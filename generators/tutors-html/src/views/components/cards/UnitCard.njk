@@ -1,0 +1,24 @@
+{% from "css/tailwindcss.njk" import unitcardcontainer %}
+{% from "components/cards/Image.njk" import image %}
+{% from "components/cards/CardDeck.njk" import cardDeck %}
+{% from "components/cards/VideoCard.njk" import videoCard %}
+{% from "components/cards/TalkCard.njk" import talkCard %}
+{% from "components/cards/NoteCard.njk" import noteCard %}
+{% from "components/cards/PanelCards.njk" import panelCards %}
+
+
+{% macro unitCard (lo) %}
+
+  <div class={{ unitcardcontainer }}>
+    <div class="flex justify-between w-full">
+      <h2 class="p-2 text-xl font-normal">
+        {{ lo.title }}
+      </h2>
+    </div>
+    {{ panelCards (lo, "./") }}
+    <div class="flex flex-wrap justify-center">
+      {{ cardDeck(lo.standardLos, './' + lo.folder + '/') }}
+    </div>
+  </div>
+
+{% endmacro %}

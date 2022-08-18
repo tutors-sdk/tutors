@@ -1,0 +1,30 @@
+{% macro navBody(lo) %}
+
+  <div class="ui pushable">
+    <div class="ui inverted labeled icon left inline vertical sidebar menu">
+      <br><br>
+      {% for lab in lo.course.walls[1].los %}
+        {% if (not lab.properties.disable) %}
+          {% if lab.parent.lotype == 'unit' %}
+            <a class="item"
+               href="{{ lab.properties.courseurl }}/{{ lab.parent.parent.folder }}/{{ lab.parentFolder }}/{{ lab.folder }}/{{ lab.link }}">{{ lab.title }} </a>
+          {% else %}
+            <a class="item"
+               href="{{ lab.properties.courseurl }}/{{ lab.parentFolder }}/{{ lab.folder }}/{{ lab.link }}">{{ lab.title }} </a>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    <div class="pusher" tabindex="-1">
+      <div class="ui basic segment">
+        <br>
+        {% for chapter in lo.chapters %}
+          <div class="ui tab segment lab" data-tab="{{ chapter.shortTitle }}">
+            {{ chapter.content }}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% endmacro %}

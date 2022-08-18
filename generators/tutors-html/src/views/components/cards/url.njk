@@ -1,0 +1,20 @@
+{% macro urlStart (lo, path) %}
+    {% if (lo.lotype == "course") and (lo.link) %}
+      {% set url = lo.link %}
+      {% elif (lo.lotype == "web") or ((lo.lotype == "github") ) %}
+      {% set url = lo.link + ' target="_blank"' %}
+      {% elif (lo.lotype == "talk") %}
+      {% set url = path + '/' + lo.folder + '/' + lo.link + ' target="_blank"' %}
+    {% else %}
+      {% set url = path +  lo.folder + '/' + lo.link %}
+    {% endif %}
+    {% set regExp = r/.md.*/g %}
+    {% if regExp.test(lo.link) %}
+      {% set url = '#' %}
+    {% endif %}
+    <a href={{ url }}>
+  {% endmacro %}
+
+{% macro urlEnd(lo) %}
+  </a>
+{% endmacro %}

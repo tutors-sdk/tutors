@@ -1,0 +1,12 @@
+{% from "components/cards/card.njk" import card %}
+{% from "css/tailwindcss.njk" import carddeckbg %}
+
+{% macro cardDeck (los, path) %}
+  <div class="{{ carddeckbg }}">
+    <div class="flex flex-wrap justify-center">
+      {% for lo in los %}
+        {{ card (lo, path) }}
+      {% endfor %}
+    </div>
+  </div>
+{% endmacro %}

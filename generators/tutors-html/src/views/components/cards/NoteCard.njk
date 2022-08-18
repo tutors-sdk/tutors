@@ -1,0 +1,8 @@
+{% from "css/tailwindcss.njk" import notecontent %}
+
+{% macro noteCard (lo, path) %}
+
+  <div class="{{ notecontent }}">
+    {{ lo.contentMd }}
+  </div>
+{% endmacro %}

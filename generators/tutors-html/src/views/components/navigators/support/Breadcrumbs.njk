@@ -1,0 +1,45 @@
+{% from "css/tailwindcss.njk" import navbarsecondarybg %}
+{% from "components/iconography/Icon.njk" import icon %}
+
+{% macro breadcrumbs (lo) %}
+  <div class="{{ navbarsecondarybg }}">
+    <ul>
+      {% if (lo.lotype == "course") %}
+        <li class="ml-2">
+          {{ icon("moduleHome", 20, "", "") }}
+          <a class="font-bold" href="#"> <span class="hidden text-xs lg:block lg:pl-2"> Home </span> </a>
+        </li>
+      {% else %}
+        <li class="ml-2">
+          {% if (lo.parent.lotype == "unit") %}
+            {{ icon("moduleHome", 20, "", "") }}
+            <a class="font-bold" href="../../index.html"> <span class="hidden text-xs lg:block lg:pl-2"> Home </span>
+            </a>
+          {% else %}
+            {{ icon("moduleHome", 20, "", "") }}
+            <a class="font-bold" href="../index.html"> <span class="hidden text-xs lg:block lg:pl-2"> Home </span> </a>
+          {% endif %}
+        </li>
+        {% if (lo.lotype == "lab" or lo.lotype == "note") %}
+          {% if (lo.parent.lotype == "unit") %}
+            <li class="ml-2">
+              {{ icon("topic", 20, "", "") }}
+              <a class="font-bold" href="../../index.html"> <span
+                    class="hidden text-xs lg:block lg:pl-2"> {{ lo.parent.parent.title }} </span> </a>
+            </li>
+          {% else %}
+            <li class="ml-2">
+              {{ icon("topic", 20, "", "") }}
+              <a class="font-bold" href="../index.html"> <span
+                    class="hidden text-xs lg:block lg:pl-2"> {{ lo.parent.title }} </span> </a>
+            </li>
+          {% endif %}
+        {% endif %}
+        <li class="ml-2">
+          {{ icon(lo.lotype, 20, "", "") }}
+          <a class="font-bold" href="#"> <span class="hidden text-xs lg:block lg:pl-2"> {{ lo.title }}</span> </a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+{% endmacro %}

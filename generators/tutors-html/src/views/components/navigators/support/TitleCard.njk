@@ -1,0 +1,15 @@
+{% from "css/tailwindcss.njk" import navbartitle %}
+{% from "components/cards/Image.njk" import image  %}
+
+{% macro titleCard (lo) %}
+  <div class="flex-1">
+    <div class="{{ navbartitle }}">
+      <p class="text-sm font-bold">{{ lo.title }}</p>
+      {% if (lo.lotype == "course") %}
+        <p class="text-sm font-bold">{{ lo.properties.credits }}</p>
+      {% else %}
+        <p class="text-sm font-bold">{{ lo.parent.title }}</p>
+      {% endif %}
+    </div>
+  </div>
+{% endmacro %}
