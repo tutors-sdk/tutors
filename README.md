@@ -8,7 +8,7 @@
   </a>
 </p>
 
-<h2 align="center">
+<h3 align="center">
 Tutors: An Open Learning Web Toolkit
 </h3>
 
