@@ -18,6 +18,22 @@ Tutors: An Open Learning Web Toolkit
   <a href="#">Roadmap</a>
 </p>
 
-<p align="center">
+## What is Tutors?
+
 Tutors is a collection of open source components & services supporting the creation of transformative learning experiences using open web standards.
-</p>
+
+## Overview of Tutors
+
+## Tutors Components
+
+## Installing
+
+## Contributing
+
+Please ensure to read the [Code of Conduct](./CODE_OF_CONDUCT.md) before contributing to the Tutors project.
+
+## License
+
+[![license](https://img.shields.io/badge/license-MIT-3A929B.svg)](./LICENSE)
+
+This project is licensed under the terms of the [MIT License](./LICENSE).
