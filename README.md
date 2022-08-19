@@ -8,6 +8,16 @@
   </a>
 </p>
 
-# Tutors
+<h2 align="center">
+Tutors: An Open Learning Web Toolkit
+</h3>
 
-Monorepo of the Tutors Open Source Project.
+<p align="center">
+  <a href="#">Documentation</a> |
+  <a href="#">Changelog</a> |
+  <a href="#">Roadmap</a>
+</p>
+
+<p align="center">
+Tutors is a collection of open source components & services supporting the creation of transformative learning experiences using open web standards.
+</p>
