@@ -44,7 +44,7 @@ Please ensure to read the [Code of Conduct](./CODE_OF_CONDUCT.md) before contrib
 
 # Sponsors
 
-This project is powered by Netlify Open Source.
+This project is powered by [Netlify Open Source](https://www.netlify.com/open-source/).
 
 [![Deploys by Netlify](https://www.netlify.com/v3/img/components/netlify-color-bg.svg)](https://www.netlify.com)
 
