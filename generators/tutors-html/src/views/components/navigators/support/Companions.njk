@@ -1,0 +1,19 @@
+{% from "css/tailwindcss.njk" import iconbar %}
+{% from "components/iconography/Icon.njk" import icon %}
+
+{% macro companions(properties) %}
+
+  {% if properties.moodle or properties.slack or properties.youtube or properties.teams %}
+      <div class="{{ iconbar }}">
+        {% if properties.moodle %}
+          {{ icon ("moodle", 20, properties.moodle, "To Moodle ...") }}
+        {% endif %}
+        {% if properties.slack %}
+          {{ icon ("slack", 20, properties.slack, "To Slack ...") }}
+        {% endif %}
+        {% if properties.youtube %}
+          {{ icon ("youtube", 20, properties.youtube, "To Youtube ...") }}
+        {% endif %}
+    </div>
+  {% endif %}
+{% endmacro %}

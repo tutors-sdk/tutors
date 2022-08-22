@@ -1,0 +1,20 @@
+{% macro navBar(lo) %}
+
+  <div class="ui fixed top pointing inverted stackable menu labmenu">
+    <header class="header item">
+      {% if lo.parent.lotype == 'unit' %}
+        <a href="../../index.html">  <i class="sitemap icon"></i> {{ lo.parent.title }} </a>
+      {% else %}
+        <a href="../index.html">  <i class="sitemap icon"></i>{{ lo.parent.title }} </a>
+      {% endif %}
+    </header>
+    <div class="right tab-menu menu">
+      {% for chapter in lo.chapters %}
+        <a class="item" data-tab="{{ chapter.shortTitle }}">
+          {{ chapter.shortTitle }}
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+{% endmacro %}

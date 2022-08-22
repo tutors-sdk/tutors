@@ -1,0 +1,15 @@
+{% from "components/cards/VideoCard.njk" import videoCard %}
+{% from "components/cards/TalkCard.njk" import talkCard %}
+{% from "components/cards/NoteCard.njk" import noteCard %}
+
+{% macro panelCards (lo, path) %}
+  {% for lo in lo.panelVideos %}
+    {{ videoCard (lo, path) }}
+  {% endfor %}
+  {% for lo in lo.panelTalks %}
+    {{ talkCard (lo, path) }}
+  {% endfor %}
+  {% for lo in lo.panelNotes %}
+    {{ noteCard (lo, path) }}
+  {% endfor %}
+{% endmacro %}

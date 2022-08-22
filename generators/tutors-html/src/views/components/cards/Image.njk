@@ -1,0 +1,9 @@
+{% from "css/tailwindcss.njk" import tutorscardimage %}
+
+{% macro image (lo, path) %}
+  {% if (lo.icon) %}
+    <span class="iconify" data-icon="{{ lo.icon.type }}" data-width="164" style="color:{{ lo.icon.color }};"></span>
+  {% else %}
+  <img loading="lazy" class="{{ tutorscardimage }}" src="{{ path }}{{ lo.folder }}/{{ lo.img }}" alt="{{ lo.title  }}">
+  {% endif %}
+{% endmacro %}

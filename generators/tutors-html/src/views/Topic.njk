@@ -1,0 +1,16 @@
+{% from "components/cards/CardDeck.njk" import cardDeck %}
+{% from "components/cards/UnitCard.njk" import unitCard %}
+{% from "components/cards/PanelCards.njk" import panelCards %}
+{% from "components/navigators/MainNavigator.njk" import mainNavigator %}
+{% extends "layouts/main.html" %}
+
+{% block content %}
+  {{ mainNavigator(lo) }}
+  {{ panelCards(lo, "./") }}
+  {% for lo in lo.units %}
+    <div class="mt-2">
+      {{ unitCard (lo) }}
+    </div>
+  {% endfor %}
+  {{ cardDeck(lo.standardLos, "./") }}
+{% endblock %}

@@ -1,0 +1,28 @@
+{
+    "name": "tutors-monorepo",
+    "version": "0.1.0",
+    "private": false,
+    "workspaces": [
+        "generators/*",
+        "readers/*"
+    ],
+    "scripts": {
+        "build": "turbo run build",
+        "dev": "turbo run dev --parallel",
+        "lint": "turbo run lint",
+        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+        "start": "cd ./apps/emulator-electron && yarn start"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^17.0.3",
+        "@commitlint/config-conventional": "^17.0.3",
+        "husky": "^8.0.1",
+        "prettier": "^2.5.1",
+        "turbo": "latest",
+        "typescript": "4.7.4"
+    },
+    "engines": {
+        "npm": ">=7.0.0",
+        "node": ">=14.0.0"
+    }
+}

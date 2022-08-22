@@ -1,0 +1,12 @@
+{
+    "files": [],
+    "references": [
+      { "path": "readers/tutors-course-reader" },
+      { "path": "readers/tutors-time-reader" },
+      { "path": "readers/tutors-reader-lib" },
+      { "path": "generators/tutors-html" },
+      { "path": "generators/tutors-json" },
+      { "path": "generators/tutors-lib"}
+    ]
+  }
+  

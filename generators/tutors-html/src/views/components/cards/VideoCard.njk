@@ -1,0 +1,11 @@
+{% from "css/tailwindcss.njk" import videocardcontainer %}
+
+{% macro videoCard (lo, path) %}
+  <div class="{{ videocardcontainer }}">
+    <div class="relative aspect-video" style="padding-top: 40%;">
+      <iframe title="{[lo.title}}" class="absolute inset-0 w-full h-full"
+              src="https://www.youtube.com/embed/{{ lo.videoid }}" allow="encrypted-media" allowfullscreen
+              uk-responsive></iframe>
+    </div>
+  </div>
+{% endmacro %}

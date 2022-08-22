@@ -1,0 +1,46 @@
+{% from "css/tailwindcss.njk" import tutorscontainer, labmenucontainer, labmenu, labpanel, labcontent %}
+{% from "components/navigators/MainNavigator.njk" import mainNavigator %}
+{% extends "layouts/main.html" %}
+
+{% block content %}
+  {{ mainNavigator(lo) }}
+  <div class="flex m-2">
+    <div class="{{ labmenucontainer }}">
+      <ul class="{{ labmenu }}">
+        {% for chapter in lo.chapters %}
+          <a id="menu-{{ chapter.shortTitle }}" class="p-4 py-3 text-base" href="javascript:showtab('{{ chapter.shortTitle }}')">  {{ chapter.title }} </a>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="{{ labpanel }}">
+      <article id="tab-container" class="{{ labcontent }}">
+      </article>
+    </div>
+  </div>
+  {% for chapter in lo.chapters %}
+    <div id="{{ chapter.shortTitle }}" style="visibility:hidden"> {{ chapter.content }}</div>
+  {% endfor %}
+  <script>
+    function showtab(tabs) {
+      let menuItem;
+      {% for chapter in lo.chapters %}
+      menuItem = document.getElementById('menu-{{chapter.shortTitle}}');
+      menuItem.className = "p-4 py-3 text-base";
+      {% endfor %}
+      var tab = tabs;
+      switch (tab)
+      {
+        {% for chapter in lo.chapters %}
+          case "{{ chapter.shortTitle }}":
+            menuItem = document.getElementById('menu-{{chapter.shortTitle}}');
+            menuItem.className = "p-4 py-3 text-base font-bold bordered";
+            document.getElementById('tab-container').innerHTML = document.getElementById("{{ chapter.shortTitle }}").innerHTML;
+            break;
+        {% endfor %}
+          default:
+            document.getElementById('tab-container').innerHTML = document.getElementById("00").innerHTML;
+            break;
+      }
+    }
+  </script>
+{% endblock %}
