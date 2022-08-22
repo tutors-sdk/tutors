@@ -28,7 +28,7 @@
     "axios": "^0.27.2",
     "daisyui": "2.24.0",
     "file-saver": "^2.0.5",
-    "firebase": "^9.9.2",
+    "firebase": "^9.9.3",
     "pdfjs-dist": "^2.15.349",
     "postcss": "^8.4.16",
     "svelte": "^3.49.0",
