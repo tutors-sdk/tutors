@@ -20,7 +20,7 @@
     "showdown-highlight": "2.1.8",
     "showdown-katex": "^0.8.0",
     "remove-markdown": "^0.5.0",
-    "firebase": "^9.8.4",
+    "firebase": "^9.9.3",
     "path-browserify": "^1.0.1"
   },
   "devDependencies": {
