@@ -16,7 +16,7 @@
         @apply mx-auto antialiased bg-base-100 w-full flex min-h-screen flex-col justify-between
     }
     .course-container {
-        @apply mx-auto antialiased bg-base-100 w-11/12 lg:w-full
+        @apply mx-auto antialiased bg-base-100 container lg:flex-nowrap mb-2 mt-2 mx-auto
     }
     .header-container {
         @apply w-full sticky top-0 z-40 navbar flex justify-center bg-opacity-90 backdrop-blur bg-neutral text-neutral-content shadow-lg z-40 flex w-full
