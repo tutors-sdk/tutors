@@ -1,6 +1,6 @@
 <script lang="js">
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
-  import { Clock } from "svelte-loading-spinners";
+  import { BarLoader } from "svelte-loading-spinners";
   import FileSaver from "file-saver";
   import { onDestroy, tick } from "svelte";
 
@@ -31,7 +31,7 @@
   const renderPage = (num) => {
     pageRendering = true;
 
-    pdfDoc.getPage(num).then(function(page) {
+    pdfDoc.getPage(num).then(function (page) {
       let viewport = page.getViewport({ scale: scale, rotation: rotation });
       const canvasContext = canvas.getContext("2d");
       canvas.height = viewport.height;
@@ -39,12 +39,12 @@
 
       let renderContext = {
         canvasContext,
-        viewport
+        viewport,
       };
       let renderTask = page.render(renderContext);
 
       // Wait for rendering to finish
-      renderTask.promise.then(function() {
+      renderTask.promise.then(function () {
         pageRendering = false;
         if (pageNumPending !== null) {
           // New page rendering is pending
@@ -102,15 +102,14 @@
     window.addEventListener("keydown", keypressInput);
     let loadingTask = pdfjs.getDocument({ url });
     loadingTask.promise
-      .then(async function(pdfDoc_) {
+      .then(async function (pdfDoc_) {
         pdfDoc = pdfDoc_;
         await tick();
         pageCount = pdfDoc.numPages;
         totalPage = pageCount;
         renderPage(pageNum);
       })
-      .catch(function(error) {
-      });
+      .catch(function (error) {});
   };
   initialLoad();
 
@@ -129,9 +128,7 @@
       onPrevPage();
     }
   }
-
 </script>
-
 
 {#if pdfDoc}
   <div class="talkcard-container">
@@ -141,15 +138,15 @@
       </div>
       <div>
         <button on:click={onPrevPage}>
-          <Icon button="true" type="left" tipPos="tooltip-bottom" toolTip="Previous Slide"/>
+          <Icon button="true" type="left" tipPos="tooltip-bottom" toolTip="Previous Slide" />
         </button>
         <button on:click={onNextPage}>
-          <Icon button="true" type="right" tipPos="tooltip-bottom" toolTip="Next Slide"/>
+          <Icon button="true" type="right" tipPos="tooltip-bottom" toolTip="Next Slide" />
         </button>
-        <button on:click={clockwiseRotate} >
-          <Icon button="true" type="rotate" tipPos="tooltip-bottom" toolTip="Rotate 90 Degrees"/>
+        <button on:click={clockwiseRotate}>
+          <Icon button="true" type="rotate" tipPos="tooltip-bottom" toolTip="Rotate 90 Degrees" />
         </button>
-        <button on:click={downloadPdf} >
+        <button on:click={downloadPdf}>
           <Icon type="download" button="true" toolTip="download" tipPos="tooltip-bottom" />
         </button>
         <Icon button="true" link={lo.pdf} type="fullScreen" toolTip="Full Screen" tipPos="tooltip-bottom" target="_blank" />
@@ -159,6 +156,8 @@
   </div>
 {:else}
   <div class="flex flex-col justify-center items-center mt-28">
-    <Clock size="280" color="#FF3E00" unit="px" />
+    <BarLoader size="100" color="#37919B" unit="px" />
+    <br />
+    <span class="text-lg">Loading...</span>
   </div>
 {/if}
