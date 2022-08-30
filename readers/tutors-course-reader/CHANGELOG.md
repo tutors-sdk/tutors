@@ -1,6 +1,6 @@
 # Tutors Changelog
 
-## [5.1.0] - 2022--8-08
+## [6.0.0] = 2022-08-30
 
 - feat: online status & sidebar of online users
 - feat: sticky navbar menu
