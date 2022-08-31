@@ -29,7 +29,7 @@
     "daisyui": "2.24.0",
     "file-saver": "^2.0.5",
     "firebase": "^9.9.3",
-    "pdfjs-dist": "^2.15.349",
+    "pdfjs-dist": "^2.16.105",
     "postcss": "^8.4.16",
     "svelte": "^3.49.0",
     "svelte-check": "^2.9.0",
