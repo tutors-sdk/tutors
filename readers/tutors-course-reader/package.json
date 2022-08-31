@@ -19,7 +19,7 @@
   "devDependencies": {
     "@iconify/svelte": "^2.2.1",
     "@iconify/types": "^1.1.0",
-    "@sveltejs/vite-plugin-svelte": "^1.0.2",
+    "@sveltejs/vite-plugin-svelte": "^1.0.3",
     "@tailwindcss/line-clamp": "^0.4.0",
     "@tailwindcss/typography": "^0.5.4",
     "@tsconfig/svelte": "^3.0.0",
@@ -29,10 +29,10 @@
     "daisyui": "2.24.0",
     "file-saver": "^2.0.5",
     "firebase": "^9.9.3",
-    "pdfjs-dist": "^2.15.349",
+    "pdfjs-dist": "^2.16.105",
     "postcss": "^8.4.16",
     "svelte": "^3.49.0",
-    "svelte-check": "^2.8.0",
+    "svelte-check": "^2.9.0",
     "svelte-loading-spinners": "^0.1.7",
     "svelte-preprocess": "^4.10.7",
     "svelte-scrollto": "^0.2.0",
@@ -41,7 +41,7 @@
     "svelte-tabs": "^1.1.0",
     "svelte-transitions-fade-scale": "^1.0.0",
     "tailwindcss": "^3.1.8",
-    "typescript": "^4.7.4",
+    "typescript": "^4.8.2",
     "vite": "^3.0.9"
   }
 }

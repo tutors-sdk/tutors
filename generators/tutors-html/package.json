@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "tutors-lib": "^2.5.2",
-    "@types/node": "^18.7.9",
+    "@types/node": "^18.7.14",
     "@types/shelljs": "^0.8.11",
     "commander": "^9.3.0",
     "nunjucks": "^3.2.3",
@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "prettier": "2.7.1",
-    "typescript": "^4.7.4"
+    "typescript": "^4.8.2"
   },
   "prettier": {
     "singleQuote": false,
