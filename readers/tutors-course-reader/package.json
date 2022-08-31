@@ -32,7 +32,7 @@
     "pdfjs-dist": "^2.15.349",
     "postcss": "^8.4.16",
     "svelte": "^3.49.0",
-    "svelte-check": "^2.8.0",
+    "svelte-check": "^2.9.0",
     "svelte-loading-spinners": "^0.1.7",
     "svelte-preprocess": "^4.10.7",
     "svelte-scrollto": "^0.2.0",
