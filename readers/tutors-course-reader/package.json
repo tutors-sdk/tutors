@@ -19,7 +19,7 @@
   "devDependencies": {
     "@iconify/svelte": "^2.2.1",
     "@iconify/types": "^1.1.0",
-    "@sveltejs/vite-plugin-svelte": "^1.0.2",
+    "@sveltejs/vite-plugin-svelte": "^1.0.3",
     "@tailwindcss/line-clamp": "^0.4.0",
     "@tailwindcss/typography": "^0.5.4",
     "@tsconfig/svelte": "^3.0.0",
@@ -32,7 +32,7 @@
     "pdfjs-dist": "^2.15.349",
     "postcss": "^8.4.16",
     "svelte": "^3.49.0",
-    "svelte-check": "^2.8.0",
+    "svelte-check": "^2.9.0",
     "svelte-loading-spinners": "^0.1.7",
     "svelte-preprocess": "^4.10.7",
     "svelte-scrollto": "^0.2.0",
