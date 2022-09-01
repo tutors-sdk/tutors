@@ -20,7 +20,6 @@
     user = newUser;
     let course = await $currentCourse;
     if (isAuthenticated() && course.authLevel > 0) {
-      metricsService.setCourse(course);
       if (user && !user.hasOwnProperty("onlineStatus")) {
         user.onlineStatus = "online";
       } else {
@@ -58,3 +57,4 @@
     </ul>
   </div>
 {/if}
+
