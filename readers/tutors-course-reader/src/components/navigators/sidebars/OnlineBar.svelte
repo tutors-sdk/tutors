@@ -14,6 +14,7 @@
   const metricsService :MetricsService = getContext("metrics");
   let students: StudentMetric[] = [];
   let presenceService: PresenceService = null;
+  let lastCourse:Course = null;
 
   function refresh(refreshedStudents: StudentMetric[]) {
     students = [...refreshedStudents];
@@ -31,8 +32,11 @@
   }
 
   currentCourse.subscribe(async (newCourse: Course) => {
-    if (newCourse && isAuthenticated() && newCourse?.authLevel > 0) {
-      initService(newCourse);
+    if (newCourse && newCourse != lastCourse) {
+      lastCourse = newCourse;
+      if (isAuthenticated() && newCourse?.authLevel > 0) {
+        initService(newCourse);
+      }
     }
   });
 </script>
