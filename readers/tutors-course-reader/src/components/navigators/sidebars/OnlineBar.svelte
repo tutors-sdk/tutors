@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { currentCourse, currentUser, revealOnline } from "../../../stores";
+  import { currentCourse, currentUser, revealOnline, studentsOnline } from "../../../stores";
   import { beforeUpdate, getContext } from "svelte";
   import type { Course } from "tutors-reader-lib/src/models/course";
   import type { CourseService } from "../../../reader-lib/services/course-service";
   import type { StudentMetric, User } from "tutors-reader-lib/src/types/metrics-types";
   import { PresenceService } from "../../../reader-lib/services/presence-service";
   import { MetricsService } from "../../../reader-lib/services/metrics-service";
-  import CourseNavigator from "../CourseNavigator.svelte";
   import SidebarComponent from "./SidebarComponent.svelte";
   import StudentCard from "../../cards/StudentCard.svelte";
   import { isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
@@ -14,7 +13,6 @@
   let user: User;
   let course: Course = null;
   let status = false;
-  let show = false;
   let lastCourse: Course = null;
   const cache: CourseService = getContext("cache");
 
@@ -26,13 +24,13 @@
   function refresh(refreshedStudents: StudentMetric[]) {
     onlineStudents = refreshedStudents.length;
     students = [...refreshedStudents];
+    studentsOnline.set(onlineStudents);
   }
 
   currentUser.subscribe(async (newUser) => {
     user = newUser;
     let course = await $currentCourse;
-    if (course?.hasEnrollment() && isAuthenticated()) {
-      show = true;
+    if (course && isAuthenticated()) {
       metricsService.setCourse(course);
       if (user && !user.hasOwnProperty("onlineStatus")) {
         user.onlineStatus = "online";
