@@ -10,53 +10,37 @@
   import StudentCard from "../../cards/StudentCard.svelte";
   import { isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
 
-  let user: User;
-  let course: Course = null;
-  let status = false;
-  let lastCourse: Course = null;
   const cache: CourseService = getContext("cache");
-
-  const metricsService = getContext("metrics");
-  let onlineStudents = 0;
+  const metricsService :MetricsService = getContext("metrics");
   let students: StudentMetric[] = [];
   let presenceService: PresenceService = null;
 
   function refresh(refreshedStudents: StudentMetric[]) {
-    onlineStudents = refreshedStudents.length;
     students = [...refreshedStudents];
-    studentsOnline.set(onlineStudents);
+    studentsOnline.set(refreshedStudents.length);
   }
 
-  currentUser.subscribe(async (newUser) => {
-    user = newUser;
-    let course = await $currentCourse;
-    if (course && isAuthenticated()) {
-      metricsService.setCourse(course);
-      if (user && !user.hasOwnProperty("onlineStatus")) {
-        user.onlineStatus = "online";
-      } else {
-        if (user) status = user.onlineStatus === "online";
-      }
-      presenceService = new PresenceService(new MetricsService(), students, refresh, null);
-      lastCourse = course;
-      presenceService.setCourse(course);
-      presenceService.start();
-    }
-  });
+  function initService(course: Course) {
+    if (presenceService) presenceService.stop();
+    metricsService.setCourse(course);
+    presenceService = new PresenceService(metricsService, students, refresh, null);
+    presenceService.setCourse(course);
+    presenceService.start();
+    students = [];
+    studentsOnline.set(0);
+  }
 
-  let display = false;
-  beforeUpdate(() => {
-    course = cache.course;
-    if (course) {
-      display = true;
+  currentCourse.subscribe(async (newCourse: Course) => {
+    if (newCourse && isAuthenticated() && newCourse?.authLevel > 0) {
+      initService(newCourse);
     }
   });
 </script>
 
-{#if $revealOnline && display}
+{#if $revealOnline}
   <SidebarComponent title="Online Students" show={revealOnline} origin="right-0">
     <div class="flex flex-wrap">
-      {#if onlineStudents < 1}
+      {#if $studentsOnline == 0}
         <span class="text-lg">No students currently online...</span>
       {/if}
       {#each students as student}
