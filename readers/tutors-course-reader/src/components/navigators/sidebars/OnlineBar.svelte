@@ -36,7 +36,7 @@
     students = [];
     studentsOnline.set(0);
   }
-
+  
   currentCourse.subscribe(async (newCourse: Course) => {
     if (newCourse && newCourse != lastCourse) {
       lastCourse = newCourse;
