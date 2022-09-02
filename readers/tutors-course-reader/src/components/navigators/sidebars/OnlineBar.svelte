@@ -15,8 +15,14 @@
   let students: StudentMetric[] = [];
   let presenceService: PresenceService = null;
   let lastCourse:Course = null;
+  let user: User;
 
   function refresh(refreshedStudents: StudentMetric[]) {
+    let student = refreshedStudents.find(student => student.nickname === user.nickname);
+    let index = refreshedStudents.indexOf(student);
+    if (index !== -1) {
+      refreshedStudents.splice(index, 1);
+    }
     students = [...refreshedStudents];
     studentsOnline.set(refreshedStudents.length);
   }
@@ -38,6 +44,10 @@
         initService(newCourse);
       }
     }
+  });
+
+  currentUser.subscribe(async (newUser) => {
+    user = newUser;
   });
 </script>
 
