@@ -1,5 +1,10 @@
 # Tutors Changelog
 
+## [6.0.2] - 2022-09-03
+
+- fix: presence
+- style: online users card
+
 ## [6.0.1] - 2022-09-02
 
 - fix: online users
