@@ -49,11 +49,13 @@
                                                     bind:checked={status} on:click={handleClick} /> <span
           class="label-text text-base-content text-base">Share Presence</span> </label>
       </li>
-      <li>
-        <button on:click={() => revealOnline.set(true)}>
-          <div>View <span class="badge badge-success">{$studentsOnline}</span> Online</div>
-        </button>
-      </li>
+      {#if status}
+        <li>
+          <button on:click={() => revealOnline.set(true)}>
+            <div>View <span class="badge badge-success">{$studentsOnline}</span> Online</div>
+          </button>
+        </li>
+      {/if}
     </ul>
   </div>
 {/if}
