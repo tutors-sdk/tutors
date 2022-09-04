@@ -32,7 +32,9 @@
 {#if $currentUser && $currentCourse.authLevel > 0}
   <div class="flex-none capitalize dropdown dropdown-end dropdown-hover">
     <div class="indicator">
-      <span class="indicator-item indicator-top indicator-center badge badge-error">{$studentsOnline}</span>
+      {#if $studentsOnline > 0}
+        <span class="indicator-item indicator-top indicator-center badge badge-error">{$studentsOnline}</span>
+      {/if}
       <button class="btn btn-ghost">
         {#if status}
           <Icon type="online" />
@@ -42,14 +44,13 @@
         {/if}
       </button>
     </div>
-    <ul tabindex="0"
-        class="shadow-xl menu dropdown-content bg-base-100 text-base-content w-48 p-1 rounded-box rounded-xl z-50">
+    <ul tabindex="0" class="shadow-xl menu dropdown-content bg-base-100 text-base-content w-48 p-1 rounded-box rounded-xl z-50">
       <li>
-        <label class="cursor-pointer label"> <input type="checkbox" class="checkbox checkbox-primary checkbox-sm"
-                                                    bind:checked={status} on:click={handleClick} /> <span
-          class="label-text text-base-content text-base">Share Presence</span> </label>
+        <label class="cursor-pointer label">
+        <input type="checkbox" class="checkbox checkbox-primary checkbox-sm" bind:checked={status} on:click={handleClick} />
+        <span class="label-text text-base-content text-base">Share Presence</span> </label>
       </li>
-      {#if status}
+      {#if status && $studentsOnline > 0}
         <li>
           <button on:click={() => revealOnline.set(true)}>
             <div>View <span class="badge badge-success">{$studentsOnline}</span> Online</div>
