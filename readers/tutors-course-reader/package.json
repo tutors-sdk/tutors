@@ -26,7 +26,7 @@
     "auth0-js": "^9.19.0",
     "autoprefixer": "^10.4.8",
     "axios": "^0.27.2",
-    "daisyui": "2.24.0",
+    "daisyui": "2.24.2",
     "file-saver": "^2.0.5",
     "firebase": "^9.9.3",
     "pdfjs-dist": "^2.16.105",
