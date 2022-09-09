@@ -13,7 +13,7 @@
   
   {#each themes as theme}
   <Variant name={theme} description="The {theme} theme.">
-    <div class="h-full bg-base-100" data-theme={theme}>
+    <div class="w-full h-96 bg-base-100" data-theme={theme}>
       The current selected theme is {theme}
   </div>
   </Variant>
