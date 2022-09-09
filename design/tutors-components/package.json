@@ -1,0 +1,26 @@
+{
+    "name": "tutors-components",
+    "version": "0.0.1",
+    "scripts": {
+      "story:dev": "histoire dev",
+      "story:build": "histoire build",
+      "story:preview": "histoire preview --port 4567"
+    },
+    "type": "module",
+    "dependencies": {
+      "svelte": "^3.49.0"
+    },
+    "devDependencies": {
+      "@histoire/plugin-svelte": "^0.10",
+      "@sveltejs/vite-plugin-svelte": "^1.0.1",
+      "histoire": "^0.10.0",
+      "svelte-preprocess": "^4.10.7",
+      "vite": "^3.0.5",
+      "@iconify/svelte": "^2.2.1",
+      "@iconify/types": "^1.1.0",
+      "@tailwindcss/line-clamp": "^0.4.0",
+      "@tailwindcss/typography": "^0.5.4",
+      "autoprefixer": "^10.4.8",
+      "daisyui": "2.24.0"
+    }
+  }

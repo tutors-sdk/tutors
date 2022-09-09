@@ -4,7 +4,8 @@
     "private": false,
     "workspaces": [
         "generators/*",
-        "readers/*"
+        "readers/*",
+        "design/*"
     ],
     "scripts": {
         "build": "turbo run build",

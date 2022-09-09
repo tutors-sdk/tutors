@@ -24,7 +24,8 @@
         { "path": "readers/tutors-reader-lib"},
         { "path": "generators/tutors-html" },
         { "path": "generators/tutors-json" },
-        { "path": "generators/tutors-lib"}
+        { "path": "generators/tutors-lib"},
+        { "path": "design/tutors-components"}
     ]
     }
     
