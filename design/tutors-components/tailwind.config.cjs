@@ -144,7 +144,8 @@ module.exports = {
             }
           }
         }, "black"
-      ]
+      ],
+      darkTheme: "tutors-dark"
     }
   };
   
