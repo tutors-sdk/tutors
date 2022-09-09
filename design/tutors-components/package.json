@@ -9,7 +9,8 @@
     "vitebook:preview": "vitebook preview"
   },
   "dependencies": {
-    "clsx": "^1.1.1"
+    "clsx": "^1.1.1",
+    "daisyui": "^2.25.0"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.36",
