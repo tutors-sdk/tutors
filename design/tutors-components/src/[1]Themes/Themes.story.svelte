@@ -13,14 +13,18 @@
       EventsAddon,
       eventCallback,
     } from '@vitebook/client/addons';
-    import Themes from './Themes.svelte';
   
     let title = 'Click Me';
     let disabled = false;
+    let themes = ["tutors", "tutors-dark", "tutors-black", "tutors-dyslexia", "tutors-wireframe"];
   </script>
   
   <Variant name="Default" description="The default tutors theme.">
-    <Button {disabled} on:click={eventCallback}>{title}</Button>
+    {#each themes as theme}
+    <div class="h-full bg-base-100" data-theme={theme}>
+      The current selected theme is {theme}
+  </div>
+  {/each}
   </Variant>
   
   <Variant
@@ -33,7 +37,6 @@
       disabled = false;
     }}
   >
-    <Button {disabled}>{title}</Button>
   </Variant>
   
   <ControlsAddon>
