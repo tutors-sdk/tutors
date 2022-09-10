@@ -19,6 +19,8 @@
     "@vitebook/markdown-shiki": "0.100.5",
     "@vitebook/markdown-svelte": "0.100.5",
     "@vitebook/theme-default": "0.100.5",
+    "@iconify/svelte": "^2.2.1",
+    "@iconify/types": "^1.1.0",
     "autoprefixer": "^10.4.0",
     "postcss": "^8.4.5",
     "svelte": "^3.49.0",
