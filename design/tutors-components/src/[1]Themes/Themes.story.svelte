@@ -17,7 +17,7 @@
   ];
 </script>
 
-<div class="flex">
+<div class="flex flex-wrap">
   {#each themes as theme}
     <div class="px-8 py-4">
       <div

@@ -8,24 +8,23 @@
 </script>
 
 <script>
-  import { Variant } from "@vitebook/client";
-  import {
-    ControlsAddon,
-    EventsAddon,
-    eventCallback,
-  } from "@vitebook/client/addons";
+  import { ControlsAddon, EventsAddon } from "@vitebook/client/addons";
   import Icon from "./Icon.svelte";
 
-  let icon = "line-md:cloud-tags-loop";
+  let icon = "heroicons:academic-cap-solid";
+  let size = 20;
+  let colour = "secondary";
 </script>
 
-<Variant name="Icon" description="The default icon.">
-  <Icon {icon} />
-</Variant>
+<Icon {icon} {size} />
 
 <ControlsAddon>
   <div>
     Icon <input type="text" bind:value={icon} />
+  </div>
+  <br />
+  <div>
+    Size <input type="text" bind:value={size} />
   </div>
 </ControlsAddon>
 
