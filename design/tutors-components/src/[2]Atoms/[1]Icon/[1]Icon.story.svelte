@@ -15,7 +15,6 @@
     "fluent:home-24-filled",
     "fluent:video-clip-24-filled",
     "fluent:video-24-filled",
-    ,
     "fluent:notebook-24-filled",
     "fluent:bookmark-24-filled",
     "fluent:dual-screen-group-24-filled",
@@ -51,14 +50,14 @@
     "fluent:settings-24-filled",
     "fluent:re-order-dots-vertical-24-filled",
   ];
-  let icon;
   let size = 40;
-  let colour = "secondary";
 </script>
 
 <div class="flex flex-wrap w-10/12">
   {#each icons as icon}
-    <Icon {icon} {size} />
+    <div class="p-4 m-1 bg-base-100">
+      <Icon {icon} {size} />
+    </div>
   {/each}
 </div>
 
