@@ -62,14 +62,6 @@
       colour: "error",
     },
     {
-      icon: "fluent:presenter-24-filled",
-      colour: "info",
-    },
-    {
-      icon: "fluent:notepad-16-regular",
-      colour: "warning",
-    },
-    {
       icon: "fluent:notepad-16-regular",
       colour: "warning",
     },
@@ -152,10 +144,6 @@
     {
       icon: "fluent:settings-24-filled",
       colour: "info",
-    },
-    {
-      icon: "fluent:re-order-dots-vertical-24-filled",
-      colour: "error",
     },
   ];
   let size = 40;
