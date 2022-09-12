@@ -1,31 +1,15 @@
 {
-  "name": "tutors-components",
-  "description": "design system & components for the tutors open source project",
-  "version": "0.0.0",
+  "name": "@design/tutors-components",
+  "description": "Design system & components for the tutors open source project",
+  "version": "0.0.1",
   "type": "module",
-  "scripts": {
-    "vitebook:dev": "vitebook dev",
-    "vitebook:build": "vitebook build",
-    "vitebook:preview": "vitebook preview"
-  },
-  "dependencies": {
-    "clsx": "^1.1.1",
-    "daisyui": "^2.25.0"
-  },
-  "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.36",
-    "@vitebook/client": "0.100.5",
-    "@vitebook/core": "0.100.5",
-    "@vitebook/markdown-shiki": "0.100.5",
-    "@vitebook/markdown-svelte": "0.100.5",
-    "@vitebook/theme-default": "0.100.5",
-    "@iconify/svelte": "^2.2.1",
-    "@iconify/types": "^1.1.0",
-    "autoprefixer": "^10.4.0",
-    "postcss": "^8.4.5",
-    "svelte": "^3.49.0",
-    "tailwindcss": "^3.0.6",
-    "typescript": "^4.4.3",
-    "vite": "^3.0.0"
-  }
+	"main": "index.js",
+	"svelte": "index.js",
+	"dependencies": {
+		"svrollbar": "^0.12.0"
+	},
+	"devDependencies": {
+		"svelte-inview": "^3.0.1",
+		"@iconify/svelte": "^2.2.1"
+	}
 }

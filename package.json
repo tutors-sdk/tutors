@@ -1,7 +1,7 @@
 {
     "name": "tutors-monorepo",
     "version": "0.1.0",
-    "private": false,
+    "private": true,
     "workspaces": [
         "generators/*",
         "readers/*",
@@ -25,5 +25,9 @@
     "engines": {
         "npm": ">=7.0.0",
         "node": ">=14.0.0"
-    }
+    },
+    "main": "index.js",
+    "repository": "https://github.com/tutors-sdk/tutors.git",
+    "author": "Jordan Harrison <76656637+jordharr@users.noreply.github.com>",
+    "license": "MIT"
 }

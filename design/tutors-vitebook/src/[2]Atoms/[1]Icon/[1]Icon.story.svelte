@@ -1,5 +1,6 @@
 <script lang="ts" context="module">
   import type { PageMeta } from "@vitebook/client";
+  import { Icon } from "@design/tutors-components";
 
   export const __pageMeta: PageMeta = {
     title: "Icon",
@@ -9,7 +10,6 @@
 
 <script>
   import { ControlsAddon, EventsAddon } from "@vitebook/client/addons";
-  import Icon from "./Icon.svelte";
 
   let icons = [
     "fluent:home-24-filled",
