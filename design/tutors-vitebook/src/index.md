@@ -1,3 +1,3 @@
-# Welcome to the tutors-components Vitebook
+# Welcome to tutors-vitebook
 
-Here you will find the components of the tutors open source project.
+Here you will find the design system & components of the tutors open source project.
