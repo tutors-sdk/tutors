@@ -1,3 +1,4 @@
+export { default as Badge } from "./lib/Atoms/Badge/Badge.svelte";
 export { default as Button } from "./lib/Atoms/Button/Button.svelte";
 export { default as Colour } from "./lib/Atoms/Colour/Colour.svelte";
 export { default as Icon } from "./lib/Atoms/Icon/Icon.svelte";
