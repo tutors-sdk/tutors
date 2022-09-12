@@ -15,12 +15,24 @@
     EventsAddon,
     eventCallback,
   } from "@vitebook/client/addons";
-
+  let colours = [
+    "primary",
+    "secondary",
+    "accent",
+    "neutral",
+    "info",
+    "success",
+    "warning",
+    "error",
+  ];
   let content = "Click Me";
   let colour = "primary";
   let size = "lg";
   let href = "";
   let target = "_blank";
+  function onChange(event) {
+    colour = event.currentTarget.value;
+  }
 </script>
 
 <Variant name="Default" description="The default button.">
@@ -33,9 +45,12 @@
   <div>
     Content <input type="text" bind:value={content} />
   </div>
-  <div class="mt-6">
-    Colour <input type="text" bind:value={colour} />
-  </div>
+  <select class="mt-6" on:change={onChange}>
+    <option disabled selected>Select a Colour</option>
+    {#each colours as colour}
+      <option checked={colour === colour} name="colour">{colour}</option>
+    {/each}
+  </select>
   <div class="mt-6">
     href <input type="text" bind:value={href} />
   </div>
