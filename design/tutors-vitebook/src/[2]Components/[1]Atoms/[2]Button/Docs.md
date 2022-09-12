@@ -1,3 +1,8 @@
+<script>
+  import { Icon } from "@design/tutors-components";
+  import { Button } from "@design/tutors-components";
+</script>
+
 # Button
 
 This is the documentation page for the `<Button />` component.
@@ -9,11 +14,6 @@ This is the documentation page for the `<Button />` component.
 ```
 
 ## Example
-
-<script>
-  import { Icon } from "@design/tutors-components";
-  import { Button } from "@design/tutors-components";
-</script>
 
 ```svelte{1}
 <Button colour="primary">My Button</Button>

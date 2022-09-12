@@ -1,15 +1,12 @@
 <script lang="ts" context="module">
   import type { PageMeta } from "@vitebook/client";
   import { Icon } from "@design/tutors-components";
+  import { ControlsAddon, EventsAddon } from "@vitebook/client/addons";
 
   export const __pageMeta: PageMeta = {
     title: "Icon",
     description: "Icon molecule",
   };
-</script>
-
-<script>
-  import { ControlsAddon, EventsAddon } from "@vitebook/client/addons";
 
   let icons = [
     {
