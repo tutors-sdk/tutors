@@ -6,8 +6,8 @@
 </script>
 
 {#if href}
-  <a class="btn btn-{colour} btn-{size}" {href} {target}><slot /></a>
+  <a class="btn btn-{size} btn-{colour}" {href} {target}><slot /></a>
 {/if}
 {#if !href}
-  <button class="btn btn-{colour} btn-{size}" on:click><slot /></button>
+  <button class="btn btn-{size} btn-{colour}" on:click><slot /></button>
 {/if}
