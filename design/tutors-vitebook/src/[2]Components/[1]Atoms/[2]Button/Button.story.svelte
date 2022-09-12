@@ -16,33 +16,31 @@
     eventCallback,
   } from "@vitebook/client/addons";
 
-  let title = "Click Me";
-  let disabled = false;
+  let content = "Click Me";
+  let colour = "primary";
+  let size = "lg";
+  let href = "";
+  let target = "_blank";
 </script>
 
 <Variant name="Default" description="The default button.">
-  <Button {disabled} on:click={eventCallback}>{title}</Button>
-</Variant>
-
-<Variant
-  name="Disabled"
-  description="The disabled button."
-  on:enter={() => {
-    disabled = true;
-  }}
-  on:exit={() => {
-    disabled = false;
-  }}
->
-  <Button {disabled}>{title}</Button>
+  <Button {colour} {size} {href} {target} on:click={eventCallback}
+    >{content}</Button
+  >
 </Variant>
 
 <ControlsAddon>
   <div>
-    Title <input type="text" bind:value={title} />
+    Content <input type="text" bind:value={content} />
   </div>
   <div class="mt-6">
-    Disabled <input type="checkbox" bind:checked={disabled} />
+    Colour <input type="text" bind:value={colour} />
+  </div>
+  <div class="mt-6">
+    href <input type="text" bind:value={href} />
+  </div>
+  <div class="mt-6">
+    target <input type="text" bind:value={target} />
   </div>
 </ControlsAddon>
 
