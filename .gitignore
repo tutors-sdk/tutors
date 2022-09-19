@@ -34,3 +34,13 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+# idea
+.idea
+
+# dist folders
+**/dist
+
+# env
+**/.env
+
