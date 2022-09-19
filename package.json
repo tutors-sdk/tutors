@@ -1,33 +1,29 @@
 {
-    "name": "tutors-monorepo",
-    "version": "0.1.0",
+    "name": "tutors",
+    "repository": "https://github.com/tutors-sdk/tutors.git",
+    "author": "Jordan Harrison <contact@jordanharrison.ie>",
+    "license": "MIT",
+    "version": "0.2.0",
     "private": true,
     "workspaces": [
-        "generators/*",
-        "readers/*",
-        "design/*"
+      "apps/*",
+      "components/*",
+      "sites/*"
     ],
     "scripts": {
-        "build": "turbo run build",
-        "dev": "turbo run dev --parallel",
-        "lint": "turbo run lint",
-        "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-        "start": "cd ./apps/emulator-electron && yarn start"
+      "build": "turbo run build",
+      "dev": "turbo run dev --parallel",
+      "lint": "turbo run lint",
+      "clean": "turbo run clean",
+      "format": "prettier --write \"**/*.{ts,tsx,md}\""
     },
     "devDependencies": {
-        "@commitlint/cli": "^17.1.2",
-        "@commitlint/config-conventional": "^17.1.0",
-        "husky": "^8.0.1",
-        "prettier": "^2.5.1",
-        "turbo": "latest",
-        "typescript": "4.8.2"
-    },
-    "engines": {
-        "npm": ">=7.0.0",
-        "node": ">=14.0.0"
-    },
-    "main": "index.js",
-    "repository": "https://github.com/tutors-sdk/tutors.git",
-    "author": "Jordan Harrison <76656637+jordharr@users.noreply.github.com>",
-    "license": "MIT"
-}
+      "eslint": "^8.0.0",
+      "husky": "^8.0.1",
+      "prettier": "^2.7.1",
+      "prettier-plugin-tailwindcss": "^0.1.11",
+      "prettier-plugin-svelte": "^2.7.0",
+      "turbo": "latest",
+      "typescript": "4.8.2"
+    }
+  }  

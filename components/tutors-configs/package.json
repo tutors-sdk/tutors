@@ -1,0 +1,11 @@
+{
+    "name": "tutors-configs",
+    "version": "0.0.1",
+    "private": true,
+    "main": "index.js",
+    "devDependencies": {
+      "tailwindcss": "^3.1.4",
+      "daisyui": "2.28.0"
+    }
+  }
+  
