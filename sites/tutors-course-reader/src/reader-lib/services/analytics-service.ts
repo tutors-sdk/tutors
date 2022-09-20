@@ -1,10 +1,10 @@
-import {initializeApp} from "firebase/app";
-import type {Lo} from "tutors-reader-lib/src/types/lo-types";
-import type {Course} from "tutors-reader-lib/src/models/course";
-import type {User} from "tutors-reader-lib/src/types/auth-types";
-import {checkAuth} from "./auth-service";
-import {getKeys} from "../../environment";
-import {currentCourse} from "../../stores";
+import { initializeApp } from "firebase/app";
+import type { Lo } from "tutors-reader-lib/src/types/lo-types";
+import type { Course } from "tutors-reader-lib/src/models/course";
+import type { User } from "tutors-reader-lib/src/types/auth-types";
+import { checkAuth } from "./auth-service";
+import { getKeys } from "../../environment";
+import { currentCourse } from "../../stores";
 
 import {
   getNode,
@@ -21,7 +21,7 @@ let course: Course;
 let currentRoute = "";
 let currentLo: Lo;
 
-currentCourse.subscribe(async current => {
+currentCourse.subscribe(async (current) => {
   if (current) course = current;
 });
 
