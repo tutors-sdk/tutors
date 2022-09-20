@@ -46,19 +46,11 @@
     </div>
     <ul tabindex="0" class="shadow-xl menu dropdown-content bg-base-100 text-base-content w-48 p-1 rounded-box rounded-xl z-50">
       <li>
-<<<<<<< HEAD:readers/tutors-course-reader/src/components/navigators/support/Presence.svelte
         <label class="cursor-pointer label">
         <input type="checkbox" class="checkbox checkbox-primary checkbox-sm" bind:checked={status} on:click={handleClick} />
         <span class="label-text text-base-content text-base">Share Presence</span> </label>
       </li>
       {#if status && $studentsOnline > 0}
-=======
-        <label class="cursor-pointer label"> <input type="checkbox" class="checkbox checkbox-primary checkbox-sm"
-                                                    bind:checked={status} on:click={handleClick} /> <span
-          class="label-text text-base-content text-base">Share Presence</span> </label>
-      </li>
-      {#if status}
->>>>>>> origin/design/components:sites/tutors-course-reader/src/components/navigators/support/Presence.svelte
         <li>
           <button on:click={() => revealOnline.set(true)}>
             <div>View <span class="badge badge-success">{$studentsOnline}</span> Online</div>
