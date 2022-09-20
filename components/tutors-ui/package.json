@@ -16,7 +16,7 @@
 		"postcss": "^8.4.16",
 		"daisyui": "^2.28.0",
 		"tutors-configs": "*",
-		"typescript": "^4.8.2",
+		"typescript": "^4.8.3",
 		"@tailwindcss/line-clamp": "^0.4.0",
 		"@tailwindcss/typography": "^0.5.4",
 		"@tsconfig/svelte": "^3.0.0"
