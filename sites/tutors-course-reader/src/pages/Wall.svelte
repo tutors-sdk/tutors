@@ -1,21 +1,21 @@
 <script lang="ts">
-  import {getContext, onMount} from "svelte";
-  import type {Lo} from "tutors-reader-lib/src/types/lo-types";
+  import { getContext, onMount } from "svelte";
+  import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import CardDeck from "../components/cards/CardDeck.svelte";
   import VideoCard from "../components/cards/VideoCard.svelte";
-  import {currentCourse, currentLo} from "../stores";
-  import type {AnalyticsService} from "../reader-lib/services/analytics-service";
+  import { currentCourse, currentLo } from "../stores";
+  import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import * as animateScroll from "svelte-scrollto";
-  import {viewDelay} from "../components/animations";
+  import { viewDelay } from "../components/animations";
   import Loading from "./support/Loading.svelte";
-  import Error from "./support/Error.svelte"
-  import {CourseService} from "../reader-lib/services/course-service";
-  import Course from "./Course.svelte";
+  import Error from "./support/Error.svelte";
+  import type { CourseService } from "../reader-lib/services/course-service";
+  import type Course from "./Course.svelte";
 
   export let params: Record<string, string>;
 
-  let course:Course;
-  currentCourse.subscribe(async current => {
+  let course: Course;
+  currentCourse.subscribe(async (current) => {
     if (current) course = current;
   });
 
@@ -56,29 +56,29 @@
 
   onMount(async () => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-    animateScroll.scrollTo({delay: 200, element: "#top"});
+    animateScroll.scrollTo({ delay: 200, element: "#top" });
   });
 </script>
 
 {#await getWall(params.wild)}
-  <Loading/>
+  <Loading />
 {:then los}
   {#if !hide}
     <div class="">
-      {#if wallType !== 'video'}
-        <CardDeck {los}/>
+      {#if wallType !== "video"}
+        <CardDeck {los} />
       {:else}
         <div class="wall-bg">
           {#each panelVideos as lo}
             <div class="w-1/2 p-2">
-              <VideoCard {lo}/>
+              <VideoCard {lo} />
             </div>
           {/each}
         </div>
         <div class="wall-bg">
           {#each talkVideos as lo}
             <div class="w-1/4 p-2">
-              <VideoCard {lo}/>
+              <VideoCard {lo} />
             </div>
           {/each}
         </div>
@@ -86,5 +86,5 @@
     </div>
   {/if}
 {:catch error}
-  <Error {error}/>
+  <Error {error} />
 {/await}

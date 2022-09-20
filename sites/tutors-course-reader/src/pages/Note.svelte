@@ -7,16 +7,16 @@
   import { talkTransition } from "../components/animations";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import NoteCard from "../components/cards/NoteCard.svelte";
-  import {CourseService} from "../reader-lib/services/course-service";
+  import type { CourseService } from "../reader-lib/services/course-service";
   import Loading from "./support/Loading.svelte";
-  import Error from "./support/Error.svelte"
+  import Error from "./support/Error.svelte";
 
   export let params: Record<string, string>;
 
   const analytics: AnalyticsService = getContext("analytics");
   const cache: CourseService = getContext("cache");
   let hide = true;
-  setTimeout(function() {
+  setTimeout(function () {
     hide = false;
   }, 500);
 
@@ -25,7 +25,7 @@
     animateScroll.scrollTo({ delay: 800, element: "#top" });
   });
 
-  async function getNote(url:string): Promise<Lo> {
+  async function getNote(url: string): Promise<Lo> {
     revealSidebar.set(false);
     let lo = await cache.readLo(url, "note");
     analytics.pageLoad(params.wild, lo);
@@ -34,12 +34,12 @@
 </script>
 
 {#await getNote(params.wild)}
-  <Loading/>
+  <Loading />
 {:then lo}
   {#if !hide}
     <div class="h-screen flex">
       <div transition:talkTransition class="flex-grow">
-        <NoteCard {lo}/>
+        <NoteCard {lo} />
       </div>
       <div class="hidden lg:block">
         <TopicNavigatorCard topic={lo.parent} />
@@ -47,8 +47,5 @@
     </div>
   {/if}
 {:catch error}
-  <Error {error}/>
+  <Error {error} />
 {/await}
-
-
-
