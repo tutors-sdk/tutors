@@ -1,0 +1,21 @@
+{
+  "version": "0.1.0",
+  "configurations": [
+    {
+      "name": "Tutors-Json",
+      "program": "${workspaceFolder}//apps/tutors-json/src/tutors-json.js",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node",
+      "cwd": "/Users/edeleastar/repos/modules/hdip/2022/sem-2/web-development-2-2022"
+    },
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Tutors-Course-Reader",
+      "port": 9222,
+      "urlFilter": "http://localhost:5001/*",
+      "webRoot": "${workspaceFolder}/sites/tutors-course-reader"
+    }
+  ]
+}
