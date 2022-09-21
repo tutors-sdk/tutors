@@ -1,100 +1,109 @@
 import path from "path-browserify";
-import { courseUrl, currentCourse, currentUser, week } from "../../stores";
+import { courseUrl, currentCourse, currentLo, currentUser, week } from "../../stores";
 import { replace } from "svelte-spa-router";
 import { Course } from "tutors-reader-lib/src/models/course";
 import { Lab } from "tutors-reader-lib/src/models/lab";
 import { lastSegment } from "tutors-reader-lib/src/utils/lo-utils";
 import { fromLocalStorage, getUserId, isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
 import { fetchUserById } from "tutors-reader-lib/src/utils/metrics-utils";
+import axios from "axios";
+import type { Lo, WeekType } from "tutors-reader-lib/src/types/lo-types";
+import type { Topic } from "tutors-reader-lib/src/models/topic";
 
 export class CourseService {
   course: Course;
   courses = new Map<string, Course>();
   courseUrl = "";
-  loadError = false;
 
-  constructor() {
+  constructor() {}
+
+  async getOrLoadCourse(courseId: string): Promise<Course> {
+    let course = this.courses.get(courseId);
+    if (!course) {
+      const courseUrl = "https://" + courseId + "/tutors.json";
+      try {
+        const response = await axios.get<Lo>(courseUrl);
+        course = new Course(response.data, courseId);
+        this.courses.set(courseId, course);
+        return course;
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    }
+    return course;
   }
 
-  async getCourse(url) {
-    if (!this.course || this.course.url !== url) {
-      this.courseUrl = url;
-      this.course = this.courses.get(url);
-      if (!this.course) {
-        this.course = new Course(url);
-        try {
-          await this.course.fetchCourse();
-        } catch (e) {
-          this.courseUrl = "";
-          this.course = null;
-          this.loadError = true;
-          console.log(e);
-        }
-      }
+  async checkAuthenticated(course: Course) {
+    if (isAuthenticated()) {
+      const user = await fetchUserById(course.url, getUserId(), null);
+      currentUser.set(user);
     }
   }
 
-  async fetchCourse(url: string) {
-    await this.getCourse(url);
-    if (!this.loadError) {
-      if (this.course.hasWhiteList()) {
-        if (isAuthenticated()) {
-          const user = fromLocalStorage();
-          const student = this.course.getStudents().find((student) => student.github === user.nickname);
-          if (!student) {
-            console.log("Not Authorised to access this models");
-            replace(`/unauthorised`);
-          }
-        }
-      }
-      currentCourse.set(this.course);
+  async checkWhiteList(course: Course) {
+    if (course.hasWhiteList()) {
       if (isAuthenticated()) {
-        const user = await fetchUserById(this.course.url, getUserId(), null);
-        currentUser.set(user);
+        const user = fromLocalStorage();
+        const student = course.getStudents().find((student) => student.github === user.nickname);
+        if (!student) {
+          console.log("Not Authorised to access this models");
+          replace(`/unauthorised`);
+        }
       }
-      week.set(this.course.currentWeek);
-      courseUrl.set(url);
     }
-    return this.course;
   }
 
-  async fetchTopic(url: string) {
-    await this.fetchCourse(path.dirname(url));
-    return this.course.topicIndex.get(lastSegment(url));
+  async readCourse(courseId: string): Promise<Course> {
+    let course = await this.getOrLoadCourse(courseId);
+    currentCourse.set(course);
+    week.set(<WeekType>course?.currentWeek);
+    await this.checkAuthenticated(course);
+    await this.checkWhiteList(course);
+    this.course = course;
+    return course;
   }
 
-  async fetchCourseFromTalk(url: string) {
-    url = url.substring(0, url.indexOf("/"));
-    await this.fetchCourse(url);
-    return this.course;
+  async readTopic(topicId: string): Promise<Topic> {
+    const courseId = path.dirname(topicId);
+    const course = await this.readCourse(courseId);
+    const topic = course.topicIndex.get(lastSegment(topicId));
+    currentLo.set(topic.lo);
+    return topic!;
   }
 
-  async fetchWall(url: string) {
-    const path = url.split("/");
-    await this.fetchCourse(path[1]);
-    return this.course.walls.get(path[0]);
-  }
-
-  async fetchLab(url: string) {
-    let courseUrl = url.substring(0, url.indexOf("/"));
-    await this.fetchCourse(courseUrl);
+  async readLab(url: string): Promise<Lab> {
+    let courseId = url.substring(0, url.indexOf("/"));
+    const course = await this.readCourse(courseId);
     let labId = `/#/lab/${url}`;
     const lastSegment = url.substr(url.lastIndexOf("/") + 1);
     if (!lastSegment.startsWith("book")) {
       url = url.substr(0, url.lastIndexOf("/"));
       labId = `/#/lab/${url}`;
     }
-    const lo = this.course.labIndex.get(labId);
-    let lab = this.course.hydratedLabs.get(labId);
+    const lo = course.loIndex.get(labId);
+    let lab = course.hydratedLabs.get(labId);
     if (!lab) {
-      lab = new Lab(this.course, lo, url);
-      this.course.hydratedLabs.set(labId, lab);
+      lab = new Lab(course, lo!, url);
+      course.hydratedLabs.set(labId, lab);
     }
+    currentLo.set(lab.lo);
     return lab;
   }
 
+  async readWall(url: string): Promise<Lo[]> {
+    const path = url.split("/");
+    const course = await this.readCourse(path[1]);
+    const wall = course.walls.get(path[0]);
+    return wall!;
+  }
 
-
+  async readLo(url: string, loType: string): Promise<Lo> {
+    const courseId = url.substring(0, url.indexOf("/"));
+    const course = await this.readCourse(courseId);
+    const ref = `/#/${loType}/${url}`;
+    const lo = course.loIndex.get(ref);
+    currentLo.set(lo);
+    return lo!;
+  }
 }
-
-

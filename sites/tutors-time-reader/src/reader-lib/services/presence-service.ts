@@ -5,29 +5,30 @@ import type { Lo } from "tutors-reader-lib/src/types/lo-types";
 import type { Course } from "tutors-reader-lib/src/models/course";
 import { studentsOnline } from "../../stores";
 
-function compareStudents(student1: StudentMetric, student2: StudentMetric) {
+function compareStudents(student1: StudentMetric, student2: StudentMetric): number {
   if (!student1.lab) {
     return -1;
   }
   if (student1.lab && student2.lab) {
     return student1.lab.title.localeCompare(student2.lab.title);
   }
+  return 0;
 }
 
 export class PresenceService {
   students: StudentMetric[] = [];
   metricsService: MetricsService;
-  refresh: refreshStudents = null;
-  refreshStatus: StatusChange = null;
+  refresh: refreshStudents;
+  refreshStatus: StatusChange;
 
-  constructor(metricsService: MetricsService, students: StudentMetric[], refresh: refreshStudents, refreshStatus:StatusChange) {
+  constructor(metricsService: MetricsService, students: StudentMetric[], refresh: refreshStudents, refreshStatus: StatusChange) {
     this.metricsService = metricsService;
     this.students = students;
     this.refresh = refresh;
     this.refreshStatus = refreshStatus;
   }
 
-  setCourse(course:Course) {
+  setCourse(course: Course) {
     this.metricsService.setCourse(course);
   }
 
@@ -42,13 +43,13 @@ export class PresenceService {
     this.metricsService.stopListening();
   }
 
-  statusChange(user:User) {
+  statusChange(user: User) {
     if (this.refreshStatus) this.refreshStatus(user);
   }
 
   metricDelete(user: User) {
-    let student = this.students.find(student => student.nickname === user.nickname);
-    let index = this.students.indexOf(student);
+    let student = this.students.find((student) => student.nickname === user.nickname);
+    let index = this.students.indexOf(student!);
     if (index !== -1) {
       this.students.splice(index, 1);
     }
@@ -58,15 +59,15 @@ export class PresenceService {
 
   metricUpdate(user: User, topic: Topic, lab: Lo, time: number) {
     if (user.onlineStatus === "offline") return;
-    let student = this.students.find(student => student.nickname === user.nickname);
+    let student = this.students.find((student) => student.nickname === user.nickname);
     if (!student) {
       student = {
         name: user.name,
         nickname: user.nickname,
         img: user.picture,
-        topic: null,
-        lab: null,
-        time: time
+        topic: undefined,
+        lab: undefined,
+        time: time,
       };
       this.students.push(student);
     }
@@ -77,7 +78,7 @@ export class PresenceService {
     if (lab) {
       student.lab = lab;
     }
-    this.students.sort(compareStudents);
+    this.students?.sort(compareStudents);
     if (this.refresh) this.refresh(this.students);
     studentsOnline.set(this.students.length);
   }
