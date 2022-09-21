@@ -17,7 +17,7 @@
     "showdown": "1.9.1",
     "showdown-custom-class": "^1.0.0",
     "showdown-emoji": "^3.0.0",
-    "showdown-highlight": "2.1.8",
+    "showdown-highlight": "3.1.0",
     "showdown-katex": "^0.8.0",
     "remove-markdown": "^0.5.0",
     "firebase": "^9.9.3",
