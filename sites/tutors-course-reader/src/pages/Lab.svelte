@@ -1,16 +1,16 @@
 <script lang="ts">
-  import {push} from "svelte-spa-router";
-  import {afterUpdate, getContext, onDestroy} from "svelte";
+  import { push } from "svelte-spa-router";
+  import { afterUpdate, getContext, onDestroy } from "svelte";
 
-  import type {AnalyticsService} from "../reader-lib/services/analytics-service";
-  import {currentLo, revealSidebar} from "../stores";
-  import {CourseService} from "../reader-lib/services/course-service";
+  import type { AnalyticsService } from "../reader-lib/services/analytics-service";
+  import { revealSidebar } from "../stores";
+  import type { CourseService } from "../reader-lib/services/course-service";
   import * as animateScroll from "svelte-scrollto";
-  import {viewDelay} from "../components/animations";
-  import {fade, fly, slide, draw} from 'svelte/transition';
-  import {Lab} from "tutors-reader-lib/src/models/lab";
+  import { viewDelay } from "../components/animations";
+  import { fly } from "svelte/transition";
+  import type { Lab } from "tutors-reader-lib/src/models/lab";
   import Loading from "./support/Loading.svelte";
-  import Error from "./support/Error.svelte"
+  import Error from "./support/Error.svelte";
 
   export let params: Record<string, string>;
 
@@ -18,7 +18,6 @@
   const cache: CourseService = getContext("cache");
 
   let lab: Lab;
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   window.addEventListener("keydown", keypressInput);
   window.addEventListener("mousedown", mouseClick);
 
@@ -30,12 +29,12 @@
   let mostRecentLab = "";
 
   function removeLastDirectory(the_url: string) {
-    var the_arr = the_url.split('/');
+    var the_arr = the_url.split("/");
     let lastSegment = the_arr.pop();
     if (lastSegment.startsWith("book")) {
       return the_url;
     }
-    return the_arr.join('/');
+    return the_arr.join("/");
   }
 
   async function getLab(url: string) {
@@ -47,7 +46,7 @@
       mostRecentLab = removeLastDirectory(params.wild);
       lab = await cache.readLab(params.wild);
     } else {
-      let thisLab = removeLastDirectory(params.wild)
+      let thisLab = removeLastDirectory(params.wild);
       if (mostRecentLab !== thisLab) {
         lab = await cache.readLab(params.wild);
       }
@@ -82,26 +81,29 @@
   }
 
   onDestroy(async () => {
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     window.removeEventListener("keydown", keypressInput);
     window.removeEventListener("mousedown", mouseClick);
   });
 
   afterUpdate(async () => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-    animateScroll.scrollTo({delay: 200, element: "#top"});
+    animateScroll.scrollTo({ delay: 200, element: "#top" });
   });
 </script>
 
 <svelte:head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.js"
-          integrity="sha512-DAZH0Wu7q9Hnm0Fw8tRZsTeQBzIugiUy6k2r7E0KKMlC2nBvvrNSH/LVnGueCXRfDs5epP+Ieoh3L+VzSKi0Aw=="
-          crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.css"
-        integrity="sha512-nii0D5CrWiLjtPcfU3pQJifaRLxKKVut/hbsazsodCcIOERZbwLH7dQxzOKy3Ey/Fv8fXCA9+Rf+wQzqklbEJQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"/>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.js"
+    integrity="sha512-DAZH0Wu7q9Hnm0Fw8tRZsTeQBzIugiUy6k2r7E0KKMlC2nBvvrNSH/LVnGueCXRfDs5epP+Ieoh3L+VzSKi0Aw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.css"
+    integrity="sha512-nii0D5CrWiLjtPcfU3pQJifaRLxKKVut/hbsazsodCcIOERZbwLH7dQxzOKy3Ey/Fv8fXCA9+Rf+wQzqklbEJQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
 </svelte:head>
-
 
 {#await getLab(params.wild)}
   <Loading />
@@ -119,14 +121,14 @@
             {@html lab.horizontalNavbarHtml}
           </nav>
         </header>
-        <article class="labcontent" in:fly="{{ x: direction, duration: 200 }}">
+        <article class="labcontent" in:fly={{ x: direction, duration: 200 }}>
           {@html lab.content}
         </article>
       </div>
     </div>
   {/if}
 {:catch error}
-  <Error {error}/>
+  <Error {error} />
 {/await}
 
 <style>
