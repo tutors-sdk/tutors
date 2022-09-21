@@ -1,9 +1,9 @@
 <script lang="ts">
-  const version = "6.0.2";
+  const version = "6.0.3";
 </script>
 
-<footer class="footer items-center p-4 bg-base-200 text-base-content container mx-auto rounded-xl my-2">
-  <div class="items-center grid-flow-col">
+<footer class="container footer mx-auto my-2 items-center rounded-xl bg-base-200 p-4 text-base-content">
+  <div class="grid-flow-col items-center">
     <a href="https://tutors.dev" target="_blank">
       <svg
         version="1.1"
