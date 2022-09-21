@@ -1,0 +1,47 @@
+{
+  "name": "tutors-course-reader",
+  "version": "6.0.3",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tutors-sdk/tutors-next.git"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json"
+  },
+  "dependencies": {
+    "tutors-reader-lib": "^2.6.0"
+  },
+  "devDependencies": {
+    "@iconify/svelte": "^2.2.1",
+    "@iconify/types": "^1.1.0",
+    "@sveltejs/vite-plugin-svelte": "^1.0.7",
+    "@tailwindcss/line-clamp": "^0.4.0",
+    "@tailwindcss/typography": "^0.5.4",
+    "@tsconfig/svelte": "^3.0.0",
+    "auth0-js": "^9.19.0",
+    "autoprefixer": "^10.4.8",
+    "axios": "^0.27.2",
+    "daisyui": "2.24.0",
+    "file-saver": "^2.0.5",
+    "firebase": "^9.9.3",
+    "pdfjs-dist": "^2.16.105",
+    "postcss": "^8.4.16",
+    "svelte": "^3.49.0",
+    "svelte-check": "^2.9.0",
+    "svelte-loading-spinners": "^0.1.7",
+    "svelte-preprocess": "^4.10.7",
+    "svelte-scrollto": "^0.2.0",
+    "svelte-simple-modal": "^1.4.1",
+    "svelte-spa-router": "^3.3.0",
+    "svelte-tabs": "^1.1.0",
+    "svelte-transitions-fade-scale": "^1.0.0",
+    "tailwindcss": "^3.1.8",
+    "typescript": "^4.8.3",
+    "vite": "^3.1.3"
+  }
+}

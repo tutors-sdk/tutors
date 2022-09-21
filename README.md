@@ -26,11 +26,11 @@ Tutors is a collection of open source components & services supporting the creat
 
 # Installing
 
-## Readers
+## Sites
 
 ### Tutors Course Reader
 
-Go to the `readers/tutors-course-reader` folder and copy the `.env.example` file to a `.env` file.
+Go to the `sites/tutors-course-reader` folder and copy the `.env.example` file to a `.env` file.
 
 Fill out the environment varaibles as needed.
 

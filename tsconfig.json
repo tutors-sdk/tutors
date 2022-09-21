@@ -19,12 +19,15 @@
     //  },
       "files": [],
       "references": [
-        { "path": "readers/tutors-course-reader" },
-        { "path": "readers/tutors-time-reader" },
-        { "path": "readers/tutors-reader-lib"},
-        { "path": "generators/tutors-html" },
-        { "path": "generators/tutors-json" },
-        { "path": "generators/tutors-lib"}
+        { "path": "apps/tutors-html" },
+        { "path": "apps/tutors-json" },
+        { "path": "components/tutors-reader-lib"},
+        { "path": "components/tutors-lib"},
+        { "path": "components/tutors-ui"},
+        { "path": "components/tutors-configs"},
+        { "path": "sites/tutors-course-reader" },
+        { "path": "sites/tutors-time-reader" },
+        { "path": "sites/tutors-vitebook"}
     ]
     }
     
