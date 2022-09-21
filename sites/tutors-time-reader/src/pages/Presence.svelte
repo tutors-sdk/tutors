@@ -6,7 +6,7 @@
   import StudentCard from "../components/cards/StudentCard.svelte";
   import { querystring } from "svelte-spa-router";
   import { PresenceService } from "../reader-lib/services/presence-service";
-  import { MetricsService } from "../reader-lib/services/metrics-service";
+  import type { MetricsService } from "../reader-lib/services/metrics-service";
 
   let students: StudentMetric[] = [];
   export let params: any = {};
@@ -22,7 +22,6 @@
 
   function refresh(refreshedStudents: StudentMetric[]) {
     students = [...refreshedStudents];
-
   }
 
   function refreshStatus(user: User) {
@@ -34,7 +33,7 @@
 
   async function getCourse(url) {
     let id = $querystring;
-    course = await cache.fetchCourse(params.wild);
+    course = await cache.readCourse(params.wild);
     presenceService.setCourse(course);
     presenceService.start();
     // noinspection TypeScriptValidateTypes
@@ -42,12 +41,12 @@
       title: `Tutors Live: ${course.lo.title}`,
       type: "tutorsLive",
       parentLo: course.lo,
-      img: course.lo.img
+      img: course.lo.img,
     });
     title = `Tutors Live`;
     const user = await metricsService.fetchUserById(id);
-    if (!user.onlineStatus) user.onlineStatus = "online"
-    show = user.onlineStatus === "online"
+    if (!user.onlineStatus) user.onlineStatus = "online";
+    show = user.onlineStatus === "online";
     currentUser.set(user);
     thisUserNickName = user.nickname;
     status = user.onlineStatus === "offline";
@@ -57,7 +56,6 @@
   onDestroy(async () => {
     presenceService.stop();
   });
-
 </script>
 
 <svelte:head>
@@ -74,23 +72,21 @@
       </div>
     </div>
   {/await}
-  {:else}
-  <div class="flex h-screen justify-center mt-28">
-    <div class="text-center max-w-screen-md">
-
-      <div class="flex flex-wrap shadow-md rounded-lg px-4 py-2 bg-base-200 text-base-content">
-        <div class="flex justify-between w-full border-gray-400 border-b-2 p-2">
-          <div class="font-sm font-light text-xl text-center">TutorsLive</div>
+{:else}
+  <div class="mt-28 flex h-screen justify-center">
+    <div class="max-w-screen-md text-center">
+      <div class="flex flex-wrap rounded-lg bg-base-200 px-4 py-2 text-base-content shadow-md">
+        <div class="flex w-full justify-between border-b-2 border-gray-400 p-2">
+          <div class="font-sm text-center text-xl font-light">TutorsLive</div>
         </div>
 
-        <div class="font-sm font-light text-l text-left p-2">
+        <div class="font-sm text-l p-2 text-left font-light">
           <p class="p-2">
-            In order to see who is online now, you will need to also share your presence.
-            Check the "Share Presence" box on your course page.
+            In order to see who is online now, you will need to also share your presence. Check the "Share Presence" box on your course
+            page.
           </p>
         </div>
       </div>
     </div>
   </div>
 {/if}
-
