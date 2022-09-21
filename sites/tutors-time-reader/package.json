@@ -42,7 +42,7 @@
     "svelte-tabs": "^1.1.0",
     "svelte-transitions-fade-scale": "^1.0.0",
     "tailwindcss": "^3.1.6",
-    "typescript": "^4.8.2",
+    "typescript": "^4.8.3",
     "vite": "^3.0.9"
   }
 }

@@ -24,6 +24,6 @@
       "prettier-plugin-tailwindcss": "^0.1.11",
       "prettier-plugin-svelte": "^2.7.0",
       "turbo": "latest",
-      "typescript": "4.8.2"
+      "typescript": "4.8.3"
     }
   }  
