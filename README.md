@@ -20,23 +20,53 @@ Tutors: An Open Learning Web Toolkit
 
 # What is Tutors?
 
-Tutors is a collection of open source components & services supporting the creation of transformative learning experiences using open web standards.
+A collection of open source components & services supporting the creation of transformative learning experiences using open web standards.
 
 # Overview of Tutors
 
-# Installing
+This is a monorepo for all of the components & services of the Tutors Open Source Project. This is broken down into 3 sections - Apps, Components & Sites.
+
+# Components & Services
+
+## Apps
+
+### tutors-html
+
+A static site generator application that creates a website from a course.
+
+### tutors-json
+
+Converts a course into json, which can be read by the tutors course reader.
+
+## Components
+
+### tutors-configs
+
+A shared set of config files which is used as a base in components & services.
+
+### tutors-lib
+
+A shared library for Tutors
+
+### tutors-reader-lib
+
+A library used by the tutors-course-reader
+
+### tutors-ui
+
+A shared library of UI components which can be used to build a Tutors site.
 
 ## Sites
 
-### Tutors Course Reader
+### tutors-course-reader
 
-Go to the `sites/tutors-course-reader` folder and copy the `.env.example` file to a `.env` file.
+A reader which consumes the output of the tutors-json app.
 
-Fill out the environment varaibles as needed.
+### tutors-time-reader
 
-Install dependancies with `npm install`.
+### tutors-vitebook
 
-Run with `npm run dev`.
+A web page which displays the UI components of the tutors-ui library.
 
 # Contributing
 
