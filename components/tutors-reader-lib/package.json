@@ -12,7 +12,7 @@
     "@types/remove-markdown": "^0.3.1",
     "@types/showdown": "2.0.0",
     "@iconify/svelte": "^2.2.1",
-    "@tsconfig/svelte": "^2.0.1",
+    "@tsconfig/svelte": "^3.0.0",
     "crypto-es": "^1.2.7",
     "showdown": "1.9.1",
     "showdown-custom-class": "^1.0.0",
