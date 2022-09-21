@@ -7,7 +7,7 @@
   import * as pdfjs from "pdfjs-dist/build/pdf.js";
   import pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
 
-  export let url;
+  export let url = "";
   export let scale = 1.8;
   export let pageNum = 1; //must be number
   export let lo = null;
@@ -132,7 +132,7 @@
 
 {#if pdfDoc}
   <div class="talkcard-container">
-    <div class="flex justify-between items-center mx-2">
+    <div class="mx-2 flex items-center justify-between">
       <div class="text-sm">
         {pageNum} of {pdfDoc.numPages}
       </div>
@@ -152,10 +152,10 @@
         <Icon button="true" link={lo.pdf} type="fullScreen" toolTip="Full Screen" tipPos="tooltip-bottom" target="_blank" />
       </div>
     </div>
-    <canvas class="w-full 2xl:w-4/5 mx-auto" bind:this={canvas} />
+    <canvas class="mx-auto w-full 2xl:w-4/5" bind:this={canvas} />
   </div>
 {:else}
-  <div class="flex flex-col justify-center items-center mt-28">
+  <div class="mt-28 flex flex-col items-center justify-center">
     <BarLoader size="100" color="#37919B" unit="px" />
     <br />
     <span class="text-lg">Loading...</span>

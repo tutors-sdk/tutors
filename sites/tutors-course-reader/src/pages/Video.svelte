@@ -1,16 +1,16 @@
 <script lang="ts">
-  import {afterUpdate, getContext} from "svelte";
-  import type {Lo} from "tutors-reader-lib/src/types/lo-types";
+  import { afterUpdate, getContext } from "svelte";
+  import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import TopicNavigatorCard from "../components/cards/TopicNavigatorCard.svelte";
   import VideoCard from "../components/cards/VideoCard.svelte";
-  import type {AnalyticsService} from "../reader-lib/services/analytics-service";
-  import {revealSidebar} from "../stores";
-  import {talkTransition, viewDelay} from "../components/animations";
-  import {querystring} from "svelte-spa-router";
+  import type { AnalyticsService } from "../reader-lib/services/analytics-service";
+  import { revealSidebar } from "../stores";
+  import { talkTransition, viewDelay } from "../components/animations";
+  import { querystring } from "svelte-spa-router";
   import * as animateScroll from "svelte-scrollto";
   import Loading from "./support/Loading.svelte";
-  import Error from "./support/Error.svelte"
-  import {CourseService} from "../reader-lib/services/course-service";
+  import Error from "./support/Error.svelte";
+  import type { CourseService } from "../reader-lib/services/course-service";
 
   export let params: Record<string, string>;
   const analytics: AnalyticsService = getContext("analytics");
@@ -35,26 +35,23 @@
 
   afterUpdate(async () => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-    animateScroll.scrollTo({delay: 200, element: "#top"});
+    animateScroll.scrollTo({ delay: 200, element: "#top" });
   });
 </script>
 
 {#await getVideo(params.wild)}
-  <Loading/>
+  <Loading />
 {:then lo}
   {#if !hide}
     <div class="h-screen flex">
       <div transition:talkTransition class="w-full">
-        <VideoCard {lo}/>
+        <VideoCard {lo} />
       </div>
       <div class="hidden md:block">
-        <TopicNavigatorCard topic={lo.parent}/>
+        <TopicNavigatorCard topic={lo.parent} />
       </div>
     </div>
   {/if}
 {:catch error}
-  <Error {error}/>
+  <Error {error} />
 {/await}
-
-
-

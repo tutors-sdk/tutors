@@ -8,11 +8,10 @@
   import UnitCard from "../components/cards/UnitCard.svelte";
   import TalkCard from "../components/cards/TalkCard.svelte";
   import { currentLo, layout, revealSidebar } from "../stores";
-  // @ts-ignore
   import * as animateScroll from "svelte-scrollto";
   import { viewDelay } from "../components/animations";
   import Loading from "./support/Loading.svelte";
-  import Error from "./support/Error.svelte"
+  import Error from "./support/Error.svelte";
 
   export let params: any = {};
   const cache: CourseService = getContext("cache");
@@ -23,7 +22,7 @@
   let title = "";
 
   let hide = true;
-  setTimeout(function() {
+  setTimeout(function () {
     hide = false;
   }, viewDelay);
 
@@ -38,15 +37,13 @@
     topic = await cache.readTopic(url);
     if (unitPos !== -1) {
       let unitLo = topic.lo.los.filter((lo) => lo.id == unitId);
-      // noinspection TypeScriptValidateTypes
       currentLo.set(unitLo[0]);
     } else {
-      // noinspection TypeScriptValidateTypes
       currentLo.set(topic.lo);
       title = topic.lo.title;
       unitId = "";
     }
-    analytics.pageLoad(params.wild, cache.course, topic.lo);
+    analytics.pageLoad(params.wild, topic.lo);
     return topic;
   }
 
@@ -61,7 +58,7 @@
 
   let grid = "";
 
-  const unsubscribe = layout.subscribe(layout => {
+  const unsubscribe = layout.subscribe((layout) => {
     if (layout === "compacted") {
       grid = "grid grid-cols-2 gap-2 ";
     } else {
@@ -69,28 +66,27 @@
     }
   });
   onDestroy(unsubscribe);
-
 </script>
 
 {#await getTopic(params.wild)}
-  <Loading/>
+  <Loading />
 {:then topic}
   {#if !hide}
-    <div class="{grid}">
+    <div class={grid}>
       {#each topic.panelVideos as lo}
-        <VideoCard {lo}/>
+        <VideoCard {lo} />
       {/each}
       {#each topic.panelTalks as lo}
-        <TalkCard {lo}/>
+        <TalkCard {lo} />
       {/each}
       {#each topic.units as unit}
         <div class="mt-2">
-          <UnitCard {unit}/>
+          <UnitCard {unit} />
         </div>
       {/each}
-      <CardDeck los={topic.standardLos}/>
+      <CardDeck los={topic.standardLos} />
     </div>
   {/if}
 {:catch error}
-  <Error {error}/>
+  <Error {error} />
 {/await}

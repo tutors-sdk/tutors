@@ -1,5 +1,5 @@
 import path from "path-browserify";
-import {courseUrl, currentCourse, currentLo, currentUser, week} from "../../stores";
+import { courseUrl, currentCourse, currentLo, currentUser, week } from "../../stores";
 import { replace } from "svelte-spa-router";
 import { Course } from "tutors-reader-lib/src/models/course";
 import { Lab } from "tutors-reader-lib/src/models/lab";
@@ -7,19 +7,18 @@ import { lastSegment } from "tutors-reader-lib/src/utils/lo-utils";
 import { fromLocalStorage, getUserId, isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
 import { fetchUserById } from "tutors-reader-lib/src/utils/metrics-utils";
 import axios from "axios";
-import type {Lo, WeekType} from "tutors-reader-lib/src/types/lo-types";
-import type {Topic} from "tutors-reader-lib/src/models/topic";
+import type { Lo, WeekType } from "tutors-reader-lib/src/types/lo-types";
+import type { Topic } from "tutors-reader-lib/src/models/topic";
 
 export class CourseService {
   course: Course;
   courses = new Map<string, Course>();
   courseUrl = "";
 
-  constructor() {
-  }
+  constructor() {}
 
   async getOrLoadCourse(courseId: string): Promise<Course> {
-    let course = this.courses.get(courseId)
+    let course = this.courses.get(courseId);
     if (!course) {
       const courseUrl = "https://" + courseId + "/tutors.json";
       try {
@@ -38,7 +37,6 @@ export class CourseService {
   async checkAuthenticated(course: Course) {
     if (isAuthenticated()) {
       const user = await fetchUserById(course.url, getUserId(), null);
-      // @ts-ignore
       currentUser.set(user);
     }
   }
@@ -58,7 +56,6 @@ export class CourseService {
 
   async readCourse(courseId: string): Promise<Course> {
     let course = await this.getOrLoadCourse(courseId);
-    // @ts-ignore
     currentCourse.set(course);
     week.set(<WeekType>course?.currentWeek);
     await this.checkAuthenticated(course);
@@ -68,17 +65,16 @@ export class CourseService {
   }
 
   async readTopic(topicId: string): Promise<Topic> {
-    const courseId = path.dirname(topicId)
-    const course = await this.readCourse(courseId)
-    const topic = course.topicIndex.get(lastSegment(topicId))
-    // @ts-ignore
+    const courseId = path.dirname(topicId);
+    const course = await this.readCourse(courseId);
+    const topic = course.topicIndex.get(lastSegment(topicId));
     currentLo.set(topic.lo);
     return topic!;
   }
 
   async readLab(url: string): Promise<Lab> {
     let courseId = url.substring(0, url.indexOf("/"));
-    const course = await this.readCourse(courseId)
+    const course = await this.readCourse(courseId);
     let labId = `/#/lab/${url}`;
     const lastSegment = url.substr(url.lastIndexOf("/") + 1);
     if (!lastSegment.startsWith("book")) {
@@ -91,7 +87,6 @@ export class CourseService {
       lab = new Lab(course, lo!, url);
       course.hydratedLabs.set(labId, lab);
     }
-    // @ts-ignore
     currentLo.set(lab.lo);
     return lab;
   }
@@ -103,15 +98,12 @@ export class CourseService {
     return wall!;
   }
 
-  async readLo(url: string, loType:string): Promise<Lo> {
+  async readLo(url: string, loType: string): Promise<Lo> {
     const courseId = url.substring(0, url.indexOf("/"));
     const course = await this.readCourse(courseId);
     const ref = `/#/${loType}/${url}`;
     const lo = course.loIndex.get(ref);
-    // @ts-ignore
     currentLo.set(lo);
     return lo!;
   }
 }
-
-

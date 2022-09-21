@@ -10,9 +10,9 @@
   import * as animateScroll from "svelte-scrollto";
   import { viewDelay } from "../components/animations";
   import Loading from "./support/Loading.svelte";
-  import Error from "./support/Error.svelte"
+  import Error from "./support/Error.svelte";
 
-  export let params: Record<string, string> | null
+  export let params: Record<string, string> | null;
 
   let course: Course = null;
   const cache: CourseService = getContext("cache");
@@ -33,13 +33,12 @@
       // noinspection TypeScriptValidateTypes
       currentLo.set(course.lo);
       title = course.lo.title;
-      analytics.pageLoad(url, course, course.lo);
+      analytics.pageLoad(url, course.lo);
       if (course.lo.properties.ignorepin) {
         ignorePin = "" + course.lo.properties.ignorepin;
       }
     }, viewDelay);
     return course;
-
   }
 
   function keypressInput(e) {
@@ -60,20 +59,19 @@
   });
 </script>
 
-
 {#await getCourse(params.wild)}
-  <Loading/>
+  <Loading />
 {:then course}
   {#if !hide}
     {#each course.units as unit}
-      <UnitCard {unit}/>
+      <UnitCard {unit} />
     {/each}
     {#if standardDeck}
-      <CardDeck los={course.standardLos}/>
+      <CardDeck los={course.standardLos} />
     {:else}
-      <CardDeck los={course.allLos}/>
+      <CardDeck los={course.allLos} />
     {/if}
   {/if}
 {:catch error}
-  <Error {error}/>
+  <Error {error} />
 {/await}
