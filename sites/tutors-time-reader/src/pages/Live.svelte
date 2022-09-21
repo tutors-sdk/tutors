@@ -7,11 +7,12 @@
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import StudentCard from "../components/cards/StudentCard.svelte";
   import { querystring } from "svelte-spa-router";
+  import type { MetricsService } from "src/reader-lib/services/metrics-service";
 
   let students: StudentMetric[] = [];
   export let params: any = {};
   const cache: CourseService = getContext("cache");
-  const metricsService = getContext("metrics");
+  const metricsService: MetricsService = getContext("metrics");
   let course = cache.course;
   let title = "";
   let status = false;
@@ -19,7 +20,7 @@
   async function getCourse(url) {
     let id = $querystring;
     live.set(true);
-    course = await cache.fetchCourse(params.wild);
+    course = await cache.readCourse(params.wild);
     metricsService.setCourse(course);
     await metricsService.subscribeToAllUsers();
     // noinspection TypeScriptValidateTypes
@@ -27,13 +28,13 @@
       title: `Tutors Live: ${course.lo.title}`,
       type: "tutorsLive",
       parentLo: course.lo,
-      img: course.lo.img
+      img: course.lo.img,
     });
     title = `Tutors Live`;
     studentsOnline.set(0);
     metricsService.startListening(metricUpdate, metricDelete);
     const users = metricsService.getLiveUsers();
-    users.forEach(user => {
+    users.forEach((user) => {
       metricUpdate(user, null, null, Date.now());
     });
     studentsOnline.set(metricsService.getLiveCount());
@@ -49,7 +50,7 @@
   });
 
   function metricDelete(user: User) {
-    let student = students.find(student => student.nickname === user.nickname);
+    let student = students.find((student) => student.nickname === user.nickname);
     let index = students.indexOf(student);
     if (index !== -1) {
       students.splice(index, 1);
@@ -57,7 +58,7 @@
     students = [...students];
   }
 
-  function compareStudents(student1:StudentMetric, student2:StudentMetric) {
+  function compareStudents(student1: StudentMetric, student2: StudentMetric) {
     if (!student1.lab) {
       return -1;
     }
@@ -68,7 +69,7 @@
 
   function metricUpdate(user: User, topic: Topic, lab: Lo, time: number) {
     if (user.onlineStatus === "offline") return;
-    let student = students.find(student => student.nickname === user.nickname);
+    let student = students.find((student) => student.nickname === user.nickname);
     if (!student) {
       student = {
         name: user.name,
@@ -76,7 +77,7 @@
         img: user.picture,
         topic: null,
         lab: null,
-        time: time
+        time: time,
       };
       students.push(student);
     }
@@ -111,5 +112,3 @@
     </div>
   </div>
 {/await}
-
-

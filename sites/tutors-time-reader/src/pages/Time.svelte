@@ -10,13 +10,14 @@
   import { currentLo, currentUser } from "../stores";
   // @ts-ignore
   import { Tab, TabList, TabPanel, Tabs } from "svelte-tabs";
-  import {querystring} from 'svelte-spa-router'
+  import { querystring } from "svelte-spa-router";
+  import type { MetricsService } from "src/reader-lib/services/metrics-service";
   export let params: any = {};
 
   let instructorMode = false;
-  let course: Course = null;
+  let course: Course;
   const cache: CourseService = getContext("cache");
-  const metricsService = getContext("metrics");
+  const metricsService: MetricsService = getContext("metrics");
   let title = "";
   let pinBuffer = "";
   let ignorePin = "";
@@ -26,7 +27,7 @@
   async function getCourse(url) {
     id = $querystring;
 
-    course = await cache.fetchCourse(url);
+    course = await cache.readCourse(url);
     metricsService.setCourse(course);
     const user = await metricsService.fetchUserById(id);
     currentUser.set(user);
@@ -61,11 +62,11 @@
   <div in:fade={{ duration: 500 }} class="bg-base-200 mt-4 container mx-auto rounded-box">
     <Tabs>
       <TabList>
-        <Tab> Labs</Tab>
-        <Tab> Calendar</Tab>
+        <Tab>Labs</Tab>
+        <Tab>Calendar</Tab>
         {#if instructorMode}
-          <Tab> Labs All Students</Tab>
-          <Tab> Calendar All Students</Tab>
+          <Tab>Labs All Students</Tab>
+          <Tab>Calendar All Students</Tab>
         {/if}
       </TabList>
 
