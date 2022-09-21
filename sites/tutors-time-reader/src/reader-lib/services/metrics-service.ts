@@ -7,14 +7,14 @@ import type { Topic } from "tutors-reader-lib/src/models/topic";
 import { updateStr } from "tutors-reader-lib/src/utils/firebase-utils";
 
 export class MetricsService {
-  course: Course;
+  course: Course | undefined;
   users = new Map<string, UserMetric>();
   userRefresh = new Map<string, number>();
   allLabs: Lo[] = [];
   courseBase = "";
-  metricUpdate: MetricUpdate = null;
-  metricDelete: MetricDelete = null;
-  statusChange: StatusChange = null;
+  metricUpdate: MetricUpdate | undefined;
+  metricDelete: MetricDelete | undefined;
+  statusChange: StatusChange | undefined;
   canUpdate = false;
 
   setCourse(course: Course) {
@@ -24,7 +24,7 @@ export class MetricsService {
     setInterval(this.sweepAndPurge.bind(this), 1000 * 120);
   }
 
-  diffMinutes(dt2, dt1) {
+  diffMinutes(dt2: number, dt1: number) {
     var diff = (dt2 - dt1) / 1000;
     diff /= 60;
     return Math.abs(Math.round(diff));
@@ -89,7 +89,7 @@ export class MetricsService {
     }
   }
 
-  async fetchUserById(userId: string){
+  async fetchUserById(userId: string) {
     const user = await fetchUserById(this.course.url, userId, this.allLabs);
     if (!user.hasOwnProperty("onlineStatus")) user.onlineStatus = "online";
     return user;
@@ -115,7 +115,7 @@ export class MetricsService {
     return users;
   }
 
-  startListening(metricUpdate: MetricUpdate, metricDelete: MetricDelete, statusChange:StatusChange) {
+  startListening(metricUpdate: MetricUpdate, metricDelete: MetricDelete, statusChange: StatusChange) {
     this.metricUpdate = metricUpdate;
     this.metricDelete = metricDelete;
     this.statusChange = statusChange;
