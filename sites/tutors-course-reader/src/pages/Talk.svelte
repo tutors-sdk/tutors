@@ -5,7 +5,7 @@
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { revealSidebar } from "../stores";
   import * as animateScroll from "svelte-scrollto";
-  import { talkTransition } from "../components/animations";
+  import { talkTransition, cardTransition } from "../components/animations";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
   import type { CourseService } from "../reader-lib/services/course-service";
@@ -43,7 +43,7 @@
       <div transition:talkTransition class="flex-grow">
         <TalkCard {lo} />
       </div>
-      <div class="hidden lg:block">
+      <div class="hidden lg:block" transition:cardTransition>
         <TopicNavigatorCard topic={lo.parent} />
       </div>
     </div>
