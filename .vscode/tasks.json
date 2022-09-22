@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "typescript",
+      "tsconfig": "apps/tutors-json/tsconfig.json",
+      "option": "watch",
+      "problemMatcher": ["$tsc-watch"],
+      "group": "build",
+      "label": "tsc: watch - apps/tutors-json/tsconfig.json",
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "type": "typescript",
+      "tsconfig": "apps/tutors-html/tsconfig.json",
+      "option": "watch",
+      "problemMatcher": ["$tsc-watch"],
+      "group": "build",
+      "label": "tsc: watch - apps/tutors-html/tsconfig.json",
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "type": "typescript",
+      "tsconfig": "components/tutors-lib/tsconfig.json",
+      "option": "watch",
+      "problemMatcher": ["$tsc-watch"],
+      "group": "build",
+      "label": "tsc: watch - components/tutors-lib/tsconfig.json",
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    }
+  ]
+}

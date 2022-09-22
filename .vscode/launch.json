@@ -10,6 +10,14 @@
       "cwd": "/Users/edeleastar/repos/modules/hdip/2022/sem-2/web-development-2-2022"
     },
     {
+      "name": "Tutors-Html",
+      "program": "${workspaceFolder}//apps/tutors-html/src/tutors-html.js",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node",
+      "cwd": "/Users/edeleastar/repos/modules/hdip/2022/sem-2/web-development-2-2022"
+    },
+    {
       "type": "chrome",
       "request": "attach",
       "name": "Tutors-Course-Reader",
