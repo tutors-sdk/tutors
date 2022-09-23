@@ -97,7 +97,7 @@
         @apply shadow-xl rounded-box card-corner overflow-hidden bg-base-300 px-4 pb-4 pt-2 mb-2 w-full mx-auto
     }
     .topicnavigator {
-        @apply card compact text-center shadow-2xl bg-base-200 ml-2 rounded-box card-corner
+        @apply card compact text-center shadow-2xl bg-base-200 ml-2 rounded-box card-corner sticky top-24
     }
     .topicnavigator-title {
         @apply flex flex-row justify-between items-center p-3
