@@ -43,7 +43,7 @@
 </script>
 
 {#if $currentCourse && !$currentCourse.areVideosHidden()}
-  <div class="container mx-auto">
+  <div class="container mx-auto text-center">
     {#if heanet}
       {#if showVime}
         <vime-player controls cross-origin="true">
@@ -53,15 +53,18 @@
         </vime-player>
       {/if}
     {:else if vimp}
+    <div class="block w-[720px] h-[405px] mx-auto">
       <iframe
         title={lo.title}
         src="https://vimp.oth-regensburg.de/media/embed?key={vimpId}&autoplay=false&controls=true"
         class="iframeLoaded"
         allowfullscreen="allowfullscreen"
+        width="720"
+        height="405"
         allowtransparency="true"
         aria-label="media embed code"
       />
-    }
+    </div>
     {:else}
       {#if firefox}
         <iframe
