@@ -6,7 +6,7 @@ import { copyFolder } from "tutors-lib/src/utils/futils";
 
 const tutors = require("../package.json").version;
 
-const version = `tutors-html: ${tutors} (tutors-lib: 2.5.2)`;
+const version = `tutors-html?: ${tutors} (tutors-lib: 2.5.2)`;
 const nunjucks = require("nunjucks");
 const root = __dirname;
 nunjucks.configure(root + "/views", { autoescape: false });
