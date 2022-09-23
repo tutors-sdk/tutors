@@ -37,8 +37,8 @@
   <Loading />
 {:then lo}
   {#if !hide}
-    <div class="h-screen flex">
-      <div transition:talkTransition class="flex-grow">
+    <div class="h-full flex">
+      <div transition:talkTransition class="flex-grow card p-4 bg-base-200">
         <NoteCard {lo} />
       </div>
       <div class="hidden lg:block">
