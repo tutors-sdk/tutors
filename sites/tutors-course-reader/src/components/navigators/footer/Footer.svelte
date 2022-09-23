@@ -1,5 +1,5 @@
 <script lang="ts">
-  const version = "6.0.3";
+  const version = "6.0.4";
 </script>
 
 <footer class="container footer mx-auto my-2 items-center rounded-xl bg-base-200 p-4 text-base-content">
