@@ -12,7 +12,7 @@
   contentHtml = generateToc(contentHtml);
 </script>
 
-<article class="notecontent">
+<article class="notecontent prose">
   {@html contentHtml}
 </article>
 
