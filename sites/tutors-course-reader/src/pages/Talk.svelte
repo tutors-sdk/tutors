@@ -39,11 +39,11 @@
   <Loading />
 {:then lo}
   {#if !hide}
-    <div class="flex">
-      <div transition:talkTransition class="flex-grow">
+    <div class="h-screen flex">
+      <div transition:talkTransition class="w-full">
         <TalkCard {lo} />
       </div>
-      <div class="hidden lg:block" transition:cardTransition>
+      <div class="hidden md:block">
         <TopicNavigatorCard topic={lo.parent} />
       </div>
     </div>
