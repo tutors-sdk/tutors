@@ -1,11 +1,11 @@
-import path from 'path-browserify';
-import type { Lo } from '../types/lo-types';
+import path from "path-browserify";
+import type { Lo } from "../types/lo-types";
 
 export function injectCourseUrl(lo: Lo, url) {
-  if (lo.route) lo.route = lo.route.replace('{{COURSEURL}}', url);
-  if (lo.img) lo.img = lo.img.replace('{{COURSEURL}}', url);
-  if (lo.video) lo.video = lo.video.replace('{{COURSEURL}}', url);
-  if (lo.pdf) lo.pdf = lo.pdf.replace('{{COURSEURL}}', url);
+  if (lo.route) lo.route = lo.route.replace("{{COURSEURL}}", url);
+  if (lo.img) lo.img = lo.img.replace("{{COURSEURL}}", url);
+  if (lo.video) lo.video = lo.video.replace("{{COURSEURL}}", url);
+  if (lo.pdf) lo.pdf = lo.pdf.replace("{{COURSEURL}}", url);
   if (lo.los) {
     lo.los.forEach((lo) => {
       injectCourseUrl(lo, url);
@@ -13,7 +13,7 @@ export function injectCourseUrl(lo: Lo, url) {
   }
 }
 
-export function flattenLos (los:Lo[]): Lo[] {
+export function flattenLos(los: Lo[]): Lo[] {
   let result: Lo[] = [];
   los.forEach((lo) => {
     result.push(lo);
@@ -23,22 +23,22 @@ export function flattenLos (los:Lo[]): Lo[] {
 }
 
 function removeLastDirectory(the_url) {
-  var the_arr = the_url.split('/');
+  var the_arr = the_url.split("/");
   the_arr.pop();
-  return the_arr.join('/');
+  return the_arr.join("/");
 }
 
 export function removeLeadingHashes(str: string): string {
-  if (str.includes('#')) {
-    const i = str.lastIndexOf('#');
-    str = str.substr(str.lastIndexOf('#') + 1);
+  if (str.includes("#")) {
+    const i = str.lastIndexOf("#");
+    str = str.substr(str.lastIndexOf("#") + 1);
   }
   return str;
 }
 
 export function findCourseUrls(labUrl: string): string[] {
   let topicUrl = removeLastDirectory(labUrl);
-  if (path.basename(topicUrl).startsWith('unit') && topicUrl.includes('topic')) {
+  if (path.basename(topicUrl).startsWith("unit") && topicUrl.includes("topic")) {
     topicUrl = removeLastDirectory(topicUrl);
   }
   const courseUrl = removeLastDirectory(topicUrl);
@@ -46,7 +46,7 @@ export function findCourseUrls(labUrl: string): string[] {
 }
 
 export function lastSegment(url: string) {
-  var parts = url.split('/');
+  var parts = url.split("/");
   var lastSegment = parts.pop() || parts.pop();
   return lastSegment;
 }
@@ -66,7 +66,7 @@ export function findLos(los: Lo[], lotype: string): Lo[] {
     if (lo.type === lotype) {
       result.push(lo);
     }
-    if (lo.type == 'unit') {
+    if (lo.type == "unit") {
       result = result.concat(findLos(lo.los, lotype));
     }
   });
@@ -79,7 +79,7 @@ export function findVideoLos(los: Lo[]): Lo[] {
     if (lo.video) {
       result.push(lo);
     }
-    if (lo.type == 'unit') {
+    if (lo.type == "unit") {
       result = result.concat(findVideoLos(lo.los));
     }
   });
@@ -103,27 +103,25 @@ export function allVideoLos(los: Lo[]) {
 }
 
 export function fixRoutes(lo: Lo) {
-  if (lo.route && lo.route[0] == '#') {
+  if (lo.route && lo.route[0] == "#") {
     lo.route = lo.route.slice(1);
-    lo.route = '/#/' + lo.route;
+    lo.route = "/#/" + lo.route;
   }
-  if (lo.video && lo.video[0] == '#') {
+  if (lo.video && lo.video[0] == "#") {
     lo.video = lo.video.slice(1);
-    lo.video = '/#/' + lo.video;
+    lo.video = "/#/" + lo.video;
   }
-  if (lo.route.endsWith('md') && lo.video) {
+  if (lo.route.endsWith("md") && lo.video) {
     lo.route = lo.video;
   }
 }
 
 export function getSortedUnits(los: Lo[]) {
-  const allUnits = los.filter((lo) => lo.type == 'unit');
+  const allUnits = los.filter((lo) => lo.type == "unit");
   for (let unit of allUnits) {
-    const panelVideos = unit.los.filter((lo) => lo.type == 'panelvideo');
-    const panelTalks = unit.los.filter((lo) => lo.type == 'paneltalk');
-    const standardLos = unit.los.filter(
-      (lo) => lo.type !== 'unit' && lo.type !== 'panelvideo' && lo.type !== 'paneltalk'
-    );
+    const panelVideos = unit.los.filter((lo) => lo.type == "panelvideo");
+    const panelTalks = unit.los.filter((lo) => lo.type == "paneltalk");
+    const standardLos = unit.los.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk");
     const sortedLos: Lo[] = [];
     sortedLos.push(...panelVideos);
     sortedLos.push(...panelTalks);
@@ -132,5 +130,3 @@ export function getSortedUnits(los: Lo[]) {
   }
   return allUnits;
 }
-
-

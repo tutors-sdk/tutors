@@ -1,4 +1,3 @@
-
 export interface IconType {
   icon: any;
   colour: string;

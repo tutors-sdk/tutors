@@ -24,7 +24,7 @@ export function updateCount(root: string, key: string, title: string) {
 export function updateCountValue(key: string) {
   const db = getDatabase();
   const dbRef = ref(db, key);
-  runTransaction(dbRef, function(count) {
+  runTransaction(dbRef, function (count) {
     return (count || 0) + 1;
   });
 }
@@ -32,7 +32,7 @@ export function updateCountValue(key: string) {
 export function updateStr(key: string, str: string) {
   const db = getDatabase();
   const dbRef = ref(db, key);
-  runTransaction(dbRef, function() {
+  runTransaction(dbRef, function () {
     return str;
   });
 }
