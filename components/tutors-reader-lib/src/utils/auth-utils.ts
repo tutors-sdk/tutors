@@ -44,7 +44,7 @@ export function fromLocalStorage(): User {
     picture: decrypt(localStorage.getItem("infoextra")),
     name: decrypt(localStorage.getItem("info")),
     nickname: decrypt(localStorage.getItem("infoextraplus")),
-    onlineStatus: ""
+    onlineStatus: "",
   };
   return user;
 }

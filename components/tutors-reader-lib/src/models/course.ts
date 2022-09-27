@@ -1,13 +1,5 @@
 import type { Calendar, Lo, Student, WeekType } from "../types/lo-types";
-import {
-  allLos,
-  allVideoLos,
-  fixRoutes,
-  flattenLos,
-  getSortedUnits,
-  injectCourseUrl,
-  threadLos
-} from "../utils/lo-utils";
+import { allLos, allVideoLos, fixRoutes, flattenLos, getSortedUnits, injectCourseUrl, threadLos } from "../utils/lo-utils";
 import { Topic } from "./topic";
 import type { IconNav, IconNavBar } from "../types/icon-types";
 import { addIcon } from "../iconography/themes";
@@ -36,7 +28,7 @@ export class Course {
     bar: [],
   };
 
-  constructor(lo:Lo, courseId:string) {
+  constructor(lo: Lo, courseId: string) {
     this.url = courseId;
     injectCourseUrl(lo, courseId);
     if (lo.properties.hasOwnProperty("auth")) this.authLevel = lo.properties.auth as unknown as number;

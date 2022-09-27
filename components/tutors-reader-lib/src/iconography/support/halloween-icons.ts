@@ -44,5 +44,5 @@ export const HalloweenIconLib = {
   compacted: { icon: "mdi:coffin", colour: "warning" },
   expanded: { icon: "mdi:coffin", colour: "warning" },
 
-  default: { icon: "mdi:coffin", colour: "warning" }
+  default: { icon: "mdi:coffin", colour: "warning" },
 };

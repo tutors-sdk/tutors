@@ -1,6 +1,6 @@
 import type { Lo } from "../types/lo-types";
 import { fixRoutes, getSortedUnits } from "../utils/lo-utils";
-import type {Course} from "./course";
+import type { Course } from "./course";
 
 export class Topic {
   course: Course;
@@ -11,7 +11,7 @@ export class Topic {
   standardLos: Lo[];
   toc: Lo[] = [];
 
-  constructor(lo: Lo, courseUrl: string, course:Course) {
+  constructor(lo: Lo, courseUrl: string, course: Course) {
     this.lo = lo;
     this.course = course;
 

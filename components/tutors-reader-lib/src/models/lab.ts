@@ -1,7 +1,7 @@
-import type {Lo} from "../types/lo-types";
-import {convertMd} from "../utils/markdown-utils";
-import {removeLeadingHashes} from "../utils/lo-utils";
-import type {Course} from "./course";
+import type { Lo } from "../types/lo-types";
+import { convertMd } from "../utils/markdown-utils";
+import { removeLeadingHashes } from "../utils/lo-utils";
+import type { Course } from "./course";
 
 export class Lab {
   course: Course;
@@ -41,9 +41,7 @@ export class Lab {
       let number = this.autoNumber == true ? chapter.shortTitle + ": " : "";
       const active = encodeURI(chapter.shortTitle) == this.currentChapterShortTitle ? "font-bold bordered bg-neutral-focus" : "";
       let title = this.chaptersTitles.get(chapter.shortTitle);
-      nav = nav.concat(
-          `<li class="py-1 text-base ${active}"> <a href="/#/lab/${this.url}/${encodeURI(chapter.shortTitle)}"> ${number}${title} </a> </li>`
-      );
+      nav = nav.concat(`<li class="py-1 text-base ${active}"> <a href="/#/lab/${this.url}/${encodeURI(chapter.shortTitle)}"> ${number}${title} </a> </li>`);
 
       // horizontal nav
       if (encodeURI(chapter.shortTitle) == this.currentChapterShortTitle) {
@@ -52,9 +50,7 @@ export class Lab {
           let title = this.chaptersTitles.get(nav.shortTitle);
           let step = `${i - 1}:`;
           this.horizontalNavbarHtml = this.horizontalNavbarHtml.concat(
-              `<a class="btn btn-sm capitalize" href="/#/lab/${this.url}/${encodeURI(
-                  nav.shortTitle
-              )}"> <span aria-hidden="true">&larr;</span>&nbsp; ${number}${title} </a>`
+            `<a class="btn btn-sm capitalize" href="/#/lab/${this.url}/${encodeURI(nav.shortTitle)}"> <span aria-hidden="true">&larr;</span>&nbsp; ${number}${title} </a>`
           );
         }
         if (this.lo.los[i + 1] !== undefined) {
@@ -62,9 +58,9 @@ export class Lab {
           let title = this.chaptersTitles.get(nav.shortTitle);
           let step = `${i + 1}:`;
           this.horizontalNavbarHtml = this.horizontalNavbarHtml.concat(
-              `<a class="ml-auto btn btn-sm capitalize" style="margin-left: auto" href="/#/lab/${this.url}/${encodeURI(
-                  nav.shortTitle
-              )}"> ${number}${title} &nbsp;<span aria-hidden="true">&rarr;</span></a>`
+            `<a class="ml-auto btn btn-sm capitalize" style="margin-left: auto" href="/#/lab/${this.url}/${encodeURI(
+              nav.shortTitle
+            )}"> ${number}${title} &nbsp;<span aria-hidden="true">&rarr;</span></a>`
           );
         }
       }

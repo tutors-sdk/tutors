@@ -1,28 +1,28 @@
-import { convertMd } from './markdown-utils';
+import { convertMd } from "./markdown-utils";
 import removeMd from "remove-markdown";
 import type { Lo } from "../types/lo-types";
 import { removeLeadingHashes } from "./lo-utils";
 
 const maxNumberHits: number = 100;
-const fenceTick : string = '```';
-const fenceTilde : string = '~~~';
+const fenceTick: string = "```";
+const fenceTilde: string = "~~~";
 
 type ContentType = {
   content: string;
   style: string; //fenced, unfenced
   language: string;
   fence: string; //  ``` or ~~~
-}
+};
 
 export type ResultType = {
   fenced: boolean;
   language: string;
   contentMd: string;
-  lab: Lo
+  lab: Lo;
   html: string;
-  title:string;
-  link:string;
-}
+  title: string;
+  link: string;
+};
 /**
  * Searches an array of nested Lo arrays for presence of searchTerm.
  * On 31.10.19 resolved the issue whereby only first instance of a searchTerm on any
@@ -44,20 +44,20 @@ export type ResultType = {
 export function searchHits(los: Lo[], searchTerm: string): ResultType[] {
   let flatLos = flattenNestedLosArrays(los);
   //let result : string[] = [];
-  let results : ResultType[] = [];
+  let results: ResultType[] = [];
   flatLos.forEach((obj) => {
     let text = obj.lab.contentMd;
     let contents: ContentType[] = arrayLinesSearchTermHits(text, searchTerm);
     for (let content of contents) {
       const result = {
         fenced: content.style !== "unfenced",
-        language : content.language,
-        contentMd : content.content,
+        language: content.language,
+        contentMd: content.content,
         lab: obj.lab,
-        title:`${obj.lab.parentLo.title}/${removeLeadingHashes(obj.lab.title)}`,
+        title: `${obj.lab.parentLo.title}/${removeLeadingHashes(obj.lab.title)}`,
         link: obj.lab?.route,
-        html: ""
-      }
+        html: "",
+      };
       result.link = result.link.substring(1);
       result.link = "#/" + result.link;
       results.push(result);
@@ -76,18 +76,18 @@ export function searchHits(los: Lo[], searchTerm: string): ResultType[] {
  * @param searchTerm The substring, at lease one instance of which exists.
  * @return string array of lines of content containing search term.
  */
-function arrayLinesSearchTermHits(content: string, searchTerm: string) : ContentType[] {
-  let arStrings : ContentType[] = [];
+function arrayLinesSearchTermHits(content: string, searchTerm: string): ContentType[] {
+  let arStrings: ContentType[] = [];
   let arIndx = indicesOf(content, searchTerm); // indices of searchTerm occurences
   for (let i = 0; i < arIndx.length; i += 1) {
     let str = currentline(searchTerm, arIndx[i], content);
     let style = isFenced(content, arIndx[i]);
-    let language = '';
-    if(style === 'fenced') {
+    let language = "";
+    if (style === "fenced") {
       language = getLanguage(content, arIndx[i]);
     }
     let fence = getFenceType(content, arIndx[i]);
-    arStrings.push({content:str, style, fence, language});
+    arStrings.push({ content: str, style, fence, language });
   }
   return arStrings;
 }
@@ -99,12 +99,12 @@ function arrayLinesSearchTermHits(content: string, searchTerm: string) : Content
  * @param indexSearchTerm the index of the first character of the search term.
  * @returns the language for the current fenced section.
  */
-function getLanguage(content: string, indexSearchTerm: number) : string {
+function getLanguage(content: string, indexSearchTerm: number): string {
   let ar = arStartFenceIndices(content);
   let indexFence = findNearestPreviousIndex(ar, indexSearchTerm);
-  let language = '';
+  let language = "";
   let index = indexFence[1] + 3; // fence comprises 3 tickks or tildes.
-  while(content.charAt(index) !== '\n') {
+  while (content.charAt(index) !== "\n") {
     language += content.charAt(index);
     index += 1;
   }
@@ -117,13 +117,13 @@ function getLanguage(content: string, indexSearchTerm: number) : string {
  * @param indexSearchTerm
  * @returns fence type: string comprising 3 tildes or 3 ticks.
  */
-function getFenceType(content: string, indexSearchTerm: number) : string {
+function getFenceType(content: string, indexSearchTerm: number): string {
   let ar = arStartFenceIndices(content);
   let indexFence = findNearestPreviousIndex(ar, indexSearchTerm);
-  if(content.charAt(indexFence[1]) === '~') {
-    return '~~~';
+  if (content.charAt(indexFence[1]) === "~") {
+    return "~~~";
   }
-  return '```';
+  return "```";
 }
 
 /*
@@ -189,7 +189,7 @@ function onlySpaces(str) {
   return str.trim().length === 0;
 }
 export function isValid(str: string) {
- // return str != undefined && /\S/.test(str) == true;
+  // return str != undefined && /\S/.test(str) == true;
   return !onlySpaces(str);
 }
 
@@ -232,8 +232,8 @@ function indicesOf(str: string, substr: string): number[] {
  * @param content
  * @returns array of indices
  */
-function arStartFenceIndices(content: string) : number[] {
-  let ar =  arrayStartFenceIndices(content, fenceTick).concat(arrayStartFenceIndices(content, fenceTilde));
+function arStartFenceIndices(content: string): number[] {
+  let ar = arrayStartFenceIndices(content, fenceTick).concat(arrayStartFenceIndices(content, fenceTilde));
   return numericSort(ar);
 }
 
@@ -243,7 +243,7 @@ function arStartFenceIndices(content: string) : number[] {
  * @returns
  */
 function numericSort(ar: number[]) {
-  return ar.sort((n1,n2) => n1 - n2);
+  return ar.sort((n1, n2) => n1 - n2);
 }
 
 /**
@@ -254,19 +254,19 @@ function numericSort(ar: number[]) {
  * @param searchTermIndex The index of the searchTerm.
  * @returns A string: fenced or unfenced.
  */
-function isFenced(content : string, searchTermIndex: number) : string {
+function isFenced(content: string, searchTermIndex: number): string {
   //let ar : number[] = arrayStartFenceIndices(content, fenceTick).concat(arrayStartFenceIndices(content, fenceTilde));
   let ar = arStartFenceIndices(content);
   // If length array of start fence indices is zero this means searchTerm is in html range.
   // That is, no fenced content.
-  if(ar.length == 0) {
-    return 'unfenced';
+  if (ar.length == 0) {
+    return "unfenced";
   }
   let prevSmaller = findNearestPreviousIndex(ar, searchTermIndex);
-  if(isEven(prevSmaller[0])) {
-    return 'fenced';
+  if (isEven(prevSmaller[0])) {
+    return "fenced";
   } else {
-    return 'unfenced';
+    return "unfenced";
   }
 }
 
@@ -276,7 +276,7 @@ function isFenced(content : string, searchTermIndex: number) : string {
  * @param fenceType ticks or tildes
  * @returns array of indices
  */
-function arrayStartFenceIndices(content: string, fenceType: string) : number[] {
+function arrayStartFenceIndices(content: string, fenceType: string): number[] {
   let ar = indicesOf(content, fenceType);
   return ar;
 }
@@ -286,8 +286,8 @@ function arrayStartFenceIndices(content: string, fenceType: string) : number[] {
  * @param aninteger
  * @returns true if aninteger even else false.
  */
-function isEven(aninteger: number) : boolean {
-  return aninteger%2 == 0;
+function isEven(aninteger: number): boolean {
+  return aninteger % 2 == 0;
 }
 
 /**
@@ -297,7 +297,7 @@ function isEven(aninteger: number) : boolean {
  * @param content The current page.
  * @returns A string representing the line in which the searchTerm is located.
  */
-function currentline(searchTerm: string, indexSearchTerm: number, content: string)  : string {
+function currentline(searchTerm: string, indexSearchTerm: number, content: string): string {
   let arrayIndicesSeparators = indicesOf(content, separator());
   let indexStartLine = findNearestPreviousIndex(arrayIndicesSeparators, indexSearchTerm);
   let indexEndLine = findNearestNextIndex(arrayIndicesSeparators, indexSearchTerm, content.length);
@@ -310,9 +310,9 @@ function currentline(searchTerm: string, indexSearchTerm: number, content: strin
  * @param currIndex The index of the searchTerm
  * @returns An array of tuples, each tuple containing the array index and the index immediately previous to current index.
  */
-function findNearestPreviousIndex(indices: number[], currIndex: number) : [number,number] {
-  for(let i = indices.length - 1; i >= 0; i--) {
-    if(indices[i] < currIndex) {
+function findNearestPreviousIndex(indices: number[], currIndex: number): [number, number] {
+  for (let i = indices.length - 1; i >= 0; i--) {
+    if (indices[i] < currIndex) {
       return [i, indices[i]];
     }
   }
@@ -326,12 +326,11 @@ function findNearestPreviousIndex(indices: number[], currIndex: number) : [numbe
  * @returns An array of tuples, each tuple containing the array index and the index immediately following the current index.
  *
  */
-function findNearestNextIndex(indices: number[], currIndex: number, contentLen: number) : [number, number] {
-  for(let i = 0; i < indices.length; i += 1) {
-    if(currIndex > indices[indices.length - 1]) {
-      return[i, contentLen];// Edge condition where no eof character exists.
-    }
-    else if(indices[i] > currIndex) {
+function findNearestNextIndex(indices: number[], currIndex: number, contentLen: number): [number, number] {
+  for (let i = 0; i < indices.length; i += 1) {
+    if (currIndex > indices[indices.length - 1]) {
+      return [i, contentLen]; // Edge condition where no eof character exists.
+    } else if (indices[i] > currIndex) {
       return [i, indices[i]];
     }
   }
@@ -343,5 +342,5 @@ function findNearestNextIndex(indices: number[], currIndex: number, contentLen: 
  * @returns new line character as string.
  */
 function separator(): string {
-  return '\n';
+  return "\n";
 }
