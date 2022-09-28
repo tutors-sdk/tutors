@@ -24,7 +24,7 @@
     "@tailwindcss/typography": "^0.5.4",
     "@tsconfig/svelte": "^3.0.0",
     "auth0-js": "^9.19.0",
-    "autoprefixer": "^10.4.8",
+    "autoprefixer": "^10.4.12",
     "axios": "^0.27.2",
     "daisyui": "^2.31.0",
     "file-saver": "^2.0.5",
