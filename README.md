@@ -27,6 +27,47 @@ A collection of open source components & services supporting the creation of tra
 - [Classic Design Patterns at SETU](https://tutors-svelte.netlify.app/#/course/classic-design-patterns.netlify.app)
 - [Agile Software Development at SETU](https://reader.tutors.dev/#/course/agile-dev-2021.netlify.app)
 
+# Getting Started
+
+Make sure you have Node 16 + a recent VSCode installed, and clone this repo. In the root folder, open a shell inside the folder and enter:
+
+~~~bash
+npm install
+~~~
+
+In sites/tutors-course-reader subfolder, copy the file called `.env.example` to `.env` and then run:
+
+~~~bash
+npm run dev
+~~~
+
+You should see:
+
+~~~bash
+  VITE v3.1.3  ready in 768 ms
+
+  ➜  Local:   http://localhost:5001/
+  ➜  Network: http://192.168.1.7:5001/
+~~~
+
+Browse to the local location in a browser - which will display a holding page. You are now running the tutors reader application. This application relies on the url to locate the course to display. Any of the samples above can be 'read' with an appropriate url segments appended to the local url you now have running. So for instance:
+
+~~~bash
+https://reader.tutors.dev/#/course/full-stack-web-dev-oth-2022.netlify.app
+~~~
+
+... can be loaded locally by:
+
+~~~bash
+http://localhost:5001/#/course/full-stack-web-dev-oth-2022.netlify.app
+~~~
+
+You are now running the tutors reader locally, rebuilt from source, to browse a tutors course. You could try any of the other sample courses above.
+
+If you would like to build your own course then [this workshop here](https://reader.tutors.dev/#/topic/docs.tutors.dev/topic-00-WX) would be a good place to start. In particular, [this lab here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-00-WX/unit-1-creating/book-a) will get you up and running with a sample course in a few minutes. More guidance and examples are on our [Educator documentation](https://reader.tutors.dev/#/topic/docs.tutors.dev/topic-02-EX) site. To learn more about the project, explore the core principles at https://tutors.dev/.
+
+# Project Structure
+
 This is a monorepo for all of the components & services of the [Tutors Open Source Project](https://tutors.dev/). There are three categories of independent sub-projects:
 
 - Sites
