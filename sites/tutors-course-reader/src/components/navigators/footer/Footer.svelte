@@ -29,7 +29,7 @@
       ></a
     >
     <a href="https://tutors.dev" target="_blank">
-      <p>Powered by Tutors Reader {version}</p>
+      <p>Powered by Tutors Course Reader {version}</p>
     </a>
   </div>
 </footer>
