@@ -74,13 +74,13 @@ This is a monorepo for all of the components & services of the [Tutors Open Sour
 - Apps
 - Components
 
-# [sites](https://github.com/tutors-sdk/tutors/tree/main/sites)
+# [Sites](https://github.com/tutors-sdk/tutors/tree/main/sites)
 
-These are the student facing web applications for browsing a course, an application inspecting course analytics + a storybook encapsulation of UX elements. The principles embodied in the [learner experience  are presenter here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/01).
+These are the student facing web applications for browsing a course, an application inspecting course analytics + a storybook encapsulation of UX elements. The principles embodied in the [learner experience  are presented here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/01).
 
 ### [tutors-course-reader](https://github.com/tutors-sdk/tutors/tree/main/sites/tutors-course-reader)
 
-The main tutors user experience - demonstrated in the links above. It is a Svelte application that renders a course in an appealing, context sensitive user experience. On [overview of the user experience is presented here](https://reader.tutors.dev/#/talk/docs.tutors.dev/topic-00-WX/unit-1-creating/talk-1/tutor-ux.pdf)
+The main tutors user experience - demonstrated in the links above. It is a Svelte application that renders a course in an appealing, context sensitive user experience. An [overview of the user experience is presented here](https://reader.tutors.dev/#/talk/docs.tutors.dev/topic-00-WX/unit-1-creating/talk-1/tutor-ux.pdf).
 
 ### [tutors-time-reader](https://github.com/tutors-sdk/tutors/tree/main/sites/tutors-time-reader)
 
@@ -90,13 +90,13 @@ Also a Svelte application, this application presents the educational analytics g
 
 A storybook style application which hosts the UI components of the course and time readers.
 
-# [apps](https://github.com/tutors-sdk/tutors/tree/main/apps)
+# [Apps](https://github.com/tutors-sdk/tutors/tree/main/apps)
 
-These as command line applications used by educators to generate courses. The principles embodied in the [educator experience  are presenter here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/02).
+These are command line applications used by educators to generate courses. The principles embodied in the [educator experience  are presented here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/02).
 
 ### [tutors-json](https://github.com/tutors-sdk/tutors/tree/main/apps/tutors-json)
 
-The primary static site generator for tutors courses. It will inject a folder adhering to prescribed format and generate a static site that can be rendered by the course reader. The [overall approach + example folder structure is presenter here](https://reader.tutors.dev/#/talk/docs.tutors.dev/topic-00-WX/unit-1-creating/talk-2/tutor-ex.pdf). A tutorial on building a new course [can be accessed here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-00-WX/unit-1-creating/book-a).
+The primary static site generator for tutors courses. It will inject a folder adhering to a prescribed format and generate a static site that can be rendered by the course reader. The [overall approach + example folder structure is presented here](https://reader.tutors.dev/#/talk/docs.tutors.dev/topic-00-WX/unit-1-creating/talk-2/tutor-ex.pdf). A tutorial on building a new course [can be accessed here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-00-WX/unit-1-creating/book-a).
 
 ### [tutors-html](https://github.com/tutors-sdk/tutors/tree/main/apps/tutors-html)
 
@@ -108,19 +108,19 @@ Reusable components used in the apps & sites.
 
 ### [tutors-configs](https://github.com/tutors-sdk/tutors/tree/main/components/tutors-configs)
 
-A shared set of config files which is used as a base in for all sites, apps and components
+A shared set of config files which is used as a base for all sites, apps and components.
 
 ### [tutors-lib](https://github.com/tutors-sdk/tutors/tree/main/components/tutors-lib)
 
-The parser library for a course. This component embodies the data structure constructied when in-jesting a course from a folder. Comparable to an Abstract Syntax Tree in a compiler, this three is traverse to generate JSON and HTML versions by the apps above.
+The parser library for a course. This component embodies the data structure constructed when in-jesting a course from a folder. Comparable to an Abstract Syntax Tree in a compiler, this tree is traversed to generate JSON and HTML versions by the apps above.
 
 ### [tutors-reader-lib](https://github.com/tutors-sdk/tutors/tree/main/components/tutors-reader-lib)
 
-Comparable to tutors-lib, but intended for use in svelte applications. Constructs a modified AST like representation of a course as retrieved from a web hosted json version of a course. Also include additional tools and utilities used in the readers.
+Comparable to tutors-lib, but intended for use in Svelte applications. Constructs a modified AST-like representation of a course as retrieved from a web-hosted, JSON version of a course. Also includes additional tools and utilities used in the readers.
 
 ### [tutors-ui](https://github.com/tutors-sdk/tutors/tree/main/components/tutors-ui)
 
-A shared library of UI components which can be used to build the readers and hosted in the vite-book
+A shared library of UI components which can be used to build the readers and hosted in the vite-book.
 
 # Contributing
 
