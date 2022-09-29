@@ -15,7 +15,7 @@
       </g>
     </svg>
     <div class="flex-1 hidden px-2 mx-2 lg:block">
-      <p class="text-lg font-bold">Tutors Reader</p>
+      <p class="text-lg font-bold">Tutors Course Reader</p>
       <p class="text-sm font-bold">Tutors Open Source Project</p>
     </div>
   </div>
