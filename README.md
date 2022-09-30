@@ -31,36 +31,36 @@ A collection of open source components & services supporting the creation of tra
 
 Make sure you have Node 16 + a recent VSCode installed, and clone this repo. In the root folder, open a shell inside the folder and enter:
 
-~~~bash
+```bash
 npm install
-~~~
+```
 
 In sites/tutors-course-reader subfolder, copy the file called `.env.example` to `.env` and then run:
 
-~~~bash
+```bash
 npm run dev
-~~~
+```
 
 You should see:
 
-~~~bash
+```bash
   VITE v3.1.3  ready in 768 ms
 
   ➜  Local:   http://localhost:5001/
   ➜  Network: http://192.168.1.7:5001/
-~~~
+```
 
 Browse to the local location in a browser - which will display a holding page. You are now running the tutors reader application. This application relies on the url to locate the course to display. Any of the samples above can be 'read' with an appropriate url segments appended to the local url you now have running. So for instance:
 
-~~~bash
+```bash
 https://reader.tutors.dev/#/course/full-stack-web-dev-oth-2022.netlify.app
-~~~
+```
 
 ... can be loaded locally by:
 
-~~~bash
+```bash
 http://localhost:5001/#/course/full-stack-web-dev-oth-2022.netlify.app
-~~~
+```
 
 You are now running the tutors reader locally, rebuilt from source, to browse a tutors course. You could try any of the other sample courses above.
 
@@ -76,23 +76,27 @@ This is a monorepo for all of the components & services of the [Tutors Open Sour
 
 # [Sites](https://github.com/tutors-sdk/tutors/tree/main/sites)
 
-These are the student facing web applications for browsing a course, an application inspecting course analytics + a storybook encapsulation of UX elements. The principles embodied in the [learner experience  are presented here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/01).
+These are the student facing web applications for browsing a course, an application inspecting course analytics + a storybook encapsulation of UX elements. The principles embodied in the [learner experience are presented here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/01).
 
 ### [tutors-course-reader](https://github.com/tutors-sdk/tutors/tree/main/sites/tutors-course-reader)
 
-The main tutors user experience - demonstrated in the links above. It is a Svelte application that renders a course in an appealing, context sensitive user experience. An [overview of the user experience is presented here](https://reader.tutors.dev/#/talk/docs.tutors.dev/topic-00-WX/unit-1-creating/talk-1/tutor-ux.pdf).
+The main tutors user experience - demonstrated in the links above. It is a Svelte application that renders a course in an appealing, context sensitive user experience. An [overview of the user experience is presented here](https://reader.tutors.dev/#/talk/docs.tutors.dev/topic-00-WX/unit-1-creating/talk-1/tutor-ux.pdf). This is deployed to https://reader.tutors.dev
 
 ### [tutors-time-reader](https://github.com/tutors-sdk/tutors/tree/main/sites/tutors-time-reader)
 
-Also a Svelte application, this application presents the educational analytics gathered by the application. There is a student + an educator perspective.
+Also a Svelte application, this application presents the educational analytics gathered by the application. There is a student + an educator perspective. This is deployed to https://time.tutors.dev
+
+### [tutors-home](https://github.com/tutors-sdk/tutors/tree/main/sites/tutors-home)
+
+The homepage of the Tutors project built with Astro. This is deployed at https://tutors.dev
 
 ### [tutors-vitebook](https://github.com/tutors-sdk/tutors/tree/main/sites/tutors-vitebook)
 
-A storybook style application which hosts the UI components of the course and time readers.
+A storybook style application which visualises the UI components of the Tutors project. This is deployed at https://vitebook.tutors.dev
 
 # [Apps](https://github.com/tutors-sdk/tutors/tree/main/apps)
 
-These are command line applications used by educators to generate courses. The principles embodied in the [educator experience  are presented here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/02).
+These are command line applications used by educators to generate courses. The principles embodied in the [educator experience are presented here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/02).
 
 ### [tutors-json](https://github.com/tutors-sdk/tutors/tree/main/apps/tutors-json)
 
@@ -100,7 +104,7 @@ The primary static site generator for tutors courses. It will inject a folder ad
 
 ### [tutors-html](https://github.com/tutors-sdk/tutors/tree/main/apps/tutors-html)
 
-An alternative to tutors-json, this command application generate a static site independent of the course reader. This presents a subset of the user experience, and is useful as an offline version of the course for backup purposes. 
+An alternative to tutors-json, this command application generate a static site independent of the course reader. This presents a subset of the user experience, and is useful as an offline version of the course for backup purposes.
 
 # [Components](https://github.com/tutors-sdk/tutors/tree/main/components)
 
@@ -120,11 +124,13 @@ Comparable to tutors-lib, but intended for use in Svelte applications. Construct
 
 ### [tutors-ui](https://github.com/tutors-sdk/tutors/tree/main/components/tutors-ui)
 
-A shared library of UI components which can be used to build the readers and hosted in the vite-book.
+A shared library of UI components which can be used to build the readers, these components are visualised in the vitebook site (https://vitebook.tutors.dev).
 
 # Contributing
 
 Please ensure to read the [Code of Conduct](./CODE_OF_CONDUCT.md) before contributing to the Tutors project.
+
+When contributing, pull requests should be opened to the 'development' branch, and once tested this will be merged to main.
 
 # Sponsors
 
