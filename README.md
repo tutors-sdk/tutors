@@ -29,25 +29,41 @@ A collection of open source components & services supporting the creation of tra
 
 # Getting Started
 
-Make sure you have Node 16 + a recent VSCode installed, and clone this repo. In the root folder, open a shell inside the folder and enter:
+Make sure you have Node 16 + a recent VSCode installed.
+
+<details>
+<summary><h2>Running the course reader locally</h2></summary>
+Clone this repo, then in the root of the cloned folder open a shell and enter:
 
 ```bash
 npm install
 ```
 
-In sites/tutors-course-reader subfolder, copy the file called `.env.example` to `.env` and then run:
+Copy the file in sites/tutors-course-reader called `.env.example` to `.env`
+
+Run the below command from the root folder to run the course reader.
 
 ```bash
-npm run dev
+npm run reader
 ```
 
-You should see:
+You should see an output similar to below:
 
 ```bash
-  VITE v3.1.3  ready in 768 ms
+> tutors@0.2.0 reader
+> turbo run dev --filter tutors-course-reader
 
-  ➜  Local:   http://localhost:5001/
-  ➜  Network: http://192.168.1.7:5001/
+• Packages in scope: tutors-course-reader
+• Running dev in 1 packages
+cache bypass, force executing 41ecfc6ec2765918
+
+> tutors-course-reader@6.0.4 dev
+> vite
+
+VITE v3.1.3  ready in 212 ms
+
+➜  Local:   http://localhost:5001/
+➜  Network: http://192.168.112.86:5001/
 ```
 
 Browse to the local location in a browser - which will display a holding page. You are now running the tutors reader application. This application relies on the url to locate the course to display. Any of the samples above can be 'read' with an appropriate url segments appended to the local url you now have running. So for instance:
@@ -64,17 +80,16 @@ http://localhost:5001/#/course/full-stack-web-dev-oth-2022.netlify.app
 
 You are now running the tutors reader locally, rebuilt from source, to browse a tutors course. You could try any of the other sample courses above.
 
+</details>
+
 If you would like to build your own course then [this workshop here](https://reader.tutors.dev/#/topic/docs.tutors.dev/topic-00-WX) would be a good place to start. In particular, [this lab here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-00-WX/unit-1-creating/book-a) will get you up and running with a sample course in a few minutes. More guidance and examples are on our [Educator documentation](https://reader.tutors.dev/#/topic/docs.tutors.dev/topic-02-EX) site. To learn more about the project, explore the core principles at https://tutors.dev/.
 
 # Project Structure
 
 This is a monorepo for all of the components & services of the [Tutors Open Source Project](https://tutors.dev/). There are three categories of independent sub-projects:
 
-- Sites
-- Apps
-- Components
-
-# [Sites](https://github.com/tutors-sdk/tutors/tree/main/sites)
+<details>
+<summary><h2>Sites</h1></summary>
 
 These are the student facing web applications for browsing a course, an application inspecting course analytics + a storybook encapsulation of UX elements. The principles embodied in the [learner experience are presented here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/01).
 
@@ -94,7 +109,10 @@ The homepage of the Tutors project built with Astro. This is deployed at https:/
 
 A storybook style application which visualises the UI components of the Tutors project. This is deployed at https://vitebook.tutors.dev
 
-# [Apps](https://github.com/tutors-sdk/tutors/tree/main/apps)
+</details>
+
+<details>
+<summary><h2>Apps</h1></summary>
 
 These are command line applications used by educators to generate courses. The principles embodied in the [educator experience are presented here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/02).
 
@@ -106,7 +124,10 @@ The primary static site generator for tutors courses. It will inject a folder ad
 
 An alternative to tutors-json, this command application generate a static site independent of the course reader. This presents a subset of the user experience, and is useful as an offline version of the course for backup purposes.
 
-# [Components](https://github.com/tutors-sdk/tutors/tree/main/components)
+</details>
+
+<details>
+<summary><h2>Components</h2></summary>
 
 Reusable components used in the apps & sites.
 
@@ -125,6 +146,8 @@ Comparable to tutors-lib, but intended for use in Svelte applications. Construct
 ### [tutors-ui](https://github.com/tutors-sdk/tutors/tree/main/components/tutors-ui)
 
 A shared library of UI components which can be used to build the readers, these components are visualised in the vitebook site (https://vitebook.tutors.dev).
+
+</details>
 
 # Contributing
 
