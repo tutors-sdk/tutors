@@ -1,0 +1,121 @@
+---
+import "../styles/tailwind.css";
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import Contributor from "../components/Contributor.astro";
+---
+
+<Layout title="Home">
+  <main>
+    <div
+      class="flex items-center w-full px-4 py-10 bg-cover card bg-base-200"
+      style="background-image:url('https://source.unsplash.com/x6sZagaUOM4/1920x1280')"
+    >
+      <div class="card glass text-gray-900 my-8 p-4">
+        <div class="card-body">
+          <h1 class="text-2xl">
+            <strong>Tutors: An Open Learning Web Toolkit</strong>
+          </h1>
+          <p class="text-lg py-4">
+            A collection of open source components &amp; services supporting the
+            creation of transformative learning experiences using open web
+            standards.
+          </p>
+          <div class="card-actions">
+            <a
+              href="https://github.com/tutors-sdk/tutors"
+              target="_blank"
+              class="btn btn-primary rounded-full"
+            >
+              Visit our GitHub
+            </a>
+            <a
+              href="https://docs.tutors.dev"
+              target="_blank"
+              class="btn btn-primary rounded-full"
+            >
+              View our Documentation
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="unitcard-container bg-base-200 rounded-box w-full mt-2">
+      <div class="card-body">
+        <p class="text-xl">
+          <strong>The project supports three complimentary perspectives</strong>
+        </p><br />
+        <div class="flex flex-wrap justify-center">
+          <Card
+            border="info"
+            title="The Learner Experience"
+            href="https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/01"
+            target="_blank"
+            icon="ph:student"
+            body="The <strong><em>Learner Experience</em></strong> prioritises web interactions that are <strong>engaging</strong>, <strong>contextual</strong>, <strong>linkable</strong>, <strong>searchable</strong>, <strong>accessible</strong> and <strong>responsive</strong>. In addition the experience should foster a sense of <strong>community</strong> and <strong>connection</strong> among fellow learners."
+          />
+          <Card
+            border="warning"
+            title="The Educator Experience"
+            href="https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/02"
+            target="_blank"
+            icon="ph:chalkboard-teacher"
+            body="The <strong><em>Educator Experience</em></strong> prioritises the creation of a <strong>guided paths</strong> through a curriculum via the creation of learning materials that are <strong>autonomous</strong>, <strong>structurally aligned</strong>, <strong>composable</strong>, <strong>auditable</strong>, <strong>extensible</strong>, <strong>versioned</strong> and <strong>independent</strong>."
+          />
+          <Card
+            border="error"
+            title="The Developer Experience"
+            href="https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/03"
+            target="_blank"
+            icon="ant-design:code-outlined"
+            body="The <strong><em>Developer Experience</em></strong> prioritises the specification and implementation of <strong>robust</strong>, <strong>well documented</strong>, <strong>loosely coupled components & services</strong>, integrated into a <strong>coherent toolkit</strong> open to contributions from <strong>diverse skill sets</strong>."
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="unitcard-container bg-base-200 rounded-box w-full mt-2">
+      <div class="card-body">
+        <h2 class="card-title">Contributors</h2>
+        <div class="flex flex-wrap justify-center">
+          <Contributor
+            image="https://avatars.githubusercontent.com/u/557508?s=70&v=4"
+            name="Eamonn de Leastar"
+            work="SETU"
+            github="https://github.com/edeleastar"
+            email="edeleastar@setu.ie"
+          />
+          <Contributor
+            image="https://avatars.githubusercontent.com/u/26001100?s=70&v=4"
+            name="Colm Dunphy"
+            work="SETU"
+            github="https://github.com/cdunphy"
+            email="cdunphy@setu.ie"
+          />
+          <Contributor
+            image="https://avatars.githubusercontent.com/u/76656637?s=70&v=4"
+            name="Jordan Harrison"
+            work="Charles River Labs"
+            github="https://github.com/jordharr"
+            email="contact@jordanharrison.ie"
+          />
+          <Contributor
+            image="https://avatars.githubusercontent.com/u/87311656?s=70&v=4"
+            name="Emma Kidney"
+            github="https://github.com/ekidneyrh"
+          />
+          <Contributor
+            image="https://ca.slack-edge.com/TCLNFMT45-U028ZUHFELT-6f212632b977-512"
+            name="Ellen O'Carroll"
+            work="Red Hat"
+          />
+          <Contributor
+            image="https://ca.slack-edge.com/TEL752280-UEN0YN2NT-a2e16b2824c2-192"
+            name="Pete Windle"
+            work="SETU"
+          />
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
