@@ -32,7 +32,7 @@ A collection of open source components & services supporting the creation of tra
 Make sure you have Node 16 + a recent VSCode installed.
 
 <details>
-<summary>Running the course reader locally</summary>
+<summary><h2>Running the course reader locally</h2></summary>
 Clone this repo, then in the root of the cloned folder open a shell and enter:
 
 ```bash
@@ -148,6 +148,7 @@ Comparable to tutors-lib, but intended for use in Svelte applications. Construct
 A shared library of UI components which can be used to build the readers, these components are visualised in the vitebook site (https://vitebook.tutors.dev).
 
 </details>
+
 # Contributing
 
 Please ensure to read the [Code of Conduct](./CODE_OF_CONDUCT.md) before contributing to the Tutors project.
