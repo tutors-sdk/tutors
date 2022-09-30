@@ -1,0 +1,38 @@
+---
+import "../styles/tailwind.css";
+import Layout from "../layouts/Layout.astro";
+
+const changelogs = await Astro.glob("./changelogs/*.md");
+---
+
+<Layout title="Changelog">
+  <main>
+    <div class="unitcard-container bg-base-200 rounded-box w-full mt-2">
+      <div class="card-body">
+        <p class="text-xl">
+          <strong>Changelog</strong>
+        </p><br />
+        <div>
+          {
+            changelogs.map((changelog) => (
+              <div
+                tabindex="0"
+                class="collapse collapse-arrow border border-base-300 bg-base-100 rounded-box"
+              >
+                <div class="collapse-title text-lg font-medium">
+                  {changelog.frontmatter.title} &nbsp;
+                  <span class="badge badge-primary">
+                    {changelog.frontmatter.latestVersion}
+                  </span>
+                </div>
+                <div class="collapse-content">
+                  <changelog.Content />
+                </div>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,129 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .container {
+        @apply w-full 2xl:w-11/12;
+    }
+    .card-corner {
+        @apply rounded-xl;
+    }
+    .nav-corner {
+        @apply rounded-3xl;
+    }
+    .tutors-container {
+        @apply mx-auto antialiased bg-base-100 w-full flex min-h-screen flex-col justify-between
+    }
+    .course-container {
+        @apply mx-auto antialiased bg-base-100
+    }
+    .header-container {
+        @apply w-full sticky top-0 z-40 navbar flex justify-center bg-opacity-90 backdrop-blur bg-neutral text-neutral-content shadow-lg z-40 flex w-full
+    }
+    .navbar-secondary {
+        @apply flex flex-wrap lg:flex-nowrap mb-2 mt-2
+    }
+    .navbar-title {
+        @apply flex-auto hidden px-2 mx-2 lg:inline-block
+    }
+    .navbar-calendar {
+        @apply justify-center flex-auto hidden px-2 mx-2 lg:flex text-left text-base-content
+    }
+    .calendar {
+        @apply hidden lg:block w-auto h-auto pl-4 pr-4 rounded-box rounded-xl text-base-content tooltip text-white
+    }
+    .presence {
+        @apply hidden lg:block w-auto h-auto pl-4 pr-4 rounded-box rounded-xl text-base-content tooltip text-white
+    }
+    .navbar-icon {
+        @apply btn btn-square btn-ghost border-0
+    }
+    .navbar-icon:hover {
+        --tw-border-opacity:1
+    }
+    .navbar-secondary-bg {
+        @apply shadow-lg bg-neutral bg-opacity-90 rounded-xl nav-corner horizontal text-neutral-content text-sm breadcrumbs flex flex-auto content-center h-12
+    }
+    .iconbar {
+        @apply block shadow-lg bg-neutral bg-opacity-90 text-neutral-content rounded-xl nav-corner horizontal ml-1 mt-2 lg:mt-0
+    }
+    .carddeck-bg {
+        @apply bg-base-200 text-base-content rounded-box card-corner mb-2 p-2
+    }
+    .tutorscard {
+        @apply card compact text-center shadow-2xl rounded-box card-corner bg-base-100 m-2 border-t-8 border-b-8 z-0 transition ease-in-out hover:scale-105 duration-200
+    }
+    .tutorscard-compact {
+        @apply card compact text-center shadow-2xl rounded-box rounded-2xl bg-base-100 m-2 border-t-2 border-b-2 z-0 transition ease-in-out hover:scale-105 duration-200
+    }
+    .tutorscard-header {
+        @apply flex flex-row justify-between items-center p-3
+    }
+    .tutorscard-header-compact {
+        @apply flex flex-row justify-between items-center p-1
+    }
+    .tutorscard-image {
+        @apply rounded-xl object-scale-down p-1
+    }
+    .tutorscard-body {
+        @apply text-center text-base-content line-clamp-3
+    }
+    .labmenu-container {
+        @apply hidden md:block
+    }
+    .labmenu {
+        @apply menu py-2 w-72 shadow-lg bg-neutral bg-opacity-90 text-neutral-content rounded-box card-corner sticky top-24 overflow-auto h-auto mr-2
+    }
+    .labmenu > :where(li:last-child), .labmenu > :where(li:first-child) > :where(:not(ul)) {
+        border-bottom-left-radius: 0; border-top-left-radius: 0;
+    }
+    .labpanel {
+        @apply justify-end w-full bg-base-200 rounded-box rounded-xl py-1 text-base-content
+    }
+    .labmenu-mobile {
+        @apply md:hidden bg-neutral bg-opacity-90 p-4 text-neutral-content rounded-box mb-4
+    }
+    .labcontent {
+        @apply prose xl:max-w-3xl 2xl:max-w-5xl mx-auto p-2 m-4
+    }
+    .labsearchresult {
+        @apply prose xl:max-w-5xl 2xl:max-w-5xl mx-auto
+    }
+    .notecontent {
+        @apply prose xl:max-w-4xl 2xl:max-w-5xl mx-auto p-2 m-2
+    }
+    .talkcard-container {
+        @apply shadow-xl rounded-box card-corner overflow-hidden bg-base-300 px-4 pb-4 pt-2 mb-2 w-full mx-auto
+    }
+    .topicnavigator {
+        @apply card compact text-center shadow-2xl bg-base-200 ml-2 rounded-box card-corner
+    }
+    .topicnavigator-title {
+        @apply flex flex-row justify-between items-center p-3
+    }
+    .wall-bg {
+        @apply flex flex-wrap justify-center w-full rounded-lg
+    }
+    .labcontent :where(code):not(:where([class~="not-prose"] *)) {
+        border-radius: 0 !important;
+    }
+    .tooltip:before {
+        @apply z-50
+    }
+
+    .labcontent pre code {
+        @apply text-neutral-content bg-neutral-focus p-4
+    }
+
+    .header-icons-desktop {
+        @apply hidden md:inline-block flex-none
+    }
+
+    .header-icons-mobile {
+        @apply inline-block md:hidden flex-none
+    }
+}
+ pre code {
+     color : black
+ }

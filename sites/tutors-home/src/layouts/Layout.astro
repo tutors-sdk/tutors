@@ -1,0 +1,131 @@
+---
+export interface Props {
+  title: string;
+}
+const { title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Tutors | {title}</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"
+    ></script>
+  </head>
+  <body class="bg-base-100">
+    <div class="header-container">
+      <nav class="navbar">
+        <div class="container mx-auto">
+          <div class="flex-1">
+            <a href="/">
+              <div class="inline-block">
+                <img src="/logo.svg" />
+              </div>
+              <div class="navbar-title hidden md:inline-block">
+                <p class="text-lg font-bold">Tutors Open Source Project</p>
+                <p class="text-sm font-bold">Open Learning Web Toolkit</p>
+              </div>
+            </a>
+          </div>
+          <a href="/">
+            <div class="btn btn-ghost rounded-xl">Home</div>
+          </a>
+          <a href="/design">
+            <div class="btn btn-ghost rounded-xl">Design</div>
+          </a>
+          <a href="/changelog">
+            <div class="btn btn-ghost rounded-xl">Changelog</div>
+          </a>
+          <div class="navbar-icon">
+            <span
+              data-toggle-theme="tutors-dark,tutors"
+              data-act-class="ACTIVECLASS"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                aria-hidden="true"
+                role="img"
+                class="text-warning iconify iconify--fluent"
+                width="20"
+                height="20"
+                preserveAspectRatio="xMidYMid meet"
+                viewBox="0 0 24 24"
+              >
+                <g fill="none">
+                  <path
+                    d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10zm0-2V4a8 8 0 1 1 0 16z"
+                    fill="currentColor"></path>
+                </g>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="container tutors-container mt-2">
+      <slot />
+      <footer
+        class="p-10 footer bg-neutral text-neutral-content rounded-box my-2"
+      >
+        <div>
+          <img src="/logo.svg" />
+          <p>
+            Tutors Open Source Project
+            <br />Licensed under the <a
+              href="https://github.com/tutors-sdk/tutors/blob/main/LICENSE"
+              target="_blank"
+              class="link"
+              >MIT License
+            </a>
+          </p>
+        </div>
+        <div>
+          <span class="footer-title">Pages</span>
+          <a class="link link-hover" href="/">Home</a>
+          <a class="link link-hover" href="/design">Design</a>
+          <a class="link link-hover" href="/changelog">Changelog</a>
+        </div>
+        <div>
+          <span class="footer-title">Links</span>
+          <a
+            class="link link-hover"
+            href="https://docs.tutors.dev"
+            target="_blank"
+            >Documentation
+          </a>
+          <a
+            class="link link-hover"
+            href="https://github.com/tutors-sdk"
+            target="_blank"
+            >GitHub
+          </a>
+          <a
+            class="link link-hover"
+            href="https://github.com/tutors-sdk/tutors/blob/main/CODE_OF_CONDUCT.md"
+            target="_blank"
+            >Code of Conduct
+          </a>
+        </div>
+        <div>
+          <span class="footer-title">More</span>
+          <a href="https://www.netlify.com">
+            <img
+              src="https://www.netlify.com/v3/img/components/netlify-color-bg.svg"
+              alt="Deploys by Netlify"
+            />
+          </a>
+        </div>
+      </footer>
+    </div>
+    <div class="hidden border-info border-success border-warning border-error">
+    </div>
+  </body>
+</html>
