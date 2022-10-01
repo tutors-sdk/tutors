@@ -1,15 +1,16 @@
 <script lang="ts">
-  import type { StudentMetric, User } from "tutors-reader-lib/src/types/metrics-types";
+  import type { User } from "tutors-reader-lib/src/types/metrics-types";
   import { currentCourse, currentUser, studentsOnline } from "../../../stores";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
-  import { getContext, onDestroy } from "svelte";
+  import { getContext } from "svelte";
   import { isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
   import { revealOnline } from "../../../stores";
+  import type { MetricsService } from "src/reader-lib/services/metrics-service";
 
   let user: User;
   let status = false;
 
-  const metricsService = getContext("metrics");
+  const metricsService = getContext<MetricsService>("metrics");
 
   function handleClick() {
     status = !status;
@@ -42,11 +43,11 @@
         {/if}
       </button>
     </div>
-    <ul tabindex="0" class="dropdown-content menu rounded-box z-50 w-48 rounded-xl bg-base-100 p-1 text-base-content shadow-xl">
+    <ul tabindex="0" class="dropdown-content menu rounded-box bg-base-100 text-base-content z-50 w-48 rounded-xl p-1 shadow-xl">
       <li>
         <label class="label cursor-pointer">
           <input type="checkbox" class="checkbox checkbox-primary checkbox-sm" bind:checked={status} on:click={handleClick} />
-          <span class="label-text text-base text-base-content">Share Presence</span>
+          <span class="label-text text-base-content text-base">Share Presence</span>
         </label>
       </li>
       {#if status}

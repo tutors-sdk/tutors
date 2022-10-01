@@ -5,6 +5,6 @@
 
 {#if !$currentCourse.isPortfolio()}
   <button class="tooltip tooltip-bottom">
-    <Icon type="search" toolTip="Search" link="/#/search/{$courseUrl}" button="true" />
+    <Icon type="search" toolTip="Search" link="/#/search/{$courseUrl}" button={true} />
   </button>
 {/if}

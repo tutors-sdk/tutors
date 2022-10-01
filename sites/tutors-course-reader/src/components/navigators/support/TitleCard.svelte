@@ -1,6 +1,5 @@
 <script lang="ts">
   import { currentCourse, currentLo } from "../../../stores";
-  import { getContext } from "svelte";
   import Image from "../../cards/Image.svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { getIcon } from "tutors-reader-lib/src/iconography/themes";
@@ -8,16 +7,6 @@
 
   let lo: Lo;
   let wall = false;
-  const { open } = getContext("simple-modal");
-  const unsubscribe = currentLo.subscribe((current) => {
-    lo = current;
-    if (lo && lo.type === "unit") {
-      lo.img = lo.parentLo.img;
-      lo.icon = lo.parentLo.icon;
-    } else if (lo && lo.route.includes("wall")) {
-      wall = true;
-    }
-  });
 </script>
 
 {#if $currentLo}

@@ -1,24 +1,22 @@
 <script lang="ts">
   import { currentCourse, currentUser, revealOnline, studentsOnline } from "../../../stores";
-  import { beforeUpdate, getContext } from "svelte";
+  import { getContext } from "svelte";
   import type { Course } from "tutors-reader-lib/src/models/course";
-  import type { CourseService } from "../../../reader-lib/services/course-service";
   import type { StudentMetric, User } from "tutors-reader-lib/src/types/metrics-types";
+  import type { MetricsService } from "../../../reader-lib/services/metrics-service";
   import { PresenceService } from "../../../reader-lib/services/presence-service";
-  import { MetricsService } from "../../../reader-lib/services/metrics-service";
   import SidebarComponent from "./SidebarComponent.svelte";
   import StudentCard from "../../cards/StudentCard.svelte";
   import { isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
 
-  const cache: CourseService = getContext("cache");
-  const metricsService :MetricsService = getContext("metrics");
+  const metricsService: MetricsService = getContext("metrics");
   let students: StudentMetric[] = [];
   let presenceService: PresenceService = null;
-  let lastCourse:Course = null;
+  let lastCourse: Course = null;
   let user: User;
 
   function refresh(refreshedStudents: StudentMetric[]) {
-    let student = refreshedStudents.find(student => student.nickname === user.nickname);
+    let student = refreshedStudents.find((student) => student.nickname === user.nickname);
     let index = refreshedStudents.indexOf(student);
     if (index !== -1) {
       refreshedStudents.splice(index, 1);
@@ -27,26 +25,27 @@
     studentsOnline.set(refreshedStudents.length);
   }
 
-  function initService(course: Course) {
+  async function initService(course: Course) {
     if (presenceService) presenceService.stop();
     metricsService.setCourse(course);
     presenceService = new PresenceService(metricsService, students, refresh, null);
     presenceService.setCourse(course);
-    presenceService.start();
+    await presenceService.start();
     students = [];
     studentsOnline.set(0);
   }
-  
-  currentCourse.subscribe(async (newCourse: Course) => {
+
+  currentCourse.subscribe((newCourse: Course) => {
     if (newCourse && newCourse != lastCourse) {
       lastCourse = newCourse;
       if (isAuthenticated() && newCourse?.authLevel > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
         initService(newCourse);
       }
     }
   });
 
-  currentUser.subscribe(async (newUser) => {
+  currentUser.subscribe((newUser) => {
     user = newUser;
   });
 </script>

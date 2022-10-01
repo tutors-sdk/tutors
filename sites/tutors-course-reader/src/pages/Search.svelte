@@ -2,7 +2,7 @@
   import { getContext, onMount } from "svelte";
   import { currentLo } from "../stores";
   import type { ResultType } from "tutors-reader-lib/src/utils/search-utils";
-  import { extractPath, isValid, searchHits } from "tutors-reader-lib/src/utils/search-utils";
+  import { isValid, searchHits } from "tutors-reader-lib/src/utils/search-utils";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { allLos } from "tutors-reader-lib/src/utils/lo-utils";
   import { push } from "svelte-spa-router";
@@ -14,16 +14,13 @@
   const cache: CourseService = getContext("cache");
 
   let course: Course;
-  let search_strings: string[] = [];
   let labs: Lo[] = [];
-  let title = "";
   let searchTerm = "";
   let searchResults: ResultType[] = [];
 
   onMount(async () => {
     course = await cache.readCourse(params.wild);
     currentLo.set(course.lo);
-    title = course.lo.title;
     labs = allLos("lab", course.lo.los);
   });
 
@@ -47,6 +44,7 @@
     if (isValid(searchTerm)) {
       searchResults = searchHits(labs, searchTerm);
       transformResults(searchResults);
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       push(searchTerm);
     }
   }
@@ -54,7 +52,7 @@
 
 {#if course}
   <div class="container mx-auto">
-    <label for="search" class="block p-2 text-xl text-base-content">Enter search term:</label>
+    <label for="search" class="text-base-content block p-2 text-xl">Enter search term:</label>
     <div class="mt-1 border">
       <input bind:value={searchTerm} type="text" name="email" id="search" class="input input-bordered w-full" placeholder="..." />
     </div>

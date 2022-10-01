@@ -4,8 +4,8 @@
 
   export let los: Lo[] = [];
   let orderedLos = los.filter((lo) => lo?.frontMatter?.order);
-  let unOrderedLos = los.filter((lo) => !(lo?.frontMatter?.order));
-  orderedLos.sort((a, b) => a.frontMatter.order - b.frontMatter.order);
+  let unOrderedLos = los.filter((lo) => !lo?.frontMatter?.order);
+  orderedLos.sort((a, b) => Number(a.frontMatter.order) - Number(b.frontMatter.order));
 </script>
 
 {#if los.length}

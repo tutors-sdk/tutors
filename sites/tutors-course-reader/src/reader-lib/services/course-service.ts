@@ -1,5 +1,5 @@
 import path from "path-browserify";
-import { courseUrl, currentCourse, currentLo, currentUser, week } from "../../stores";
+import { currentCourse, currentLo, currentUser, week } from "../../stores";
 import { replace } from "svelte-spa-router";
 import { Course } from "tutors-reader-lib/src/models/course";
 import { Lab } from "tutors-reader-lib/src/models/lab";
@@ -14,8 +14,6 @@ export class CourseService {
   course: Course;
   courses = new Map<string, Course>();
   courseUrl = "";
-
-  constructor() {}
 
   async getOrLoadCourse(courseId: string): Promise<Course> {
     let course = this.courses.get(courseId);
@@ -48,14 +46,14 @@ export class CourseService {
         const student = course.getStudents().find((student) => student.github === user.nickname);
         if (!student) {
           console.log("Not Authorised to access this models");
-          replace(`/unauthorised`);
+          await replace(`/unauthorised`);
         }
       }
     }
   }
 
   async readCourse(courseId: string): Promise<Course> {
-    let course = await this.getOrLoadCourse(courseId);
+    const course = await this.getOrLoadCourse(courseId);
     currentCourse.set(course);
     week.set(<WeekType>course?.currentWeek);
     await this.checkAuthenticated(course);
@@ -69,11 +67,11 @@ export class CourseService {
     const course = await this.readCourse(courseId);
     const topic = course.topicIndex.get(lastSegment(topicId));
     currentLo.set(topic.lo);
-    return topic!;
+    return topic;
   }
 
   async readLab(url: string): Promise<Lab> {
-    let courseId = url.substring(0, url.indexOf("/"));
+    const courseId = url.substring(0, url.indexOf("/"));
     const course = await this.readCourse(courseId);
     let labId = `/#/lab/${url}`;
     const lastSegment = url.substr(url.lastIndexOf("/") + 1);
@@ -84,7 +82,7 @@ export class CourseService {
     const lo = course.loIndex.get(labId);
     let lab = course.hydratedLabs.get(labId);
     if (!lab) {
-      lab = new Lab(course, lo!, url);
+      lab = new Lab(course, lo, url);
       course.hydratedLabs.set(labId, lab);
     }
     currentLo.set(lab.lo);
@@ -95,7 +93,7 @@ export class CourseService {
     const path = url.split("/");
     const course = await this.readCourse(path[1]);
     const wall = course.walls.get(path[0]);
-    return wall!;
+    return wall;
   }
 
   async readLo(url: string, loType: string): Promise<Lo> {
@@ -104,6 +102,6 @@ export class CourseService {
     const ref = `/#/${loType}/${url}`;
     const lo = course.loIndex.get(ref);
     currentLo.set(lo);
-    return lo!;
+    return lo;
   }
 }

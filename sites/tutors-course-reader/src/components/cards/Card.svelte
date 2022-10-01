@@ -9,7 +9,6 @@
   import Image from "./Image.svelte";
   import { convertMd } from "tutors-reader-lib/src/utils/markdown-utils";
 
-  let type = "default";
   export let lo: Lo;
   let target = "";
   if (lo.type === "web") {
@@ -62,9 +61,10 @@
       <div class="tutorscard-body">
         {#if $currentCourse && !$currentCourse.areVideosHidden()}
           {#if lo.video && lo.type !== "video"}
-            <Icon link={lo.video} width="40" height="40" type="video" toolTip="Play video for this talk" />
+            <Icon link={lo.video} width={40} height={40} type="video" toolTip="Play video for this talk" />
           {/if}
         {/if}
+
         <p />
         <div class="{text} prose">
           {@html lo.summary}

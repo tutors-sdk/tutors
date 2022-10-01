@@ -4,6 +4,7 @@ import type { Course } from "tutors-reader-lib/src/models/course";
 import { encrypt, fromLocalStorage, isAuthenticated, setSession, toLocalStorage } from "tutors-reader-lib/src/utils/auth-utils";
 import { replace } from "svelte-spa-router";
 import { getKeys } from "../../environment";
+import type { User } from "tutors-reader-lib/src/types/auth-types";
 
 const auth0 = new WebAuth({
   domain: getKeys().auth0.domain,
@@ -30,11 +31,11 @@ export function checkAuth(course: Course, loType: string, analytics: AnalyticsSe
 }
 
 export function handleAuthentication(result: string, analytics: AnalyticsService): void {
-  let authResult = new URLSearchParams(result);
+  const authResult = new URLSearchParams(result);
   const accessToken = authResult.get("access_token");
   const idToken = authResult.get("id_token");
   if (accessToken && idToken) {
-    auth0.client.userInfo(accessToken, function (err, user) {
+    auth0.client.userInfo(accessToken, function (err: Error, user: User) {
       if (err) {
         console.log("Error loading the Profile", err);
       }
@@ -43,6 +44,7 @@ export function handleAuthentication(result: string, analytics: AnalyticsService
       user.userId = encrypt(user.email);
       analytics.reportLogin(user, url);
       setSession(authResult);
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       replace(`/course/${url}`);
     });
   }

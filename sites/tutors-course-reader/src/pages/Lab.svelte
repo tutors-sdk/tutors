@@ -37,7 +37,7 @@
     return the_arr.join("/");
   }
 
-  async function getLab(url: string) {
+  async function getLab() {
     revealSidebar.set(false);
     let encoded = encodeURI(params.wild);
     const lastSegment = encoded.substr(params.wild.lastIndexOf("/") + 1);
@@ -62,7 +62,7 @@
 
   let direction = 0;
 
-  function mouseClick(e) {
+  function mouseClick() {
     direction = 0;
   }
 
@@ -80,12 +80,12 @@
     }
   }
 
-  onDestroy(async () => {
+  onDestroy(() => {
     window.removeEventListener("keydown", keypressInput);
     window.removeEventListener("mousedown", mouseClick);
   });
 
-  afterUpdate(async () => {
+  afterUpdate(() => {
     animateScroll.scrollTo({ delay: 200, element: "#top" });
   });
 </script>
@@ -105,7 +105,7 @@
   />
 </svelte:head>
 
-{#await getLab(params.wild)}
+{#await getLab()}
   <Loading />
 {:then lab}
   {#if !hide}

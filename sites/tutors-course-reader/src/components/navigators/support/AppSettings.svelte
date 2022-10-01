@@ -7,9 +7,9 @@
 
 <div class="dropdown dropdown-end">
   <button>
-    <Icon type="appSettings" button="true" />
+    <Icon type="appSettings" button={true} />
   </button>
-  <ul tabindex="0" class="shadow-xl menu dropdown-content bg-base-100 text-base-content w-44 p-1 rounded-box rounded-xl z-50 block">
+  <ul tabindex="0" class="menu dropdown-content bg-base-100 text-base-content rounded-box z-50 block w-44 rounded-xl p-1 shadow-xl">
     <Search />
     <Compact />
     <DarkMode />
