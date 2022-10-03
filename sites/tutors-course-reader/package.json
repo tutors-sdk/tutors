@@ -11,7 +11,10 @@
     "build": "vite build",
     "serve": "vite preview",
     "preview": "vite preview",
-    "check": "svelte-check --tsconfig ./tsconfig.json"
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "lint": "eslint ./src/**/*.{ts,svelte}",
+    "lint:fix": "eslint --fix ./src/**/*.{ts,svelte}",
+    "format": "prettier --write ./src/**/*.{js,svelte,html,ts}"
   },
   "dependencies": {
     "tutors-reader-lib": "^2.6.0"
@@ -23,10 +26,14 @@
     "@tailwindcss/line-clamp": "^0.4.0",
     "@tailwindcss/typography": "^0.5.4",
     "@tsconfig/svelte": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
     "auth0-js": "^9.19.0",
     "autoprefixer": "^10.4.12",
     "axios": "^0.27.2",
     "daisyui": "^2.31.0",
+    "eslint": "^8.24.0",
+    "eslint-plugin-svelte3": "^4.0.0",
     "file-saver": "^2.0.5",
     "firebase": "^9.9.3",
     "pdfjs-dist": "^2.16.105",

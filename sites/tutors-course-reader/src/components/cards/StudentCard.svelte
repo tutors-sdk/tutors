@@ -7,10 +7,8 @@
   export let student: StudentMetric;
 
   let headingText = "text-xs font-medium";
-  let text = "text-xs";
   let cardWidths = "w-36 h-56";
   let cardType = "tutorscard-compact";
-  let cardHeader = "tutorscard-header-compact";
   let iconHeight = "80";
   let imageHeight = "h-24";
 
@@ -31,7 +29,7 @@
 <div transition:cardTransition class="{cardType} {cardWidths} border-{getIcon('talk').colour}">
   <div class="flex">
     <div class="avatar">
-      <div class="w-10 rounded-full mt-1 ml-1">
+      <div class="mt-1 ml-1 w-10 rounded-full">
         <img loading="lazy" class="object-scale-down" src={student.img} alt={student.nickname} />
       </div>
     </div>
@@ -70,8 +68,8 @@
       {/if}
     </div>
   {/if}
-  <div class="text-xs text-center tutorscard-body">
-    <div class="italic mt-2">
+  <div class="tutorscard-body text-center text-xs">
+    <div class="mt-2 italic">
       {new Date(student.time).toLocaleTimeString()}
     </div>
     <div class="mt-2">

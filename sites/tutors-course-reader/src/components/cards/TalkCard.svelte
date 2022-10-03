@@ -3,8 +3,8 @@
   import { BarLoader } from "svelte-loading-spinners";
   import FileSaver from "file-saver";
   import { onDestroy, tick } from "svelte";
-
   import * as pdfjs from "pdfjs-dist/build/pdf.js";
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   import pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
 
   export let url = "";
@@ -13,10 +13,8 @@
   export let lo = null;
 
   url = lo.pdf;
-  let status = "";
 
   let canvas;
-  let page_num = 0;
   let pageCount = 0;
   let pdfDoc = null;
   let pageRendering = false;
@@ -98,7 +96,7 @@
     FileSaver.saveAs(url, fileName);
   };
 
-  const initialLoad = async () => {
+  const initialLoad = () => {
     window.addEventListener("keydown", keypressInput);
     let loadingTask = pdfjs.getDocument({ url });
     loadingTask.promise
@@ -109,7 +107,7 @@
         totalPage = pageCount;
         renderPage(pageNum);
       })
-      .catch(function (error) {});
+      .catch(() => null);
   };
   initialLoad();
 
@@ -120,11 +118,10 @@
   });
 
   function keypressInput(e) {
+    e.preventDefault();
     if (e.key === "ArrowRight") {
-      e.preventDefault();
       onNextPage();
     } else if (e.key === "ArrowLeft") {
-      e.preventDefault();
       onPrevPage();
     }
   }
@@ -138,18 +135,18 @@
       </div>
       <div>
         <button on:click={onPrevPage}>
-          <Icon button="true" type="left" tipPos="tooltip-bottom" toolTip="Previous Slide" />
+          <Icon button={true} type="left" tipPos="tooltip-bottom" toolTip="Previous Slide" />
         </button>
         <button on:click={onNextPage}>
-          <Icon button="true" type="right" tipPos="tooltip-bottom" toolTip="Next Slide" />
+          <Icon button={true} type="right" tipPos="tooltip-bottom" toolTip="Next Slide" />
         </button>
         <button on:click={clockwiseRotate}>
-          <Icon button="true" type="rotate" tipPos="tooltip-bottom" toolTip="Rotate 90 Degrees" />
+          <Icon button={true} type="rotate" tipPos="tooltip-bottom" toolTip="Rotate 90 Degrees" />
         </button>
         <button on:click={downloadPdf}>
-          <Icon type="download" button="true" toolTip="download" tipPos="tooltip-bottom" />
+          <Icon type="download" button={true} toolTip="download" tipPos="tooltip-bottom" />
         </button>
-        <Icon button="true" link={lo.pdf} type="fullScreen" toolTip="Full Screen" tipPos="tooltip-bottom" target="_blank" />
+        <Icon button={true} link={lo.pdf} type="fullScreen" toolTip="Full Screen" tipPos="tooltip-bottom" target="_blank" />
       </div>
     </div>
     <canvas class="mx-auto w-full 2xl:w-4/5" bind:this={canvas} />

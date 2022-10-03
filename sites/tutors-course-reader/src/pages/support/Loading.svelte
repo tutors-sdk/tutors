@@ -9,7 +9,7 @@
 </script>
 
 {#if !hide}
-  <div class="flex flex-col justify-center items-center mt-28">
+  <div class="mt-28 flex flex-col items-center justify-center">
     <BarLoader size="100" color="#37919B" unit="px" />
     <br />
     <span class="text-lg">Loading...</span>

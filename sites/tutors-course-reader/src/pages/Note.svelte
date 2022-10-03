@@ -20,14 +20,14 @@
     hide = false;
   }, 500);
 
-  onMount(async () => {
+  onMount(() => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     animateScroll.scrollTo({ delay: 800, element: "#top" });
   });
 
   async function getNote(url: string): Promise<Lo> {
     revealSidebar.set(false);
-    let lo = await cache.readLo(url, "note");
+    const lo = await cache.readLo(url, "note");
     analytics.pageLoad(params.wild, lo);
     return lo;
   }

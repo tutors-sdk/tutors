@@ -21,7 +21,7 @@ let course: Course;
 let currentRoute = "";
 let currentLo: Lo;
 
-currentCourse.subscribe(async (current) => {
+currentCourse.subscribe((current) => {
   if (current) course = current;
 });
 
@@ -95,7 +95,7 @@ export class AnalyticsService {
 
     if (!lo) return;
     this.initRoot(course.url);
-    let node = getNode(lo.type, course.url, path);
+    const node = getNode(lo.type, course.url, path);
     updateLastAccess(this.firebaseIdRoot, node, lo.title);
     updateVisits(this.firebaseIdRoot, node, lo.title);
 
@@ -114,7 +114,7 @@ export class AnalyticsService {
 
     if (!lo) return;
     this.initRoot(course.url);
-    let node = getNode(lo.type, course.url, path);
+    const node = getNode(lo.type, course.url, path);
     updateLastAccess(this.firebaseIdRoot, node, lo.title);
     updateCount(this.firebaseIdRoot, node, lo.title);
     if (this.userEmail) {

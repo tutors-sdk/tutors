@@ -6,16 +6,16 @@
   }
 </script>
 
-<div class="flex h-screen justify-center items-center bg-neutral bg-opacity-90 backdrop-blur text-neutral-content">
-  <div class="text-center max-w-screen-md">
+<div class="bg-neutral text-neutral-content flex h-screen items-center justify-center bg-opacity-90 backdrop-blur">
+  <div class="max-w-screen-md text-center">
     <div
-      class="flex flex-wrap justify-items-center shadow-md rounded-lg px-4 py-2 bg-base-200 bg-opacity-90 backdrop-blur text-base-content m-8"
+      class="bg-base-200 text-base-content m-8 flex flex-wrap justify-items-center rounded-lg bg-opacity-90 px-4 py-2 shadow-md backdrop-blur"
     >
-      <div class="flex justify-between w-full border-gray-400 border-b-2 p-2">
-        <div class="font-sm font-light text-xl text-center">TutorsTime</div>
+      <div class="flex w-full justify-between border-b-2 border-gray-400 p-2">
+        <div class="font-sm text-center text-xl font-light">TutorsTime</div>
       </div>
 
-      <div class="font-sm font-light text-l text-left p-2">
+      <div class="font-sm text-l p-2 text-left font-light">
         <p class="p-2">
           You have been authenticated via your GitHib credentials and are about to enter a Tutors course. Tutors will record how much time
           each view is active and send this to the TutorsTime data store. You can view this information via the TutorsTime feature on the
@@ -30,13 +30,13 @@
           TutorsLive page.
         </p>
         <p class="p-2">To learn more about these features please consult:</p>
-        <ul class="list-disc list-inside ml-4 underline text-blue-600 hover:text-blue-800 visited:text-purple-600">
+        <ul class="ml-4 list-inside list-disc text-blue-600 underline visited:text-purple-600 hover:text-blue-800">
           <li><a target="_blank" href="https://github.com/tutors-sdk/tutors-faqs/blob/main/tutors-time-faq.md"> Tutors Time FAQ </a></li>
           <li><a target="_blank" href="https://github.com/tutors-sdk/tutors-faqs/blob/main/tutors-live-faq.md">Tutors Live FAQ </a></li>
         </ul>
         <p class="p-2">
           Tutors is an open source application - the data collection component <a
-            class="underline text-blue-600 hover:text-blue-800 visited:text-purple-600"
+            class="text-blue-600 underline visited:text-purple-600 hover:text-blue-800"
             href="https://github.com/tutors-sdk/tutors-readers/blob/main/tutors-course-reader/src/reader-lib/services/analytics-service.ts"
             target="_blank"
           >
