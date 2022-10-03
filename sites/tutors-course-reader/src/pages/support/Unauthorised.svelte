@@ -11,7 +11,7 @@
 </script>
 
 <div class="container mx-auto mt-8">
-  <div class="navbar bg-neutral text-neutral-content rounded-box mb-2 justify-center p-4 shadow-lg">
+  <div class="navbar rounded-box bg-neutral text-neutral-content mb-2 justify-center p-4 shadow-lg">
     <div class="flex-1">
       <svg
         version="1.1"
@@ -49,7 +49,7 @@
       <div class="btn btn-ghost rounded-2xl">Tutors.dev</div>
     </a>
   </div>
-  <div class="bg-base-200 text-base-content rounded-box mb-2 p-20">
+  <div class="rounded-box bg-base-200 text-base-content mb-2 p-20">
     <div class="text-center">
       <p class="text-4xl font-bold">Oops!</p>
       <br />

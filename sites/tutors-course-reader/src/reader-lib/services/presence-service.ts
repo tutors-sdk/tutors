@@ -49,7 +49,7 @@ export class PresenceService {
 
   metricDelete(user: User) {
     const student = this.students.find((student) => student.nickname === user.nickname);
-    const index = this.students.indexOf(student);
+    const index = this.students.indexOf(student!);
     if (index !== -1) {
       this.students.splice(index, 1);
     }

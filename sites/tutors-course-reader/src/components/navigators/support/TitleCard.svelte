@@ -4,9 +4,20 @@
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { getIcon } from "tutors-reader-lib/src/iconography/themes";
   import Icon from "@iconify/svelte";
+  import { onDestroy } from "svelte";
 
   let lo: Lo;
   let wall = false;
+  const unsubscribe = currentLo.subscribe((current) => {
+    lo = current;
+    if (lo && lo.type === "unit") {
+      lo.img = lo.parentLo.img;
+      lo.icon = lo.parentLo.icon;
+    } else if (lo && lo.route.includes("wall")) {
+      wall = true;
+    }
+  });
+  onDestroy(unsubscribe);
 </script>
 
 {#if $currentLo}

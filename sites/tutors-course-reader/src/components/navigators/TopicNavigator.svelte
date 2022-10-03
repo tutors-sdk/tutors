@@ -29,8 +29,8 @@
       <li class="mb-2 ml-4">
         {#each lo.los as loFromLos}
           <div class="flex">
-            <a class="inline-flex" href={loFromLos.route}>
-              <Icon type={loFromLos.type} /> <span class="pl-1"> {@html convertMd(loFromLos.title, "")} </span>
+            <a class="inline-flex" href={lo.route}>
+              <Icon type={lo.type} /> <span class="pl-1"> {@html convertMd(lo.title, "")} </span>
             </a>
             {#if loFromLos.video && loFromLos.type != "panelvideo"}
               <a class="inline-flex pl-2" href={loFromLos.video}>

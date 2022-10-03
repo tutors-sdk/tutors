@@ -29,19 +29,37 @@ A collection of open source components & services supporting the creation of tra
 
 # Getting Started
 
-Make sure you have Node 16 + a recent VSCode installed.
+Make sure you have Node 16 + installed, and start by cloning this repo:
 
-<details>
-<summary><h2>Running the course reader locally</h2></summary>
-Clone this repo, then in the root of the cloned folder open a shell and enter:
+~~~bash
+git clone https://github.com/tutors-sdk/tutors.git
+~~~
+
+Open a shell and...
 
 ```bash
+cd tutors
 npm install
+npm run build
 ```
 
-Copy the file in sites/tutors-course-reader called `.env.example` to `.env`
+This may take a few minutes, and should conclude with:
 
-Run the below command from the root folder to run the course reader.
+```text
+...
+Tasks:    6 successful, 6 total
+Cached:   0 cached, 6 total
+```
+
+Change directory into sites/tutors-course-reader
+
+```bash
+cd sites/tutors-course-reader
+```
+
+and copy the file `.env.example` to `.env`
+
+Back in the root folder for the project, run this command:
 
 ```bash
 npm run reader
@@ -80,16 +98,15 @@ http://localhost:5001/#/course/full-stack-web-dev-oth-2022.netlify.app
 
 You are now running the tutors reader locally, rebuilt from source, to browse a tutors course. You could try any of the other sample courses above.
 
-</details>
-
 If you would like to build your own course then [this workshop here](https://reader.tutors.dev/#/topic/docs.tutors.dev/topic-00-WX) would be a good place to start. In particular, [this lab here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-00-WX/unit-1-creating/book-a) will get you up and running with a sample course in a few minutes. More guidance and examples are on our [Educator documentation](https://reader.tutors.dev/#/topic/docs.tutors.dev/topic-02-EX) site. To learn more about the project, explore the core principles at https://tutors.dev/.
+
+If you have VSCode, you should be able to open the project now.
 
 # Project Structure
 
 This is a monorepo for all of the components & services of the [Tutors Open Source Project](https://tutors.dev/). There are three categories of independent sub-projects:
 
-<details>
-<summary><h2>Sites</h1></summary>
+## Sites
 
 These are the student facing web applications for browsing a course, an application inspecting course analytics + a storybook encapsulation of UX elements. The principles embodied in the [learner experience are presented here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/01).
 
@@ -109,10 +126,7 @@ The homepage of the Tutors project built with Astro. This is deployed at https:/
 
 A storybook style application which visualises the UI components of the Tutors project. This is deployed at https://vitebook.tutors.dev
 
-</details>
-
-<details>
-<summary><h2>Apps</h1></summary>
+## Apps
 
 These are command line applications used by educators to generate courses. The principles embodied in the [educator experience are presented here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/02).
 
@@ -124,10 +138,7 @@ The primary static site generator for tutors courses. It will inject a folder ad
 
 An alternative to tutors-json, this command application generate a static site independent of the course reader. This presents a subset of the user experience, and is useful as an offline version of the course for backup purposes.
 
-</details>
-
-<details>
-<summary><h2>Components</h2></summary>
+## Components
 
 Reusable components used in the apps & sites.
 
@@ -146,8 +157,6 @@ Comparable to tutors-lib, but intended for use in Svelte applications. Construct
 ### [tutors-ui](https://github.com/tutors-sdk/tutors/tree/main/components/tutors-ui)
 
 A shared library of UI components which can be used to build the readers, these components are visualised in the vitebook site (https://vitebook.tutors.dev).
-
-</details>
 
 # Contributing
 

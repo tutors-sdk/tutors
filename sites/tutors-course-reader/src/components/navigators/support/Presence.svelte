@@ -10,7 +10,7 @@
   let user: User;
   let status = false;
 
-  const metricsService = getContext<MetricsService>("metrics");
+  const metricsService: MetricsService = getContext("metrics");
 
   function handleClick() {
     status = !status;
@@ -31,7 +31,7 @@
 </script>
 
 {#if $currentUser && $currentCourse.authLevel > 0}
-  <div class="dropdown dropdown-end dropdown-hover flex-none capitalize">
+  <div class="dropdown-end dropdown dropdown-hover flex-none capitalize">
     <div class="indicator">
       <span class="badge indicator-item badge-error indicator-center indicator-top">{$studentsOnline}</span>
       <button class="btn btn-ghost">

@@ -52,11 +52,11 @@
           title={lo.title}
           src="https://vimp.oth-regensburg.de/media/embed?key={vimpId}&autoplay=false&controls=true"
           class="iframeLoaded"
-          allowfullscreen={true}
           width="720"
           height="405"
-          allowtransparency={true}
           aria-label="media embed code"
+          allowtransparency={true}
+          allowfullscreen
         />
       </div>
     {:else}
@@ -67,7 +67,6 @@
           src="https://www.youtube.com/embed/{defaultId}"
           allow="encrypted-media"
           allowfullscreen
-          uk-responsive
         />
       {:else}
         <div class="relative aspect-video" style="padding-top: 40%;">
@@ -77,7 +76,6 @@
             src="https://www.youtube.com/embed/{defaultId}"
             allow="encrypted-media"
             allowfullscreen
-            uk-responsive
           />
         </div>
       {/if}

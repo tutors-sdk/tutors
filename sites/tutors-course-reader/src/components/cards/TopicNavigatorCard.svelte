@@ -24,6 +24,7 @@
     }
   });
   onDestroy(unsubscribe);
+  onDestroy(unsubscribeLo);
 </script>
 
 <div class="topicnavigator {cardWidths}">

@@ -13,9 +13,9 @@
   }
 </script>
 
-<div class="dropdown dropdown-end dropdown-hover flex-none">
+<div class="dropdown-end dropdown dropdown-hover flex-none">
   <Icon type="dark" button={true} />
-  <ul class="menu dropdown-content bg-base-100 text-base-content w-48 rounded-xl p-1 shadow" tabindex="0">
+  <ul class="dropdown-content menu bg-base-100 text-base-content w-48 rounded-xl p-1 shadow" tabindex="0">
     {#each themes as theme}
       <button on:click={() => setTheme(theme)} class="bg-base-100 text-base-content py-2" data-theme={theme}>{theme}</button>
     {/each}

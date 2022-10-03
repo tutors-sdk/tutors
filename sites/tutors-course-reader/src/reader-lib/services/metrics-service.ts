@@ -187,7 +187,7 @@ export class MetricsService {
     });
   }
 
-  subscribeToUserTopics(user: User, email: string) {
+  subscribeToUserTopics(user, email: string) {
     const that = this;
     const topics = this.course.topics;
 

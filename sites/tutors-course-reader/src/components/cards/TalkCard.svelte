@@ -4,6 +4,8 @@
   import FileSaver from "file-saver";
   import { onDestroy, tick } from "svelte";
   import * as pdfjs from "pdfjs-dist/build/pdf.js";
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  import pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
 
   export let url = "";
   export let scale = 1.8;

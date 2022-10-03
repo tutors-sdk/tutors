@@ -4,6 +4,10 @@
   "description": "Static course web site generator - core library",
   "author": "Eamonn de Leastar (edeleastar@wit.ie)",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/tutors-sdk/tutors-lib.git"

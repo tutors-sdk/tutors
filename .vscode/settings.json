@@ -6,9 +6,5 @@
     "**/*.js.map": true,
     "**/*.d.ts": true
   },
-  "eslint.validate": [
-    "javascript",
-    "typescript",
-    "svelte"
-  ]
+  "eslint.validate": ["javascript", "typescript", "svelte"]
 }
