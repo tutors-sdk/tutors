@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "tutors-lib": "^2.5.2",
-    "@types/node": "^18.7.14",
+    "@types/node": "^18.8.0",
     "@types/shelljs": "^0.8.11",
     "commander": "^9.3.0",
     "nunjucks": "^3.2.3",
