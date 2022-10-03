@@ -30,7 +30,7 @@ export function checkAuth(course: Course, loType: string, analytics: AnalyticsSe
 }
 
 export function handleAuthentication(result: string, analytics: AnalyticsService): void {
-  let authResult = new URLSearchParams(result);
+  const authResult = new URLSearchParams(result);
   const accessToken = authResult.get("access_token");
   const idToken = authResult.get("id_token");
   if (accessToken && idToken) {
@@ -43,6 +43,7 @@ export function handleAuthentication(result: string, analytics: AnalyticsService
       user.userId = encrypt(user.email);
       analytics.reportLogin(user, url);
       setSession(authResult);
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       replace(`/course/${url}`);
     });
   }
