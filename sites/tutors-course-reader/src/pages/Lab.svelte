@@ -39,19 +39,19 @@
 
   async function getLab(url: string) {
     revealSidebar.set(false);
-    let encoded = encodeURI(params.wild);
+    let encoded = encodeURI(url);
     const lastSegment = encoded.substr(params.wild.lastIndexOf("/") + 1);
 
     if (mostRecentLab === "") {
-      mostRecentLab = removeLastDirectory(params.wild);
+      mostRecentLab = removeLastDirectory(url);
       lab = await cache.readLab(params.wild);
     } else {
-      let thisLab = removeLastDirectory(params.wild);
+      let thisLab = removeLastDirectory(url);
       if (mostRecentLab !== thisLab) {
-        lab = await cache.readLab(params.wild);
+        lab = await cache.readLab(url);
       }
     }
-    analytics.pageLoad(params.wild, lab.lo);
+    analytics.pageLoad(url, lab.lo);
     if (lastSegment.startsWith("book")) {
       lab.setFirstPageActive();
     } else {
@@ -62,7 +62,7 @@
 
   let direction = 0;
 
-  function mouseClick(e) {
+  function mouseClick() {
     direction = 0;
   }
 
@@ -80,12 +80,12 @@
     }
   }
 
-  onDestroy(async () => {
+  onDestroy(() => {
     window.removeEventListener("keydown", keypressInput);
     window.removeEventListener("mousedown", mouseClick);
   });
 
-  afterUpdate(async () => {
+  afterUpdate(() => {
     animateScroll.scrollTo({ delay: 200, element: "#top" });
   });
 </script>

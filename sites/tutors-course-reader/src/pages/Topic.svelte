@@ -13,7 +13,7 @@
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
 
-  export let params: any = {};
+  export let params: { wild?: string } = {};
   const cache: CourseService = getContext("cache");
   const analytics: AnalyticsService = getContext("analytics");
 
@@ -26,10 +26,10 @@
     hide = false;
   }, viewDelay);
 
-  async function getTopic(url) {
+  async function getTopic(url: string) {
     revealSidebar.set(false);
     unitId = "";
-    let unitPos = url.indexOf("/unit");
+    let unitPos: number = url.indexOf("/unit");
     if (unitPos !== -1) {
       unitId = url.substr(unitPos + 1);
       url = url.substr(0, unitPos);

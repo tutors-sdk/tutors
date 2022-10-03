@@ -5,7 +5,7 @@
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { revealSidebar } from "../stores";
   import * as animateScroll from "svelte-scrollto";
-  import { talkTransition, cardTransition } from "../components/animations";
+  import { talkTransition } from "../components/animations";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
   import type { CourseService } from "../reader-lib/services/course-service";
@@ -22,7 +22,7 @@
     hide = false;
   }, 500);
 
-  onMount(async () => {
+  onMount(() => {
     animateScroll.scrollTo({ delay: 800, element: "#top" });
   });
 

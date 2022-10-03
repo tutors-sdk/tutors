@@ -20,7 +20,7 @@
     hide = false;
   }, 500);
 
-  onMount(async () => {
+  onMount(() => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     animateScroll.scrollTo({ delay: 800, element: "#top" });
   });

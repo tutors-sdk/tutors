@@ -6,7 +6,6 @@
   import type { CourseService } from "../reader-lib/services/course-service";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { currentLo, revealSidebar } from "../stores";
-  // @ts-ignore
   import * as animateScroll from "svelte-scrollto";
   import { viewDelay } from "../components/animations";
   import Loading from "./support/Loading.svelte";
@@ -35,7 +34,7 @@
       title = course.lo.title;
       analytics.pageLoad(url, course.lo);
       if (course.lo.properties.ignorepin) {
-        ignorePin = "" + course.lo.properties.ignorepin;
+        ignorePin = course.lo.properties.ignorepin;
       }
     }, viewDelay);
     return course;
@@ -50,11 +49,11 @@
     }
   }
 
-  onDestroy(async () => {
+  onDestroy(() => {
     window.removeEventListener("keydown", keypressInput);
   });
 
-  afterUpdate(async () => {
+  afterUpdate(() => {
     animateScroll.scrollTo({ delay: 200, element: "#top" });
   });
 </script>

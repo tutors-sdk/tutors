@@ -2,7 +2,7 @@
   import { getContext, onMount } from "svelte";
   import { currentLo } from "../stores";
   import type { ResultType } from "tutors-reader-lib/src/utils/search-utils";
-  import { extractPath, isValid, searchHits } from "tutors-reader-lib/src/utils/search-utils";
+  import { isValid, searchHits } from "tutors-reader-lib/src/utils/search-utils";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { allLos } from "tutors-reader-lib/src/utils/lo-utils";
   import { push } from "svelte-spa-router";
@@ -14,7 +14,6 @@
   const cache: CourseService = getContext("cache");
 
   let course: Course;
-  let search_strings: string[] = [];
   let labs: Lo[] = [];
   let title = "";
   let searchTerm = "";
@@ -47,6 +46,7 @@
     if (isValid(searchTerm)) {
       searchResults = searchHits(labs, searchTerm);
       transformResults(searchResults);
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       push(searchTerm);
     }
   }
