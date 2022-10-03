@@ -4,6 +4,7 @@
   import { currentLo, layout } from "../../stores";
   import { onDestroy } from "svelte";
   import Image from "./Image.svelte";
+  import type { Lo } from "tutors-reader-lib/src/types/lo-types";
 
   export let topic: Topic;
 
@@ -11,7 +12,7 @@
   let headingText = "";
   let text = "";
   let cardWidths = "";
-  let lo;
+  let lo: Lo;
   const unsubscribe = layout.subscribe((layout) => {
     if (layout === "compacted") {
       imageHeight = "h-20";
@@ -29,6 +30,7 @@
     lo = current;
   });
   onDestroy(unsubscribe);
+  onDestroy(unsubscribeLo);
 </script>
 
 <div class="topicnavigator {cardWidths}">

@@ -53,41 +53,39 @@
         </vime-player>
       {/if}
     {:else if vimp}
-    <div class="block w-[720px] h-[405px] mx-auto">
-      <iframe
-        title={lo.title}
-        src="https://vimp.oth-regensburg.de/media/embed?key={vimpId}&autoplay=false&controls=true"
-        class="iframeLoaded"
-        allowfullscreen="allowfullscreen"
-        width="720"
-        height="405"
-        allowtransparency="true"
-        aria-label="media embed code"
-      />
-    </div>
+      <div class="mx-auto block h-[405px] w-[720px]">
+        <iframe
+          title={lo.title}
+          src="https://vimp.oth-regensburg.de/media/embed?key={vimpId}&autoplay=false&controls=true"
+          class="iframeLoaded"
+          width="720"
+          height="405"
+          aria-label="media embed code"
+          allowtransparency={true}
+          allowfullscreen
+        />
+      </div>
     {:else}
       {#if firefox}
         <iframe
           title={lo.title}
-          class="relative w-full p-2 aspect-video"
+          class="relative aspect-video w-full p-2"
           src="https://www.youtube.com/embed/{defaultId}"
           allow="encrypted-media"
           allowfullscreen
-          uk-responsive
         />
       {:else}
         <div class="relative aspect-video" style="padding-top: 40%;">
           <iframe
             title={lo.title}
-            class="absolute inset-0 w-full h-full"
+            class="absolute inset-0 h-full w-full"
             src="https://www.youtube.com/embed/{defaultId}"
             allow="encrypted-media"
             allowfullscreen
-            uk-responsive
           />
         </div>
       {/if}
     {/if}<br />
-    <p class="text-lg italic justify-center">{lo.title}</p>
+    <p class="justify-center text-lg italic">{lo.title}</p>
   </div>
 {/if}

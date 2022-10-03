@@ -9,15 +9,9 @@
   let imageHeight = "";
   let iconHeight = "";
 
-  function isColor(string) {
-    var s = new Option().style;
-    s.color = string;
-    return s.color.length > 0;
-  }
-
   let colourPrefix = "";
 
-  function isColour(string) {
+  function isColour(string: string) {
     var s = new Option().style;
     s.color = string;
     return s.color.length > 0;
@@ -26,7 +20,7 @@
   if (lo && !lo.icon && lo.frontMatter && lo.frontMatter.icon) {
     lo.icon = {
       type: lo.frontMatter.icon["type"],
-      color: lo.frontMatter.icon["color"]
+      color: lo.frontMatter.icon["color"],
     };
   }
 
@@ -40,7 +34,7 @@
     imageHeight = "h-12";
     iconHeight = "48";
   }
-  const unsubscribe = layout.subscribe(layout => {
+  const unsubscribe = layout.subscribe((layout) => {
     if (!miniImage) {
       if (layout === "compacted") {
         iconHeight = "90";
@@ -55,7 +49,7 @@
 </script>
 
 {#if lo.icon}
-  <Iconify icon="{lo.icon.type}" color="{colourPrefix}{lo.icon.color}" height="{iconHeight}"></Iconify>
+  <Iconify icon={lo.icon.type} color="{colourPrefix}{lo.icon.color}" height={iconHeight} />
 {:else}
-  <img loading="lazy" class="tutorscard-image {imageHeight}" src="{lo.img}" alt="{lo.title}">
+  <img loading="lazy" class="tutorscard-image {imageHeight}" src={lo.img} alt={lo.title} />
 {/if}
