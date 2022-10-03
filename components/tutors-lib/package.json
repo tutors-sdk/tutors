@@ -5,7 +5,8 @@
   "author": "Eamonn de Leastar (edeleastar@wit.ie)",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc --build",
+    "clean": "tsc --build --clean"
   },
   "repository": {
     "type": "git",
