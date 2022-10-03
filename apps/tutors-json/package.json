@@ -4,7 +4,7 @@
   "description": "Static course web site generator - json emitter",
   "main": "./src/tutors-json.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "author": "Eamonn de Leastar (edeleastar@wit.ie)",
   "license": "MIT",
