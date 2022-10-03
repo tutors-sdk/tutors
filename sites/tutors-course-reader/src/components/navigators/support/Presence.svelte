@@ -1,15 +1,16 @@
 <script lang="ts">
-  import type { StudentMetric, User } from "tutors-reader-lib/src/types/metrics-types";
+  import type { User } from "tutors-reader-lib/src/types/metrics-types";
   import { currentCourse, currentUser, studentsOnline } from "../../../stores";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
-  import { getContext, onDestroy } from "svelte";
+  import { getContext } from "svelte";
   import { isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
   import { revealOnline } from "../../../stores";
+  import type { MetricsService } from "src/reader-lib/services/metrics-service";
 
   let user: User;
   let status = false;
 
-  const metricsService = getContext("metrics");
+  const metricsService: MetricsService = getContext("metrics");
 
   function handleClick() {
     status = !status;
@@ -30,7 +31,7 @@
 </script>
 
 {#if $currentUser && $currentCourse.authLevel > 0}
-  <div class="dropdown dropdown-end dropdown-hover flex-none capitalize">
+  <div class="dropdown-end dropdown dropdown-hover flex-none capitalize">
     <div class="indicator">
       <span class="badge indicator-item badge-error indicator-center indicator-top">{$studentsOnline}</span>
       <button class="btn btn-ghost">

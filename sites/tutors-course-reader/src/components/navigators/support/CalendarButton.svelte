@@ -7,15 +7,15 @@
   let textColour = "text-white";
   let course: Course;
 
-  currentCourse.subscribe(async current => {
+  currentCourse.subscribe((current) => {
     course = current;
     switch (course?.currentWeek?.type) {
       case "tuition":
-        textColour = "white"
+        textColour = "white";
         bgColour = "bg-warning";
         break;
       case "reading":
-        textColour = "white"
+        textColour = "white";
         bgColour = "bg-info";
         break;
       default:
@@ -26,10 +26,10 @@
 
 {#if $currentCourse.currentWeek}
   <button on:click={() => revealCalendar.set(true)}>
-    <Icon type="calendar" toolTip="Full Calendar" button="true" tipPos="tooltip-bottom"></Icon>
+    <Icon type="calendar" toolTip="Full Calendar" button={true} tipPos="tooltip-bottom" />
   </button>
   <div class="calendar {textColour} {bgColour}">
-    <div class="text-sm  pt-1">Current Week</div>
+    <div class="pt-1  text-sm">Current Week</div>
     <div class="text-l pb-1">{$currentCourse.currentWeek.title}</div>
   </div>
 {/if}
