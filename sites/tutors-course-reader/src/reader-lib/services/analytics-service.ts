@@ -47,6 +47,7 @@ export class AnalyticsService {
     if (getKeys().firebase.apiKey !== "XXX") {
       initializeApp(getKeys().firebase);
     }
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     currentAnalytics = this;
   }
 
@@ -84,6 +85,7 @@ export class AnalyticsService {
       this.initRoot(url);
       this.userEmail = user.email;
       this.userId = user.userId;
+      // eslint-disable-next-line no-useless-escape
       this.userEmailSanitised = user.email.replace(/[`#$.\[\]\/]/gi, "*");
       this.firebaseEmailRoot = `${this.courseBaseName}/users/${this.userEmailSanitised}`;
       this.updateLogin(user);

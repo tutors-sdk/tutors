@@ -97,7 +97,7 @@
     FileSaver.saveAs(url, fileName);
   };
 
-  const initialLoad = async () => {
+  const initialLoad = () => {
     window.addEventListener("keydown", keypressInput);
     let loadingTask = pdfjs.getDocument({ url });
     loadingTask.promise
@@ -108,7 +108,9 @@
         totalPage = pageCount;
         renderPage(pageNum);
       })
-      .catch(function (error) {});
+      .catch(function (error) {
+        console.log(error);
+      });
   };
   initialLoad();
 

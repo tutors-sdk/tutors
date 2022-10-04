@@ -23,7 +23,7 @@
   let hide = true;
   window.addEventListener("keydown", keypressInput);
 
-  async function getCourse(url) {
+  async function getCourse(url: string): Promise<Course> {
     revealSidebar.set(false);
     course = await cache.readCourse(url);
     hide = true;
@@ -34,13 +34,13 @@
       title = course.lo.title;
       analytics.pageLoad(url, course.lo);
       if (course.lo.properties.ignorepin) {
-        ignorePin = course.lo.properties.ignorepin;
+        ignorePin = course.lo.properties.ignorepin.toString();
       }
     }, viewDelay);
     return course;
   }
 
-  function keypressInput(e) {
+  function keypressInput(e: { key: string }) {
     pinBuffer = pinBuffer.concat(e.key);
     if (pinBuffer === ignorePin) {
       course.showAllLos();

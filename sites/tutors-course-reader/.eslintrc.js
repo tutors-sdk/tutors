@@ -22,17 +22,12 @@ module.exports = {
     "svelte3/typescript": require("typescript"),
   },
   rules: {
-    "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/no-this-alias": "off",
     "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/no-unsafe-assignment": "off",
     "@typescript-eslint/no-unsafe-call": "off",
     "@typescript-eslint/no-unsafe-member-access": "off",
     "@typescript-eslint/no-unsafe-return": "off",
     "@typescript-eslint/restrict-template-expressions": "off",
-    "@typescript-eslint/no-misused-promises": "off",
-    "no-useless-escape": "off",
-    "no-prototype-builtins": "off",
   },
 
   plugins: ["svelte3", "@typescript-eslint"],

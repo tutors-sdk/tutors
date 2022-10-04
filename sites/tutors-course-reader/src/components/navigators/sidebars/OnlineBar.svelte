@@ -35,7 +35,7 @@
     studentsOnline.set(0);
   }
 
-  currentCourse.subscribe(async (newCourse: Course) => {
+  currentCourse.subscribe((newCourse: Course) => {
     if (newCourse && newCourse != lastCourse) {
       lastCourse = newCourse;
       if (isAuthenticated() && newCourse?.authLevel > 0) {

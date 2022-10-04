@@ -17,10 +17,12 @@
     metricsService.setOnlineStatus(user, status);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   currentUser.subscribe(async (newUser) => {
     user = newUser;
     let course = await $currentCourse;
     if (isAuthenticated() && course.authLevel > 0) {
+      // eslint-disable-next-line no-prototype-builtins
       if (user && !user.hasOwnProperty("onlineStatus")) {
         user.onlineStatus = "online";
       } else {
@@ -31,7 +33,7 @@
 </script>
 
 {#if $currentUser && $currentCourse.authLevel > 0}
-  <div class="dropdown-end dropdown dropdown-hover flex-none capitalize">
+  <div class="dropdown-end dropdown-hover dropdown flex-none capitalize">
     <div class="indicator">
       <span class="badge indicator-item badge-error indicator-center indicator-top">{$studentsOnline}</span>
       <button class="btn btn-ghost">
@@ -43,11 +45,11 @@
         {/if}
       </button>
     </div>
-    <ul tabindex="0" class="dropdown-content menu rounded-box bg-base-100 text-base-content z-50 w-48 rounded-xl p-1 shadow-xl">
+    <ul tabindex="0" class="dropdown-content menu rounded-box z-50 w-48 rounded-xl bg-base-100 p-1 text-base-content shadow-xl">
       <li>
         <label class="label cursor-pointer">
           <input type="checkbox" class="checkbox checkbox-primary checkbox-sm" bind:checked={status} on:click={handleClick} />
-          <span class="label-text text-base-content text-base">Share Presence</span>
+          <span class="label-text text-base text-base-content">Share Presence</span>
         </label>
       </li>
       {#if status}
