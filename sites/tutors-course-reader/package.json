@@ -12,7 +12,7 @@
     "serve": "vite preview",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "lint": "eslint ./src/**/*.{ts,svelte}",
+    "lint": "eslint ./src",
     "lint:fix": "eslint --fix ./src/**/*.{ts,svelte}",
     "format": "prettier --write ./src/**/*.{js,svelte,html,ts}"
   },
