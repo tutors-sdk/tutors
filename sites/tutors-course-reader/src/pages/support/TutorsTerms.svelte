@@ -17,7 +17,7 @@
 
       <div class="font-sm text-l p-2 text-left font-light">
         <p class="p-2">
-          You have been authenticated via your GitHib credentials and are about to enter a Tutors course. Tutors will record how much time
+          You have been authenticated via your GitHub credentials and are about to enter a Tutors course. Tutors will record how much time
           each view is active and send this to the TutorsTime data store. You can view this information via the TutorsTime feature on the
           course Navigator.
         </p>
