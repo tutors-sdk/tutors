@@ -18,6 +18,7 @@
   const cache: CourseService = getContext("cache");
 
   let lab: Lab;
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   window.addEventListener("keydown", keypressInput);
   window.addEventListener("mousedown", mouseClick);
 
@@ -81,6 +82,7 @@
   }
 
   onDestroy(() => {
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     window.removeEventListener("keydown", keypressInput);
     window.removeEventListener("mousedown", mouseClick);
   });
