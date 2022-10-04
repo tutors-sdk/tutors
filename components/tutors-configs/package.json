@@ -1,10 +1,18 @@
 {
     "name": "tutors-configs",
     "version": "0.0.1",
-    "private": true,
-    "main": "index.js",
+    "license": "MIT",
+    "exports": {
+      "./tailwindConfig": {
+        "import": "./configs/tailwind.config.js",
+        "require": "./configs/tailwind.config.js"
+      }
+    },
+    "type": "module",
     "devDependencies": {
       "tailwindcss": "^3.1.4",
+      "@tailwindcss/typography": "*",
+      "@tailwindcss/line-clamp": "*",
       "daisyui": "2.28.0"
     }
   }
