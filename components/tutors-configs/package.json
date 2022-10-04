@@ -4,8 +4,8 @@
     "license": "MIT",
     "exports": {
       "./tailwindConfig": {
-        "import": "./configs/tailwind.config.js",
-        "require": "./configs/tailwind.config.js"
+        "import": "./configs/tailwind.config.cjs",
+        "require": "./configs/tailwind.config.cjs"
       }
     },
     "type": "module",
