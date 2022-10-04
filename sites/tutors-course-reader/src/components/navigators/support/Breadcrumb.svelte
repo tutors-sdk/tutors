@@ -9,7 +9,7 @@
     unitId = lo.id;
   }
 
-  function truncate(input) {
+  function truncate(input: string) {
     if (input.length > 26) {
       return input.substring(0, 26) + "...";
     }
@@ -17,9 +17,9 @@
   }
 </script>
 
-<li class="ml-2" in:fly="{{ x: -100, duration: 2000 }}" out:fade>
+<li class="ml-2" in:fly={{ x: -100, duration: 2000 }} out:fade>
   <a class="font-bold" href="{lo.route}{unitId}">
-    <Icon type="{lo.type}" />
-    <span class="hidden text-xs lg:block lg:pl-2">{truncate(lo.title)}</span></a>
+    <Icon type={lo.type} />
+    <span class="hidden text-xs lg:block lg:pl-2">{truncate(lo.title)}</span></a
+  >
 </li>
-

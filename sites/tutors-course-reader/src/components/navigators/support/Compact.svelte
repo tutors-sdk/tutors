@@ -22,17 +22,9 @@
     }
   }
 
-  function getOppositeLayout(layout: string): string {
-    if (layout === "compacted") {
-      return "expanded";
-    } else {
-      return "compacted";
-    }
-  }
-
   applyInitialLayout();
 </script>
 
 <button on:click={() => toggleLayout()}>
-  <Icon type={$layout} toolTip="Switch layout" button="true" />
+  <Icon type={$layout} toolTip="Switch layout" button={true} />
 </button>

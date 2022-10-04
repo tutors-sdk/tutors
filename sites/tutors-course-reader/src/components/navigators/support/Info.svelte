@@ -5,6 +5,6 @@
 
 {#if $currentCourse?.lo.contentMd}
   <button on:click={() => revealInfoBar.set(true)}>
-    <Icon type="courseinfo" toolTip="Information" button="true" tipPos="tooltip-bottom" />
+    <Icon type="courseinfo" toolTip="Information" button={true} tipPos="tooltip-bottom" />
   </button>
 {/if}

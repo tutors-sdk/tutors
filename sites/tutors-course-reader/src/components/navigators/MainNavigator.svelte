@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { getContext, onDestroy } from "svelte";
   import TitleCard from "./support/TitleCard.svelte";
-  import { currentCourse, layout, portfolio } from "../../stores";
+  import { currentCourse, portfolio } from "../../stores";
   import DarkMode from "./support/ThemeSwitch.svelte";
   import Breadcrumbs from "./support/Breadcrumbs.svelte";
   import Companions from "./support/Companions.svelte";

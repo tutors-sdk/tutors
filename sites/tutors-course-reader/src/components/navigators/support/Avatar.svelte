@@ -17,7 +17,7 @@
     liveUrl = `${timeApp}/#/live/${course?.url}?${getUserId()}`;
   }
 
-  currentUser.subscribe(async (current) => {
+  currentUser.subscribe((current) => {
     if (current) {
       user = current;
       gitUrl = `https://github.com/${user.nickname}`;
@@ -26,7 +26,7 @@
       }
     }
   });
-  currentCourse.subscribe(async (current) => {
+  currentCourse.subscribe((current) => {
     if (current) {
       course = current;
       if (user && current) {
@@ -37,15 +37,15 @@
 </script>
 
 {#if $currentUser && $currentCourse.authLevel > 0}
-  <div class="flex-none capitalize dropdown dropdown-end dropdown-hover top-1">
+  <div class="dropdown dropdown-end dropdown-hover top-1 flex-none capitalize">
     <div class="navbar-icon">
-      <div class="avatar flex content-center w-8 h-8 mx-auto">
+      <div class="avatar mx-auto flex h-8 w-8 content-center">
         <div class="rounded-full">
           <img src={$currentUser.picture} alt={$currentUser.nickname} />
         </div>
       </div>
     </div>
-    <ul tabindex="0" class="shadow-xl menu dropdown-content bg-base-100 text-base-content w-48 p-1 rounded-box rounded-xl z-50">
+    <ul tabindex="0" class="menu dropdown-content bg-base-100 text-base-content rounded-box z-50 w-48 rounded-xl p-1 shadow-xl">
       <div class="mt-2 mb-1 ml-4 text-xs">Logged in as:</div>
       <div class="mb-1 ml-4 text-sm">{$currentUser.name}</div>
       <li>

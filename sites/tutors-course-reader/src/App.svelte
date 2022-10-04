@@ -38,7 +38,7 @@
   let authenticating = false;
   let bg = "bg-gray-50";
 
-  onMount(async () => {
+  onMount(() => {
     applyInitialTheme();
     const path = document.location.href;
     if (path.includes("access_token")) {
@@ -100,12 +100,12 @@
         <Infobar />
         <Calendar />
         <MainNavigator />
-        <div class="container course-container">
+        <div class="course-container container">
           <Router {routes} />
         </div>
       </Modal>
     </div>
-    <div class="footer w-11/12 lg:w-full mx-auto">
+    <div class="footer mx-auto w-11/12 lg:w-full">
       <Footer />
     </div>
   {/if}

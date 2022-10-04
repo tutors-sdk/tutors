@@ -7,7 +7,7 @@
 
   let orderedLos = topic.toc.filter((lo) => lo?.frontMatter?.order);
   let unOrderedLos = topic.toc.filter((lo) => !lo?.frontMatter?.order);
-  orderedLos.sort((a, b) => a.frontMatter.order - b.frontMatter.order);
+  orderedLos.sort((a, b) => Number(a.frontMatter.order) - Number(b.frontMatter.order));
   orderedLos.push(...unOrderedLos);
   topic.toc = orderedLos;
 </script>
@@ -16,7 +16,7 @@
   <li>
     <a href={lo.route} class="flex">
       <Icon type={lo.type} />
-      <span class="ml-2 mb-1"> {@html convertMd(lo.title)} </span>
+      <span class="ml-2 mb-1"> {@html convertMd(lo.title, "")} </span>
       {#if lo.video && lo.type != "panelvideo"}
         <a class="flex pl-1" href={lo.video}>
           <Icon type="video" />
@@ -30,7 +30,7 @@
         {#each lo.los as lo}
           <div class="flex">
             <a class="inline-flex" href={lo.route}>
-              <Icon type={lo.type} /> <span class="pl-1"> {@html convertMd(lo.title)} </span>
+              <Icon type={lo.type} /> <span class="pl-1"> {@html convertMd(lo.title, "")} </span>
             </a>
             {#if lo.video && lo.type != "panelvideo"}
               <a class="inline-flex pl-2" href={lo.video}>

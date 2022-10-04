@@ -15,7 +15,7 @@
   export let params: Record<string, string>;
 
   let course: Course;
-  currentCourse.subscribe(async (current) => {
+  currentCourse.subscribe((current) => {
     if (current) course = current;
   });
 
@@ -54,7 +54,7 @@
     return los;
   }
 
-  onMount(async () => {
+  onMount(() => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
     animateScroll.scrollTo({ delay: 200, element: "#top" });
   });

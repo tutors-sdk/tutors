@@ -32,8 +32,8 @@ export class PresenceService {
     this.metricsService.setCourse(course);
   }
 
-  start() {
-    this.metricsService.subscribeToAllUsers();
+  async start() {
+    await this.metricsService.subscribeToAllUsers();
     this.metricsService.startListening(this.metricUpdate.bind(this), this.metricDelete.bind(this), this.statusChange.bind(this));
     this.students = [];
   }
@@ -48,8 +48,8 @@ export class PresenceService {
   }
 
   metricDelete(user: User) {
-    let student = this.students.find((student) => student.nickname === user.nickname);
-    let index = this.students.indexOf(student!);
+    const student = this.students.find((student) => student.nickname === user.nickname);
+    const index = this.students.indexOf(student!);
     if (index !== -1) {
       this.students.splice(index, 1);
     }
