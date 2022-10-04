@@ -37,7 +37,7 @@
     return the_arr.join("/");
   }
 
-  async function getLab() {
+  async function getLab(url: string) {
     revealSidebar.set(false);
     let encoded = encodeURI(url);
     const lastSegment = encoded.substr(params.wild.lastIndexOf("/") + 1);
@@ -105,7 +105,7 @@
   />
 </svelte:head>
 
-{#await getLab()}
+{#await getLab(params.wild)}
   <Loading />
 {:then lab}
   {#if !hide}
