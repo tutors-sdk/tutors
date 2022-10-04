@@ -59,7 +59,17 @@ cd sites/tutors-course-reader
 
 and copy the file `.env.example` to `.env`
 
-Back in the root folder for the project, run this command:
+```bash
+cp .\.env.example .env
+```
+
+Now navigate back to the root folder for the project:
+
+```bash
+cd ../../
+```
+
+Now to start our reader with this command:
 
 ```bash
 npm run reader
@@ -68,7 +78,7 @@ npm run reader
 You should see an output similar to below:
 
 ```bash
-> tutors@0.2.0 reader
+> tutors@6.1.0 reader
 > turbo run dev --filter tutors-course-reader
 
 • Packages in scope: tutors-course-reader
@@ -80,11 +90,12 @@ cache bypass, force executing 41ecfc6ec2765918
 
 VITE v3.1.3  ready in 212 ms
 
-➜  Local:   http://localhost:5001/
-➜  Network: http://192.168.112.86:5001/
+➜  Local:   http://localhost:5000/
+➜  Network: http://192.168.112.86:5000/
 ```
 
-Browse to the local location in a browser - which will display a holding page. You are now running the tutors reader application. This application relies on the url to locate the course to display. Any of the samples above can be 'read' with an appropriate url segments appended to the local url you now have running. So for instance:
+Now our Reader is up and running and you can browse to it by opening the <a href="http://localhost:5000/">local location</a> in your browser. You should see a holding page informing you that you are running a reader with no content. 
+You are now running the tutors reader application which relies on a url to locate the course to display. Any of the samples above can be 'read' with an appropriate url segments appended to the local url you now have running. So for instance:
 
 ```bash
 https://reader.tutors.dev/#/course/full-stack-web-dev-oth-2022.netlify.app
@@ -93,7 +104,7 @@ https://reader.tutors.dev/#/course/full-stack-web-dev-oth-2022.netlify.app
 ... can be loaded locally by:
 
 ```bash
-http://localhost:5001/#/course/full-stack-web-dev-oth-2022.netlify.app
+http://localhost:5000/#/course/full-stack-web-dev-oth-2022.netlify.app
 ```
 
 You are now running the tutors reader locally, rebuilt from source, to browse a tutors course. You could try any of the other sample courses above.
