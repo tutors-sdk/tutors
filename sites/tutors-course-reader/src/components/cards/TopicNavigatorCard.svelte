@@ -26,11 +26,11 @@
       cardWidths = "w-72";
     }
   });
-  const unsubscribeLo = currentLo.subscribe((current) => {
+  currentLo.subscribe((current) => {
     lo = current;
   });
   onDestroy(unsubscribe);
-  onDestroy(unsubscribeLo);
+  // onDestroy(unsubscribeLo);
 </script>
 
 <div class="topicnavigator {cardWidths}">

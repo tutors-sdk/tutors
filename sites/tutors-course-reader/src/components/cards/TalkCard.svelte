@@ -3,6 +3,7 @@
   import { BarLoader } from "svelte-loading-spinners";
   import FileSaver from "file-saver";
   import { onDestroy, tick } from "svelte";
+
   import * as pdfjs from "pdfjs-dist/build/pdf.js";
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   import pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
@@ -96,7 +97,7 @@
     FileSaver.saveAs(url, fileName);
   };
 
-  const initialLoad = () => {
+  const initialLoad = async () => {
     window.addEventListener("keydown", keypressInput);
     let loadingTask = pdfjs.getDocument({ url });
     loadingTask.promise
@@ -107,7 +108,7 @@
         totalPage = pageCount;
         renderPage(pageNum);
       })
-      .catch(() => null);
+      .catch(function (error) {});
   };
   initialLoad();
 
@@ -118,10 +119,11 @@
   });
 
   function keypressInput(e) {
-    e.preventDefault();
     if (e.key === "ArrowRight") {
+      e.preventDefault();
       onNextPage();
     } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
       onPrevPage();
     }
   }
