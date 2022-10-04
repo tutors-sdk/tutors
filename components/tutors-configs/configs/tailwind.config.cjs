@@ -1,6 +1,9 @@
 const config = {
   mode: 'jit',
-  content: ['../../tutors-ui/**/*.{html,js,svelte,svx,ts}', './src/**/*.{html,js,svelte,svx,ts}'],
+  content: [
+    '../../tutors-ui/**/*.{html,js,svelte,svx,ts}',
+    'src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'
+  ],
   safelist: [
     {
       pattern: /border|text/
