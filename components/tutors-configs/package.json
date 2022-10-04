@@ -13,7 +13,7 @@
       "tailwindcss": "^3.1.4",
       "@tailwindcss/typography": "*",
       "@tailwindcss/line-clamp": "*",
-      "daisyui": "2.28.0"
+      "daisyui": "2.31.0"
     }
   }
   
