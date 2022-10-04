@@ -1,9 +1,10 @@
 <script lang="ts">
   import { currentCourse, currentLo } from "../../../stores";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
+  import { onDestroy } from "svelte/types/runtime/internal/lifecycle";
 
   let lo: Lo;
-  const unsubscribe = currentLo.subscribe(current => {
+  const unsubscribe = currentLo.subscribe((current) => {
     lo = current;
     if (lo && lo.type === "unit") {
       lo.img = lo.parentLo.img;
@@ -11,6 +12,7 @@
     }
   });
 
+  onDestroy(unsubscribe);
 </script>
 
 {#if $currentLo}

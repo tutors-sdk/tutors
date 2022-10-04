@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  export let params: any = {};
+  export let params: Record<string, string> = {};
 
-  onMount(async () => {
+  onMount(() => {
     console.log(params);
   });
 </script>

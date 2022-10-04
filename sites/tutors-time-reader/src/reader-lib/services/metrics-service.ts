@@ -25,7 +25,7 @@ export class MetricsService {
   }
 
   diffMinutes(dt2: number, dt1: number) {
-    var diff = (dt2 - dt1) / 1000;
+    let diff = (dt2 - dt1) / 1000;
     diff /= 60;
     return Math.abs(Math.round(diff));
   }
@@ -91,6 +91,7 @@ export class MetricsService {
 
   async fetchUserById(userId: string) {
     const user = await fetchUserById(this.course.url, userId, this.allLabs);
+    // eslint-disable-next-line no-prototype-builtins
     if (!user.hasOwnProperty("onlineStatus")) user.onlineStatus = "online";
     return user;
   }
@@ -134,11 +135,12 @@ export class MetricsService {
         this.canUpdate = true;
       };
       setTimeout(func, 20 * 1000);
-      this.users.forEach(async (user) => {
+      this.users.forEach((user) => {
+        // eslint-disable-next-line no-useless-escape
         const userEmailSanitised = user.email.replace(/[`#$.\[\]\/]/gi, "*");
-        if (this.allLabs) await this.subscribeToUserLabs(user, userEmailSanitised);
-        if (this.course.topics) await this.subscribeToUserTopics(user, userEmailSanitised);
-        await this.subscribeToUserStatus(user, userEmailSanitised);
+        if (this.allLabs) this.subscribeToUserLabs(user, userEmailSanitised);
+        if (this.course.topics) this.subscribeToUserTopics(user, userEmailSanitised);
+        this.subscribeToUserStatus(user, userEmailSanitised);
       });
     } catch (e) {
       console.log("no users yet");
@@ -146,6 +148,7 @@ export class MetricsService {
   }
 
   setOnlineStatus(user: User, status: boolean) {
+    // eslint-disable-next-line no-useless-escape
     const userEmailSanitised = user.email.replace(/[`#$.\[\]\/]/gi, "*");
     const firebaseEmailRoot = `${this.courseBase}/users/${userEmailSanitised}`;
     if (status) {
@@ -159,13 +162,15 @@ export class MetricsService {
 
   stopService() {
     this.users.forEach((user) => {
+      // eslint-disable-next-line no-useless-escape
       const userEmailSanitised = user.email.replace(/[`#$.\[\]\/]/gi, "*");
       this.unsubscribeToUserLabs(user, userEmailSanitised);
       this.unsubscribeToUserTopics(user, userEmailSanitised);
     });
   }
 
-  async subscribeToUserStatus(user: User, email: string) {
+  subscribeToUserStatus(user: User, email: string) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     const db = getDatabase();
     const statustRef = ref(db, `${this.courseBase}/users/${email}/onlineStatus`);
@@ -174,20 +179,22 @@ export class MetricsService {
     });
   }
 
-  async subscribeToUserLabs(user: User, email: string) {
+  subscribeToUserLabs(user: User, email: string) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     this.allLabs.forEach((lab) => {
       const labRoute = lab.route.split("topic");
       const route = `${this.courseBase}/users/${email}/topic${labRoute[1]}`;
       const db = getDatabase();
       const labRef = ref(db, route);
-      onValue(labRef, (snapshot) => {
+      onValue(labRef, () => {
         that.metricChange(user, null, lab);
       });
     });
   }
 
-  async subscribeToUserTopics(user, email: string) {
+  subscribeToUserTopics(user, email: string) {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     const topics = this.course.topics;
 
@@ -214,7 +221,7 @@ export class MetricsService {
     });
   }
 
-  unsubscribeToUserTopics(user, email: string) {
+  unsubscribeToUserTopics(user: User, email: string) {
     const topics = this.course.topics;
     topics.forEach((topic) => {
       const route = `${this.courseBase}/users/${email}/${topic.lo.id}`;
