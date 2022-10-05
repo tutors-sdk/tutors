@@ -7,7 +7,7 @@
     "build": "tsc --build",
     "clean": "tsc --build --clean"
   },
-  "author": "Eamonn de Leastar (edeleastar@wit.ie)",
+  "author": "Eamonn de Leastar (edeleastar@setu.ie)",
   "license": "MIT",
   "repository": {
     "type": "git",
