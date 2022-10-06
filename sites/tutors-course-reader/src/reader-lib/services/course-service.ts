@@ -1,5 +1,5 @@
 import path from "path-browserify";
-import { currentCourse, currentLo, currentUser, week } from "../../stores";
+import { courseUrl, currentCourse, currentLo, currentUser, week } from "../../stores";
 import { replace } from "svelte-spa-router";
 import { Course } from "tutors-reader-lib/src/models/course";
 import { Lab } from "tutors-reader-lib/src/models/lab";
@@ -55,6 +55,7 @@ export class CourseService {
   async readCourse(courseId: string): Promise<Course> {
     const course = await this.getOrLoadCourse(courseId);
     currentCourse.set(course);
+    courseUrl.set(course.url);
     week.set(<WeekType>course?.currentWeek);
     await this.checkAuthenticated(course);
     await this.checkWhiteList(course);
