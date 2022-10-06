@@ -11,6 +11,10 @@
 **/components/tutors-lib/**/*.js.map
 **/components/tutors-lib/**/*.d.ts
 
+# exclude ts build info caches
+**/tsconfig.tsbuildinfo
+
+
 # dependencies
 node_modules
 .pnp
