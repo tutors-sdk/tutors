@@ -60,7 +60,7 @@ cd sites/tutors-course-reader
 and copy the file `.env.example` to `.env`
 
 ```bash
-cp .\.env.example .env
+cp .env.example .env
 ```
 
 Now navigate back to the root folder for the project:
