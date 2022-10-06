@@ -41,6 +41,7 @@ Open a shell and...
 ```bash
 cd tutors
 npm install
+npm run clean
 npm run build
 ```
 
