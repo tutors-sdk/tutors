@@ -23,9 +23,10 @@ Tutors: An Open Learning Web Toolkit
 A collection of open source components & services supporting the creation of transformative learning experiences using open web standards. Some representative examples:
 
 - [Higher Diploma in Computer Science at SETU](https://reader.tutors.dev/#/course/wit-hdip-comp-sci-showcase.netlify.app)
-- [Full Stack Development at OTH Regensburg](https://reader.tutors.dev/#/course/full-stack-web-dev-oth-2022.netlify.app)
-- [Classic Design Patterns at SETU](https://tutors-svelte.netlify.app/#/course/classic-design-patterns.netlify.app)
-- [Agile Software Development at SETU](https://reader.tutors.dev/#/course/agile-dev-2021.netlify.app)
+- [Full Stack Development](https://reader.tutors.dev/#/course/full-stack-web-dev-oth-2022.netlify.app)
+- [Classic Design Patterns](https://tutors-svelte.netlify.app/#/course/classic-design-patterns.netlify.app)
+- [Agile Software Development](https://reader.tutors.dev/#/course/agile-dev-2021.netlify.app)
+- [Technologische Fähigkeiten](https://reader.tutors.dev/#/course/zusatzstudium-digital-skills-semester1.netlify.app)
 
 # Getting Started
 
@@ -40,6 +41,7 @@ Open a shell and...
 ```bash
 cd tutors
 npm install
+npm run clean
 npm run build
 ```
 
@@ -95,7 +97,7 @@ VITE v3.1.3  ready in 212 ms
 ```
 
 Now our Reader is up and running and you can browse to it by opening the <a href="http://localhost:5000/">local location</a> in your browser. You should see a holding page informing you that you are running a reader with no content. 
-You are now running the tutors reader application which relies on a url to locate the course to display. Any of the samples above can be 'read' with an appropriate url segments appended to the local url you now have running. So for instance:
+The reader relies on a segment of the url to locate the course to display. Any of the samples above can be 'read' with an appropriate url segments appended to the local url you now have running. So for instance:
 
 ```bash
 https://reader.tutors.dev/#/course/full-stack-web-dev-oth-2022.netlify.app
@@ -107,11 +109,13 @@ https://reader.tutors.dev/#/course/full-stack-web-dev-oth-2022.netlify.app
 http://localhost:5000/#/course/full-stack-web-dev-oth-2022.netlify.app
 ```
 
-You are now running the tutors reader locally, rebuilt from source, to browse a tutors course. You could try any of the other sample courses above.
+(Note the port number may vary - for example 5001)
+
+You could try any of the other sample courses above.
 
 If you would like to build your own course then [this workshop here](https://reader.tutors.dev/#/topic/docs.tutors.dev/topic-00-WX) would be a good place to start. In particular, [this lab here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-00-WX/unit-1-creating/book-a) will get you up and running with a sample course in a few minutes. More guidance and examples are on our [Educator documentation](https://reader.tutors.dev/#/topic/docs.tutors.dev/topic-02-EX) site. To learn more about the project, explore the core principles at https://tutors.dev/.
 
-If you have VSCode, you should be able to open the project now.
+If you have VSCode, you should be able to open project.
 
 # Project Structure
 
@@ -123,7 +127,7 @@ These are the student facing web applications for browsing a course, an applicat
 
 ### [tutors-course-reader](https://github.com/tutors-sdk/tutors/tree/main/sites/tutors-course-reader)
 
-The main tutors user experience - demonstrated in the links above. It is a Svelte application that renders a course in an appealing, context sensitive user experience. An [overview of the user experience is presented here](https://reader.tutors.dev/#/talk/docs.tutors.dev/topic-00-WX/unit-1-creating/talk-1/tutor-ux.pdf). This is deployed to https://reader.tutors.dev
+The main tutors user experience - demonstrated in the links above. This can be built and launched via the instructions above. It is a Svelte application that renders a course in an appealing, context sensitive user experience. An [overview of the user experience is presented here](https://reader.tutors.dev/#/talk/docs.tutors.dev/topic-00-WX/unit-1-creating/talk-1/tutor-ux.pdf). This is deployed to https://reader.tutors.dev
 
 ### [tutors-time-reader](https://github.com/tutors-sdk/tutors/tree/main/sites/tutors-time-reader)
 
@@ -135,7 +139,7 @@ The homepage of the Tutors project built with Astro. This is deployed at https:/
 
 ### [tutors-vitebook](https://github.com/tutors-sdk/tutors/tree/main/sites/tutors-vitebook)
 
-A storybook style application which visualises the UI components of the Tutors project. This is deployed at https://vitebook.tutors.dev
+A storybook style application which visualises the UI components of the Tutors project. This is deployed at https://vitebook.tutors.dev. Currently a work in progress.
 
 ## Apps
 
@@ -143,11 +147,11 @@ These are command line applications used by educators to generate courses. The p
 
 ### [tutors-json](https://github.com/tutors-sdk/tutors/tree/main/apps/tutors-json)
 
-The primary static site generator for tutors courses. It will inject a folder adhering to a prescribed format and generate a static site that can be rendered by the course reader. The [overall approach + example folder structure is presented here](https://reader.tutors.dev/#/talk/docs.tutors.dev/topic-00-WX/unit-1-creating/talk-2/tutor-ex.pdf). A tutorial on building a new course [can be accessed here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-00-WX/unit-1-creating/book-a).
+The primary static site generator for tutors courses. It will injest a folder adhering to a prescribed format and generate a static site that can be rendered by the course reader. The [overall approach + example folder structure is presented here](https://reader.tutors.dev/#/talk/docs.tutors.dev/topic-00-WX/unit-1-creating/talk-2/tutor-ex.pdf). A tutorial on building a new course [can be accessed here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-00-WX/unit-1-creating/book-a).
 
 ### [tutors-html](https://github.com/tutors-sdk/tutors/tree/main/apps/tutors-html)
 
-An alternative to tutors-json, this command application generate a static site independent of the course reader. This presents a subset of the user experience, and is useful as an offline version of the course for backup purposes.
+An alternative to tutors-json, this command line application generates a static site independent of the course reader. This presents a subset of the user experience, and is useful as an offline version of the course for backup purposes.
 
 ## Components
 
@@ -159,7 +163,7 @@ A shared set of config files which is used as a base for all sites, apps and com
 
 ### [tutors-lib](https://github.com/tutors-sdk/tutors/tree/main/components/tutors-lib)
 
-The parser library for a course. This component embodies the data structure constructed when in-jesting a course from a folder. Comparable to an Abstract Syntax Tree in a compiler, this tree is traversed to generate JSON and HTML versions by the apps above.
+The parser library for a course. This component embodies the data structures constructed when in-jesting a course from a folder. Comparable to an Abstract Syntax Tree in a compiler, this tree is traversed to generate JSON and HTML versions by the apps above.
 
 ### [tutors-reader-lib](https://github.com/tutors-sdk/tutors/tree/main/components/tutors-reader-lib)
 
