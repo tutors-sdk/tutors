@@ -1,7 +1,7 @@
 <script lang="ts">
   import { currentCourse, currentLo } from "../../../stores";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import { onDestroy } from "svelte/types/runtime/internal/lifecycle";
+  import { onDestroy } from "svelte";
 
   let lo: Lo;
   const unsubscribe = currentLo.subscribe((current) => {
