@@ -8,11 +8,11 @@
   import type { Course } from "tutors-reader-lib/src/models/course";
   import type { CourseService } from "../reader-lib/services/course-service";
   import { currentLo, currentUser } from "../stores";
-  // @ts-ignore
   import { Tab, TabList, TabPanel, Tabs } from "svelte-tabs";
   import { querystring } from "svelte-spa-router";
   import type { MetricsService } from "src/reader-lib/services/metrics-service";
-  export let params: any = {};
+
+  export let params: Record<string, string> = {};
 
   let instructorMode = false;
   let course: Course;
@@ -21,10 +21,11 @@
   let title = "";
   let pinBuffer = "";
   let ignorePin = "";
+  let id = "";
 
   window.addEventListener("keydown", keypressInput);
-  let id = "";
-  async function getCourse(url) {
+
+  async function getCourse(url: string) {
     id = $querystring;
 
     course = await cache.readCourse(url);
@@ -40,14 +41,14 @@
     return course;
   }
 
-  function keypressInput(e) {
+  function keypressInput(e: KeyboardEvent) {
     pinBuffer = pinBuffer.concat(e.key);
     if (pinBuffer === ignorePin) {
       instructorMode = true;
     }
   }
 
-  onDestroy(async () => {
+  onDestroy(() => {
     window.removeEventListener("keydown", keypressInput);
   });
 </script>

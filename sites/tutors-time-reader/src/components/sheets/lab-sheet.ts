@@ -2,38 +2,47 @@ import type { ICellRendererParams } from "ag-grid-community";
 import type { Lo } from "tutors-reader-lib/src/types/lo-types";
 import type { UserMetric } from "tutors-reader-lib/src/types/metrics-types";
 
-export let options = {
+interface LabSheetColumn {
+  headerName: string;
+  field: string;
+  width: number;
+  suppressSizeToFit: boolean;
+  pinned?: "left";
+  cellRenderer?: (params: ICellRendererParams) => HTMLSpanElement;
+}
+
+export const options = {
   animateRows: true,
   headerHeight: 180,
   defaultColDef: {
     sortable: true,
-    resizable: true
+    resizable: true,
   },
   enableRangeSelection: true,
   enableCellChangeFlash: true,
-  getRowNodeId: function(data) {
+  getRowNodeId: function (data) {
     return data.github;
-  }
+  },
 };
 
 export class LabSheet {
   title = "";
   subtitle = "";
 
-  columnDefs: any = [
+  columnDefs: LabSheetColumn[] = [
     { headerName: "User", field: "user", width: 180, suppressSizeToFit: true, pinned: "left" },
     { headerName: "Github", field: "github", width: 80, suppressSizeToFit: true, cellRenderer: this.renderGithub },
     { headerName: "Total", field: "summary", width: 60, suppressSizeToFit: true },
-    { headerName: "Date Last Accessed", field: "date", width: 90, suppressSizeToFit: true }
+    { headerName: "Date Last Accessed", field: "date", width: 90, suppressSizeToFit: true },
   ];
   sortModel = [{ colId: "summary", sort: "dsc" }];
   rowData = [];
 
   renderGithub(params: ICellRendererParams) {
     if (params.value) {
-      var nameElement = document.createElement("span");
-      var a = document.createElement("a");
-      var linkText = document.createTextNode(params.value);
+      const nameElement = document.createElement("span");
+      const a = document.createElement("a");
+      const linkText = document.createTextNode(params.value);
       a.appendChild(linkText);
       a.title = params.value;
       a.href = "http://github.com/" + a.title;
@@ -49,19 +58,19 @@ export class LabSheet {
     if (name === email) {
       name = "~~ " + email;
     } else {
-      var firstName = fullName.split(" ").slice(0, -1).join(" ");
-      var lastName = fullName.split(" ").slice(-1).join(" ");
+      const firstName = fullName.split(" ").slice(0, -1).join(" ");
+      const lastName = fullName.split(" ").slice(-1).join(" ");
       name = lastName + ", " + firstName;
     }
     return name;
   }
 
   creatRow(user: UserMetric) {
-    let row = {
+    const row = {
       user: user.name, //this.formatName(user.name, user.email),
       summary: 0,
       date: user.last,
-      github: user.nickname
+      github: user.nickname,
     };
     return row;
   }
@@ -96,12 +105,9 @@ export class LabSheet {
     });
   }
 
-  populateCols(los: Lo[]) {
-  }
+  // populateCols(los: Lo[]) {}
 
-  populateRow(user: UserMetric, los: Lo[]) {
-  }
+  // populateRow(user: UserMetric, los: Lo[]) {}
 
-  updateRow(user: UserMetric, rowNode) {
-  }
+  // updateRow(user: UserMetric, rowNode) {}
 }

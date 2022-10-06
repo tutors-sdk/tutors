@@ -9,14 +9,13 @@
   import type { MetricsService } from "../reader-lib/services/metrics-service";
 
   let students: StudentMetric[] = [];
-  export let params: any = {};
+  export let params: Record<string, string> = {};
   const cache: CourseService = getContext("cache");
   const metricsService: MetricsService = getContext("metrics");
   const presenceService = new PresenceService(metricsService, students, refresh, refreshStatus);
   let course = cache.course;
   let title = "";
   let status = false;
-  let thisUser: User = null;
   let thisUserNickName = "";
   let show = true;
 
@@ -26,16 +25,17 @@
 
   function refreshStatus(user: User) {
     if (user.nickname === thisUserNickName) {
+      // eslint-disable-next-line no-prototype-builtins
       if (!user.hasOwnProperty("onlineStatus")) user.onlineStatus = "online";
       show = user.onlineStatus === "online";
     }
   }
 
-  async function getCourse(url) {
+  async function getCourse(url: string) {
     let id = $querystring;
-    course = await cache.readCourse(params.wild);
+    course = await cache.readCourse(url);
     presenceService.setCourse(course);
-    presenceService.start();
+    await presenceService.start();
     // noinspection TypeScriptValidateTypes
     currentLo.set({
       title: `Tutors Live: ${course.lo.title}`,
@@ -53,7 +53,7 @@
     return course;
   }
 
-  onDestroy(async () => {
+  onDestroy(() => {
     presenceService.stop();
   });
 </script>
@@ -75,7 +75,7 @@
 {:else}
   <div class="mt-28 flex h-screen justify-center">
     <div class="max-w-screen-md text-center">
-      <div class="flex flex-wrap rounded-lg bg-base-200 px-4 py-2 text-base-content shadow-md">
+      <div class="bg-base-200 text-base-content flex flex-wrap rounded-lg px-4 py-2 shadow-md">
         <div class="flex w-full justify-between border-b-2 border-gray-400 p-2">
           <div class="font-sm text-center text-xl font-light">TutorsLive</div>
         </div>

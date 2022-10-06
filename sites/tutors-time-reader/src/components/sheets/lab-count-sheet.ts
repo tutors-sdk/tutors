@@ -15,13 +15,13 @@ export class LabCountSheet extends LabSheet {
         field: lab.title,
         suppressSizeToFit: true,
         cellClassRules: deepScheme,
-        menuTabs: []
+        menuTabs: [],
       });
     });
   }
 
   populateRow(user: UserMetric, los: Lo[]) {
-    let row = this.creatRow(user);
+    const row = this.creatRow(user);
     this.zeroEntries(los, row);
     let summaryCount = 0;
     user.labActivity.forEach((labMetric) => {

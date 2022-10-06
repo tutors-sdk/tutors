@@ -5,17 +5,17 @@
   let status = false;
   let user: User;
 
-  currentUser.subscribe(async newUser => {
+  currentUser.subscribe((newUser) => {
     user = newUser;
     status = user?.onlineStatus === "offline";
   });
 </script>
 
 {#if user}
-  <div transition:cardTransition class="tutorscard w-32 h-32 border-info">
-    <div class="card-title text-base-content text-xs mb-1"> {user.name}</div>
+  <div transition:cardTransition class="tutorscard border-info h-32 w-32">
+    <div class="card-title text-base-content mb-1 text-xs">{user.name}</div>
     <figure class="flex justify-center">
-      <img loading="lazy" class="object-scale-down p-1 h-20" src="{user.picture}" alt="{user.nickname}">
+      <img loading="lazy" class="h-20 object-scale-down p-1" src={user.picture} alt={user.nickname} />
     </figure>
   </div>
 {/if}

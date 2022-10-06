@@ -4,55 +4,65 @@ import type { UserMetric } from "tutors-reader-lib/src/types/metrics-types";
 import { deepScheme } from "./heat-map-colours";
 import { formatDate } from "tutors-reader-lib/src/utils/auth-utils";
 
-export let options = {
+interface CalendarSheetColumn {
+  headerName: string;
+  field: string;
+  width: number;
+  suppressSizeToFit: boolean;
+  pinned?: "left";
+  cellRenderer?: (params: ICellRendererParams) => HTMLSpanElement;
+  cellClassRules?: Record<string, string>;
+  menuTabs?: [];
+}
+
+export const options = {
   animateRows: true,
   headerHeight: 120,
   defaultColDef: {
     sortable: true,
-    resizable: true
+    resizable: true,
   },
   enableRangeSelection: true,
   enableCellChangeFlash: true,
-  getRowNodeId: function(data) {
+  getRowNodeId: function (data) {
     return data.github;
   },
-  getRowHeight: function(params) {
+  getRowHeight: function (params) {
     if (params.data.user) {
       return 60;
     }
     return 25;
   },
-  getRowStyle: function(params) {
+  getRowStyle: function (params) {
     if (params.data.user) {
       return { background: "#B2E3F1" };
     }
-  }
+  },
 };
 
 export class CalendarSheet {
   title = "Tutors Time";
   subtitle = "Activity in the Semester";
 
-  columnDefs: any = [
+  columnDefs: CalendarSheetColumn[] = [
     { headerName: "User", field: "user", width: 180, suppressSizeToFit: true, pinned: "left" },
     {
       headerName: "Github",
       field: "github",
       width: 80,
       suppressSizeToFit: true,
-      cellRenderer: this.renderGithub
+      cellRenderer: this.renderGithub,
     },
-    { headerName: "Day", field: "date", width: 90, suppressSizeToFit: true }
+    { headerName: "Day", field: "date", width: 90, suppressSizeToFit: true },
   ];
   sortModel = [{ colId: "summary", sort: "dsc" }];
   rowData = [];
 
   renderGithub(params: ICellRendererParams) {
     if (params.value) {
-      var nameElement = document.createElement("span");
-      var a = document.createElement("a");
-
-      let img = document.createElement("img");
+      const nameElement = document.createElement("span");
+      const a = document.createElement("a");
+      const img = document.createElement("img");
       img.src = `http://github.com/${params.value}.png`;
       img.width = 120;
       a.append(img);
@@ -65,19 +75,19 @@ export class CalendarSheet {
   }
 
   createUserIdRow(user: UserMetric) {
-    let row = {
+    const row = {
       user: user.name,
-      github: user.nickname
+      github: user.nickname,
     };
     return row;
   }
 
   creatRow(user: UserMetric, day: number) {
     const days = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
-    let row = {
+    const row = {
       user: "",
       date: days[day],
-      github: ""
+      github: "",
     };
     return row;
   }
@@ -102,7 +112,7 @@ export class CalendarSheet {
           field: dateStr,
           suppressSizeToFit: true,
           cellClassRules: deepScheme,
-          menuTabs: []
+          menuTabs: [],
         });
       });
     }
@@ -111,13 +121,10 @@ export class CalendarSheet {
   populateRow(user: UserMetric, calendar: Calendar) {
     this.rowData.push(this.createUserIdRow(user));
     for (let day = 0; day < 7; day++) {
-      let row = this.creatRow(user, day);
+      const row = this.creatRow(user, day);
       user.calendarActivity.forEach((measure) => {
         for (let i = 0; i < calendar.weeks.length - 1; i++) {
-          if (
-            measure.dateObj >= Date.parse(calendar.weeks[i].date) &&
-            measure.dateObj < Date.parse(calendar.weeks[i + 1].date)
-          ) {
+          if (measure.dateObj >= Date.parse(calendar.weeks[i].date) && measure.dateObj < Date.parse(calendar.weeks[i + 1].date)) {
             const col = formatDate(calendar.weeks[i].date);
             const date2 = measure.dateObj;
             const date1 = Date.parse(calendar.weeks[i].date);
@@ -131,7 +138,7 @@ export class CalendarSheet {
       });
       this.rowData.push(row);
     }
-    let row = this.creatRow(user, 8);
+    const row = this.creatRow(user, 8);
     this.rowData.push(row);
   }
 }
