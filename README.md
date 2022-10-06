@@ -32,16 +32,15 @@ A collection of open source components & services supporting the creation of tra
 
 Make sure you have Node 16 + installed, and start by cloning this repo:
 
-~~~bash
+```bash
 git clone https://github.com/tutors-sdk/tutors.git
-~~~
+```
 
 Open a shell and...
 
 ```bash
 cd tutors
 npm install
-npm run clean
 npm run build
 ```
 
@@ -96,7 +95,7 @@ VITE v3.1.3  ready in 212 ms
 ➜  Network: http://192.168.112.86:5000/
 ```
 
-Now our Reader is up and running and you can browse to it by opening the <a href="http://localhost:5000/">local location</a> in your browser. You should see a holding page informing you that you are running a reader with no content. 
+Now our Reader is up and running and you can browse to it by opening the <a href="http://localhost:5000/">local location</a> in your browser. You should see a holding page informing you that you are running a reader with no content.
 The reader relies on a segment of the url to locate the course to display. Any of the samples above can be 'read' with an appropriate url segments appended to the local url you now have running. So for instance:
 
 ```bash
