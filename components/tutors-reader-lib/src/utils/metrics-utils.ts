@@ -23,7 +23,7 @@ function populateCalendar(user: UserMetric) {
 
 function populateLabUsage(user: UserMetric, allLabs: Lo[]) {
   user.labActivity = [];
-  for (let lab of allLabs) {
+  for (const lab of allLabs) {
     const labActivity = findInUser(lab.title, user);
     user.labActivity.push(labActivity);
   }
@@ -35,7 +35,7 @@ function findInUser(title: string, metric: UserMetric) {
 
 function findInMetrics(title: string, metrics: Metric[]): Metric {
   let result: Metric = null;
-  for (let metric of metrics) {
+  for (const metric of metrics) {
     if (metric.id === "ab" || metric.id === "alk" || metric.id === "ideo") {
       // console.log("ignoring spurious data"); as result of bug in types
       // since fixed, but bad data in some user dbs.
@@ -60,7 +60,7 @@ function findInMetric(title: string, metric: Metric) {
 }
 
 function expandGenericMetrics(id: string, fbData): any {
-  let metric = {
+  const metric = {
     id: "",
     metrics: [],
   };
@@ -104,8 +104,7 @@ export async function fetchAllUsers(courseUrl: string, allLabs) {
   if (snapshot.exists()) {
     const genericMetrics = expandGenericMetrics("root", snapshot.val());
 
-    const usage = genericMetrics.metrics[0];
-    for (let userMetric of genericMetrics.metrics[1].metrics) {
+    for (const userMetric of genericMetrics.metrics[1].metrics) {
       if (userMetric.nickname) {
         const user = {
           userId: userMetric.id,

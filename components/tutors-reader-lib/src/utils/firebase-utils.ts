@@ -13,18 +13,18 @@ export function updateLastAccess(root: string, key: string, title: string) {
   updateStr(`${root}/${key}/title`, title);
 }
 
-export function updateVisits(root: string, key: string, title: string) {
+export function updateVisits(root: string, key: string) {
   updateCountValue(`${root}/${key}/visits`);
 }
 
-export function updateCount(root: string, key: string, title: string) {
+export function updateCount(root: string, key: string) {
   updateCountValue(`${root}/${key}/count`);
 }
 
 export function updateCountValue(key: string) {
   const db = getDatabase();
   const dbRef = ref(db, key);
-  runTransaction(dbRef, function (count) {
+  void runTransaction(dbRef, function (count) {
     return (count || 0) + 1;
   });
 }
@@ -32,7 +32,7 @@ export function updateCountValue(key: string) {
 export function updateStr(key: string, str: string) {
   const db = getDatabase();
   const dbRef = ref(db, key);
-  runTransaction(dbRef, function () {
+  void runTransaction(dbRef, function () {
     return str;
   });
 }
@@ -45,11 +45,11 @@ export function sanatisePath(url: string, path: string) {
 }
 
 export function updateCalendar(root: string) {
-  var dateObj = new Date();
-  var day = ("0" + dateObj.getDate()).slice(-2);
-  var month = ("0" + (dateObj.getMonth() + 1)).slice(-2);
-  var year = dateObj.getFullYear();
-  var date = year + "-" + month + "-" + day;
+  const dateObj = new Date();
+  const day = ("0" + dateObj.getDate()).slice(-2);
+  const month = ("0" + (dateObj.getMonth() + 1)).slice(-2);
+  const year = dateObj.getFullYear();
+  const date = year + "-" + month + "-" + day;
   updateCountValue(`${root}/calendar/${date}`);
 }
 

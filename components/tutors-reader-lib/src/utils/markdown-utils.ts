@@ -3,7 +3,7 @@ import showdownHighlight from "showdown-highlight";
 import showdownKatex from "showdown-katex";
 import customClassExt from "showdown-custom-class";
 
-let converter = new showdown.Converter({
+const converter = new showdown.Converter({
   tables: true,
   emoji: true,
   openLinksInNewWindow: true,

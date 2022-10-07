@@ -5,7 +5,7 @@ export function isAuthenticated() {
   if (!hasId()) {
     return false;
   }
-  let expiresAt = JSON.parse(localStorage.getItem("expires_at"));
+  const expiresAt = JSON.parse(localStorage.getItem("expires_at"));
   if (expiresAt) {
     return new Date().getTime() < expiresAt;
   }
@@ -78,8 +78,8 @@ export function logout() {
   clearLocalStorage();
 }
 
-var key = Crypto.enc.Hex.parse("000102030405060708090a0b0c0d0e0f");
-var iv = Crypto.enc.Hex.parse("101112131415161718191a1b1c1d1e1f");
+const key = Crypto.enc.Hex.parse("000102030405060708090a0b0c0d0e0f");
+const iv = Crypto.enc.Hex.parse("101112131415161718191a1b1c1d1e1f");
 
 export function encrypt(str: string): string {
   const ciphertext = Crypto.AES.encrypt(str, key, { iv: iv });

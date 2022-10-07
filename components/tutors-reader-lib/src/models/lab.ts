@@ -38,25 +38,23 @@ export class Lab {
     this.horizontalNavbarHtml = "";
 
     this.lo.los.forEach((chapter, i) => {
-      let number = this.autoNumber == true ? chapter.shortTitle + ": " : "";
+      const number = this.autoNumber == true ? chapter.shortTitle + ": " : "";
       const active = encodeURI(chapter.shortTitle) == this.currentChapterShortTitle ? "font-bold bordered bg-neutral-focus" : "";
-      let title = this.chaptersTitles.get(chapter.shortTitle);
+      const title = this.chaptersTitles.get(chapter.shortTitle);
       nav = nav.concat(`<li class="py-1 text-base ${active}"> <a href="/#/lab/${this.url}/${encodeURI(chapter.shortTitle)}"> ${number}${title} </a> </li>`);
 
       // horizontal nav
       if (encodeURI(chapter.shortTitle) == this.currentChapterShortTitle) {
         if (this.lo.los[i - 1] !== undefined) {
-          let nav = this.lo.los[i - 1];
-          let title = this.chaptersTitles.get(nav.shortTitle);
-          let step = `${i - 1}:`;
+          const nav = this.lo.los[i - 1];
+          const title = this.chaptersTitles.get(nav.shortTitle);
           this.horizontalNavbarHtml = this.horizontalNavbarHtml.concat(
             `<a class="btn btn-sm capitalize" href="/#/lab/${this.url}/${encodeURI(nav.shortTitle)}"> <span aria-hidden="true">&larr;</span>&nbsp; ${number}${title} </a>`
           );
         }
         if (this.lo.los[i + 1] !== undefined) {
-          let nav = this.lo.los[i + 1];
-          let title = this.chaptersTitles.get(nav.shortTitle);
-          let step = `${i + 1}:`;
+          const nav = this.lo.los[i + 1];
+          const title = this.chaptersTitles.get(nav.shortTitle);
           this.horizontalNavbarHtml = this.horizontalNavbarHtml.concat(
             `<a class="ml-auto btn btn-sm capitalize" style="margin-left: auto" href="/#/lab/${this.url}/${encodeURI(
               nav.shortTitle
