@@ -17,7 +17,6 @@
         "time": "turbo run dev --filter tutors-time-reader",
         "lint": "turbo run lint",
         "clean": "turbo run clean",
-        "accessibility": "achecker --outputFolder Accessibility_Report -- reportLevels violation .",
         "format": "prettier --write \"**/*.{ts,tsx,md}\""
     },
     "devDependencies": {
