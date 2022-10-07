@@ -36,7 +36,6 @@
       }
       result.html = convertMd(resultStrs.join("\n"), course.url);
       result.link = `https://reader.tutors.dev/${result.link}`;
-      console.log(result);
     });
   }
 
@@ -45,14 +44,14 @@
       searchResults = searchHits(labs, searchTerm);
       transformResults(searchResults);
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      push(searchTerm);
+      // spush(searchTerm);
     }
   }
 </script>
 
 {#if course}
   <div class="container mx-auto">
-    <label for="search" class="text-base-content block p-2 text-xl">Enter search term:</label>
+    <label for="search" class="block p-2 text-xl text-base-content">Enter search term:</label>
     <div class="mt-1 border">
       <input bind:value={searchTerm} type="text" name="email" id="search" class="input input-bordered w-full" placeholder="..." />
     </div>
