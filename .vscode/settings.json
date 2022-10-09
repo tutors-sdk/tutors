@@ -1,15 +1,16 @@
-"svelte.enable-ts-plugin": true,
-"task.allowAutomaticTasks": "on",
-"files.exclude": {
-  "**/*.js": { "when": "$(basename).ts" },
-  "**/*.js.map": true,
-  "**/*.d.ts": true,
-  "**/node_modules": true,
-  "**/.turbo": true,
-  "**/dist": true,
-  "**/*.tsbuildinfo": true,
-  "**/package-lock.json": true,
-  "**/.github": true
-},
-"eslint.validate": ["javascript", "typescript", "svelte"]
+{
+  "svelte.enable-ts-plugin": true,
+  "task.allowAutomaticTasks": "on",
+  "files.exclude": {
+    "**/*.js": { "when": "$(basename).ts" },
+    "**/*.js.map": true,
+    "**/*.d.ts": true,
+    "**/node_modules": true,
+    "**/.turbo": true,
+    "**/dist": true,
+    "**/*.tsbuildinfo": true,
+    "**/package-lock.json": true,
+    "**/.github": true
+  },
+  "eslint.validate": ["javascript", "typescript", "svelte"]
 }
