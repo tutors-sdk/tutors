@@ -3,9 +3,9 @@
   import type { CourseService } from "../reader-lib/services/course-service";
   import CardDeck from "../components/cards/CardDeck.svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import { currentLo,portfolio } from "../stores";
+  import { currentLo, portfolio } from "../stores";
   import { Wave } from "svelte-loading-spinners";
-  import { fetchAllCourseList } from "tutors-reader-lib/src/utils/firebase-utils";
+  import { fetchAllCourseList, deleteCourseFromList } from "tutors-reader-lib/src/utils/firebase-utils";
 
   let los: Lo[] = [];
 
@@ -16,15 +16,43 @@
   let courseNmr = 0;
   let total = 0;
 
-  $ : total = courseNmr;
+  $: total = courseNmr;
   let title = "All known Modules";
 
   async function getAllCourses() {
     portfolio.set(true);
     let courses = await fetchAllCourseList();
-    courses = courses.filter(course => course.visits > 30);
+
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    courses.forEach(async (course) => {
+      if (course.url[24] == "-" && course.url[25] == "-") {
+        await deleteCourseFromList(course.url);
+      } else {
+        if (course.url.startsWith("main--") || course.url.startsWith("master--")) {
+          await deleteCourseFromList(course.url);
+        }
+        if (course.url.startsWith("deploy-preview")) {
+          await deleteCourseFromList(course.url);
+        }
+      }
+    });
+
+    courses = await fetchAllCourseList();
+    courses = courses.filter((course) => course.visits > 100);
+    const courseIds: string[] = [];
     for (let i = 0; i < courses.length; i++) {
-      const courseLo = await cache.fetchCourse(`${courses[i].url}.netlify.app`);
+      let courseLo;
+
+      try {
+        courseLo = await cache.readCourse(`${courses[i].url}.netlify.app`);
+        const title = courseLo.lo.title;
+        courseIds.push(
+          `- [${title}](https://reader.tutors.dev/#/course/${courses[i].url}.netlify.app): ${courseLo.lo?.properties?.credits} (visits: ${courses[i].visits})`
+        );
+      } catch (e) {
+        console.log("unfound");
+        await deleteCourseFromList(`${courses[i].url}`);
+      }
       if (courseLo != null) {
         courseNmr++;
         courseLo.lo.route = `https://reader.tutors.dev//#/course/${courses[i].url}.netlify.app`;
@@ -32,10 +60,10 @@
         courseLo.lo.type = "web";
         los.push(courseLo.lo);
         tickerTape = courseLo.lo.title;
-      } else {
-        // deleteCourseFromList(`${courses[i].url}`);
       }
     }
+    courseIds.sort();
+    console.log(courseIds);
     refresh = !refresh;
     loading = false;
     // noinspection TypeScriptValidateTypes
@@ -49,7 +77,7 @@
 </svelte:head>
 
 <div class="container mx-auto">
-  {#await getAllCourses() }
+  {#await getAllCourses()}
     <div class="border rounded-lg overflow-hidden mt-4 dark:border-gray-700">
       <div class="flex border justify-center items-center dark:border-gray-700">
         <Wave size="280" color="#FF3E00" unit="px" />
@@ -57,7 +85,6 @@
     </div>
     {total} : {tickerTape}
   {:then courses}
-    <CardDeck los={los} />
+    <CardDeck {los} />
   {/await}
 </div>
-
