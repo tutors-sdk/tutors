@@ -1,4 +1,4 @@
-import { child, get, getDatabase, ref, runTransaction } from "firebase/database";
+import { child, get, getDatabase, ref, runTransaction, remove } from "firebase/database";
 
 export function getNode(lotype: string, url: string, path: string): string {
   let node = "";
@@ -67,4 +67,11 @@ export async function fetchAllCourseList() {
     courseList.sort((a, b) => Number(b.visits) - Number(a.visits));
   }
   return courseList;
+}
+
+export async function deleteCourseFromList(url: string) {
+  const db = getDatabase();
+  const obj = ref(db, `all-course-access/${url}`);
+  await remove(obj);
+  console.log(`deleting: ${url} as invalid`);
 }
