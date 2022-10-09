@@ -22,7 +22,7 @@ export class CourseService {
       try {
         const response = await axios.get<Lo>(courseUrl);
         course = new Course(response.data, courseId);
-        this.courses.set(courseId, course);
+        // this.courses.set(courseId, course);
         return course;
       } catch (error) {
         console.log(error);
@@ -54,10 +54,10 @@ export class CourseService {
 
   async readCourse(courseId: string): Promise<Course> {
     const course = await this.getOrLoadCourse(courseId);
-    currentCourse.set(course);
-    week.set(course?.currentWeek);
-    await this.checkAuthenticated(course);
-    await this.checkWhiteList(course);
+    //currentCourse.set(course);
+    //week.set(course?.currentWeek);
+    //await this.checkAuthenticated(course);
+    //await this.checkWhiteList(course);
     this.course = course;
     return course;
   }
