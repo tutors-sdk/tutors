@@ -2,7 +2,7 @@ import type { ICellRendererParams } from "ag-grid-community";
 import type { Calendar } from "tutors-reader-lib/src/types/lo-types";
 import type { UserMetric } from "tutors-reader-lib/src/types/metrics-types";
 import { deepScheme } from "./heat-map-colours";
-import { formatDate } from "tutors-reader-lib/src/utils/auth-utils";
+import { formatDate } from "tutors-reader-lib/src/utils/firebase-utils";
 
 interface CalendarSheetColumn {
   headerName: string;
