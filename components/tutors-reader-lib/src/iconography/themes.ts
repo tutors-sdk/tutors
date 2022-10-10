@@ -30,7 +30,7 @@ export function getIcon(type: string): IconType {
   return icon;
 }
 
-export let currentIconLib: any = StandardIconLib;
+export const currentIconLib: any = StandardIconLib;
 
 // currentCourse.subscribe((course) => {
 //   if (course && course.lo && course.lo.properties.iconset) {

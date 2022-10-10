@@ -63,7 +63,7 @@ export function clearLocalStorage() {
 export function setSession(authResult: URLSearchParams) {
   const hour = 3600000;
   const expireAtTime = hour * 24 * 7 + new Date().getTime();
-  let expiresAt = JSON.stringify(expireAtTime);
+  const expiresAt = JSON.stringify(expireAtTime);
   localStorage.setItem("access_token", authResult.get("acces_token"));
   localStorage.setItem("id_token", authResult.get("id_token"));
   localStorage.setItem("expires_at", expiresAt);
@@ -91,16 +91,4 @@ export function decrypt(str: string): string {
   const raw = Crypto.AES.decrypt(str, key, { iv: iv });
   const value = raw.toString(Crypto.enc.Utf8);
   return value;
-}
-
-export function formatDate(date): string {
-  var d = new Date(date),
-    month = "" + (d.getMonth() + 1),
-    day = "" + d.getDate(),
-    year = d.getFullYear();
-
-  if (month.length < 2) month = "0" + month;
-  if (day.length < 2) day = "0" + day;
-
-  return [year, month, day].join("-");
 }

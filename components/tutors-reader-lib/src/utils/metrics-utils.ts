@@ -80,6 +80,7 @@ function expandGenericMetrics(id: string, fbData): any {
 export async function fetchUserById(courseUrl: string, userId: string, allLabs) {
   const courseBase = courseUrl.substr(0, courseUrl.indexOf("."));
   const userEmail = decrypt(userId);
+  // eslint-disable-next-line no-useless-escape
   const userEmailSanitised = userEmail.replace(/[`#$.\[\]\/]/gi, "*");
 
   const dbRef = ref(getDatabase());

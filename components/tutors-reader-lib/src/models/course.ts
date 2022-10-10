@@ -172,7 +172,7 @@ export class Course {
         tip: "Go to module Teams meeting",
       });
     if (properties.companions) {
-      for (let [key, value] of Object.entries(properties.companions)) {
+      for (const [key, value] of Object.entries(properties.companions)) {
         const companion: any = value;
         addIcon(key, companion.icon);
         this.companions.bar.push({

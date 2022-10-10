@@ -30,7 +30,6 @@ function removeLastDirectory(the_url) {
 
 export function removeLeadingHashes(str: string): string {
   if (str.includes("#")) {
-    const i = str.lastIndexOf("#");
     str = str.substr(str.lastIndexOf("#") + 1);
   }
   return str;

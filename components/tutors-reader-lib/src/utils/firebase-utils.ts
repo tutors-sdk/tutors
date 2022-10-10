@@ -24,7 +24,7 @@ export function updateCount(root: string, key: string) {
 export function updateCountValue(key: string) {
   const db = getDatabase();
   const dbRef = ref(db, key);
-  void runTransaction(dbRef, function (count) {
+  void runTransaction(dbRef, function (count: number) {
     return (count || 0) + 1;
   });
 }
@@ -40,16 +40,14 @@ export function updateStr(key: string, str: string) {
 export function sanatisePath(url: string, path: string) {
   let node = path.replace(url, "");
   node = node.substr(node.indexOf("//") + 2, node.length);
+  // eslint-disable-next-line no-useless-escape
   node = node.replace(/[`#$.\[\]]/gi, "*");
   return node;
 }
 
 export function updateCalendar(root: string) {
   const dateObj = new Date();
-  const day = ("0" + dateObj.getDate()).slice(-2);
-  const month = ("0" + (dateObj.getMonth() + 1)).slice(-2);
-  const year = dateObj.getFullYear();
-  const date = year + "-" + month + "-" + day;
+  const date = formatDate(dateObj);
   updateCountValue(`${root}/calendar/${date}`);
 }
 
@@ -74,4 +72,14 @@ export async function deleteCourseFromList(url: string) {
   const obj = ref(db, `all-course-access/${url}`);
   await remove(obj);
   console.log(`deleting: ${url} as invalid`);
+}
+
+export function formatDate(date: Date): string {
+  const d = new Date(date);
+  const year = d.getFullYear().toString();
+  let month = (d.getMonth() + 1).toString();
+  let day = d.getDate().toString();
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+  return [year, month, day].join("-");
 }
