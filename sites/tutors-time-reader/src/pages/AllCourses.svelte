@@ -38,7 +38,7 @@
     });
 
     courses = await fetchAllCourseList();
-    courses = courses.filter((course) => course.visits > 100);
+    courses = courses.filter((course) => course.visits > 10);
     const courseIds: string[] = [];
     for (let i = 0; i < courses.length; i++) {
       let courseLo;
