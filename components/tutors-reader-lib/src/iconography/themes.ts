@@ -1,6 +1,5 @@
-import { FluentIconLib } from "tutors-reader-lib/src/iconography/support/fluent-icons";
-// import { currentCourse } from "../stores";
-import type { IconType } from "tutors-reader-lib/src/types/icon-types";
+import { FluentIconLib } from "./support/fluent-icons";
+import type { IconType } from "../types/icon-types";
 
 let StandardIconLib = FluentIconLib;
 
@@ -31,14 +30,6 @@ export function getIcon(type: string): IconType {
 }
 
 export const currentIconLib: any = StandardIconLib;
-
-// currentCourse.subscribe((course) => {
-//   if (course && course.lo && course.lo.properties.iconset) {
-//     currentIconLib = course.lo.properties.iconset;
-//   } else {
-//     currentIconLib = StandardIconLib;
-//   }
-// });
 
 export function addIcon(type: string, icon: IconType) {
   StandardIconLib[type] = icon;
