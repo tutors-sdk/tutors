@@ -1,7 +1,7 @@
 const config = {
   mode: 'jit',
   content: [
-    '../../tutors-ui/**/*.{html,js,svelte,svx,ts}',
+    '../../tutors-ui/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
     'src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'
   ],
   safelist: [
