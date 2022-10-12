@@ -3,17 +3,16 @@ import * as fs from "fs";
 import { Course } from "tutors-lib/src/models/course";
 import { HtmlEmitter } from "./controllers/html-emitter";
 import { copyFolder } from "tutors-lib/src/utils/futils";
+import * as nunjucks from "nunjucks";
 
-const tutors = require("../package.json").version;
+const version = `tutors-html: 2.6.0 (tutors-lib: 2.6.0)`;
 
-const version = `tutors-html?: ${tutors} (tutors-lib: 2.5.2)`;
-const nunjucks = require("nunjucks");
 const root = __dirname;
 nunjucks.configure(root + "/views", { autoescape: false });
 nunjucks.installJinjaCompat();
 
 if (fs.existsSync("course.md")) {
-  let folder = process.cwd() + "/public-site";
+  const folder = process.cwd() + "/public-site";
   const course = new Course();
   console.log(`Static course generator ${version}`);
   course.publish(folder);
