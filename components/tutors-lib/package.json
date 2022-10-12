@@ -1,6 +1,6 @@
 {
   "name": "tutors-lib",
-  "version": "2.5.2",
+  "version": "2.6.0",
   "description": "Static course web site generator - core library",
   "author": "Eamonn de Leastar (edeleastar@wit.ie)",
   "license": "MIT",

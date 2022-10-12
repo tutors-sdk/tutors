@@ -4,7 +4,6 @@ import { findLos, publishLos, reapLos } from "../utils/loutils";
 import * as fs from "fs";
 import { copyFileToFolder, readCalendar, readEnrollment, readWholeFile } from "../utils/futils";
 import { Topic } from "./topic";
-const version = require("../../package.json").version;
 
 interface LoWall {
   course: Course;
@@ -37,7 +36,7 @@ export class Course extends LearningObject {
     this.contentMd = readWholeFile("course.md");
     const ignoreList = this.properties!.ignore;
     if (ignoreList) {
-      const los = this.los.filter((lo) => ignoreList.indexOf(lo.folder!) >= 0);
+      const los = this.los.filter((lo) => ignoreList.indexOf(lo.folder) >= 0);
       los.forEach((lo) => {
         lo.hide = true;
       });
@@ -65,9 +64,7 @@ export class Course extends LearningObject {
 
   publish(path: string): void {
     console.log(":: ", this.title);
-    copyFileToFolder(this.img!, path);
+    copyFileToFolder(this.img, path);
     publishLos(path, this.los);
   }
-
-  gen3() {}
 }

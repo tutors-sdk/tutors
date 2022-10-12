@@ -1,4 +1,4 @@
-import * as fs from 'fs';
+import * as fs from "fs";
 
 export interface VideoIdentifier {
   service: string;
@@ -11,21 +11,21 @@ export interface VideoIdentifiers {
 }
 
 export function readVideoIds(): VideoIdentifiers {
-  let videos: VideoIdentifiers = {
-    videoid: '',
+  const videos: VideoIdentifiers = {
+    videoid: "",
     videoIds: [],
   };
 
-  if (fs.existsSync('videoid')) {
-    const entries = fs.readFileSync('videoid').toString().split('\n');
+  if (fs.existsSync("videoid")) {
+    const entries = fs.readFileSync("videoid").toString().split("\n");
 
     entries.forEach((entry) => {
-      if (entry !== '') {
-        if (entry.includes('heanet') || entry.includes('vimp')) {
+      if (entry !== "") {
+        if (entry.includes("heanet") || entry.includes("vimp")) {
           videos.videoIds.push(parseProperty(entry));
         } else {
           videos.videoid = entry;
-          videos.videoIds.push({ service: 'youtube', id: entry });
+          videos.videoIds.push({ service: "youtube", id: entry });
         }
       }
     });
@@ -37,8 +37,8 @@ export function readVideoIds(): VideoIdentifiers {
 }
 
 function parseProperty(nv: string): VideoIdentifier {
-  const nameValue = nv.split('=');
-  nameValue[0] = nameValue[0].replace('\r', '');
-  nameValue[1] = nameValue[1].replace('\r', '');
+  const nameValue = nv.split("=");
+  nameValue[0] = nameValue[0].replace("\r", "");
+  nameValue[1] = nameValue[1].replace("\r", "");
   return { service: nameValue[0], id: nameValue[1] };
 }
