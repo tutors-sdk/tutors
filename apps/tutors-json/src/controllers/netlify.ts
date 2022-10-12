@@ -1,15 +1,13 @@
-import * as fs from 'fs';
-import * as sh from 'shelljs';
+import * as fs from "fs";
+import * as sh from "shelljs";
 sh.config.silent = true;
 
 export function writeFile(folder: string, filename: string, contents: string): void {
   if (!fs.existsSync(folder)) {
     sh.mkdir(folder);
   }
-  return fs.writeFileSync(folder + '/' + filename, contents);
+  return fs.writeFileSync(folder + "/" + filename, contents);
 }
-
-const version = require('../../package.json').version;
 
 const netlifyToml = `#
 # The following redirect is intended for use with most SPAs that handle
@@ -26,7 +24,7 @@ const netlifyToml = `#
     Access-Control-Allow-Origin = "*"
 `;
 
-function redirectHtmlFile(version: string): string {
+function redirectHtmlFile(): string {
   const netlifyHtml = `
     <!DOCTYPE html>
     <html>
@@ -51,7 +49,7 @@ function redirectHtmlFile(version: string): string {
 }
 
 export function generateNetlifyToml(site: string) {
-  writeFile(site, 'netlify.toml', netlifyToml);
-  let baseCourseUrl = '';
-  writeFile(site, 'index.html', redirectHtmlFile(version));
+  writeFile(site, "netlify.toml", netlifyToml);
+  const baseCourseUrl = "";
+  writeFile(site, "index.html", redirectHtmlFile());
 }

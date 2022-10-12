@@ -1,6 +1,6 @@
 {
   "name": "tutors-json",
-  "version": "2.5.2",
+  "version": "2.6.0",
   "description": "Static course web site generator - json emitter",
   "main": "./src/tutors-json.js",
   "scripts": {
