@@ -1,15 +1,15 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # generated files from ts sources in specific ts only modules
-**/apps/tutors-html/**/*.js
-**/apps/tutors-html/**/*.js.map
-**/apps/tutors-html/**/*.d.ts
-**/apps/tutors-json/**/*.js
-**/apps/tutors-json/**/*.js.map
-**/apps/tutors-json/**/*.d.ts
-**/components/tutors-lib/**/*.js
-**/components/tutors-lib/**/*.js.map
-**/components/tutors-lib/**/*.d.ts
+**/apps/tutors-html/src/**/*.js
+**/apps/tutors-html/src/**/*.js.map
+**/apps/tutors-html/src/**/*.d.ts
+**/apps/tutors-json/src/**/*.js
+**/apps/tutors-json/src/**/*.js.map
+**/apps/tutors-json/src/**/*.d.ts
+**/components/tutors-lib/src/**/*.js
+**/components/tutors-lib/src/**/*.js.map
+**/components/tutors-lib/src/**/*.d.ts
 
 # exclude ts build info caches
 **/tsconfig.tsbuildinfo
