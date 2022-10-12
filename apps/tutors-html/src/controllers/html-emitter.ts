@@ -1,5 +1,4 @@
 import * as sh from "shelljs";
-
 import { Course } from "tutors-lib/src/models/course";
 import { writeFile } from "tutors-lib/src/utils/futils";
 import { Topic, Unit } from "tutors-lib/src/models/topic";
@@ -7,7 +6,7 @@ import { Lab } from "tutors-lib/src/models/lab";
 import { MarkdownParser } from "../utils/markdown-parser";
 import { LearningObject } from "tutors-lib/src/models/lo";
 import { Note } from "tutors-lib/src/models/note";
-// import { generateToc } from "../utils/markdown-toc-lib";
+import { generateToc } from "../utils/markdown-toc-lib";
 import { sortLos } from "tutors-lib/src/utils/loutils";
 import * as nunjucks from "nunjucks";
 
@@ -34,7 +33,7 @@ export class HtmlEmitter {
 
   emitNote(note: Note, path: string) {
     note.contentMd = this.parser.parse(note.contentMd);
-    // note.contentMd = generateToc(note.contentMd);
+    note.contentMd = generateToc(note.contentMd);
     const notePath = `${path}/${note.folder}`;
     publishTemplate(notePath, "index.html", "Note.njk", note);
   }
@@ -57,7 +56,7 @@ export class HtmlEmitter {
       if (lo.lotype == "panelnote") {
         const note = lo as Note;
         note.contentMd = this.parser.parse(note.contentMd);
-        //note.contentMd = generateToc(note.contentMd);
+        note.contentMd = generateToc(note.contentMd);
       }
     });
     unit.standardLos = sortLos(unit.standardLos);

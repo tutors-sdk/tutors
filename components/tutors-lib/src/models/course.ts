@@ -34,7 +34,7 @@ export class Course extends LearningObject {
     this.lotype = "course";
     this.reap("course");
     this.contentMd = readWholeFile("course.md");
-    const ignoreList = this.properties!.ignore;
+    const ignoreList = this.properties?.ignore;
     if (ignoreList) {
       const los = this.los.filter((lo) => ignoreList.indexOf(lo.folder) >= 0);
       los.forEach((lo) => {

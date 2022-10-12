@@ -50,6 +50,5 @@ function redirectHtmlFile(): string {
 
 export function generateNetlifyToml(site: string) {
   writeFile(site, "netlify.toml", netlifyToml);
-  const baseCourseUrl = "";
   writeFile(site, "index.html", redirectHtmlFile());
 }
