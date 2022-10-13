@@ -7,7 +7,7 @@
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "node",
-      "cwd": "/Users/edeleastar/repos/modules/hdip/2022/sem-2/web-development-2-2022"
+      "cwd": "${workspaceFolder}/courses/tutors-template/"
     },
     {
       "name": "Tutors-Html",
@@ -15,7 +15,7 @@
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "node",
-      "cwd": "/Users/edeleastar/repos/modules/hdip/2022/sem-2/web-development-2-2022"
+      "cwd": "${workspaceFolder}/courses/tutors-template"
     },
     {
       "type": "chrome",
