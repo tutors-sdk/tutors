@@ -87,7 +87,7 @@ export class HtmlEmitter {
     topic.los.forEach((lo) => {
       this.emitLo(lo, topicPath);
     });
-    topic.standardLos = sortLos(topic.standardLos);
+    topic.standardLos = topic.los.filter((lo: LearningObject) => lo.lotype !== "unit" && lo.lotype !== "panelvideo" && lo.lotype !== "paneltalk");
     publishTemplate(topicPath, "index.html", "Topic.njk", topic);
     sh.cd("..");
   }
