@@ -7,7 +7,7 @@
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "node",
-      "cwd": "${workspaceFolder}/courses/tutors-template/"
+      "cwd": "${workspaceFolder}/courses/tutors-reference/"
     },
     {
       "name": "Tutors-Html",
@@ -15,7 +15,7 @@
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "node",
-      "cwd": "${workspaceFolder}/courses/tutors-template"
+      "cwd": "${workspaceFolder}/courses/tutors-reference"
     },
     {
       "type": "chrome",
