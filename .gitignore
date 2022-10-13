@@ -10,6 +10,8 @@
 **/components/tutors-lib/src/**/*.js
 **/components/tutors-lib/src/**/*.js.map
 **/components/tutors-lib/src/**/*.d.ts
+**/courses/tutors-reference/json
+**/courses/tutors-reference/public-site
 
 # exclude ts build info caches
 **/tsconfig.tsbuildinfo
