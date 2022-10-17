@@ -4,6 +4,9 @@ const redirectUri = import.meta.env.VITE_auth0_redirectUri;
 const apiKey = import.meta.env.VITE_firebase_apiKey;
 const databaseUrl = import.meta.env.VITE_firebase_databaseUrl;
 const projectId = import.meta.env.VITE_firebase_projectId;
+const tutorStoreId = import.meta.env.VITE_tutors_store_id;
+const tutorStoreSecret = import.meta.env.VITE_tutors_store_secret;
+const tutorsFirebaseSecret = import.meta.env.VITE_tutors_firebase_secret;
 
 const keys = {
   auth0: {
@@ -15,6 +18,9 @@ const keys = {
     apiKey: apiKey,
     databaseURL: databaseUrl,
     projectId: projectId,
+    tutorStoreId: tutorStoreId,
+    tutorStoreSecret: tutorStoreSecret,
+    tutorsFirebaseSecret: tutorsFirebaseSecret,
   },
 };
 
