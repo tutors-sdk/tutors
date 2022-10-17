@@ -5,6 +5,8 @@ interface ImportMetaEnv {
   readonly VITE_firebase_apiKey: string;
   readonly VITE_firebase_databaseUrl: string;
   readonly VITE_firebase_projectId: string;
+  readonly VITE_tutors_store_id: string;
+  readonly VITE_tutors_store_secret: string;
 }
 
 interface ImportMeta {
