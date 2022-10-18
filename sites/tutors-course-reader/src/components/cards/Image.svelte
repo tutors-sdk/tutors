@@ -31,7 +31,7 @@
   }
 
   if (miniImage) {
-    imageHeight = "h-12";
+    imageHeight = "h-10";
     iconHeight = "48";
   }
   const unsubscribe = layout.subscribe((layout) => {
