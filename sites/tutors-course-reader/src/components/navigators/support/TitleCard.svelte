@@ -31,14 +31,14 @@
     </div>
   </div>
     <div class="flex-nowrap ml-4">
-    <a href="/" class="hidden sm:inline-block text-sm sm:text-lg font-bold mr-4" title="Return to Homepage">{$currentLo.title}</a>
+    <h2 class="hidden sm:inline-block text-sm sm:text-lg font-bold mr-4">{$currentLo.title}</h2>
 		<!-- Badge -->
-		<a class="hidden sm:block" href="https://github.com/Brain-Bones/skeleton/releases" target="_blank">
+		<div class="hidden sm:block" target="_blank">
 			{#if $currentLo.title != $currentCourse.lo.title}
         <p class="text-sm font-bold">{$currentCourse.lo.title}</p>
       {:else}
         <p class="text-sm font-bold">{$currentCourse.lo.properties.credits}</p>
       {/if}
-		</a>
+    </div>
     </div>
 {/if}
