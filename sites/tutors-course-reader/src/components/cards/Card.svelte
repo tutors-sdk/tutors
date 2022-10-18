@@ -50,10 +50,10 @@
 
 <div class="{cardType} {cardWidths} border-{getIcon(lo.type).colour}">
   <a href={lo.route} {target}>
-    <div class="card m-2 border-y-8 hover:scale-105 transition-all h-96">
+    <div class="card m-2 border-y-8 hover:scale-105 transition-all">
       <header class="card-header flex flex-row justify-between items-center p-3">
-        <div class="inline-flex">
-          <div class="flex-1">{lo.title}</div>
+        <div class="inline-flex w-full">
+          <div class="flex-auto">{lo.title}</div>
           <div class="flex-none"><Icon type={lo.type} /></div>
         </div>
       </header>
