@@ -34,15 +34,11 @@
 </script>
 
 <div class="topicnavigator {cardWidths}">
-  <div class="topicnavigator-title">
-    <h3 class="card-title  {headingText}">{topic.lo.title}</h3>
-  </div>
-  <figure class="flex justify-center">
-    <Image {lo} />
-  </figure>
-  <div class="card-body p-4">
-    <ul class="text-left text-base-content {text}">
-      <TopicNavigator {topic} />
-    </ul>
-  </div>
+  <div class="card">
+    <header class="card-header">{topic.lo.title}</header>
+    <div class="card-body"><figure class="flex justify-center">
+      <Image {lo} />
+    </figure></div>
+    <footer class="card-footer"><TopicNavigator {topic} /></footer>
+</div>
 </div>

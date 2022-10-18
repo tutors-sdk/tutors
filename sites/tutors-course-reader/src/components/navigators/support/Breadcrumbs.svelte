@@ -21,7 +21,7 @@
     return input;
   }
 </script>
-
+<div class="p-1 my-4 mx-8">
 <Breadcrumb>
   {#if $currentCourse.lo.properties?.parent != null }
 	<Crumb href='#/{$currentCourse.lo.properties?.parent}'>
@@ -37,3 +37,4 @@
   </Crumb>
   {/each}
 </Breadcrumb>
+</div>

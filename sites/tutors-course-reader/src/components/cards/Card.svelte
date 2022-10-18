@@ -48,28 +48,29 @@
   onDestroy(unsubscribe);
 </script>
 
-<div transition:cardTransition class="{cardType} {cardWidths} border-{getIcon(lo.type).colour}">
-  <a href={lo.route} {target} in:fade={{ duration: 800 }}>
-    <div class={cardHeader}>
-      <h3 class="card-title {headingText}">{lo.title}</h3>
-      <Icon type={lo.type} />
-    </div>
-    <figure class="flex justify-center px-2">
-      <Image {lo} />
-    </figure>
-    <div class="card-body">
-      <div class="tutorscard-body">
-        {#if $currentCourse && !$currentCourse.areVideosHidden()}
-          {#if lo.video && lo.type !== "video"}
-            <Icon link={lo.video} width={40} height={40} type="video" toolTip="Play video for this talk" />
-          {/if}
-        {/if}
-
-        <p />
-        <div class="{text} prose">
-          {@html lo.summary}
+<div class="{cardType} {cardWidths} border-{getIcon(lo.type).colour}">
+  <a href={lo.route} {target}>
+    <div class="card m-1">
+      <header class="card-header">
+        <div class="inline-flex">
+          <div class="flex-1">{lo.title}</div>
+          <div class="flex-none"><Icon type={lo.type} /></div>
         </div>
+      </header>
+      <div class="card-body">
+        <figure class="flex justify-center">
+          <Image {lo} />
+        </figure>
       </div>
+      <footer class="card-footer">{#if $currentCourse && !$currentCourse.areVideosHidden()}
+        {#if lo.video && lo.type !== "video"}
+          <Icon link={lo.video} width={40} height={40} type="video" toolTip="Play video for this talk" />
+        {/if}
+      {/if}
+      <div class="{text} prose">
+        {@html lo.summary}
+      </div>
+    </footer>
     </div>
   </a>
 </div>

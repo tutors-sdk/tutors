@@ -6,6 +6,7 @@
   import { isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
   import { revealOnline } from "../../../stores";
   import type { MetricsService } from "src/reader-lib/services/metrics-service";
+  import { menu } from "@brainandbones/skeleton";
 
   let user: User;
   let status = false;
@@ -33,20 +34,18 @@
 </script>
 
 {#if $currentUser && $currentCourse.authLevel > 0}
-  <div class="dropdown-end dropdown-hover dropdown flex-none capitalize">
-    <div class="indicator">
-      <span class="badge indicator-item badge-error indicator-center indicator-top">{$studentsOnline}</span>
-      <button class="btn btn-ghost">
-        {#if status}
+<div class="relative">
+  <button class="btn btn-sm space-x-1" use:menu={{ menu: 'presence' }}>
+    {#if status}
           <Icon type="online" />
         {/if}
         {#if !status}
           <Icon type="offline" />
         {/if}
-      </button>
-    </div>
-    <ul tabindex="0" class="dropdown-content menu rounded-box z-50 w-48 rounded-xl bg-base-100 p-1 text-base-content shadow-xl">
-      <li>
+  </button>
+  <nav class="list-nav card card-body w-56 shadow-xl space-y-4" data-menu="presence">
+    <ul>
+      <li class="inline-block">
         <label class="label cursor-pointer">
           <input type="checkbox" class="checkbox checkbox-primary checkbox-sm" bind:checked={status} on:click={handleClick} />
           <span class="label-text text-base text-base-content">Share Presence</span>
@@ -60,5 +59,6 @@
         </li>
       {/if}
     </ul>
-  </div>
+  </nav>
+</div>
 {/if}

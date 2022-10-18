@@ -108,7 +108,7 @@
         <svelte:fragment slot="pageHeader">
           <PageHeader />
         </svelte:fragment>
-        <div class="course-container container">
+        <div class="container mx-auto my-4">
           <Router {routes} />
         </div>
     <div class="footer mx-auto w-11/12 lg:w-full">

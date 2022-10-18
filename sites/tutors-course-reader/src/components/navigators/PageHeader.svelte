@@ -1,17 +1,19 @@
 <script lang="ts">
   import { currentCourse, portfolio } from "../../stores";
   import Breadcrumbs from "./support/Breadcrumbs.svelte";
-  import Companions from "./support/Companions.svelte";
-  import Wall from "./support/Wall.svelte";
+  import IconBar from "tutors-reader-lib/src/iconography/IconBar.svelte";
 </script>
 
 {#if $currentCourse}
-<div class="py-4 px-8 bg-primary-100">
+<div class="bg-primary-100 flex">
     {#if !$currentCourse.isPortfolio() && !$portfolio}
       <Breadcrumbs />
-      <div class="hidden lg:flex">
-        <Companions />
-        <Wall />
+      <div class="flex flex-auto"></div>
+      <div class="hidden lg:flex lg:flex-none lg:bg-primary-200 lg:rounded-lg lg:my-4">
+        <IconBar nav={$currentCourse.companions} />
+      </div>
+      <div class="hidden lg:flex lg:flex-none lg:bg-primary-200 lg:rounded-lg lg:my-4 lg:ml-2 mr-10">
+        <IconBar nav={$currentCourse.wallBar} />
       </div>
     {/if}
   </div>

@@ -4,6 +4,7 @@
   import type { Course } from "tutors-reader-lib/src/models/course";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
   import { getUserId } from "tutors-reader-lib/src/utils/auth-utils";
+  import { menu, Avatar } from "@brainandbones/skeleton";
 
   let user: User;
   let course: Course;
@@ -37,17 +38,15 @@
 </script>
 
 {#if $currentUser && $currentCourse.authLevel > 0}
-  <div class="dropdown dropdown-end dropdown-hover top-1 flex-none capitalize">
-    <div class="navbar-icon">
-      <div class="avatar mx-auto flex h-8 w-8 content-center">
-        <div class="rounded-full">
-          <img src={$currentUser.picture} alt={$currentUser.nickname} />
-        </div>
-      </div>
-    </div>
-    <ul tabindex="0" class="menu dropdown-content bg-base-100 text-base-content rounded-box z-50 w-48 rounded-xl p-1 shadow-xl">
-      <div class="mt-2 mb-1 ml-4 text-xs">Logged in as:</div>
-      <div class="mb-1 ml-4 text-sm">{$currentUser.name}</div>
+
+<div class="relative">
+  <button class="btn btn-sm space-x-1" use:menu={{ menu: 'avatar' }}>
+    <Avatar width="w-10" src={$currentUser.picture} alt={$currentUser.nickname} />
+  </button>
+  <nav class="list-nav card card-body w-56 shadow-xl space-y-4" data-menu="avatar">
+    <div class="mt-2 mb-1 ml-4 text-xs">Logged in as:</div>
+    <div class="mb-1 ml-4 text-sm">{$currentUser.name}</div>
+    <ul>
       <li>
         <a href={timeUrl} target="_blank">
           <Icon type="tutorsTime" />
@@ -73,5 +72,6 @@
         </a>
       </li>
     </ul>
-  </div>
+  </nav>
+</div>
 {/if}

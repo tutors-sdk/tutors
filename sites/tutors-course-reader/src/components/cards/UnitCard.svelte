@@ -24,7 +24,7 @@
   onDestroy(unsubscribe);
 </script>
 
-<div class="bg-base-200 text-base-content rounded-box card-corner p-2 mb-2 overflow-hidden w-full mx-auto p-4 place-items-center max-w-full">
+<div class="bg-surface-100-800-token rounded-xl backdrop-blur text-base-content rounded-box card-corner p-2 mb-2 overflow-hidden w-full mx-auto p-4 place-items-center max-w-full">
   <div class="flex justify-between w-full">
     <h2 id="{unit.id}" class="p-2 {text}">
       {unit.title}
