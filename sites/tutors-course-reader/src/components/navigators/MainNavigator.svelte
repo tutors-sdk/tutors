@@ -1,7 +1,6 @@
 <script lang="ts">
   import TitleCard from "./support/TitleCard.svelte";
-  import { courseUrl, currentCourse, layout, revealCalendar, revealInfoBar } from "../../stores";
-  import Toc from "./support/Toc.svelte";
+  import { courseUrl, currentCourse, layout, revealCalendar, revealInfoBar, revealSidebar } from "../../stores";
   import Presence from "./support/Presence.svelte";
   import Avatar from "./support/Avatar.svelte";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
@@ -63,7 +62,10 @@
       <LightSwitch origin="tr" />
       <Presence />
       <Avatar />
-      <Toc /></svelte:fragment
+      <button class="btn" on:click={() => revealSidebar.set(true)}>
+        <Icon type="toc" />
+      </button>
+      </svelte:fragment
     >
   </AppBar>
 {/if}
