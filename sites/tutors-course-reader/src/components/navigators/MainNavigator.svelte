@@ -2,7 +2,6 @@
   import TitleCard from "./support/TitleCard.svelte";
   import { courseUrl, currentCourse, layout, revealCalendar, revealInfoBar } from "../../stores";
   import Toc from "./support/Toc.svelte";
-  import { fly } from "svelte/transition";
   import Presence from "./support/Presence.svelte";
   import Avatar from "./support/Avatar.svelte";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
