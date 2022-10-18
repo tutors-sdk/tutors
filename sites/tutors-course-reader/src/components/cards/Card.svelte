@@ -50,15 +50,15 @@
 
 <div class="{cardType} {cardWidths} border-{getIcon(lo.type).colour}">
   <a href={lo.route} {target}>
-    <div class="card m-1">
-      <header class="card-header">
+    <div class="card m-2 border-y-8 hover:scale-105 transition-all h-96">
+      <header class="card-header flex flex-row justify-between items-center p-3">
         <div class="inline-flex">
           <div class="flex-1">{lo.title}</div>
           <div class="flex-none"><Icon type={lo.type} /></div>
         </div>
       </header>
       <div class="card-body">
-        <figure class="flex justify-center">
+        <figure class="flex justify-center object-scale-down p-1">
           <Image {lo} />
         </figure>
       </div>
@@ -67,7 +67,7 @@
           <Icon link={lo.video} width={40} height={40} type="video" toolTip="Play video for this talk" />
         {/if}
       {/if}
-      <div class="{text} prose">
+      <div class="{text} prose text-center text-base-content line-clamp-3">
         {@html lo.summary}
       </div>
     </footer>
