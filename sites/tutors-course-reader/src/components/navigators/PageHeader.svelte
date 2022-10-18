@@ -6,7 +6,7 @@
 </script>
 
 {#if $currentCourse}
-<div class="navbar-secondary">
+<div class="py-4 px-8 bg-primary-100">
     {#if !$currentCourse.isPortfolio() && !$portfolio}
       <Breadcrumbs />
       <div class="hidden lg:flex">

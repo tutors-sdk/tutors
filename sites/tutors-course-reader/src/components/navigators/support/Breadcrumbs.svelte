@@ -36,5 +36,4 @@
   <span>{truncate(lo.title)}</span>
   </Crumb>
   {/each}
-	<Crumb>(current)</Crumb>
 </Breadcrumb>
