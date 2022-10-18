@@ -1,5 +1,8 @@
 <script lang="ts">
-  import "./tailwind.css";
+  import "@brainandbones/skeleton/styles/all.css";
+  import '@brainandbones/skeleton/themes/theme-skeleton.css';
+  import "./main.css";
+  import { AppShell } from '@brainandbones/skeleton';
   import { onMount, setContext } from "svelte";
   import Router from "svelte-spa-router";
   import Sidebar from "./components/navigators/sidebars/TocBar.svelte";
@@ -14,6 +17,7 @@
   import Lab from "./pages/Lab.svelte";
   import NotFound from "./pages/support/NotFound.svelte";
   import MainNavigator from "./components/navigators/MainNavigator.svelte";
+  import PageHeader from "./components/navigators/PageHeader.svelte";
   import Footer from "./components/navigators/footer/Footer.svelte";
   import BackToTop from "./components/navigators/BackToTop.svelte";
   import Logout from "./pages/support/Logout.svelte";
@@ -89,25 +93,28 @@
   <title>{$currentLo?.title}</title>
 </svelte:head>
 
-<div class="tutors-container">
+<div id="app">
   {#if authenticating}
     <TutorsTerms bind:authenticating />
   {:else}
-    <div class="content">
-      <Modal>
+  <AppShell>
         <Sidebar />
         <Onlinebar />
         <Infobar />
         <Calendar />
-        <MainNavigator />
+        <svelte:fragment slot="header">
+          <MainNavigator />
+        </svelte:fragment>
+        <svelte:fragment slot="pageHeader">
+          <PageHeader />
+        </svelte:fragment>
         <div class="course-container container">
           <Router {routes} />
         </div>
-      </Modal>
-    </div>
     <div class="footer mx-auto w-11/12 lg:w-full">
       <Footer />
     </div>
+  </AppShell>
   {/if}
 </div>
 

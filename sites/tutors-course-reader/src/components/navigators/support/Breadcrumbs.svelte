@@ -1,9 +1,8 @@
 <script lang="ts">
   import { currentCourse, currentLo } from "../../../stores";
-  import Breadcrumb from "./Breadcrumb.svelte";
+  import { Breadcrumb, Crumb } from '@brainandbones/skeleton';
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import { fade, fly } from "svelte/transition";
 
   function crumbs(lo: Lo, los: Lo[]) {
     if (lo) {
@@ -14,18 +13,28 @@
     }
     return los;
   }
+
+  function truncate(input: string) {
+    if (input.length > 26) {
+      return input.substring(0, 26) + "...";
+    }
+    return input;
+  }
 </script>
-<div class="navbar-secondary-bg">
-  <ul in:fly="{{ y: -20, duration: 1000 }}" out:fade>
-    {#if $currentCourse.lo.properties?.parent != null }
-      <li>
-        <a class="navbar-icon" href="#/{$currentCourse.lo.properties?.parent}">
-          <Icon type="programHome" />
-        </a>
-      </li>
-    {/if}
-    {#each crumbs($currentLo, []) as lo}
-      <Breadcrumb {lo} />
-    {/each}
-  </ul>
-</div>
+
+<Breadcrumb>
+  {#if $currentCourse.lo.properties?.parent != null }
+	<Crumb href='#/{$currentCourse.lo.properties?.parent}'>
+		<svelte:fragment slot="lead"><Icon type="programHome" /></svelte:fragment>
+	</Crumb>
+  {/if}
+  {#each crumbs($currentLo, []) as lo}
+  <Crumb href="{lo.route}{lo.id}">
+    <svelte:fragment slot="lead">
+    <Icon type={lo.type} />
+  </svelte:fragment>
+  <span>{truncate(lo.title)}</span>
+  </Crumb>
+  {/each}
+	<Crumb>(current)</Crumb>
+</Breadcrumb>

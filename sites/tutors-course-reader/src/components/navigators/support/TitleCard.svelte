@@ -29,13 +29,16 @@
         <Icon icon={getIcon(lo.type).icon} class="text-{getIcon(lo.type).colour}" width="40" height="40" />
       {/if}
     </div>
-    <div class="navbar-title align-middle">
-      <p class="text-lg font-bold">{$currentLo.title}</p>
-      {#if $currentLo.title != $currentCourse.lo.title}
+  </div>
+    <div class="flex-nowrap ml-4">
+    <a href="/" class="hidden sm:inline-block text-sm sm:text-lg font-bold mr-4" title="Return to Homepage">{$currentLo.title}</a>
+		<!-- Badge -->
+		<a class="hidden sm:block" href="https://github.com/Brain-Bones/skeleton/releases" target="_blank">
+			{#if $currentLo.title != $currentCourse.lo.title}
         <p class="text-sm font-bold">{$currentCourse.lo.title}</p>
       {:else}
         <p class="text-sm font-bold">{$currentCourse.lo.properties.credits}</p>
       {/if}
+		</a>
     </div>
-  </div>
 {/if}

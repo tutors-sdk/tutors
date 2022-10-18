@@ -1,51 +1,70 @@
 <script lang="ts">
   import TitleCard from "./support/TitleCard.svelte";
-  import { currentCourse, portfolio } from "../../stores";
-  import DarkMode from "./support/ThemeSwitch.svelte";
-  import Breadcrumbs from "./support/Breadcrumbs.svelte";
-  import Companions from "./support/Companions.svelte";
-  import Wall from "./support/Wall.svelte";
-  import Search from "./support/Search.svelte";
+  import { courseUrl, currentCourse, layout, revealCalendar, revealInfoBar } from "../../stores";
   import Toc from "./support/Toc.svelte";
   import { fly } from "svelte/transition";
-  import Compact from "./support/Compact.svelte";
   import Presence from "./support/Presence.svelte";
   import Avatar from "./support/Avatar.svelte";
-  import Info from "./support/Info.svelte";
-  import CalendarButton from "./support/CalendarButton.svelte";
-  import AppSettings from "./support/AppSettings.svelte";
+  import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
+  import { AppBar, LightSwitch } from "@brainandbones/skeleton";
+
+  function applyInitialLayout() {
+    const savedLayout = window.localStorage.getItem("site-layout");
+    if (savedLayout != null) {
+      layout.set(savedLayout);
+    } else {
+      layout.set("expanded");
+      window.localStorage.setItem("site-layout", "expanded");
+    }
+  }
+
+  function toggleLayout() {
+    if ($layout === "compacted") {
+      layout.set("expanded");
+      window.localStorage.setItem("site-layout", "expanded");
+    } else {
+      layout.set("compacted");
+      window.localStorage.setItem("site-layout", "compacted");
+    }
+  }
+
+  applyInitialLayout();
 </script>
 
 {#if $currentCourse}
-  <div in:fly={{ y: -100, duration: 1000 }} out:fly={{ y: -100, duration: 500 }} class="header-container">
-    <nav class="navbar">
-      <div class="container mx-auto">
-        <Info />
+  <AppBar>
+    <svelte:fragment slot="lead">
+      <div class="flex">
+        {#if $currentCourse?.lo.contentMd}
+          <button class="btn btn-base" on:click={() => revealInfoBar.set(true)}>
+            <Icon type="courseinfo" button={true} />
+          </button>
+        {/if}
         <TitleCard />
-        <CalendarButton />
-        <div class="flex-0">
-          <div class="header-icons-desktop">
-            <Search />
-            <Compact />
-            <DarkMode />
-          </div>
-          <div class="header-icons-mobile">
-            <AppSettings />
-          </div>
-          <Presence />
-          <Avatar />
-          <Toc />
+      </div>
+    </svelte:fragment>
+    {#if $currentCourse.currentWeek}
+      <div class="inline-flex">
+        <button class="btn" on:click={() => revealCalendar.set(true)}>
+          <Icon type="calendar" />
+        </button>
+        <div class="calendar">
+          <div class="pt-1 text-sm">Current Week</div>
+          <div class="text-l pb-1">{$currentCourse.currentWeek.title}</div>
         </div>
       </div>
-    </nav>
-  </div>
-  <div class="navbar-secondary">
-    {#if !$currentCourse.isPortfolio() && !$portfolio}
-      <Breadcrumbs />
-      <div class="hidden lg:flex">
-        <Companions />
-        <Wall />
-      </div>
     {/if}
-  </div>
+    <svelte:fragment slot="trail">
+      {#if !$currentCourse.isPortfolio()}
+        <Icon type="search" link="/#/search/{$courseUrl}" button={true} />
+      {/if}
+      <button class="btn" on:click={() => toggleLayout()}>
+        <Icon type={$layout} />
+      </button>
+      <LightSwitch origin="tr" />
+      <Presence />
+      <Avatar />
+      <Toc /></svelte:fragment
+    >
+  </AppBar>
 {/if}

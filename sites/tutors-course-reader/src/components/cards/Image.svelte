@@ -3,6 +3,7 @@
   import { layout } from "../../stores";
   import { onDestroy } from "svelte";
   import Iconify from "@iconify/svelte";
+  import { Avatar } from '@brainandbones/skeleton';
 
   export let lo: Lo;
   export let miniImage = false;
@@ -50,5 +51,5 @@
 {#if lo.icon}
   <Iconify icon={lo.icon.type} color="{colourPrefix}{lo.icon.color}" height={iconHeight} />
 {:else}
-  <img loading="lazy" class="tutorscard-image {imageHeight}" src={lo.img} alt={lo.title} />
+  <Avatar src={lo.img} alt={lo.title} width="w-12" rounded="rounded-xl" />
 {/if}
