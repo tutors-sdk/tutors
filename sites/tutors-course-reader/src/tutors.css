@@ -84,26 +84,16 @@
   --color-warning-900: 34 2 7;
   /* ⬅ #220207 */
   /* surface | #527598 */
-  --color-surface-50: 248 250 251;
-  /* ⬅ #f8fafb */
-  --color-surface-100: 238 242 246;
-  /* ⬅ #eef2f6 */
-  --color-surface-200: 222 230 237;
-  /* ⬅ #dee6ed */
-  --color-surface-300: 195 209 223;
-  /* ⬅ #c3d1df */
-  --color-surface-400: 136 163 191;
-  /* ⬅ #88a3bf */
-  --color-surface-500: 82 117 152;
-  /* ⬅ #527598 */
-  --color-surface-600: 59 84 109;
-  /* ⬅ #3b546d */
-  --color-surface-700: 43 61 80;
-  /* ⬅ #2b3d50 */
-  --color-surface-800: 25 36 46;
-  /* ⬅ #19242e */
-  --color-surface-900: 12 18 23;
-  /* ⬅ #0c1217 */
+  --color-surface-50: 255 255 255;
+  --color-surface-100: 232 234 237;
+  --color-surface-200: 245 245 245;
+  --color-surface-300: 162 169 184;
+  --color-surface-400: 77 84 101;
+  --color-surface-500: 42 46 55;
+  --color-surface-600: 33 36 43;
+  --color-surface-700: 24 27 32;
+  --color-surface-800: 18 19 23;
+  --color-surface-900: 9 10 12;
 }
 
 [data-theme="tutors"] h1,
