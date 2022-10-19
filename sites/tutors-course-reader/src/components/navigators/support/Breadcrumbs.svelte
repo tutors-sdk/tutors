@@ -16,8 +16,8 @@
   }
 
   function truncate(input: string) {
-    if (input.length > 26) {
-      return input.substring(0, 26) + "...";
+    if (input.length > 15) {
+      return input.substring(0, 15) + "...";
     }
     return input;
   }
@@ -34,7 +34,7 @@
     <svelte:fragment slot="lead">
     <Icon type={lo.type} />
   </svelte:fragment>
-  <span>{truncate(lo.title)}</span>
+  <span class="hidden lg:block">{truncate(lo.title)}</span>
   </Crumb>
   {/each}
 </Breadcrumb>
