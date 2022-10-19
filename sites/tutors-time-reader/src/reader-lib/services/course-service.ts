@@ -1,5 +1,5 @@
 import path from "path-browserify";
-import { currentCourse, currentLo, currentUser, week } from "../../stores";
+import { courseUrl, currentCourse, currentLo, currentUser, week } from "../../stores";
 import { replace } from "svelte-spa-router";
 import { Course } from "tutors-reader-lib/src/models/course";
 import { Lab } from "tutors-reader-lib/src/models/lab";
@@ -7,8 +7,9 @@ import { lastSegment } from "tutors-reader-lib/src/utils/lo-utils";
 import { fromLocalStorage, getUserId, isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
 import { fetchUserById } from "tutors-reader-lib/src/utils/metrics-utils";
 import axios from "axios";
-import type { Lo } from "tutors-reader-lib/src/types/lo-types";
+import type { Lo, WeekType } from "tutors-reader-lib/src/types/lo-types";
 import type { Topic } from "tutors-reader-lib/src/models/topic";
+import { getKeys } from "../../environment";
 
 export class CourseService {
   course: Course;
@@ -22,7 +23,7 @@ export class CourseService {
       try {
         const response = await axios.get<Lo>(courseUrl);
         course = new Course(response.data, courseId);
-        // this.courses.set(courseId, course);
+        this.courses.set(courseId, course);
         return course;
       } catch (error) {
         console.log(error);
@@ -33,6 +34,7 @@ export class CourseService {
   }
 
   async checkAuthenticated(course: Course) {
+    if (getKeys().firebase.apiKey === "XXX") return;
     if (isAuthenticated()) {
       const user = await fetchUserById(course.url, getUserId(), null);
       currentUser.set(user);
@@ -54,10 +56,11 @@ export class CourseService {
 
   async readCourse(courseId: string): Promise<Course> {
     const course = await this.getOrLoadCourse(courseId);
-    //currentCourse.set(course);
-    //week.set(course?.currentWeek);
-    //await this.checkAuthenticated(course);
-    //await this.checkWhiteList(course);
+    currentCourse.set(course);
+    courseUrl.set(course.url);
+    week.set(<WeekType>course?.currentWeek);
+    await this.checkAuthenticated(course);
+    await this.checkWhiteList(course);
     this.course = course;
     return course;
   }
