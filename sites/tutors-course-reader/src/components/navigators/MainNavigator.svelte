@@ -3,7 +3,7 @@
   import { courseUrl, currentCourse, layout, calendarDrawer, infoDrawer, tocDrawer } from "../../stores";
   import Avatar from "./support/Avatar.svelte";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
-  import { AppBar, LightSwitch } from "@brainandbones/skeleton";
+  import { AppBar, LightSwitch, menu } from "@brainandbones/skeleton";
 
   function applyInitialLayout() {
     const savedLayout = window.localStorage.getItem("site-layout");
@@ -58,12 +58,27 @@
     {/if}
     <svelte:fragment slot="trail">
       {#if !$currentCourse.isPortfolio()}
-        <Icon type="search" link="/#/search/{$courseUrl}" button={true} />
+      <a class="btn btn-sm space-x-1" href=""><Icon type="search" /></a>
       {/if}
-      <button class="btn" on:click={() => toggleLayout()}>
-        <Icon type={$layout} />
+      <div class="relative">
+      <button class="btn btn-sm space-x-1" use:menu={{ menu: 'design' }}>
+        <Icon type="dark" />
       </button>
-      <LightSwitch origin="tr" />
+      <nav class="list-nav card card-body w-56 shadow-xl space-y-4" data-menu="design">
+        <h5>Toggles</h5>
+        <section class="flex justify-between">
+					<h6>Dark Mode</h6>
+					<LightSwitch origin="tr" />
+				</section>
+        <button on:click={() => toggleLayout()}>
+        <section class="flex justify-between">
+					<h6 class="mr-11">Compact Layout</h6>
+            <Icon type={$layout} />
+				</section>
+      </button>
+      <hr>
+      </nav>
+    </div>
       <Avatar />
       <button class="btn" on:click={tocDrawerOpen}>
         <Icon type="toc" />

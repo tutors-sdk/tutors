@@ -44,7 +44,7 @@ export const FluentIconLib = {
   search: { icon: "fluent:search-24-filled", colour: "info" },
   tutors: { icon: "fa-solid:chalkboard-teacher", colour: "bg-base-content" },
   logout: { icon: "fluent:sign-out-24-filled", colour: "error" },
-  dark: { icon: "fluent:dark-theme-24-filled", colour: "warning" },
+  dark: { icon: "fluent:calendar-edit-24-filled", colour: "warning" },
   toc: { icon: "fluent:line-horizontal-3-20-filled", colour: "bg-base-content" },
   compacted: { icon: "fluent:re-order-dots-vertical-24-filled", colour: "success" },
   expanded: { icon: "fluent:re-order-dots-horizontal-24-filled", colour: "success" },

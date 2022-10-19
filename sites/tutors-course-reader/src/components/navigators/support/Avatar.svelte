@@ -66,7 +66,7 @@
 {#if $currentUser && $currentCourse.authLevel > 0}
 
 <div class="relative">
-  <button class="btn btn-sm space-x-1" use:menu={{ menu: 'avatar' }}>
+  <button class="btn btn-sm space-x-1" use:menu={{ menu: 'avatar', interactive: true }}>
     <div class="relative inline-block">
       {#if status && studentsOnline}
         <span class="badge-icon bg-warning-500 text-white absolute -top-2 -right-2 z-10">{$studentsOnline}</span>
