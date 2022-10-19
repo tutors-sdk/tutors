@@ -19,3 +19,4 @@ export const studentsOnline = writable(0);
 export const infoDrawer: Writable<boolean> = writable(false);
 export const calendarDrawer: Writable<boolean> = writable(false);
 export const onlineDrawer: Writable<boolean> = writable(false);
+export const tocDrawer: Writable<boolean> = writable(false);

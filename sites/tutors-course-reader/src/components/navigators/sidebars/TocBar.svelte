@@ -3,8 +3,7 @@
   import type { Course } from "tutors-reader-lib/src/models/course";
   import type { CourseService } from "../../../reader-lib/services/course-service";
   import CourseNavigator from "../CourseNavigator.svelte";
-  import { revealSidebar } from "../../../stores";
-  import SidebarComponent from "./SidebarComponent.svelte";
+  import { tocDrawer } from "../../../stores";
 
   let course: Course = null;
   const cache: CourseService = getContext("cache");
@@ -16,10 +15,12 @@
       display = true;
     }
   });
+  const drawerClose: any = () => { tocDrawer.set(false) };
 </script>
 
-{#if $revealSidebar && display}
-  <SidebarComponent title="Course Contents" show={revealSidebar} origin="right-0">
-    <CourseNavigator {course} />
-  </SidebarComponent>
-{/if}
+<div class="text-right mt-4 mr-4">
+<button class="btn btn-square bg-primary-500" on:click={drawerClose}>X</button>
+</div>
+<div class="px-12 py-4">
+  <CourseNavigator {course} />
+</div>

@@ -19,6 +19,7 @@
 
   const drawerClose: any = () => { infoDrawer.set(false) };
 </script>
+
 <div class="text-right mt-4 mr-4">
 <button class="btn btn-square bg-primary-500" on:click={drawerClose}>X</button>
 </div>

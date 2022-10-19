@@ -1,6 +1,6 @@
 <script lang="ts">
   import TitleCard from "./support/TitleCard.svelte";
-  import { courseUrl, currentCourse, layout, calendarDrawer, infoDrawer, onlineDrawer } from "../../stores";
+  import { courseUrl, currentCourse, layout, calendarDrawer, infoDrawer, tocDrawer } from "../../stores";
   import Presence from "./support/Presence.svelte";
   import Avatar from "./support/Avatar.svelte";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
@@ -28,6 +28,7 @@
 
   const infoDrawerOpen: any = () => { infoDrawer.set(true) };
   const calendarDrawerOpen: any = () => { calendarDrawer.set(true) };
+  const tocDrawerOpen: any = () => { tocDrawer.set(true) };
 
   applyInitialLayout();
 </script>
@@ -65,7 +66,7 @@
       <LightSwitch origin="tr" />
       <Presence />
       <Avatar />
-      <button class="btn" on:click={() => {}}>
+      <button class="btn" on:click={tocDrawerOpen}>
         <Icon type="toc" />
       </button>
       </svelte:fragment

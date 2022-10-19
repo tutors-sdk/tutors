@@ -11,9 +11,9 @@
   orderedLos.push(...unOrderedLos);
   topic.toc = orderedLos;
 </script>
+
 {#each topic.toc as lo}
-  <li>
-    <a href={lo.route} class="flex">
+    <a href={lo.route} class="flex py-1">
       <Icon type={lo.type} />
       <span class="ml-2 mb-1"> {@html convertMd(lo.title, "")} </span>
       {#if lo.video && lo.type != "panelvideo"}
@@ -22,12 +22,10 @@
         </a>
       {/if}
     </a>
-  </li>
   {#if lo.type != "lab"}
     {#if lo.los}
-      <li class="mb-2 ml-4">
         {#each lo.los as lo}
-          <div class="flex">
+          <div class="flex py-1">
             <a class="inline-flex" href={lo.route}>
               <Icon type={lo.type} /> <span class="pl-1"> {@html convertMd(lo.title, "")} </span>
             </a>
@@ -38,7 +36,6 @@
             {/if}
           </div>
         {/each}
-      </li>
     {/if}
   {/if}
 {/each}

@@ -29,9 +29,10 @@
   import InfoBar from "./components/navigators/sidebars/InfoBar.svelte";
   import CalendarBar from "./components/navigators/sidebars/CalendarBar.svelte";
   import OnlineBar from "./components/navigators/sidebars/OnlineBar.svelte";
+  import TocBar from "./components/navigators/sidebars/TocBar.svelte";
   import Note from "./pages/Note.svelte";
   import { MetricsService } from "./reader-lib/services/metrics-service";
-  import { currentLo, infoDrawer, calendarDrawer, onlineDrawer } from "./stores";
+  import { currentLo, infoDrawer, calendarDrawer, onlineDrawer, tocDrawer } from "./stores";
 
   setContext("cache", new CourseService());
   const analytics = new AnalyticsService();
@@ -89,8 +90,11 @@
     <OnlineBar />
   </Drawer>
 
+  <Drawer open={tocDrawer} position="right" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm">
+    <TocBar />
+  </Drawer>
+
   <AppShell>
-        <Sidebar />
         <svelte:fragment slot="header">
           <MainNavigator />
         </svelte:fragment>
