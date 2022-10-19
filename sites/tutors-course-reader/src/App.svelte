@@ -83,7 +83,7 @@
   {@html `\<style\>${themes[$storeTheme]}}\</style\>`}
 </svelte:head>
 
-<div id="app">
+<div id="app" class="h-full overflow-hidden">
   {#if authenticating}
     <TutorsTerms bind:authenticating />
   {:else}

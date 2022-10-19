@@ -37,7 +37,7 @@
     <svelte:fragment slot="lead">
       <div class="flex">
         {#if $currentCourse?.lo.contentMd}
-          <button class="btn btn-sm" on:click={infoDrawerOpen}>
+          <button class="btn btn-icon" on:click={infoDrawerOpen}>
             <Icon type="courseinfo" button={true} />
           </button>
         {/if}
@@ -58,10 +58,10 @@
     {/if}
     <svelte:fragment slot="trail">
       {#if !$currentCourse.isPortfolio()}
-      <a class="btn btn-sm space-x-1" href=""><Icon type="search" /></a>
+      <a class="btn  btn-icon" href=""><Icon type="search" /></a>
       {/if}
       <div class="relative">
-      <button class="btn btn-sm space-x-1" use:menu={{ menu: 'design' }}>
+      <button class="btn  btn-icon" use:menu={{ menu: 'design' }}>
         <Icon type="dark" />
       </button>
       <nav class="list-nav card card-body w-56 shadow-xl space-y-4" data-menu="design">
@@ -89,7 +89,7 @@
       </nav>
     </div>
       <Avatar />
-      <button class="btn btn-sm" on:click={tocDrawerOpen}>
+      <button class="btn btn-icon" on:click={tocDrawerOpen}>
         <Icon type="toc" />
       </button>
       </svelte:fragment
