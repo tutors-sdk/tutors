@@ -37,7 +37,7 @@
     <svelte:fragment slot="lead">
       <div class="flex">
         {#if $currentCourse?.lo.contentMd}
-          <button class="btn btn-base" on:click={infoDrawerOpen}>
+          <button class="btn btn-sm" on:click={infoDrawerOpen}>
             <Icon type="courseinfo" button={true} />
           </button>
         {/if}
@@ -80,7 +80,7 @@
       </nav>
     </div>
       <Avatar />
-      <button class="btn" on:click={tocDrawerOpen}>
+      <button class="btn btn-sm" on:click={tocDrawerOpen}>
         <Icon type="toc" />
       </button>
       </svelte:fragment
