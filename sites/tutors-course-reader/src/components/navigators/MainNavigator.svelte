@@ -1,7 +1,6 @@
 <script lang="ts">
   import TitleCard from "./support/TitleCard.svelte";
   import { courseUrl, currentCourse, layout, calendarDrawer, infoDrawer, tocDrawer } from "../../stores";
-  import Presence from "./support/Presence.svelte";
   import Avatar from "./support/Avatar.svelte";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
   import { AppBar, LightSwitch } from "@brainandbones/skeleton";
@@ -65,7 +64,6 @@
         <Icon type={$layout} />
       </button>
       <LightSwitch origin="tr" />
-      <Presence />
       <Avatar />
       <button class="btn" on:click={tocDrawerOpen}>
         <Icon type="toc" />

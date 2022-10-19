@@ -45,7 +45,7 @@
 </script>
 
   <a href={lo.route} {target}>
-    <div class="card border-y-8 m-2 {cardWidths} hover:scale-105 transition-all">
+    <div class="card bg-surface-900/50 border-y-8 m-2 {cardWidths} hover:scale-105 transition-all">
       <header class="card-header flex flex-row justify-between items-center p-3">
         <div class="inline-flex w-full">
           <div class="flex-auto {headingText}">{lo.title}</div>

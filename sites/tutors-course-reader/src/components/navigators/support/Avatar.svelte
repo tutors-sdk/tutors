@@ -1,13 +1,16 @@
 <script lang="ts">
-  import { currentCourse, currentUser } from "../../../stores";
+  import { currentCourse, currentUser, studentsOnline, onlineDrawer } from "../../../stores";
   import type { User } from "tutors-reader-lib/src/types/metrics-types";
   import type { Course } from "tutors-reader-lib/src/models/course";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
-  import { getUserId } from "tutors-reader-lib/src/utils/auth-utils";
-  import { menu, Avatar } from "@brainandbones/skeleton";
+  import { getUserId, isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
+  import { getContext } from "svelte";
+  import type { MetricsService } from "src/reader-lib/services/metrics-service";
+  import { menu, Avatar, Divider } from "@brainandbones/skeleton";
 
   let user: User;
   let course: Course;
+  let status = false;
   const timeApp = "https://time.tutors.dev";
   let timeUrl = "";
   let liveUrl = "";
@@ -35,18 +38,69 @@
       }
     }
   });
+
+  const metricsService: MetricsService = getContext("metrics");
+
+  function handleClick() {
+    status = !status;
+    metricsService.setOnlineStatus(user, status);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  currentUser.subscribe(async (newUser) => {
+    user = newUser;
+    let course = await $currentCourse;
+    if (isAuthenticated() && course.authLevel > 0) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (user && !user.hasOwnProperty("onlineStatus")) {
+        user.onlineStatus = "online";
+      } else {
+        if (user) status = user.onlineStatus === "online";
+      }
+    }
+  });
+
+  const onlineDrawerOpen: any = () => { onlineDrawer.set(true) };
 </script>
 
 {#if $currentUser && $currentCourse.authLevel > 0}
 
 <div class="relative">
   <button class="btn btn-sm space-x-1" use:menu={{ menu: 'avatar' }}>
-    <Avatar width="w-10" src={$currentUser.picture} alt={$currentUser.nickname} />
+    <div class="relative inline-block">
+      {#if status && studentsOnline}
+        <span class="badge-icon bg-warning-500 text-white absolute -top-2 -right-2 z-10">{$studentsOnline}</span>
+      {/if}
+      <span class="badge-icon text-white absolute -bottom-2 -right-2 z-10">
+        {#if status}
+          <Icon type="online" />
+        {/if}
+        {#if !status}
+          <Icon type="offline" />
+        {/if}</span>
+      <Avatar width="w-10" src={$currentUser.picture} alt={$currentUser.nickname} />
+    </div>
   </button>
   <nav class="list-nav card card-body w-56 shadow-xl space-y-4" data-menu="avatar">
-    <div class="mt-2 mb-1 ml-4 text-xs">Logged in as:</div>
+    <div class="mt-2 ml-4 text-xs">Logged in as:</div>
     <div class="mb-1 ml-4 text-sm">{$currentUser.name}</div>
+    <Divider />
     <ul>
+      <li class="flex">
+        <div class="label cursor-pointer inline-flex ml-4">
+          <input type="checkbox" class="checkbox checkbox-sm flex-1" bind:checked={status} on:click={handleClick} />
+          <div class="ml-3">Share Presence</div>
+        </div>
+      </li>
+      {#if status}
+        <li>
+          <a on:click={onlineDrawerOpen}>
+            <Icon type="listOnline" />
+            <div class="ml-2">View <span class="badge bg-warning-500">{$studentsOnline}</span> Online</div>
+          </a>
+        </li>
+      {/if}
+      <Divider />
       <li>
         <a href={timeUrl} target="_blank">
           <Icon type="tutorsTime" />
