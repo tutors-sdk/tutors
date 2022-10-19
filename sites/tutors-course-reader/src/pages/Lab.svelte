@@ -112,7 +112,7 @@
           </nav>
         </header>
         <div class="bg-surface-100-800-token p-8 m-2 rounded-xl">
-          <article class="mx-auto prose">
+          <article class="mx-auto prose dark:prose-invert">
             {@html lab.content}
           </article>
         </div>

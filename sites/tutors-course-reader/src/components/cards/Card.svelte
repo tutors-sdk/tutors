@@ -62,7 +62,7 @@
           <Icon link={lo.video} width={40} height={40} type="video" toolTip="Play video for this talk" />
         {/if}
       {/if}
-      <div class="prose text-center line-clamp-3">
+      <div class="prose dark:prose-invert text-center line-clamp-3">
         {@html lo.summary}
       </div>
     </footer>

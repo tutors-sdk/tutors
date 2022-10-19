@@ -10,7 +10,7 @@
   contentHtml = generateToc(contentHtml);
 </script>
 
-<article class="notecontent prose">
+<article class="notecontent prose dark:prose-invert">
   {@html contentHtml}
 </article>
 

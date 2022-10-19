@@ -24,7 +24,7 @@
 <button class="btn btn-square bg-primary-500" on:click={drawerClose}>X</button>
 </div>
 <div class="px-12 py-4">
-<prose>
+<prose dark:prose-invert>
 {@html courseInfo}
-</prose>
+</prose dark:prose-invert>
 </div>
