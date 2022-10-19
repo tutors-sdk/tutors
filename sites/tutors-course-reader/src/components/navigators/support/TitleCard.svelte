@@ -31,9 +31,9 @@
     </div>
   </div>
     <div class="flex-nowrap ml-4">
-    <h2 class="hidden sm:inline-block text-sm sm:text-lg font-bold mr-4">{$currentLo.title}</h2>
+    <h2 class="hidden md:inline-block text-sm sm:text-lg font-bold mr-4">{$currentLo.title}</h2>
 		<!-- Badge -->
-		<div class="hidden sm:block" target="_blank">
+		<div class="hidden md:block" target="_blank">
 			{#if $currentLo.title != $currentCourse.lo.title}
         <p class="text-sm font-bold">{$currentCourse.lo.title}</p>
       {:else}

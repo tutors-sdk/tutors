@@ -2,9 +2,9 @@
   const version = "6.1.0";
 </script>
 
-<footer class="footer container mx-auto items-center p-4 bg-base-200 text-base-content mb-2 rounded-box flex">
-  <div class="items-center grid-flow-col flex-1">
-    <a href="https://tutors.dev" target="_blank" class="inline-flex">
+<footer class="footer container mx-auto py-8 bg-base-200 text-base-content rounded-box flex">
+  <div class="grid-flow-col flex-1">
+    <a href="https://tutors.dev" target="_blank" class="inline-flex mx-auto">
     <svg
         width="40px"
         viewBox="0 0 54.5 39.4"

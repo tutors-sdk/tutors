@@ -3,6 +3,7 @@
   import { Breadcrumb, Crumb } from '@brainandbones/skeleton';
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
+    import { logout } from "tutors-reader-lib/src/utils/auth-utils";
 
   function crumbs(lo: Lo, los: Lo[]) {
     if (lo) {
@@ -21,15 +22,15 @@
     return input;
   }
 </script>
-<div class="p-1 my-4 mx-8">
-<Breadcrumb>
+<div class="p-1 my-4 mx-8 overflow-hidden">
+<Breadcrumb text="text-xs">
   {#if $currentCourse.lo.properties?.parent != null }
 	<Crumb href='#/{$currentCourse.lo.properties?.parent}'>
 		<svelte:fragment slot="lead"><Icon type="programHome" /></svelte:fragment>
 	</Crumb>
   {/if}
-  {#each crumbs($currentLo, []) as lo}
-  <Crumb href="{lo.route}{lo.id}">
+  {#each crumbs($currentLo, []) as lo, i}
+  <Crumb href="{lo.route}">
     <svelte:fragment slot="lead">
     <Icon type={lo.type} />
   </svelte:fragment>

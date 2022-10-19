@@ -1,8 +1,8 @@
 <script lang="ts">
   import "@brainandbones/skeleton/styles/all.css";
-  import '@brainandbones/skeleton/themes/theme-skeleton.css';
+  import "@brainandbones/skeleton/themes/theme-skeleton.css";
   import "./main.css";
-  import { AppShell, Drawer } from '@brainandbones/skeleton';
+  import { AppShell, Drawer } from "@brainandbones/skeleton";
   import { onMount, setContext } from "svelte";
   import Router from "svelte-spa-router";
   import Sidebar from "./components/navigators/sidebars/TocBar.svelte";
@@ -78,36 +78,38 @@
   {#if authenticating}
     <TutorsTerms bind:authenticating />
   {:else}
-  <Drawer open={infoDrawer} position="left" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm">
-    <InfoBar />
-  </Drawer>
+    <Drawer open={infoDrawer} position="left" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm">
+      <InfoBar />
+    </Drawer>
 
-  <Drawer open={calendarDrawer} position="left" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm">
-    <CalendarBar />
-  </Drawer>
+    <Drawer open={calendarDrawer} position="left" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm">
+      <CalendarBar />
+    </Drawer>
 
-  <Drawer open={onlineDrawer} position="right" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm">
-    <OnlineBar />
-  </Drawer>
+    <Drawer open={onlineDrawer} position="right" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm">
+      <OnlineBar />
+    </Drawer>
 
-  <Drawer open={tocDrawer} position="right" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm">
-    <TocBar />
-  </Drawer>
+    <Drawer open={tocDrawer} position="right" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm">
+      <TocBar />
+    </Drawer>
 
-  <AppShell>
-        <svelte:fragment slot="header">
-          <MainNavigator />
-        </svelte:fragment>
-        <svelte:fragment slot="pageHeader">
-          <PageHeader />
-        </svelte:fragment>
-        <div class="container mx-auto my-4">
-          <Router {routes} />
+    <AppShell>
+      <svelte:fragment slot="header">
+        <MainNavigator />
+      </svelte:fragment>
+      <svelte:fragment slot="pageHeader">
+        <PageHeader />
+      </svelte:fragment>
+      <div class="container mx-auto my-4">
+        <Router {routes} />
+      </div>
+      <svelte:fragment slot="footer">
+        <div class="mt-2 w-full bg-surface-100-800-token">
+          <Footer />
         </div>
-    <div class="footer mx-auto w-11/12 lg:w-full">
-      <Footer />
-    </div>
-  </AppShell>
+      </svelte:fragment>
+    </AppShell>
   {/if}
 </div>
 

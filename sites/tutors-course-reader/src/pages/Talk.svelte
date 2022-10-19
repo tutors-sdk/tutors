@@ -39,7 +39,7 @@
   <Loading />
 {:then lo}
   {#if !hide}
-    <div class="h-screen flex">
+    <div class="flex">
       <div transition:talkTransition class="w-full">
         <TalkCard {lo} />
       </div>

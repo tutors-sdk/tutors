@@ -46,11 +46,11 @@
       </div>
     </svelte:fragment>
     {#if $currentCourse.currentWeek}
-      <div class="inline-flex">
+      <div class="hidden lg:inline-flex">
         <button class="btn" on:click={calendarDrawerOpen}>
           <Icon type="calendar" />
         </button>
-        <div class="calendar">
+        <div>
           <div class="pt-1 text-sm">Current Week</div>
           <div class="text-l pb-1">{$currentCourse.currentWeek.title}</div>
         </div>
