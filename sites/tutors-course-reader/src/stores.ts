@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable, type Writable } from "svelte/store";
 import type { WeekType } from "tutors-reader-lib/src/types/lo-types";
 const weekType: WeekType = {
   title: "",
@@ -8,8 +8,6 @@ const weekType: WeekType = {
 };
 export const revealSidebar = writable(false);
 export const revealOnline = writable(false);
-export const revealInfoBar = writable(false);
-export const revealCalendar = writable(false);
 export const week = writable(weekType);
 export const courseUrl = writable("");
 export const currentCourse = writable(null);
@@ -18,3 +16,6 @@ export const currentUser = writable(null);
 export const portfolio = writable(false);
 export const layout = writable("");
 export const studentsOnline = writable(0);
+export const infoDrawer: Writable<boolean> = writable(false);
+export const calendarDrawer: Writable<boolean> = writable(false);
+export const onlineDrawer: Writable<boolean> = writable(false);

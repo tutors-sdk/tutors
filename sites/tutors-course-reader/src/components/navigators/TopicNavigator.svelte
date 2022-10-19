@@ -11,7 +11,6 @@
   orderedLos.push(...unOrderedLos);
   topic.toc = orderedLos;
 </script>
-
 {#each topic.toc as lo}
   <li>
     <a href={lo.route} class="flex">

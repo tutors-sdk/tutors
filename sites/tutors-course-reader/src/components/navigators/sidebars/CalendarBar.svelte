@@ -3,8 +3,7 @@
   import type { Course } from "tutors-reader-lib/src/models/course";
   import type { Calendar, WeekType } from "tutors-reader-lib/src/types/lo-types";
   import type { CourseService } from "../../../reader-lib/services/course-service";
-  import { revealCalendar } from "../../../stores";
-  import SidebarComponent from "./SidebarComponent.svelte";
+  import { calendarDrawer } from "../../../stores";
 
   let course: Course = null;
   const cache: CourseService = getContext("cache");
@@ -23,10 +22,15 @@
       currentWeek = course.currentWeek;
     }
   });
+
+
+  const drawerClose: any = () => { calendarDrawer.set(false) };
 </script>
 
-{#if $revealCalendar && display}
-  <SidebarComponent title="Academic Calendar" show={revealCalendar} origin="left-0" direction={-1000}>
+<div class="text-right mt-4 mr-4">
+  <button class="btn btn-square bg-primary-500" on:click={drawerClose}>X</button>
+  </div>
+  <div class="px-12 py-4">
     <table class="table-compact text-base-content prose table w-full">
       <caption>{calendar.title} : {title} </caption>
       <thead
@@ -55,5 +59,6 @@
         {/each}
       </tbody>
     </table>
-  </SidebarComponent>
-{/if}
+
+  </div>
+    

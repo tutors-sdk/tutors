@@ -1,6 +1,6 @@
 <script lang="ts">
   import TitleCard from "./support/TitleCard.svelte";
-  import { courseUrl, currentCourse, layout, revealCalendar, revealInfoBar, revealSidebar } from "../../stores";
+  import { courseUrl, currentCourse, layout, calendarDrawer, infoDrawer, onlineDrawer } from "../../stores";
   import Presence from "./support/Presence.svelte";
   import Avatar from "./support/Avatar.svelte";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
@@ -26,6 +26,9 @@
     }
   }
 
+  const infoDrawerOpen: any = () => { infoDrawer.set(true) };
+  const calendarDrawerOpen: any = () => { calendarDrawer.set(true) };
+
   applyInitialLayout();
 </script>
 
@@ -34,7 +37,7 @@
     <svelte:fragment slot="lead">
       <div class="flex">
         {#if $currentCourse?.lo.contentMd}
-          <button class="btn btn-base" on:click={() => revealInfoBar.set(true)}>
+          <button class="btn btn-base" on:click={infoDrawerOpen}>
             <Icon type="courseinfo" button={true} />
           </button>
         {/if}
@@ -43,7 +46,7 @@
     </svelte:fragment>
     {#if $currentCourse.currentWeek}
       <div class="inline-flex">
-        <button class="btn" on:click={() => revealCalendar.set(true)}>
+        <button class="btn" on:click={calendarDrawerOpen}>
           <Icon type="calendar" />
         </button>
         <div class="calendar">
@@ -62,7 +65,7 @@
       <LightSwitch origin="tr" />
       <Presence />
       <Avatar />
-      <button class="btn" on:click={() => revealSidebar.set(true)}>
+      <button class="btn" on:click={() => {}}>
         <Icon type="toc" />
       </button>
       </svelte:fragment

@@ -58,17 +58,24 @@
   });
 </script>
 
+
 {#await getCourse(params.wild)}
   <Loading />
 {:then course}
   {#if !hide}
     {#each course.units as unit}
+    <div class="bg-surface-100-800-token rounded-xl backdrop-blur text-base-content rounded-box card-corner mb-2 overflow-hidden w-full mx-auto p-4 place-items-center max-w-full">
       <UnitCard {unit} />
+    </div>
     {/each}
     {#if standardDeck}
+    <div class="bg-surface-100-800-token rounded-xl backdrop-blur text-base-content rounded-box card-corner mb-2 overflow-hidden w-full mx-auto p-4 place-items-center max-w-full">
       <CardDeck los={course.standardLos} />
+      </div>
     {:else}
+    <div class="bg-surface-100-800-token rounded-xl backdrop-blur text-base-content rounded-box card-corner mb-2 overflow-hidden w-full mx-auto p-4 place-items-center max-w-full">
       <CardDeck los={course.allLos} />
+      </div>
     {/if}
   {/if}
 {:catch error}

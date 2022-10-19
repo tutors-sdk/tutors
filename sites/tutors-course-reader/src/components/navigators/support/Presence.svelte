@@ -4,7 +4,7 @@
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
   import { getContext } from "svelte";
   import { isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
-  import { revealOnline } from "../../../stores";
+  import { onlineDrawer } from "../../../stores";
   import type { MetricsService } from "src/reader-lib/services/metrics-service";
   import { menu } from "@brainandbones/skeleton";
 
@@ -31,6 +31,8 @@
       }
     }
   });
+
+  const onlineDrawerOpen: any = () => { onlineDrawer.set(true) };
 </script>
 
 {#if $currentUser && $currentCourse.authLevel > 0}
@@ -53,8 +55,8 @@
       </li>
       {#if status}
         <li>
-          <button on:click={() => revealOnline.set(true)}>
-            <div>View <span class="badge badge-success">{$studentsOnline}</span> Online</div>
+          <button class="btn" on:click={onlineDrawerOpen}>
+            <div>View <span class="badge bg-primary-500">{$studentsOnline}</span> Online</div>
           </button>
         </li>
       {/if}

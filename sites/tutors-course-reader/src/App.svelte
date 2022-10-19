@@ -2,7 +2,7 @@
   import "@brainandbones/skeleton/styles/all.css";
   import '@brainandbones/skeleton/themes/theme-skeleton.css';
   import "./main.css";
-  import { AppShell } from '@brainandbones/skeleton';
+  import { AppShell, Drawer } from '@brainandbones/skeleton';
   import { onMount, setContext } from "svelte";
   import Router from "svelte-spa-router";
   import Sidebar from "./components/navigators/sidebars/TocBar.svelte";
@@ -26,13 +26,12 @@
   import { handleAuthentication } from "./reader-lib/services/auth-service";
   import { AnalyticsService } from "./reader-lib/services/analytics-service";
   import Search from "./pages/Search.svelte";
-  import Modal from "svelte-simple-modal";
-  import { setIconLib, themeIcons, themes } from "tutors-reader-lib/src/iconography/themes";
-  import Infobar from "./components/navigators/sidebars/InfoBar.svelte";
-  import Calendar from "./components/navigators/sidebars/CalendarBar.svelte";
+  import InfoBar from "./components/navigators/sidebars/InfoBar.svelte";
+  import CalendarBar from "./components/navigators/sidebars/CalendarBar.svelte";
+  import OnlineBar from "./components/navigators/sidebars/OnlineBar.svelte";
   import Note from "./pages/Note.svelte";
   import { MetricsService } from "./reader-lib/services/metrics-service";
-  import { currentLo } from "./stores";
+  import { currentLo, infoDrawer, calendarDrawer, onlineDrawer } from "./stores";
 
   setContext("cache", new CourseService());
   const analytics = new AnalyticsService();
@@ -40,10 +39,9 @@
   setContext("metrics", new MetricsService());
 
   let authenticating = false;
-  let bg = "bg-gray-50";
+  let bg = "bg-surface-900";
 
   onMount(() => {
-    applyInitialTheme();
     const path = document.location.href;
     if (path.includes("access_token")) {
       const token = path.substring(path.indexOf("#") + 1);
@@ -69,24 +67,6 @@
     "/search/*": Search,
     "*": NotFound,
   };
-
-  const htmlTag = document.getElementsByTagName("html")[0];
-  let currentTheme = window.localStorage.getItem("site-theme");
-  if (themes.indexOf(currentTheme) < 0) {
-    currentTheme = null;
-  }
-
-  function applyInitialTheme() {
-    if (currentTheme == null) {
-      window.localStorage.setItem("site-theme", "tutors");
-      window.localStorage.setItem("theme", "tutors");
-      htmlTag.setAttribute("data-theme", "tutors");
-      setIconLib(themeIcons["tutors"]);
-    } else {
-      htmlTag.setAttribute("data-theme", currentTheme);
-      setIconLib(themeIcons[currentTheme]);
-    }
-  }
 </script>
 
 <svelte:head>
@@ -97,11 +77,20 @@
   {#if authenticating}
     <TutorsTerms bind:authenticating />
   {:else}
+  <Drawer open={infoDrawer} position="left" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm">
+    <InfoBar />
+  </Drawer>
+
+  <Drawer open={calendarDrawer} position="left" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm">
+    <CalendarBar />
+  </Drawer>
+
+  <Drawer open={onlineDrawer} position="right" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm">
+    <OnlineBar />
+  </Drawer>
+
   <AppShell>
         <Sidebar />
-        <Onlinebar />
-        <Infobar />
-        <Calendar />
         <svelte:fragment slot="header">
           <MainNavigator />
         </svelte:fragment>
