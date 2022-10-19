@@ -2,7 +2,7 @@
   const version = "7.0.0-alpha";
 </script>
 
-<footer class="footer container mx-auto py-8 bg-base-200 text-base-content rounded-box flex">
+<footer class="mx-auto w-11/12 py-8">
   <div class="grid-flow-col flex-1">
     <a href="https://tutors.dev" target="_blank" class="inline-flex mx-auto">
     <svg
