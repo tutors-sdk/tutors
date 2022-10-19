@@ -62,7 +62,7 @@ export function updateCalendar(root: string) {
   updateCountValue(`${root}/calendar/${date}`);
 }
 
-export async function fetchAllCourseList() {
+export async function fetchAllCourseAccess() {
   try {
     const dbRef = ref(getDatabase());
     const snapshot = await get(child(dbRef, "all-course-access"));
@@ -71,10 +71,9 @@ export async function fetchAllCourseList() {
       const courseObjs: any = snapshot.val();
       for (const [key, value] of Object.entries(courseObjs)) {
         const course: any = value;
-        course.url = key;
+        course.courseId = key;
         courseList.push(course);
       }
-      courseList.sort((a, b) => Number(b.visits) - Number(a.visits));
     }
     return courseList;
   } catch (error) {
@@ -124,6 +123,21 @@ export async function readAllCourseIds(keys: FirebaseKeys): Promise<string[]> {
   const user = getAuth().currentUser;
   const token = await user.getIdToken(true);
   const url = `${keys.databaseURL}/.json?auth=${token}&shallow=true`;
+  const response = await fetch(url);
+  const list = await response.json();
+  for (const [key, value] of Object.entries(list)) {
+    if (value) courseList.push(key);
+  }
+  return courseList;
+}
+
+export async function readAllCourseAccess(keys: FirebaseKeys): Promise<any[]> {
+  const courseList = [];
+  const auth = getAuth();
+  await signInWithEmailAndPassword(auth, keys.tutorStoreId, keys.tutorStoreSecret);
+  const user = getAuth().currentUser;
+  const token = await user.getIdToken(true);
+  const url = `${keys.databaseURL}/all-course-access.json?auth=${token}`;
   const response = await fetch(url);
   const list = await response.json();
   for (const [key, value] of Object.entries(list)) {
