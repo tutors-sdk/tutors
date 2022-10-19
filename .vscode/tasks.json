@@ -33,6 +33,17 @@
       "runOptions": {
         "runOn": "folderOpen"
       }
+    },
+    {
+      "type": "typescript",
+      "tsconfig": "apps/tutors-time/tsconfig.json",
+      "option": "watch",
+      "problemMatcher": ["$tsc-watch"],
+      "group": "build",
+      "label": "tsc: watch - apps/tutors-time/tsconfig.json",
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
     }
   ]
 }

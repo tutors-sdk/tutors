@@ -82,16 +82,19 @@ export async function fetchUserById(courseUrl: string, userId: string, allLabs) 
   const userEmail = decrypt(userId);
   // eslint-disable-next-line no-useless-escape
   const userEmailSanitised = userEmail.replace(/[`#$.\[\]\/]/gi, "*");
-
-  const dbRef = ref(getDatabase());
-  const snapshot = await get(child(dbRef, `${courseBase}/users/${userEmailSanitised}`));
   let user = null;
-  if (snapshot.exists()) {
-    user = expandGenericMetrics("root", snapshot.val());
-    populateCalendar(user);
-    if (allLabs) {
-      populateLabUsage(user, allLabs);
+  const dbRef = ref(getDatabase());
+  try {
+    const snapshot = await get(child(dbRef, `${courseBase}/users/${userEmailSanitised}`));
+    if (snapshot.exists()) {
+      user = expandGenericMetrics("root", snapshot.val());
+      populateCalendar(user);
+      if (allLabs) {
+        populateLabUsage(user, allLabs);
+      }
     }
+  } catch (error) {
+    console.log("db error");
   }
   return user;
 }

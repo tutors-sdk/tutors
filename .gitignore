@@ -7,6 +7,9 @@
 **/apps/tutors-json/src/**/*.js
 **/apps/tutors-json/src/**/*.js.map
 **/apps/tutors-json/src/**/*.d.ts
+**/apps/tutors-time/src/**/*.js
+**/apps/tutors-time/src/**/*.js.map
+**/apps/tutors-time/src/**/*.d.ts
 **/components/tutors-lib/src/**/*.js
 **/components/tutors-lib/src/**/*.js.map
 **/components/tutors-lib/src/**/*.d.ts

@@ -129,3 +129,18 @@ export function getSortedUnits(los: Lo[]) {
   }
   return allUnits;
 }
+
+export function isValidCourseName(course: string) {
+  let isValid = true;
+  if (course.length > 27 && course[24] == "-" && course[25] == "-") {
+    isValid = false;
+  } else {
+    if (course.startsWith("main--") || course.startsWith("master--")) {
+      isValid = false;
+    }
+    if (course.startsWith("deploy-preview")) {
+      isValid = false;
+    }
+  }
+  return isValid;
+}

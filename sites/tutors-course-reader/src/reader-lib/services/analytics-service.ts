@@ -1,4 +1,3 @@
-import { initializeApp } from "firebase/app";
 import type { Lo } from "tutors-reader-lib/src/types/lo-types";
 import type { Course } from "tutors-reader-lib/src/models/course";
 import type { User } from "tutors-reader-lib/src/types/auth-types";
@@ -8,6 +7,7 @@ import { currentCourse } from "../../stores";
 
 import {
   getNode,
+  initFirebase,
   updateCalendar,
   updateCount,
   updateCountValue,
@@ -15,6 +15,7 @@ import {
   updateStr,
   updateVisits,
 } from "tutors-reader-lib/src/utils/firebase-utils";
+import { isValidCourseName } from "tutors-reader-lib/src/utils/lo-utils";
 
 let currentAnalytics: AnalyticsService;
 let course: Course;
@@ -44,9 +45,7 @@ export class AnalyticsService {
   url = "";
 
   constructor() {
-    if (getKeys().firebase.apiKey !== "XXX") {
-      initializeApp(getKeys().firebase);
-    }
+    initFirebase(getKeys().firebase);
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     currentAnalytics = this;
   }
@@ -79,7 +78,7 @@ export class AnalyticsService {
   }
 
   reportLogin(user: User, url: string) {
-    if (this.courseBaseName.startsWith("master--") || this.courseBaseName.startsWith("main--")) return;
+    if (!isValidCourseName(this.courseBaseName)) return;
 
     if (this.userEmail !== user.email || this.url !== url) {
       this.initRoot(url);
@@ -93,35 +92,35 @@ export class AnalyticsService {
   }
 
   reportPageLoad(path: string, course: Course, lo: Lo) {
-    if (this.courseBaseName.startsWith("master--") || this.courseBaseName.startsWith("main--")) return;
-
+    if (!isValidCourseName(this.courseBaseName)) return;
     if (!lo) return;
+
     this.initRoot(course.url);
     const node = getNode(lo.type, course.url, path);
     updateLastAccess(this.firebaseIdRoot, node, lo.title);
-    updateVisits(this.firebaseIdRoot, node, lo.title);
+    updateVisits(this.firebaseIdRoot, node);
 
     updateLastAccess(`all-course-access/${this.courseBaseName}`, "", lo.title);
-    updateVisits(`all-course-access/${this.courseBaseName}`, "", lo.title);
+    updateVisits(`all-course-access/${this.courseBaseName}`, "");
 
     if (this.userEmail) {
       this.firebaseEmailRoot = `${this.courseBaseName}/users/${this.userEmailSanitised}`;
       updateLastAccess(this.firebaseEmailRoot, node, lo.title);
-      updateVisits(this.firebaseEmailRoot, node, lo.title);
+      updateVisits(this.firebaseEmailRoot, node);
     }
   }
 
   reportPageCount(path: string, course: Course, lo: Lo) {
-    if (this.courseBaseName.startsWith("master--") || this.courseBaseName.startsWith("main--")) return;
-
+    if (!isValidCourseName(this.courseBaseName)) return;
     if (!lo) return;
+
     this.initRoot(course.url);
     const node = getNode(lo.type, course.url, path);
     updateLastAccess(this.firebaseIdRoot, node, lo.title);
-    updateCount(this.firebaseIdRoot, node, lo.title);
+    updateCount(this.firebaseIdRoot, node);
     if (this.userEmail) {
       updateLastAccess(this.firebaseEmailRoot, node, lo.title);
-      updateCount(this.firebaseEmailRoot, node, lo.title);
+      updateCount(this.firebaseEmailRoot, node);
       updateCalendar(this.firebaseEmailRoot);
     }
   }
