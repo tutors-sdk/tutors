@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { getDatabase, ref, runTransaction, remove } from "firebase/database";
+import { getDatabase, ref, runTransaction, remove, get, child, set } from "firebase/database";
 import axios from "axios";
 
 export interface FirebaseKeys {
@@ -9,6 +9,13 @@ export interface FirebaseKeys {
   projectId: string;
   tutorStoreId: string;
   tutorStoreSecret: string;
+}
+
+export interface CourseDetails {
+  title: string;
+  route: string;
+  visits: number;
+  count: number;
 }
 
 export function getNode(lotype: string, url: string, path: string): string {
@@ -70,17 +77,6 @@ export function updateCalendar(root: string) {
   updateCountValue(`${root}/calendar/${date}`);
 }
 
-export async function deleteCourseFromList(url: string) {
-  try {
-    const db = getDatabase();
-    const obj = ref(db, `all-course-access/${url}`);
-    await remove(obj);
-    console.log(`deleting: ${url} as invalid`);
-  } catch (error) {
-    console.log("TutorStore Error");
-  }
-}
-
 export function formatDate(date: Date): string {
   const d = new Date(date);
   const year = d.getFullYear().toString();
@@ -96,31 +92,49 @@ export async function initFirebase(keys: any) {
     if (keys.apiKey !== "XXX") {
       initializeApp(keys);
       const auth = getAuth();
-      const email = keys.tutorsStoreId;
-      const secret = keys.tutorsStoreSecret;
-      const user = await signInWithEmailAndPassword(auth, email, secret);
-      console.log(user);
+      await signInWithEmailAndPassword(auth, keys.tutorsStoreId, keys.tutorsStoreSecret);
     }
   } catch (error) {
     console.log(error);
   }
 }
 
-export async function readAllCourseIds(keys: any): Promise<string[]> {
-  const courseList = [];
-  const auth = getAuth();
-  const email = keys.tutorsStoreId;
-  const secret = keys.tutorsStoreSecret;
-  await signInWithEmailAndPassword(auth, email, secret);
-  const user = getAuth().currentUser;
-  if (user) {
-    const token = await user.getIdToken(true);
-    const url = `${keys.databaseURL}/.json?auth=${token}&shallow=true`;
-    const response = await axios.get(url);
-    const list = await response.data;
-    for (const [key, value] of Object.entries(list)) {
-      if (value) courseList.push(key);
+export async function fetchAllAtNode(key: string) {
+  const dbRef = ref(getDatabase());
+  const snapshot = await get(child(dbRef, key));
+  const courseList: any[] = [];
+  if (snapshot.exists()) {
+    const courseObjs: any = snapshot.val();
+    for (const [key, value] of Object.entries(courseObjs)) {
+      const course: any = value;
+      course.url = key;
+      courseList.push(course);
     }
   }
   return courseList;
+}
+
+export async function fetchAll(): Promise<string[]> {
+  const dbRef = ref(getDatabase());
+  const snapshot = await get(dbRef);
+  const courseList = [];
+  if (snapshot.exists()) {
+    const courseObjs: any = snapshot.val();
+    for (const [key, value] of Object.entries(courseObjs)) {
+      courseList.push(key);
+    }
+  }
+  return courseList;
+}
+
+export async function deleteNode(url: string) {
+  const db = getDatabase();
+  const obj = ref(db, `${url}`);
+  await remove(obj);
+  console.log(`deleting: ${url}`);
+}
+
+export async function writeNode(key: string, data: any) {
+  const db = getDatabase();
+  await set(ref(db, key), data);
 }
