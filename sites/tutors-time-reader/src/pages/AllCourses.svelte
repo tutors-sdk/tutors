@@ -3,12 +3,10 @@
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { currentLo, layout, portfolio } from "../stores";
   import { Wave } from "svelte-loading-spinners";
-  import { readAllCourseIds } from "tutors-reader-lib/src/utils/firebase-utils";
+  import { fetchAllCourseAccess, readAllCourseAccess } from "tutors-reader-lib/src/utils/firebase-utils";
   import axios from "axios";
 
   let los: Lo[] = [];
-  import { getKeys } from "../environment";
-
   let refresh = false;
   let tickerTape = "Loading...";
   let courseNmr = 0;
@@ -17,28 +15,42 @@
   $: total = courseNmr;
   let title = "All known Modules";
 
+  function compareFn(a: any, b: any) {
+    if (a?.visits < b?.visits) {
+      return 1;
+    }
+    if (a?.visits > b?.visits) {
+      return -1;
+    }
+    return 0;
+  }
+
   layout.set("compacted");
   async function getAllCourses(): Promise<Lo[]> {
     portfolio.set(true);
-    let courseIds = await readAllCourseIds(getKeys().firebase);
-
-    for (let i = 0; i < courseIds.length; i++) {
+    // let courseIds = await readAllCourseIds(getKeys().firebase);
+    let allCourseAccess = await fetchAllCourseAccess();
+    allCourseAccess = allCourseAccess.filter((usage) => usage?.visits > 50);
+    allCourseAccess.sort(compareFn);
+    for (let i = 0; i < allCourseAccess.length; i++) {
       try {
-        const response = await axios.get<Lo>(`https://${courseIds[i]}.netlify.app/tutors.json`);
+        const courseId = allCourseAccess[i].courseId;
+        const response = await axios.get<Lo>(`https://${courseId}.netlify.app/tutors.json`);
         const lo = response.data;
         tickerTape = lo.title;
         courseNmr++;
         lo.type = "web";
-        lo.route = `https://reader.tutors.dev//#/course/${courseIds[i]}.netlify.app`;
-        lo.img = lo.img.replace("{{COURSEURL}}", `${courseIds[i]}.netlify.app`);
+        lo.route = `https://reader.tutors.dev//#/course/${courseId}.netlify.app`;
+        lo.img = lo.img.replace("{{COURSEURL}}", `${courseId}.netlify.app`);
+        lo.summary = `Visits:${allCourseAccess[i].visits}`;
         los.push(lo);
       } catch (error) {
-        console.log(`invalid course :${courseIds[i]}`);
+        console.log(`invalid course :${allCourseAccess[i]}`);
       }
     }
     refresh = !refresh;
     // noinspection TypeScriptValidateTypes
-    currentLo.set({ title: `${courseIds.length} Known Tutors Modules`, type: "tutors", parentLo: null, img: null });
+    currentLo.set({ title: `${allCourseAccess.length} Known Tutors Modules`, type: "tutors", parentLo: null, img: null });
     return los;
   }
 </script>
