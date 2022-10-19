@@ -32,28 +32,23 @@
 
   const unsubscribe = layout.subscribe((layout) => {
     if (layout === "compacted") {
-      headingText = "text-xs font-medium";
-      text = "text-xs";
-      cardWidths = "w-32 h-56";
-      cardType = "tutorscard-compact";
-      cardHeader = "tutorscard-header-compact";
-    } else {
       headingText = "text-md font-medium";
+      text = "text-xs";
+      cardWidths = "w-36 h-[21rem]";
+    } else {
+      headingText = "text-lg font-semibold";
       text = "text-sm";
-      cardWidths = "w-60";
-      cardType = "tutorscard";
-      cardHeader = "tutorscard-header";
+      cardWidths = "w-60 h-[24.5rem]";
     }
   });
   onDestroy(unsubscribe);
 </script>
 
-<div class="{cardType} {cardWidths} border-{getIcon(lo.type).colour}">
   <a href={lo.route} {target}>
-    <div class="card m-2 border-y-8 h-[24.5rem] hover:scale-105 transition-all">
+    <div class="card border-y-8 m-2 {cardWidths} hover:scale-105 transition-all">
       <header class="card-header flex flex-row justify-between items-center p-3">
         <div class="inline-flex w-full">
-          <div class="flex-auto">{lo.title}</div>
+          <div class="flex-auto {headingText}">{lo.title}</div>
           <div class="flex-none"><Icon type={lo.type} /></div>
         </div>
       </header>
@@ -73,4 +68,3 @@
     </footer>
     </div>
   </a>
-</div>
