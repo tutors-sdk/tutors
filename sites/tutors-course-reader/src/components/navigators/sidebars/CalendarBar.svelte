@@ -31,26 +31,26 @@
   <button class="btn btn-square bg-primary-500" on:click={drawerClose}>X</button>
   </div>
   <div class="px-12 py-4">
-    <table class="table-compact text-base-content prose table w-full">
-      <caption>{calendar.title} : {title} </caption>
+    <h4 class="text-center font-semibold mb-4">{calendar.title} : {title} </h4>
+    <table class="table-auto w-full">
       <thead
-        ><br />
+        >
         <tr>
-          <th class="w-1/3 text-center">Week No.</th>
-          <th class="w-1/3 text-center">Type</th>
-          <th class="w-1/3 text-center">Date Starts</th>
+          <th class="text-center mb-1">Week No.</th>
+          <th class="text-center mb-1">Type</th>
+          <th class="text-center mb-1">Date Starts</th>
         </tr>
       </thead>
       <tbody class="text-center">
         {#each calendar.weeks as week}
           {#if currentWeek.title == week.title}
-            <tr class="active">
+            <tr class="bg-surface-50-900-token my-2">
               <td>{week.title}</td>
               <td>{week.type}</td>
               <td>{monthNames[week.dateObj.getMonth()]} {week.dateObj.getDate()}</td>
             </tr>
           {:else}
-            <tr class="hover">
+            <tr class="hover my-2">
               <td>{week.title}</td>
               <td>{week.type}</td>
               <td>{monthNames[week.dateObj.getMonth()]} {week.dateObj.getDate()}</td>
