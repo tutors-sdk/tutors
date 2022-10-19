@@ -47,10 +47,10 @@
   </button>
   <nav class="list-nav card card-body w-56 shadow-xl space-y-4" data-menu="presence">
     <ul>
-      <li class="inline-block">
-        <label class="label cursor-pointer">
-          <input type="checkbox" class="checkbox checkbox-primary checkbox-sm" bind:checked={status} on:click={handleClick} />
-          <span class="label-text text-base text-base-content">Share Presence</span>
+      <li class="flex">
+        <label class="label cursor-pointer inline-flex">
+          <input type="checkbox" class="checkbox checkbox-sm flex-1" bind:checked={status} on:click={handleClick} />
+          <span class="label-text text-base text-base-content">&nbsp; Share Presence</span>
         </label>
       </li>
       {#if status}
