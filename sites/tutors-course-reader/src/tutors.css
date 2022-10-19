@@ -8,28 +8,18 @@
   --theme-font-color-dark: var(--color-surface-100);
   --theme-rounded-base: 8px;
   --theme-rounded-container: 8px;
-  /* =~= Theme Colors | Hex =~= */
-  /* primary | #3da2ae */
-  --color-primary-50: 247 252 252;
-  /* ⬅ #f7fcfc */
-  --color-primary-100: 236 247 248;
-  /* ⬅ #ecf7f8 */
-  --color-primary-200: 217 239 242;
-  /* ⬅ #d9eff2 */
-  --color-primary-300: 187 227 231;
-  /* ⬅ #bbe3e7 */
-  --color-primary-400: 119 198 207;
-  /* ⬅ #77c6cf */
-  --color-primary-500: 61 162 174;
-  /* ⬅ #3da2ae */
-  --color-primary-600: 44 116 125;
-  /* ⬅ #2c747d */
-  --color-primary-700: 32 85 91;
-  /* ⬅ #20555b */
-  --color-primary-800: 19 49 53;
-  /* ⬅ #133135 */
-  --color-primary-900: 9 25 26;
-  /* ⬅ #09191a */
+
+  --color-primary-50: 232 246 247;
+  --color-primary-100: 210 236 239;
+  --color-primary-200: 165 217 223;
+  --color-primary-300: 123 200 208;
+  --color-primary-400: 78 181 192;
+  --color-primary-500: 55 145 155;
+  --color-primary-600: 44 116 124;
+  --color-primary-700: 33 88 94;
+  --color-primary-800: 21 56 60;
+  --color-primary-900: 11 28 30;
+
   /* accent | #3dae81 */
   --color-accent-50: 247 252 250;
   /* ⬅ #f7fcfa */
