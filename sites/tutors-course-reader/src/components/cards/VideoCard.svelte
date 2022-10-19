@@ -63,13 +63,13 @@
       {#if firefox}
         <iframe
           title={lo.title}
-          class="relative aspect-video w-full p-2"
+          class="relative aspect-video w-5/6 mx-auto"
           src="https://www.youtube.com/embed/{defaultId}"
           allow="encrypted-media"
           allowfullscreen
         />
       {:else}
-        <div class="relative aspect-video" style="padding-top: 40%;">
+        <div class="relative aspect-video w-5/6 mx-auto" style="padding-top: 40%;">
           <iframe
             title={lo.title}
             class="absolute inset-0 h-full w-full"
@@ -80,6 +80,6 @@
         </div>
       {/if}
     {/if}<br />
-    <p class="justify-center text-lg italic">{lo.title}</p>
+    <p class="justify-center text-lg italic mb-4">{lo.title}</p>
   </div>
 {/if}
