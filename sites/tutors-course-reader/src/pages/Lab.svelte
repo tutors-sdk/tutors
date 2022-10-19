@@ -100,7 +100,7 @@
 {:then lab}
   {#if !hide}
     <div class="flex">
-      <div class="menu hidden lg:block w-1/4">
+      <div class="menu hidden lg:block w-2/5">
         <ul class="bg-surface-100-800-token p-8 m-2 rounded-xl">
           {@html lab.navbarHtml}
         </ul>
