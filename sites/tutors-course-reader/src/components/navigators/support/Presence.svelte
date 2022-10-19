@@ -39,7 +39,10 @@
 <div class="relative">
   <button class="btn btn-sm space-x-1" use:menu={{ menu: 'presence' }}>
     {#if status}
+        <div class="relative inline-block">
+          <span class="badge-icon bg-warning-500 text-white absolute -top-3 -right-3 z-10">{$studentsOnline}</span>
           <Icon type="online" />
+        </div>
         {/if}
         {#if !status}
           <Icon type="offline" />
