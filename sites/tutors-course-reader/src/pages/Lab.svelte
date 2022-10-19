@@ -90,42 +90,34 @@
   afterUpdate(() => {
     animateScroll.scrollTo({ delay: 200, element: "#top" });
   });
+
+  const onComplete = () => {
+		alert('Lab Complete!!');
+	};
 </script>
 
-<svelte:head>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.js"
-    integrity="sha512-DAZH0Wu7q9Hnm0Fw8tRZsTeQBzIugiUy6k2r7E0KKMlC2nBvvrNSH/LVnGueCXRfDs5epP+Ieoh3L+VzSKi0Aw=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"></script>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.css"
-    integrity="sha512-nii0D5CrWiLjtPcfU3pQJifaRLxKKVut/hbsazsodCcIOERZbwLH7dQxzOKy3Ey/Fv8fXCA9+Rf+wQzqklbEJQ=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
-</svelte:head>
 
 {#await getLab(params.wild)}
   <Loading />
 {:then lab}
   {#if !hide}
     <div class="flex">
-      <div class="labmenu-container">
-        <ul class="labmenu">
+      <div class="menu hidden lg:block w-1/4">
+        <ul class="bg-surface-100-800-token p-8 m-2 rounded-xl">
           {@html lab.navbarHtml}
         </ul>
       </div>
-      <div id="lab-panel" class="labpanel">
-        <header class="labmenu-mobile">
+      <div id="lab-panel" class="w-full">
+        <header class="block lg:hidden">
           <nav class="flex flex-wrap justify-between">
             {@html lab.horizontalNavbarHtml}
           </nav>
         </header>
-        <article class="labcontent" in:fly={{ x: direction, duration: 200 }}>
-          {@html lab.content}
-        </article>
+        <div class="bg-surface-100-800-token p-8 m-2 rounded-xl">
+          <article class="mx-auto prose">
+            {@html lab.content}
+          </article>
+        </div>
       </div>
     </div>
   {/if}
