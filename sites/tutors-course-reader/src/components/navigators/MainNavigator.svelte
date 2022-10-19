@@ -1,6 +1,6 @@
 <script lang="ts">
   import TitleCard from "./support/TitleCard.svelte";
-  import { courseUrl, currentCourse, layout, calendarDrawer, infoDrawer, tocDrawer } from "../../stores";
+  import { currentCourse, layout, calendarDrawer, infoDrawer, tocDrawer, storeTheme } from "../../stores";
   import Avatar from "./support/Avatar.svelte";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
   import { AppBar, LightSwitch, menu } from "@brainandbones/skeleton";
@@ -77,6 +77,15 @@
 				</section>
       </button>
       <hr>
+      <h5>Themes</h5>
+        <ul>
+          <li class="option" class:!bg-primary-500={$storeTheme === 'tutors'} on:click={() => { storeTheme.set('tutors') }}> 
+            <span>Tutors</span>
+          </li>
+          <li class="option" class:!bg-primary-500={$storeTheme === 'skeleton'} on:click={() => { storeTheme.set('skeleton') }}> 
+            <span>Skeleton</span>
+          </li>
+        </ul>
       </nav>
     </div>
       <Avatar />

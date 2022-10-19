@@ -1,12 +1,8 @@
 <script lang="ts">
   import "@brainandbones/skeleton/styles/all.css";
-  import "@brainandbones/skeleton/themes/theme-skeleton.css";
-  import "./main.css";
   import { AppShell, Drawer } from "@brainandbones/skeleton";
   import { onMount, setContext } from "svelte";
   import Router from "svelte-spa-router";
-  import Sidebar from "./components/navigators/sidebars/TocBar.svelte";
-  import Onlinebar from "./components/navigators/sidebars/OnlineBar.svelte";
   import Blank from "./pages/support/Blank.svelte";
   import Unauthorised from "./pages/support/Unauthorised.svelte";
   import Course from "./pages/Course.svelte";
@@ -32,7 +28,19 @@
   import TocBar from "./components/navigators/sidebars/TocBar.svelte";
   import Note from "./pages/Note.svelte";
   import { MetricsService } from "./reader-lib/services/metrics-service";
-  import { currentLo, infoDrawer, calendarDrawer, onlineDrawer, tocDrawer } from "./stores";
+  import { currentLo, infoDrawer, calendarDrawer, onlineDrawer, tocDrawer, storeTheme } from "./stores";
+
+  
+  import tutors from "./tutors.css";
+  import skeleton from "@brainandbones/skeleton/themes/theme-skeleton.css";
+
+  
+	const themes: any = { tutors, skeleton };
+
+  storeTheme.subscribe(setBodyThemeAttribute);
+	function setBodyThemeAttribute(): void {
+		document.body.setAttribute('data-theme', $storeTheme);
+	}
 
   setContext("cache", new CourseService());
   const analytics = new AnalyticsService();
@@ -72,6 +80,7 @@
 
 <svelte:head>
   <title>{$currentLo?.title}</title>
+  {@html `\<style\>${themes[$storeTheme]}}\</style\>`}
 </svelte:head>
 
 <div id="app">

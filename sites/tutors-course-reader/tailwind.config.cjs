@@ -13,7 +13,7 @@ const config = {
     },
   ],
   plugins: [require("@tailwindcss/typography"), require("@tailwindcss/line-clamp"), require("@brainandbones/skeleton/tailwind/theme.cjs")],
-  darkMode: "class",
+  darkMode: "class"
 };
 
 module.exports = config;

@@ -1,5 +1,6 @@
 import { writable, type Writable } from "svelte/store";
 import type { WeekType } from "tutors-reader-lib/src/types/lo-types";
+import { localStorageStore } from '@brainandbones/skeleton';
 const weekType: WeekType = {
   title: "",
   type: "",
@@ -20,3 +21,4 @@ export const infoDrawer: Writable<boolean> = writable(false);
 export const calendarDrawer: Writable<boolean> = writable(false);
 export const onlineDrawer: Writable<boolean> = writable(false);
 export const tocDrawer: Writable<boolean> = writable(false);
+export const storeTheme: Writable<string> = localStorageStore('storeTheme', 'tutors');
