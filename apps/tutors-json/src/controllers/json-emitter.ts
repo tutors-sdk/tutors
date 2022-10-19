@@ -1,14 +1,14 @@
-import { Course } from 'tutors-lib/src/models/course';
-import { LearningObject } from 'tutors-lib/src/models/lo';
-import { Topic, Unit } from 'tutors-lib/src/models/topic';
-import { Archive, PanelTalk, Talk } from 'tutors-lib/src/models/los';
-import { PanelVideo } from 'tutors-lib/src/models/web-los';
-import { writeFile } from 'tutors-lib/src/utils/futils';
-import { Lab } from 'tutors-lib/src/models/lab';
-import { Note, PanelNote } from 'tutors-lib/src/models/note';
+import { Course } from "tutors-lib/src/models/course";
+import { LearningObject } from "tutors-lib/src/models/lo";
+import { Topic, Unit } from "tutors-lib/src/models/topic";
+import { Archive, PanelTalk, Talk } from "tutors-lib/src/models/los";
+import { PanelVideo } from "tutors-lib/src/models/web-los";
+import { writeFile } from "tutors-lib/src/utils/futils";
+import { Lab } from "tutors-lib/src/models/lab";
+import { Note, PanelNote } from "tutors-lib/src/models/note";
 
 export class JsonEmitter {
-  version = '0.0';
+  version = "0.0";
 
   emitLo(lo: LearningObject, url: string, jsonObj: any) {
     jsonObj.properties = lo.properties;
@@ -39,7 +39,7 @@ export class JsonEmitter {
     jsonObj.route = `#lab/${url}`;
     jsonObj.los = [];
     lo.chapters.forEach((chapter) => {
-      let jsonChapter: any = {};
+      const jsonChapter: any = {};
       jsonChapter.title = chapter.title;
       jsonChapter.shortTitle = chapter.shortTitle;
       jsonChapter.contentMd = chapter.contentMd;
@@ -78,7 +78,7 @@ export class JsonEmitter {
   }
 
   emitUnit(lo: Unit, url: string, jsonObj: any) {
-    url = url.substring(0, url.lastIndexOf('/')) + '/';
+    url = url.substring(0, url.lastIndexOf("/")) + "/";
     this.emitTopic(lo, url, jsonObj);
     jsonObj.route = `#topic/${url}`;
   }
@@ -89,32 +89,32 @@ export class JsonEmitter {
     jsonObj.route = `#topic/${topicUrl}`;
     jsonObj.los = [];
     lo.los.forEach((lo) => {
-      let loJson: any = {};
+      const loJson: any = {};
       const baseUrl = `${topicUrl}/${lo.folder}`;
       this.emitLo(lo, baseUrl, loJson);
       switch (lo.lotype) {
-        case 'unit':
+        case "unit":
           this.emitUnit(lo as Unit, baseUrl, loJson);
           break;
-        case 'talk':
+        case "talk":
           this.emitTalk(lo as Talk, baseUrl, loJson);
           break;
-        case 'lab':
+        case "lab":
           this.emitLab(lo as Lab, baseUrl, loJson);
           break;
-        case 'note':
+        case "note":
           this.emitNote(lo as Note, baseUrl, loJson);
           break;
-        case 'panelnote':
+        case "panelnote":
           this.emitPanelNote(lo as PanelNote, baseUrl, loJson);
           break;
-        case 'paneltalk':
+        case "paneltalk":
           this.emitPanelTalk(lo as PanelTalk, baseUrl, loJson);
           break;
-        case 'archive':
+        case "archive":
           this.emitArchive(lo as Archive, baseUrl, loJson);
           break;
-        case 'panelvideo':
+        case "panelvideo":
           this.emitPanelVideo(lo as PanelVideo, baseUrl, loJson);
           break;
       }
@@ -126,7 +126,7 @@ export class JsonEmitter {
     this.emitLo(lo, url, jsonObj);
     jsonObj.los = [];
     lo.los.forEach((lo) => {
-      let topicObj: any = {};
+      const topicObj: any = {};
       this.emitTopic(lo as Topic, url, topicObj);
       jsonObj.los.push(topicObj);
     });
@@ -136,9 +136,9 @@ export class JsonEmitter {
   }
 
   generateCourse(version: string, path: string, course: Course) {
-    let courseJson: any = {};
+    const courseJson: any = {};
     courseJson.version = version.toString();
-    this.emitCourse(course, '{{COURSEURL}}/', courseJson);
-    writeFile(path, 'tutors.json', JSON.stringify(courseJson));
+    this.emitCourse(course, "{{COURSEURL}}/", courseJson);
+    writeFile(path, "tutors.json", JSON.stringify(courseJson));
   }
 }

@@ -9,6 +9,7 @@ import { fetchUserById } from "tutors-reader-lib/src/utils/metrics-utils";
 import axios from "axios";
 import type { Lo, WeekType } from "tutors-reader-lib/src/types/lo-types";
 import type { Topic } from "tutors-reader-lib/src/models/topic";
+import { getKeys } from "../../environment";
 
 export class CourseService {
   course: Course;
@@ -33,6 +34,7 @@ export class CourseService {
   }
 
   async checkAuthenticated(course: Course) {
+    if (getKeys().firebase.apiKey === "XXX") return;
     if (isAuthenticated()) {
       const user = await fetchUserById(course.url, getUserId(), null);
       currentUser.set(user);

@@ -1,34 +1,18 @@
 // A 'solution' tsconfig, used to support Typescript Project References
 // https://www.typescriptlang.org/docs/handbook/project-references.html#overall-structure
 {
-    //  "compilerOptions": {
-    //    "target": "esnext",
-    //    "useDefineForClassFields": true,
-    //    "module": "esnext",
-    //    "resolveJsonModule": true,
-    //    "baseUrl": ".",
-    //    /**
-    //     * Typecheck JS in `.svelte` and `.js` files by default.
-    //     * Disable checkJs if you'd like to use dynamic types in JS.
-    //     * Note that setting allowJs false does not prevent the use
-    //     * of JS in `.svelte` files.
-    //     */
-    //    "allowJs": true,
-    //    "checkJs": true,
-    //    "isolatedModules": true
-    //  },
-      "files": [],
-      "references": [
-        { "path": "apps/tutors-html" },
-        { "path": "apps/tutors-json" },
-        { "path": "components/tutors-reader-lib"},
-        { "path": "components/tutors-lib"},
-        { "path": "components/tutors-ui"},
-        { "path": "components/tutors-configs"},
-        { "path": "sites/tutors-course-reader" },
-        { "path": "sites/tutors-time-reader" },
-        { "path": "sites/tutors-vitebook"},
-        { "path": "sites/tutors-home"}
-    ]
-    }
-    
+  "files": [],
+  "references": [
+    { "path": "apps/tutors-html" },
+    { "path": "apps/tutors-json" },
+    { "path": "apps/tutors-time" },
+    { "path": "components/tutors-reader-lib" },
+    { "path": "components/tutors-lib" },
+    { "path": "components/tutors-ui" },
+    { "path": "components/tutors-configs" },
+    { "path": "sites/tutors-course-reader" },
+    { "path": "sites/tutors-time-reader" },
+    { "path": "sites/tutors-vitebook" },
+    { "path": "sites/tutors-home" }
+  ]
+}

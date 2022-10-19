@@ -12,21 +12,16 @@
   import { getKeys } from "./environment";
   import { MetricsService } from "./reader-lib/services/metrics-service";
 
-  import { initializeApp } from 'firebase/app';
+  import { initFirebase } from "tutors-reader-lib/src/utils/firebase-utils";
   import AllCourses from "./pages/AllCourses.svelte";
   import Presence from "./pages/Presence.svelte";
 
   setContext("cache", new CourseService());
   setContext("metrics", new MetricsService());
 
-  let authenticating = false;
-  let bg = "bg-gray-50";
-
-  onMount(async () => {
+  onMount(() => {
     applyInitialTheme();
-    if (getKeys().firebase.apiKey !== "XXX") {
-      initializeApp(getKeys().firebase);
-    }
+    initFirebase(getKeys().firebase);
   });
 
   let routes = {
@@ -35,7 +30,7 @@
     "/oldlive/*": Live,
     "/live/*": Presence,
     "/all/": AllCourses,
-    "*": NotFound
+    "*": NotFound,
   };
 
   const htmlTag = document.getElementsByTagName("html")[0];
@@ -54,11 +49,9 @@
       setIconLib(themeIcons["tutors"]);
     }
   }
-
 </script>
 
 <div id="top" class="tutors-container">
   <MainNavigator />
   <Router {routes} />
 </div>
-

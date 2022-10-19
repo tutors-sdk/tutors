@@ -1,5 +1,5 @@
 import type { Calendar, Lo, Student, WeekType } from "../types/lo-types";
-import { allLos, allVideoLos, fixRoutes, flattenLos, getSortedUnits, injectCourseUrl, threadLos } from "../utils/lo-utils";
+import { allLos, allVideoLos, flattenLos, getSortedUnits, injectCourseUrl, threadLos } from "../utils/lo-utils";
 import { Topic } from "./topic";
 import type { IconNav, IconNavBar } from "../types/icon-types";
 import { addIcon } from "../iconography/themes";
@@ -31,6 +31,7 @@ export class Course {
   constructor(lo: Lo, courseId: string) {
     this.url = courseId;
     injectCourseUrl(lo, courseId);
+    // eslint-disable-next-line no-prototype-builtins
     if (lo.properties.hasOwnProperty("auth")) this.authLevel = lo.properties.auth as unknown as number;
     threadLos(lo);
     lo.route = `/#/course/${courseId}`;
@@ -47,14 +48,14 @@ export class Course {
   }
 
   populate() {
-    for (let lo of this.lo.los) {
+    for (const lo of this.lo.los) {
       const topic = new Topic(lo, this.url, this);
       this.topics.push(topic);
       this.topicIndex.set(lo.id, topic);
     }
 
-    let los = flattenLos(this.lo.los);
-    for (let lo of los) {
+    const los = flattenLos(this.lo.los);
+    for (const lo of los) {
       this.loIndex.set(lo.route, lo);
     }
     if (!this.areVideosHidden()) {
@@ -101,7 +102,7 @@ export class Course {
   areVideosHidden(): boolean {
     let videosHidden = false;
     if (this.lo.properties.hideVideos !== undefined) {
-      let hideVideos: any = this.lo.properties.hideVideos;
+      const hideVideos: any = this.lo.properties.hideVideos;
       videosHidden = hideVideos == true;
     }
     return videosHidden;
@@ -110,7 +111,7 @@ export class Course {
   areLabStepsAutoNumbered(): boolean {
     let labStepsAutoNumber = false;
     if (this.lo.properties.labStepsAutoNumber !== undefined) {
-      let labStepsAutoNumberProp: any = this.lo.properties.labStepsAutoNumber;
+      const labStepsAutoNumberProp: any = this.lo.properties.labStepsAutoNumber;
       labStepsAutoNumber = labStepsAutoNumberProp == true;
     }
     return labStepsAutoNumber;
@@ -171,7 +172,7 @@ export class Course {
         tip: "Go to module Teams meeting",
       });
     if (properties.companions) {
-      for (let [key, value] of Object.entries(properties.companions)) {
+      for (const [key, value] of Object.entries(properties.companions)) {
         const companion: any = value;
         addIcon(key, companion.icon);
         this.companions.bar.push({
@@ -216,9 +217,7 @@ export class Course {
         for (let i = 0; i < calendarObj.weeks.length; i++) {
           const week = {
             date: Object.entries(calendarObj.weeks[i])[0][0],
-            // @ts-ignore
             title: Object.entries(calendarObj.weeks[i])[0][1].title,
-            // @ts-ignore
             type: Object.entries(calendarObj.weeks[i])[0][1].type,
             dateObj: new Date(Object.entries(calendarObj.weeks[i])[0][0]),
           };

@@ -9,7 +9,7 @@
   {#each nav.bar as i}
     <div class="navbar-icon">
       <a href={i.link} target={i.target}>
-        <Icon toolTip={i.tip} type={i.icon} button="true" tipPos="tooltip-top" />
+        <Icon toolTip={i.tip} type={i.icon} button={true} tipPos="tooltip-top" />
       </a>
     </div>
   {/each}

@@ -3,24 +3,25 @@
   import type { CourseService } from "../reader-lib/services/course-service";
   import { currentLo, currentUser, live, studentsOnline } from "../stores";
   import type { StudentMetric, User } from "tutors-reader-lib/src/types/metrics-types";
-  import { Topic } from "tutors-reader-lib/src/models/topic";
+  import type { Topic } from "tutors-reader-lib/src/models/topic";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import StudentCard from "../components/cards/StudentCard.svelte";
   import { querystring } from "svelte-spa-router";
   import type { MetricsService } from "src/reader-lib/services/metrics-service";
 
-  let students: StudentMetric[] = [];
-  export let params: any = {};
+  export let params: Record<string, string> = {};
+
   const cache: CourseService = getContext("cache");
   const metricsService: MetricsService = getContext("metrics");
+  let students: StudentMetric[] = [];
   let course = cache.course;
   let title = "";
   let status = false;
 
-  async function getCourse(url) {
+  async function getCourse(url: string) {
     let id = $querystring;
     live.set(true);
-    course = await cache.readCourse(params.wild);
+    course = await cache.readCourse(url);
     metricsService.setCourse(course);
     await metricsService.subscribeToAllUsers();
     // noinspection TypeScriptValidateTypes
@@ -32,7 +33,7 @@
     });
     title = `Tutors Live`;
     studentsOnline.set(0);
-    metricsService.startListening(metricUpdate, metricDelete);
+    metricsService.startListening(metricUpdate, metricDelete, undefined);
     const users = metricsService.getLiveUsers();
     users.forEach((user) => {
       metricUpdate(user, null, null, Date.now());
@@ -45,7 +46,7 @@
     return course;
   }
 
-  onDestroy(async () => {
+  onDestroy(() => {
     metricsService.stopListening();
   });
 
@@ -94,9 +95,9 @@
     studentsOnline.set(metricsService.getLiveCount());
   }
 
-  function handleClick() {
-    // analytics.setOnlineStatus(models, status);
-  }
+  // function handleClick() {
+  // analytics.setOnlineStatus(models, status);
+  // }
 </script>
 
 <svelte:head>

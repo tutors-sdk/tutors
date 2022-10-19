@@ -23,14 +23,13 @@ export function flattenLos(los: Lo[]): Lo[] {
 }
 
 function removeLastDirectory(the_url) {
-  var the_arr = the_url.split("/");
+  const the_arr = the_url.split("/");
   the_arr.pop();
   return the_arr.join("/");
 }
 
 export function removeLeadingHashes(str: string): string {
   if (str.includes("#")) {
-    const i = str.lastIndexOf("#");
     str = str.substr(str.lastIndexOf("#") + 1);
   }
   return str;
@@ -46,8 +45,8 @@ export function findCourseUrls(labUrl: string): string[] {
 }
 
 export function lastSegment(url: string) {
-  var parts = url.split("/");
-  var lastSegment = parts.pop() || parts.pop();
+  const parts = url.split("/");
+  const lastSegment = parts.pop() || parts.pop();
   return lastSegment;
 }
 
@@ -88,7 +87,7 @@ export function findVideoLos(los: Lo[]): Lo[] {
 
 export function allLos(lotype: string, los: Lo[]) {
   let allLos: Lo[] = [];
-  for (let topic of los) {
+  for (const topic of los) {
     allLos = allLos.concat(findLos(topic.los, lotype));
   }
   return allLos;
@@ -96,7 +95,7 @@ export function allLos(lotype: string, los: Lo[]) {
 
 export function allVideoLos(los: Lo[]) {
   let allLos: Lo[] = [];
-  for (let topic of los) {
+  for (const topic of los) {
     allLos = allLos.concat(findVideoLos(topic.los));
   }
   return allLos;
@@ -118,7 +117,7 @@ export function fixRoutes(lo: Lo) {
 
 export function getSortedUnits(los: Lo[]) {
   const allUnits = los.filter((lo) => lo.type == "unit");
-  for (let unit of allUnits) {
+  for (const unit of allUnits) {
     const panelVideos = unit.los.filter((lo) => lo.type == "panelvideo");
     const panelTalks = unit.los.filter((lo) => lo.type == "paneltalk");
     const standardLos = unit.los.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk");
@@ -129,4 +128,19 @@ export function getSortedUnits(los: Lo[]) {
     unit.los = sortedLos;
   }
   return allUnits;
+}
+
+export function isValidCourseName(course: string) {
+  let isValid = true;
+  if (course.length > 27 && course[24] == "-" && course[25] == "-") {
+    isValid = false;
+  } else {
+    if (course.startsWith("main--") || course.startsWith("master--")) {
+      isValid = false;
+    }
+    if (course.startsWith("deploy-preview")) {
+      isValid = false;
+    }
+  }
+  return isValid;
 }

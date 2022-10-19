@@ -1,8 +1,7 @@
-const showdown = require('showdown');
-const showdownHighlight = require('showdown-highlight');
+import * as showdown from "showdown";
+import showdownHighlight from "showdown-highlight";
 
-let converter = new showdown.Converter({ tables: true, openLinksInNewWindow: true, extensions: [showdownHighlight] });
-
+const converter = new showdown.Converter({ tables: true, openLinksInNewWindow: true, extensions: [showdownHighlight] });
 export class MarkdownParser {
   parse(md: string): string {
     return converter.makeHtml(md);

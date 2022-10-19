@@ -7,7 +7,7 @@
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "node",
-      "cwd": "/Users/edeleastar/repos/modules/hdip/2022/sem-2/web-development-2-2022"
+      "cwd": "${workspaceFolder}/courses/tutors-reference/"
     },
     {
       "name": "Tutors-Html",
@@ -15,7 +15,15 @@
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "node",
-      "cwd": "/Users/edeleastar/repos/modules/hdip/2022/sem-2/web-development-2-2022"
+      "cwd": "${workspaceFolder}/courses/tutors-reference"
+    },
+    {
+      "name": "Tutors-Time",
+      "program": "${workspaceFolder}//apps/tutors-time/src/tutors-time.js",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node",
+      "cwd": "${workspaceFolder}/apps/tutors-time"
     },
     {
       "type": "chrome",
@@ -24,6 +32,14 @@
       "port": 9222,
       "urlFilter": "http://localhost:5001/*",
       "webRoot": "${workspaceFolder}/sites/tutors-course-reader"
+    },
+    {
+      "type": "chrome",
+      "request": "attach",
+      "name": "Tutors-Time-Reader",
+      "port": 9222,
+      "urlFilter": "http://localhost:5001/*",
+      "webRoot": "${workspaceFolder}/sites/tutors-time-reader"
     }
   ]
 }

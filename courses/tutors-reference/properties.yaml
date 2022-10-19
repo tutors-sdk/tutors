@@ -1,0 +1,127 @@
+credits: A reference course containing all supported learning objects
+ignorepin: 4321
+labStepsAutoNumber: true
+ignore:
+  - topic-08-next
+
+moodle: https://moodle.wit.ie/course/view.php?id=118143&section=3
+youtube: https://www.youtube.com/playlist?list=PLMW4bgOfD3Dwi6FWirJ3AQtXZ-N_hV3Eo
+companions:
+  piazza:
+    link: https://piazza.com/
+    title: Piazza Q & A for this course
+    icon:
+      icon: academicons:piazza
+      colour: info
+  teams:
+    link: https://teams.com
+    title: Teams channel for this course
+    icon:
+      icon: logos:microsoft-teams
+
+iconset:
+  moodle:
+    icon: fa-solid:graduation-cap
+    colour: warning
+  github:
+    icon: logos:github-octocat
+    colour: warning
+  # programHome:
+  #   icon: heroicons-outline:home
+  #   colour: success
+  # slack:
+  #   icon: grommet-icons:slack
+  #   colour: error
+  # youtube:
+  #   icon: logos:youtube-icon
+  #   colour: error
+  # video:
+  #   icon: heroicons-outline:play
+  #   colour: error
+  # zoom:
+  #   icon: grommet-icons:zoom
+  #   colour: info
+  # course:
+  #   icon: heroicons-outline:book-open
+  #   colour: info
+  # topic:
+  #   icon: heroicons-outline:view-boards
+  #   colour: info
+  # unit:
+  #   icon: heroicons-outline:collection
+  #   colour: success
+  # talk:
+  #   icon: heroicons-outline:presentation-chart-bar
+  #   colour: info
+  # reference:
+  #   icon: heroicons-outline:document-duplicate
+  #   colour: warning
+  # lab:
+  #   icon: heroicons-outline:beaker
+  #   colour: success
+  # archive:
+  #   icon: heroicons-outline:archive
+  #   colour: info
+  # web:
+  #   icon: heroicons-outline:bookmark
+  #   colour: info
+  # github:
+  #   icon: heroicons-outline:terminal
+  #   colour: warning
+  # panelvideo:
+  #   icon: heroicons-outline:play
+  #   colour: error
+  # left:
+  #   icon: heroicons-outline:arrow-left
+  #   colour: success
+  # right:
+  #   icon: heroicons-outline:arrow-right
+  #   colour: success
+  # print:
+  #   icon: heroicons-outline:printer
+  #   colour: success
+  # rotate:
+  #   icon: heroicons-outline:refresh
+  #   colour: success
+  # download:
+  #   icon: heroicons-outline:arrow-down
+  #   colour: success
+  # fullScreen:
+  #   icon: heroicons-outline:arrows-expand
+  #   colour: success
+  # expand:
+  #   icon: heroicons-outline:switch-horizontal
+  #   colour: success
+  # tutorsTime:
+  #   icon: heroicons-outline:clock
+  #   colour: info
+  # timeExport:
+  #   icon: heroicons-outline:save-as
+  #   colour: success
+  # live:
+  #   icon: heroicons-outline:users
+  #   colour: success
+  # search:
+  #   icon: heroicons-outline:search
+  #   colour: info
+  # tutors:
+  #   icon: fa-solid:chalkboard-teacher
+  #   colour: white
+  # logout:
+  #   icon: heroicons-outline:logout
+  #   colour: error
+  # dark:
+  #   icon: heroicons-outline:moon
+  #   colour: warning
+  # toc:
+  #   icon: heroicons-outline:menu-alt-2
+  #   colour: white
+  # compacted:
+  #   icon: heroicons-outline:dots-vertical
+  #   colour: white
+  # expanded:
+  #   icon: heroicons-outline:dots-horizontal
+  #   colour: white
+  # default:
+  #   icon: heroicons-outline:dots-vertical
+  #   colour: white
