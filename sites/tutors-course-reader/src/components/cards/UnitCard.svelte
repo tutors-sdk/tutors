@@ -16,7 +16,7 @@
   let text="text-xl font-semibold";
   const unsubscribe = layout.subscribe(layout => {
     if (layout === "compacted") {
-      text="text-l font-normal";
+      text="text-lg font-semibold";
     } else {
       text="text-xl font-semibold";
     }
