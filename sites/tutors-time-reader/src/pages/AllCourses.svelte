@@ -12,14 +12,15 @@
   let courseNmr = 0;
   let total = 0;
 
-  $: total = courseNmr;
+  $: total = 0;
+  $: current = 0;
   let title = "All known Modules";
 
   function compareFn(a: any, b: any) {
-    if (a?.visits < b?.visits) {
+    if (a?.count < b?.count) {
       return 1;
     }
-    if (a?.visits > b?.visits) {
+    if (a?.count > b?.count) {
       return -1;
     }
     return 0;
@@ -30,19 +31,24 @@
     portfolio.set(true);
     // let courseIds = await readAllCourseIds(getKeys().firebase);
     let allCourseAccess = await fetchAllCourseAccess();
-    allCourseAccess = allCourseAccess.filter((usage) => usage?.visits > 50);
+    allCourseAccess = allCourseAccess.filter((usage) => usage?.visits > 100);
     allCourseAccess.sort(compareFn);
+    current = 0;
+    total = allCourseAccess.length;
     for (let i = 0; i < allCourseAccess.length; i++) {
       try {
         const courseId = allCourseAccess[i].courseId;
         const response = await axios.get<Lo>(`https://${courseId}.netlify.app/tutors.json`);
         const lo = response.data;
         tickerTape = lo.title;
-        courseNmr++;
+        current++;
         lo.type = "web";
         lo.route = `https://reader.tutors.dev//#/course/${courseId}.netlify.app`;
         lo.img = lo.img.replace("{{COURSEURL}}", `${courseId}.netlify.app`);
-        lo.summary = `Visits:${allCourseAccess[i].visits}`;
+        lo.summary = `${allCourseAccess[i].count / 2}`;
+        if (lo.properties.icon) {
+          lo.icon = lo.properties.icon;
+        }
         los.push(lo);
       } catch (error) {
         console.log(`invalid course :${allCourseAccess[i]}`);
@@ -61,13 +67,13 @@
 
 <div class="container mx-auto">
   {#await getAllCourses()}
-    <h1>{courseNmr} Known Tutors Modules</h1>
+    <h1>{total} Known Tutors Modules</h1>
     <div class="border rounded-lg overflow-hidden mt-4 dark:border-gray-700">
       <div class="flex border justify-center items-center dark:border-gray-700">
         <Wave size="280" color="#FF3E00" unit="px" />
       </div>
     </div>
-    {total} : {tickerTape}
+    {current} : {tickerTape}
   {:then courses}
     <CardDeck {los} />
   {/await}
