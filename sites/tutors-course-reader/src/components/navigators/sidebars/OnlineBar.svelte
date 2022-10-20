@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentCourse, currentUser, onlineDrawer, studentsOnline, studentsOnlineList } from "../../../stores";
+  import { currentCourse, currentUser, onlineDrawer, studentsOnline } from "../../../stores";
   import { getContext } from "svelte";
   import type { Course } from "tutors-reader-lib/src/models/course";
   import type { StudentMetric, User } from "tutors-reader-lib/src/types/metrics-types";
@@ -20,21 +20,18 @@
     if (index !== -1) {
       refreshedStudents.splice(index, 1);
     }
-    studentsOnlineList.set([...refreshedStudents]);
+    students = [...refreshedStudents];
     studentsOnline.set(refreshedStudents.length);
   }
 
   async function initService(course: Course) {
-    if (presenceService) {
-      await presenceService.start();
-    }else {
-      metricsService.setCourse(course);
-      presenceService = new PresenceService(metricsService, students, refresh, null);
-      presenceService.setCourse(course);
-      await presenceService.start();
-      studentsOnlineList.set([]);
-      studentsOnline.set(0);
-    }
+    if (presenceService) presenceService.stop();
+    metricsService.setCourse(course);
+    presenceService = new PresenceService(metricsService, students, refresh, null);
+    presenceService.setCourse(course);
+    await presenceService.start();
+    students = [];
+    studentsOnline.set(0);
   }
 
   currentCourse.subscribe((newCourse: Course) => {
@@ -61,7 +58,7 @@
     {#if $studentsOnline == 0}
       <span class="text-lg">No students currently online...</span>
     {/if}
-    {#each $studentsOnlineList as student}
+    {#each students as student}
       <StudentCard {student} />
     {/each}
   </div>
