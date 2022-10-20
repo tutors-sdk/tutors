@@ -31,11 +31,11 @@
   import { currentLo, infoDrawer, calendarDrawer, onlineDrawer, tocDrawer, storeTheme } from "./stores";
 
   
-  import tutors from "./tutors.css";
-  import skeleton from "@brainandbones/skeleton/themes/theme-skeleton.css";
+  import tutors from "./themes/tutors.css";
+  import halloween from "./themes/halloween.css";
 
   
-	const themes: any = { tutors, skeleton };
+	const themes: any = { tutors, halloween };
 
   storeTheme.subscribe(setBodyThemeAttribute);
 	function setBodyThemeAttribute(): void {

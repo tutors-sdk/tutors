@@ -82,8 +82,8 @@
           <li class="option" class:!bg-primary-500={$storeTheme === 'tutors'} on:click={() => { storeTheme.set('tutors') }}> 
             <span>Tutors</span>
           </li>
-          <li class="option" class:!bg-primary-500={$storeTheme === 'skeleton'} on:click={() => { storeTheme.set('skeleton') }}> 
-            <span>Skeleton</span>
+          <li class="option" class:!bg-primary-500={$storeTheme === 'halloween'} on:click={() => { storeTheme.set('halloween') }}> 
+            <span>Halloween</span>
           </li>
         </ul>
       </nav>
