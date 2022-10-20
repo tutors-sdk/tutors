@@ -46,6 +46,11 @@
       <header class="card-header flex flex-row justify-between items-center p-3">
         <div class="inline-flex w-full">
           <div class="flex-auto {headingText}">{lo.title}</div>
+          {#if lo.video && lo.type !== "video"}
+          <a href="{lo.video}">
+            <Icon type="video" />
+          </a>
+          {/if}
           <div class="flex-none"><Icon type={lo.type} /></div>
         </div>
       </header>
@@ -55,9 +60,6 @@
         </figure>
       </div>
       <footer class="card-footer">{#if $currentCourse && !$currentCourse.areVideosHidden()}
-        {#if lo.video && lo.type !== "video"}
-          <Icon link={lo.video} width={40} height={40} type="video" toolTip="Play video for this talk" />
-        {/if}
       {/if}
       <div class="prose dark:prose-invert text-center line-clamp-3">
         {@html lo.summary}

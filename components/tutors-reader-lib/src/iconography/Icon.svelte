@@ -34,8 +34,6 @@
   
 </script>
 
-<div data-tip="{toolTip}" class="{tip}">
-  <div class="{buttonAttr}">
     {#if link}
       <a target="{target}" href="{link}">
         <Icon icon={getIcon(type).icon} color="{iconColour(getIcon(type).colour)}" width="{width}" height="{height}" />
@@ -43,5 +41,3 @@
     {:else}
       <Icon icon={getIcon(type).icon} color={iconColour(getIcon(type).colour)} width="{width}" height="{height}" />
     {/if}
-  </div>
-</div>
