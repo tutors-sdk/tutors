@@ -24,7 +24,7 @@
   }
 </script>
 
-<div transition:cardTransition class="card w-36 h-56 overflow-x-hidden m-1">
+<div transition:cardTransition class="card w-2/5 h-90 overflow-x-hidden m-1">
   <div class="flex">
     <header class="card-header inline-flex">
       <Avatar src={student.img} alt={student.nickname} />
@@ -74,11 +74,3 @@
       </p>
     </footer>
   </div>
-
-<style>
-  .card {
-    max-width: 200px;
-    min-width: 200px;
-    height: auto;
-  }
-</style>

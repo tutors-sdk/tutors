@@ -13,8 +13,10 @@
     {#if $studentsOnline == 0}
       <span class="text-lg">No students currently online...</span>
     {/if}
+    <div class="flex flex-wrap justify-center w-full">
     {#each $studentsOnlineList as student}
       <StudentCard {student} />
     {/each}
+    </div>
   </div>
 </div>
