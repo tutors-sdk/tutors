@@ -1,7 +1,13 @@
 <script lang="ts">
   import TitleCard from "./support/TitleCard.svelte";
-  import { currentCourse, layout, calendarDrawer, infoDrawer, tocDrawer, storeTheme } from "../../stores";
+  import { currentCourse,currentUser, studentsOnline, studentsOnlineList, layout, calendarDrawer, infoDrawer, tocDrawer, storeTheme } from "../../stores";
   import Avatar from "./support/Avatar.svelte";
+  import { isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
+  import { getContext } from "svelte";
+  import type { Course } from "tutors-reader-lib/src/models/course";
+  import type { StudentMetric, User } from "tutors-reader-lib/src/types/metrics-types";
+  import type { MetricsService } from "../../reader-lib/services/metrics-service";
+  import { PresenceService } from "../../reader-lib/services/presence-service";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
   import { AppBar, LightSwitch, menu } from "@brainandbones/skeleton";
 
@@ -28,6 +34,46 @@
   const infoDrawerOpen: any = () => { infoDrawer.set(true) };
   const calendarDrawerOpen: any = () => { calendarDrawer.set(true) };
   const tocDrawerOpen: any = () => { tocDrawer.set(true) };
+
+  const metricsService: MetricsService = getContext("metrics");
+  let students: StudentMetric[] = [];
+  let presenceService: PresenceService = null;
+  let lastCourse: Course = null;
+  let user: User;
+
+  function refresh(refreshedStudents: StudentMetric[]) {
+    let student = refreshedStudents.find((student) => student.nickname === user.nickname);
+    let index = refreshedStudents.indexOf(student);
+    if (index !== -1) {
+      refreshedStudents.splice(index, 1);
+    }
+    studentsOnlineList.set([...refreshedStudents]);
+    studentsOnline.set(refreshedStudents.length);
+  }
+
+  async function initService(course: Course) {
+    if (presenceService) presenceService.stop();
+    metricsService.setCourse(course);
+    presenceService = new PresenceService(metricsService, students, refresh, null);
+    presenceService.setCourse(course);
+    await presenceService.start();
+    studentsOnlineList.set([]);
+    studentsOnline.set(0);
+  }
+
+  currentCourse.subscribe((newCourse: Course) => {
+    if (newCourse && newCourse != lastCourse) {
+      lastCourse = newCourse;
+      if (isAuthenticated() && newCourse?.authLevel > 0) {
+        // eslint-disable-next-line @typescript-eslint/no-floating-promises
+        initService(newCourse);
+      }
+    }
+  });
+
+  currentUser.subscribe((newUser) => {
+    user = newUser;
+  });
 
   applyInitialLayout();
 </script>
