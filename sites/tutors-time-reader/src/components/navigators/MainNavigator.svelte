@@ -12,15 +12,15 @@
 
 {#if $currentCourse}
   <div class="header-container">
-    <div in:fly="{{ y: -100, duration: 1000 }}" out:fly="{{ y: -100, duration: 500 }}" class="navbar">
-      <LoggedinStudentCard/>
+    <div in:fly={{ y: -100, duration: 1000 }} out:fly={{ y: -100, duration: 500 }} class="navbar">
+      <LoggedinStudentCard />
       <TitleCard />
-      <OnlineStudents/>
+      <OnlineStudents />
       <TutorsIcon />
       <Compact />
       <DarkMode />
       <div class="h-28">
-        <ClockCard/>
+        <ClockCard />
       </div>
     </div>
   </div>

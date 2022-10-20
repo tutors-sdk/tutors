@@ -9,9 +9,15 @@
   let imageHeight = "";
   let iconHeight = "";
 
+  function isColor(string) {
+    var s = new Option().style;
+    s.color = string;
+    return s.color.length > 0;
+  }
+
   let colourPrefix = "";
 
-  function isColour(string: string) {
+  function isColour(string) {
     var s = new Option().style;
     s.color = string;
     return s.color.length > 0;
@@ -37,8 +43,8 @@
   const unsubscribe = layout.subscribe((layout) => {
     if (!miniImage) {
       if (layout === "compacted") {
-        iconHeight = "90";
-        imageHeight = "h-20";
+        iconHeight = "70";
+        imageHeight = "h-16";
       } else {
         iconHeight = "180";
         imageHeight = "h-48";
@@ -49,7 +55,7 @@
 </script>
 
 {#if lo.icon}
-  <Iconify icon={lo.icon.type} color="{colourPrefix}{lo.icon.color}" height="h24" />
+  <Iconify icon={lo.icon.type} color="{colourPrefix}{lo.icon.color}" height={iconHeight} />
 {:else}
-  <img loading="lazy" class="h-24 object-scale-down" src={lo.img} alt={lo.title} />
+  <img loading="lazy" class="{imageHeight}  object-scale-down" src={lo.img} alt={lo.title} />
 {/if}

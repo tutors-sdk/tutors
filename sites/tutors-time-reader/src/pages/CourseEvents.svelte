@@ -30,15 +30,19 @@
         if (canUpdate) {
           const snapshot = await get(child(ref(db), `all-course-access/${courseId}`));
           const usage = snapshot.val();
-          const lo = await getCourseSummary(courseId);
-          lo.summary = usage.title;
-          console.log(courseId);
           const foundLo = courseMap.get(courseId);
+          console.log(courseId);
           if (foundLo) {
-            los = los.filter((lo: Lo) => lo != foundLo);
+            foundLo.visits++;
+            foundLo.summary = usage.title;
+          } else {
+            const lo = await getCourseSummary(courseId);
+            lo.summary = usage.title;
+            lo.visits = 1;
+            courseMap.set(courseId, lo);
+            los.push(lo);
           }
-          los.unshift(lo);
-          courseMap.set(courseId, lo);
+          los.sort((a: any, b: any) => b?.visits - a?.visits);
           los = [...los];
           numberModules = los.length;
         }

@@ -65,7 +65,10 @@
           {/if}
         {/if}
         <p />
-        <div class="{text} prose">
+        <div class="text-xs">
+          {lo.visits}
+        </div>
+        <div class="text-xs">
           {@html lo.summary}
         </div>
       </div>
