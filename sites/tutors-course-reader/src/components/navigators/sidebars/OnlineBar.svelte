@@ -30,8 +30,6 @@
     presenceService = new PresenceService(metricsService, students, refresh, null);
     presenceService.setCourse(course);
     await presenceService.start();
-    students = [];
-    studentsOnline.set(0);
   }
 
   currentCourse.subscribe((newCourse: Course) => {
