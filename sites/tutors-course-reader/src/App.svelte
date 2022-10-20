@@ -32,10 +32,11 @@
 
   
   import tutors from "./themes/tutors.css";
+  import dyslexia from "./themes/dyslexia.css";
   import halloween from "./themes/halloween.css";
 
   
-	const themes: any = { tutors, halloween };
+	const themes: any = { tutors, dyslexia, halloween };
 
   storeTheme.subscribe(setBodyThemeAttribute);
 	function setBodyThemeAttribute(): void {

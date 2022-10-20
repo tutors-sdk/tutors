@@ -70,20 +70,25 @@
 					<h6>Dark Mode</h6>
 					<LightSwitch origin="tr" />
 				</section>
-        <button on:click={() => toggleLayout()}>
+        <button class="w-full" on:click={() => toggleLayout()}>
         <section class="flex justify-between">
-					<h6 class="mr-11">Compact Layout</h6>
+					<h6>Compact</h6>
+          <div class="mr-3">
             <Icon type={$layout} />
+          </div>
 				</section>
       </button>
       <hr>
       <h5>Themes</h5>
         <ul>
           <li class="option" class:!bg-primary-500={$storeTheme === 'tutors'} on:click={() => { storeTheme.set('tutors') }}> 
-            <span>Tutors</span>
+            <h6>Tutors</h6>
+          </li>
+          <li class="option" class:!bg-primary-500={$storeTheme === 'dyslexia'} on:click={() => { storeTheme.set('dyslexia') }}> 
+            <h6>Dyslexia</h6>
           </li>
           <li class="option" class:!bg-primary-500={$storeTheme === 'halloween'} on:click={() => { storeTheme.set('halloween') }}> 
-            <span>Halloween</span>
+            <h6>Halloween</h6>
           </li>
         </ul>
       </nav>
