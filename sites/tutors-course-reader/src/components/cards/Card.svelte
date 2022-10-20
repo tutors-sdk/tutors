@@ -22,34 +22,47 @@
   }
 
   let headingText = "";
-  let text = "";
   let cardWidths = "";
-  let cardType = "tutorscard";
-  let cardHeader = "tutorscard-header";
 
   const unsubscribe = layout.subscribe((layout) => {
     if (layout === "compacted") {
       headingText = "text-md font-medium";
-      text = "text-xs";
       cardWidths = "w-36 h-[21rem]";
     } else {
       headingText = "text-lg font-semibold";
-      text = "text-sm";
       cardWidths = "w-60 h-[24.5rem]";
     }
   });
+
+  function getColor(type){
+    if(type === 'lab') {
+      return 'border-accent-500'
+    }
+    if(type === 'topic' || 'talk') {
+      return 'border-primary-500'
+    }
+    if(type === 'web' || 'video' || 'github') {
+      return 'border-warning-500'
+    }
+    if(type === 'panelvideo') {
+      return 'border-ternary-500'
+    }
+  }
+
   onDestroy(unsubscribe);
 </script>
 
   <a href={lo.route} {target}>
-    <div class="card bg-surface-900/50 border-y-8 m-2 {cardWidths} hover:scale-105 transition-all">
+    <div class="card border-y-8 {getColor(lo.type)} m-2 {cardWidths} hover:scale-105 transition-all">
       <header class="card-header flex flex-row justify-between items-center p-3">
         <div class="inline-flex w-full">
           <div class="flex-auto {headingText}">{lo.title}</div>
+          {#if $currentCourse && !$currentCourse.areVideosHidden()}
           {#if lo.video && lo.type !== "video"}
           <a href="{lo.video}">
             <Icon type="video" />
           </a>
+          {/if}
           {/if}
           <div class="flex-none"><Icon type={lo.type} /></div>
         </div>
@@ -59,8 +72,7 @@
           <Image {lo} />
         </figure>
       </div>
-      <footer class="card-footer">{#if $currentCourse && !$currentCourse.areVideosHidden()}
-      {/if}
+      <footer class="card-footer">
       <div class="prose dark:prose-invert text-center line-clamp-3">
         {@html lo.summary}
       </div>
