@@ -93,7 +93,7 @@
     {#if $currentCourse.currentWeek}
       <div class="hidden lg:flex w-full">
         <div class="inline-flex mx-auto">
-        <button class="btn btn-sm on:click={calendarDrawerOpen}">
+        <button class="btn btn-sm" on:click={calendarDrawerOpen}>
           <Icon type="calendar" />
         </button>
         <div>
