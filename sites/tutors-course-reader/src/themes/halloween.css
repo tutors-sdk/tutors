@@ -8,8 +8,6 @@
     --theme-font-family-base: system-ui;
     --theme-font-color-base: var(--color-primary-900);
     --theme-font-color-dark: var(--color-primary-200);
-    --theme-rounded-base: 9999px;
-    --theme-rounded-container: 24px;
     /* =~= Theme Colors | Tailwind =~= */
     /* orange | #f97316 */
     --color-primary-50: 255 247 237;
