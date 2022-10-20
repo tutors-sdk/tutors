@@ -25,16 +25,13 @@
   }
 
   async function initService(course: Course) {
-    if (presenceService) {
-      await presenceService.start();
-    }else {
-      metricsService.setCourse(course);
-      presenceService = new PresenceService(metricsService, students, refresh, null);
-      presenceService.setCourse(course);
-      await presenceService.start();
-      studentsOnlineList.set([]);
-      studentsOnline.set(0);
-    }
+    if (presenceService) presenceService.stop();
+    metricsService.setCourse(course);
+    presenceService = new PresenceService(metricsService, students, refresh, null);
+    presenceService.setCourse(course);
+    await presenceService.start();
+    studentsOnlineList.set([]);
+    studentsOnline.set(0);
   }
 
   currentCourse.subscribe((newCourse: Course) => {
