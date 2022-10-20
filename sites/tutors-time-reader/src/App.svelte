@@ -15,6 +15,7 @@
   import { initFirebase } from "tutors-reader-lib/src/utils/firebase-utils";
   import AllCourses from "./pages/AllCourses.svelte";
   import Presence from "./pages/Presence.svelte";
+  import CurrentEvents from "./pages/CourseEvents.svelte";
 
   setContext("cache", new CourseService());
   setContext("metrics", new MetricsService());
@@ -30,6 +31,7 @@
     "/oldlive/*": Live,
     "/live/*": Presence,
     "/all/": AllCourses,
+    "/current/": CurrentEvents,
     "*": NotFound,
   };
 
