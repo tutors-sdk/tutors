@@ -16,20 +16,13 @@
   let liveUrl = "";
   let gitUrl = "";
 
+  const metricsService: MetricsService = getContext("metrics");
+
   function setTimeUrls() {
     timeUrl = `${timeApp}/#/time/${course?.url}?${getUserId()}`;
     liveUrl = `${timeApp}/#/live/${course?.url}?${getUserId()}`;
   }
 
-  currentUser.subscribe((current) => {
-    if (current) {
-      user = current;
-      gitUrl = `https://github.com/${user.nickname}`;
-      if (user && current) {
-        setTimeUrls();
-      }
-    }
-  });
   currentCourse.subscribe((current) => {
     if (current) {
       course = current;
@@ -39,7 +32,23 @@
     }
   });
 
-  const metricsService: MetricsService = getContext("metrics");
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  currentUser.subscribe(async (newUser) => {
+    user = newUser;
+    gitUrl = `https://github.com/${user.nickname}`;
+    if (user && newUser) {
+      setTimeUrls();
+    }
+    let course = await $currentCourse;
+    if (isAuthenticated() && course.authLevel > 0) {
+      // eslint-disable-next-line no-prototype-builtins
+      if (user && !user.hasOwnProperty("onlineStatus")) {
+        user.onlineStatus = "online";
+      } else {
+        if (user) status = user.onlineStatus === "online";
+      }
+    }
+  });
 
   function handleClick() {
     status = !status;
@@ -83,24 +92,31 @@
   </button>
   <nav class="list-nav card card-body w-56 shadow-xl space-y-4" data-menu="avatar">
     <div class="mt-2 ml-4 text-xs">Logged in as:</div>
-    <div class="mb-1 ml-4 text-sm">{$currentUser.name}</div>
+    <div class="ml-4 text-sm">{$currentUser.name}</div>
     <Divider />
     <ul>
       <li class="flex">
-        <div class="label cursor-pointer inline-flex ml-4">
-          <input type="checkbox" class="checkbox checkbox-sm flex-1" bind:checked={status} on:click={handleClick} />
-          <div class="ml-3">Share Presence</div>
-        </div>
+        <a on:click={handleClick}>
+          {#if status}
+          <Icon type="online" />
+        {/if}
+        {#if !status}
+          <Icon type="offline" />
+        {/if}
+          <div class="ml-2">Share Presence</div>
+        </a>
       </li>
       {#if status}
         <li>
           <a on:click={onlineDrawerOpen}>
             <Icon type="listOnline" />
-            <div class="ml-2">View <span class="badge bg-warning-500">{$studentsOnline}</span> Online</div>
+            <div class="ml-2">View <span class="badge bg-warning-500 text-white">{$studentsOnline}</span> Online</div>
           </a>
         </li>
       {/if}
+    </ul>
       <Divider />
+      <ul>
       <li>
         <a href={timeUrl} target="_blank">
           <Icon type="tutorsTime" />
