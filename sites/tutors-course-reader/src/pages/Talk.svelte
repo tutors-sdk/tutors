@@ -39,7 +39,7 @@
   <Loading />
 {:then lo}
   {#if !hide}
-    <div class="flex">
+    <div class="flex w-11/12 mx-auto">
       <div transition:talkTransition class="w-full">
         <TalkCard {lo} />
       </div>

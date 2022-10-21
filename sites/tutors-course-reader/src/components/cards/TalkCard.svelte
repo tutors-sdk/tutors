@@ -132,25 +132,27 @@
 </script>
 
 {#if pdfDoc}
-  <div class="talkcard-container">
-    <div class="mx-2 flex items-center justify-between">
+  <div class="bg-surface-100-800-token rounded-lg p-2 border mr-2">
+    <div class="mx-2 mb-2 flex items-center justify-between">
       <div class="text-sm">
         {pageNum} of {pdfDoc.numPages}
       </div>
       <div>
-        <button on:click={onPrevPage}>
-          <Icon button={true} type="left" tipPos="tooltip-bottom" toolTip="Previous Slide" />
+        <button class="btn btn-sm" on:click={onPrevPage}>
+          <Icon type="left" />
         </button>
-        <button on:click={onNextPage}>
-          <Icon button={true} type="right" tipPos="tooltip-bottom" toolTip="Next Slide" />
+        <button class="btn btn-sm" on:click={onNextPage}>
+          <Icon type="right" />
         </button>
-        <button on:click={clockwiseRotate}>
-          <Icon button={true} type="rotate" tipPos="tooltip-bottom" toolTip="Rotate 90 Degrees" />
+        <button class="btn btn-sm" on:click={clockwiseRotate}>
+          <Icon type="rotate" />
         </button>
-        <button on:click={downloadPdf}>
-          <Icon type="download" button={true} toolTip="download" tipPos="tooltip-bottom" />
+        <button class="btn btn-sm" on:click={downloadPdf}>
+          <Icon type="download" />
         </button>
-        <Icon button={true} link={lo.pdf} type="fullScreen" toolTip="Full Screen" tipPos="tooltip-bottom" target="_blank" />
+        <button class="btn btn-sm">
+          <Icon link={lo.pdf} type="fullScreen" target="_blank" />
+        </button>
       </div>
     </div>
     <canvas class="mx-auto w-full 2xl:w-4/5" bind:this={canvas} />
