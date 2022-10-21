@@ -3,88 +3,88 @@
 @tailwind utilities;
 
 @layer components {
-    .tutors-container {
-        @apply mx-auto px-3 antialiased bg-base-100 min-h-screen w-full 2xl:w-11/12
-    }
-    .navbar {
-        @apply shadow-lg bg-neutral text-neutral-content rounded-box mb-2 p-1 justify-center
-    }
-    .header-container {
-        @apply mb-2 pt-4 md:top-0 md:z-40 sticky
-    }
-    .navbar-secondary {
-        @apply flex flex-wrap lg:flex-nowrap
-    }
-    .navbar-title {
-        @apply flex-1 hidden px-2 mx-2 lg:block
-    }
-    .navbar-calendar {
-        @apply justify-center flex-1 hidden px-2 mx-2 lg:flex text-left text-base-content
-    }
-    .navbar-icon {
-        @apply btn btn-square btn-ghost rounded-2xl
-    }
-    .navbar-secondary-bg {
-        @apply shadow-lg bg-neutral rounded-box horizontal text-neutral-content text-sm breadcrumbs flex flex-auto p-2 content-center h-12
-    }
-    .breadcrumbs-btn {
-        @apply btn btn-sm btn-ghost -mr-3 -ml-2 rounded-xl
-    }
-    .iconbar {
-        @apply flex-wrap lg:flex-none shadow-lg bg-neutral text-neutral-content rounded-box rounded-2xl horizontal ml-1 mt-2 lg:mt-0
-    }
-    .carddeck-bg {
-        @apply bg-base-200 text-base-content rounded-box mb-2 p-2
-    }
-    .tutorscard {
-        @apply card compact text-center shadow-2xl bg-base-100 m-2 border-t-8 border-b-8
-    }
-    .tutorscard-compact {
-        @apply card compact text-center shadow-2xl rounded-box rounded-2xl bg-base-100 m-2 border-t-2 border-b-2 z-0
-    }
-    .tutorscard-header {
-        @apply flex flex-row justify-between items-center p-3
-    }
-    .tutorscard-header-compact {
-        @apply flex flex-row justify-between items-center p-1
-    }
-    .tutorscard-image {
-        @apply rounded-xl object-scale-down p-1
-    }
-    .tutorscard-body {
-        @apply text-center text-base-content line-clamp-3
-    }
-    .unitcard-container {
-        @apply bg-base-200 text-base-content rounded-box p-2 mb-2
-    }
-    .videocard-container {
-        @apply bg-base-200 text-base-content rounded-box p-2 mb-2 overflow-hidden w-full mx-auto p-4 grid place-items-center
-    }
-    .labmenu-container {
-        @apply hidden md:block py-1 md:w-3/12 2xl:w-2/12
-    }
-    .labmenu {
-        @apply menu w-3/12 2xl:w-2/12 py-3 shadow-lg bg-neutral text-neutral-content rounded-box fixed overflow-auto h-2/3
-    }
-    .labpanel {
-        @apply justify-end w-full md:w-9/12 2xl:w-10/12 bg-base-200 rounded-box my-1 md:ml-4 2xl:ml-12 text-base-content
-    }
-    .labmenu-mobile {
-        @apply md:hidden bg-neutral p-4 text-neutral-content rounded-box mb-4
-    }
-    .labcontent {
-        @apply prose xl:max-w-3xl 2xl:max-w-5xl mx-auto p-2 m-4
-    }
-    .talkcard-container {
-        @apply shadow-xl rounded-lg overflow-hidden bg-base-200 px-4 pb-4 pt-2 w-full mx-auto 2xl:w-4/5
-    }
-    .topicnavigator {
-        @apply card compact text-center shadow-2xl bg-base-200 ml-2
-    }
-    .topicnavigator-title {
-        @apply flex flex-row justify-between items-center p-3
-    }
-    .wall-bg {
-        @apply flex flex-wrap justify-center w-full rounded-lg
-    }
+  .tutors-container {
+    @apply mx-auto min-h-screen w-full bg-base-100 px-3 antialiased 2xl:w-11/12;
+  }
+  .navbar {
+    @apply rounded-box mb-2 justify-center bg-neutral p-1 text-neutral-content shadow-lg;
+  }
+  .header-container {
+    @apply sticky mb-2 pt-4 md:top-0 md:z-40;
+  }
+  .navbar-secondary {
+    @apply flex flex-wrap lg:flex-nowrap;
+  }
+  .navbar-title {
+    @apply mx-2 hidden flex-1 px-2 lg:block;
+  }
+  .navbar-calendar {
+    @apply mx-2 hidden flex-1 justify-center px-2 text-left text-base-content lg:flex;
+  }
+  .navbar-icon {
+    @apply btn btn-ghost btn-square rounded-2xl;
+  }
+  .navbar-secondary-bg {
+    @apply breadcrumbs rounded-box horizontal flex h-12 flex-auto content-center bg-neutral p-2 text-sm text-neutral-content shadow-lg;
+  }
+  .breadcrumbs-btn {
+    @apply btn btn-ghost btn-sm -mr-3 -ml-2 rounded-xl;
+  }
+  .iconbar {
+    @apply rounded-box horizontal ml-1 mt-2 flex-wrap rounded-2xl bg-neutral text-neutral-content shadow-lg lg:mt-0 lg:flex-none;
+  }
+  .carddeck-bg {
+    @apply rounded-box mb-2 bg-base-200 p-2 text-base-content;
+  }
+  .tutorscard {
+    @apply card compact m-2 border-t-8 border-b-8 bg-base-100 text-center shadow-2xl;
+  }
+  .tutorscard-compact {
+    @apply card compact rounded-box z-0 m-2 rounded-2xl border-t-2 border-b-2 bg-base-100 text-center shadow-2xl;
+  }
+  .tutorscard-header {
+    @apply flex flex-row items-center justify-between p-3;
+  }
+  .tutorscard-header-compact {
+    @apply flex flex-row items-center justify-between p-1;
+  }
+  .tutorscard-image {
+    @apply rounded-xl object-scale-down p-1;
+  }
+  .tutorscard-body {
+    @apply text-center text-base-content;
+  }
+  .unitcard-container {
+    @apply rounded-box mb-2 bg-base-200 p-2 text-base-content;
+  }
+  .videocard-container {
+    @apply rounded-box mx-auto mb-2 grid w-full place-items-center overflow-hidden bg-base-200 p-2 p-4 text-base-content;
+  }
+  .labmenu-container {
+    @apply hidden py-1 md:block md:w-3/12 2xl:w-2/12;
+  }
+  .labmenu {
+    @apply menu rounded-box fixed h-2/3 w-3/12 overflow-auto bg-neutral py-3 text-neutral-content shadow-lg 2xl:w-2/12;
+  }
+  .labpanel {
+    @apply rounded-box my-1 w-full justify-end bg-base-200 text-base-content md:ml-4 md:w-9/12 2xl:ml-12 2xl:w-10/12;
+  }
+  .labmenu-mobile {
+    @apply rounded-box mb-4 bg-neutral p-4 text-neutral-content md:hidden;
+  }
+  .labcontent {
+    @apply prose m-4 mx-auto p-2 xl:max-w-3xl 2xl:max-w-5xl;
+  }
+  .talkcard-container {
+    @apply mx-auto w-full overflow-hidden rounded-lg bg-base-200 px-4 pb-4 pt-2 shadow-xl 2xl:w-4/5;
+  }
+  .topicnavigator {
+    @apply card compact ml-2 bg-base-200 text-center shadow-2xl;
+  }
+  .topicnavigator-title {
+    @apply flex flex-row items-center justify-between p-3;
+  }
+  .wall-bg {
+    @apply flex w-full flex-wrap justify-center rounded-lg;
+  }
 }

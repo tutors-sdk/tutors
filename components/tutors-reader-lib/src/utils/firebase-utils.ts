@@ -16,6 +16,10 @@ export function updateLastAccess(root: string, key: string, title: string) {
   updateStr(`${root}/${key}/title`, title);
 }
 
+export function updateImage(root: string, img: string) {
+  updateStr(`${root}/loimg`, img);
+}
+
 export function updateVisits(root: string, key: string) {
   updateCountValue(`${root}/${key}/visits`);
 }
