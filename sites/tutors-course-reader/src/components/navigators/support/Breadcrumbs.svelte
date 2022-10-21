@@ -22,7 +22,7 @@
     return input;
   }
 </script>
-<div class="p-1 my-4 mx-8 overflow-hidden">
+<div class="p-1 my-2 mx-8 overflow-hidden">
 <Breadcrumb text="text-xs">
   {#if $currentCourse.lo.properties?.parent != null }
 	<Crumb href='#/{$currentCourse.lo.properties?.parent}'>

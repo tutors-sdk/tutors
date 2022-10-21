@@ -104,21 +104,16 @@
       <TocBar />
     </Drawer>
 
-    <AppShell>
-      <svelte:fragment slot="header">
+    <AppShell class="h-screen">
+      <div class="sticky top-0 z-50">
         <MainNavigator />
-      </svelte:fragment>
-      <svelte:fragment slot="pageHeader">
-        <PageHeader />
-      </svelte:fragment>
+        <PageHeader /></div>
       <div class="mx-auto my-4">
         <Router {routes} />
       </div>
-      <svelte:fragment slot="footer">
         <div class="mt-2 w-full bg-surface-100-800-token">
           <Footer />
         </div>
-      </svelte:fragment>
     </AppShell>
   {/if}
 </div>
