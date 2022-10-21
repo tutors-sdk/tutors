@@ -5,22 +5,32 @@
   import { fetchAllCourseAccess } from "tutors-reader-lib/src/utils/firebase-utils";
   import { child, get, getDatabase, onValue, ref } from "firebase/database";
   import { getCourseSummary } from "tutors-reader-lib/src/utils/lo-utils";
+  import { toHoursAndMinutes } from "tutors-reader-lib/src/utils/metrics-utils";
 
   let los: Lo[] = [];
   let canUpdate = false;
   let courseMap = new Map<string, Lo>();
   $: numberModules = 0;
-  const startTime = new Date().toLocaleString();
-  let title = "Current Module Activity";
+  let title = "Tutors Time";
+  let subTitle = "Connecting....";
+
+  function summarise(usage: any, visits: number): string {
+    let str = `${toHoursAndMinutes(usage.count)}<br>`;
+    str += `${usage.visits}<br>`;
+    str += `${visits}<br>`;
+    str += "<hr><br>";
+    str += `${usage.title}`;
+    return str;
+  }
 
   layout.set("compacted");
   async function getAllCourses(): Promise<Lo[]> {
     portfolio.set(true);
     const db = getDatabase();
     let allCourseAccess = await fetchAllCourseAccess();
-    allCourseAccess = allCourseAccess.filter((usage) => usage?.visits > 100);
     const func = () => {
       canUpdate = true;
+      subTitle = "";
     };
     setTimeout(func, 20 * 1000);
     for (let i = 0; i < allCourseAccess.length; i++) {
@@ -34,11 +44,11 @@
           console.log(courseId);
           if (foundLo) {
             foundLo.visits++;
-            foundLo.summary = usage.title;
+            foundLo.summary = summarise(usage, foundLo.visits);
           } else {
             const lo = await getCourseSummary(courseId);
-            lo.summary = usage.title;
             lo.visits = 1;
+            lo.summary = summarise(usage, lo.visits);
             courseMap.set(courseId, lo);
             los.push(lo);
           }
@@ -60,7 +70,8 @@
   <div class="flex-1">
     <div class="navbar-title">
       <p class="text-center text-lg">
-        {numberModules} Modules Active since {startTime}
+        Tutors Time: {numberModules} Modules Currently Online : {new Date().toLocaleString()}
+        {subTitle}
       </p>
     </div>
   </div>

@@ -25,13 +25,13 @@
     @apply btn btn-ghost btn-square rounded-2xl;
   }
   .navbar-secondary-bg {
-    @apply breadcrumbs horizontal rounded-box flex h-12 flex-auto content-center bg-neutral p-2 text-sm text-neutral-content shadow-lg;
+    @apply breadcrumbs rounded-box horizontal flex h-12 flex-auto content-center bg-neutral p-2 text-sm text-neutral-content shadow-lg;
   }
   .breadcrumbs-btn {
     @apply btn btn-ghost btn-sm -mr-3 -ml-2 rounded-xl;
   }
   .iconbar {
-    @apply horizontal rounded-box ml-1 mt-2 flex-wrap rounded-2xl bg-neutral text-neutral-content shadow-lg lg:mt-0 lg:flex-none;
+    @apply rounded-box horizontal ml-1 mt-2 flex-wrap rounded-2xl bg-neutral text-neutral-content shadow-lg lg:mt-0 lg:flex-none;
   }
   .carddeck-bg {
     @apply rounded-box mb-2 bg-base-200 p-2 text-base-content;
@@ -52,7 +52,7 @@
     @apply rounded-xl object-scale-down p-1;
   }
   .tutorscard-body {
-    @apply text-center text-base-content line-clamp-4;
+    @apply text-center text-base-content;
   }
   .unitcard-container {
     @apply rounded-box mb-2 bg-base-200 p-2 text-base-content;
