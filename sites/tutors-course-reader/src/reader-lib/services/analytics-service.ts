@@ -11,6 +11,7 @@ import {
   updateCalendar,
   updateCount,
   updateCountValue,
+  updateImage,
   updateLastAccess,
   updateStr,
   updateVisits,
@@ -102,6 +103,11 @@ export class AnalyticsService {
 
     updateLastAccess(`all-course-access/${this.courseBaseName}`, "", lo.title);
     updateVisits(`all-course-access/${this.courseBaseName}`, "");
+    if (lo.type === "course") {
+      updateImage(`all-course-access/${this.courseBaseName}`, "");
+    } else {
+      updateImage(`all-course-access/${this.courseBaseName}`, lo?.img);
+    }
 
     if (this.userEmail) {
       this.firebaseEmailRoot = `${this.courseBaseName}/users/${this.userEmailSanitised}`;
