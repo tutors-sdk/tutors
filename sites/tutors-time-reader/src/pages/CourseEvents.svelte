@@ -47,10 +47,13 @@
             foundLo.summary = summarise(usage, foundLo.visits);
           } else {
             const lo = await getCourseSummary(courseId);
-            lo.visits = 1;
-            lo.summary = summarise(usage, lo.visits);
-            courseMap.set(courseId, lo);
-            los.push(lo);
+            const keepPrivate = lo.properties?.private as unknown as number;
+            if (!keepPrivate) {
+              lo.visits = 1;
+              lo.summary = summarise(usage, lo.visits);
+              courseMap.set(courseId, lo);
+              los.push(lo);
+            }
           }
           los.sort((a: any, b: any) => b?.visits - a?.visits);
           los = [...los];

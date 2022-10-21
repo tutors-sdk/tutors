@@ -14,13 +14,21 @@
   $: total = 0;
   let title = "All known Modules";
 
+  function summarise(usage: any): string {
+    let str = "Total Reading Time<br>";
+    str += `${toHoursAndMinutes(usage.count)}<br>`;
+    str += "Page Loads<br>";
+    str += `${usage.visits}<br>`;
+    return str;
+  }
+
   layout.set("compacted");
   async function getAllCourses(): Promise<Lo[]> {
     portfolio.set(true);
     let allCourseAccess = await fetchAllCourseAccess();
     allCourseAccess = allCourseAccess.filter((usage) => isValidCourseName(usage.courseId));
     allCourseAccess = allCourseAccess.filter((usage) => usage?.visits > 50);
-    allCourseAccess.sort((a: any, b: any) => b?.count - a?.count);
+    allCourseAccess.sort((a: any, b: any) => b?.visits - a?.visits);
     total = allCourseAccess.length;
     let moduleCount = 0;
     for (let i = 0; i < allCourseAccess.length; i++) {
@@ -31,7 +39,8 @@
         if (!keepPrivate) {
           moduleCount++;
           tickerTape = `${moduleCount}: ${lo.title}`;
-          lo.summary = toHoursAndMinutes(allCourseAccess[i].count);
+          // lo.summary = toHoursAndMinutes(allCourseAccess[i].count);
+          lo.summary = summarise(allCourseAccess[i]);
           los.push(lo);
         }
       } catch (error) {
