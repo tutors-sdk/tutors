@@ -1,5 +1,6 @@
 <script lang="ts">
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
+  import { getIcon } from "tutors-reader-lib/src/iconography/themes";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { currentCourse, layout } from "../../stores";
   import { onDestroy } from "svelte";
@@ -34,18 +35,15 @@
     }
   });
 
-  function getColor(type){
-    if(type === 'lab') {
-      return 'border-accent-500'
-    }
-    if(type === 'topic' || 'talk') {
+  function getColor(colourInput){
+    if(colourInput === 'info') {
       return 'border-primary-500'
-    }
-    if(type === 'web' || 'video' || 'github') {
-      return 'border-warning-500'
-    }
-    if(type === 'panelvideo') {
+    } else if(colourInput === 'success') {
+      return 'border-accent-500'
+    } else if(colourInput === 'warning') {
       return 'border-ternary-500'
+    } else if(colourInput === 'error') {
+      return 'border-warning-500'
     }
   }
 
@@ -53,7 +51,7 @@
 </script>
 
   <a href={lo.route} {target}>
-    <div class="card border-y-8 {getColor(lo.type)} m-2 {cardWidths} hover:scale-105 transition-all">
+    <div class="card border-y-8 {getColor(getIcon(lo.type).colour)} m-2 {cardWidths} hover:scale-105 transition-all">
       <header class="card-header flex flex-row justify-between items-center p-3">
         <div class="inline-flex w-full">
           <div class="flex-auto {headingText}">{lo.title}</div>
