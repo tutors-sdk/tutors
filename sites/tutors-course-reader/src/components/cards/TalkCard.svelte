@@ -132,7 +132,7 @@
 </script>
 
 {#if pdfDoc}
-  <div class="bg-surface-100-800-token rounded-lg p-2 border mr-2">
+  <div class="card rounded-lg p-2 mr-2">
     <div class="mx-2 mb-2 flex items-center justify-between">
       <div class="text-sm">
         {pageNum} of {pdfDoc.numPages}
