@@ -17,7 +17,6 @@
     "format": "prettier --write ./src/**/*.{js,svelte,html,ts}"
   },
   "dependencies": {
-    "highlight.js": "^11.6.0",
     "tutors-reader-lib": "^2.6.0"
   },
   "devDependencies": {

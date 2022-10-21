@@ -1,4 +1,137 @@
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('OpenDyslexic-Bold.woff2') format('woff2'),
+        url('OpenDyslexic-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('OpenDyslexic-Italic.woff2') format('woff2'),
+        url('OpenDyslexic-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('OpenDyslexic-BoldItalic.woff2') format('woff2'),
+        url('OpenDyslexic-BoldItalic.woff') format('woff');
+    font-weight: bold;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'OpenDyslexic';
+    src: url('OpenDyslexic-Regular.woff2') format('woff2'),
+        url('OpenDyslexic-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
 html,
 body {
     @apply h-full overflow-hidden;
+}
+pre:not(.unstyled):not(.code-block pre) {
+    background: none !important;
+}
+
+code:not(.unstyled):not(.code-block code) {
+    background-color: rgb(var(--color-surface-500)) !important;
+    color: rgb(var(--color-primary-500)) !important;
+    padding: 1rem !important;
+}
+
+.hljs {
+    display: block;
+    overflow-x: auto;
+    background: #333;
+    color: white;
+}
+
+.hljs-name,
+.hljs-strong {
+    font-weight: bold;
+}
+
+.hljs-code,
+.hljs-emphasis {
+    font-style: italic;
+}
+
+.hljs-tag {
+    color: #62c8f3;
+}
+
+.hljs-variable,
+.hljs-template-variable,
+.hljs-selector-id,
+.hljs-selector-class {
+    color: #ade5fc;
+}
+
+.hljs-string,
+.hljs-bullet {
+    color: #a2fca2;
+}
+
+.hljs-type,
+.hljs-title,
+.hljs-section,
+.hljs-attribute,
+.hljs-quote,
+.hljs-built_in {
+    color: #ffa;
+}
+
+.hljs-number,
+.hljs-symbol,
+.hljs-bullet {
+    color: #d36363;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal {
+    color: #fcc28c;
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-code {
+    color: #888;
+}
+
+.hljs-regexp,
+.hljs-link {
+    color: #c6b4f0;
+}
+
+.hljs-meta {
+    color: #fc9b9b;
+}
+
+.hljs-deletion {
+    background-color: #fc9b9b;
+    color: #333;
+}
+
+.hljs-addition {
+    background-color: #a2fca2;
+    color: #333;
+}
+
+.hljs a {
+    color: inherit;
+}
+
+.hljs a:focus,
+.hljs a:hover {
+    color: inherit;
+    text-decoration: underline;
 }
