@@ -107,7 +107,8 @@
     <AppShell class="h-screen">
       <div class="sticky top-0 z-40">
         <MainNavigator />
-        <PageHeader /></div>
+        <PageHeader />
+      </div>
       <div class="mx-auto my-4">
         <Router {routes} />
       </div>

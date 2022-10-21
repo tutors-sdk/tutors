@@ -5,8 +5,8 @@
 </script>
 
 {#if $currentCourse}
-<div class="bg-primary-100 dark:bg-primary-900 flex h-12 z-10">
     {#if !$currentCourse.isPortfolio() && !$portfolio}
+    <div class="bg-primary-100 dark:bg-primary-900 flex h-12 z-10">
       <Breadcrumbs />
       <div class="flex flex-auto"></div>
       <div class="hidden lg:flex lg:flex-none bg-primary-200 bg-opacity-80 dark:bg-primary-800 rounded-lg my-2">
@@ -15,6 +15,6 @@
       <div class="hidden lg:flex lg:flex-none bg-primary-200 dark:bg-primary-800 bg-opacity-80 rounded-lg my-2 ml-2 mr-10">
         <IconBar nav={$currentCourse.wallBar} />
       </div>
+    </div>
     {/if}
-  </div>
 {/if}
