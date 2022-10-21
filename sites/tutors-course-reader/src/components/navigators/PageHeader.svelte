@@ -5,7 +5,7 @@
 </script>
 
 {#if $currentCourse}
-<div class="bg-primary-100 dark:bg-primary-900 flex bg-opacity-90 backdrop-blur h-12 z-10">
+<div class="bg-primary-100 dark:bg-primary-900 flex h-12 z-10">
     {#if !$currentCourse.isPortfolio() && !$portfolio}
       <Breadcrumbs />
       <div class="flex flex-auto"></div>
