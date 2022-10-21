@@ -1,62 +1,54 @@
 <script lang="ts">
   import CardDeck from "../components/cards/CardDeck.svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import { currentLo, layout, portfolio } from "../stores";
+  import { courseUrl, currentLo, layout, portfolio } from "../stores";
   import { Wave } from "svelte-loading-spinners";
-  import { fetchAllCourseAccess, readAllCourseAccess } from "tutors-reader-lib/src/utils/firebase-utils";
+  import { fetchAllCourseAccess } from "tutors-reader-lib/src/utils/firebase-utils";
   import axios from "axios";
+  import { getCourseSummary, isValidCourseName } from "tutors-reader-lib/src/utils/lo-utils";
+  import { toHoursAndMinutes } from "tutors-reader-lib/src/utils/metrics-utils";
 
   let los: Lo[] = [];
   let refresh = false;
-  let tickerTape = "Loading...";
-  let courseNmr = 0;
-  let total = 0;
-
+  $: tickerTape = "";
   $: total = 0;
-  $: current = 0;
   let title = "All known Modules";
 
-  function compareFn(a: any, b: any) {
-    if (a?.count < b?.count) {
-      return 1;
-    }
-    if (a?.count > b?.count) {
-      return -1;
-    }
-    return 0;
+  function summarise(usage: any): string {
+    let str = "Total Reading Time<br>";
+    str += `${toHoursAndMinutes(usage.count)}<br>`;
+    str += "Page Loads<br>";
+    str += `${usage.visits}<br>`;
+    return str;
   }
 
   layout.set("compacted");
   async function getAllCourses(): Promise<Lo[]> {
     portfolio.set(true);
-    // let courseIds = await readAllCourseIds(getKeys().firebase);
     let allCourseAccess = await fetchAllCourseAccess();
-    allCourseAccess = allCourseAccess.filter((usage) => usage?.visits > 100);
-    allCourseAccess.sort(compareFn);
-    current = 0;
+    allCourseAccess = allCourseAccess.filter((usage) => isValidCourseName(usage.courseId));
+    allCourseAccess = allCourseAccess.filter((usage) => usage?.visits > 50);
+    allCourseAccess.sort((a: any, b: any) => b?.visits - a?.visits);
     total = allCourseAccess.length;
+    let moduleCount = 0;
     for (let i = 0; i < allCourseAccess.length; i++) {
       try {
         const courseId = allCourseAccess[i].courseId;
-        const response = await axios.get<Lo>(`https://${courseId}.netlify.app/tutors.json`);
-        const lo = response.data;
-        tickerTape = lo.title;
-        current++;
-        lo.type = "web";
-        lo.route = `https://reader.tutors.dev//#/course/${courseId}.netlify.app`;
-        lo.img = lo.img.replace("{{COURSEURL}}", `${courseId}.netlify.app`);
-        lo.summary = `${allCourseAccess[i].count / 2}`;
-        if (lo.properties.icon) {
-          lo.icon = lo.properties.icon;
+        const lo = await getCourseSummary(courseId);
+        const keepPrivate = lo.properties?.private as unknown as number;
+        if (!keepPrivate) {
+          moduleCount++;
+          tickerTape = `${moduleCount}: ${lo.title}`;
+          // lo.summary = toHoursAndMinutes(allCourseAccess[i].count);
+          lo.summary = summarise(allCourseAccess[i]);
+          los.push(lo);
         }
-        los.push(lo);
       } catch (error) {
         console.log(`invalid course :${allCourseAccess[i]}`);
       }
     }
     refresh = !refresh;
-    // noinspection TypeScriptValidateTypes
-    currentLo.set({ title: `${allCourseAccess.length} Known Tutors Modules`, type: "tutors", parentLo: null, img: null });
+    tickerTape = `${moduleCount} read`;
     return los;
   }
 </script>
@@ -65,16 +57,17 @@
   <title>{title}</title>
 </svelte:head>
 
-<div class="container mx-auto">
-  {#await getAllCourses()}
-    <h1>{total} Known Tutors Modules</h1>
-    <div class="border rounded-lg overflow-hidden mt-4 dark:border-gray-700">
-      <div class="flex border justify-center items-center dark:border-gray-700">
-        <Wave size="280" color="#FF3E00" unit="px" />
-      </div>
+<div class="header-container navbar">
+  <div class="flex-1">
+    <div class="navbar-title">
+      <p class="text-lg">
+        Tutors Time: {total} Known Modules : {tickerTape}
+      </p>
     </div>
-    {current} : {tickerTape}
-  {:then courses}
+  </div>
+</div>
+<div class="container mx-auto">
+  {#await getAllCourses() then courses}
     <CardDeck {los} />
   {/await}
 </div>

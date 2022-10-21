@@ -144,3 +144,15 @@ export function isValidCourseName(course: string) {
   }
   return isValid;
 }
+
+export async function getCourseSummary(courseId: string): Promise<Lo> {
+  const response = await fetch(`https://${courseId}.netlify.app/tutors.json`);
+  const lo = await response.json();
+  lo.type = "web";
+  lo.route = `https://reader.tutors.dev//#/course/${courseId}.netlify.app`;
+  lo.img = lo.img.replace("{{COURSEURL}}", `${courseId}.netlify.app`);
+  if (lo.properties.icon) {
+    lo.icon = lo.properties.icon;
+  }
+  return lo;
+}

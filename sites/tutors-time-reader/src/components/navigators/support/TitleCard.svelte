@@ -19,10 +19,10 @@
   <div class="flex-1">
     <div class="navbar-title">
       <p class="text-lg font-bold">{$currentLo.title}</p>
-      {#if $currentLo.title != $currentCourse.lo.title}
-        <p class="text-sm font-bold">{$currentCourse.lo.title}</p>
+      {#if $currentLo.title != $currentCourse?.lo.title}
+        <p class="text-sm font-bold">{$currentCourse?.lo.title}</p>
       {:else}
-        <p class="text-sm font-bold">{$currentCourse.lo.properties.credits}</p>
+        <p class="text-sm font-bold">{$currentCourse?.lo.properties.credits}</p>
       {/if}
     </div>
   </div>

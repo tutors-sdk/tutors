@@ -34,7 +34,7 @@
     if (layout === "compacted") {
       headingText = "text-xs font-medium";
       text = "text-xs";
-      cardWidths = "w-32 h-56";
+      cardWidths = "w-36 h-64";
       cardType = "tutorscard-compact";
       cardHeader = "tutorscard-header-compact";
     } else {
@@ -57,7 +57,7 @@
     <figure class="flex justify-center">
       <Image {lo} />
     </figure>
-    <div class="card-body">
+    <div class="-p-2 card-body">
       <div class="tutorscard-body">
         {#if $currentCourse && !$currentCourse.areVideosHidden()}
           {#if lo.video && lo.type !== "video"}
@@ -65,7 +65,10 @@
           {/if}
         {/if}
         <p />
-        <div class="{text} prose">
+        <!-- <div class="text-xs">
+          {lo?.visits}
+        </div> -->
+        <div class="text-xs">
           {@html lo.summary}
         </div>
       </div>
