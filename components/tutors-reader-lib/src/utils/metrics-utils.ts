@@ -139,3 +139,19 @@ export async function fetchAllUsers(courseUrl: string, allLabs) {
   }
   return users;
 }
+
+export function toHoursAndMinutes(totalMinutes: number): string {
+  let str = "";
+  let hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  if (hours > 24) {
+    const days = Math.floor(hours / 24);
+    hours = hours % 24;
+    str += `${days}:`;
+  }
+  if (hours > 0) {
+    str += `${hours}:`;
+  }
+  str += `${minutes}`;
+  return str;
+}
