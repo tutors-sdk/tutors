@@ -19,8 +19,8 @@
 </script>
 
 <div class="text-right mt-4 mr-4">
-<button class="btn btn-square bg-primary-500" on:click={drawerClose}>X</button>
-</div>
+  <button class="btn btn-icon bg-primary-500 text-white" on:click={drawerClose}><span class="font-bold">X</span></button>
+  </div>
 <div class="px-12 py-4">
   <CourseNavigator {course} />
 </div>
