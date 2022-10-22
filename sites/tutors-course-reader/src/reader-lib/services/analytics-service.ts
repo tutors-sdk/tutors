@@ -11,12 +11,11 @@ import {
   updateCalendar,
   updateCount,
   updateCountValue,
-  updateImage,
   updateLastAccess,
   updateStr,
   updateVisits,
 } from "tutors-reader-lib/src/utils/firebase-utils";
-import { isValidCourseName } from "tutors-reader-lib/src/utils/lo-utils";
+import { isValidCourseName, updateLo } from "tutors-reader-lib/src/utils/lo-utils";
 
 let currentAnalytics: AnalyticsService;
 let course: Course;
@@ -31,7 +30,7 @@ let mins = 0;
 const func = () => {
   mins = mins + 0.5;
   if (course && !document.hidden && getKeys().firebase.apiKey !== "XXX") {
-    currentAnalytics.reportPageCount(currentRoute, course, currentLo);
+    currentAnalytics?.reportPageCount(currentRoute, course, currentLo);
   }
 };
 setInterval(func, 30 * 1000);
@@ -103,11 +102,7 @@ export class AnalyticsService {
 
     updateLastAccess(`all-course-access/${this.courseBaseName}`, "", lo.title);
     updateVisits(`all-course-access/${this.courseBaseName}`, "");
-    if (lo.type === "course") {
-      updateImage(`all-course-access/${this.courseBaseName}`, "");
-    } else {
-      updateImage(`all-course-access/${this.courseBaseName}`, lo?.img);
-    }
+    updateLo(`all-course-access/${this.courseBaseName}`, course, lo);
 
     if (this.userEmail) {
       this.firebaseEmailRoot = `${this.courseBaseName}/users/${this.userEmailSanitised}`;
