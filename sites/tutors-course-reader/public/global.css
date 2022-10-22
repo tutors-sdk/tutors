@@ -44,7 +44,7 @@ pre:not(.unstyled):not(.code-block pre) {
 code:not(.unstyled):not(.code-block code) {
     background-color: rgb(var(--color-surface-500)) !important;
     color: rgb(var(--color-primary-500)) !important;
-    padding: 1rem !important;
+    padding: 5px !important;
 }
 
 .hljs {

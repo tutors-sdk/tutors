@@ -100,18 +100,18 @@
 {:then lab}
   {#if !hide}
     <div class="flex">
-      <div class="menu hidden lg:block w-2/5">
-        <ul class="bg-surface-100-800-token p-8 m-2 rounded-xl">
+      <div class="hidden lg:block w-2/5">
+        <ul class="card menu bg-surface-100-800-token p-8 m-2 rounded-xl">
           {@html lab.navbarHtml}
         </ul>
       </div>
       <div id="lab-panel" class="w-full">
         <header class="block lg:hidden">
-          <nav class="flex flex-wrap justify-between">
+          <nav class="flex flex-wrap justify-between card mx-2 p-2">
             {@html lab.horizontalNavbarHtml}
           </nav>
         </header>
-        <div class="bg-surface-100-800-token p-8 m-2 rounded-xl">
+        <div class="card bg-surface-100-800-token p-8 m-2 rounded-xl">
           <article class="mx-auto prose dark:prose-invert">
             {@html lab.content}
           </article>
