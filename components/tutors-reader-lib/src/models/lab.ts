@@ -39,9 +39,9 @@ export class Lab {
 
     this.lo.los.forEach((chapter, i) => {
       const number = this.autoNumber == true ? chapter.shortTitle + ": " : "";
-      const active = encodeURI(chapter.shortTitle) == this.currentChapterShortTitle ? "font-bold bordered bg-neutral-focus" : "";
+      const active = encodeURI(chapter.shortTitle) == this.currentChapterShortTitle ? "font-bold bg-primary-100 dark:bg-primary-800 pl-4" : "";
       const title = this.chaptersTitles.get(chapter.shortTitle);
-      nav = nav.concat(`<li class="py-1 text-base ${active}"> <a href="/#/lab/${this.url}/${encodeURI(chapter.shortTitle)}"> ${number}${title} </a> </li>`);
+      nav = nav.concat(`<li class="py-2 pl-4 ${active}"> <a href="/#/lab/${this.url}/${encodeURI(chapter.shortTitle)}"> ${number}${title} </a> </li>`);
 
       // horizontal nav
       if (encodeURI(chapter.shortTitle) == this.currentChapterShortTitle) {

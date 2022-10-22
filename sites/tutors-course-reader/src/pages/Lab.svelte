@@ -101,7 +101,7 @@
   {#if !hide}
     <div class="flex">
       <div class="hidden lg:block w-1/3">
-        <ul class="card menu bg-surface-100-800-token p-4 m-2 rounded-xl sticky top-40">
+        <ul class="card bg-surface-100-800-token py-4 m-2 rounded-xl sticky top-40">
           {@html lab.navbarHtml}
         </ul>
       </div>
