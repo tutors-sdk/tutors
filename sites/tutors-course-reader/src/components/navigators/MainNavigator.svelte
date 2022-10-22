@@ -79,7 +79,7 @@
 </script>
 
 {#if $currentCourse}
-  <AppBar class="h-24">
+  <AppBar class="h-24 space-x-1">
     <svelte:fragment slot="lead">
       <div class="flex">
         {#if $currentCourse?.lo.contentMd}
