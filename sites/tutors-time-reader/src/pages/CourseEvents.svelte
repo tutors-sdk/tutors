@@ -47,7 +47,7 @@
               foundLo.title = lo.courseTitle;
               foundLo.visits++;
               foundLo.summary = summarise(usage, foundLo.visits);
-              foundLo.route = `https:/reader.tutors.dev${lo.subRoute}`;
+              foundLo.route = `https://reader.tutors.dev${lo.subRoute}`;
               if (lo.img) {
                 foundLo.img = lo.img;
                 if (lo.icon) {
@@ -60,7 +60,7 @@
               if (!lo.isPrivate) {
                 const loCopy = { ...lo };
                 loCopy.title = lo.courseTitle;
-                loCopy.route = `https:/reader.tutors.dev${lo.subRoute}`;
+                loCopy.route = `https://reader.tutors.dev${lo.subRoute}`;
                 loCopy.visits = 1;
                 loCopy.summary = summarise(usage, 1);
                 loCopy.type = "web";
@@ -68,7 +68,7 @@
                 los.push(loCopy);
               }
             }
-            los.sort((a: any, b: any) => b?.visits - a?.visits);
+            // los.sort((a: any, b: any) => b?.visits - a?.visits);
             los = [...los];
             numberModules = los.length;
           }
