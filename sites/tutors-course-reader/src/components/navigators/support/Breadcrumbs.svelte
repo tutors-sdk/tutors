@@ -23,14 +23,15 @@
   }
 </script>
 <div class="p-1 my-2 mx-8 overflow-hidden">
-<Breadcrumb text="text-xs">
+<Breadcrumb text="text-xs" separator=" ">
   {#if $currentCourse.lo.properties?.parent != null }
-	<Crumb href='#/{$currentCourse.lo.properties?.parent}'>
+	<Crumb href='#/{$currentCourse.lo.properties?.parent}' class="space-x-0">
 		<svelte:fragment slot="lead"><Icon type="programHome" /></svelte:fragment>
 	</Crumb>
   {/if}
   {#each crumbs($currentLo, []) as lo, i}
-  <Crumb href="{lo.route}">
+  <span class="mt-[0.1rem]">›</span>
+  <Crumb href="{lo.route}" class="space-x-0">
     <svelte:fragment slot="lead">
     <Icon type={lo.type} />
   </svelte:fragment>
