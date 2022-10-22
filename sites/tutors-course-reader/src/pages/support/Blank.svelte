@@ -1,5 +1,7 @@
-<div class="header-container mb-2 p-4 justify-center">
-  <div class="flex-1"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+<div class="container mx-auto">
+      <div class="flex justify-center py-8">
+        <div class="pt-4 pb-8 px-8 flex-none">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
       xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" height="40px"
       viewBox="0 0 54.5 39.4" style="enable-background:new 0 0 54.5 39.4;" xml:space="preserve">
       <defs></defs>
@@ -13,25 +15,20 @@
           </g>
         </g>
       </g>
-    </svg>
-    <div class="flex-1 hidden px-2 mx-2 lg:block">
-      <p class="text-lg font-bold">Tutors Course Reader</p>
-      <p class="text-sm font-bold">Tutors Open Source Project</p>
+    </svg></div>
+      <h2 class="font-bold pt-4 flex-none">
+        Tutors Course Reader
+      </h2>
     </div>
-  </div>
-  <a href="https://tutors.dev">
-    <div class="btn btn-ghost rounded-2xl">
-      <a href="https://tutors.dev/"> Homepage </a>
-    </div>
-  </a>
-</div>
-<div class="container mx-auto mt-8">
-  <div class="bg-base-200 text-base-content rounded-box mb-2 p-20">
+
+  <div class="container pb-12">
+  <div class="card rounded-box mb-2 p-20 mx-auto">
     <div class="text-center">
-      <p class="text-4xl font-bold">Oops!</p><br>
+      <h2>Oops!</h2><br>
       <p class="text-lg">You've stumbled across the Tutors Course Reader with no content!</p>
       <p class="p-4">Perhaps you meant to access a course?</p>
-      <a class="btn btn-primary mt-6" href="https://tutors.dev">Tutors Homepage</a>
+      <a class="btn bg-primary-500 text-white mt-6" href="https://tutors.dev">Tutors Homepage</a>
     </div>
   </div>
+</div>
 </div>
