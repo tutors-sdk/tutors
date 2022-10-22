@@ -93,13 +93,17 @@
     {#if $currentCourse.currentWeek}
       <div class="hidden lg:flex w-full">
         <div class="inline-flex mx-auto">
+          <div class="pr-4">
+            <div class="pt-1 text-sm">Current Week</div>
+            <div class="text-l font-bold pb-1">{$currentCourse.currentWeek.title}</div>
+          </div>
+
+        <Divider vertical={true} borderWidth="border-l" />
         <button class="btn btn-sm" on:click={calendarDrawerOpen}>
           <Icon type="calendar" />
+        <span class="font-bold text-sm">Calendar</span>
         </button>
-        <div>
-          <div class="pt-1 text-sm">Current Week</div>
-          <div class="text-l pb-1">{$currentCourse.currentWeek.title}</div>
-        </div></div>
+        </div>
       </div>
     {/if}
     <svelte:fragment slot="trail">
