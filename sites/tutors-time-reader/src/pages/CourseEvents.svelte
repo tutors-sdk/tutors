@@ -4,18 +4,18 @@
   import { layout, portfolio } from "../stores";
   import { fetchAllCourseAccess } from "tutors-reader-lib/src/utils/firebase-utils";
   import { child, get, getDatabase, onValue, ref } from "firebase/database";
-  import { getCourseSummary } from "tutors-reader-lib/src/utils/lo-utils";
   import { toHoursAndMinutes } from "tutors-reader-lib/src/utils/metrics-utils";
 
   let los: Lo[] = [];
   let canUpdate = false;
-  let courseMap = new Map<string, Lo>();
+  let courseMap = new Map<string, any>();
   $: numberModules = 0;
   let title = "Tutors Time";
   let subTitle = "Connecting....";
 
   function summarise(usage: any, visits: number): string {
-    let str = `${toHoursAndMinutes(usage.count)}<br>`;
+    let str = "";
+    if (usage.count) str += `${toHoursAndMinutes(usage.count)}<br>`;
     str += `${usage.visits}<br>`;
     str += `${visits}<br>`;
     str += "<hr><br>";
@@ -36,28 +36,42 @@
     for (let i = 0; i < allCourseAccess.length; i++) {
       const courseId = allCourseAccess[i].courseId;
       const statusRef = ref(db, `all-course-access/${courseId}/visits`);
-      onValue(statusRef, async (snapshot) => {
+      onValue(statusRef, async () => {
         if (canUpdate) {
           const snapshot = await get(child(ref(db), `all-course-access/${courseId}`));
           const usage = snapshot.val();
-          const foundLo = courseMap.get(courseId);
-          console.log(courseId);
-          if (foundLo) {
-            foundLo.visits++;
-            foundLo.summary = summarise(usage, foundLo.visits);
-          } else {
-            const lo = await getCourseSummary(courseId);
-            const keepPrivate = lo.properties?.private as unknown as number;
-            if (!keepPrivate) {
-              lo.visits = 1;
-              lo.summary = summarise(usage, lo.visits);
-              courseMap.set(courseId, lo);
-              los.push(lo);
+          if (usage.lo) {
+            const lo = usage.lo;
+            const foundLo = courseMap.get(courseId);
+            if (foundLo) {
+              foundLo.title = lo.courseTitle;
+              foundLo.visits++;
+              foundLo.summary = summarise(usage, foundLo.visits);
+              foundLo.route = `https:/reader.tutors.dev${lo.subRoute}`;
+              if (lo.img) {
+                foundLo.img = lo.img;
+                if (lo.icon) {
+                  foundLo.icon = lo.icon;
+                } else {
+                  foundLo.icon = null;
+                }
+              }
+            } else {
+              if (!lo.isPrivate) {
+                const loCopy = { ...lo };
+                loCopy.title = lo.courseTitle;
+                loCopy.route = `https:/reader.tutors.dev${lo.subRoute}`;
+                loCopy.visits = 1;
+                loCopy.summary = summarise(usage, 1);
+                loCopy.type = "web";
+                courseMap.set(courseId, loCopy);
+                los.push(loCopy);
+              }
             }
+            los.sort((a: any, b: any) => b?.visits - a?.visits);
+            los = [...los];
+            numberModules = los.length;
           }
-          los.sort((a: any, b: any) => b?.visits - a?.visits);
-          los = [...los];
-          numberModules = los.length;
         }
       });
     }

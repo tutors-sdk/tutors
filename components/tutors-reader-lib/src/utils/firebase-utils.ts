@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import type { FirebaseKeys } from "../types/store-types";
-import { child, get, getDatabase, ref, runTransaction, remove } from "firebase/database";
+import { child, get, getDatabase, ref, runTransaction, remove, set } from "firebase/database";
 
 export function getNode(lotype: string, url: string, path: string): string {
   let node = "";
@@ -14,10 +14,6 @@ export function getNode(lotype: string, url: string, path: string): string {
 export function updateLastAccess(root: string, key: string, title: string) {
   updateStr(`${root}/${key}/last`, new Date().toLocaleString());
   updateStr(`${root}/${key}/title`, title);
-}
-
-export function updateImage(root: string, img: string) {
-  updateStr(`${root}/loimg`, img);
 }
 
 export function updateVisits(root: string, key: string) {
@@ -35,8 +31,8 @@ export function updateCountValue(key: string) {
     void runTransaction(dbRef, function (count: number) {
       return (count || 0) + 1;
     });
-  } catch (error) {
-    console.log("TutorStore Error");
+  } catch (error: any) {
+    console.log(`TutorStore Error: ${error.message}`);
   }
 }
 
@@ -47,8 +43,17 @@ export function updateStr(key: string, str: string) {
     void runTransaction(dbRef, function () {
       return str;
     });
-  } catch (error) {
-    console.log("TutorStore Error");
+  } catch (error: any) {
+    console.log(`TutorStore Error: ${error.message}`);
+  }
+}
+export function writeObj(key: string, obj: any) {
+  try {
+    const db = getDatabase();
+    const dbRef = ref(db, key);
+    void set(dbRef, obj);
+  } catch (error: any) {
+    console.log(`TutorStore Error: ${error.message}`);
   }
 }
 
@@ -91,8 +96,8 @@ export async function deleteCourseFromList(url: string) {
     const obj = ref(db, `all-course-access/${url}`);
     await remove(obj);
     console.log(`deleting: ${url} as invalid`);
-  } catch (error) {
-    console.log("TutorStore Error");
+  } catch (error: any) {
+    console.log(`TutorStore Error: ${error.message}`);
   }
 }
 
@@ -114,8 +119,8 @@ export function initFirebase(keys: FirebaseKeys) {
       .then(() => {
         console.log("Connected to TutorStore");
       })
-      .catch((error) => {
-        console.log(error);
+      .catch((error: any) => {
+        console.log(`TutorStore Error: ${error.message}`);
       });
   }
 }
