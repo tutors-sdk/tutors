@@ -1,5 +1,7 @@
 import path from "path-browserify";
+import type { Course } from "src/models/course";
 import type { Lo } from "../types/lo-types";
+import { writeObj } from "./firebase-utils";
 
 export function injectCourseUrl(lo: Lo, url) {
   if (lo.route) lo.route = lo.route.replace("{{COURSEURL}}", url);
@@ -155,4 +157,27 @@ export async function getCourseSummary(courseId: string): Promise<Lo> {
     lo.icon = lo.properties.icon;
   }
   return lo;
+}
+
+export function updateLo(root: string, course: Course, currentLo: Lo) {
+  const lo = {
+    icon: {},
+    img: currentLo.img,
+    title: currentLo.title,
+    courseTitle: course.lo.title,
+    subRoute: currentLo.route,
+  };
+  if (currentLo.type === "course" && currentLo.icon) {
+    lo.icon = currentLo.icon;
+  } else {
+    if (currentLo?.frontMatter?.icon) {
+      lo.icon = {
+        type: currentLo.frontMatter.icon["type"],
+      };
+      if (currentLo.frontMatter.icon["color"]) {
+        lo.icon.color = currentLo.frontMatter.icon["color"];
+      }
+    }
+  }
+  writeObj(`${root}/lo`, lo);
 }
