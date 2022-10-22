@@ -31,7 +31,7 @@
       cardWidths = "w-36 h-[21rem]";
     } else {
       headingText = "text-lg font-semibold";
-      cardWidths = "w-60 h-[24.5rem]";
+      cardWidths = "w-60 h-[25rem]";
     }
   });
 
@@ -54,7 +54,7 @@
     <div class="card border-y-8 {getColor(getIcon(lo.type).colour)} m-2 {cardWidths} hover:scale-105 transition-all">
       <header class="card-header flex flex-row justify-between items-center p-3">
         <div class="inline-flex w-full">
-          <div class="flex-auto {headingText}">{lo.title}</div>
+          <div class="flex-auto line-clamp-2 {headingText}">{lo.title}</div>
           {#if $currentCourse && !$currentCourse.areVideosHidden()}
           {#if lo.video && lo.type !== "video"}
           <a href="{lo.video}">
