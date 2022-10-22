@@ -39,12 +39,11 @@
         if (!keepPrivate) {
           moduleCount++;
           tickerTape = `${moduleCount}: ${lo.title}`;
-          // lo.summary = toHoursAndMinutes(allCourseAccess[i].count);
           lo.summary = summarise(allCourseAccess[i]);
           los.push(lo);
         }
-      } catch (error) {
-        console.log(`invalid course :${allCourseAccess[i]}`);
+      } catch (error: any) {
+        console.log(`invalid course :${error.message}`);
       }
     }
     refresh = !refresh;
