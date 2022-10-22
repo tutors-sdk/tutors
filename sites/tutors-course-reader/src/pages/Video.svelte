@@ -43,7 +43,7 @@
   <Loading />
 {:then lo}
   {#if !hide}
-    <div class="h-screen flex">
+    <div class="flex w-11/12 mx-auto">
       <div transition:talkTransition class="w-full">
         <VideoCard {lo} />
       </div>

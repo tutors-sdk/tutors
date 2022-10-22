@@ -37,7 +37,7 @@
 </script>
 
 {#if $currentCourse && !$currentCourse.areVideosHidden()}
-  <div class="container mx-auto text-center">
+  <div class="card rounded-lg p-8 mr-2">
     {#if heanet}
       {#if showVime}
         <vime-player controls cross-origin="true">
@@ -80,6 +80,6 @@
         </div>
       {/if}
     {/if}<br />
-    <p class="justify-center text-lg italic mb-4">{lo.title}</p>
+    <p class="text-center text-lg italic mb-4">{lo.title}</p>
   </div>
 {/if}
