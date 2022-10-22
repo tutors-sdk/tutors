@@ -26,8 +26,8 @@
     {#if lo.los}
         {#each lo.los as lo}
           <div class="flex py-1">
-            <a class="inline-flex" href={lo.route}>
-              <Icon type={lo.type} /> <span class="pl-1"> {@html convertMd(lo.title, "")} </span>
+            <a class="inline-flex pl-6" href={lo.route}>
+              <Icon type={lo.type} /> <span class="pl-2"> {@html convertMd(lo.title, "")} </span>
             </a>
             {#if lo.video && lo.type != "panelvideo"}
               <a class="inline-flex pl-2" href={lo.video}>

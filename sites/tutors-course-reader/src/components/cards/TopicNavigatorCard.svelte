@@ -35,7 +35,7 @@
 
 <div class="topicnavigator {cardWidths}">
   <div class="card">
-    <header class="card-header">{topic.lo.title}</header>
+    <h3 class="px-4 pt-6 pb-2 text-center">{topic.lo.title}</h3>
     <div class="card-body"><figure class="flex justify-center">
       <Image {lo} />
     </figure></div>
