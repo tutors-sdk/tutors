@@ -9,7 +9,7 @@
   import type { MetricsService } from "../../reader-lib/services/metrics-service";
   import { PresenceService } from "../../reader-lib/services/presence-service";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
-  import { AppBar, LightSwitch, menu } from "@brainandbones/skeleton";
+  import { AppBar, LightSwitch, menu, Divider } from "@brainandbones/skeleton";
 
   function applyInitialLayout() {
     const savedLayout = window.localStorage.getItem("site-layout");
@@ -104,11 +104,16 @@
     {/if}
     <svelte:fragment slot="trail">
       {#if !$currentCourse.isPortfolio()}
-      <a class="btn btn-sm" href="/#/search/{$courseUrl}"><Icon type="search" /></a>
+      <a class="btn btn-sm" href="/#/search/{$courseUrl}"><Icon type="search" />
+      <span class="hidden lg:block font-bold text-sm">Search</span>
+    </a>
+    <Divider vertical={true} borderWidth="border-l" class="hidden lg:block" />
       {/if}
       <div class="relative">
       <button class="btn btn-sm" use:menu={{ menu: 'design', interactive: true }}>
         <Icon type="dark" />
+        <span class="hidden lg:block font-bold text-sm">Layout</span>
+        <span class="opacity-50">▾</span>
       </button>
       <nav class="list-nav card card-body w-56 shadow-lg space-y-4" data-menu="design">
         <h5>Toggles</h5>
@@ -139,6 +144,7 @@
         </ul>
       </nav>
     </div>
+    <Divider vertical={true} borderWidth="border-l"  class="hidden lg:block" />
       <Avatar />
       <button class="btn btn-sm" on:click={tocDrawerOpen}>
         <Icon type="toc" />
