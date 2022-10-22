@@ -166,6 +166,7 @@ export function updateLo(root: string, course: Course, currentLo: Lo) {
     title: currentLo.title,
     courseTitle: course.lo.title,
     subRoute: currentLo.route,
+    isPrivate: 0,
   };
   if (currentLo.type === "course" && currentLo.icon) {
     lo.icon = currentLo.icon;
@@ -178,6 +179,9 @@ export function updateLo(root: string, course: Course, currentLo: Lo) {
         lo.icon.color = currentLo.frontMatter.icon["color"];
       }
     }
+  }
+  if (course.lo.properties?.private) {
+    lo.isPrivate = course.lo.properties?.private as unknown as number;
   }
   writeObj(`${root}/lo`, lo);
 }
