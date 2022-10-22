@@ -107,10 +107,10 @@
       <a class="btn btn-sm" href="/#/search/{$courseUrl}"><Icon type="search" /></a>
       {/if}
       <div class="relative">
-      <button class="btn btn-sm" use:menu={{ menu: 'design' }}>
+      <button class="btn btn-sm" use:menu={{ menu: 'design', interactive: true }}>
         <Icon type="dark" />
       </button>
-      <nav class="list-nav card card-body w-56 shadow-xl space-y-4" data-menu="design">
+      <nav class="list-nav card card-body w-56 shadow-lg space-y-4" data-menu="design">
         <h5>Toggles</h5>
         <section class="flex justify-between">
 					<h6>Dark Mode</h6>

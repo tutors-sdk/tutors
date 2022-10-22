@@ -90,7 +90,7 @@
       <Avatar width="w-10" src={$currentUser.picture} alt={$currentUser.nickname} />
     </div>
   </button>
-  <nav class="list-nav card card-body w-56 shadow-xl space-y-4" data-menu="avatar">
+  <nav class="list-nav card card-body w-56 shadow-lg space-y-4" data-menu="avatar">
     <span class="mt-2 ml-4 text-xs">Logged in as:</span><br/>
     <span class="ml-4 text-sm">{$currentUser.name}</span>
     <Divider />
