@@ -1,17 +1,16 @@
 <script lang="ts">
   import CardDeck from "../components/cards/CardDeck.svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import { courseUrl, currentLo, layout, portfolio } from "../stores";
-  import { Wave } from "svelte-loading-spinners";
   import { fetchAllCourseAccess } from "tutors-reader-lib/src/utils/firebase-utils";
-  import axios from "axios";
   import { getCourseSummary, isValidCourseName } from "tutors-reader-lib/src/utils/lo-utils";
   import { toHoursAndMinutes } from "tutors-reader-lib/src/utils/metrics-utils";
+  import { layout, portfolio } from "../stores";
+  import SecondaryNavigator from "../components/navigators/SecondaryNavigator.svelte";
 
-  let los: Lo[] = [];
-  let refresh = false;
+  let los: Lo[];
   $: tickerTape = "";
   $: total = 0;
+  $: moduleCount = 0;
   let title = "All known Modules";
 
   function summarise(usage: any): string {
@@ -23,14 +22,11 @@
   }
 
   layout.set("compacted");
-  async function getAllCourses(): Promise<Lo[]> {
-    portfolio.set(true);
-    let allCourseAccess = await fetchAllCourseAccess();
-    allCourseAccess = allCourseAccess.filter((usage) => isValidCourseName(usage.courseId));
-    allCourseAccess = allCourseAccess.filter((usage) => usage?.visits > 50);
-    allCourseAccess.sort((a: any, b: any) => b?.visits - a?.visits);
+  void getAllCourses();
+
+  async function populate(allCourseAccess: any[]) {
+    const localLos: Lo[] = [];
     total = allCourseAccess.length;
-    let moduleCount = 0;
     for (let i = 0; i < allCourseAccess.length; i++) {
       try {
         const courseId = allCourseAccess[i].courseId;
@@ -38,17 +34,24 @@
         const keepPrivate = lo.properties?.private as unknown as number;
         if (!keepPrivate) {
           moduleCount++;
-          tickerTape = `${moduleCount}: ${lo.title}`;
+          tickerTape = `${lo.title}`;
           lo.summary = summarise(allCourseAccess[i]);
-          los.push(lo);
+          localLos.push(lo);
+          los = [...localLos];
+          los.sort((lo1: Lo, lo2: Lo) => lo1.title.localeCompare(lo2.title));
         }
       } catch (error: any) {
         console.log(`invalid course :${error.message}`);
       }
     }
-    refresh = !refresh;
-    tickerTape = `${moduleCount} read`;
-    return los;
+  }
+
+  async function getAllCourses() {
+    portfolio.set(true);
+    let allCourseAccess = await fetchAllCourseAccess();
+    allCourseAccess = allCourseAccess.filter((usage) => isValidCourseName(usage.courseId));
+    allCourseAccess = allCourseAccess.filter((usage) => usage?.visits > 50);
+    await populate(allCourseAccess);
   }
 </script>
 
@@ -56,17 +59,7 @@
   <title>{title}</title>
 </svelte:head>
 
-<div class="header-container navbar">
-  <div class="flex-1">
-    <div class="navbar-title">
-      <p class="text-lg">
-        Tutors Time: {total} Known Modules : {tickerTape}
-      </p>
-    </div>
-  </div>
-</div>
+<SecondaryNavigator title="Tutors Module Ecosystem: {moduleCount} Modules " subTitle={tickerTape} />
 <div class="container mx-auto">
-  {#await getAllCourses() then courses}
-    <CardDeck {los} />
-  {/await}
+  <CardDeck {los} />
 </div>

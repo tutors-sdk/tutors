@@ -1,7 +1,8 @@
 <div class="container mx-auto mt-8">
 
   <div class="navbar shadow-lg bg-neutral text-neutral-content rounded-box mb-2 p-4 justify-center">
-    <div class="flex-1"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+    <div class="flex-1">
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
         xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" height="40px"
         viewBox="0 0 54.5 39.4" style="enable-background:new 0 0 54.5 39.4;" xml:space="preserve">
         <defs></defs>

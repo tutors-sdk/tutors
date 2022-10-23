@@ -5,13 +5,18 @@
   import { fetchAllCourseAccess } from "tutors-reader-lib/src/utils/firebase-utils";
   import { child, get, getDatabase, onValue, ref } from "firebase/database";
   import { toHoursAndMinutes } from "tutors-reader-lib/src/utils/metrics-utils";
+  import SecondaryNavigator from "../components/navigators/SecondaryNavigator.svelte";
 
   let los: Lo[] = [];
   let canUpdate = false;
   let courseMap = new Map<string, any>();
   $: numberModules = 0;
   let title = "Tutors Time";
-  let subTitle = "Connecting....";
+  $: subTitle = "Connecting ...";
+  let activeSince = "";
+
+  layout.set("compacted");
+  void startListening();
 
   function summarise(usage: any, visits: number): string {
     let str = "";
@@ -23,14 +28,14 @@
     return str;
   }
 
-  layout.set("compacted");
-  async function getAllCourses(): Promise<Lo[]> {
+  async function startListening() {
     portfolio.set(true);
     const db = getDatabase();
     let allCourseAccess = await fetchAllCourseAccess();
     const func = () => {
       canUpdate = true;
-      subTitle = "";
+      activeSince = new Date().toLocaleTimeString();
+      subTitle = "Connected ... listenting for module activity";
     };
     setTimeout(func, 20 * 1000);
     for (let i = 0; i < allCourseAccess.length; i++) {
@@ -66,16 +71,16 @@
                 loCopy.type = "web";
                 courseMap.set(courseId, loCopy);
                 los.push(loCopy);
+                numberModules++;
+                subTitle = `${numberModules} active since : ${activeSince}`;
               }
             }
-            // los.sort((a: any, b: any) => b?.visits - a?.visits);
             los = [...los];
             numberModules = los.length;
           }
         }
       });
     }
-    return los;
   }
 </script>
 
@@ -83,20 +88,8 @@
   <title>{title}</title>
 </svelte:head>
 
-<div class="header-container navbar">
-  <div class="flex-1">
-    <div class="navbar-title">
-      <p class="text-center text-lg">
-        Tutors Time: {numberModules} Modules Currently Online : {new Date().toLocaleString()}
-        {subTitle}
-      </p>
-    </div>
-  </div>
-</div>
+<SecondaryNavigator title="Tutors Module Active Now" {subTitle} />
+
 <div class="container mx-auto">
-  {#await getAllCourses()}
-    <h1>waiting</h1>
-  {:then courses}
-    <CardDeck {los} />
-  {/await}
+  <CardDeck {los} />
 </div>
