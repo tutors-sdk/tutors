@@ -14,7 +14,7 @@
       </div>
     </div>
     <a href="https://tutors.dev" target="_window">
-      <div class="btn-ghost btn rounded-2xl">Homepage</div>
+      <div class="btn btn-ghost rounded-2xl">Tutors Open Source Project</div>
     </a>
   </div>
 </div>

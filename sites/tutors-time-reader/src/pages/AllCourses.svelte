@@ -2,7 +2,7 @@
   import CardDeck from "../components/cards/CardDeck.svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { fetchAllCourseAccess } from "tutors-reader-lib/src/utils/firebase-utils";
-  import { getCourseSummary, isValidCourseName } from "tutors-reader-lib/src/utils/lo-utils";
+  import { getCourseSummary, isValidCourseName } from "tutors-reader-lib/src/utils/course-utils";
   import { toHoursAndMinutes } from "tutors-reader-lib/src/utils/metrics-utils";
   import { layout, portfolio } from "../stores";
   import SecondaryNavigator from "../components/navigators/SecondaryNavigator.svelte";

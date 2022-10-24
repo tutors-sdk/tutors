@@ -35,7 +35,7 @@
     const func = () => {
       canUpdate = true;
       activeSince = new Date().toLocaleTimeString();
-      subTitle = "Connected ... listenting for module activity";
+      subTitle = "Connected ... listening for module activity";
     };
     setTimeout(func, 20 * 1000);
     for (let i = 0; i < allCourseAccess.length; i++) {
@@ -88,7 +88,7 @@
   <title>{title}</title>
 </svelte:head>
 
-<SecondaryNavigator title="Tutors Module Active Now" {subTitle} />
+<SecondaryNavigator title="Tutors Module Activity" {subTitle} />
 
 <div class="container mx-auto">
   <CardDeck {los} />
