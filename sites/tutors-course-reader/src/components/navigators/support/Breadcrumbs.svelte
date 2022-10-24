@@ -3,7 +3,6 @@
   import { Breadcrumb, Crumb } from '@brainandbones/skeleton';
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-    import { logout } from "tutors-reader-lib/src/utils/auth-utils";
 
   function crumbs(lo: Lo, los: Lo[]) {
     if (lo) {
@@ -15,11 +14,19 @@
     return los;
   }
 
+  let truncated = [true,true,true,true,true,true,true]
+
   function truncate(input: string) {
     if (input.length > 15) {
       return input.substring(0, 15) + "...";
     }
     return input;
+  }
+
+  function title(input: string, truncated: boolean, i: number) {
+    if (truncated === true) {
+      return truncate(input)
+    } return input
   }
 </script>
 <div class="p-1 my-2 mx-8 overflow-hidden">
@@ -35,7 +42,7 @@
     <svelte:fragment slot="lead">
     <Icon type={lo.type} />
   </svelte:fragment>
-  <span class="hidden lg:block">{truncate(lo.title)}</span>
+    <span class="hidden lg:block" on:mouseenter={() => {truncated[i]=false}} on:mouseleave={() => {truncated[i]=true}}>{title(lo.title, truncated[i], i)}</span>
   </Crumb>
   {/each}
 </Breadcrumb>
