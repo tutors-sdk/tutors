@@ -1,3 +1,4 @@
+import { isValidCourseName, updateLo } from "tutors-reader-lib/src/utils/course-utils";
 import type { Lo } from "tutors-reader-lib/src/types/lo-types";
 import type { Course } from "tutors-reader-lib/src/models/course";
 import type { User } from "tutors-reader-lib/src/types/auth-types";
@@ -15,7 +16,6 @@ import {
   updateStr,
   updateVisits,
 } from "tutors-reader-lib/src/utils/firebase-utils";
-import { isValidCourseName, updateLo } from "tutors-reader-lib/src/utils/lo-utils";
 
 let currentAnalytics: AnalyticsService;
 let course: Course;
