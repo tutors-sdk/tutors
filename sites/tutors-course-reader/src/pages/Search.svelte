@@ -52,15 +52,15 @@
 {#if course}
   <div class="container mx-auto card p-4">
     <label for="search" class="block py-2 text-xl font-bold">Enter search term:</label>
-    <input bind:value={searchTerm} type="text" name="email" id="search" class="p-2" placeholder="..." />
-    <div>
+    <input bind:value={searchTerm} type="text" name="email" id="search" class="p-2 m-2" placeholder="..." />
+    <div class="flex flex-wrap justify-center">
       {#each searchResults as result}
-        <div class="card my-1 p-4">
+        <div class="card m-1 p-4 w-full lg:w-72 2xl:w-96">
           <div>
             <div>
               {@html result.html}
             </div>
-            <div class="text-right text-sm">
+            <div class="text-right text-sm pt-4">
               <a href={result.link} target="_blank">
                 {result.title}
               </a>
