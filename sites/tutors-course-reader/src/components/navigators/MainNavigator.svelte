@@ -92,10 +92,10 @@
     </svelte:fragment>
     {#if $currentCourse.currentWeek}
       <div class="hidden lg:flex w-full">
-        <div class="inline-flex mx-auto">
+        <div class="inline-flex mx-auto p-2 rounded-lg bg-surface-200 dark:bg-surface-700">
           <div class="pr-4">
             <div class="pt-1 text-sm">Current Week</div>
-            <div class="text-l font-bold pb-1">{$currentCourse.currentWeek.title}</div>
+            <div class="text-l font-bold pb-1 text-center">{$currentCourse.currentWeek.title}</div>
           </div>
 
         <Divider vertical={true} borderWidth="border-l" />
