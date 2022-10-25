@@ -122,12 +122,12 @@
       <nav class="list-nav card card-body w-56 shadow-lg space-y-4" data-menu="design">
         <h5>Toggles</h5>
         <section class="flex justify-between">
-					<h6>Dark Mode</h6>
+					<p class="text-lg">Dark Mode</p>
 					<LightSwitch origin="tr" />
 				</section>
         <button class="w-full" on:click={() => toggleLayout()}>
         <section class="flex justify-between">
-					<h6>Compact</h6>
+					<p class="text-lg">Compact</p>
           <div class="mr-3">
             <Icon type={$layout} />
           </div>
@@ -137,13 +137,13 @@
       <h5>Themes</h5>
         <ul>
           <li class="option" class:!bg-primary-500={$storeTheme === 'tutors'} on:click={() => { storeTheme.set('tutors') }}> 
-            <h6>Tutors</h6>
+            <p class="text-lg">Tutors</p>
           </li>
           <li class="option" class:!bg-primary-500={$storeTheme === 'dyslexia'} on:click={() => { storeTheme.set('dyslexia') }}> 
-            <h6>Dyslexia</h6>
+            <p class="text-lg">Dyslexia</p>
           </li>
           <li class="option" class:!bg-primary-500={$storeTheme === 'halloween'} on:click={() => { storeTheme.set('halloween') }}> 
-            <h6>Halloween</h6>
+            <p class="text-lg">Halloween</p>
           </li>
         </ul>
       </nav>
