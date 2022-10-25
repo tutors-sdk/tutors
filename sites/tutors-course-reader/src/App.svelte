@@ -112,7 +112,7 @@
       <div class="mx-auto my-4">
         <Router {routes} />
       </div>
-        <div class="mt-2 w-full bg-surface-100-800-token">
+        <div class="mt-2 w-full bg-surface-100-800-token border-t">
           <Footer />
         </div>
     </AppShell>
