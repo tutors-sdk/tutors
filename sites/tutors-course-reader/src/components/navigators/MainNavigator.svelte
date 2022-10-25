@@ -79,7 +79,7 @@
 </script>
 
 {#if $currentCourse}
-  <AppBar class="h-24 space-x-0.5 lg:space-x-4">
+  <AppBar class="h-24 space-x-1 lg:space-x-4">
     <svelte:fragment slot="lead">
       <div class="flex">
         {#if $currentCourse?.lo.contentMd}
@@ -107,7 +107,7 @@
       </div>
     {/if}
     <svelte:fragment slot="trail">
-      <div class="flex items-center space-x-0.5 lg:space-x-4">
+      <div class="flex items-center space-x-1 lg:space-x-4">
       {#if !$currentCourse.isPortfolio()}
       <a class="btn btn-sm" href="/#/search/{$courseUrl}"><Icon type="search" />
       <span class="hidden lg:block font-bold text-sm">Search</span>
