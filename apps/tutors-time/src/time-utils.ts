@@ -20,15 +20,15 @@ export function filterPreviews(courseList: string[]) {
   return filtered;
 }
 
-export async function prunePreviews(courseList: string[]) {
+export async function prunePreviews(root: string, courseList: string[]) {
   const deleteList = filterPreviews(courseList);
   for (let i = 0; i < deleteList.length; i++) {
     console.log(deleteList[i]);
-    await deleteNode(deleteList[i]);
+    await deleteNode(root, deleteList[i]);
   }
 }
 
-export async function pruneInvalid(courseList: string[]) {
+export async function pruneInvalid(root: string, courseList: string[]) {
   for (let i = 0; i < courseList.length; i++) {
     const course = courseList[i];
     try {
@@ -37,19 +37,19 @@ export async function pruneInvalid(courseList: string[]) {
     } catch (e) {
       if (course !== "all-course-access") {
         console.log(`Pruning ${course} as invalid`);
-        await deleteNode(course);
+        await deleteNode(root, course);
       }
     }
   }
 }
 
-export async function readAllCourseIds(keys: any): Promise<string[]> {
+export async function readAllCourseIds(keys: any, root: string): Promise<string[]> {
   const courseList = [];
 
   const user = getAuth().currentUser;
   if (user) {
     const token = await user.getIdToken(true);
-    const url = `${keys.databaseURL}/.json?auth=${token}&shallow=true`;
+    const url = `${keys.databaseURL}/${root}/.json?auth=${token}&shallow=true`;
     const response = await axios.get(url);
     const list = await response.data;
     for (const [key, value] of Object.entries(list)) {
@@ -59,7 +59,7 @@ export async function readAllCourseIds(keys: any): Promise<string[]> {
   return courseList;
 }
 
-export async function readAllUsageData(keys: any, courseIds: string[]): Promise<any[]> {
+export async function readAllUsageData(keys: any, root: string, courseIds: string[]): Promise<any[]> {
   const courseUsage: any = {};
   const auth = getAuth();
   await signInWithEmailAndPassword(auth, keys.tutorsStoreId, keys.tutorsStoreSecret);
@@ -67,7 +67,7 @@ export async function readAllUsageData(keys: any, courseIds: string[]): Promise<
   if (user) {
     const token = await user.getIdToken(true);
     for (let i = 0; i < courseIds.length; i++) {
-      const url = `${keys.databaseURL}/${courseIds[i]}/usage.json?auth=${token}`;
+      const url = `${keys.databaseURL}/${root}/${courseIds[i]}/usage.json?auth=${token}`;
       try {
         const response = await axios.get(url);
         const usage = await response.data;
