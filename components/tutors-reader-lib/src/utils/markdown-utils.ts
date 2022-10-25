@@ -21,11 +21,11 @@ const converter = new showdown.Converter({
   ],
 });
 
-function replaceAll(str, find, replace) {
+function replaceAll(str: string, find: string, replace: string) {
   return str.replace(new RegExp(find, "g"), replace);
 }
 
-export function convertMd(md: string, url): string {
+export function convertMd(md: string, url: string): string {
   let html = "";
   if (md) {
     let filtered = replaceAll(md, "./img\\/", `img/`);
