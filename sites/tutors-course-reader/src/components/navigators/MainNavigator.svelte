@@ -120,7 +120,7 @@
         <span class="opacity-50">▾</span>
       </button>
       <nav class="list-nav card card-body w-56 shadow-lg space-y-4" data-menu="design">
-        <h5>Toggles</h5>
+        <h6>Toggles</h6>
         <section class="flex justify-between">
 					<p class="text-lg">Dark Mode</p>
 					<LightSwitch origin="tr" />
@@ -134,7 +134,7 @@
 				</section>
       </button>
       <hr>
-      <h5>Themes</h5>
+      <h6>Themes</h6>
         <ul>
           <li class="option" class:!bg-primary-500={$storeTheme === 'tutors'} on:click={() => { storeTheme.set('tutors') }}> 
             <p class="text-lg">Tutors</p>
