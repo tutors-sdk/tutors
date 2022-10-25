@@ -51,7 +51,7 @@
 </script>
 
   <a href={lo.route} {target}>
-    <div class="card border-y-8 {getColor(getIcon(lo.type).colour)} m-2 {cardWidths} hover:scale-105 transition-all">
+    <div class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 {getColor(getIcon(lo.type).colour)} m-2 {cardWidths} hover:scale-105 transition-all">
       <header class="card-header flex flex-row justify-between items-center p-3">
         <div class="inline-flex w-full">
           <div class="flex-auto line-clamp-2 {headingText}">{lo.title}</div>
