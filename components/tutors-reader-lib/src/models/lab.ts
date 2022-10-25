@@ -41,7 +41,7 @@ export class Lab {
       const number = this.autoNumber == true ? chapter.shortTitle + ": " : "";
       const active = encodeURI(chapter.shortTitle) == this.currentChapterShortTitle ? "font-bold bg-primary-100 dark:bg-primary-800 pl-4" : "";
       const title = this.chaptersTitles.get(chapter.shortTitle);
-      nav = nav.concat(`<a href="/#/lab/${this.url}/${encodeURI(chapter.shortTitle)}"><li class="py-2 pl-4 ${active}">${number}${title}</li></a>`);
+      nav = nav.concat(`<a href="/#/lab/${this.url}/${encodeURI(chapter.shortTitle)}"><li class="py-2 px-4 ${active}">${number}${title}</li></a>`);
 
       // horizontal nav
       if (encodeURI(chapter.shortTitle) == this.currentChapterShortTitle) {
