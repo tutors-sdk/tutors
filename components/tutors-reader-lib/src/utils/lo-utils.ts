@@ -1,7 +1,7 @@
 import path from "path-browserify";
 import type { Lo } from "../types/lo-types";
 
-export function injectCourseUrl(lo: Lo, url) {
+export function injectCourseUrl(lo: Lo, url: string) {
   if (lo.route) lo.route = lo.route.replace("{{COURSEURL}}", url);
   if (lo.img) lo.img = lo.img.replace("{{COURSEURL}}", url);
   if (lo.video) lo.video = lo.video.replace("{{COURSEURL}}", url);
@@ -22,7 +22,7 @@ export function flattenLos(los: Lo[]): Lo[] {
   return result;
 }
 
-function removeLastDirectory(the_url) {
+function removeLastDirectory(the_url: string) {
   const the_arr = the_url.split("/");
   the_arr.pop();
   return the_arr.join("/");

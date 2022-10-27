@@ -184,7 +184,7 @@ function flatten(arr: Lo[], topicTitle: string, result = []) {
  * @returns true if valid else false.
  */
 
-function onlySpaces(str) {
+function onlySpaces(str: string) {
   return str.trim().length === 0;
 }
 export function isValid(str: string) {
@@ -203,7 +203,6 @@ export function isValid(str: string) {
  * @author: jfitzgerald
  * @param str The target or specified string within which the first index of each substring is sought.
  * @param substr The substring(s) whose indices are being determined.
- * @param arIndex An array of substring start indices.
  * @return An array of the indices of positions of first character of each substring. If no mon-empty substring is
  *         present then empty array returned.
  */
