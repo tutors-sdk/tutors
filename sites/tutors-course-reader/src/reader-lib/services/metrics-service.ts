@@ -193,7 +193,7 @@ export class MetricsService {
     });
   }
 
-  subscribeToUserTopics(user: UserMetric, email: string) {
+  subscribeToUserTopics(user: User, email: string) {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const that = this;
     const topics = this.course.topics;
