@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onlineDrawer, studentsOnline, studentsOnlineList } from "../../../stores";
-  import StudentCard from "../../cards/StudentCard.svelte";
+  import { StudentCard } from "tutors-ui";
 
   const drawerClose: any = () => { onlineDrawer.set(false) };
 </script>

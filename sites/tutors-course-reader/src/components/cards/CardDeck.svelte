@@ -9,7 +9,6 @@
 </script>
 
 {#if los.length}
-  <div class="carddeck-bg">
     <div class="flex flex-wrap justify-center">
       {#each orderedLos as lo}
         <Card {lo} />
@@ -18,5 +17,4 @@
         <Card {lo} />
       {/each}
     </div>
-  </div>
 {/if}
