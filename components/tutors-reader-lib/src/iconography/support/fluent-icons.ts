@@ -5,8 +5,8 @@ export const FluentIconLib = {
   // companion Icons
   slack: { icon: "logos:slack-icon", colour: "error" },
   moodle: { icon: "academicons:moodle", colour: "warning" },
-  youtube: { icon: "fluent:video-clip-24-filled", colour: "error" },
-  video: { icon: "fluent:video-clip-24-regular", colour: "error" },
+  youtube: { icon: "fa:youtube", colour: "error" },
+  video: { icon: "fluent:video-clip-24-filled", colour: "error" },
   zoom: { icon: "fluent:video-24-filled", colour: "info" },
   teams: { icon: "logos:microsoft-teams", colour: "bg-base-content" },
 
