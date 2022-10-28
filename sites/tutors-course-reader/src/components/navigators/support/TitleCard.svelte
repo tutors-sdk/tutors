@@ -22,7 +22,7 @@
 
 {#if $currentLo}
   <div class="flex-1">
-    <div class="inline-flex align-middle">
+    <div class="inline-flex">
       {#if !wall}
         <Image {lo} miniImage={true} />
       {:else}

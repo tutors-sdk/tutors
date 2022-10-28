@@ -98,7 +98,7 @@
 {#if $currentCourse}
   <AppBar class="h-24 space-x-1 lg:space-x-4">
     <svelte:fragment slot="lead">
-      <div class="flex">
+      <div class="flex items-center">
         {#if $currentCourse?.lo.contentMd}
           <button class="btn btn-sm" on:click={infoDrawerOpen}>
             <Icon type="courseinfo" />
@@ -110,7 +110,7 @@
     {#if $currentCourse.currentWeek}
       <div class="hidden w-full lg:flex">
         <div class="mx-auto inline-flex rounded-lg bg-surface-200 p-2 dark:bg-surface-700">
-          <div class="pr-4">
+          <div class="pr-4 pl-2">
             <div class="pt-1 text-sm">Current Week</div>
             <div class="text-l pb-1 text-center font-bold">{$currentCourse.currentWeek.title}</div>
           </div>
