@@ -24,10 +24,10 @@
   }
 </script>
 
-<div transition:cardTransition class="card w-2/5 h-90 overflow-x-hidden m-1">
+<div transition:cardTransition class="card w-4/5 lg:w-2/5 h-90 overflow-x-hidden m-1 border-y-8 border-primary-500">
   <div class="flex">
-    <header class="card-header inline-flex">
-      <Avatar src={student.img} alt={student.nickname} />
+    <header class="card-header inline-flex items-center">
+      <Avatar src={student.img} alt={student.nickname} class="mr-2" />
     <h6>{student.name}</h6>
   </header>
   </div>
@@ -37,7 +37,7 @@
       {#if student.topic.lo.icon}
         <Iconify icon={student.topic.lo.icon.type} color={student.topic.lo.icon.color} height={iconHeight} />
       {:else}
-        <img loading="lazy" class="tutorscard-image {imageHeight}" src={student?.topic?.lo.img} alt={student?.topic?.lo.title} />
+        <img loading="lazy" class="mx-auto {imageHeight}" src={student?.topic?.lo.img} alt={student?.topic?.lo.title} />
       {/if}
     </div>
   {/if}
@@ -46,7 +46,7 @@
       {#if student.lab.icon}
         <Iconify icon={student.lab.icon.type} color={student.lab.icon.color} height={iconHeight} />
       {:else}
-        <img loading="lazy" class="tutorscard-image {imageHeight}" src={student.lab.img} alt={student.lab.title} />
+        <img loading="lazy" class="mx-auto {imageHeight}" src={student.lab.img} alt={student.lab.title} />
       {/if}
     </div>
   {/if}
@@ -55,7 +55,7 @@
       {#if student.lab.icon}
         <Iconify icon={student.lab.icon.type} color={student.lab.icon.color} height={iconHeight} />
       {:else}
-        <img loading="lazy" class="tutorscard-image {imageHeight}" src={student.lab.img} alt={student.lab.title} />
+        <img loading="lazy" class="mx-auto {imageHeight}" src={student.lab.img} alt={student.lab.title} />
       {/if}
     </div>
   {/if}
