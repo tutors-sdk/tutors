@@ -5,12 +5,10 @@
   export let nav: IconNavBar;
 </script>
 
-<div>
+<div class="flex-auto">
   {#each nav.bar as i}
-    <div class="navbar-icon">
-      <a href={i.link} target={i.target}>
-        <Icon toolTip={i.tip} type={i.icon} button={true} tipPos="tooltip-top" />
+      <a class="btn btn-sm" href={i.link} target={i.target} title={i.tip}>
+        <Icon type={i.icon} />
       </a>
-    </div>
   {/each}
 </div>

@@ -6,7 +6,7 @@
   import { currentCourse, layout } from "../../stores";
   import { cardTransition } from "../animations";
   import { onDestroy } from "svelte";
-  import Image from "./Image.svelte";
+  import { Image } from "tutors-ui";
   import { convertMd } from "tutors-reader-lib/src/utils/markdown-utils";
 
   export let lo: Lo;

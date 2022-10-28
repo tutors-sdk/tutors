@@ -12,7 +12,6 @@
     { "path": "components/tutors-configs" },
     { "path": "sites/tutors-course-reader" },
     { "path": "sites/tutors-time-reader" },
-    { "path": "sites/tutors-vitebook" },
     { "path": "sites/tutors-home" }
   ]
 }

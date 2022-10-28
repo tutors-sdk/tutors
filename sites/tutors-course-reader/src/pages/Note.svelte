@@ -1,12 +1,12 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
-  import TopicNavigatorCard from "../components/cards/TopicNavigatorCard.svelte";
+  import { TopicNavigatorCard } from "tutors-ui";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { revealSidebar } from "../stores";
   import * as animateScroll from "svelte-scrollto";
   import { talkTransition } from "../components/animations";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import NoteCard from "../components/cards/NoteCard.svelte";
+  import { NoteCard } from "tutors-ui";
   import type { CourseService } from "../reader-lib/services/course-service";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";

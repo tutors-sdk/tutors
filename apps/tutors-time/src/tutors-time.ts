@@ -13,19 +13,24 @@ function compareFn(a: any, b: any) {
   return 0;
 }
 
+function printIds(courseIds: string[]) {
+  courseIds.forEach((courseId) => console.log(courseId));
+  console.log(`${courseIds.length} Courses.`);
+}
+
 async function run() {
   await initFirebase(firebase);
   // Read all IDs
-  // console.log("Reading all Ids...");
-  // let courseIds = await readAllCourseIds(firebase);
-  // console.log(`${courseIds.length} Courses.`);
+  console.log("Reading all Ids...");
+  let courseIds = await readAllCourseIds(firebase, "all-course-access");
+  printIds(courseIds);
 
   // remove invalid ids
-  // console.log("Removing previews & invalid courses...");
-  // await prunePreviews(courseIds);
-  // await pruneInvalid(courseIds);
-  // courseIds = await readAllCourseIds(firebase);
-  // console.log(`${courseIds.length} Courses after pruning`);
+  //  console.log("Removing previews & invalid courses...");
+  //  await prunePreviews("all-course-access", courseIds);
+  //  await pruneInvalid("all-course-access", courseIds);
+  //  courseIds = await readAllCourseIds(firebase, "all-course-access");
+  //  console.log(`${courseIds.length} Courses after pruning`);
 
   // gather all usage data
   //console.log("Reading all usage data...");
@@ -45,9 +50,9 @@ async function run() {
   // console.log("Writing usage data to all-course-accsss.");
   // await writeNode("all-course-access", usageDetails);
 
-  const usageDetails = await fetchAllCourseAccess();
-  console.log(usageDetails);
-  console.log("Done");
+  //const usageDetails = await fetchAllCourseAccess();
+  //console.log(usageDetails);
+  //console.log("Done");
 }
 
 void run();

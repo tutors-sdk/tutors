@@ -1,13 +1,11 @@
 <script lang="ts">
   import { push } from "svelte-spa-router";
   import { afterUpdate, getContext, onDestroy } from "svelte";
-
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { revealSidebar } from "../stores";
   import type { CourseService } from "../reader-lib/services/course-service";
   import * as animateScroll from "svelte-scrollto";
   import { viewDelay } from "../components/animations";
-  import { fly } from "svelte/transition";
   import type { Lab } from "tutors-reader-lib/src/models/lab";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
@@ -90,42 +88,33 @@
   afterUpdate(() => {
     animateScroll.scrollTo({ delay: 200, element: "#top" });
   });
-</script>
 
-<svelte:head>
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.js"
-    integrity="sha512-DAZH0Wu7q9Hnm0Fw8tRZsTeQBzIugiUy6k2r7E0KKMlC2nBvvrNSH/LVnGueCXRfDs5epP+Ieoh3L+VzSKi0Aw=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"></script>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.css"
-    integrity="sha512-nii0D5CrWiLjtPcfU3pQJifaRLxKKVut/hbsazsodCcIOERZbwLH7dQxzOKy3Ey/Fv8fXCA9+Rf+wQzqklbEJQ=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  />
-</svelte:head>
+  const onComplete = () => {
+    alert("Lab Complete!!");
+  };
+</script>
 
 {#await getLab(params.wild)}
   <Loading />
 {:then lab}
   {#if !hide}
-    <div class="flex">
-      <div class="labmenu-container">
-        <ul class="labmenu">
+    <div class="flex w-full lg:w-10/12 2xl:w-3/4 mx-auto">
+      <div class="hidden lg:block w-1/3">
+        <ul class="card bg-surface-100-800-token py-4 m-2 rounded-xl sticky top-40">
           {@html lab.navbarHtml}
         </ul>
       </div>
-      <div id="lab-panel" class="labpanel">
-        <header class="labmenu-mobile">
-          <nav class="flex flex-wrap justify-between">
+      <div id="lab-panel" class="w-full">
+        <header class="block lg:hidden">
+          <nav class="flex flex-wrap justify-between card mx-2 p-2">
             {@html lab.horizontalNavbarHtml}
           </nav>
         </header>
-        <article class="labcontent" in:fly={{ x: direction, duration: 200 }}>
-          {@html lab.content}
-        </article>
+        <div class="card bg-surface-100-800-token p-8 m-2 rounded-xl">
+          <article class="mx-auto prose dark:prose-invert">
+            {@html lab.content}
+          </article>
+        </div>
       </div>
     </div>
   {/if}

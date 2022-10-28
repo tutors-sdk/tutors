@@ -2,9 +2,8 @@
   import { beforeUpdate, getContext } from "svelte";
   import type { Course } from "tutors-reader-lib/src/models/course";
   import type { CourseService } from "../../../reader-lib/services/course-service";
-  import { revealInfoBar } from "../../../stores";
+  import { infoDrawer } from "../../../stores";
   import { convertMd } from "tutors-reader-lib/src/utils/markdown-utils";
-  import SidebarComponent from "./SidebarComponent.svelte";
 
   let course: Course = null;
   const cache: CourseService = getContext("cache");
@@ -17,12 +16,17 @@
       courseInfo = convertMd(course.lo.contentMd, null);
     }
   });
+
+  const drawerClose: any = () => {
+    infoDrawer.set(false);
+  };
 </script>
 
-{#if $revealInfoBar && display}
-  <SidebarComponent title="Course Information" show={revealInfoBar} origin="left-0" direction={-1000}>
-    <div class="prose">
-      {@html courseInfo}
-    </div>
-  </SidebarComponent>
-{/if}
+<div class="mt-4 mr-4 text-right">
+  <button class="btn btn-icon bg-primary-500 text-white" on:click={drawerClose}><span class="font-bold">X</span></button>
+</div>
+<div class="px-12 py-4">
+  <prose class="prose dark:prose-invert">
+    {@html courseInfo}
+  </prose>
+</div>

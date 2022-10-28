@@ -3,8 +3,7 @@
   import type { Course } from "tutors-reader-lib/src/models/course";
   import type { Calendar, WeekType } from "tutors-reader-lib/src/types/lo-types";
   import type { CourseService } from "../../../reader-lib/services/course-service";
-  import { revealCalendar } from "../../../stores";
-  import SidebarComponent from "./SidebarComponent.svelte";
+  import { calendarDrawer } from "../../../stores";
 
   let course: Course = null;
   const cache: CourseService = getContext("cache");
@@ -23,37 +22,41 @@
       currentWeek = course.currentWeek;
     }
   });
+
+  const drawerClose: any = () => {
+    calendarDrawer.set(false);
+  };
 </script>
 
-{#if $revealCalendar && display}
-  <SidebarComponent title="Academic Calendar" show={revealCalendar} origin="left-0" direction={-1000}>
-    <table class="table-compact text-base-content prose table w-full">
-      <caption>{calendar.title} : {title} </caption>
-      <thead
-        ><br />
-        <tr>
-          <th class="w-1/3 text-center">Week No.</th>
-          <th class="w-1/3 text-center">Type</th>
-          <th class="w-1/3 text-center">Date Starts</th>
-        </tr>
-      </thead>
-      <tbody class="text-center">
-        {#each calendar.weeks as week}
-          {#if currentWeek.title == week.title}
-            <tr class="active">
-              <td>{week.title}</td>
-              <td>{week.type}</td>
-              <td>{monthNames[week.dateObj.getMonth()]} {week.dateObj.getDate()}</td>
-            </tr>
-          {:else}
-            <tr class="hover">
-              <td>{week.title}</td>
-              <td>{week.type}</td>
-              <td>{monthNames[week.dateObj.getMonth()]} {week.dateObj.getDate()}</td>
-            </tr>
-          {/if}
-        {/each}
-      </tbody>
-    </table>
-  </SidebarComponent>
-{/if}
+<div class="mt-4 mr-4 text-right">
+  <button class="btn btn-icon bg-primary-500 text-white" on:click={drawerClose}><span class="font-bold">X</span></button>
+</div>
+<div class="px-12 py-4">
+  <h4 class="mb-4 text-center font-semibold">{calendar.title} : {title}</h4>
+  <table class="w-full table-auto">
+    <thead>
+      <tr>
+        <th class="mb-1 text-center">Week No.</th>
+        <th class="mb-1 text-center">Type</th>
+        <th class="mb-1 text-center">Date Starts</th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+      {#each calendar.weeks as week}
+        {#if currentWeek.title == week.title}
+          <tr class="bg-surface-50-900-token my-2">
+            <td>{week.title}</td>
+            <td>{week.type}</td>
+            <td>{monthNames[week.dateObj.getMonth()]} {week.dateObj.getDate()}</td>
+          </tr>
+        {:else}
+          <tr class="hover my-2">
+            <td>{week.title}</td>
+            <td>{week.type}</td>
+            <td>{monthNames[week.dateObj.getMonth()]} {week.dateObj.getDate()}</td>
+          </tr>
+        {/if}
+      {/each}
+    </tbody>
+  </table>
+</div>

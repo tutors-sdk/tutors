@@ -30,7 +30,7 @@
     aria-hidden="true"
     focusable="false"
     data-prefix="fas"
-    class="w-4 h-4"
+    class="h-4 w-4"
     role="img"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 448 512"

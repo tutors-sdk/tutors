@@ -1,8 +1,7 @@
 <script lang="ts">
   import { afterUpdate, getContext } from "svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import TopicNavigatorCard from "../components/cards/TopicNavigatorCard.svelte";
-  import VideoCard from "../components/cards/VideoCard.svelte";
+  import { TopicNavigatorCard, VideoCard } from "tutors-ui";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { revealSidebar } from "../stores";
   import { talkTransition, viewDelay } from "../components/animations";
@@ -43,7 +42,7 @@
   <Loading />
 {:then lo}
   {#if !hide}
-    <div class="h-screen flex">
+    <div class="flex w-11/12 mx-auto">
       <div transition:talkTransition class="w-full">
         <VideoCard {lo} />
       </div>

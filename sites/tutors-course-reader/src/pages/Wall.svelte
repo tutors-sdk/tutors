@@ -1,8 +1,7 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import CardDeck from "../components/cards/CardDeck.svelte";
-  import VideoCard from "../components/cards/VideoCard.svelte";
+  import { CardDeck, VideoCard } from "tutors-ui";
   import { currentCourse, currentLo } from "../stores";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import * as animateScroll from "svelte-scrollto";
@@ -64,20 +63,20 @@
   <Loading />
 {:then los}
   {#if !hide}
-    <div class="">
+    <div class="container mx-auto">
       {#if wallType !== "video"}
         <CardDeck {los} />
       {:else}
-        <div class="wall-bg">
+        <div class="flex flex-wrap justify-center">
           {#each panelVideos as lo}
-            <div class="w-1/2 p-2">
+            <div class="w-2/5 p-2 card m-2">
               <VideoCard {lo} />
             </div>
           {/each}
         </div>
-        <div class="wall-bg">
+        <div class="flex flex-wrap justify-center">
           {#each talkVideos as lo}
-            <div class="w-1/4 p-2">
+            <div class="w-2/5 p-2 card m-2">
               <VideoCard {lo} />
             </div>
           {/each}

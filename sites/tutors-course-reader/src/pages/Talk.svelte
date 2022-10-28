@@ -1,7 +1,6 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
-  import TalkCard from "../components/cards/TalkCard.svelte";
-  import TopicNavigatorCard from "../components/cards/TopicNavigatorCard.svelte";
+  import { TalkCard, TopicNavigatorCard } from "tutors-ui";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { revealSidebar } from "../stores";
   import * as animateScroll from "svelte-scrollto";
@@ -39,7 +38,7 @@
   <Loading />
 {:then lo}
   {#if !hide}
-    <div class="h-screen flex">
+    <div class="flex w-11/12 mx-auto">
       <div transition:talkTransition class="w-full">
         <TalkCard {lo} />
       </div>

@@ -50,19 +50,17 @@
 </script>
 
 {#if course}
-  <div class="container mx-auto">
-    <label for="search" class="block p-2 text-xl text-base-content">Enter search term:</label>
-    <div class="mt-1 border">
-      <input bind:value={searchTerm} type="text" name="email" id="search" class="input input-bordered w-full" placeholder="..." />
-    </div>
-    <div>
+  <div class="card container mx-auto p-4">
+    <label for="search" class="block py-2 text-xl font-bold">Enter search term:</label>
+    <input bind:value={searchTerm} type="text" name="email" id="search" class="m-2 p-2" placeholder="..." />
+    <div class="flex flex-wrap justify-center">
       {#each searchResults as result}
-        <div class="rounded-2xl border-2">
-          <div class="labsearchresult ">
+        <div class="card m-1 w-full p-4 lg:w-72 2xl:w-96">
+          <div>
             <div>
               {@html result.html}
             </div>
-            <div class="text-right text-sm">
+            <div class="pt-4 text-right text-sm">
               <a href={result.link} target="_blank">
                 {result.title}
               </a>

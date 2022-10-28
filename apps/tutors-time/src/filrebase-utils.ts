@@ -127,11 +127,17 @@ export async function fetchAll(): Promise<string[]> {
   return courseList;
 }
 
-export async function deleteNode(url: string) {
+export async function deleteNode(root: string, url: string) {
   const db = getDatabase();
-  const obj = ref(db, `${url}`);
+  let key = "";
+  if (root) {
+    key = `${root}/${url}`;
+  } else {
+    key = url;
+  }
+  const obj = ref(db, key);
   await remove(obj);
-  console.log(`deleting: ${url}`);
+  console.log(`deleting: ${key}`);
 }
 
 export async function writeNode(key: string, data: any) {

@@ -3,10 +3,7 @@
   import type { Topic } from "tutors-reader-lib/src/models/topic";
   import type { CourseService } from "../reader-lib/services/course-service";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
-  import CardDeck from "../components/cards/CardDeck.svelte";
-  import VideoCard from "../components/cards/VideoCard.svelte";
-  import UnitCard from "../components/cards/UnitCard.svelte";
-  import TalkCard from "../components/cards/TalkCard.svelte";
+  import { CardDeck, UnitCard, TalkCard, VideoCard } from "tutors-ui";
   import { currentLo, layout, revealSidebar } from "../stores";
   import * as animateScroll from "svelte-scrollto";
   import { viewDelay } from "../components/animations";
@@ -74,13 +71,23 @@
   {#if !hide}
     <div class={grid}>
       {#each topic.panelVideos as lo}
-        <VideoCard {lo} />
+        <div
+          class="bg-surface-100-800-token rounded-xl backdrop-blur text-base-content rounded-box card-corner mb-2 overflow-hidden w-11/12 mx-auto p-4 place-items-center max-w-full"
+        >
+          <VideoCard {lo} />
+        </div>
       {/each}
       {#each topic.panelTalks as lo}
-        <TalkCard {lo} />
+        <div
+          class="bg-surface-100-800-token rounded-xl backdrop-blur text-base-content rounded-box card-corner mb-2 overflow-hidden w-11/12 mx-auto p-4 place-items-center max-w-full"
+        >
+          <TalkCard {lo} />
+        </div>
       {/each}
       {#each topic.units as unit}
-        <div class="mt-2">
+        <div
+          class="bg-surface-100-800-token rounded-xl backdrop-blur text-base-content rounded-box card-corner mb-2 overflow-hidden w-11/12 mx-auto p-4 place-items-center max-w-full"
+        >
           <UnitCard {unit} />
         </div>
       {/each}
