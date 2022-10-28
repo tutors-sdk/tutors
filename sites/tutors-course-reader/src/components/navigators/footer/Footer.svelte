@@ -3,7 +3,7 @@
 </script>
 
 <footer class="mx-auto w-11/12 py-8">
-  <div class="flex grid-flow-col">
+  <div class="flex grid-flow-col items-center">
     <a href="https://tutors.dev" target="_blank" class="inline-flex items-center">
       <svg width="40px" viewBox="0 0 54.5 39.4" xml:space="preserve"
         ><defs /><g
