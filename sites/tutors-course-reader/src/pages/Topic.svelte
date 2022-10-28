@@ -3,9 +3,7 @@
   import type { Topic } from "tutors-reader-lib/src/models/topic";
   import type { CourseService } from "../reader-lib/services/course-service";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
-  import { CardDeck, VideoCard } from "tutors-ui";
-  import UnitCard from "../components/cards/UnitCard.svelte";
-  import { TalkCard } from "tutors-ui";
+  import { CardDeck, UnitCard, TalkCard, VideoCard } from "tutors-ui";
   import { currentLo, layout, revealSidebar } from "../stores";
   import * as animateScroll from "svelte-scrollto";
   import { viewDelay } from "../components/animations";

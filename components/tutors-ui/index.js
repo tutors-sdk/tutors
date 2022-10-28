@@ -7,3 +7,4 @@ export { default as TalkCard } from './lib/Molecules/Cards/TalkCard.svelte';
 export { default as VideoCard } from './lib/Molecules/Cards/VideoCard.svelte';
 
 export { default as CardDeck } from './lib/Organisms/CardDeck/CardDeck.svelte';
+export { default as UnitCard } from './lib/Organisms/UnitCard/UnitCard.svelte';
