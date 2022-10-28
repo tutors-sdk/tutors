@@ -3,7 +3,7 @@
   import TopicNavigator from "../navigators/TopicNavigator.svelte";
   import { currentLo, layout } from "../../stores";
   import { onDestroy } from "svelte";
-  import Image from "./Image.svelte";
+  import { Image } from "tutors-ui";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
 
   export let topic: Topic;

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentCourse, currentLo } from "../../../stores";
-  import Image from "../../cards/Image.svelte";
+  import { Image } from "tutors-ui";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { getIcon } from "tutors-reader-lib/src/iconography/themes";
   import Icon from "@iconify/svelte";
