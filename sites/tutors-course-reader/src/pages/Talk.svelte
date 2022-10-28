@@ -1,7 +1,6 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
-  import { TalkCard } from "tutors-ui";
-  import TopicNavigatorCard from "../components/cards/TopicNavigatorCard.svelte";
+  import { TalkCard, TopicNavigatorCard } from "tutors-ui";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { revealSidebar } from "../stores";
   import * as animateScroll from "svelte-scrollto";

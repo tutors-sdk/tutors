@@ -1,8 +1,7 @@
 <script lang="ts">
   import { afterUpdate, getContext } from "svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import TopicNavigatorCard from "../components/cards/TopicNavigatorCard.svelte";
-  import { VideoCard } from "tutors-ui";
+  import { TopicNavigatorCard, VideoCard } from "tutors-ui";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { revealSidebar } from "../stores";
   import { talkTransition, viewDelay } from "../components/animations";

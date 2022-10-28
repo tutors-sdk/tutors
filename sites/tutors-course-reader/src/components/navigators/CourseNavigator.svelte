@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Course } from "tutors-reader-lib/src/models/course";
-  import TopicNavigator from "./TopicNavigator.svelte";
+  import { TopicNavigator } from "tutors-ui";
   import { AccordionGroup, AccordionItem } from '@brainandbones/skeleton';
 
   export let course: Course = null;
