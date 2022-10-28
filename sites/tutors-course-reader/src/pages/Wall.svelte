@@ -63,20 +63,20 @@
   <Loading />
 {:then los}
   {#if !hide}
-    <div class="">
+    <div class="container mx-auto">
       {#if wallType !== "video"}
         <CardDeck {los} />
       {:else}
-        <div class="wall-bg">
+        <div class="flex flex-wrap justify-center">
           {#each panelVideos as lo}
-            <div class="w-1/2 p-2">
+            <div class="w-2/5 p-2 card m-2">
               <VideoCard {lo} />
             </div>
           {/each}
         </div>
-        <div class="wall-bg">
+        <div class="flex flex-wrap justify-center">
           {#each talkVideos as lo}
-            <div class="w-1/4 p-2">
+            <div class="w-2/5 p-2 card m-2">
               <VideoCard {lo} />
             </div>
           {/each}
