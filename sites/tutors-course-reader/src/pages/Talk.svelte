@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
-  import TalkCard from "../components/cards/TalkCard.svelte";
+  import { TalkCard } from "tutors-ui";
   import TopicNavigatorCard from "../components/cards/TopicNavigatorCard.svelte";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { revealSidebar } from "../stores";

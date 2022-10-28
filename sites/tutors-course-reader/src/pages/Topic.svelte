@@ -5,7 +5,7 @@
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { CardDeck, VideoCard } from "tutors-ui";
   import UnitCard from "../components/cards/UnitCard.svelte";
-  import TalkCard from "../components/cards/TalkCard.svelte";
+  import { TalkCard } from "tutors-ui";
   import { currentLo, layout, revealSidebar } from "../stores";
   import * as animateScroll from "svelte-scrollto";
   import { viewDelay } from "../components/animations";
