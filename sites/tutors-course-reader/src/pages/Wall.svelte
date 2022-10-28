@@ -1,8 +1,7 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import { CardDeck } from "tutors-ui";
-  import VideoCard from "../components/cards/VideoCard.svelte";
+  import { CardDeck, VideoCard } from "tutors-ui";
   import { currentCourse, currentLo } from "../stores";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import * as animateScroll from "svelte-scrollto";

@@ -3,8 +3,7 @@
   import type { Topic } from "tutors-reader-lib/src/models/topic";
   import type { CourseService } from "../reader-lib/services/course-service";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
-  import { CardDeck } from "tutors-ui";
-  import VideoCard from "../components/cards/VideoCard.svelte";
+  import { CardDeck, VideoCard } from "tutors-ui";
   import UnitCard from "../components/cards/UnitCard.svelte";
   import TalkCard from "../components/cards/TalkCard.svelte";
   import { currentLo, layout, revealSidebar } from "../stores";
