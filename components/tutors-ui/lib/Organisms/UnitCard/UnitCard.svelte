@@ -1,7 +1,7 @@
 <script lang="ts">
     import { CardDeck, Image, NoteCard, TalkCard, VideoCard } from "tutors-ui";
     import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-    import { layout, currentCourse } from "../../stores";
+    import { layout, currentCourse } from "tutors-course-reader/src/stores";
     import { onDestroy } from "svelte";
     export let unit: Lo;
     const panelVideos = unit.los.filter((lo) => lo.type == "panelvideo");

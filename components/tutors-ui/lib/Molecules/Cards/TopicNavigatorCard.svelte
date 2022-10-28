@@ -1,10 +1,9 @@
 <script lang="ts">
     import type { Topic } from "tutors-reader-lib/src/models/topic";
-    import { TopicNavigator } from "tutors-ui";
-    import { currentLo, layout } from "../../stores";
-    import { onDestroy } from "svelte";
-    import { Image } from "tutors-ui";
     import type { Lo } from "tutors-reader-lib/src/types/lo-types";
+    import { Image, TopicNavigator } from "tutors-ui";
+    import { currentLo, layout } from "tutors-course-reader/src/stores";
+    import { onDestroy } from "svelte";
   
     export let topic: Topic;
   
