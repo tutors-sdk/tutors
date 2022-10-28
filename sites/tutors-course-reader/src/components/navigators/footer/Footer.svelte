@@ -4,7 +4,7 @@
 
 <footer class="mx-auto w-11/12 py-8">
   <div class="flex grid-flow-col">
-    <a href="https://tutors.dev" target="_blank" class="inline-flex">
+    <a href="https://tutors.dev" target="_blank" class="inline-flex items-center">
       <svg width="40px" viewBox="0 0 54.5 39.4" xml:space="preserve"
         ><defs /><g
           ><path
@@ -18,7 +18,7 @@
           ></g
         ></svg
       >
-      <p class="pl-2 pt-1">Powered by Tutors Course Reader {version}</p>
+      <p class="pl-4 pt-1">Powered by Tutors Course Reader {version}</p>
     </a>
     <a href="https://netlify.com" target="_blank" class="ml-auto">
       <img src="https://www.netlify.com/v3/img/components/netlify-color-bg.svg" alt="Deploys by Netlify" class="h-10" />
