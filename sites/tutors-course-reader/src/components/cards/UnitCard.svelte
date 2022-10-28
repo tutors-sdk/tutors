@@ -1,7 +1,7 @@
 <script lang="ts">
   import VideoCard from "../cards/VideoCard.svelte";
   import TalkCard from "../cards/TalkCard.svelte";
-  import CardDeck from "./CardDeck.svelte";
+  import { CardDeck } from "tutors-ui";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { layout, currentCourse } from "../../stores";
   import { onDestroy } from "svelte";

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import CardDeck from "../components/cards/CardDeck.svelte";
+  import { CardDeck } from "tutors-ui";
   import VideoCard from "../components/cards/VideoCard.svelte";
   import { currentCourse, currentLo } from "../stores";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
