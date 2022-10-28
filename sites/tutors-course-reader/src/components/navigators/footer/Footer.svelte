@@ -3,12 +3,9 @@
 </script>
 
 <footer class="mx-auto w-11/12 py-8">
-  <div class="grid-flow-col flex-1">
-    <a href="https://tutors.dev" target="_blank" class="inline-flex mx-auto">
-    <svg
-        width="40px"
-        viewBox="0 0 54.5 39.4"
-        xml:space="preserve"
+  <div class="flex-1 grid-flow-col">
+    <a href="https://tutors.dev" target="_blank" class="mx-auto inline-flex">
+      <svg width="40px" viewBox="0 0 54.5 39.4" xml:space="preserve"
         ><defs /><g
           ><path
             fill="#37919b"
@@ -20,8 +17,8 @@
             ></g
           ></g
         ></svg
-      > 
-    <p class="pl-2 pt-1">Powered by Tutors Course Reader {version}</p>
-  </a>
-  </div> 
+      >
+      <p class="pl-2 pt-1">Powered by Tutors Course Reader {version}</p>
+    </a>
+  </div>
 </footer>

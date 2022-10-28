@@ -71,17 +71,23 @@
   {#if !hide}
     <div class={grid}>
       {#each topic.panelVideos as lo}
-      <div class="bg-surface-100-800-token rounded-xl backdrop-blur text-base-content rounded-box card-corner mb-2 overflow-hidden w-11/12 mx-auto p-4 place-items-center max-w-full">
-        <VideoCard {lo} />
+        <div
+          class="bg-surface-100-800-token rounded-xl backdrop-blur text-base-content rounded-box card-corner mb-2 overflow-hidden w-11/12 mx-auto p-4 place-items-center max-w-full"
+        >
+          <VideoCard {lo} />
         </div>
       {/each}
       {#each topic.panelTalks as lo}
-      <div class="bg-surface-100-800-token rounded-xl backdrop-blur text-base-content rounded-box card-corner mb-2 overflow-hidden w-11/12 mx-auto p-4 place-items-center max-w-full">
-        <TalkCard {lo} />
+        <div
+          class="bg-surface-100-800-token rounded-xl backdrop-blur text-base-content rounded-box card-corner mb-2 overflow-hidden w-11/12 mx-auto p-4 place-items-center max-w-full"
+        >
+          <TalkCard {lo} />
         </div>
       {/each}
       {#each topic.units as unit}
-      <div class="bg-surface-100-800-token rounded-xl backdrop-blur text-base-content rounded-box card-corner mb-2 overflow-hidden w-11/12 mx-auto p-4 place-items-center max-w-full">
+        <div
+          class="bg-surface-100-800-token rounded-xl backdrop-blur text-base-content rounded-box card-corner mb-2 overflow-hidden w-11/12 mx-auto p-4 place-items-center max-w-full"
+        >
           <UnitCard {unit} />
         </div>
       {/each}

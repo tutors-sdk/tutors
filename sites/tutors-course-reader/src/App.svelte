@@ -30,18 +30,16 @@
   import { MetricsService } from "./reader-lib/services/metrics-service";
   import { currentLo, infoDrawer, calendarDrawer, onlineDrawer, tocDrawer, storeTheme } from "./stores";
 
-  
   import tutors from "./themes/tutors.css";
   import dyslexia from "./themes/dyslexia.css";
   import halloween from "./themes/halloween.css";
 
-  
-	const themes: any = { tutors, dyslexia, halloween };
+  const themes: any = { tutors, dyslexia, halloween };
 
   storeTheme.subscribe(setBodyThemeAttribute);
-	function setBodyThemeAttribute(): void {
-		document.body.setAttribute('data-theme', $storeTheme);
-	}
+  function setBodyThemeAttribute(): void {
+    document.body.setAttribute("data-theme", $storeTheme);
+  }
 
   setContext("cache", new CourseService());
   const analytics = new AnalyticsService();
@@ -112,9 +110,9 @@
       <div class="mx-auto my-4">
         <Router {routes} />
       </div>
-        <div class="mt-2 w-full bg-surface-100-800-token">
-          <Footer />
-        </div>
+      <div class="bg-surface-100-800-token mt-2 w-full">
+        <Footer />
+      </div>
     </AppShell>
   {/if}
 </div>

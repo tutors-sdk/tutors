@@ -90,10 +90,9 @@
   });
 
   const onComplete = () => {
-		alert('Lab Complete!!');
-	};
+    alert("Lab Complete!!");
+  };
 </script>
-
 
 {#await getLab(params.wild)}
   <Loading />

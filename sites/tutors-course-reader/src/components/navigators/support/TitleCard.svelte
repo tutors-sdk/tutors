@@ -30,15 +30,15 @@
       {/if}
     </div>
   </div>
-    <div class="flex-nowrap ml-4">
-    <h2 class="hidden md:inline-block text-sm sm:text-lg font-bold mr-4">{$currentLo.title}</h2>
-		<!-- Badge -->
-		<div class="hidden md:block" target="_blank">
-			{#if $currentLo.title != $currentCourse.lo.title}
+  <div class="ml-4 flex-nowrap">
+    <h2 class="mr-4 hidden text-sm font-bold sm:text-lg md:inline-block">{$currentLo.title}</h2>
+    <!-- Badge -->
+    <div class="hidden md:block" target="_blank">
+      {#if $currentLo.title != $currentCourse.lo.title}
         <p class="text-sm font-bold">{$currentCourse.lo.title}</p>
       {:else}
         <p class="text-sm font-bold">{$currentCourse.lo.properties.credits}</p>
       {/if}
     </div>
-    </div>
+  </div>
 {/if}
