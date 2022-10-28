@@ -1,7 +1,7 @@
 <script lang="ts">
   import VideoCard from "../cards/VideoCard.svelte";
   import TalkCard from "../cards/TalkCard.svelte";
-  import { CardDeck } from "tutors-ui";
+  import { CardDeck, NoteCard } from "tutors-ui";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { layout, currentCourse } from "../../stores";
   import { onDestroy } from "svelte";
@@ -11,7 +11,6 @@
   const panelNotes =  unit.los.filter((lo) => lo.type == "panelnote");
   const standardLos = unit.los.filter((lo) => (lo.type != "panelvideo") && (lo.type != "paneltalk") && (lo.type != "panelnote"));
   import Image from "./Image.svelte";
-  import NoteCard from "./NoteCard.svelte";
 
   let text="text-xl font-semibold";
   const unsubscribe = layout.subscribe(layout => {

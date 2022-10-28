@@ -6,7 +6,7 @@
   import * as animateScroll from "svelte-scrollto";
   import { talkTransition } from "../components/animations";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import NoteCard from "../components/cards/NoteCard.svelte";
+  import { NoteCard } from "tutors-ui";
   import type { CourseService } from "../reader-lib/services/course-service";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
