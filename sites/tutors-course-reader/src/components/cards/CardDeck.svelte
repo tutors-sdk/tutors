@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Card from "./Card.svelte";
+  import { Card } from "tutors-ui";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
 
   export let los: Lo[] = [];
