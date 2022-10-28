@@ -166,7 +166,7 @@ Comparable to tutors-lib, but intended for use in Svelte applications. Construct
 
 ### [tutors-ui](https://github.com/tutors-sdk/tutors/tree/main/components/tutors-ui)
 
-A shared library of UI components which can be used to build the readers, these components are visualised in the vitebook site (https://vitebook.tutors.dev).
+A shared library of UI components which can be used to build Tutors.
 
 # Contributing
 
