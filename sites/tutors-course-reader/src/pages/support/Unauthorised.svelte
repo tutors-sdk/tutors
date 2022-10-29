@@ -49,7 +49,7 @@
       <div class="btn btn-ghost rounded-2xl">Tutors.dev</div>
     </a>
   </div>
-  <div class="rounded-box bg-base-200 text-base-content mb-2 p-20">
+  <div class="rounded-box bg-base-200 mb-2 p-20">
     <div class="text-center">
       <p class="text-4xl font-bold">Oops!</p>
       <br />

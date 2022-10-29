@@ -22,21 +22,25 @@
   onDestroy(unsubscribe);
 </script>
 
-<div class="flex w-full justify-between pb-2">
-  <h2 id="{unit.id}" class="p-2 {text}">
-    {unit.title}
-  </h2>
-  <Image lo="{$currentCourse.lo}" miniImage="{true}" />
-</div>
-<div class="flex flex-wrap justify-center">
-  {#each panelVideos as lo}
-    <VideoCard lo="{lo}" />
-  {/each}
-  {#each panelTalks as lo}
-    <TalkCard lo="{lo}" />
-  {/each}
-  {#each panelNotes as lo}
-    <NoteCard lo="{lo}" />
-  {/each}
-  <CardDeck los="{standardLos}" />
+<div
+  class="bg-surface-100-800-token rounded-box card-corner mx-auto mb-2 w-11/12 max-w-full place-items-center overflow-hidden rounded-xl p-4 backdrop-blur"
+>
+  <div class="flex w-full justify-between pb-2">
+    <h2 id="{unit.id}" class="p-2 {text}">
+      {unit.title}
+    </h2>
+    <Image lo="{$currentCourse.lo}" miniImage="{true}" />
+  </div>
+  <div class="flex flex-wrap justify-center">
+    {#each panelVideos as lo}
+      <VideoCard lo="{lo}" />
+    {/each}
+    {#each panelTalks as lo}
+      <TalkCard lo="{lo}" />
+    {/each}
+    {#each panelNotes as lo}
+      <NoteCard lo="{lo}" />
+    {/each}
+    <CardDeck los="{standardLos}" />
+  </div>
 </div>

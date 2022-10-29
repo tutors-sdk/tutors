@@ -4,7 +4,6 @@
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { revealSidebar } from "../stores";
   import * as animateScroll from "svelte-scrollto";
-  import { talkTransition } from "../components/animations";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { NoteCard } from "tutors-ui";
   import type { CourseService } from "../reader-lib/services/course-service";
@@ -38,7 +37,7 @@
 {:then lo}
   {#if !hide}
     <div class="h-full flex">
-      <div transition:talkTransition class="flex-grow card p-4 bg-base-200">
+      <div class="flex-grow card p-4 bg-base-200">
         <NoteCard {lo} />
       </div>
       <div class="hidden lg:block">
