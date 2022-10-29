@@ -1,5 +1,5 @@
 <script lang="ts">
-  const version = "7.0.0-alpha";
+  const version = "7.0.0-beta";
 </script>
 
 <footer class="mx-auto w-11/12 py-8">
