@@ -6,13 +6,11 @@
     currentUser,
     studentsOnline,
     studentsOnlineList,
-    layout,
     calendarDrawer,
     infoDrawer,
     tocDrawer,
-    storeTheme,
   } from "../../stores";
-  import Avatar from "./support/Avatar.svelte";
+  import { LayoutMenu, NavUser } from "tutors-ui";
   import { isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
   import { getContext } from "svelte";
   import type { Course } from "tutors-reader-lib/src/models/course";
@@ -20,27 +18,7 @@
   import type { MetricsService } from "../../reader-lib/services/metrics-service";
   import { PresenceService } from "../../reader-lib/services/presence-service";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
-  import { AppBar, LightSwitch, menu, Divider } from "@brainandbones/skeleton";
-
-  function applyInitialLayout() {
-    const savedLayout = window.localStorage.getItem("site-layout");
-    if (savedLayout != null) {
-      layout.set(savedLayout);
-    } else {
-      layout.set("expanded");
-      window.localStorage.setItem("site-layout", "expanded");
-    }
-  }
-
-  function toggleLayout() {
-    if ($layout === "compacted") {
-      layout.set("expanded");
-      window.localStorage.setItem("site-layout", "expanded");
-    } else {
-      layout.set("compacted");
-      window.localStorage.setItem("site-layout", "compacted");
-    }
-  }
+  import { AppBar, Divider } from "@brainandbones/skeleton";
 
   const infoDrawerOpen: any = () => {
     infoDrawer.set(true);
@@ -91,8 +69,6 @@
   currentUser.subscribe((newUser) => {
     user = newUser;
   });
-
-  applyInitialLayout();
 </script>
 
 {#if $currentCourse}
@@ -132,60 +108,9 @@
           </a>
           <Divider vertical={true} borderWidth="border-l" class="hidden lg:block" />
         {/if}
-        <div class="relative">
-          <button class="btn btn-sm" use:menu={{ menu: "design", interactive: true }}>
-            <Icon type="dark" />
-            <span class="hidden text-sm font-bold lg:block">Layout <span class="pl-2 opacity-50">▾</span></span>
-          </button>
-          <nav class="list-nav card card-body w-56 space-y-4 shadow-lg" data-menu="design">
-            <h6>Toggles</h6>
-            <section class="flex justify-between">
-              <p class="text-lg">Dark Mode</p>
-              <LightSwitch origin="tr" />
-            </section>
-            <button class="w-full" on:click={() => toggleLayout()}>
-              <section class="flex justify-between">
-                <p class="text-lg">Compact</p>
-                <div class="mr-3">
-                  <Icon type={$layout} />
-                </div>
-              </section>
-            </button>
-            <hr />
-            <h6>Themes</h6>
-            <ul>
-              <li
-                class="option"
-                class:!bg-primary-500={$storeTheme === "tutors"}
-                on:click={() => {
-                  storeTheme.set("tutors");
-                }}
-              >
-                <p class="text-lg">Tutors</p>
-              </li>
-              <li
-                class="option"
-                class:!bg-primary-500={$storeTheme === "dyslexia"}
-                on:click={() => {
-                  storeTheme.set("dyslexia");
-                }}
-              >
-                <p class="text-lg">Dyslexia</p>
-              </li>
-              <li
-                class="option"
-                class:!bg-primary-500={$storeTheme === "halloween"}
-                on:click={() => {
-                  storeTheme.set("halloween");
-                }}
-              >
-                <p class="text-lg">Halloween</p>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <LayoutMenu />
         <Divider vertical={true} borderWidth="border-l" class="hidden lg:block" />
-        <Avatar />
+        <NavUser />
         <button class="btn btn-sm" on:click={tocDrawerOpen}>
           <Icon type="toc" />
         </button>
