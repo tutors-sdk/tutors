@@ -12,7 +12,7 @@
   import Wall from "./pages/Wall.svelte";
   import Lab from "./pages/Lab.svelte";
   import NotFound from "./pages/support/NotFound.svelte";
-  import MainNavigator from "./components/navigators/MainNavigator.svelte";
+  import NavBar from "./components/navigators/NavBar.svelte";
   import PageHeader from "./components/navigators/PageHeader.svelte";
   import Footer from "./components/navigators/footer/Footer.svelte";
   import BackToTop from "./components/navigators/BackToTop.svelte";
@@ -104,7 +104,7 @@
 
     <AppShell class="h-screen">
       <div class="sticky top-0 z-40">
-        <MainNavigator />
+        <NavBar />
         <PageHeader />
       </div>
       <div class="mx-auto my-4">
