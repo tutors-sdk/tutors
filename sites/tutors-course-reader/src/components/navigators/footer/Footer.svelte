@@ -1,4 +1,15 @@
 <script lang="ts">
+  import { onMount } from "svelte";
+
+  let id = "";
+
+  onMount(async () => {
+    await fetch("https://api.github.com/repos/tutors-sdk/tutors/commits/beta")
+      .then((response) => response.json())
+      .then((data) => {
+        id = data.sha.slice(0, 7);
+      });
+  });
   const version = "7.0.0-beta";
 </script>
 
@@ -18,7 +29,7 @@
           ></g
         ></svg
       >
-      <p class="pl-4 pt-1">Powered by Tutors Course Reader {version}</p>
+      <p class="pl-4 pt-1">Powered by Tutors Course Reader {version}-{id}</p>
     </a>
     <a href="https://netlify.com" target="_blank" class="ml-auto">
       <img src="https://www.netlify.com/v3/img/components/netlify-color-bg.svg" alt="Deploys by Netlify" class="h-10" />
