@@ -3,7 +3,7 @@ import { WebAuth } from "auth0-js";
 import type { Course } from "tutors-reader-lib/src/models/course";
 import { encrypt, fromLocalStorage, isAuthenticated, setSession, toLocalStorage } from "tutors-reader-lib/src/utils/auth-utils";
 import { replace } from "svelte-spa-router";
-import { getKeys } from "../../environment";
+import { getKeys } from "tutors-course-reader/src/environment";
 import type { User } from "tutors-reader-lib/src/types/auth-types";
 
 const auth0 = new WebAuth({

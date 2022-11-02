@@ -2,8 +2,8 @@
   import { afterUpdate, getContext, onDestroy } from "svelte";
   import type { Course } from "tutors-reader-lib/src/models/course";
   import { CardDeck, UnitCard } from "tutors-ui";
-  import type { CourseService } from "../reader-lib/services/course-service";
-  import type { AnalyticsService } from "../reader-lib/services/analytics-service";
+  import type { CourseService } from "tutors-reader-lib/src/services/course-service";
+  import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
   import { currentLo, revealSidebar } from "../stores";
   import * as animateScroll from "svelte-scrollto";
   import Loading from "./support/Loading.svelte";

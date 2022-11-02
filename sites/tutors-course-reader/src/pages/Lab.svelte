@@ -1,9 +1,9 @@
 <script lang="ts">
   import { push } from "svelte-spa-router";
   import { afterUpdate, getContext, onDestroy } from "svelte";
-  import type { AnalyticsService } from "../reader-lib/services/analytics-service";
+  import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
   import { revealSidebar } from "../stores";
-  import type { CourseService } from "../reader-lib/services/course-service";
+  import type { CourseService } from "tutors-reader-lib/src/services/course-service";
   import * as animateScroll from "svelte-scrollto";
   import type { Lab } from "tutors-reader-lib/src/models/lab";
   import Loading from "./support/Loading.svelte";

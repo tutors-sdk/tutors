@@ -7,7 +7,7 @@
   import { allLos } from "tutors-reader-lib/src/utils/lo-utils";
   import { convertMd } from "tutors-reader-lib/src/utils/markdown-utils";
   import type { Course } from "tutors-reader-lib/src/models/course";
-  import type { CourseService } from "../reader-lib/services/course-service";
+  import type { CourseService } from "tutors-reader-lib/src/services/course-service";
 
   export let params: Record<string, string>;
   const cache: CourseService = getContext("cache");

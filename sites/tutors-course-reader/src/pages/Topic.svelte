@@ -1,8 +1,8 @@
 <script lang="ts">
   import { afterUpdate, getContext, onDestroy, tick } from "svelte";
   import type { Topic } from "tutors-reader-lib/src/models/topic";
-  import type { CourseService } from "../reader-lib/services/course-service";
-  import type { AnalyticsService } from "../reader-lib/services/analytics-service";
+  import type { CourseService } from "tutors-reader-lib/src/services/course-service";
+  import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
   import { CardDeck, UnitCard, TalkCard, VideoCard } from "tutors-ui";
   import { currentLo, layout, revealSidebar } from "../stores";
   import * as animateScroll from "svelte-scrollto";

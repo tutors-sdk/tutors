@@ -1,7 +1,7 @@
 <script lang="ts">
   import { beforeUpdate, getContext } from "svelte";
   import type { Course } from "tutors-reader-lib/src/models/course";
-  import type { CourseService } from "../../reader-lib/services/course-service";
+  import type { CourseService } from "../tutors-reader-lib/src/services/course-service";
   import { infoDrawer } from "../../stores";
   import { convertMd } from "tutors-reader-lib/src/utils/markdown-utils";
 

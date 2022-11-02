@@ -3,19 +3,10 @@ import type { Lo } from "tutors-reader-lib/src/types/lo-types";
 import type { Course } from "tutors-reader-lib/src/models/course";
 import type { User } from "tutors-reader-lib/src/types/auth-types";
 import { checkAuth } from "./auth-service";
-import { getKeys } from "../../environment";
-import { currentCourse } from "../../stores";
+import { getKeys } from "tutors-course-reader/src/environment";
+import { currentCourse } from "tutors-course-reader/src/stores";
 
-import {
-  getNode,
-  initFirebase,
-  updateCalendar,
-  updateCount,
-  updateCountValue,
-  updateLastAccess,
-  updateStr,
-  updateVisits,
-} from "tutors-reader-lib/src/utils/firebase-utils";
+import { getNode, initFirebase, updateCalendar, updateCount, updateCountValue, updateLastAccess, updateStr, updateVisits } from "tutors-reader-lib/src/utils/firebase-utils";
 
 let currentAnalytics: AnalyticsService;
 let course: Course;

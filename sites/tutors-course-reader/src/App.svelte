@@ -18,16 +18,16 @@
   import BackToTop from "./navigators/BackToTop.svelte";
   import Logout from "./pages/support/Logout.svelte";
   import TutorsTerms from "./pages/support/TutorsTerms.svelte";
-  import { CourseService } from "./reader-lib/services/course-service";
-  import { handleAuthentication } from "./reader-lib/services/auth-service";
-  import { AnalyticsService } from "./reader-lib/services/analytics-service";
+  import { CourseService } from "tutors-reader-lib/src/services/course-service";
+  import { handleAuthentication } from "tutors-reader-lib/src/services/auth-service";
+  import { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
+  import { MetricsService } from "tutors-reader-lib/src/services/metrics-service";
   import Search from "./pages/Search.svelte";
   import InfoBar from "./navigators/sidebars/InfoBar.svelte";
   import CalendarBar from "./navigators/sidebars/CalendarBar.svelte";
   import OnlineBar from "./navigators/sidebars/OnlineBar.svelte";
   import TocBar from "./navigators/sidebars/TocBar.svelte";
   import Note from "./pages/Note.svelte";
-  import { MetricsService } from "./reader-lib/services/metrics-service";
   import { currentLo, infoDrawer, calendarDrawer, onlineDrawer, tocDrawer, storeTheme } from "./stores";
 
   import tutors from "./themes/tutors.css";

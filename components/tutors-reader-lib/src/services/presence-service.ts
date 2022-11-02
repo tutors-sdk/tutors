@@ -3,7 +3,7 @@ import type { MetricsService } from "./metrics-service";
 import type { Topic } from "tutors-reader-lib/src/models/topic";
 import type { Lo } from "tutors-reader-lib/src/types/lo-types";
 import type { Course } from "tutors-reader-lib/src/models/course";
-import { studentsOnline } from "../../stores";
+import { studentsOnline } from "tutors-course-reader/src/stores";
 
 function compareStudents(student1: StudentMetric, student2: StudentMetric): number {
   if (!student1.lab) {
