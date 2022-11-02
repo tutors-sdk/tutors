@@ -4,7 +4,7 @@
   let id = "";
 
   onMount(async () => {
-    await fetch("https://api.github.com/repos/tutors-sdk/tutors/commits/beta")
+    await fetch("https://api.github.com/repos/tutors-sdk/tutors/commits/development")
       .then((response) => response.json())
       .then((data) => {
         id = data.sha.slice(0, 7);
