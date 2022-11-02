@@ -1,5 +1,4 @@
 <script lang="ts">
-  import TitleCard from "./support/TitleCard.svelte";
   import {
     courseUrl,
     currentCourse,
@@ -10,7 +9,7 @@
     infoDrawer,
     tocDrawer,
   } from "../../stores";
-  import { LayoutMenu, NavUser } from "tutors-ui";
+  import { LayoutMenu, NavTitle, NavUser } from "tutors-ui";
   import { isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
   import { getContext } from "svelte";
   import type { Course } from "tutors-reader-lib/src/models/course";
@@ -80,7 +79,7 @@
             <Icon type="courseinfo" />
           </button>
         {/if}
-        <TitleCard />
+        <NavTitle />
       </div>
     </svelte:fragment>
     {#if $currentCourse.currentWeek}

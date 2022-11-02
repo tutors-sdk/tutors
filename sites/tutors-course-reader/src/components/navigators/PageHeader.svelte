@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentCourse, portfolio } from "../../stores";
-  import Breadcrumbs from "./support/Breadcrumbs.svelte";
+  import { Breadcrumbs } from "tutors-ui";
   import IconBar from "tutors-reader-lib/src/iconography/IconBar.svelte";
 </script>
 

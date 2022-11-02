@@ -1,7 +1,9 @@
 export { default as Image } from './lib/Atoms/Image/Image.svelte';
 
+export { default as Breadcrumbs } from './lib/Molecules/Breadcrumbs/Breadcrumbs.svelte';
 export { default as Card } from './lib/Molecules/Cards/Card.svelte';
 export { default as LayoutMenu } from './lib/Molecules/LayoutMenu/LayoutMenu.svelte';
+export { default as NavTitle } from './lib/Molecules/NavTitle/NavTitle.svelte';
 export { default as NavUser } from './lib/Molecules/NavUser/NavUser.svelte';
 export { default as NoteCard } from './lib/Molecules/Cards/NoteCard.svelte';
 export { default as StudentCard } from './lib/Molecules/Cards/StudentCard.svelte';
