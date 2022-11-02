@@ -8,25 +8,23 @@
   export let width = 20;
   export let height = 20;
 
-
   function iconColour(colourInput) {
-    if(colourInput === 'info') {
-      return 'rgba(var(--color-primary-500))'
-    } else if(colourInput === 'success') {
-      return 'rgba(var(--color-accent-500))'
-    } else if(colourInput === 'warning') {
-      return 'rgba(var(--color-ternary-500))'
-    } else if(colourInput === 'error') {
-      return 'rgba(var(--color-warning-500))'
+    if (colourInput === "info") {
+      return "rgba(var(--color-primary-500))";
+    } else if (colourInput === "success") {
+      return "rgba(var(--color-accent-500))";
+    } else if (colourInput === "warning") {
+      return "rgba(var(--color-tertiary-500))";
+    } else if (colourInput === "error") {
+      return "rgba(var(--color-warning-500))";
     }
   }
-  
 </script>
 
-    {#if link}
-      <a target="{target}" href="{link}">
-        <Icon icon={getIcon(type).icon} color="{iconColour(getIcon(type).colour)}" width="{width}" height="{height}" />
-      </a>
-    {:else}
-      <Icon icon={getIcon(type).icon} color={iconColour(getIcon(type).colour)} width="{width}" height="{height}" />
-    {/if}
+{#if link}
+  <a {target} href={link}>
+    <Icon icon={getIcon(type).icon} color={iconColour(getIcon(type).colour)} {width} {height} />
+  </a>
+{:else}
+  <Icon icon={getIcon(type).icon} color={iconColour(getIcon(type).colour)} {width} {height} />
+{/if}

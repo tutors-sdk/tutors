@@ -41,26 +41,26 @@
   /* ⬅ #133527 */
   --color-accent-900: 9 26 20;
   /* ⬅ #091a14 */
-  /* ternary | #e2ac08 */
-  --color-ternary-50: 255 252 245;
+  /* tertiary | #e2ac08 */
+  --color-tertiary-50: 255 252 245;
   /* ⬅ #fffcf5 */
-  --color-ternary-100: 254 248 230;
+  --color-tertiary-100: 254 248 230;
   /* ⬅ #fef8e6 */
-  --color-ternary-200: 253 241 206;
+  --color-tertiary-200: 253 241 206;
   /* ⬅ #fdf1ce */
-  --color-ternary-300: 252 230 166;
+  --color-tertiary-300: 252 230 166;
   /* ⬅ #fce6a6 */
-  --color-ternary-400: 249 206 78;
+  --color-tertiary-400: 249 206 78;
   /* ⬅ #f9ce4e */
-  --color-ternary-500: 226 172 8;
+  --color-tertiary-500: 226 172 8;
   /* ⬅ #e2ac08 */
-  --color-ternary-600: 162 123 6;
+  --color-tertiary-600: 162 123 6;
   /* ⬅ #a27b06 */
-  --color-ternary-700: 118 90 4;
+  --color-tertiary-700: 118 90 4;
   /* ⬅ #765a04 */
-  --color-ternary-800: 69 52 2;
+  --color-tertiary-800: 69 52 2;
   /* ⬅ #453402 */
-  --color-ternary-900: 34 26 1;
+  --color-tertiary-900: 34 26 1;
   /* ⬅ #221a01 */
   /* warning | #de0d30 */
   --color-warning-50: 254 245 247;

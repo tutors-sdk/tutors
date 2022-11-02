@@ -41,7 +41,7 @@
     } else if (colourInput === 'success') {
       return 'border-accent-500';
     } else if (colourInput === 'warning') {
-      return 'border-ternary-500';
+      return 'border-tertiary-500';
     } else if (colourInput === 'error') {
       return 'border-warning-500';
     }
