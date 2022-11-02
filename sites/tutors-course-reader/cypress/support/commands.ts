@@ -4,39 +4,37 @@ import "cypress-axe";
 import "cypress-fail-fast";
 
 /// <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+
+const delay = 1000;
+
+Cypress.Commands.add("clickBreadcrumb", (lo: any) => {
+  cy.get(".navbar-secondary").contains(lo.title.trim()).click();
+  cy.wait(delay);
+});
+
+Cypress.Commands.add("clickCard", (lo: any) => {
+  if (!lo.hide && lo.type != "github" && lo.type != "archive" && lo.type != "web" && lo.type != "unit") {
+    if (lo.type == "lab") {
+      cy.contains(lo.title.trim()).click();
+      for (let i = 1; i < 7; i++) cy.clickLabStep(i);
+    } else {
+      cy.contains(lo.title.trim()).click();
+    }
+    cy.wait(delay);
+  }
+});
+
+Cypress.Commands.add("clickLabStep", (step: number) => {
+  cy.get(`div.labmenu-container > ul > li:nth-child(${step}) > a`).click();
+  cy.wait(delay);
+});
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      clickBreadcrumb(lo: any): Chainable<any>;
+      clickCard(lo: any): Chainable<any>;
+      clickLabStep(lo: any): Chainable<any>;
+    }
+  }
+}
