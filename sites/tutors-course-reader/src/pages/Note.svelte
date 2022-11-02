@@ -1,13 +1,12 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
-  import TopicNavigatorCard from "../components/cards/TopicNavigatorCard.svelte";
-  import type { AnalyticsService } from "../reader-lib/services/analytics-service";
-  import { revealSidebar } from "../stores";
+  import { TopicNavigatorCard } from "tutors-ui";
+  import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
+  import { revealSidebar } from "tutors-reader-lib/src/stores/stores";
   import * as animateScroll from "svelte-scrollto";
-  import { talkTransition } from "../components/animations";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import NoteCard from "../components/cards/NoteCard.svelte";
-  import type { CourseService } from "../reader-lib/services/course-service";
+  import { NoteCard } from "tutors-ui";
+  import type { CourseService } from "tutors-reader-lib/src/services/course-service";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
 
@@ -38,7 +37,7 @@
 {:then lo}
   {#if !hide}
     <div class="h-full flex">
-      <div transition:talkTransition class="flex-grow card p-4 bg-base-200">
+      <div class="flex-grow card p-4 bg-base-200">
         <NoteCard {lo} />
       </div>
       <div class="hidden lg:block">

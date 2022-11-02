@@ -1,11 +1,10 @@
 <script lang="js">
   import { BarLoader } from "svelte-loading-spinners";
-  import { viewDelay } from "../../components/animations";
 
   let hide = true;
   setTimeout(function () {
     hide = false;
-  }, viewDelay);
+  }, 500);
 </script>
 
 {#if !hide}
