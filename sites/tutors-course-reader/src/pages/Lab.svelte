@@ -5,7 +5,6 @@
   import { revealSidebar } from "../stores";
   import type { CourseService } from "../reader-lib/services/course-service";
   import * as animateScroll from "svelte-scrollto";
-  import { viewDelay } from "../components/animations";
   import type { Lab } from "tutors-reader-lib/src/models/lab";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
@@ -23,7 +22,7 @@
   let hide = true;
   setTimeout(function () {
     hide = false;
-  }, viewDelay);
+  }, 500);
 
   let mostRecentLab = "";
 
