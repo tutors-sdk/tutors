@@ -17,7 +17,7 @@
   let truncated = [true, true, true, true, true, true, true];
 
   function truncate(input: string) {
-    if (input.length > 15) {
+    if (input.length > 16) {
       return input.substring(0, 15) + '...';
     }
     return input;
