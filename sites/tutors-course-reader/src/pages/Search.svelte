@@ -5,7 +5,6 @@
   import { isValid, searchHits } from "tutors-reader-lib/src/utils/search-utils";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { allLos } from "tutors-reader-lib/src/utils/lo-utils";
-  import { push } from "svelte-spa-router";
   import { convertMd } from "tutors-reader-lib/src/utils/markdown-utils";
   import type { Course } from "tutors-reader-lib/src/models/course";
   import type { CourseService } from "../reader-lib/services/course-service";

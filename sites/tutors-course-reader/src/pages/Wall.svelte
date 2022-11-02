@@ -5,7 +5,6 @@
   import { currentCourse, currentLo } from "../stores";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import * as animateScroll from "svelte-scrollto";
-  import { viewDelay } from "../components/animations";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
   import type { CourseService } from "../reader-lib/services/course-service";
@@ -49,7 +48,7 @@
           talkVideos = los.filter((lo) => lo.type !== "panelvideo");
         }
       }
-    }, viewDelay);
+    }, 500);
     return los;
   }
 

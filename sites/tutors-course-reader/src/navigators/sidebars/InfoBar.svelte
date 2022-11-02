@@ -1,22 +1,24 @@
 <script lang="ts">
   import { beforeUpdate, getContext } from "svelte";
   import type { Course } from "tutors-reader-lib/src/models/course";
-  import type { CourseService } from "../../../reader-lib/services/course-service";
-  import CourseNavigator from "../CourseNavigator.svelte";
-  import { tocDrawer } from "../../../stores";
+  import type { CourseService } from "../../reader-lib/services/course-service";
+  import { infoDrawer } from "../../stores";
+  import { convertMd } from "tutors-reader-lib/src/utils/markdown-utils";
 
   let course: Course = null;
   const cache: CourseService = getContext("cache");
-
+  let courseInfo = "";
   let display = false;
   beforeUpdate(() => {
     course = cache.course;
     if (course) {
       display = true;
+      courseInfo = convertMd(course.lo.contentMd, null);
     }
   });
+
   const drawerClose: any = () => {
-    tocDrawer.set(false);
+    infoDrawer.set(false);
   };
 </script>
 
@@ -24,5 +26,7 @@
   <button class="btn btn-icon bg-primary-500 text-white" on:click={drawerClose}><span class="font-bold">X</span></button>
 </div>
 <div class="px-12 py-4">
-  <CourseNavigator {course} />
+  <prose class="prose dark:prose-invert">
+    {@html courseInfo}
+  </prose>
 </div>

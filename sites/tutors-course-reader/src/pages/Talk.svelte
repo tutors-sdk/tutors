@@ -4,7 +4,6 @@
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { revealSidebar } from "../stores";
   import * as animateScroll from "svelte-scrollto";
-  import { talkTransition } from "../components/animations";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
   import type { CourseService } from "../reader-lib/services/course-service";
@@ -39,7 +38,7 @@
 {:then lo}
   {#if !hide}
     <div class="flex w-11/12 mx-auto">
-      <div transition:talkTransition class="w-full">
+      <div class="w-full">
         <TalkCard {lo} />
       </div>
       <div class="hidden md:block">

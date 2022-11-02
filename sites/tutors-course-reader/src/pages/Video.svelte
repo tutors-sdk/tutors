@@ -4,7 +4,6 @@
   import { TopicNavigatorCard, VideoCard } from "tutors-ui";
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { revealSidebar } from "../stores";
-  import { talkTransition, viewDelay } from "../components/animations";
   import { querystring } from "svelte-spa-router";
   import * as animateScroll from "svelte-scrollto";
   import Loading from "./support/Loading.svelte";
@@ -19,7 +18,7 @@
   let hide = true;
   setTimeout(function () {
     hide = false;
-  }, viewDelay);
+  }, 500);
 
   async function getVideo(url: string): Promise<Lo> {
     revealSidebar.set(false);
@@ -43,7 +42,7 @@
 {:then lo}
   {#if !hide}
     <div class="flex w-11/12 mx-auto">
-      <div transition:talkTransition class="w-full">
+      <div class="w-full">
         <VideoCard {lo} />
       </div>
       <div class="hidden md:block">

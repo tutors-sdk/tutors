@@ -6,7 +6,6 @@
   import type { AnalyticsService } from "../reader-lib/services/analytics-service";
   import { currentLo, revealSidebar } from "../stores";
   import * as animateScroll from "svelte-scrollto";
-  import { viewDelay } from "../components/animations";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
 
@@ -35,7 +34,7 @@
       if (course.lo.properties.ignorepin) {
         ignorePin = course.lo.properties.ignorepin.toString();
       }
-    }, viewDelay);
+    }, 500);
     return course;
   }
 

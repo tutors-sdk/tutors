@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onlineDrawer, studentsOnline, studentsOnlineList } from "../../../stores";
+  import { onlineDrawer, studentsOnline, studentsOnlineList } from "../../stores";
   import { StudentCard } from "tutors-ui";
 
   const drawerClose: any = () => {

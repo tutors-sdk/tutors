@@ -8,14 +8,14 @@
     calendarDrawer,
     infoDrawer,
     tocDrawer,
-  } from "../../stores";
+  } from "../stores";
   import { LayoutMenu, NavTitle, NavUser } from "tutors-ui";
   import { isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
   import { getContext } from "svelte";
   import type { Course } from "tutors-reader-lib/src/models/course";
   import type { StudentMetric, User } from "tutors-reader-lib/src/types/metrics-types";
-  import type { MetricsService } from "../../reader-lib/services/metrics-service";
-  import { PresenceService } from "../../reader-lib/services/presence-service";
+  import type { MetricsService } from "../reader-lib/services/metrics-service";
+  import { PresenceService } from "../reader-lib/services/presence-service";
   import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
   import { AppBar, Divider } from "@brainandbones/skeleton";
 

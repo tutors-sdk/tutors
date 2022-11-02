@@ -6,7 +6,6 @@
   import { CardDeck, UnitCard, TalkCard, VideoCard } from "tutors-ui";
   import { currentLo, layout, revealSidebar } from "../stores";
   import * as animateScroll from "svelte-scrollto";
-  import { viewDelay } from "../components/animations";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
 
@@ -21,7 +20,7 @@
   let hide = true;
   setTimeout(function () {
     hide = false;
-  }, viewDelay);
+  }, 500);
 
   async function getTopic(url: string) {
     revealSidebar.set(false);
