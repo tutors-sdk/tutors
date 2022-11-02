@@ -29,7 +29,9 @@
   }
 </script>
 
-<div class="card h-90 border-primary-500 m-1 w-4/5 overflow-x-hidden border-y-8 lg:w-2/5">
+<div
+  class="card h-90 border-primary-500 m-1 w-4/5 overflow-x-hidden border-y-8 transition-all hover:scale-105 lg:w-2/5"
+>
   <div class="flex">
     <header class="card-header inline-flex items-center">
       <Avatar src="{student.img}" alt="{student.nickname}" class="mr-2" />
