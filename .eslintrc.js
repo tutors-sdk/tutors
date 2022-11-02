@@ -3,7 +3,8 @@ module.exports = {
   extends: [],
   settings: {
     next: {
-      rootDir: ["apps/*/"],
-    },
+      rootDir: ['apps/*/']
+    }
   },
+  ignorePatterns: ['**/.eslintrc.js', '**/*.cy.ts', '**/commands.ts']
 };
