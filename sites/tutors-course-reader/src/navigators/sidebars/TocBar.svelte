@@ -1,9 +1,9 @@
 <script lang="ts">
   import { beforeUpdate, getContext } from "svelte";
   import type { Course } from "tutors-reader-lib/src/models/course";
-  import type { CourseService } from "../tutors-reader-lib/src/services/course-service";
+  import type { CourseService } from "tutors-reader-lib/src/services/course-service";
   import CourseNavigator from "../CourseNavigator.svelte";
-  import { tocDrawer } from "../../stores";
+  import { tocDrawer } from "tutors-reader-lib/src/stores/stores";
 
   let course: Course = null;
   const cache: CourseService = getContext("cache");

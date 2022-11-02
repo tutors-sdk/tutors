@@ -3,7 +3,7 @@
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { TopicNavigatorCard, VideoCard } from "tutors-ui";
   import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
-  import { revealSidebar } from "../stores";
+  import { revealSidebar } from "tutors-reader-lib/src/stores/stores";
   import { querystring } from "svelte-spa-router";
   import * as animateScroll from "svelte-scrollto";
   import Loading from "./support/Loading.svelte";

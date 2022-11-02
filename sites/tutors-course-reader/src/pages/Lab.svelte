@@ -2,7 +2,7 @@
   import { push } from "svelte-spa-router";
   import { afterUpdate, getContext, onDestroy } from "svelte";
   import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
-  import { revealSidebar } from "../stores";
+  import { revealSidebar } from "tutors-reader-lib/src/stores/stores";
   import type { CourseService } from "tutors-reader-lib/src/services/course-service";
   import * as animateScroll from "svelte-scrollto";
   import type { Lab } from "tutors-reader-lib/src/models/lab";

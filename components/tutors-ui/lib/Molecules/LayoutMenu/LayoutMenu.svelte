@@ -1,6 +1,6 @@
 <script lang="ts">
   import { LightSwitch, menu } from '@brainandbones/skeleton';
-  import { layout, storeTheme } from 'tutors-course-reader/src/stores';
+  import { layout, storeTheme } from 'tutors-reader-lib/src/stores/stores';
   import Icon from 'tutors-reader-lib/src/iconography/Icon.svelte';
 
   function applyInitialLayout() {

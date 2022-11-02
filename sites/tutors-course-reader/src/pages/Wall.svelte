@@ -2,7 +2,7 @@
   import { getContext, onMount } from "svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { CardDeck, VideoCard } from "tutors-ui";
-  import { currentCourse, currentLo } from "../stores";
+  import { currentCourse, currentLo } from "tutors-reader-lib/src/stores/stores";
   import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
   import * as animateScroll from "svelte-scrollto";
   import Loading from "./support/Loading.svelte";

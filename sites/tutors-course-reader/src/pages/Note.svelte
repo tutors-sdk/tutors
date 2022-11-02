@@ -2,7 +2,7 @@
   import { getContext, onMount } from "svelte";
   import { TopicNavigatorCard } from "tutors-ui";
   import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
-  import { revealSidebar } from "../stores";
+  import { revealSidebar } from "tutors-reader-lib/src/stores/stores";
   import * as animateScroll from "svelte-scrollto";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { NoteCard } from "tutors-ui";

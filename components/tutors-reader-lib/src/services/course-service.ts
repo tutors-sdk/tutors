@@ -1,5 +1,5 @@
 import path from "path-browserify";
-import { courseUrl, currentCourse, currentLo, currentUser, week } from "tutors-course-reader/src/stores";
+import { courseUrl, currentCourse, currentLo, currentUser, week } from "tutors-reader-lib/src/stores/stores";
 import { replace } from "svelte-spa-router";
 import { Course } from "tutors-reader-lib/src/models/course";
 import { Lab } from "tutors-reader-lib/src/models/lab";

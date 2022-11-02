@@ -2,7 +2,7 @@
   import Icon from 'tutors-reader-lib/src/iconography/Icon.svelte';
   import { getIcon } from 'tutors-reader-lib/src/iconography/themes';
   import type { Lo } from 'tutors-reader-lib/src/types/lo-types';
-  import { currentCourse, layout } from 'tutors-course-reader/src/stores';
+  import { currentCourse, layout } from 'tutors-reader-lib/src/stores/stores';
   import { onDestroy } from 'svelte';
   import { Image } from 'tutors-ui';
   import { convertMd } from 'tutors-reader-lib/src/utils/markdown-utils';

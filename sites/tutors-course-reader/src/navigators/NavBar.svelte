@@ -8,7 +8,7 @@
     calendarDrawer,
     infoDrawer,
     tocDrawer,
-  } from "../stores";
+  } from "tutors-reader-lib/src/stores/stores";
   import { LayoutMenu, NavTitle, NavUser } from "tutors-ui";
   import { isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
   import { getContext } from "svelte";

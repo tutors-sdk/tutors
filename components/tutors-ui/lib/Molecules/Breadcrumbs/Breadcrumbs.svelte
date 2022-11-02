@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentCourse, currentLo } from 'tutors-course-reader/src/stores';
+  import { currentCourse, currentLo } from 'tutors-reader-lib/src/stores/stores';
   import { Breadcrumb, Crumb } from '@brainandbones/skeleton';
   import Icon from 'tutors-reader-lib/src/iconography/Icon.svelte';
   import type { Lo } from 'tutors-reader-lib/src/types/lo-types';

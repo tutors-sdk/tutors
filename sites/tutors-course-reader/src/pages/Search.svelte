@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
-  import { currentLo } from "../stores";
+  import { currentLo } from "tutors-reader-lib/src/stores/stores";
   import type { ResultType } from "tutors-reader-lib/src/utils/search-utils";
   import { isValid, searchHits } from "tutors-reader-lib/src/utils/search-utils";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";

@@ -4,7 +4,7 @@
   import { CardDeck, UnitCard } from "tutors-ui";
   import type { CourseService } from "tutors-reader-lib/src/services/course-service";
   import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
-  import { currentLo, revealSidebar } from "../stores";
+  import { currentLo, revealSidebar } from "tutors-reader-lib/src/stores/stores";
   import * as animateScroll from "svelte-scrollto";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";

@@ -28,7 +28,7 @@
   import OnlineBar from "./navigators/sidebars/OnlineBar.svelte";
   import TocBar from "./navigators/sidebars/TocBar.svelte";
   import Note from "./pages/Note.svelte";
-  import { currentLo, infoDrawer, calendarDrawer, onlineDrawer, tocDrawer, storeTheme } from "./stores";
+  import { currentLo, infoDrawer, calendarDrawer, onlineDrawer, tocDrawer, storeTheme } from "tutors-reader-lib/src/stores/stores";
 
   import tutors from "./themes/tutors.css";
   import dyslexia from "./themes/dyslexia.css";

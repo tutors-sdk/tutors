@@ -4,7 +4,7 @@ import type { Course } from "tutors-reader-lib/src/models/course";
 import type { User } from "tutors-reader-lib/src/types/auth-types";
 import { checkAuth } from "./auth-service";
 import { getKeys } from "tutors-course-reader/src/environment";
-import { currentCourse } from "tutors-course-reader/src/stores";
+import { currentCourse } from "tutors-reader-lib/src/stores/stores";
 
 import { getNode, initFirebase, updateCalendar, updateCount, updateCountValue, updateLastAccess, updateStr, updateVisits } from "tutors-reader-lib/src/utils/firebase-utils";
 

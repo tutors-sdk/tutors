@@ -2,7 +2,7 @@
   import type { Topic } from 'tutors-reader-lib/src/models/topic';
   import type { Lo } from 'tutors-reader-lib/src/types/lo-types';
   import { Image, TopicNavigator } from 'tutors-ui';
-  import { currentLo, layout } from 'tutors-course-reader/src/stores';
+  import { currentLo, layout } from 'tutors-reader-lib/src/stores/stores';
   import { onDestroy } from 'svelte';
 
   export let topic: Topic;

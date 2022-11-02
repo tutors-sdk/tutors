@@ -4,7 +4,7 @@
     currentUser,
     studentsOnline,
     onlineDrawer
-  } from 'tutors-course-reader/src/stores';
+  } from 'tutors-reader-lib/src/stores/stores';
   import type { User } from 'tutors-reader-lib/src/types/metrics-types';
   import type { Course } from 'tutors-reader-lib/src/models/course';
   import Icon from 'tutors-reader-lib/src/iconography/Icon.svelte';

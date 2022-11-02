@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentCourse, currentLo } from 'tutors-course-reader/src/stores';
+  import { currentCourse, currentLo } from 'tutors-reader-lib/src/stores/stores';
   import { Image } from 'tutors-ui';
   import type { Lo } from 'tutors-reader-lib/src/types/lo-types';
   import { getIcon } from 'tutors-reader-lib/src/iconography/themes';
