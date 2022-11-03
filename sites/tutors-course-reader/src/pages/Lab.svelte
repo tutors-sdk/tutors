@@ -109,7 +109,7 @@
             {@html lab.horizontalNavbarHtml}
           </nav>
         </header>
-        <div class="card bg-surface-100-800-token p-8 m-2 rounded-xl">
+        <div class="card bg-surface-100-800-token py-8 m-2 rounded-xl">
           <article class="mx-auto prose dark:prose-invert">
             {@html lab.content}
           </article>
