@@ -86,19 +86,19 @@
   {#if authenticating}
     <TutorsTerms bind:authenticating />
   {:else}
-    <Drawer open={infoDrawer} position="left" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm" class="z-50">
+    <Drawer open={infoDrawer} position="left" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-none" class="z-50">
       <InfoBar />
     </Drawer>
 
-    <Drawer open={calendarDrawer} position="left" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm" class="z-50">
+    <Drawer open={calendarDrawer} position="left" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-none" class="z-50">
       <CalendarBar />
     </Drawer>
 
-    <Drawer open={onlineDrawer} position="right" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm" class="z-50">
+    <Drawer open={onlineDrawer} position="right" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-none" class="z-50">
       <OnlineBar />
     </Drawer>
 
-    <Drawer open={tocDrawer} position="right" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-sm" class="z-50">
+    <Drawer open={tocDrawer} position="right" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5" blur="backdrop-blur-none" class="z-50">
       <TocBar />
     </Drawer>
 
