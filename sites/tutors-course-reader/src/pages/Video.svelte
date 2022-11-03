@@ -9,6 +9,7 @@
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
   import type { CourseService } from "tutors-reader-lib/src/services/course-service";
+  import { talkTransition } from "tutors-ui/lib/animations";
 
   export let params: Record<string, string>;
   const analytics: AnalyticsService = getContext("analytics");
@@ -41,8 +42,8 @@
   <Loading />
 {:then lo}
   {#if !hide}
-    <div class="flex w-11/12 mx-auto">
-      <div class="w-full">
+  <div class="min-h-screen flex w-11/12 mx-auto">
+    <div transition:talkTransition class="w-full">
         <VideoCard {lo} />
       </div>
       <div class="hidden md:block">
