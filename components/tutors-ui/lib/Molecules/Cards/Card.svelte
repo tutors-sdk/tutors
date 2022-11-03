@@ -6,6 +6,7 @@
   import { onDestroy } from 'svelte';
   import { Image } from 'tutors-ui';
   import { convertMd } from 'tutors-reader-lib/src/utils/markdown-utils';
+  import { cardTransition } from '../../animations';
 
   export let lo: Lo;
   let target = '';
@@ -51,7 +52,7 @@
 </script>
 
 <a href="{lo.route}" target="{target}">
-  <div
+  <div transition:cardTransition
     class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 {getColor(
       getIcon(lo.type).colour
     )} m-2 {cardWidths} transition-all hover:scale-105"
