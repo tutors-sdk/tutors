@@ -1,6 +1,6 @@
 <script lang="ts">
   import { layout } from "../../../stores";
-  import Icon from "tutors-ui/lib/Atoms/Iconography/Icon.svelte";
+  import Icon from "tutors-ui/lib/Atoms/Icon/Icon.svelte";
 
   function applyInitialLayout() {
     const savedLayout = window.localStorage.getItem("site-layout");

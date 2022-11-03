@@ -1,7 +1,7 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
-  import Icon from "tutors-ui/lib/Atoms/Iconography/Icon.svelte";
-  import { getIcon } from "tutors-ui/lib/Atoms/Iconography/themes";
+  import Icon from "tutors-ui/lib/Atoms/Icon/Icon.svelte";
+  import { getIcon } from "tutors-ui/lib/Atoms/Icon/themes";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { currentCourse, layout } from "../../stores";
   import { cardTransition } from "../animations";

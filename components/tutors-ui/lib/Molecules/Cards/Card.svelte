@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Icon from '../../Atoms/Iconography/Icon.svelte';
-  import { getIcon } from '../../Atoms/Iconography/themes';
+  import Icon from '../../Atoms/Icon/Icon.svelte';
+  import { getIcon } from '../../Atoms/Icon/themes';
   import type { Lo } from 'tutors-reader-lib/src/types/lo-types';
   import { currentCourse, layout } from 'tutors-reader-lib/src/stores/stores';
   import { onDestroy } from 'svelte';
@@ -52,7 +52,8 @@
 </script>
 
 <a href="{lo.route}" target="{target}">
-  <div transition:cardTransition
+  <div
+    transition:cardTransition
     class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 {getColor(
       getIcon(lo.type).colour
     )} m-2 {cardWidths} transition-all hover:scale-105"

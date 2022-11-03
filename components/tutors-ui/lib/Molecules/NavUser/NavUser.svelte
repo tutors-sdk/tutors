@@ -7,7 +7,7 @@
   } from 'tutors-reader-lib/src/stores/stores';
   import type { User } from 'tutors-reader-lib/src/types/metrics-types';
   import type { Course } from 'tutors-reader-lib/src/models/course';
-  import Icon from '../../Atoms/Iconography/Icon.svelte';
+  import Icon from '../../Atoms/Icon/Icon.svelte';
   import { getUserId, isAuthenticated } from 'tutors-reader-lib/src/utils/auth-utils';
   import { getContext } from 'svelte';
   import type { MetricsService } from 'tutors-reader-lib/src/services/metrics-service';

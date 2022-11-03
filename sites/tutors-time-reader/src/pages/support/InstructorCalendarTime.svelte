@@ -4,7 +4,7 @@
   import "ag-grid-enterprise";
   import { CalendarSheet, options } from "../../components/sheets/calendar-sheet";
   import type { CourseService } from "../../reader-lib/services/course-service";
-  import Icon from "tutors-ui/lib/Atoms/Iconography/Icon.svelte";
+  import Icon from "tutors-ui/lib/Atoms/Icon/Icon.svelte";
   import type { MetricsService } from "src/reader-lib/services/metrics-service";
 
   let calendar;

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { currentCourse, currentLo } from 'tutors-reader-lib/src/stores/stores';
   import { Breadcrumb, Crumb } from '@brainandbones/skeleton';
-  import Icon from '../../Atoms/Iconography/Icon.svelte';
+  import { Icon } from 'tutors-ui';
   import type { Lo } from 'tutors-reader-lib/src/types/lo-types';
 
   function crumbs(lo: Lo, los: Lo[]) {

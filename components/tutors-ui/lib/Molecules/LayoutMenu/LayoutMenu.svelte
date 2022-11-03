@@ -1,7 +1,7 @@
 <script lang="ts">
   import { LightSwitch, menu } from '@brainandbones/skeleton';
   import { layout, storeTheme } from 'tutors-reader-lib/src/stores/stores';
-  import Icon from '../../Atoms/Iconography/Icon.svelte';
+  import Icon from '../../Atoms/Icon/Icon.svelte';
 
   function applyInitialLayout() {
     const savedLayout = window.localStorage.getItem('site-layout');

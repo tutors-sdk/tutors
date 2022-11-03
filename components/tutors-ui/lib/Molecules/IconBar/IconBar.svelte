@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Icon from '../../Atoms/Iconography/Icon.svelte';
+  import { Icon } from 'tutors-ui';
   import type { IconNavBar } from 'tutors-reader-lib/src/types/icon-types';
 
   export let nav: IconNavBar;

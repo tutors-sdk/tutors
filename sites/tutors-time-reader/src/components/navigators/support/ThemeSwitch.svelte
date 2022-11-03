@@ -1,6 +1,6 @@
 <script>
-  import Icon from "tutors-ui/lib/Atoms/Iconography/Icon.svelte";
-  import { setIconLib, themeIcons, themes } from "tutors-ui/lib/Atoms/Iconography/themes";
+  import Icon from "tutors-ui/lib/Atoms/Icon/Icon.svelte";
+  import { setIconLib, themeIcons, themes } from "tutors-ui/lib/Atoms/Icon/themes";
 
   const htmlTag = document.getElementsByTagName("html")[0];
 

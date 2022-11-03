@@ -8,7 +8,7 @@
   import NotFound from "./pages/support/NotFound.svelte";
   import MainNavigator from "./components/navigators/MainNavigator.svelte";
   import { CourseService } from "./reader-lib/services/course-service";
-  import { setIconLib, themeIcons } from "tutors-ui/lib/Atoms/Iconography/themes";
+  import { setIconLib, themeIcons } from "tutors-ui/lib/Atoms/Icon/themes";
   import { getKeys } from "./environment";
   import { MetricsService } from "./reader-lib/services/metrics-service";
 

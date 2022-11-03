@@ -16,7 +16,7 @@
   import type { StudentMetric, User } from "tutors-reader-lib/src/types/metrics-types";
   import type { MetricsService } from "tutors-reader-lib/src/services/metrics-service";
   import { PresenceService } from "tutors-reader-lib/src/services/presence-service";
-  import Icon from "tutors-ui/lib/Atoms/Iconography/Icon.svelte";
+  import Icon from "tutors-ui/lib/Atoms/Icon/Icon.svelte";
   import { AppBar, Divider } from "@brainandbones/skeleton";
 
   const infoDrawerOpen: any = () => {
