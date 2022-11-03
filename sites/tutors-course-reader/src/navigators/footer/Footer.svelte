@@ -2,12 +2,14 @@
   import { onMount } from "svelte";
 
   let id = "";
+  let sha = "";
 
   onMount(async () => {
     await fetch("https://api.github.com/repos/tutors-sdk/tutors/commits/development")
       .then((response) => response.json())
       .then((data) => {
         id = data.sha.slice(0, 7);
+        sha = data.sha;
       });
   });
   const version = "7.0.0-beta";
@@ -15,7 +17,7 @@
 
 <footer class="mx-auto w-11/12 py-8">
   <div class="flex grid-flow-col items-center">
-    <a href="https://tutors.dev" target="_blank" class="inline-flex items-center">
+    <div class="inline-flex">
       <svg width="40px" viewBox="0 0 54.5 39.4" xml:space="preserve"
         ><defs /><g
           ><path
@@ -29,8 +31,11 @@
           ></g
         ></svg
       >
-      <p class="pl-4 pt-1">Powered by Tutors Course Reader {version}-{id}</p>
-    </a>
+      <div>
+        <a href="https://tutors.dev" target="_blank"><p class="pl-4">Powered by Tutors Course Reader {version}</p></a>
+        <a href="https://github.com/tutors-sdk/tutors/commit/{sha}" target="_blank"><p class="pl-4 !text-xs">Last commit {id}</p></a>
+      </div>
+    </div>
     <a href="https://netlify.com" target="_blank" class="ml-auto">
       <img src="https://www.netlify.com/v3/img/components/netlify-color-bg.svg" alt="Deploys by Netlify" class="h-10" />
     </a>
