@@ -10,10 +10,6 @@
     "./eslintConfig": {
       "import": "./configs/eslintrc.config.cjs",
       "require": "./configs/eslintrc.config.cjs"
-    },
-    "./stores": {
-      "import": "./configs/stores.ts",
-      "require": "./configs/stores.ts"
     }
   },
   "type": "module",
