@@ -110,7 +110,7 @@
           </nav>
         </header>
         <div class="card bg-surface-100-800-token p-8 lg:px-4 py-8 m-2 rounded-xl">
-          <article class="mx-auto prose dark:prose-invert lg:prose-lg max-w-full lg:max-w-[85%]">
+          <article class="mx-auto prose dark:prose-invert max-w-full lg:max-w-[85%]">
             {@html lab.content}
           </article>
         </div>
