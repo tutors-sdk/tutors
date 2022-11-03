@@ -107,10 +107,10 @@
         <NavBar />
         <PageHeader />
       </div>
-      <div class="mx-auto my-4 min-h-screen">
+      <div class="mx-auto my-4 min-h-[70%]">
         <Router {routes} />
       </div>
-      <div class="bg-surface-100-800-token mt-2 w-full">
+      <div class="bg-surface-100-800-token bottom-0 mt-2">
         <Footer />
       </div>
     </AppShell>
