@@ -44,7 +44,7 @@
     <tbody class="text-center">
       {#each calendar.weeks as week}
         {#if currentWeek.title == week.title}
-          <tr class="bg-surface-50-900-token my-2">
+          <tr class="my-2 bg-accent-300 dark:bg-accent-700">
             <td>{week.title}</td>
             <td>{week.type}</td>
             <td>{monthNames[week.dateObj.getMonth()]} {week.dateObj.getDate()}</td>
