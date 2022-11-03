@@ -107,7 +107,7 @@
         <NavBar />
         <PageHeader />
       </div>
-      <div class="mx-auto my-4">
+      <div class="mx-auto my-4 min-h-screen">
         <Router {routes} />
       </div>
       <div class="bg-surface-100-800-token mt-2 w-full">
