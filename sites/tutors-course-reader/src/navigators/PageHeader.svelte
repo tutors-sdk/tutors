@@ -1,7 +1,6 @@
 <script lang="ts">
   import { currentCourse, portfolio } from "tutors-reader-lib/src/stores/stores";
-  import { Breadcrumbs } from "tutors-ui";
-  import IconBar from "tutors-reader-lib/src/iconography/IconBar.svelte";
+  import { Breadcrumbs, IconBar } from "tutors-ui";
 </script>
 
 {#if $currentCourse}

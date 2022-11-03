@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Icon from 'tutors-reader-lib/src/iconography/Icon.svelte';
-  import { getIcon } from 'tutors-reader-lib/src/iconography/themes';
+  import Icon from '../../Atoms/Iconography/Icon.svelte';
+  import { getIcon } from '../../Atoms/Iconography/themes';
   import type { Lo } from 'tutors-reader-lib/src/types/lo-types';
   import { currentCourse, layout } from 'tutors-reader-lib/src/stores/stores';
   import { onDestroy } from 'svelte';

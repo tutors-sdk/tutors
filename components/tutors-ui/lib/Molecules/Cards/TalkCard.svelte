@@ -1,5 +1,5 @@
 <script lang="js">
-  import Icon from 'tutors-reader-lib/src/iconography/Icon.svelte';
+  import Icon from '../../Atoms/Iconography/Icon.svelte';
   import { BarLoader } from 'svelte-loading-spinners';
   import FileSaver from 'file-saver';
   import { onDestroy, tick } from 'svelte';

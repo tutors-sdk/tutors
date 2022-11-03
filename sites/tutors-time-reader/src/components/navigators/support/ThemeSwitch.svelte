@@ -1,6 +1,6 @@
 <script>
-  import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
-  import { setIconLib, themeIcons, themes } from "tutors-reader-lib/src/iconography/themes";
+  import Icon from "tutors-ui/lib/Atoms/Iconography/Icon.svelte";
+  import { setIconLib, themeIcons, themes } from "tutors-ui/lib/Atoms/Iconography/themes";
 
   const htmlTag = document.getElementsByTagName("html")[0];
 
@@ -13,11 +13,11 @@
   }
 </script>
 
-<div class="tooltip tooltip-top dropdown dropdown-end dropdown-hover flex-none">
+<div class="tooltip-top dropdown-end dropdown-hover dropdown tooltip flex-none">
   <Icon type="dark" toolTip="Change Visual Theme" button={true} />
-  <ul class="menu dropdown-content bg-base-100 text-base-content w-52 rounded-lg p-1 shadow">
+  <ul class="dropdown-content menu w-52 rounded-lg bg-base-100 p-1 text-base-content shadow">
     {#each themes as theme}
-      <button on:click={() => setTheme(theme)} class="bg-base-100 text-base-content py-2" data-theme={theme}>{theme}</button>
+      <button on:click={() => setTheme(theme)} class="bg-base-100 py-2 text-base-content" data-theme={theme}>{theme}</button>
     {/each}
   </ul>
 </div>

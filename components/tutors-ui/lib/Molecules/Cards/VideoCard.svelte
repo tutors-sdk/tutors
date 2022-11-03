@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Lo } from 'tutors-reader-lib/src/types/lo-types';
   import { currentCourse } from 'tutors-reader-lib/src/stores/stores';
-  import { getIcon } from 'tutors-reader-lib/src/iconography/themes';
+  import { getIcon } from '../../Atoms/Iconography/themes';
 
   export let lo: Lo;
   let heanet = false;

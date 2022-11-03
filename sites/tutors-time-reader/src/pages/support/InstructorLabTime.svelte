@@ -5,7 +5,7 @@
   import "ag-grid-enterprise";
   import { options } from "../../components/sheets/lab-sheet";
   import type { CourseService } from "../../reader-lib/services/course-service";
-  import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
+  import Icon from "tutors-ui/lib/Atoms/Iconography/Icon.svelte";
   import type { MetricsService } from "src/reader-lib/services/metrics-service";
 
   let time;

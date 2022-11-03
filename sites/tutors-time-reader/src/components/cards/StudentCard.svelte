@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { StudentMetric } from "tutors-reader-lib/src/types/metrics-types";
   import { Image } from "tutors-ui";
-  import { getIcon } from "tutors-reader-lib/src/iconography/themes";
+  import { getIcon } from "tutors-ui/lib/Atoms/Iconography/themes";
   import { layout } from "../../stores";
   import { cardTransition } from "../animations";
   import { onDestroy } from "svelte";

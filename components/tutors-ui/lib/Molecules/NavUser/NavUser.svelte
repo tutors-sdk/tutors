@@ -7,10 +7,10 @@
   } from 'tutors-reader-lib/src/stores/stores';
   import type { User } from 'tutors-reader-lib/src/types/metrics-types';
   import type { Course } from 'tutors-reader-lib/src/models/course';
-  import Icon from 'tutors-reader-lib/src/iconography/Icon.svelte';
+  import Icon from '../../Atoms/Iconography/Icon.svelte';
   import { getUserId, isAuthenticated } from 'tutors-reader-lib/src/utils/auth-utils';
   import { getContext } from 'svelte';
-  import type { MetricsService } from 'tutors-course-reader/src/reader-lib/services/metrics-service';
+  import type { MetricsService } from 'tutors-reader-lib/src/services/metrics-service';
   import { menu, Avatar, Divider } from '@brainandbones/skeleton';
 
   let user: User;

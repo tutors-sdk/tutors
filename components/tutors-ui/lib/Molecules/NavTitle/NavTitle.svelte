@@ -2,7 +2,7 @@
   import { currentCourse, currentLo } from 'tutors-reader-lib/src/stores/stores';
   import { Image } from 'tutors-ui';
   import type { Lo } from 'tutors-reader-lib/src/types/lo-types';
-  import { getIcon } from 'tutors-reader-lib/src/iconography/themes';
+  import { getIcon } from '../../Atoms/Iconography/themes';
   import Icon from '@iconify/svelte';
   import { onDestroy } from 'svelte';
 
