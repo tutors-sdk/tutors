@@ -30,11 +30,10 @@
   import Note from "./pages/Note.svelte";
   import { currentLo, infoDrawer, calendarDrawer, onlineDrawer, tocDrawer, storeTheme } from "tutors-reader-lib/src/stores/stores";
 
-  import tutors from "./themes/tutors.css";
-  import dyslexia from "./themes/dyslexia.css";
-  import halloween from "./themes/halloween.css";
+  import tutors from "tutors-ui/lib/themes/tutors.css";
+  import dyslexia from "tutors-ui/lib/themes/dyslexia.css";
 
-  const themes: any = { tutors, dyslexia, halloween };
+  const themes: any = { tutors, dyslexia };
 
   storeTheme.subscribe(setBodyThemeAttribute);
   function setBodyThemeAttribute(): void {

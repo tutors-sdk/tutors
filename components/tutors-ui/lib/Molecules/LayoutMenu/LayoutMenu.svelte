@@ -1,7 +1,7 @@
 <script lang="ts">
   import { LightSwitch, menu } from '@brainandbones/skeleton';
   import { layout, storeTheme } from 'tutors-reader-lib/src/stores/stores';
-  import Icon from '../../Atoms/Icon/Icon.svelte';
+  import { Icon } from 'tutors-ui';
 
   function applyInitialLayout() {
     const savedLayout = window.localStorage.getItem('site-layout');
@@ -67,15 +67,6 @@
         }}"
       >
         <p class="text-lg">Dyslexia</p>
-      </li>
-      <li
-        class="option"
-        class:!bg-primary-500="{$storeTheme === 'halloween'}"
-        on:click="{() => {
-          storeTheme.set('halloween');
-        }}"
-      >
-        <p class="text-lg">Halloween</p>
       </li>
     </ul>
   </nav>
