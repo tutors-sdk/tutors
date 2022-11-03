@@ -40,7 +40,7 @@
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   currentUser.subscribe(async (newUser) => {
     user = newUser;
-    gitUrl = `https://github.com/${user.nickname}`;
+    gitUrl = `https://github.com/${user?.nickname}`;
     if (user && newUser) {
       setTimeUrls();
     }
@@ -96,7 +96,7 @@
             <Icon type="offline" />
           {/if}</span
         >
-        <Avatar width="w-10" src="{$currentUser.picture}" alt="{$currentUser.nickname}" />
+        <Avatar width="w-10" src="{$currentUser.picture}" alt="{$currentUser?.nickname}" />
       </div>
     </button>
     <nav class="list-nav card card-body w-56 space-y-4 shadow-lg" data-menu="avatar">
