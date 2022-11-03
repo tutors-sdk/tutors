@@ -51,5 +51,11 @@
 {#if lo.icon}
   <Iconify icon="{lo.icon.type}" color="{colourPrefix}{lo.icon.color}" height="{iconHeight}" />
 {:else}
-  <Avatar src="{lo.img}" alt="{lo.title}" width="{imageHeight}" rounded="rounded-xl" />
+  <Avatar
+    src="{lo.img}"
+    alt="{lo.title}"
+    width="{imageHeight}"
+    rounded="rounded-xl"
+    background="none"
+  />
 {/if}
