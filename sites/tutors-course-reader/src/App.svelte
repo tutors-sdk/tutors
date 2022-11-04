@@ -107,12 +107,12 @@
       <TocBar />
     </Drawer>
 
-    <AppShell class="h-screen">
+    <AppShell>
       <div class="sticky top-0 z-40">
         <NavBar />
         <PageHeader />
       </div>
-      <div class="mx-auto my-4 min-h-[70%]">
+      <div class="mx-auto my-4">
         <Router {routes} />
       </div>
       <div class="bg-surface-100-800-token bottom-0 mt-2">
