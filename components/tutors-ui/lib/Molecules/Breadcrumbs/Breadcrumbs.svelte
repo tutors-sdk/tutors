@@ -19,7 +19,7 @@
   let unitId = '';
 
   function getUnitId(type: string, id: string) {
-    if (type === 'unit') {
+    if (type == 'unit') {
       unitId = id;
     }
     return unitId;
