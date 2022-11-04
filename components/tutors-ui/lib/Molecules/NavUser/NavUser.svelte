@@ -25,7 +25,6 @@
 
   function setTimeUrls() {
     timeUrl = `${timeApp}/#/time/${course?.url}?${getUserId()}`;
-    liveUrl = `${timeApp}/#/live/${course?.url}?${getUserId()}`;
   }
 
   currentCourse.subscribe((current) => {
@@ -132,12 +131,6 @@
           <a href="{timeUrl}" target="_blank">
             <Icon type="tutorsTime" />
             <div class="ml-2">Tutors Time</div>
-          </a>
-        </li>
-        <li>
-          <a href="{liveUrl}" target="_blank">
-            <Icon type="live" />
-            <div class="ml-2">Tutors Live</div>
           </a>
         </li>
         <li>
