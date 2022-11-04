@@ -25,7 +25,7 @@
 
 <svelte:window on:scroll={handleOnScroll} />
 
-<button type="button" class="btn btn-circle btn-sm back-to-top" on:click={goTop} class:hidden>
+<button class="btn back-to-top" on:click={goTop} class:hidden>
   <svg
     aria-hidden="true"
     focusable="false"
