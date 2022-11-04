@@ -21,6 +21,8 @@
   function getUnitId(type: string, id: string) {
     if (type == 'unit') {
       unitId = id;
+    } else {
+      unitId = '';
     }
     return unitId;
   }
