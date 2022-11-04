@@ -8,7 +8,8 @@ import "cypress-fail-fast";
 const delay = 1000;
 
 Cypress.Commands.add("clickBreadcrumb", (lo: any) => {
-  cy.get(".navbar-secondary").contains(lo.title.trim()).click();
+  // cy.get(".crumb-lead").contains(lo.title.trim()).click();
+  cy.go("back");
   cy.wait(delay);
 });
 

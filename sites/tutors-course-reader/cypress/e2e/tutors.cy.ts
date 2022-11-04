@@ -11,13 +11,17 @@ describe("User page", () => {
 
   beforeEach(function () {
     cy.viewport(1440, 1440);
-    cy.visit("https://reader.tutors.dev/#/course/tutors-template.netlify.app");
+    cy.visit("https://next.tutors.dev/#/course/tutors-template.netlify.app");
   });
 
   it("Topics", function () {
     course.los.forEach((topic) => {
-      cy.clickCard(topic);
-      cy.clickBreadcrumb(course);
+      if (!topic.hide) {
+        cy.clickCard(topic);
+        cy.wait(500);
+        cy.go("back");
+        cy.wait(500);
+      }
     });
   });
 
@@ -27,9 +31,9 @@ describe("User page", () => {
         cy.clickCard(topic);
         topic.los.forEach((lo) => {
           cy.clickCard(lo);
-          cy.clickBreadcrumb(topic);
+          cy.go("back");
         });
-        cy.clickBreadcrumb(course);
+        cy.go("back");
       }
     });
   });
