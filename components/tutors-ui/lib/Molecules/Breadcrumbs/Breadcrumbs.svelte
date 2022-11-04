@@ -16,6 +16,15 @@
 
   let truncated = [true, true, true, true, true, true, true];
 
+  let unitId = '';
+
+  function getUnitId(type: string, id: string) {
+    if (type === 'unit') {
+      unitId = id;
+    }
+    return unitId;
+  }
+
   function truncate(input: string) {
     if (input.length > 16) {
       return input.substring(0, 15) + '...';
@@ -40,7 +49,7 @@
     {/if}
     {#each crumbs($currentLo, []) as lo, i}
       <span class="mt-[0.1rem]">›</span>
-      <Crumb href="{lo.route}" class="space-x-0">
+      <Crumb href="{lo.route}{getUnitId(lo.type, lo.id)}" class="space-x-0">
         <svelte:fragment slot="lead">
           <Icon type="{lo.type}" />
         </svelte:fragment>
