@@ -27,8 +27,8 @@
     unitId = "";
     let unitPos: number = url.indexOf("/unit");
     if (unitPos !== -1) {
-      unitId = url.substr(unitPos + 1);
-      url = url.substr(0, unitPos);
+      unitId = url.slice(unitPos + 1);
+      url = url.slice(0, unitPos);
     }
     topic = await cache.readTopic(url);
     if (unitPos !== -1) {
