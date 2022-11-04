@@ -20,7 +20,7 @@ export const options = {
   },
   enableRangeSelection: true,
   enableCellChangeFlash: true,
-  getRowNodeId: function (data) {
+  getRowId: function (data) {
     return data.github;
   },
 };

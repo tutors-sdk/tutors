@@ -6,11 +6,14 @@
   import CalendarTime from "./support/CalendarTime.svelte";
   import InstructorCalendarTime from "./support/InstructorCalendarTime.svelte";
   import type { Course } from "tutors-reader-lib/src/models/course";
-  import type { CourseService } from "../reader-lib/services/course-service";
-  import { currentLo, currentUser } from "../stores";
+
   import { Tab, TabList, TabPanel, Tabs } from "svelte-tabs";
   import { querystring } from "svelte-spa-router";
-  import type { MetricsService } from "src/reader-lib/services/metrics-service";
+  import { currentLo, currentUser } from "tutors-reader-lib/src/stores/stores";
+  import type { CourseService } from "tutors-reader-lib/src/services/course-service";
+  import type { MetricsService } from "tutors-reader-lib/src/services/metrics-service";
+  import NavBar from "../navigators/NavBar.svelte";
+  import { getUserEmail } from "tutors-reader-lib/src/utils/auth-utils";
 
   export let params: Record<string, string> = {};
 
@@ -29,12 +32,13 @@
     id = $querystring;
 
     course = await cache.readCourse(url);
+
     metricsService.setCourse(course);
     const user = await metricsService.fetchUserById(id);
     currentUser.set(user);
     // noinspection TypeScriptValidateTypes
     currentLo.set({ title: `Tutors Time`, type: "tutorsTime", parentLo: course.lo, img: course.lo.img });
-    title = `Tutors Time`;
+    title = `${course.lo.title}: TutorTime data`;
     if (course.lo.properties.ignorepin) {
       ignorePin = "" + course.lo.properties.ignorepin;
     }
@@ -60,6 +64,10 @@
 </svelte:head>
 
 {#await getCourse(params.wild) then course}
+  <div class="sticky top-0 z-40 mb-5">
+    <NavBar {title} subTitle={$currentUser.name} />
+  </div>
+
   <div in:fade={{ duration: 500 }} class="bg-base-200 mt-4 container mx-auto rounded-box">
     <Tabs>
       <TabList>

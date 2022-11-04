@@ -1,11 +1,11 @@
 <script lang="ts">
-  import CardDeck from "../components/cards/CardDeck.svelte";
+  import { Card } from "tutors-ui";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import { layout, portfolio } from "../stores";
+  import { portfolio } from "tutors-reader-lib/src/stores/stores";
   import { fetchAllCourseAccess } from "tutors-reader-lib/src/utils/firebase-utils";
   import { child, get, getDatabase, onValue, ref } from "firebase/database";
   import { toHoursAndMinutes } from "tutors-reader-lib/src/utils/metrics-utils";
-  import SecondaryNavigator from "../components/navigators/SecondaryNavigator.svelte";
+  import NavBar from "../navigators/NavBar.svelte";
 
   let los: Lo[] = [];
   let canUpdate = false;
@@ -15,16 +15,14 @@
   $: subTitle = "Connecting ...";
   let activeSince = "";
 
-  layout.set("compacted");
   void startListening();
 
   function summarise(usage: any, visits: number): string {
     let str = "";
-    if (usage.count) str += `${toHoursAndMinutes(usage.count)}<br>`;
-    str += `${usage.visits}<br>`;
-    str += `${visits}<br>`;
-    str += "<hr><br>";
-    str += `${usage.title}`;
+    if (usage.count) str += `Time ${toHoursAndMinutes(usage.count)}: `;
+    str += `Visits: ${usage.visits}: `;
+    str += `Count: ${visits}: `;
+    str += `<br>${usage.title}`;
     return str;
   }
 
@@ -87,9 +85,17 @@
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
-
-<SecondaryNavigator title="Tutors Module Activity" {subTitle} />
-
-<div class="container mx-auto">
-  <CardDeck {los} />
+<div class="sticky top-0 z-40 mb-5">
+  <NavBar title="Tutors Module Activity" {subTitle} />
 </div>
+{#if los.length}
+  <div
+    class="bg-surface-100-800-token rounded-box card-corner mx-auto mb-2 w-11/12 max-w-full place-items-center overflow-hidden rounded-xl p-4 backdrop-blur"
+  >
+    <div class="flex flex-wrap justify-center">
+      {#each los as lo}
+        <Card {lo} />
+      {/each}
+    </div>
+  </div>
+{/if}

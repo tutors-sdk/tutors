@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { LabCountSheet } from "../../components/sheets/lab-count-sheet";
   import { getContext, onMount } from "svelte";
   import { Grid } from "ag-grid-community";
-  import { options } from "../../components/sheets/lab-sheet";
-  import type { CourseService } from "../../reader-lib/services/course-service";
   import Icon from "tutors-ui/lib/Atoms/Icon/Icon.svelte";
-  import type { MetricsService } from "src/reader-lib/services/metrics-service";
+  import type { CourseService } from "tutors-reader-lib/src/services/course-service";
+  import type { MetricsService } from "tutors-reader-lib/src/services/metrics-service";
+  import { LabCountSheet } from "../../components/sheets/lab-count-sheet";
+  import { options } from "../../components/sheets/lab-sheet";
 
   export let id;
 
