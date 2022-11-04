@@ -1,27 +1,26 @@
 <script lang="ts">
-  import CardDeck from "../components/cards/CardDeck.svelte";
+  import { Card } from "tutors-ui";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
   import { fetchAllCourseAccess } from "tutors-reader-lib/src/utils/firebase-utils";
   import { getCourseSummary, isValidCourseName } from "tutors-reader-lib/src/utils/course-utils";
   import { toHoursAndMinutes } from "tutors-reader-lib/src/utils/metrics-utils";
-  import { layout, portfolio } from "../stores";
-  import SecondaryNavigator from "../components/navigators/SecondaryNavigator.svelte";
+  import { portfolio } from "tutors-reader-lib/src/stores/stores";
+  import NavBar from "../navigators/NavBar.svelte";
 
-  let los: Lo[];
+  let los: Lo[] = [];
   $: tickerTape = "";
   $: total = 0;
   $: moduleCount = 0;
   let title = "All known Modules";
 
   function summarise(usage: any): string {
-    let str = "Total Reading Time<br>";
+    let str = "Time ";
     str += `${toHoursAndMinutes(usage.count)}<br>`;
-    str += "Page Loads<br>";
-    str += `${usage.visits}<br>`;
+    str += "Page Loads: ";
+    str += `${usage.visits}`;
     return str;
   }
 
-  layout.set("compacted");
   void getAllCourses();
 
   async function populate(allCourseAccess: any[]) {
@@ -58,8 +57,17 @@
 <svelte:head>
   <title>{title}</title>
 </svelte:head>
-
-<SecondaryNavigator title="Tutors Module Ecosystem: {moduleCount} Modules " subTitle={tickerTape} />
-<div class="container mx-auto">
-  <CardDeck {los} />
+<div class="sticky top-0 z-40 mb-5">
+  <NavBar title="Tutors Module Ecosystem: {moduleCount} Modules " subTitle={tickerTape} />
 </div>
+{#if los.length}
+  <div
+    class="bg-surface-100-800-token rounded-box card-corner mx-auto mb-2 w-11/12 max-w-full place-items-center overflow-hidden rounded-xl p-4 backdrop-blur"
+  >
+    <div class="flex flex-wrap justify-center">
+      {#each los as lo}
+        <Card {lo} />
+      {/each}
+    </div>
+  </div>
+{/if}
