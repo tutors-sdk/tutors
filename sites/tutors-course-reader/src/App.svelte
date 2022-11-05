@@ -106,18 +106,20 @@
     <Drawer open={tocDrawer} position="right" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5 2xl:w-1/3" blur="backdrop-blur-none" class="z-50">
       <TocBar />
     </Drawer>
-
-    <AppShell>
-      <div class="sticky top-0 z-40">
+    <AppShell class="h-screen">
+      <svelte:fragment slot="header">
         <NavBar />
         <PageHeader />
-      </div>
+      </svelte:fragment>
+      <div id="top" />
       <div class="mx-auto my-4">
         <Router {routes} />
       </div>
-      <div class="bg-surface-100-800-token bottom-0 mt-2">
-        <Footer />
-      </div>
+      <svelte:fragment slot="pageFooter">
+        <div class="bg-surface-100-800-token bottom-0 mt-2">
+          <Footer />
+        </div>
+      </svelte:fragment>
     </AppShell>
   {/if}
 </div>

@@ -39,7 +39,7 @@
       <figure class="flex justify-center">
         <Image lo="{lo}" />
       </figure>
+      <TopicNavigator topic="{topic}" />
     </div>
-    <footer class="card-footer"><TopicNavigator topic="{topic}" /></footer>
   </div>
 </div>

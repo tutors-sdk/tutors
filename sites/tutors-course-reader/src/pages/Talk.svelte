@@ -3,7 +3,6 @@
   import { TalkCard, TopicNavigatorCard } from "tutors-ui";
   import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
   import { revealSidebar } from "tutors-reader-lib/src/stores/stores";
-  import * as animateScroll from "svelte-scrollto";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
   import type { CourseService } from "tutors-reader-lib/src/services/course-service";
@@ -22,7 +21,7 @@
   }, 500);
 
   onMount(() => {
-    animateScroll.scrollTo({ delay: 800, element: "#top" });
+    document.getElementById("top").scrollIntoView();
   });
 
   async function getTalk(url: string): Promise<Lo> {
@@ -38,8 +37,8 @@
   <Loading />
 {:then lo}
   {#if !hide}
-  <div class="min-h-screen flex w-11/12 mx-auto">
-    <div transition:talkTransition class="w-full">
+    <div class="flex w-11/12 mx-auto">
+      <div transition:talkTransition class="w-full">
         <TalkCard {lo} />
       </div>
       <div class="hidden md:block">

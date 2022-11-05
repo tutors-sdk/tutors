@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { afterUpdate, getContext, onDestroy, tick } from "svelte";
+  import { afterUpdate, getContext, onDestroy, onMount, tick } from "svelte";
   import type { Topic } from "tutors-reader-lib/src/models/topic";
   import type { CourseService } from "tutors-reader-lib/src/services/course-service";
   import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
   import { CardDeck, UnitCard, TalkCard, VideoCard } from "tutors-ui";
   import { currentLo, layout, revealSidebar } from "tutors-reader-lib/src/stores/stores";
-  import * as animateScroll from "svelte-scrollto";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
 
@@ -46,10 +45,14 @@
   afterUpdate(async () => {
     if (unitId) {
       await tick();
-      animateScroll.scrollTo({ delay: 500, element: "#" + unitId });
+      document.getElementById(unitId).scrollIntoView();
     } else {
-      animateScroll.scrollTo({ delay: 200, element: "#top" });
+      document.getElementById("top").scrollIntoView();
     }
+  });
+
+  onMount(() => {
+    document.getElementById("top").scrollIntoView();
   });
 
   let grid = "";

@@ -54,7 +54,7 @@
 
   onMount(() => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-    animateScroll.scrollTo({ delay: 200, element: "#top" });
+    scrollTo({ top: 0, behavior: "smooth" });
   });
 </script>
 

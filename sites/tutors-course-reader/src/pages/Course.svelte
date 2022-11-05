@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { afterUpdate, getContext, onDestroy } from "svelte";
+  import { afterUpdate, getContext, onDestroy, onMount } from "svelte";
   import type { Course } from "tutors-reader-lib/src/models/course";
   import { CardDeck, UnitCard } from "tutors-ui";
   import type { CourseService } from "tutors-reader-lib/src/services/course-service";
@@ -46,6 +46,10 @@
       standardDeck = false;
     }
   }
+
+  onMount(() => {
+    scrollTo({ top: 0, behavior: "smooth" });
+  });
 
   onDestroy(() => {
     window.removeEventListener("keydown", keypressInput);
