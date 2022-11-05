@@ -15,7 +15,6 @@
   import NavBar from "./navigators/NavBar.svelte";
   import PageHeader from "./navigators/PageHeader.svelte";
   import Footer from "./navigators/footer/Footer.svelte";
-  import BackToTop from "./navigators/BackToTop.svelte";
   import Logout from "./pages/support/Logout.svelte";
   import TutorsTerms from "./pages/support/TutorsTerms.svelte";
   import { CourseService } from "tutors-reader-lib/src/services/course-service";
@@ -123,5 +122,3 @@
     </AppShell>
   {/if}
 </div>
-
-<BackToTop />

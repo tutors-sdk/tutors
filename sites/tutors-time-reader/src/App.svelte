@@ -8,7 +8,6 @@
   import Blank from "./pages/support/Blank.svelte";
   import NotFound from "./pages/support/NotFound.svelte";
   import Footer from "./navigators/footer/Footer.svelte";
-  import BackToTop from "./navigators/BackToTop.svelte";
   import { CourseService } from "tutors-reader-lib/src/services/course-service";
   import { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
   import { MetricsService } from "tutors-reader-lib/src/services/metrics-service";
@@ -55,5 +54,3 @@
     </div>
   </AppShell>
 </div>
-
-<BackToTop />
