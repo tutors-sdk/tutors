@@ -99,7 +99,7 @@
   {#if !hide}
     <div class="flex w-full lg:w-10/12 2xl:w-3/4 mx-auto">
       <div class="hidden lg:block w-1/3">
-        <ul class="card bg-surface-100-800-token py-4 m-2 rounded-xl sticky top-6">
+        <ul class="card bg-surface-100-800-token py-4 m-2 rounded-xl sticky top-6 max-h-[60vh] overflow-y-scroll">
           {@html lab.navbarHtml}
         </ul>
       </div>
