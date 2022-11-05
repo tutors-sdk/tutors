@@ -1,4 +1,9 @@
 ---
+import 'tutors-ui/lib/themes/tutors.css';
+import '@brainandbones/skeleton/styles/all.css';
+import '../styles/global.css';
+import { AppShell, AppBar, LightSwitch } from '@brainandbones/skeleton';
+
 export interface Props {
   title: string;
 }
@@ -17,115 +22,110 @@ const { title } = Astro.props;
       rel="stylesheet"
     />
     <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
   </head>
-  <body class="bg-base-100">
-    <div class="header-container">
-      <nav class="navbar">
-        <div class="container mx-auto">
-          <div class="flex-1">
-            <a href="/">
-              <div class="inline-block">
+  <body>
+    <AppShell>
+      <!-- Header -->
+      <svelte:fragment slot="header">
+        <AppBar class="h-24 space-x-1 lg:space-x-4">
+          <svelte:fragment slot="lead">
+            <div class="flex items-center">
+              <div class="flex-1">
                 <img src="/logo.svg" />
               </div>
-              <div class="navbar-title hidden md:inline-block">
-                <p class="text-lg font-bold">Tutors Open Source Project</p>
-                <p class="text-sm font-bold">Open Learning Web Toolkit</p>
+              <div class="ml-4 flex-nowrap">
+                <h2 class="mr-4 hidden text-sm font-bold sm:text-lg md:inline-block">
+                  Tutors Open Source Project
+                </h2>
+                <!-- Badge -->
+                <div class="hidden md:block">
+                  <p class="!text-sm font-bold">Open Learning Web Toolkit</p>
+                </div>
               </div>
-            </a>
-          </div>
-          <a href="/">
-            <div class="btn btn-ghost rounded-xl">Home</div>
-          </a>
-          <a href="/design">
-            <div class="btn btn-ghost rounded-xl">Design</div>
-          </a>
-          <a href="/changelog">
-            <div class="btn btn-ghost rounded-xl">Changelog</div>
-          </a>
-          <div class="navbar-icon">
-            <span
-              data-toggle-theme="tutors-dark,tutors"
-              data-act-class="ACTIVECLASS"
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                aria-hidden="true"
-                role="img"
-                class="text-warning iconify iconify--fluent"
-                width="20"
-                height="20"
-                preserveAspectRatio="xMidYMid meet"
-                viewBox="0 0 24 24"
-              >
-                <g fill="none">
-                  <path
-                    d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10zm0-2V4a8 8 0 1 1 0 16z"
-                    fill="currentColor"></path>
-                </g>
-              </svg>
-            </span>
-          </div>
-        </div>
-      </nav>
-    </div>
-    <div class="container tutors-container mt-2">
+            </div>
+          </svelte:fragment>
+          <svelte:fragment slot="trail">
+            <div class="flex items-center space-x-1 lg:space-x-4">
+              <LightSwitch />
+            </div>
+          </svelte:fragment>
+        </AppBar>
+      </svelte:fragment>
+
       <slot />
-      <footer
-        class="p-10 footer bg-neutral text-neutral-content rounded-box my-2"
-      >
-        <div>
-          <img src="/logo.svg" />
-          <p>
-            Tutors Open Source Project
-            <br />Licensed under the <a
-              href="https://github.com/tutors-sdk/tutors/blob/main/LICENSE"
-              target="_blank"
-              class="link"
-              >MIT License
-            </a>
-          </p>
+
+      <svelte:fragment slot="pageFooter">
+        <div class="bg-surface-100-800-token bottom-0 mt-2 py-8">
+          <footer class="mx-auto w-11/12 py-8">
+            <div class="hidden md:grid grid-cols-[auto_auto_auto_auto] gap-10">
+              <div class="space-y-4">
+                <div
+                  class="grid grid-cols-1 gap-2 place-content-center place-items-center md:place-items-start"
+                >
+                  <div>
+                    <img src="/logo.svg" />
+                    <p>
+                      Tutors Open Source Project
+                      <br />Licensed under the <a
+                        href="https://github.com/tutors-sdk/tutors/blob/main/LICENSE"
+                        target="_blank"
+                        class="link"
+                        >MIT License
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="space-y-4">
+                <h6>Community</h6>
+                <ul class="space-y-2">
+                  <li>
+                    <a href="https://github.com/tutors-sdk-tutors" target="_blank" rel="noreferrer"
+                      >View GitHub</a
+                    >
+                  </li>
+                  <li>
+                    <a href="https://twitter.com/tutors_dev" target="_blank" rel="noreferrer"
+                      >Follow on Twitter</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="space-y-4">
+                <h6>Links</h6>
+                <ul class="space-y-2">
+                  <li>
+                    <a href="https://docs.tutors.dev" target="_blank" rel="noreferrer"
+                      >Documentation</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="https://github.com/tutors-sdk/tutors/blob/main/CODE_OF_CONDUCT.md"
+                      target="_blank"
+                      rel="noreferrer">Code of Conduct</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="space-y-4">
+                <h6>More</h6>
+                <ul class="space-y-2">
+                  <li>
+                    <a href="https://www.netlify.com">
+                      <img
+                        src="https://www.netlify.com/v3/img/components/netlify-color-bg.svg"
+                        alt="Deploys by Netlify"
+                      />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </footer>
         </div>
-        <div>
-          <span class="footer-title">Pages</span>
-          <a class="link link-hover" href="/">Home</a>
-          <a class="link link-hover" href="/design">Design</a>
-          <a class="link link-hover" href="/changelog">Changelog</a>
-        </div>
-        <div>
-          <span class="footer-title">Links</span>
-          <a
-            class="link link-hover"
-            href="https://docs.tutors.dev"
-            target="_blank"
-            >Documentation
-          </a>
-          <a
-            class="link link-hover"
-            href="https://github.com/tutors-sdk"
-            target="_blank"
-            >GitHub
-          </a>
-          <a
-            class="link link-hover"
-            href="https://github.com/tutors-sdk/tutors/blob/main/CODE_OF_CONDUCT.md"
-            target="_blank"
-            >Code of Conduct
-          </a>
-        </div>
-        <div>
-          <span class="footer-title">More</span>
-          <a href="https://www.netlify.com">
-            <img
-              src="https://www.netlify.com/v3/img/components/netlify-color-bg.svg"
-              alt="Deploys by Netlify"
-            />
-          </a>
-        </div>
-      </footer>
-    </div>
-    <div class="hidden border-info border-success border-warning border-error">
-    </div>
+      </svelte:fragment>
+    </AppShell>
   </body>
 </html>

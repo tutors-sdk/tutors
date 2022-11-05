@@ -10,11 +10,15 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/svelte": "^1.0.2",
     "astro": "^1.1.3",
-    "daisyui": "^2.31.0"
+    "daisyui": "^2.31.0",
+    "svelte": "^3.52.0"
   },
   "devDependencies": {
     "@astrojs/tailwind": "^1.0.0",
-    "tutors-configs": "*"
+    "@brainandbones/skeleton": "^0.67.5",
+    "tutors-configs": "*",
+    "tutors-ui": "*"
   }
 }
