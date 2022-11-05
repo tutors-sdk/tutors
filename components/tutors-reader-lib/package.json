@@ -14,7 +14,7 @@
   "dependencies": {
     "@types/remove-markdown": "^0.3.1",
     "@types/showdown": "2.0.0",
-    "@iconify/svelte": "^2.2.1",
+    "@iconify/svelte": "^3.0.0",
     "@tsconfig/svelte": "^2.0.1",
     "crypto-es": "^1.2.7",
     "showdown": "1.9.1",
