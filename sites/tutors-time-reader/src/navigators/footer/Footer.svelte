@@ -36,7 +36,7 @@
         <a href="https://github.com/tutors-sdk/tutors/commit/{sha}" target="_blank"><p class="pl-4 !text-xs">Last commit {id}</p></a>
       </div>
     </div>
-    <a href="https://netlify.com" target="_blank" class="ml-auto">
+    <a href="https://netlify.com" target="_blank" rel="noreferrer" class="ml-auto">
       <img src="https://www.netlify.com/v3/img/components/netlify-color-bg.svg" alt="Deploys by Netlify" class="h-10" />
     </a>
   </div>

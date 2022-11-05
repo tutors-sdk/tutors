@@ -24,8 +24,16 @@
       </p>
       <p class="p-2">To learn more about these features please consult:</p>
       <ul class="ml-4 list-inside list-disc text-blue-600 underline visited:text-purple-600 hover:text-blue-800">
-        <li><a target="_blank" href="https://github.com/tutors-sdk/tutors-faqs/blob/main/tutors-time-faq.md"> Tutors Time FAQ </a></li>
-        <li><a target="_blank" href="https://github.com/tutors-sdk/tutors-faqs/blob/main/tutors-live-faq.md">Tutors Live FAQ </a></li>
+        <li>
+          <a target="_blank" rel="noreferrer" href="https://github.com/tutors-sdk/tutors-faqs/blob/main/tutors-time-faq.md">
+            Tutors Time FAQ
+          </a>
+        </li>
+        <li>
+          <a target="_blank" rel="noreferrer" href="https://github.com/tutors-sdk/tutors-faqs/blob/main/tutors-live-faq.md"
+            >Tutors Live FAQ
+          </a>
+        </li>
       </ul>
       <p class="p-2">
         Tutors is an open source application - the data collection component <a

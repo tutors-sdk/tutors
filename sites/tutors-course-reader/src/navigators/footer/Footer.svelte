@@ -36,10 +36,10 @@
         <a href="https://github.com/tutors-sdk/tutors/commit/{sha}" target="_blank"><p class="pl-4 !text-xs">Last commit {id}</p></a>
       </div>
     </div>
-    <a href="https://setu.ie" target="_blank" class="btn mr-4 !rounded-md bg-[#435465] !py-2 !px-4">
+    <a href="https://setu.ie" target="_blank" rel="noreferrer" class="btn mr-4 !rounded-md bg-[#435465] !py-2 !px-4">
       <img src="https://www.setu.ie/img/logos/setu-logo.svg" alt="South East Technological University" class="h-6" />
     </a>
-    <a href="https://netlify.com" target="_blank" class="ml-auto">
+    <a href="https://netlify.com" target="_blank" rel="noreferrer" class="ml-auto">
       <img src="https://www.netlify.com/v3/img/components/netlify-color-bg.svg" alt="Deploys by Netlify" class="h-10" />
     </a>
   </div>

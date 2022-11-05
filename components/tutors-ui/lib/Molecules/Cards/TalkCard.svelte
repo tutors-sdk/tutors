@@ -151,7 +151,7 @@
           <Icon type="download" />
         </button>
         <button class="btn btn-sm">
-          <Icon link="{lo.pdf}" type="fullScreen" target="_blank" />
+          <Icon link="{lo.pdf}" type="fullScreen" target="_blank" rel="noreferrer" />
         </button>
       </div>
     </div>
