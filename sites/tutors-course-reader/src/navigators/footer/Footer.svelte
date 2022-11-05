@@ -17,7 +17,7 @@
 
 <footer class="mx-auto w-11/12 py-8">
   <div class="flex grid-flow-col items-center">
-    <div class="inline-flex">
+    <div class="inline-flex flex-1">
       <svg width="40px" viewBox="0 0 54.5 39.4" xml:space="preserve"
         ><defs /><g
           ><path
@@ -36,6 +36,9 @@
         <a href="https://github.com/tutors-sdk/tutors/commit/{sha}" target="_blank"><p class="pl-4 !text-xs">Last commit {id}</p></a>
       </div>
     </div>
+    <a href="https://setu.ie" target="_blank" class="btn mr-4 !rounded-md bg-[#435465] !py-2 !px-4">
+      <img src="https://www.setu.ie/img/logos/setu-logo.svg" alt="South East Technological University" class="h-6" />
+    </a>
     <a href="https://netlify.com" target="_blank" class="ml-auto">
       <img src="https://www.netlify.com/v3/img/components/netlify-color-bg.svg" alt="Deploys by Netlify" class="h-10" />
     </a>
