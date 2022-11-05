@@ -2,7 +2,8 @@
 import 'tutors-ui/lib/themes/tutors.css';
 import '@brainandbones/skeleton/styles/all.css';
 import '../styles/global.css';
-import { AppShell, AppBar, LightSwitch } from '@brainandbones/skeleton';
+import { AppShell, AppBar } from '@brainandbones/skeleton';
+import DarkMode from '../components/DarkMode.svelte';
 
 export interface Props {
   title: string;
@@ -11,7 +12,7 @@ const { title } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -47,7 +48,7 @@ const { title } = Astro.props;
           </svelte:fragment>
           <svelte:fragment slot="trail">
             <div class="flex items-center space-x-1 lg:space-x-4">
-              <LightSwitch />
+              <DarkMode client:load />
             </div>
           </svelte:fragment>
         </AppBar>
