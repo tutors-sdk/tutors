@@ -18,7 +18,7 @@
   let hide = true;
   setTimeout(function () {
     hide = false;
-  }, 500);
+  }, 0);
 
   onMount(() => {
     document.getElementById("top").scrollIntoView();
@@ -37,7 +37,7 @@
   <Loading />
 {:then lo}
   {#if !hide}
-    <div class="flex w-11/12 mx-auto">
+    <div class="min-h-screen flex w-11/12 mx-auto">
       <div transition:talkTransition class="w-full">
         <TalkCard {lo} />
       </div>
