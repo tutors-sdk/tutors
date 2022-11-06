@@ -5,7 +5,6 @@
   import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
   import { revealSidebar } from "tutors-reader-lib/src/stores/stores";
   import { querystring } from "svelte-spa-router";
-  import * as animateScroll from "svelte-scrollto";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
   import type { CourseService } from "tutors-reader-lib/src/services/course-service";
@@ -14,12 +13,6 @@
   export let params: Record<string, string>;
   const analytics: AnalyticsService = getContext("analytics");
   const cache: CourseService = getContext("cache");
-  let title = "";
-
-  let hide = true;
-  setTimeout(function () {
-    hide = false;
-  }, 500);
 
   async function getVideo(url: string): Promise<Lo> {
     revealSidebar.set(false);
@@ -28,7 +21,6 @@
     }
     const lo = await cache.readLo(url, "video");
     analytics.pageLoad(params.wild, lo);
-    title = lo.title;
     return lo;
   }
 
@@ -41,16 +33,14 @@
 {#await getVideo(params.wild)}
   <Loading />
 {:then lo}
-  {#if !hide}
-    <div class="min-h-screen flex w-11/12 mx-auto">
-      <div transition:talkTransition class="w-full">
-        <VideoCard {lo} />
-      </div>
-      <div class="hidden md:block">
-        <TopicNavigatorCard topic={lo.parent} />
-      </div>
+  <div class="min-h-screen flex w-11/12 mx-auto">
+    <div transition:talkTransition class="w-full">
+      <VideoCard {lo} />
     </div>
-  {/if}
+    <div class="hidden md:block">
+      <TopicNavigatorCard topic={lo.parent} />
+    </div>
+  </div>
 {:catch error}
   <Error {error} />
 {/await}

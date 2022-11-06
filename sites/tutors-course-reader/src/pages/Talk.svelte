@@ -10,15 +10,8 @@
   import { talkTransition } from "tutors-ui/lib/animations";
 
   export let params: Record<string, string>;
-
   const analytics: AnalyticsService = getContext("analytics");
   const cache: CourseService = getContext("cache");
-  let title = "";
-
-  let hide = true;
-  setTimeout(function () {
-    hide = false;
-  }, 0);
 
   onMount(() => {
     document.getElementById("top").scrollIntoView();
@@ -28,7 +21,6 @@
     revealSidebar.set(false);
     let lo = await cache.readLo(url, "talk");
     analytics.pageLoad(params.wild, lo);
-    title = lo.title;
     return lo;
   }
 </script>
@@ -36,16 +28,14 @@
 {#await getTalk(params.wild)}
   <Loading />
 {:then lo}
-  {#if !hide}
-    <div class="min-h-screen flex w-11/12 mx-auto">
-      <div transition:talkTransition class="w-full">
-        <TalkCard {lo} />
-      </div>
-      <div class="hidden md:block">
-        <TopicNavigatorCard topic={lo.parent} />
-      </div>
+  <div class="min-h-screen flex w-11/12 mx-auto">
+    <div transition:talkTransition class="w-full">
+      <TalkCard {lo} />
     </div>
-  {/if}
+    <div class="hidden md:block">
+      <TopicNavigatorCard topic={lo.parent} />
+    </div>
+  </div>
 {:catch error}
   <Error {error} />
 {/await}
