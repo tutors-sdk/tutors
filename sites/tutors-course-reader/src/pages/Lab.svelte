@@ -93,6 +93,21 @@
   };
 </script>
 
+<svelte:head>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.js"
+    integrity="sha512-DAZH0Wu7q9Hnm0Fw8tRZsTeQBzIugiUy6k2r7E0KKMlC2nBvvrNSH/LVnGueCXRfDs5epP+Ieoh3L+VzSKi0Aw=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"></script>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.css"
+    integrity="sha512-nii0D5CrWiLjtPcfU3pQJifaRLxKKVut/hbsazsodCcIOERZbwLH7dQxzOKy3Ey/Fv8fXCA9+Rf+wQzqklbEJQ=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+</svelte:head>
+
 {#await getLab(params.wild)}
   <Loading />
 {:then lab}
