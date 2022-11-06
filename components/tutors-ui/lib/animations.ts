@@ -1,4 +1,4 @@
-import { cubicInOut, cubicOut } from "svelte/easing";
+import { cubicInOut, cubicOut } from 'svelte/easing';
 
 export const cardTransition = () => {
   return {
@@ -8,7 +8,7 @@ export const cardTransition = () => {
     easing: cubicInOut,
     baseScale: 0.5,
     duration: 250,
-    delay: 250,
+    delay: 250
   };
 };
 
@@ -18,9 +18,9 @@ export const talkTransition = () => {
       return `transform: scale(${t}); `;
     },
     easing: cubicOut,
-    baseScale: 0.2,
-    duration: 250,
-    delay: 250,
+    baseScale: 0.5,
+    duration: 200,
+    delay: 200
   };
 };
 
