@@ -14,6 +14,11 @@
   const analytics: AnalyticsService = getContext("analytics");
   const cache: CourseService = getContext("cache");
 
+  let hide = true;
+  setTimeout(function () {
+    hide = false;
+  }, 500);
+
   async function getVideo(url: string): Promise<Lo> {
     revealSidebar.set(false);
     if ($querystring) {
@@ -33,14 +38,16 @@
 {#await getVideo(params.wild)}
   <Loading />
 {:then lo}
-  <div class="min-h-screen flex w-11/12 mx-auto">
-    <div transition:talkTransition class="w-full">
-      <VideoCard {lo} />
+  {#if !hide}
+    <div class="min-h-screen flex w-11/12 mx-auto">
+      <div transition:talkTransition class="w-full">
+        <VideoCard {lo} />
+      </div>
+      <div class="hidden md:block">
+        <TopicNavigatorCard topic={lo.parent} />
+      </div>
     </div>
-    <div class="hidden md:block">
-      <TopicNavigatorCard topic={lo.parent} />
-    </div>
-  </div>
+  {/if}
 {:catch error}
   <Error {error} />
 {/await}

@@ -13,6 +13,11 @@
   const analytics: AnalyticsService = getContext("analytics");
   const cache: CourseService = getContext("cache");
 
+  let hide = true;
+  setTimeout(function () {
+    hide = false;
+  }, 500);
+
   onMount(() => {
     document.getElementById("top").scrollIntoView();
   });
@@ -28,14 +33,16 @@
 {#await getTalk(params.wild)}
   <Loading />
 {:then lo}
-  <div class="min-h-screen flex w-11/12 mx-auto">
-    <div transition:talkTransition class="w-full">
-      <TalkCard {lo} />
+  {#if !hide}
+    <div class="min-h-screen flex w-11/12 mx-auto">
+      <div transition:talkTransition class="w-full">
+        <TalkCard {lo} />
+      </div>
+      <div class="hidden md:block">
+        <TopicNavigatorCard topic={lo.parent} />
+      </div>
     </div>
-    <div class="hidden md:block">
-      <TopicNavigatorCard topic={lo.parent} />
-    </div>
-  </div>
+  {/if}
 {:catch error}
   <Error {error} />
 {/await}
