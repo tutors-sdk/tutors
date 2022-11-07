@@ -1,9 +1,9 @@
-@import url("http://dyslexicfonts.com/fonts/OpenDyslexic-Regular.otf");
+@import url('https://dyslexicfonts.com/fonts/OpenDyslexic-Regular.otf');
 
 :root {
   --theme-border-base: 0px;
-  --theme-font-family-heading: "OpenDyslexic", sans-serif;
-  --theme-font-family-base: "OpenDyslexic", sans-serif;
+  --theme-font-family-heading: 'OpenDyslexic', sans-serif;
+  --theme-font-family-base: 'OpenDyslexic', sans-serif;
   --theme-font-color-base: var(--color-primary-900);
   --theme-font-color-dark: var(--color-primary-200);
 
