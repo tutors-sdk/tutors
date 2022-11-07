@@ -5,14 +5,14 @@
   let sha = "";
 
   onMount(async () => {
-    await fetch("https://api.github.com/repos/tutors-sdk/tutors/commits/development")
+    await fetch("https://api.github.com/repos/tutors-sdk/tutors/commits")
       .then((response) => response.json())
       .then((data) => {
-        id = data.sha.slice(0, 7);
-        sha = data.sha;
+        id = data[0].sha.slice(0, 7);
+        sha = data[0].sha;
       });
   });
-  const version = "7.0.0-beta";
+  const version = "7.0.0";
 </script>
 
 <footer class="mx-auto w-11/12 py-8">
