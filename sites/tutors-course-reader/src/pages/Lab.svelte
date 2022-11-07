@@ -1,13 +1,10 @@
 <script lang="ts">
   import { push } from "svelte-spa-router";
   import { afterUpdate, getContext, onDestroy } from "svelte";
-
-  import type { AnalyticsService } from "../reader-lib/services/analytics-service";
-  import { revealSidebar } from "../stores";
-  import type { CourseService } from "../reader-lib/services/course-service";
+  import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
+  import { revealSidebar } from "tutors-reader-lib/src/stores/stores";
+  import type { CourseService } from "tutors-reader-lib/src/services/course-service";
   import * as animateScroll from "svelte-scrollto";
-  import { viewDelay } from "../components/animations";
-  import { fly } from "svelte/transition";
   import type { Lab } from "tutors-reader-lib/src/models/lab";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
@@ -25,7 +22,7 @@
   let hide = true;
   setTimeout(function () {
     hide = false;
-  }, viewDelay);
+  }, 500);
 
   let mostRecentLab = "";
 
@@ -90,6 +87,10 @@
   afterUpdate(() => {
     animateScroll.scrollTo({ delay: 200, element: "#top" });
   });
+
+  const onComplete = () => {
+    alert("Lab Complete!!");
+  };
 </script>
 
 <svelte:head>
@@ -111,21 +112,23 @@
   <Loading />
 {:then lab}
   {#if !hide}
-    <div class="flex">
-      <div class="labmenu-container">
-        <ul class="labmenu">
+    <div class="flex w-full lg:w-10/12 2xl:w-3/4 mx-auto">
+      <div class="hidden lg:block w-1/3">
+        <ul class="card bg-surface-100-800-token py-4 m-2 rounded-xl sticky top-6">
           {@html lab.navbarHtml}
         </ul>
       </div>
-      <div id="lab-panel" class="labpanel">
-        <header class="labmenu-mobile">
-          <nav class="flex flex-wrap justify-between">
+      <div id="lab-panel" class="w-full">
+        <header class="block lg:hidden">
+          <nav class="flex flex-wrap justify-between card mx-2 p-2">
             {@html lab.horizontalNavbarHtml}
           </nav>
         </header>
-        <article class="labcontent" in:fly={{ x: direction, duration: 200 }}>
-          {@html lab.content}
-        </article>
+        <div class="card bg-surface-100-800-token p-8 lg:px-4 py-8 m-2 rounded-xl">
+          <article class="mx-auto prose dark:prose-invert max-w-full lg:max-w-[85%]">
+            {@html lab.content}
+          </article>
+        </div>
       </div>
     </div>
   {/if}

@@ -1,13 +1,11 @@
 <script lang="ts">
-  import { afterUpdate, getContext, onDestroy } from "svelte";
+  import { afterUpdate, getContext, onDestroy, onMount } from "svelte";
   import type { Course } from "tutors-reader-lib/src/models/course";
-  import CardDeck from "../components/cards/CardDeck.svelte";
-  import UnitCard from "../components/cards/UnitCard.svelte";
-  import type { CourseService } from "../reader-lib/services/course-service";
-  import type { AnalyticsService } from "../reader-lib/services/analytics-service";
-  import { currentLo, revealSidebar } from "../stores";
+  import { CardDeck, UnitCard } from "tutors-ui";
+  import type { CourseService } from "tutors-reader-lib/src/services/course-service";
+  import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
+  import { currentLo, revealSidebar } from "tutors-reader-lib/src/stores/stores";
   import * as animateScroll from "svelte-scrollto";
-  import { viewDelay } from "../components/animations";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
 
@@ -36,7 +34,7 @@
       if (course.lo.properties.ignorepin) {
         ignorePin = course.lo.properties.ignorepin.toString();
       }
-    }, viewDelay);
+    }, 500);
     return course;
   }
 
@@ -48,6 +46,10 @@
       standardDeck = false;
     }
   }
+
+  onMount(() => {
+    scrollTo({ top: 0, behavior: "smooth" });
+  });
 
   onDestroy(() => {
     window.removeEventListener("keydown", keypressInput);

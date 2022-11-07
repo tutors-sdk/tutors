@@ -2,9 +2,9 @@
   import { getContext, onMount } from "svelte";
   import { Grid } from "ag-grid-community";
   import { CalendarSheet, options } from "../../components/sheets/calendar-sheet";
-  import type { CourseService } from "../../reader-lib/services/course-service";
-  import Icon from "tutors-reader-lib/src/iconography/Icon.svelte";
-  import type { MetricsService } from "src/reader-lib/services/metrics-service";
+  import Icon from "tutors-ui/lib/Atoms/Icon/Icon.svelte";
+  import type { CourseService } from "tutors-reader-lib/src/services/course-service";
+  import type { MetricsService } from "tutors-reader-lib/src/services/metrics-service";
 
   export let id;
 

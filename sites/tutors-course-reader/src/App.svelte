@@ -1,9 +1,8 @@
 <script lang="ts">
-  import "./tailwind.css";
+  import "@brainandbones/skeleton/styles/all.css";
+  import { AppShell, Drawer } from "@brainandbones/skeleton";
   import { onMount, setContext } from "svelte";
   import Router from "svelte-spa-router";
-  import Sidebar from "./components/navigators/sidebars/TocBar.svelte";
-  import Onlinebar from "./components/navigators/sidebars/OnlineBar.svelte";
   import Blank from "./pages/support/Blank.svelte";
   import Unauthorised from "./pages/support/Unauthorised.svelte";
   import Course from "./pages/Course.svelte";
@@ -13,22 +12,32 @@
   import Wall from "./pages/Wall.svelte";
   import Lab from "./pages/Lab.svelte";
   import NotFound from "./pages/support/NotFound.svelte";
-  import MainNavigator from "./components/navigators/MainNavigator.svelte";
-  import Footer from "./components/navigators/footer/Footer.svelte";
-  import BackToTop from "./components/navigators/BackToTop.svelte";
+  import NavBar from "./navigators/NavBar.svelte";
+  import PageHeader from "./navigators/PageHeader.svelte";
+  import Footer from "./navigators/footer/Footer.svelte";
   import Logout from "./pages/support/Logout.svelte";
   import TutorsTerms from "./pages/support/TutorsTerms.svelte";
-  import { CourseService } from "./reader-lib/services/course-service";
-  import { handleAuthentication } from "./reader-lib/services/auth-service";
-  import { AnalyticsService } from "./reader-lib/services/analytics-service";
+  import { CourseService } from "tutors-reader-lib/src/services/course-service";
+  import { handleAuthentication } from "tutors-reader-lib/src/services/auth-service";
+  import { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
+  import { MetricsService } from "tutors-reader-lib/src/services/metrics-service";
   import Search from "./pages/Search.svelte";
-  import Modal from "svelte-simple-modal";
-  import { setIconLib, themeIcons, themes } from "tutors-reader-lib/src/iconography/themes";
-  import Infobar from "./components/navigators/sidebars/InfoBar.svelte";
-  import Calendar from "./components/navigators/sidebars/CalendarBar.svelte";
+  import InfoBar from "./navigators/sidebars/InfoBar.svelte";
+  import CalendarBar from "./navigators/sidebars/CalendarBar.svelte";
+  import OnlineBar from "./navigators/sidebars/OnlineBar.svelte";
+  import TocBar from "./navigators/sidebars/TocBar.svelte";
   import Note from "./pages/Note.svelte";
-  import { MetricsService } from "./reader-lib/services/metrics-service";
-  import { currentLo } from "./stores";
+  import { currentLo, infoDrawer, calendarDrawer, onlineDrawer, tocDrawer, storeTheme } from "tutors-reader-lib/src/stores/stores";
+
+  import tutors from "tutors-ui/lib/themes/tutors.css";
+  import dyslexia from "tutors-ui/lib/themes/dyslexia.css";
+
+  const themes: any = { tutors, dyslexia };
+
+  storeTheme.subscribe(setBodyThemeAttribute);
+  function setBodyThemeAttribute(): void {
+    document.body.setAttribute("data-theme", $storeTheme);
+  }
 
   setContext("cache", new CourseService());
   const analytics = new AnalyticsService();
@@ -36,10 +45,9 @@
   setContext("metrics", new MetricsService());
 
   let authenticating = false;
-  let bg = "bg-gray-50";
+  let bg = "bg-surface-900";
 
   onMount(() => {
-    applyInitialTheme();
     const path = document.location.href;
     if (path.includes("access_token")) {
       const token = path.substring(path.indexOf("#") + 1);
@@ -65,50 +73,52 @@
     "/search/*": Search,
     "*": NotFound,
   };
-
-  const htmlTag = document.getElementsByTagName("html")[0];
-  let currentTheme = window.localStorage.getItem("site-theme");
-  if (themes.indexOf(currentTheme) < 0) {
-    currentTheme = null;
-  }
-
-  function applyInitialTheme() {
-    if (currentTheme == null) {
-      window.localStorage.setItem("site-theme", "tutors");
-      window.localStorage.setItem("theme", "tutors");
-      htmlTag.setAttribute("data-theme", "tutors");
-      setIconLib(themeIcons["tutors"]);
-    } else {
-      htmlTag.setAttribute("data-theme", currentTheme);
-      setIconLib(themeIcons[currentTheme]);
-    }
-  }
 </script>
 
 <svelte:head>
   <title>{$currentLo?.title}</title>
+  {@html `\<style\>${themes[$storeTheme]}}\</style\>`}
 </svelte:head>
 
-<div class="tutors-container">
+<div id="app" class="h-full overflow-hidden">
   {#if authenticating}
     <TutorsTerms bind:authenticating />
   {:else}
-    <div class="content">
-      <Modal>
-        <Sidebar />
-        <Onlinebar />
-        <Infobar />
-        <Calendar />
-        <MainNavigator />
-        <div class="course-container container">
-          <Router {routes} />
+    <Drawer open={infoDrawer} position="left" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5 2xl:w-1/3" blur="backdrop-blur-none" class="z-50">
+      <InfoBar />
+    </Drawer>
+
+    <Drawer
+      open={calendarDrawer}
+      position="left"
+      width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5 2xl:w-1/3"
+      blur="backdrop-blur-none"
+      class="z-50"
+    >
+      <CalendarBar />
+    </Drawer>
+
+    <Drawer open={onlineDrawer} position="right" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5 2xl:w-1/3" blur="backdrop-blur-none" class="z-50">
+      <OnlineBar />
+    </Drawer>
+
+    <Drawer open={tocDrawer} position="right" width="w-full md:w-3/4 lg:w-1/2 xl:w-2/5 2xl:w-1/3" blur="backdrop-blur-none" class="z-50">
+      <TocBar />
+    </Drawer>
+    <AppShell class="h-screen">
+      <svelte:fragment slot="header">
+        <NavBar />
+        <PageHeader />
+      </svelte:fragment>
+      <div id="top" />
+      <div class="mx-auto my-4">
+        <Router {routes} />
+      </div>
+      <svelte:fragment slot="pageFooter">
+        <div class="bg-surface-100-800-token bottom-0 mt-2">
+          <Footer />
         </div>
-      </Modal>
-    </div>
-    <div class="footer mx-auto w-11/12 lg:w-full">
-      <Footer />
-    </div>
+      </svelte:fragment>
+    </AppShell>
   {/if}
 </div>
-
-<BackToTop />

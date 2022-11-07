@@ -1,21 +1,17 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
-  import TalkCard from "../components/cards/TalkCard.svelte";
-  import TopicNavigatorCard from "../components/cards/TopicNavigatorCard.svelte";
-  import type { AnalyticsService } from "../reader-lib/services/analytics-service";
-  import { revealSidebar } from "../stores";
-  import * as animateScroll from "svelte-scrollto";
-  import { talkTransition } from "../components/animations";
+  import { TalkCard, TopicNavigatorCard } from "tutors-ui";
+  import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
+  import { revealSidebar } from "tutors-reader-lib/src/stores/stores";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
-  import type { CourseService } from "../reader-lib/services/course-service";
+  import type { CourseService } from "tutors-reader-lib/src/services/course-service";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
+  import { talkTransition } from "tutors-ui/lib/animations";
 
   export let params: Record<string, string>;
-
   const analytics: AnalyticsService = getContext("analytics");
   const cache: CourseService = getContext("cache");
-  let title = "";
 
   let hide = true;
   setTimeout(function () {
@@ -23,14 +19,13 @@
   }, 500);
 
   onMount(() => {
-    animateScroll.scrollTo({ delay: 800, element: "#top" });
+    document.getElementById("top").scrollIntoView();
   });
 
   async function getTalk(url: string): Promise<Lo> {
     revealSidebar.set(false);
     let lo = await cache.readLo(url, "talk");
     analytics.pageLoad(params.wild, lo);
-    title = lo.title;
     return lo;
   }
 </script>
@@ -39,7 +34,7 @@
   <Loading />
 {:then lo}
   {#if !hide}
-    <div class="h-screen flex">
+    <div class="min-h-screen flex w-11/12 mx-auto">
       <div transition:talkTransition class="w-full">
         <TalkCard {lo} />
       </div>

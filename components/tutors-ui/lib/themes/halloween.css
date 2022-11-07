@@ -1,0 +1,65 @@
+/* https://fonts.google.com/specimen/Creepster?query=creep */
+@import url("https://fonts.googleapis.com/css2?family=Creepster&display=swap");
+
+:root {
+  --theme-border-base: 0px;
+  --theme-font-family-heading: "Creepster", cursive;
+  --theme-font-family-base: system-ui;
+  --theme-font-color-base: var(--color-primary-900);
+  --theme-font-color-dark: var(--color-primary-200);
+
+  --color-primary-50: 255 247 237;
+  --color-primary-100: 255 237 213;
+  --color-primary-200: 254 215 170;
+  --color-primary-300: 253 186 116;
+  --color-primary-400: 251 146 60;
+  --color-primary-500: 249 115 22;
+  --color-primary-600: 234 88 12;
+  --color-primary-700: 194 65 12;
+  --color-primary-800: 154 52 18;
+  --color-primary-900: 124 45 18;
+
+  --color-accent-50: 247 252 250;
+  --color-accent-100: 236 248 243;
+  --color-accent-200: 217 242 232;
+  --color-accent-300: 187 231 214;
+  --color-accent-400: 119 207 172;
+  --color-accent-500: 61 174 129;
+  --color-accent-600: 44 125 92;
+  --color-accent-700: 32 91 67;
+  --color-accent-800: 19 53 39;
+  --color-accent-900: 9 26 20;
+
+  --color-tertiary-50: 255 252 245;
+  --color-tertiary-100: 254 248 230;
+  --color-tertiary-200: 253 241 206;
+  --color-tertiary-300: 252 230 166;
+  --color-tertiary-400: 249 206 78;
+  --color-tertiary-500: 226 172 8;
+  --color-tertiary-600: 162 123 6;
+  --color-tertiary-700: 118 90 4;
+  --color-tertiary-800: 69 52 2;
+  --color-tertiary-900: 34 26 1;
+
+  --color-warning-50: 254 245 247;
+  --color-warning-100: 254 231 235;
+  --color-warning-200: 252 207 214;
+  --color-warning-300: 250 168 182;
+  --color-warning-400: 245 81 109;
+  --color-warning-500: 222 13 48;
+  --color-warning-600: 159 9 34;
+  --color-warning-700: 116 7 25;
+  --color-warning-800: 67 4 15;
+  --color-warning-900: 34 2 7;
+
+  --color-surface-50: 250 250 250;
+  --color-surface-100: 245 245 245;
+  --color-surface-200: 229 229 229;
+  --color-surface-300: 212 212 212;
+  --color-surface-400: 163 163 163;
+  --color-surface-500: 115 115 115;
+  --color-surface-600: 82 82 82;
+  --color-surface-700: 64 64 64;
+  --color-surface-800: 38 38 38;
+  --color-surface-900: 23 23 23;
+}

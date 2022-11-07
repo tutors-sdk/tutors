@@ -1,15 +1,10 @@
 <script lang="ts">
-  import { afterUpdate, getContext, onDestroy, tick } from "svelte";
+  import { afterUpdate, getContext, onDestroy, onMount, tick } from "svelte";
   import type { Topic } from "tutors-reader-lib/src/models/topic";
-  import type { CourseService } from "../reader-lib/services/course-service";
-  import type { AnalyticsService } from "../reader-lib/services/analytics-service";
-  import CardDeck from "../components/cards/CardDeck.svelte";
-  import VideoCard from "../components/cards/VideoCard.svelte";
-  import UnitCard from "../components/cards/UnitCard.svelte";
-  import TalkCard from "../components/cards/TalkCard.svelte";
-  import { currentLo, layout, revealSidebar } from "../stores";
-  import * as animateScroll from "svelte-scrollto";
-  import { viewDelay } from "../components/animations";
+  import type { CourseService } from "tutors-reader-lib/src/services/course-service";
+  import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
+  import { CardDeck, UnitCard, TalkCard, VideoCard } from "tutors-ui";
+  import { currentLo, layout, revealSidebar } from "tutors-reader-lib/src/stores/stores";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
 
@@ -24,15 +19,15 @@
   let hide = true;
   setTimeout(function () {
     hide = false;
-  }, viewDelay);
+  }, 500);
 
   async function getTopic(url: string) {
     revealSidebar.set(false);
     unitId = "";
     let unitPos: number = url.indexOf("/unit");
     if (unitPos !== -1) {
-      unitId = url.substr(unitPos + 1);
-      url = url.substr(0, unitPos);
+      unitId = url.slice(unitPos + 1);
+      url = url.slice(0, unitPos);
     }
     topic = await cache.readTopic(url);
     if (unitPos !== -1) {
@@ -50,10 +45,14 @@
   afterUpdate(async () => {
     if (unitId) {
       await tick();
-      animateScroll.scrollTo({ delay: 500, element: "#" + unitId });
+      document.getElementById(unitId).scrollIntoView();
     } else {
-      animateScroll.scrollTo({ delay: 200, element: "#top" });
+      document.getElementById("top").scrollIntoView();
     }
+  });
+
+  onMount(() => {
+    document.getElementById("top").scrollIntoView();
   });
 
   let grid = "";
@@ -80,9 +79,7 @@
         <TalkCard {lo} />
       {/each}
       {#each topic.units as unit}
-        <div class="mt-2">
-          <UnitCard {unit} />
-        </div>
+        <UnitCard {unit} />
       {/each}
       <CardDeck los={topic.standardLos} />
     </div>

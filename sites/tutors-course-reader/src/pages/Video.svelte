@@ -1,26 +1,23 @@
 <script lang="ts">
   import { afterUpdate, getContext } from "svelte";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import TopicNavigatorCard from "../components/cards/TopicNavigatorCard.svelte";
-  import VideoCard from "../components/cards/VideoCard.svelte";
-  import type { AnalyticsService } from "../reader-lib/services/analytics-service";
-  import { revealSidebar } from "../stores";
-  import { talkTransition, viewDelay } from "../components/animations";
+  import { TopicNavigatorCard, VideoCard } from "tutors-ui";
+  import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
+  import { revealSidebar } from "tutors-reader-lib/src/stores/stores";
   import { querystring } from "svelte-spa-router";
-  import * as animateScroll from "svelte-scrollto";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
-  import type { CourseService } from "../reader-lib/services/course-service";
+  import type { CourseService } from "tutors-reader-lib/src/services/course-service";
+  import { talkTransition } from "tutors-ui/lib/animations";
 
   export let params: Record<string, string>;
   const analytics: AnalyticsService = getContext("analytics");
   const cache: CourseService = getContext("cache");
-  let title = "";
 
   let hide = true;
   setTimeout(function () {
     hide = false;
-  }, viewDelay);
+  }, 500);
 
   async function getVideo(url: string): Promise<Lo> {
     revealSidebar.set(false);
@@ -29,13 +26,12 @@
     }
     const lo = await cache.readLo(url, "video");
     analytics.pageLoad(params.wild, lo);
-    title = lo.title;
     return lo;
   }
 
   afterUpdate(() => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
-    animateScroll.scrollTo({ delay: 200, element: "#top" });
+    scrollTo({ top: 0, behavior: "smooth" });
   });
 </script>
 
@@ -43,7 +39,7 @@
   <Loading />
 {:then lo}
   {#if !hide}
-    <div class="h-screen flex">
+    <div class="min-h-screen flex w-11/12 mx-auto">
       <div transition:talkTransition class="w-full">
         <VideoCard {lo} />
       </div>

@@ -136,10 +136,6 @@ Also a Svelte application, this application presents the educational analytics g
 
 The homepage of the Tutors project built with Astro. This is deployed at https://tutors.dev
 
-### [tutors-vitebook](https://github.com/tutors-sdk/tutors/tree/main/sites/tutors-vitebook)
-
-A storybook style application which visualises the UI components of the Tutors project. This is deployed at https://vitebook.tutors.dev. Currently a work in progress.
-
 ## Apps
 
 These are command line applications used by educators to generate courses. The principles embodied in the [educator experience are presented here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/02).
@@ -170,7 +166,7 @@ Comparable to tutors-lib, but intended for use in Svelte applications. Construct
 
 ### [tutors-ui](https://github.com/tutors-sdk/tutors/tree/main/components/tutors-ui)
 
-A shared library of UI components which can be used to build the readers, these components are visualised in the vitebook site (https://vitebook.tutors.dev).
+A shared library of UI components which can be used to build Tutors.
 
 # Contributing
 

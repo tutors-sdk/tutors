@@ -1,50 +1,46 @@
-@import "./agate.css";
-
-
 @font-face {
-  font-family: 'OpenDyslexic';
-  src: url('OpenDyslexic-Bold.woff2') format('woff2'),
-      url('OpenDyslexic-Bold.woff') format('woff');
+  font-family: "OpenDyslexic";
+  src: url("OpenDyslexic-Bold.woff2") format("woff2"), url("OpenDyslexic-Bold.woff") format("woff");
   font-weight: bold;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'OpenDyslexic';
-  src: url('OpenDyslexic-Italic.woff2') format('woff2'),
-      url('OpenDyslexic-Italic.woff') format('woff');
+  font-family: "OpenDyslexic";
+  src: url("OpenDyslexic-Italic.woff2") format("woff2"), url("OpenDyslexic-Italic.woff") format("woff");
   font-weight: normal;
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'OpenDyslexic';
-  src: url('OpenDyslexic-BoldItalic.woff2') format('woff2'),
-      url('OpenDyslexic-BoldItalic.woff') format('woff');
+  font-family: "OpenDyslexic";
+  src: url("OpenDyslexic-BoldItalic.woff2") format("woff2"), url("OpenDyslexic-BoldItalic.woff") format("woff");
   font-weight: bold;
   font-style: italic;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'OpenDyslexic';
-  src: url('OpenDyslexic-Regular.woff2') format('woff2'),
-      url('OpenDyslexic-Regular.woff') format('woff');
+  font-family: "OpenDyslexic";
+  src: url("OpenDyslexic-Regular.woff2") format("woff2"), url("OpenDyslexic-Regular.woff") format("woff");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
-
-
-:root .prose code {
-  border-radius: 0px !important;
+html,
+body {
+  @apply h-full overflow-hidden;
+}
+pre:not(.unstyled):not(.code-block pre) {
+  background: none !important;
 }
 
-.red {
-  background-color: palevioletred;
-  color: white;
+code:not(.unstyled):not(.code-block code) {
+  background-color: rgb(var(--color-surface-500)) !important;
+  color: rgb(var(--color-primary-500)) !important;
+  padding: 5px !important;
 }
 
 .ag-header-cell-label .ag-header-cell-text {
