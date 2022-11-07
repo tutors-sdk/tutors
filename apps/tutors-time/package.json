@@ -19,7 +19,7 @@
   "dependencies": {
     "@types/node": "^18.8.4",
     "@types/shelljs": "^0.8.11",
-    "axios": "^1.1.2",
+    "axios": "^1.1.3",
     "commander": "^9.4.1",
     "dotenv": "^16.0.3",
     "firebase": "^9.9.3",
