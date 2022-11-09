@@ -17,7 +17,9 @@
     "format": "prettier --write ./src/**/*.{js,svelte,html,ts}"
   },
   "dependencies": {
-    "tutors-reader-lib": "^2.6.0"
+    "tutors-reader-lib": "*",
+    "tutors-configs": "*",
+    "tutors-ui": "*"
   },
   "devDependencies": {
     "@brainandbones/skeleton": "^0.67.5",
@@ -56,8 +58,6 @@
     "svelte-tabs": "^1.1.0",
     "svelte-transitions-fade-scale": "^1.0.0",
     "tailwindcss": "^3.1.8",
-    "tutors-configs": "*",
-    "tutors-ui": "*",
     "typescript": "^4.8.3",
     "vite": "^3.1.3"
   }

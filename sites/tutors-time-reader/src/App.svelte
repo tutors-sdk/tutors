@@ -7,12 +7,11 @@
   import Router from "svelte-spa-router";
   import Blank from "./pages/support/Blank.svelte";
   import NotFound from "./pages/support/NotFound.svelte";
-  import Footer from "./navigators/footer/Footer.svelte";
+  import { Footer } from "tutors-ui";
   import { CourseService } from "tutors-reader-lib/src/services/course-service";
   import { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
   import { MetricsService } from "tutors-reader-lib/src/services/metrics-service";
   import { currentLo, storeTheme } from "tutors-reader-lib/src/stores/stores";
-  import NavBar from "./navigators/NavBar.svelte";
 
   import tutors from "tutors-ui/lib/themes/tutors.css";
   import dyslexia from "tutors-ui/lib/themes/dyslexia.css";
