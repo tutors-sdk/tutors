@@ -45,9 +45,9 @@
   afterUpdate(async () => {
     if (unitId) {
       await tick();
-      document.getElementById(unitId).scrollIntoView();
+      document.getElementById(unitId)?.scrollIntoView();
     } else {
-      document.getElementById("top").scrollIntoView();
+      document.getElementById("top")?.scrollIntoView();
     }
   });
 
