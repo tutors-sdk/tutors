@@ -1,4 +1,4 @@
-@import url('https://dyslexicfonts.com/fonts/OpenDyslexic-Regular.otf');
+@import url('https://cdn.jsdelivr.net/npm/open-dyslexic@1.0.3/otf/OpenDyslexic-Regular.otf');
 
 :root {
   --theme-border-base: 0px;
