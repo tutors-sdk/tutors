@@ -151,7 +151,7 @@ export function copyResource(src: string, dest: string): void {
 
 export function sortLos(los: Array<LearningObject>) {
   const orderedLos = los.filter((lo) => lo.frontMatter?.order);
-  const unOrderedLos = los.filter((lo) => lo.frontMatter?.order);
+  const unOrderedLos = los.filter((lo) => !lo.frontMatter?.order);
   orderedLos.sort((a: any, b: any) => a.frontMatter.order - b.frontMatter.order);
   return orderedLos.concat(unOrderedLos);
 }

@@ -18,10 +18,14 @@
       <div class="tutorscard-body">
         {% if (lo.videoid) and (lo.videoid != 'none') %}
           <div class="flex justify-center">
-          <a href="https://www.youtube.com/watch?v={{ lo.videoid }}" data-caption="{{ lo.title }}" target="_blank">
-            {{ icon("video", 30) }}
-          </a>
-          </div>
+          {% if ((lo.videoids.videoIds.length > 0) and (lo.videoids.videoIds[lo.videoids.videoIds.length - 1].service === 'heanet')) %}
+            {{ icon("video", 30, "https://media.heanet.ie/page/" + lo.videoids.videoIds[lo.videoids.videoIds.length - 1].id, "Play") }}
+          {% elseif ((lo.videoids.videoIds.length > 0) and (lo.videoids.videoIds[lo.videoids.videoIds.length - 1].service === 'vimp')) %}
+            {{ icon("video", 30, "https://vimp.oth-regensburg.de/media/embed?key=" + lo.videoids.videoIds[lo.videoids.videoIds.length - 1].id, "Play") }}
+          {% else %}
+            {{ icon("video", 30, "https://www.youtube.com/watch?v=" + lo.videoid, "Play") }}
+        {% endif %}
+      </div>
         {% endif %}
         <div class="{text} prose">
           {{ lo.objectives }}
