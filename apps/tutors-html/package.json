@@ -1,6 +1,6 @@
 {
   "name": "tutors-html",
-  "version": "2.6.0",
+  "version": "2.6.1",
   "description": "Static course web site generator - html emitter",
   "main": "./src/tutors-html.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "shelljs": "^0.8.5",
     "showdown": "^2.1.0",
     "showdown-highlight": "^3.1.0",
-    "tutors-lib": "^2.6.0"
+    "tutors-lib": "^2.6.1"
   },
   "devDependencies": {
     "@types/nunjucks": "^3.2.1",
