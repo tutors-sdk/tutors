@@ -19,7 +19,7 @@
         {% if (lo.videoid) and (lo.videoid != 'none') %}
           <div class="flex justify-center">
           {% if ((lo.videoids.videoIds.length > 0) and (lo.videoids.videoIds[lo.videoids.videoIds.length - 1].service === 'heanet')) %}
-            {{ icon("video", 30, "https://media.heanet.ie/m3u8/" + lo.videoids.videoIds[lo.videoids.videoIds.length - 1].id, "Play") }}
+            {{ icon("video", 30, "https://media.heanet.ie/page/" + lo.videoids.videoIds[lo.videoids.videoIds.length - 1].id, "Play") }}
           {% elseif ((lo.videoids.videoIds.length > 0) and (lo.videoids.videoIds[lo.videoids.videoIds.length - 1].service === 'vimp')) %}
             {{ icon("video", 30, "https://vimp.oth-regensburg.de/media/embed?key=" + lo.videoids.videoIds[lo.videoids.videoIds.length - 1].id, "Play") }}
           {% else %}
