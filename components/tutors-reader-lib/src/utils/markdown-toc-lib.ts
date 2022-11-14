@@ -68,12 +68,12 @@ export function generateToc(source: string): string {
   source = source.replace(/<p>\[toc\]<\/p>[\n]*/g, () => {
     const headers = tocCollection.shift();
     if (headers && headers.length) {
-      const str = `<ol>${headers
+      const str = `<ul class="list-none">${headers
         .map(
           ({ text, anchor }) =>
             `<li><a style="cursor: pointer;" onClick="document.getElementById('${anchor}').scrollIntoView({ behavior: 'smooth', block: 'center' });">${text}</a></li>`
         )
-        .join("")}</ol>\n`;
+        .join("")}</ul>\n`;
       return str;
     }
     return "";
