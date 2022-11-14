@@ -155,22 +155,3 @@ export function sortLos(los: Array<LearningObject>) {
   orderedLos.sort((a: any, b: any) => a.frontMatter.order - b.frontMatter.order);
   return orderedLos.concat(unOrderedLos);
 }
-
-// export function correctVideoLink(lo: LearningObject) {
-//   if (lo.videoid) {
-//     if (lo.videoids) {
-//       if (lo.videoids.videoIds.length > 0) {
-//         const id = lo.videoids.videoIds[lo.videoids.videoIds.length - 1].id;
-//         lo.videoService = lo.videoids.videoIds[lo.videoids.videoIds.length - 1].service;
-//         // if (service === "heanet") {
-//         //   console.log("link to heanet" + id);
-//         // } else if (service === "vimp") {
-//         //   console.log("link to vimp" + id);
-//         // } else if (service === "youtube") {
-//         //   console.log("link to youtube" + id);
-//         //   lo.videoid = `https://www.youtube.com/watch?v=${id}`;
-//         // }
-//       }
-//     }
-//   }
-// }
