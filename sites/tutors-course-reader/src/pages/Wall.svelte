@@ -4,7 +4,6 @@
   import { CardDeck, VideoCard } from "tutors-ui";
   import { currentCourse, currentLo } from "tutors-reader-lib/src/stores/stores";
   import type { AnalyticsService } from "tutors-reader-lib/src/services/analytics-service";
-  import * as animateScroll from "svelte-scrollto";
   import Loading from "./support/Loading.svelte";
   import Error from "./support/Error.svelte";
   import type { CourseService } from "tutors-reader-lib/src/services/course-service";
