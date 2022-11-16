@@ -84,10 +84,10 @@ export class HtmlEmitter {
     sh.cd(topic.folder);
     this.emitObjectves(topic);
     const topicPath = `${path}/${topic.folder}`;
-    topic.los.forEach((lo) => {
+    topic?.los?.forEach((lo) => {
       this.emitLo(lo, topicPath);
     });
-    topic.standardLos = topic.los.filter((lo: LearningObject) => lo.lotype !== "unit" && lo.lotype !== "panelvideo" && lo.lotype !== "paneltalk");
+    topic.standardLos = topic?.los?.filter((lo: LearningObject) => lo.lotype !== "unit" && lo.lotype !== "panelvideo" && lo.lotype !== "paneltalk");
     publishTemplate(topicPath, "index.html", "Topic.njk", topic);
     sh.cd("..");
   }

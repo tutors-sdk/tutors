@@ -25,7 +25,7 @@
     "shelljs": "^0.8.5",
     "showdown": "^2.1.0",
     "showdown-highlight": "^3.1.0",
-    "tutors-lib": "^2.6.1"
+    "tutors-lib": "^2.6.2"
   },
   "devDependencies": {
     "@types/nunjucks": "^3.2.1",

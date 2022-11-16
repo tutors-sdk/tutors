@@ -88,7 +88,7 @@ export class JsonEmitter {
     this.emitLo(lo, topicUrl, jsonObj);
     jsonObj.route = `#topic/${topicUrl}`;
     jsonObj.los = [];
-    lo.los.forEach((lo) => {
+    lo.los?.forEach((lo) => {
       const loJson: any = {};
       const baseUrl = `${topicUrl}/${lo.folder}`;
       this.emitLo(lo, baseUrl, loJson);
