@@ -8,10 +8,12 @@
 
   let los: Lo[] = [];
   let courseMap = new Map<string, any>();
-  let numberModules = 0;
+  let modules = 0;
   let title = "Tutors Module Activity";
   let subTitle = "Connecting ...";
   let activeSince = "";
+  let visits = 0;
+
   const db = getDatabase();
 
   let canUpdate = false;
@@ -67,8 +69,8 @@
     if (usage.lo) {
       usageUpdate(courseId, usage);
       los = [...los];
-      numberModules = los.length;
-      subTitle = `${numberModules} active since : ${activeSince}`;
+      modules = los.length;
+      subTitle = `Active since : ${activeSince}`;
     }
   }
 
@@ -80,6 +82,7 @@
       onValue(statusRef, async () => {
         if (canUpdate) {
           await visitUpdate(courseId);
+          visits++;
         }
       });
     });
@@ -90,7 +93,7 @@
   <title>{title}</title>
 </svelte:head>
 <div class="sticky top-0 z-40 mb-5">
-  <NavBar {title} {subTitle} />
+  <NavBar {title} {subTitle} {modules} {visits} />
 </div>
 {#if los.length}
   <div

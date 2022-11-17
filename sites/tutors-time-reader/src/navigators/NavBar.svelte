@@ -5,6 +5,8 @@
 
   export let title = "Tutors Time";
   export let subTitle = "";
+  export let modules = 0;
+  export let visits = 0;
 </script>
 
 <AppBar class="h-24 space-x-1 lg:space-x-4">
@@ -19,11 +21,21 @@
         <h2 class="mr-4 hidden text-sm font-bold sm:text-lg md:inline-block">{title}</h2>
         <!-- Badge -->
         <div class="hidden md:block" target="_blank">
-          <p class="text-sm font-bold">{subTitle}</p>
+          <span class="text-xs">{subTitle}</span>
         </div>
       </div>
     </div>
   </svelte:fragment>
+  <div class="hidden md:inline-block">
+    <span class="ml-12 mr-6">
+      <span class="badge bg-tertiary-500">{modules}</span>
+      <h2 class="mr-4 text-sm md:inline-block">Active Modules</h2>
+    </span>
+    <span class="mr-6">
+      <span class="badge bg-tertiary-500">{visits}</span>
+      <h2 class="text-sm md:inline-block">Page loads</h2>
+    </span>
+  </div>
   <svelte:fragment slot="trail">
     <div class="flex items-center space-x-1 lg:space-x-4">
       <LayoutMenu />
