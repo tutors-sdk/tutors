@@ -80,7 +80,29 @@ export class LabSheet {
     if (grid) {
       const api = grid.gridOptions.api;
       api.setColumnDefs(this.columnDefs);
-      api.setRowData(this.rowData);
+      const sortedRowData = this.rowData.sort((c1, c2) => (c1.summary < c2.summary ? 1 : c1.summary > c2.summary ? -1 : 0));
+      api.setRowData(sortedRowData);
+    }
+  }
+
+  chart(grid, chartType: string) {
+    if (grid) {
+      const api = grid.gridOptions.api;
+      const columnNames = [];
+      this.columnDefs.forEach((columnDef) => {
+        if (columnDef.field != "summary") columnNames.push(columnDef.field);
+      });
+      api.createRangeChart({
+        chartType: chartType,
+        cellRange: {
+          rowStartIndex: 0,
+          rowEndIndex: this.rowData.length,
+          columns: columnNames,
+        },
+        chartContainer: document.querySelector("#chart"),
+        //suppressChartRanges: true,
+        //unlinkChart: true,
+      });
     }
   }
 
@@ -105,10 +127,4 @@ export class LabSheet {
       });
     });
   }
-
-  // populateCols(los: Lo[]) {}
-
-  // populateRow(user: UserMetric, los: Lo[]) {}
-
-  // updateRow(user: UserMetric, rowNode) {}
 }
