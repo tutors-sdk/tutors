@@ -6,6 +6,10 @@
   }
 </script>
 
+<svelte:head>
+  <title>Tutors Terms</title>
+</svelte:head>
+
 <div class="flex min-h-screen items-center justify-center overflow-auto bg-surface-600">
   <div class="card m-8 flex w-11/12 flex-wrap justify-items-center p-4 shadow-xl lg:w-2/3">
     <div class="flex w-full justify-between border-b-2 border-surface-300 p-2">
@@ -25,20 +29,24 @@
       <p class="p-2">To learn more about these features please consult:</p>
       <ul class="ml-4 list-inside list-disc text-blue-600 underline visited:text-purple-600 hover:text-blue-800">
         <li>
-          <a target="_blank" rel="noreferrer" href="https://github.com/tutors-sdk/tutors-faqs/blob/main/tutors-time-faq.md">
+          <a target="_blank" rel="noopener noreferrer" href="https://github.com/tutors-sdk/tutors-faqs/blob/main/tutors-time-faq.md">
             Tutors Time FAQ
           </a>
         </li>
         <li>
-          <a target="_blank" rel="noreferrer" href="https://github.com/tutors-sdk/tutors-faqs/blob/main/tutors-live-faq.md"
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/tutors-sdk/tutors/blob/main/sites/tutors-time-reader/tutors-time-faq.md"
             >Tutors Live FAQ
           </a>
         </li>
       </ul>
       <p class="p-2">
         Tutors is an open source application - the data collection component <a
+          rel="noopener noreferrer"
           class="text-blue-600 underline visited:text-purple-600 hover:text-blue-800"
-          href="https://github.com/tutors-sdk/tutors-readers/blob/main/tutors-course-reader/src/reader-lib/services/analytics-service.ts"
+          href="https://github.com/tutors-sdk/tutors/blob/main/components/tutors-reader-lib/src/services/analytics-service.ts"
           target="_blank"
         >
           is here</a

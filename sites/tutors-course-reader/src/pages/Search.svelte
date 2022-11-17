@@ -60,7 +60,7 @@
               {@html result.html}
             </div>
             <div class="pt-4 text-right text-sm">
-              <a href={result.link} target="_blank">
+              <a rel="noopener noreferrer" href={result.link} target="_blank">
                 {result.title}
               </a>
             </div>

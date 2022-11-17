@@ -104,6 +104,8 @@
       <Divider />
       <ul>
         <li class="flex">
+          <!-- svelte-ignore a11y-missing-attribute -->
+          <!-- svelte-ignore a11y-click-events-have-key-events -->
           <a on:click="{handleClick}">
             {#if status}
               <Icon type="online" />
@@ -116,6 +118,8 @@
         </li>
         {#if status}
           <li>
+            <!-- svelte-ignore a11y-missing-attribute -->
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
             <a on:click="{onlineDrawerOpen}">
               <Icon type="listOnline" />
               <div class="ml-2">
@@ -128,19 +132,19 @@
       <Divider />
       <ul>
         <li>
-          <a href="{timeUrl}" target="_blank">
+          <a href="{timeUrl}" target="_blank" rel="noreferrer">
             <Icon type="tutorsTime" />
             <div class="ml-2">Tutors Time</div>
           </a>
         </li>
         <li>
-          <a href="{gitUrl}" target="_blank">
+          <a href="{gitUrl}" target="_blank" rel="noreferrer">
             <Icon type="github" />
             <div class="ml-2">Github Profile</div>
           </a>
         </li>
         <li>
-          <a href="#/logout">
+          <a href="#/logout" rel="noreferrer">
             <Icon type="logout" />
             <div class="ml-2">Logout</div>
           </a>

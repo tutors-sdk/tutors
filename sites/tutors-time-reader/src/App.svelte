@@ -45,11 +45,9 @@
 
 <div id="app" class="h-full overflow-hidden">
   <AppShell class="h-screen">
-    <div class="mx-auto my-4 min-h-[70%]">
+    <!-- <div class="mx-auto my-4 min-h-[70%]"> -->
+    <div class="w-full">
       <Router {routes} />
-    </div>
-    <div class="bg-surface-100-800-token bottom-0 mt-2">
-      <Footer />
     </div>
   </AppShell>
 </div>

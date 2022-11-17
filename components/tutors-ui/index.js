@@ -8,6 +8,7 @@ export { default as IconBar } from './lib/Molecules/IconBar/IconBar.svelte';
 export { default as LayoutMenu } from './lib/Molecules/LayoutMenu/LayoutMenu.svelte';
 export { default as NavTitle } from './lib/Molecules/NavTitle/NavTitle.svelte';
 export { default as NavUser } from './lib/Molecules/NavUser/NavUser.svelte';
+export { default as NavTimeUser } from './lib/Molecules/NavUser/NavTimeUser.svelte';
 export { default as NoteCard } from './lib/Molecules/Cards/NoteCard.svelte';
 export { default as StudentCard } from './lib/Molecules/Cards/StudentCard.svelte';
 export { default as TalkCard } from './lib/Molecules/Cards/TalkCard.svelte';

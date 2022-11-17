@@ -50,6 +50,7 @@
     <hr />
     <h6>Themes</h6>
     <ul>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <li
         class="option"
         class:!bg-primary-500="{$storeTheme === 'tutors'}"
@@ -59,6 +60,7 @@
       >
         <p class="text-lg">Tutors</p>
       </li>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <li
         class="option"
         class:!bg-primary-500="{$storeTheme === 'dyslexia'}"

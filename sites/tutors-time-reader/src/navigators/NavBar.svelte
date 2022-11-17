@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { LayoutMenu } from "tutors-ui";
-  import { AppBar } from "@brainandbones/skeleton";
+  import { LayoutMenu, NavTimeUser } from "tutors-ui";
+  import { AppBar, Divider } from "@brainandbones/skeleton";
   import TutorsIcon from "./TutorsIcon.svelte";
 
   export let title = "Tutors Time";
@@ -27,6 +27,8 @@
   <svelte:fragment slot="trail">
     <div class="flex items-center space-x-1 lg:space-x-4">
       <LayoutMenu />
+      <Divider vertical={true} borderWidth="border-l" class="hidden lg:block" />
+      <NavTimeUser />
     </div>
   </svelte:fragment>
 </AppBar>

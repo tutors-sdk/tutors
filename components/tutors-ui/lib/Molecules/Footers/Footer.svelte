@@ -30,11 +30,13 @@
         ></svg
       >
       <div>
-        <a href="https://tutors.dev" target="_blank"
+        <a href="https://tutors.dev" target="_blank" rel="noopener noreferrer"
           ><p class="pl-4">Powered by Tutors Course Reader {version}</p></a
         >
-        <a href="https://github.com/tutors-sdk/tutors/commit/{sha}" target="_blank"
-          ><p class="pl-4 !text-xs">Last commit {id}</p></a
+        <a
+          href="https://github.com/tutors-sdk/tutors/commit/{sha}"
+          target="_blank"
+          rel="noopener noreferrer"><p class="pl-4 !text-xs">Last commit {id}</p></a
         >
       </div>
     </div>

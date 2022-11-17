@@ -5,7 +5,7 @@ import { HtmlEmitter } from "./controllers/html-emitter";
 import { copyFolder } from "tutors-lib/src/utils/futils";
 import * as nunjucks from "nunjucks";
 
-const version = `tutors-html: 2.6.1 (tutors-lib: 2.6.1)`;
+const version = `tutors-html: 2.6.2 (tutors-lib: 2.6.2)`;
 
 const root = __dirname;
 nunjucks.configure(root + "/views", { autoescape: false });
