@@ -63,23 +63,32 @@
     <NavBar {title} subTitle={$currentUser.name} />
   </div>
 
-  <div in:fade={{ duration: 500 }} class="bg-base-200 mt-4 container mx-auto rounded-box">
+  <!-- <div in:fade={{ duration: 500 }} class="bg-base-200 mt-4 container mx-auto rounded-box"> -->
+  <div in:fade={{ duration: 500 }} class="bg-base-200 mt-4 ">
     <TabGroup selected={storeTab}>
       <Tab value="Labs">Labs</Tab>
+      <Tab value="LabsChart">Labs Chart</Tab>
       <Tab value="Calendar">Calendar</Tab>
       {#if instructorMode}
         <Tab value="allLabs">Labs All Students</Tab>
+        <Tab value="allLabsChart">Labs All Students - Chart</Tab>
         <Tab value="allCalendar">Calendar All Students</Tab>
       {/if}
     </TabGroup>
     {#if $storeTab === "Labs"}
-      <LabTime {id} />
+      <LabTime {id} chart={false} />
+    {/if}
+    {#if $storeTab === "LabsChart"}
+      <LabTime {id} chart={true} />
     {/if}
     {#if $storeTab === "Calendar"}
       <CalendarTime {id} />
     {/if}
     {#if $storeTab === "allLabs"}
       <InstructorLabTime />
+    {/if}
+    {#if $storeTab === "allLabsChart"}
+      <InstructorLabTime chart={true} />
     {/if}
     {#if $storeTab === "allCalendar"}
       <InstructorCalendarTime />
