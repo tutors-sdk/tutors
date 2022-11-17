@@ -1,17 +1,16 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
   import { Grid } from "ag-grid-community";
-  import Icon from "tutors-ui/lib/Atoms/Icon/Icon.svelte";
   import type { CourseService } from "tutors-reader-lib/src/services/course-service";
   import type { MetricsService } from "tutors-reader-lib/src/services/metrics-service";
   import { LabCountSheet } from "../../components/sheets/lab-count-sheet";
   import { options } from "../../components/sheets/lab-sheet";
 
   export let id;
+  export let chart = false;
 
   let time;
   let timeGrid;
-  let timeHeight = 250;
   let timeSheet = new LabCountSheet();
 
   const cache: CourseService = getContext("cache");
@@ -25,24 +24,16 @@
       timeSheet.populateCols(allLabs);
       timeSheet.populateRow(user, allLabs);
       timeSheet.render(timeGrid);
+      if (chart) timeSheet.chart(timeGrid, "groupedBar");
     }
   });
-
-  let exportExcel = function () {
-    timeGrid.gridOptions.api.exportDataAsExcel();
-  };
 </script>
 
-<div class="flex justify-center justify-around p-1">
-  <div class="w-1/2">
-    <div class="text-base font-light text-gray-900">Time spent on each lab</div>
-  </div>
-  <div class="w-1/4">
-    <button on:click={exportExcel}>
-      <Icon type="timeExport" toolTip="Export this sheet to excel" scale="1.5" />
-    </button>
-  </div>
-</div>
-<div style="height:{timeHeight}px">
-  <div bind:this={time} style="height: 100%; width:100%" class="ag-theme-balham" />
+<div class="h-screen">
+  {#if chart}
+    <div id="chart" class="ag-theme-balham h-5/6" />
+    <div bind:this={time} class="ag-theme-balham" />
+  {:else}
+    <div bind:this={time} class="ag-theme-balham h-5/6" />
+  {/if}
 </div>
