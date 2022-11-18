@@ -37,6 +37,7 @@ export function updateLo(root: string, course: Course, currentLo: Lo) {
     courseTitle: course.lo.title,
     subRoute: currentLo.route,
     isPrivate: 0,
+    tutorsTimeId: getTutorsTimeId(),
   };
   if (currentLo.type === "course" && currentLo.icon) {
     lo.icon = currentLo.icon;
@@ -53,5 +54,23 @@ export function updateLo(root: string, course: Course, currentLo: Lo) {
   if (course.lo.properties?.private) {
     lo.isPrivate = course.lo.properties?.private as unknown as number;
   }
+
   writeObj(`${root}/lo`, lo);
+}
+
+function generateTutorsTimeId() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+function getTutorsTimeId() {
+  if (window.localStorage.tutorsTimeId != null) {
+    return window.localStorage.tutorsTimeId;
+  } else {
+    window.localStorage.tutorsTimeId = generateTutorsTimeId();
+    return window.localStorage.tutorsTimeId;
+  }
 }
