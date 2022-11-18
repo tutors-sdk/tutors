@@ -6,7 +6,7 @@
   export let title = "Tutors Time";
   export let subTitle = "";
   export let modules = 0;
-  export let visits = 0;
+  export let visits = "";
 </script>
 
 <AppBar class="h-24 space-x-1 lg:space-x-4">
