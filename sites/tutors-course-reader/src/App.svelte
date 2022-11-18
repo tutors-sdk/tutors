@@ -39,6 +39,7 @@
     document.body.setAttribute("data-theme", $storeTheme);
   }
 
+  console.log("starting up...");
   setContext("cache", new CourseService());
   const analytics = new AnalyticsService();
   setContext("analytics", analytics);
