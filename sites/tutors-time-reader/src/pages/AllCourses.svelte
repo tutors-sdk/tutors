@@ -9,15 +9,17 @@
 
   let los: Lo[] = [];
   $: tickerTape = "";
-  $: total = 0;
-  $: moduleCount = 0;
-  let title = "All known Modules";
+  $: modules = 0;
+  let visits = BigInt(0);
+  let visitsStr = "";
 
   function summarise(usage: any): string {
     let str = "Time ";
     str += `${toHoursAndMinutes(usage.count)}<br>`;
     str += "Page Loads: ";
     str += `${usage.visits}`;
+    visits = visits + BigInt(usage.visits);
+    visitsStr = visits.toString();
     return str;
   }
 
@@ -25,14 +27,14 @@
 
   async function populate(allCourseAccess: any[]) {
     const localLos: Lo[] = [];
-    total = allCourseAccess.length;
+    // total = allCourseAccess.length;
     for (let i = 0; i < allCourseAccess.length; i++) {
       try {
         const courseId = allCourseAccess[i].courseId;
         const lo = await getCourseSummary(courseId);
         const keepPrivate = lo.properties?.private as unknown as number;
         if (!keepPrivate) {
-          moduleCount++;
+          modules++;
           tickerTape = `${lo.title}`;
           lo.summary = summarise(allCourseAccess[i]);
           localLos.push(lo);
@@ -55,10 +57,10 @@
 </script>
 
 <svelte:head>
-  <title>{title}</title>
+  <title>Tutors Modules</title>
 </svelte:head>
 <div class="sticky top-0 z-40 mb-5">
-  <NavBar title="Tutors Module Ecosystem: {moduleCount} Modules " subTitle={tickerTape} />
+  <NavBar title="Tutors Module Ecosystem" subTitle={tickerTape} {modules} visits={visitsStr} />
 </div>
 {#if los.length}
   <div
