@@ -10,18 +10,27 @@
   let courseMap = new Map<string, any>();
   let modules = 0;
   let title = "Tutors Module Activity";
-  let subTitle = "Connecting ...";
+  $: subTitle = "Connecting ...";
   let activeSince = "";
   let visits = 0;
+  const tutorsTimeIds = new Set();
+  let users = 0;
 
   const db = getDatabase();
 
+  let countDown = 20;
   let canUpdate = false;
-  setTimeout(function () {
-    canUpdate = true;
+  let timer = setInterval(function () {
     activeSince = new Date().toLocaleTimeString();
-    subTitle = "Connected ... listening for module activity";
-  }, 20 * 1000);
+    subTitle = `Connecting in ${countDown} seconds`;
+    countDown--;
+    if (countDown == 0) {
+      clearInterval(timer);
+      activeSince = new Date().toLocaleTimeString();
+      subTitle = `Connected at : ${activeSince}`;
+      canUpdate = true;
+    }
+  }, 1000);
 
   void startListening();
 
@@ -34,6 +43,13 @@
     return str;
   }
 
+  function updateNmrUsers(lo: any) {
+    if (lo.tutorsTimeId) {
+      tutorsTimeIds.add(lo.tutorsTimeId);
+      users = tutorsTimeIds.size;
+    }
+  }
+
   function usageUpdate(courseId: string, usage: any) {
     const lo = usage.lo;
     const foundLo = courseMap.get(courseId);
@@ -41,6 +57,8 @@
       foundLo.title = lo.courseTitle;
       foundLo.visits++;
       foundLo.summary = summarise(usage, foundLo.visits);
+      foundLo.tutorsTimeId = lo.tutorsTimeId;
+      updateNmrUsers(foundLo);
       foundLo.route = `https://reader.tutors.dev${lo.subRoute}`;
       if (lo.img) {
         foundLo.img = lo.img;
@@ -60,6 +78,7 @@
         loCopy.type = "web";
         courseMap.set(courseId, loCopy);
         los.push(loCopy);
+        updateNmrUsers(lo);
       }
     }
   }
@@ -93,7 +112,7 @@
   <title>{title}</title>
 </svelte:head>
 <div class="sticky top-0 z-40 mb-5">
-  <NavBar {title} {subTitle} {modules} {visits} />
+  <NavBar {title} {subTitle} {modules} {visits} {users} />
 </div>
 {#if los.length}
   <div

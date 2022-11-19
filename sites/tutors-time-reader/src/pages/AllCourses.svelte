@@ -10,16 +10,14 @@
   let los: Lo[] = [];
   $: tickerTape = "";
   $: modules = 0;
-  let visits = BigInt(0);
-  let visitsStr = "";
+  let visits = 0;
 
   function summarise(usage: any): string {
     let str = "Time ";
     str += `${toHoursAndMinutes(usage.count)}<br>`;
     str += "Page Loads: ";
     str += `${usage.visits}`;
-    visits = visits + BigInt(usage.visits);
-    visitsStr = visits.toString();
+    visits += usage.visits;
     return str;
   }
 
@@ -60,7 +58,7 @@
   <title>Tutors Modules</title>
 </svelte:head>
 <div class="sticky top-0 z-40 mb-5">
-  <NavBar title="Tutors Module Ecosystem" subTitle={tickerTape} {modules} visits={visitsStr} />
+  <NavBar title="Tutors Module Ecosystem" subTitle={tickerTape} {modules} {visits} />
 </div>
 {#if los.length}
   <div
