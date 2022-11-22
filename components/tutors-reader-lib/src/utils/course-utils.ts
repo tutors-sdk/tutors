@@ -1,6 +1,18 @@
 import type { Course } from "src/models/course";
+import type { IconType } from "src/types/icon-types";
 import type { Lo } from "src/types/lo-types";
 import { writeObj } from "./firebase-utils";
+
+export interface CourseSummary {
+  title: string;
+  visits: number;
+  count: number;
+  img: string;
+  icon: IconType;
+  route: string;
+  isPrivate: boolean;
+  currentLo: any;
+}
 
 export function isValidCourseName(course: string) {
   let isValid = true;
@@ -17,16 +29,19 @@ export function isValidCourseName(course: string) {
   return isValid;
 }
 
-export async function getCourseSummary(courseId: string): Promise<Lo> {
+export async function getCourseSummary(courseId: string): Promise<CourseSummary> {
   const response = await fetch(`https://${courseId}.netlify.app/tutors.json`);
   const lo = await response.json();
-  lo.type = "web";
-  lo.route = `https://reader.tutors.dev//#/course/${courseId}.netlify.app`;
-  lo.img = lo.img.replace("{{COURSEURL}}", `${courseId}.netlify.app`);
-  if (lo.properties.icon) {
-    lo.icon = lo.properties.icon;
-  }
-  return lo;
+  const courseTime: CourseSummary = {
+    title: lo.title,
+    img: lo.img.replace("{{COURSEURL}}", `${courseId}.netlify.app`),
+    icon: lo.properties?.icon,
+    route: `https://reader.tutors.dev//#/course/${courseId}.netlify.app`,
+    visits: 0,
+    count: 0,
+    isPrivate: lo.properties?.private,
+  };
+  return courseTime;
 }
 
 export function updateLo(root: string, course: Course, currentLo: Lo) {
