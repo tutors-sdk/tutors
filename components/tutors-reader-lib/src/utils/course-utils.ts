@@ -12,6 +12,7 @@ export interface CourseSummary {
   route: string;
   isPrivate: boolean;
   currentLo: any;
+  studentIds: Set<string>;
 }
 
 export function isValidCourseName(course: string) {
@@ -40,6 +41,8 @@ export async function getCourseSummary(courseId: string): Promise<CourseSummary>
     visits: 0,
     count: 0,
     isPrivate: lo.properties?.private,
+    currentLo: null,
+    studentIds: new Set<string>(),
   };
   return courseTime;
 }

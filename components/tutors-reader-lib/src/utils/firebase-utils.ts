@@ -152,7 +152,7 @@ export async function readAllCourseIds(keys: FirebaseKeys): Promise<string[]> {
   return courseList;
 }
 
-export async function readAllCourseAccess(keys: FirebaseKeys): Promise<any[]> {
+export async function readAllCourseAccessIds(keys: FirebaseKeys): Promise<any[]> {
   const courseList = [];
   const auth = getAuth();
   await signInWithEmailAndPassword(auth, keys.tutorStoreId, keys.tutorStoreSecret);
