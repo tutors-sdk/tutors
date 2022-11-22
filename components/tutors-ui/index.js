@@ -1,5 +1,6 @@
 export { default as Icon } from './lib/Atoms/Icon/Icon.svelte';
 export { default as Image } from './lib/Atoms/Image/Image.svelte';
+export { default as Metric } from './lib/Atoms/Metric/Metric.svelte';
 
 export { default as Footer } from './lib/Molecules/Footers/Footer.svelte';
 export { default as Breadcrumbs } from './lib/Molecules/Breadcrumbs/Breadcrumbs.svelte';
