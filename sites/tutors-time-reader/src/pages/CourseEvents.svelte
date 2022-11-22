@@ -12,7 +12,7 @@
   $: subTitle = "Connecting ...";
   let activeSince = "";
   let visits = 0;
-  const tutorsTimeIds = new Set();
+  const tutorsTimeIds = new Set<string>();
   let users = 0;
 
   const db = getDatabase();
@@ -36,12 +36,13 @@
   function updateNmrUsers(courseSummary: CourseSummary) {
     if (courseSummary.currentLo.tutorsTimeId) {
       tutorsTimeIds.add(courseSummary.currentLo.tutorsTimeId);
+      courseSummary.studentIds.add(courseSummary.currentLo.tutorsTimeId);
       users = tutorsTimeIds.size;
     }
   }
 
   function updateCourseSummary(courseSummary: CourseSummary) {
-    courseSummary.route = `https://reader.tutors.dev${courseSummary.currentLo?.subRoute}`;
+    courseSummary.currentLo.route = `https://reader.tutors.dev${courseSummary.currentLo?.subRoute}`;
     courseSummary.img = courseSummary.currentLo?.img;
     if (courseSummary.currentLo.icon) {
       courseSummary.icon = courseSummary.currentLo.icon;
@@ -49,6 +50,7 @@
       courseSummary.icon = null;
     }
   }
+
   async function visitUpdate(courseId: string) {
     let courseSummary = courses.get(courseId);
     if (!courseSummary) {
@@ -60,13 +62,11 @@
     const usage = await (await get(child(ref(db), `all-course-access/${courseId}`))).val();
     if (usage.lo) {
       courseSummary.currentLo = usage.lo;
-      courseSummary.count = usage.count;
       courseSummary.visits = usage.visits;
       updateCourseSummary(courseSummary);
       updateNmrUsers(courseSummary);
       los = [...los];
       modules = los.length;
-      subTitle = `Active since : ${activeSince}`;
     }
   }
 

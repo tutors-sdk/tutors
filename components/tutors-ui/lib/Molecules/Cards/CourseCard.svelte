@@ -1,12 +1,12 @@
 <script lang="ts">
-  import type { CourseSummary } from 'tutors-reader-lib/src/utils/course-utils';
-  import { layout } from 'tutors-reader-lib/src/stores/stores';
+  import type { CourseSummary, getCourseSummary } from 'tutors-reader-lib/src/utils/course-utils';
+  import { layout, studentsOnline } from 'tutors-reader-lib/src/stores/stores';
   import { onDestroy } from 'svelte';
   import { cardTransition } from '../../animations';
   import Iconify from '@iconify/svelte';
   import { Avatar } from '@brainandbones/skeleton';
   import Icon from '../../Atoms/Icon/Icon.svelte';
-  import { toHoursAndMinutes } from 'tutors-reader-lib/src/utils/metrics-utils';
+  import Metric from '../../Atoms/Metric/Metric.svelte';
 
   export let lo: CourseSummary;
   let target = '_blank';
@@ -31,14 +31,6 @@
     }
   });
 
-  function summarise(courseSummary: CourseSummary): string {
-    let str = 'Time ';
-    str += `${toHoursAndMinutes(courseSummary.count)}<br>`;
-    str += 'Page Loads: ';
-    str += `${courseSummary.visits}`;
-    return str;
-  }
-
   onDestroy(unsubscribe);
 </script>
 
@@ -50,7 +42,13 @@
     <header class="card-header flex flex-row items-center justify-between p-3">
       <div class="inline-flex w-full">
         <div class="line-clamp-2 flex-auto {headingText}">{lo.title}</div>
-        <div class="flex-none"><Icon type="web" /></div>
+        <div class="w-1/4 flex-none text-center">
+          {#if lo.studentIds.size}
+            <Metric value="{lo.studentIds.size}" title="Students" />
+          {:else}
+            <Icon type="web" />
+          {/if}
+        </div>
       </div>
     </header>
     <div class="card-body">
@@ -73,8 +71,15 @@
       </figure>
     </div>
     <footer class="card-footer">
-      <div class="prose dark:prose-invert line-clamp-3 text-center">
-        {@html summarise(lo)}
+      <div class="-m-4 mt-2 text-center">
+        {#if lo.currentLo}
+          <div class="line-clamp-1">
+            <a href="{lo.currentLo.route}" target="_blank" rel="noreferrer">{lo.currentLo.title}</a>
+          </div>
+        {/if}
+        <div class="mt-2">
+          <Metric value="{lo.visits}" title="Page Loads" />
+        </div>
       </div>
     </footer>
   </div>
