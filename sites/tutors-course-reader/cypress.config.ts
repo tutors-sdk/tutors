@@ -10,7 +10,7 @@ export default defineConfig({
       require("cypress-fail-fast/plugin")(on, config);
       return config;
     },
-    baseUrl: "http://localhost:5000/#/course/full-stack-web-dev-oth-2022.netlify.app",
+    baseUrl: "http://next.tutors.dev/#/course/full-stack-web-dev-oth-2022.netlify.app",
     specPattern: "cypress/e2e/**/**.cy.ts",
   },
 });
