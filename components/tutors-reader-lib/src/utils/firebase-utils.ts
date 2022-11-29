@@ -57,6 +57,18 @@ export function writeObj(key: string, obj: any) {
   }
 }
 
+export async function deleteObj(root: string, url: string) {
+  const db = getDatabase();
+  let key = "";
+  if (root) {
+    key = `${root}/${url}`;
+  } else {
+    key = url;
+  }
+  const obj = ref(db, key);
+  await remove(obj);
+}
+
 export function sanatisePath(url: string, path: string) {
   let node = path.replace(url, "");
   node = node.substr(node.indexOf("//") + 2, node.length);
@@ -140,7 +152,7 @@ export async function readAllCourseIds(keys: FirebaseKeys): Promise<string[]> {
   return courseList;
 }
 
-export async function readAllCourseAccess(keys: FirebaseKeys): Promise<any[]> {
+export async function readAllCourseAccessIds(keys: FirebaseKeys): Promise<any[]> {
   const courseList = [];
   const auth = getAuth();
   await signInWithEmailAndPassword(auth, keys.tutorStoreId, keys.tutorStoreSecret);

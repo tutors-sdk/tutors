@@ -137,7 +137,6 @@ export async function deleteNode(root: string, url: string) {
   }
   const obj = ref(db, key);
   await remove(obj);
-  console.log(`deleting: ${key}`);
 }
 
 export async function writeNode(key: string, data: any) {
