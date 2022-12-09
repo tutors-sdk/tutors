@@ -1,8 +1,0 @@
-/node_modules/
-/public/build/
-/dist/
-.idea
-.env
-.DS_Store
-/src/**/*.js
-/src/**/*.js.map

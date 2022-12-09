@@ -1,0 +1,99 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import Contributor from "../components/Contributor.astro";
+---
+
+<Layout title="Home">
+  <main>
+    <div class="flex items-center w-full px-4 py-20 bg-cover bg-base-200" style="background-image:url('https://source.unsplash.com/x6sZagaUOM4/1920x1280')">
+      <div class="card !bg-surface-100/40 dark:!bg-surface-800/40 backdrop-blur text-gray-900 my-8 p-12 mx-auto">
+        <div class="card-body">
+          <h1 class="!text-2xl dark:text-white">
+            <strong>Tutors: An Open Learning Web Toolkit</strong>
+          </h1>
+          <p class="text-lg py-4">A collection of open source components &amp; services supporting the creation of transformative learning experiences using open web standards.</p>
+          <div class="card-actions">
+            <a href="https://github.com/tutors-sdk/tutors-kit" target="_blank" class="mb-2 btn bg-primary-500 text-white"> Source Repo</a>
+            <a href="https://docs.tutors.dev" target="_blank" rel="noreferrer" class="mb-2 btn bg-primary-500 text-white"> Documentation</a>
+            <a href="https://tutors-time-kit.netlify.app/catalogue" target="_blank" class="mb-2 btn bg-primary-500 text-white"> Module Catalogue</a>
+            <a href="https://tutors-time-kit.netlify.app/live" target="_blank" class="mb-2 btn bg-primary-500 text-white"> Live Module Activity</a>
+            <a href="/architecture" target="_blank" class="mb-2 btn bg-primary-500 text-white"> Explore the Architecture</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container mx-auto bg-base-200 rounded-box w-full mt-2">
+      <div class="card p-12">
+        <h3>
+          <strong>The project supports three complimentary perspectives</strong>
+        </h3><br />
+        <div class="flex flex-wrap justify-center">
+          <Card
+            border="border-primary-500"
+            title="The Learner Experience"
+            href="https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/01"
+            target="_blank"
+            icon="ph:student"
+            body="The <strong><em>Learner Experience</em></strong> prioritises web interactions that are <strong>engaging</strong>, <strong>contextual</strong>, <strong>linkable</strong>, <strong>searchable</strong>, <strong>accessible</strong> and <strong>responsive</strong>. In addition the experience should foster a sense of <strong>community</strong> and <strong>connection</strong> among fellow learners."
+          />
+          <Card
+            border="border-tertiary-500"
+            title="The Educator Experience"
+            href="https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/02"
+            target="_blank"
+            icon="ph:chalkboard-teacher"
+            body="The <strong><em>Educator Experience</em></strong> prioritises the creation of a <strong>guided paths</strong> through a curriculum via the creation of learning materials that are <strong>autonomous</strong>, <strong>structurally aligned</strong>, <strong>composable</strong>, <strong>auditable</strong>, <strong>extensible</strong>, <strong>versioned</strong> and <strong>independent</strong>."
+          />
+          <Card
+            border="border-warning-500"
+            title="The Developer Experience"
+            href="https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/03"
+            target="_blank"
+            icon="ant-design:code-outlined"
+            body="The <strong><em>Developer Experience</em></strong> prioritises the specification and implementation of <strong>robust</strong>, <strong>well documented</strong>, <strong>loosely coupled components & services</strong>, integrated into a <strong>coherent toolkit</strong> open to contributions from <strong>diverse skill sets</strong>."
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="container mx-auto bg-base-200 rounded-box w-full mt-2">
+      <div class="card p-12">
+        <h3>
+          <strong>Contributors</strong>
+        </h3><br />
+        <div class="flex flex-wrap justify-center">
+          <Contributor
+            image="https://avatars.githubusercontent.com/u/557508?s=70&v=4"
+            name="Eamonn de Leastar"
+            work="SETU"
+            github="https://github.com/edeleastar"
+            email="edeleastar@setu.ie"
+          />
+          <Contributor
+            image="https://avatars.githubusercontent.com/u/26001100?s=70&v=4"
+            name="Colm Dunphy"
+            work="SETU"
+            github="https://github.com/cdunphy"
+            email="cdunphy@setu.ie"
+          />
+          <Contributor
+            image="https://avatars.githubusercontent.com/u/76656637?s=70&v=4"
+            name="Jordan Harrison"
+            work="Charles River Labs"
+            github="https://github.com/jordharr"
+            email="contact@jordanharrison.ie"
+          />
+          <Contributor image="https://avatars.githubusercontent.com/u/87311656?s=70&v=4" name="Emma Kidney" github="https://github.com/ekidneyrh" />
+          <Contributor image="https://ca.slack-edge.com/TCLNFMT45-U028ZUHFELT-6f212632b977-512" name="Ellen O'Carroll" work="Red Hat" />
+          <Contributor image="https://ca.slack-edge.com/TEL752280-UEN0YN2NT-a2e16b2824c2-192" name="Pete Windle" work="SETU" />
+          <Contributor image="https://ca.slack-edge.com/TCLNFMT45-U03N496M3D4-f2235d037186-512" name="David Fan" work="Red Hat" github="https://github.com/Fan" />
+          <Contributor image="https://avatars.githubusercontent.com/u/39221065?v=4" name="Bernard Thompson" work="Kargo" github="https://github.com/bonjo7" />
+          <Contributor image="https://avatars.githubusercontent.com/u/647104?v=4" name="Leigh Griffin" work="Red Hat" github="https://github.com/lgriffin" />
+          <Contributor image="https://avatars.githubusercontent.com/u/32563455?v=4" name="Evgeniy Dainovich" github="https://github.com/zenby" />
+          <Contributor image="https://avatars.githubusercontent.com/u/100454651?v=4" name="Josh Bennett" github="https://github.com/JoshBennett793" />
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

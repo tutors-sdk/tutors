@@ -1,0 +1,39 @@
+{
+  "name": "tutors-html",
+  "version": "2.6.2",
+  "description": "Static course web site generator - html emitter",
+  "main": "./src/tutors-html.js",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean & rm -f tsconfig.tsbuildinfo"
+  },
+  "author": "Eamonn de Leastar (edeleastar@setu.ie)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tutors-sdk/tutors-html.git"
+  },
+  "bin": {
+    "tutors-html": "./src/tutors-html.js"
+  },
+  "dependencies": {
+    "@types/node": "^18.8.4",
+    "@types/shelljs": "^0.8.11",
+    "commander": "^9.4.1",
+    "nunjucks": "^3.2.3",
+    "@types/nunjucks": "^3.2.1",
+    "path": "^0.12.7",
+    "shelljs": "^0.8.5",
+    "showdown": "^2.1.0",
+    "showdown-highlight": "^3.1.0",
+    "tutors-lib": "^2.6.2"
+  },
+  "devDependencies": {
+    "prettier": "2.7.1",
+    "typescript": "^4.8.4"
+  },
+  "prettier": {
+    "singleQuote": false,
+    "printWidth": 180
+  }
+}

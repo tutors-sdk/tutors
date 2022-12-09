@@ -1,0 +1,34 @@
+{
+  "name": "tutors-reader-lib",
+  "version": "2.6.0",
+  "description": "Tutors Reader Lib",
+  "author": "Eamonn de Leastar (edeleastar@wit.ie)",
+  "license": "MIT",
+  "scripts": {
+    "lint": "prettier --check --ignore-path=../../.prettierignore . && eslint \".\"",
+    "format": "prettier --write --ignore-path=../../.prettierignore ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tutors-sdk/tutors-kit.git"
+  },
+  "devDependencies": {
+    "@types/remove-markdown": "^0.3.1",
+    "@types/showdown": "2.0.0",
+    "@iconify/svelte": "^2.2.1",
+    "auth0-js": "^9.19.0",
+    "crypto-es": "^1.2.7",
+    "showdown": "1.9.1",
+    "axios": "^0.27.2",
+    "svelte-spa-router": "^3.3.0",
+    "showdown-custom-class": "^1.0.0",
+    "showdown-emoji": "^3.0.0",
+    "showdown-highlight": "3.1.0",
+    "showdown-katex": "^0.8.0",
+    "remove-markdown": "^0.5.0",
+    "firebase": "^9.9.3",
+    "path-browserify": "^1.0.1",
+    "eslint-config-custom": "*",
+    "typescript": "^4.8.3"
+  }
+}

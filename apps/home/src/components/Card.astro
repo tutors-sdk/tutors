@@ -1,0 +1,24 @@
+---
+export interface Props {
+  border: string;
+  title: string;
+  icon: string;
+  body: string;
+  href: string;
+  target: string;
+}
+
+const { border, href, target, title, icon, body } = Astro.props;
+---
+
+<div class={"card !bg-surface-50 dark:!bg-surface-700 border-y-8 w-80 p-4 pb-8 m-2 hover:scale-105 transition-all " + border}>
+  <a href={href} target={target}>
+    <div class="tutorscard-header justify-center">
+      <h4><strong>{title}</strong></h4>
+    </div>
+    <figure class="flex justify-center">
+      <span class="iconify" data-icon={icon} data-height="180"></span>
+    </figure>
+    <p><Fragment set:html={body} /></p>
+  </a>
+</div>
