@@ -1,6 +1,6 @@
 {
   "name": "tutors-course",
-  "version": "0.0.0",
+  "version": "8.0.0",
   "scripts": {
     "dev": "vite dev --port 3000 --open",
     "build": "vite build",
