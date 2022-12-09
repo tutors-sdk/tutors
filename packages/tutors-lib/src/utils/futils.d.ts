@@ -1,0 +1,17 @@
+export declare function writeFile(folder: string, filename: string, contents: string): void;
+export declare function readFile(path: string): string;
+export declare function readWholeFile(path: string): string;
+export declare function getImageFile(name: string): string;
+export declare function getParentFolder(): string;
+export declare function getDirectories(srcpath: string): string[];
+export declare function verifyFolder(folder: string): void;
+export declare function copyFileToFolder(src: string, dest: string): void;
+export declare function initPath(path: string): void;
+export declare function copyFolder(src: string, dest: string): void;
+export declare function readYaml(path: string): any;
+export declare function readEnrollment(path: string): any;
+export declare function readCalendar(path: string): any;
+export declare function getHeader(fileName: string): string;
+export declare function withoutHeader(fileName: string): string;
+export declare function getHeaderFromBody(body: string): string;
+export declare function withoutHeaderFromBody(body: string): string;

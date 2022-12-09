@@ -1,5 +1,4 @@
 {
-  "svelte.enable-ts-plugin": true,
   "task.allowAutomaticTasks": "on",
   "files.exclude": {
     "**/*.js": { "when": "$(basename).ts" },
@@ -11,12 +10,5 @@
     "**/*.tsbuildinfo": true,
     "**/package-lock.json": true,
     "**/.github": true
-  },
-  "eslint.validate": ["javascript", "typescript", "svelte"],
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnPaste": false, // required
-  "editor.formatOnType": false, // required
-  "editor.formatOnSave": true, // optional
-  "editor.formatOnSaveMode": "file", // required to format on save
-  "files.autoSave": "onFocusChange" // optional but recommended
+  }
 }

@@ -1,32 +1,30 @@
 {
-    "name": "tutors",
-    "repository": "https://github.com/tutors-sdk/tutors.git",
-    "author": "Jordan Harrison <contact@jordanharrison.ie>",
-    "license": "MIT",
-    "version": "0.2.0",
-    "private": true,
-    "workspaces": [
-        "apps/*",
-        "components/*",
-        "sites/*"
-    ],
-    "scripts": {
-        "build": "turbo run build",
-        "dev": "turbo run dev --parallel",
-        "reader": "turbo run dev --filter tutors-course-reader",
-        "time": "turbo run dev --filter tutors-time-reader",
-        "lint": "turbo run lint",
-        "clean": "turbo run clean",
-        "format": "prettier --write \"**/*.{ts,tsx,md}\""
-    },
-    "devDependencies": {
-        "accessibility-checker": "^3.1.38",
-        "eslint": "^8.24.0",
-        "husky": "^8.0.1",
-        "prettier": "^2.7.1",
-        "prettier-plugin-svelte": "^2.7.0",
-        "prettier-plugin-tailwindcss": "^0.1.11",
-        "turbo": "latest",
-        "typescript": "4.8.3"
-    }
+  "name": "tutors",
+  "repository": "https://github.com/tutors-sdk/tutors.git",
+  "author": "Eamonn De Leastar <eamonn.deleastar@setu.ie>",
+  "license": "MIT",
+  "version": "0.3.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "cli/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "course": "turbo run dev --filter tutors-course",
+    "home": "turbo run dev --filter tutors-home",
+    "time": "turbo run dev --filter tutors-time",
+    "lint": "turbo run lint",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "eslint-config-custom": "*",
+    "prettier": "^2.7.1",
+    "prettier-plugin-svelte": "^2.7.0",
+    "turbo": "latest"
+  },
+  "packageManager": "npm@8.19.2"
 }

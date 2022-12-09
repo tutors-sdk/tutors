@@ -1,0 +1,25 @@
+{
+  "name": "tutors-ui",
+  "description": "UI library for the tutors open source project",
+  "version": "0.1.0",
+  "type": "module",
+  "module": "index.ts",
+  "svelte": "index.ts",
+  "devDependencies": {
+    "svrollbar": "^0.12.0",
+    "@skeletonlabs/skeleton": "^0.76.3",
+    "svelte-inview": "^3.0.1",
+    "@iconify/svelte": "^2.2.1",
+    "@iconify/types": "^1.1.0",
+    "tailwindcss": "^3.1.5",
+    "postcss": "^8.4.17",
+    "svelte-loading-spinners": "^0.1.7",
+    "file-saver": "^2.0.5",
+    "pdfjs-dist": "^2.16.105",
+    "typescript": "^4.8.3",
+    "@tailwindcss/line-clamp": "^0.4.0",
+    "@tailwindcss/typography": "^0.5.4",
+    "@tsconfig/svelte": "^3.0.0",
+    "eslint-config-custom": "*"
+  }
+}

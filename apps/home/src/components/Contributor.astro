@@ -1,0 +1,47 @@
+---
+import { Avatar } from "@brainandbones/skeleton";
+
+export interface Props {
+  image: string;
+  name: string;
+  work?: string;
+  github?: string;
+  twitter?: string;
+  email?: string;
+}
+
+const { image, name, work, github, twitter, email } = Astro.props;
+---
+
+<div class="card w-64 m-2 p-4 transition ease-in-out hover:scale-105 duration-200">
+  <div class="flex-auto flex items-center">
+    <Avatar src={image} class="mr-4" />
+    <div>
+      <h6 class="font-bold">{name}</h6>
+      <p class="!text-xs">{work}</p>
+      <div class="mt-1 inline-flex">
+        {
+          github ? (
+            <a href={github} target="_blank">
+              <span class="iconify mr-1" data-icon="fa:github" data-height="16" />
+            </a>
+          ) : null
+        }
+        {
+          twitter ? (
+            <a href={twitter} target="_blank">
+              <span class="iconify mr-1" data-icon="fa:twitter" data-height="16" />
+            </a>
+          ) : null
+        }
+        {
+          email ? (
+            <a href={"mailto:" + email} target="_blank">
+              <span class="iconify mr-1" data-icon="clarity:email-solid" data-height="16" />
+            </a>
+          ) : null
+        }
+      </div>
+    </div>
+  </div>
+</div>

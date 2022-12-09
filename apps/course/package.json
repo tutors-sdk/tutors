@@ -1,0 +1,38 @@
+{
+  "name": "tutors-course",
+  "version": "8.0.0",
+  "scripts": {
+    "dev": "vite dev --port 3000 --open",
+    "build": "vite build",
+    "package": "vite package",
+    "preview": "vite preview",
+    "check": "svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "prettier --check --ignore-path=../../.prettierignore . && TIMING=1 eslint \"src\"",
+    "format": "prettier --write --ignore-path=../../.prettierignore ."
+  },
+  "devDependencies": {
+    "@bobthered/tailwindcss-palette-generator": "^3.1.1",
+    "@skeletonlabs/skeleton": "^0.76.3",
+    "@sveltejs/adapter-auto": "latest",
+    "@sveltejs/adapter-netlify": "^1.0.0-next.84",
+    "@sveltejs/kit": "latest",
+    "@types/auth0-js": "^9.14.7",
+    "auth0-js": "^9.19.2",
+    "autoprefixer": "^10.4.7",
+    "eslint-config-custom": "*",
+    "postcss": "^8.4.14",
+    "postcss-load-config": "^4.0.1",
+    "svelte": "^3.44.0",
+    "svelte-check": "^2.7.1",
+    "svelte-preprocess": "^4.10.7",
+    "tailwindcss": "^3.1.5",
+    "tslib": "^2.3.1",
+    "tutors-reader-lib": "*",
+    "tutors-ui": "*",
+    "typescript": "^4.7.2",
+    "ui": "*",
+    "vite": "^3.1.6"
+  },
+  "type": "module"
+}

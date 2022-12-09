@@ -3,44 +3,33 @@
   "tasks": [
     {
       "type": "typescript",
-      "tsconfig": "apps/tutors-json/tsconfig.json",
+      "tsconfig": "cli/tutors-json/tsconfig.json",
       "option": "watch",
       "problemMatcher": ["$tsc-watch"],
       "group": "build",
-      "label": "tsc: watch - apps/tutors-json/tsconfig.json",
+      "label": "tsc: watch - cli/tutors-json/tsconfig.json",
       "runOptions": {
         "runOn": "folderOpen"
       }
     },
     {
       "type": "typescript",
-      "tsconfig": "apps/tutors-html/tsconfig.json",
+      "tsconfig": "cli/tutors-html/tsconfig.json",
       "option": "watch",
       "problemMatcher": ["$tsc-watch"],
       "group": "build",
-      "label": "tsc: watch - apps/tutors-html/tsconfig.json",
+      "label": "tsc: watch - cli/tutors-html/tsconfig.json",
       "runOptions": {
         "runOn": "folderOpen"
       }
     },
     {
       "type": "typescript",
-      "tsconfig": "components/tutors-lib/tsconfig.json",
+      "tsconfig": "packages/tutors-lib/tsconfig.json",
       "option": "watch",
       "problemMatcher": ["$tsc-watch"],
       "group": "build",
-      "label": "tsc: watch - components/tutors-lib/tsconfig.json",
-      "runOptions": {
-        "runOn": "folderOpen"
-      }
-    },
-    {
-      "type": "typescript",
-      "tsconfig": "apps/tutors-time/tsconfig.json",
-      "option": "watch",
-      "problemMatcher": ["$tsc-watch"],
-      "group": "build",
-      "label": "tsc: watch - apps/tutors-time/tsconfig.json",
+      "label": "tsc: watch - packages/tutors-lib/tsconfig.json",
       "runOptions": {
         "runOn": "folderOpen"
       }
