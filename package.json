@@ -1,4 +1,9 @@
 {
+  "name": "tutors",
+  "repository": "https://github.com/tutors-sdk/tutors.git",
+  "author": "Eamonn De Leastar <eamonn.deleastar@setu.ie>",
+  "license": "MIT",
+  "version": "0.3.0",
   "private": true,
   "workspaces": [
     "apps/*",
