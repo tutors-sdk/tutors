@@ -32,7 +32,7 @@
     "tutors-ui": "*",
     "typescript": "^4.7.2",
     "ui": "*",
-    "vite": "^3.1.6"
+    "vite": "^4.0.0"
   },
   "type": "module"
 }
