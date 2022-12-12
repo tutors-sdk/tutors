@@ -34,7 +34,11 @@ export const analyticsService = {
 
   learningEvent(params: Record<string, string>, data: Record<string, string>) {
     this.courseUrl = params.courseid;
-    this.courseId = params.courseid.substring(0, params.courseid.indexOf("."));
+    if (this.courseUrl.includes(".")) {
+      this.courseId = params.courseid.substring(0, params.courseid.indexOf("."));
+    } else {
+      this.courseId = params.courseid;
+    }
     this.loRoute = "";
     if (params.loid) {
       this.loRoute = sanitise(params.loid);
