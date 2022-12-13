@@ -7,6 +7,7 @@
   import type { StudentLoEvent } from "tutors-reader-lib/src/types/metrics-types";
   import { decrypt, isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
   import { readObj, sanitise } from "tutors-reader-lib/src/utils/firebase-utils";
+  import { goto } from "$app/navigation";
 
   export let data: PageData;
 
