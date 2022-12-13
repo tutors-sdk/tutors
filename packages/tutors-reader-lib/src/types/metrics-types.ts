@@ -36,6 +36,14 @@ export interface StudentMetric {
   time: number;
 }
 
+export interface StudentLoEvent {
+  studentName: string;
+  studentImg: string;
+  loTitle: string;
+  loImage: string;
+  loRoute: string;
+}
+
 export type MetricUpdate = (user: User, topic: Topic, lab: Lo, time: number) => void;
 export type MetricDelete = (user: User) => void;
 export type StatusChange = (user: User) => void;
