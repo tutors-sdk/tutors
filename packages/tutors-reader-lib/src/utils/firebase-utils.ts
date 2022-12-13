@@ -34,6 +34,12 @@ export async function readValue(key: string): Promise<string> {
   return snapShot.val();
 }
 
+export async function readObj(key: string): Promise<any> {
+  const dbRef = ref(getDatabase());
+  const snapShot = await get(child(dbRef, key));
+  return snapShot.val();
+}
+
 export function updateCountValue(key: string) {
   try {
     const db = getDatabase();

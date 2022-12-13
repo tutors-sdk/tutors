@@ -88,7 +88,10 @@ export function encrypt(str: string): string {
 }
 
 export function decrypt(str: string): string {
+  let value = "";
   const raw = Crypto.AES.decrypt(str, key, { iv: iv });
-  const value = raw.toString(Crypto.enc.Utf8);
+  if (raw) {
+    value = raw.toString(Crypto.enc.Utf8);
+  }
   return value;
 }

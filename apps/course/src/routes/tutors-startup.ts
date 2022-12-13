@@ -15,6 +15,7 @@ import { goto } from "$app/navigation";
 const students: StudentMetric[] = [];
 let metricsService: MetricsService;
 let presenceService: PresenceService;
+
 let lastCourse: Course;
 let user: User;
 

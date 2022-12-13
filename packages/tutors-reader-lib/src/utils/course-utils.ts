@@ -55,7 +55,7 @@ export function updateLo(root: string, course: Course, currentLo: Lo) {
     courseTitle: course.lo.title,
     subRoute: currentLo.route,
     isPrivate: 0,
-    tutorsTimeId: getTutorsTimeId()
+    tutorsTimeId: getTutorsTimeId(course)
   };
   if (currentLo.type === "course" && currentLo.icon) {
     lo.icon = currentLo.icon;
@@ -84,11 +84,15 @@ function generateTutorsTimeId() {
   });
 }
 
-function getTutorsTimeId() {
-  if (window.localStorage.tutorsTimeId != null) {
-    return window.localStorage.tutorsTimeId;
+function getTutorsTimeId(course: Course) {
+  if (course.authLevel > 0) {
+    return window.localStorage.id;
   } else {
-    window.localStorage.tutorsTimeId = generateTutorsTimeId();
-    return window.localStorage.tutorsTimeId;
+    if (window.localStorage.tutorsTimeId != null) {
+      return window.localStorage.tutorsTimeId;
+    } else {
+      window.localStorage.tutorsTimeId = generateTutorsTimeId();
+      return window.localStorage.tutorsTimeId;
+    }
   }
 }
