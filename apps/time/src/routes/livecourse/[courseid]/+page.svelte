@@ -31,6 +31,7 @@
           const event: StudentLoEvent = {
             studentName: user.name,
             studentImg: user.picture,
+            courseTitle: usage.lo.courseTitle,
             loTitle: usage.lo.title,
             loImage: usage.lo.img,
             loRoute: usage.lo.subRoute
@@ -42,6 +43,7 @@
           } else {
             studentUpdate.studentName = event.studentName;
             studentUpdate.studentImg = event.studentImg;
+            studentUpdate.courseTitle = event.courseTitle;
             studentUpdate.loTitle = event.loTitle;
             studentUpdate.loImage = event.loImage;
             studentUpdate.loRoute = event.loRoute;
@@ -54,11 +56,15 @@
     }
   }
 
+  let firstUpdate = true;
   onMount(async () => {
     const db = getDatabase();
     const statusRef = ref(db, `all-course-access/${data.course.id}/visits`);
     onValue(statusRef, async () => {
-      await visitUpdate(data.course.id);
+      if (!firstUpdate) {
+        await visitUpdate(data.course.id);
+      }
+      firstUpdate = false;
     });
   });
 </script>
