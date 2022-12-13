@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { fade } from "svelte/transition";
   import type { PageData } from "./$types";
-  import { talkTransition } from "tutors-ui/lib/animations";
   import { TopicNavigatorCard, TalkCard } from "tutors-ui";
   export let data: PageData;
 </script>
