@@ -1,12 +1,13 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { StudentCardDeck } from "tutors-ui";
+  import { StudentCardDeck, StudentCardDeck2 } from "tutors-ui";
   import type { PageData } from "./$types";
   import { child, get, getDatabase, onValue, ref, off } from "firebase/database";
   import type { StudentLoEvent } from "tutors-reader-lib/src/types/metrics-types";
   import { decrypt, isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
   import { readObj, sanitise } from "tutors-reader-lib/src/utils/firebase-utils";
   import { goto } from "$app/navigation";
+  import { studentsOnline2, studentsOnlineList2 } from "tutors-reader-lib/src/stores/stores";
 
   export let data: PageData;
 
@@ -16,25 +17,21 @@
   let users = 0;
   let visits = 0;
 
-  let title = `${data.course.lo.title} Module Activity`;
-  const activeSince = new Date().toLocaleTimeString();
-  const subTitle = `Connected at : ${activeSince}`;
-
   async function visitUpdate(courseId: string) {
     const db = getDatabase();
-    const usage = await (await get(child(ref(db), `all-course-access/${courseId}`))).val();
-    if (usage.lo) {
-      const userId = decrypt(usage.lo.tutorsTimeId);
+    const lo = await (await get(child(ref(db), `all-course-access/${courseId}/lo`))).val();
+    if (lo) {
+      const userId = decrypt(lo.tutorsTimeId);
       if (userId) {
         const user = await readObj(`${courseId}/users/${sanitise(userId)}`);
         if (user) {
           const event: StudentLoEvent = {
             studentName: user.name,
             studentImg: user.picture,
-            courseTitle: usage.lo.courseTitle,
-            loTitle: usage.lo.title,
-            loImage: usage.lo.img,
-            loRoute: usage.lo.subRoute
+            courseTitle: lo.courseTitle,
+            loTitle: lo.title,
+            loImage: lo.img,
+            loRoute: lo.subRoute
           };
           const studentUpdate = students.get(userId);
           if (!studentUpdate) {
@@ -48,9 +45,10 @@
             studentUpdate.loImage = event.loImage;
             studentUpdate.loRoute = event.loRoute;
           }
-          los = [...los];
           users = los.length;
           visits++;
+          studentsOnlineList2.set([...los]);
+          studentsOnline2.set(los.length);
         }
       }
     }
@@ -75,4 +73,5 @@
 <svelte:head>
   <title>{data.course.lo.title} Live Students online Now</title>
 </svelte:head>
-<StudentCardDeck los="{los}" />
+<!-- <StudentCardDeck los="{los}" /> -->
+<StudentCardDeck2 />
