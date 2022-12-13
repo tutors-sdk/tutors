@@ -6,6 +6,7 @@ import type { Course } from "tutors-reader-lib/src/models/course";
 import type { StudentMetric } from "tutors-reader-lib/src/types/metrics-types";
 import { MetricsService } from "tutors-reader-lib/src/services/metrics-service";
 import { PresenceService } from "tutors-reader-lib/src/services/presence-service";
+import { presenceService2 } from "tutors-reader-lib/src/services/presence-service-2";
 import { isAuthenticated } from "tutors-reader-lib/src/utils/auth-utils";
 import type { User } from "tutors-reader-lib/src/types/auth-types";
 import { initFirebase } from "tutors-reader-lib/src/utils/firebase-utils";
@@ -23,6 +24,7 @@ export async function initServices() {
   initFirebase(getKeys().firebase);
   authService.setCredentials(getKeys().auth0);
   startPresenceEngine();
+  presenceService2.startPresenceEngine();
 
   if (getKeys().firebase.apiKey !== "XXX") {
     const pageVal = get(page);
