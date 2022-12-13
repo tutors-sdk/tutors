@@ -9,6 +9,9 @@
   let iconHeight = "80";
   let imageHeight = "h-24";
 
+  
+
+
   if (student.topic && student.topic.lo && !student.topic.lo.icon && student.topic.lo.frontMatter && student.topic.lo.frontMatter.icon) {
     student.topic.lo.icon = {
       type: student.topic.lo.frontMatter.icon["type"],
