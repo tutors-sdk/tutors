@@ -1,85 +1,76 @@
-import type { refreshStudents, StatusChange, StudentMetric } from "../types/metrics-types";
-import type { MetricsService } from "./metrics-service";
-import type { Topic } from "../models/topic";
-import type { Lo } from "../types/lo-types";
-import type { Course } from "../models/course";
-import { studentsOnline } from "../stores/stores";
+import { Course } from "../models/course";
+import { currentCourse, studentsOnline2, studentsOnlineList2 } from "tutors-reader-lib/src/stores/stores";
+import type { StudentLoEvent } from "../types/metrics-types";
+import { decrypt, isAuthenticated } from "../utils/auth-utils";
+import { child, get, getDatabase, onValue, ref, off } from "firebase/database";
+import { readObj, sanitise } from "../utils/firebase-utils";
 
-function compareStudents(student1: StudentMetric, student2: StudentMetric): number {
-  if (!student1.lab) {
-    return -1;
-  }
-  if (student1.lab && student2.lab) {
-    return student1.lab.title.localeCompare(student2.lab.title);
-  }
-  return 0;
-}
+export const presenceService = {
+  course: Course,
+  lastCourse: Course,
+  students: new Map<string, StudentLoEvent>(),
+  los: [],
+  firstUpdate: true,
 
-export class PresenceService {
-  students: StudentMetric[] = [];
-  metricsService: MetricsService;
-  refresh: refreshStudents;
-  refreshStatus: StatusChange;
-
-  constructor(metricsService: MetricsService, students: StudentMetric[], refresh: refreshStudents, refreshStatus: StatusChange) {
-    this.metricsService = metricsService;
-    this.students = students;
-    this.refresh = refresh;
-    this.refreshStatus = refreshStatus;
-  }
-
-  setCourse(course: Course) {
-    this.metricsService.setCourse(course);
-  }
-
-  async start() {
-    await this.metricsService.subscribeToAllUsers();
-    this.metricsService.startListening(this.metricUpdate.bind(this), this.metricDelete.bind(this), this.statusChange.bind(this));
-    this.students = [];
-  }
-
-  stop() {
-    this.metricsService.stopService();
-    this.metricsService.stopListening();
-  }
-
-  statusChange(user: User) {
-    if (this.refreshStatus) this.refreshStatus(user);
-  }
-
-  metricDelete(user: User) {
-    const student = this.students.find((student) => student.nickname === user.nickname);
-    const index = this.students.indexOf(student);
-    if (index !== -1) {
-      this.students.splice(index, 1);
+  async visitUpdate(courseId: string) {
+    const db = getDatabase();
+    const lo = await (await get(child(ref(db), `all-course-access/${courseId}/lo`))).val();
+    if (lo) {
+      const userId = decrypt(lo.tutorsTimeId);
+      if (userId) {
+        const user = await readObj(`${courseId}/users/${sanitise(userId)}`);
+        if (user) {
+          const event: StudentLoEvent = {
+            studentName: user.name,
+            studentImg: user.picture,
+            courseTitle: lo.courseTitle,
+            loTitle: lo.title,
+            loImage: lo.img,
+            loRoute: lo.subRoute
+          };
+          const studentUpdate = this.students.get(userId);
+          if (!studentUpdate) {
+            this.students.set(userId, event);
+            this.los.push(event);
+          } else {
+            studentUpdate.studentName = event.studentName;
+            studentUpdate.studentImg = event.studentImg;
+            studentUpdate.courseTitle = event.courseTitle;
+            studentUpdate.loTitle = event.loTitle;
+            studentUpdate.loImage = event.loImage;
+            studentUpdate.loRoute = event.loRoute;
+          }
+          studentsOnlineList2.set([...this.los]);
+          studentsOnline2.set(this.los.length);
+        }
+      }
     }
-    if (this.refresh) this.refresh(this.students);
-    studentsOnline.set(this.students.length);
-  }
+  },
 
-  metricUpdate(user: User, topic: Topic, lab: Lo, time: number) {
-    if (user.onlineStatus === "offline") return;
-    let student = this.students.find((student) => student.nickname === user.nickname);
-    if (!student) {
-      student = {
-        name: user.name,
-        nickname: user.nickname,
-        img: user.picture,
-        topic: undefined,
-        lab: undefined,
-        time: time
-      };
-      this.students.push(student);
-    }
-    student.time = time;
-    if (topic) {
-      student.topic = topic;
-    }
-    if (lab) {
-      student.lab = lab;
-    }
-    this.students?.sort(compareStudents);
-    if (this.refresh) this.refresh(this.students);
-    studentsOnline.set(this.students.length);
+  initService(course: Course) {
+    const db = getDatabase();
+    const statusRef = ref(db, `all-course-access/${course.id}/visits`);
+    onValue(statusRef, async () => {
+      if (!this.firstUpdate) {
+        await this.visitUpdate(course.id);
+      }
+      this.firstUpdate = false;
+    });
+  },
+
+  startPresenceEngine() {
+    currentCourse.subscribe((newCourse: Course) => {
+      if (newCourse && newCourse != this.lastCourse) {
+        if (this.lastCourse) {
+          const db = getDatabase();
+          const statusRef = ref(db, `all-course-access/${this.lastCourse.id}/visits`);
+          off(statusRef);
+        }
+        this.lastCourse = newCourse;
+        if (isAuthenticated() && newCourse?.authLevel > 0) {
+          this.initService(newCourse);
+        }
+      }
+    });
   }
-}
+};
