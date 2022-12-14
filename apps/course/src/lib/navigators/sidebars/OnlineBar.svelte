@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onlineDrawer, studentsOnline2, studentsOnlineList2 } from "tutors-reader-lib/src/stores/stores";
+  import { onlineDrawer, studentsOnline } from "tutors-reader-lib/src/stores/stores";
   import { StudentCardDeck } from "tutors-ui";
 
   const drawerClose: any = () => {
@@ -12,7 +12,7 @@
 </div>
 <div class="px-12 py-4">
   <div class="flex flex-wrap">
-    {#if $studentsOnline2 == 0}
+    {#if $studentsOnline == 0}
       <span class="text-lg">No students currently online...</span>
     {/if}
     <div class="flex w-full flex-wrap justify-center">
