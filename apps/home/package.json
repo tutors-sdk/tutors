@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@astrojs/tailwind": "^2.1.3",
-    "@brainandbones/skeleton": "^0.67.5",
+    "@brainandbones/skeleton": "^0.76.0",
     "tutors-ui": "*"
   }
 }
