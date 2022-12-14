@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentCourse, currentUser, studentsOnline, onlineDrawer } from "tutors-reader-lib/src/stores/stores";
+  import { currentCourse, currentUser, studentsOnline2, onlineDrawer } from "tutors-reader-lib/src/stores/stores";
   import type { User } from "tutors-reader-lib/src/types/auth-types";
   import type { Course } from "tutors-reader-lib/src/models/course";
   import Icon from "../../Atoms/Icon/Icon.svelte";
@@ -43,8 +43,8 @@
   <div class="relative">
     <button class="btn btn-sm space-x-1" use:menu="{{ menu: 'avatar', interactive: true }}">
       <div class="relative inline-block">
-        {#if status && studentsOnline}
-          <span class="badge-icon bg-warning-500 absolute -top-2 -right-2 z-10 text-white">{$studentsOnline}</span>
+        {#if status && studentsOnline2}
+          <span class="badge-icon bg-warning-500 absolute -top-2 -right-2 z-10 text-white">{$studentsOnline2}</span>
         {/if}
         <span class="badge-icon absolute -bottom-2 -right-2 z-10 text-white">
           {#if status}
@@ -82,7 +82,7 @@
             <a on:click="{onlineDrawerOpen}">
               <Icon type="listOnline" />
               <div class="ml-2">
-                View <span class="badge bg-warning-500 text-white">{$studentsOnline}</span> Online
+                View <span class="badge bg-warning-500 text-white">{$studentsOnline2}</span> Online
               </div>
             </a>
           </li>
@@ -90,12 +90,14 @@
       </ul>
       <Divider />
       <ul>
-        <li>
-          <a href="{liveUrl}" target="_blank" rel="noreferrer">
-            <Icon type="listOnline" />
-            <div class="ml-2">Tutors Live</div>
-          </a>
-        </li>
+        {#if status}
+          <li>
+            <a href="{liveUrl}" target="_blank" rel="noreferrer">
+              <Icon type="listOnline" />
+              <div class="ml-2">Tutors Live</div>
+            </a>
+          </li>
+        {/if}
         <li>
           <a href="{timeUrl}" target="_blank" rel="noreferrer">
             <Icon type="tutorsTime" />

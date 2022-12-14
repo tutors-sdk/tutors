@@ -1,6 +1,6 @@
 import { writable, type Writable } from "svelte/store";
 import type { Lo, WeekType } from "../types/lo-types";
-import type { StudentMetric } from "../types/metrics-types";
+import type { StudentLoEvent, StudentMetric } from "../types/metrics-types";
 import type { User } from "../types/auth-types";
 import { localStorageStore } from "@skeletonlabs/skeleton";
 import type { Course } from "../models/course";
@@ -32,3 +32,7 @@ export const tocDrawer: Writable<boolean> = writable(false);
 export const themeBuilderDrawer: Writable<boolean> = writable(false);
 export const storeTheme: Writable<string> = localStorageStore("storeTheme", "tutors");
 export const authenticating: Writable<boolean> = writable(false);
+
+const students2: StudentLoEvent[] = [];
+export const studentsOnline2 = writable(0);
+export const studentsOnlineList2 = writable(students2);
