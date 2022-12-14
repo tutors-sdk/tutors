@@ -5,16 +5,17 @@ import { decrypt, isAuthenticated } from "../utils/auth-utils";
 import { child, get, getDatabase, onValue, ref, off } from "firebase/database";
 import { readObj, sanitise } from "../utils/firebase-utils";
 
+let canUpdate = false;
+
 export const presenceService = {
+  db:{},
   course: Course,
   lastCourse: Course,
   students: new Map<string, StudentLoEvent>(),
   los: [],
-  firstUpdate: true,
 
   async visitUpdate(courseId: string) {
-    const db = getDatabase();
-    const lo = await (await get(child(ref(db), `all-course-access/${courseId}/lo`))).val();
+    const lo = await (await get(child(ref(this.db), `all-course-access/${courseId}/lo`))).val();
     if (lo) {
       const userId = decrypt(lo.tutorsTimeId);
       if (userId) {
@@ -48,31 +49,30 @@ export const presenceService = {
   },
 
   initService(course: Course) {
-    const db = getDatabase();
-    const statusRef = ref(db, `all-course-access/${course.id}/visits`);
+    studentsOnline.set(0);
+    studentsOnlineList.set([]);
+    canUpdate = false;
+    setTimeout(function () {
+      canUpdate = true;
+    }, 10000);
+    const statusRef = ref(this.db, `all-course-access/${course.id}/visits`);
     onValue(statusRef, async () => {
-      if (!this.firstUpdate) {
+      if (canUpdate) {
         await this.visitUpdate(course.id);
       }
-      this.firstUpdate = false;
     });
   },
 
   startPresenceEngine() {
-    studentsOnline.set(0);
-    studentsOnlineList.set([]);
+    this.db = getDatabase();
     currentCourse.subscribe((newCourse: Course) => {
       if (newCourse && newCourse != this.lastCourse) {
         if (this.lastCourse) {
-          const db = getDatabase();
-          const statusRef = ref(db, `all-course-access/${this.lastCourse.id}/visits`);
+          const statusRef = ref(this.db, `all-course-access/${this.lastCourse.id}/visits`);
           off(statusRef);
         }
         this.lastCourse = newCourse;
         if (isAuthenticated() && newCourse?.authLevel > 0) {
-          this.firstUpdate = true;
-          studentsOnline.set(0);
-          studentsOnlineList.set([]);
           this.initService(newCourse);
         }
       }
