@@ -1,5 +1,5 @@
 import { Course } from "../models/course";
-import { currentCourse, studentsOnline2, studentsOnlineList2 } from "tutors-reader-lib/src/stores/stores";
+import { currentCourse, studentsOnline, studentsOnlineList } from "tutors-reader-lib/src/stores/stores";
 import type { StudentLoEvent } from "../types/metrics-types";
 import { decrypt, isAuthenticated } from "../utils/auth-utils";
 import { child, get, getDatabase, onValue, ref, off } from "firebase/database";
@@ -40,8 +40,8 @@ export const presenceService = {
             studentUpdate.loImage = event.loImage;
             studentUpdate.loRoute = event.loRoute;
           }
-          studentsOnlineList2.set([...this.los]);
-          studentsOnline2.set(this.los.length);
+          studentsOnlineList.set([...this.los]);
+          studentsOnline.set(this.los.length);
         }
       }
     }
@@ -59,6 +59,8 @@ export const presenceService = {
   },
 
   startPresenceEngine() {
+    studentsOnline.set(0);
+    studentsOnlineList.set([]);
     currentCourse.subscribe((newCourse: Course) => {
       if (newCourse && newCourse != this.lastCourse) {
         if (this.lastCourse) {
@@ -68,6 +70,9 @@ export const presenceService = {
         }
         this.lastCourse = newCourse;
         if (isAuthenticated() && newCourse?.authLevel > 0) {
+          this.firstUpdate = true;
+          studentsOnline.set(0);
+          studentsOnlineList.set([]);
           this.initService(newCourse);
         }
       }
