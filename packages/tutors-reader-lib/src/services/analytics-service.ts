@@ -57,8 +57,10 @@ export const analyticsService = {
     const key = `${this.courseId}/users/${sanitise(user.email)}/onlineStatus`;
     if (status) {
       updateStr(key, "online");
+      user.onlineStatus = "online";
     } else {
       updateStr(key, "offline");
+      user.onlineStatus = "offline";
     }
   },
 
@@ -77,9 +79,11 @@ export const analyticsService = {
     updateLastAccess(`${this.courseId}/usage/${this.loRoute}`, this.title);
     updateVisits(this.courseId);
 
-    updateLastAccess(`all-course-access/${this.courseId}`, this.title);
-    updateVisits(`all-course-access/${this.courseId}`);
-    updateLo(`all-course-access/${this.courseId}`, course, this.lo);
+    if (user.onlineStatus === "online") {
+      updateLastAccess(`all-course-access/${this.courseId}`, this.title);
+      updateVisits(`all-course-access/${this.courseId}`);
+      updateLo(`all-course-access/${this.courseId}`, course, this.lo);
+    }
 
     if (user) {
       const key = `${this.courseId}/users/${sanitise(user.email)}/${this.loRoute}`;
