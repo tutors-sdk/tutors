@@ -1,11 +1,13 @@
 <script lang="ts">
   import { Avatar } from "@skeletonlabs/skeleton";
+  import Iconify from "@iconify/svelte";
   import { StudentLoEvent } from "tutors-reader-lib/src/types/metrics-types";
   import { layout } from "tutors-reader-lib/src/stores/stores";
   import { cardTransition } from "../../animations";
 
   export let lo: StudentLoEvent;
   let imageHeight = "h-32";
+  let iconHeight = "80";
   let headingText = "";
   let cardWidths = "";
 
@@ -13,9 +15,11 @@
     if (layout === "compacted") {
       headingText = "text-md font-medium";
       cardWidths = "w-36 h-[21rem]";
+      iconHeight = "80";
     } else {
       headingText = "text-lg font-semibold";
       cardWidths = "w-60 h-[25rem]";
+      iconHeight = "150";
     }
   });
 </script>
@@ -31,7 +35,11 @@
     </div>
     <div class="card-body">
       <div class="my-2 justify-center">
-        <img loading="lazy" class="mx-auto {imageHeight}" src="{lo.loImage}" alt="{lo.loTitle}" />
+        {#if lo.loIcon}
+          <Iconify icon="{lo.loIcon.type}" color="{lo.loIcon.color}" height="{iconHeight}" />
+        {:else}
+          <img loading="lazy" class="mx-auto {imageHeight}" src="{lo.loImage}" alt="{lo.loTitle}" />
+        {/if}
       </div>
     </div>
     <footer class="card-footer text-center">

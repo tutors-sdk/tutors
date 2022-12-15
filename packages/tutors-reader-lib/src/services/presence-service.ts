@@ -8,7 +8,7 @@ import { readObj, sanitise } from "../utils/firebase-utils";
 let canUpdate = false;
 
 export const presenceService = {
-  db:{},
+  db: {},
   course: Course,
   lastCourse: Course,
   students: new Map<string, StudentLoEvent>(),
@@ -27,7 +27,8 @@ export const presenceService = {
             courseTitle: lo.courseTitle,
             loTitle: lo.title,
             loImage: lo.img,
-            loRoute: lo.subRoute
+            loRoute: lo.subRoute,
+            loIcon: lo.icon
           };
           const studentUpdate = this.students.get(userId);
           if (!studentUpdate) {
@@ -40,6 +41,7 @@ export const presenceService = {
             studentUpdate.loTitle = event.loTitle;
             studentUpdate.loImage = event.loImage;
             studentUpdate.loRoute = event.loRoute;
+            studentUpdate.loIcon = lo.icon;
           }
           studentsOnlineList.set([...this.los]);
           studentsOnline.set(this.los.length);

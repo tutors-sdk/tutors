@@ -1,5 +1,6 @@
 import type { Topic } from "../models/topic";
 import type { User } from "./auth-types";
+import type { IconType } from "./icon-types";
 import type { Lo } from "./lo-types";
 
 export interface Metric {
@@ -43,6 +44,7 @@ export interface StudentLoEvent {
   loTitle: string;
   loImage: string;
   loRoute: string;
+  loIcon?: IconType;
 }
 
 export type MetricUpdate = (user: User, topic: Topic, lab: Lo, time: number) => void;
