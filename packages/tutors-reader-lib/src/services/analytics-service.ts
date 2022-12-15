@@ -79,7 +79,7 @@ export const analyticsService = {
     updateLastAccess(`${this.courseId}/usage/${this.loRoute}`, this.title);
     updateVisits(this.courseId);
 
-    if (user.onlineStatus === "online") {
+    if (user && user.onlineStatus === "online") {
       updateLastAccess(`all-course-access/${this.courseId}`, this.title);
       updateVisits(`all-course-access/${this.courseId}`);
       updateLo(`all-course-access/${this.courseId}`, course, this.lo);
