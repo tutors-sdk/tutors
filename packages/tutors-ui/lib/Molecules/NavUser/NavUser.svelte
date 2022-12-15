@@ -30,7 +30,7 @@
   });
 
   currentCourse.subscribe((newCourse: Course) => {
-    liveUrl = `https://next.tutors.dev/live/${$currentCourse.id}`;
+    liveUrl = `https://next.tutors.dev/live/${$currentCourse?.id}`;
   });
 
   function handleClick() {
