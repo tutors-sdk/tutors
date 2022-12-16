@@ -1,9 +1,10 @@
 <script lang="ts">
   import CourseNavigator from "../CourseNavigator.svelte";
-  import { tocDrawer, currentCourse } from "tutors-reader-lib/src/stores/stores";
+  import { currentCourse } from "tutors-reader-lib/src/stores/stores";
+  import { drawerStore } from "@skeletonlabs/skeleton";
 
   const drawerClose: any = () => {
-    tocDrawer.set(false);
+    drawerStore.close();
   };
 </script>
 

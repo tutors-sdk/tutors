@@ -22,11 +22,6 @@ export const currentUser: Writable<User> = writable();
 export const portfolio = writable(false);
 export const layout = writable("");
 export const transitionKey = writable("");
-export const infoDrawer: Writable<boolean> = writable(false);
-export const calendarDrawer: Writable<boolean> = writable(false);
-export const onlineDrawer: Writable<boolean> = writable(false);
-export const tocDrawer: Writable<boolean> = writable(false);
-export const themeBuilderDrawer: Writable<boolean> = writable(false);
 export const storeTheme: Writable<string> = localStorageStore("storeTheme", "tutors");
 export const authenticating: Writable<boolean> = writable(false);
 

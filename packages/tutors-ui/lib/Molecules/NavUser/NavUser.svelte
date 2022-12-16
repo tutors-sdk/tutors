@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { currentCourse, currentUser, studentsOnline, onlineDrawer } from "tutors-reader-lib/src/stores/stores";
+  import { currentCourse, currentUser, studentsOnline } from "tutors-reader-lib/src/stores/stores";
   import type { User } from "tutors-reader-lib/src/types/auth-types";
   import type { Course } from "tutors-reader-lib/src/models/course";
   import Icon from "../../Atoms/Icon/Icon.svelte";
   import { analyticsService } from "tutors-reader-lib/src/services/analytics-service";
-  import { menu, Avatar, Divider } from "@skeletonlabs/skeleton";
+  import { menu, Avatar, Divider, drawerStore, type DrawerSettings } from "@skeletonlabs/skeleton";
 
   let user: User;
   let status = false;
@@ -39,7 +39,8 @@
   }
 
   const onlineDrawerOpen: any = () => {
-    onlineDrawer.set(true);
+    const settings: DrawerSettings = { id: "online", position: "right" };
+    drawerStore.open(settings);
   };
 </script>
 

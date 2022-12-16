@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { infoDrawer, currentCourse } from "tutors-reader-lib/src/stores/stores";
+  import { currentCourse } from "tutors-reader-lib/src/stores/stores";
   import { convertMd } from "tutors-reader-lib/src/utils/markdown-utils";
-
+  import { drawerStore } from "@skeletonlabs/skeleton";
   const courseInfo = convertMd($currentCourse.lo.contentMd, "");
 
   const drawerClose: any = () => {
-    infoDrawer.set(false);
+    drawerStore.close();
   };
 </script>
 

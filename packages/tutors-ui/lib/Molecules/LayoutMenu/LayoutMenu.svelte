@@ -1,30 +1,23 @@
 <script lang="ts">
-  import { LightSwitch, menu } from "@skeletonlabs/skeleton";
-  import { layout, storeTheme, themeBuilderDrawer } from "tutors-reader-lib/src/stores/stores";
+  import { DrawerSettings, drawerStore, LightSwitch, menu } from "@skeletonlabs/skeleton";
+  import { layout, storeTheme } from "tutors-reader-lib/src/stores/stores";
   import { Icon } from "tutors-ui";
 
   function applyInitialLayout() {
-    // //const savedLayout = window.localStorage.getItem("site-layout");
-    // if (savedLayout != null) {
-    //layout.set(savedLayout);
-    // } else {
     layout.set("expanded");
-    //window.localStorage.setItem("site-layout", "expanded");
-    // }
   }
 
   function toggleLayout() {
     if ($layout === "compacted") {
       layout.set("expanded");
-      //window.localStorage.setItem("site-layout", "expanded");
     } else {
       layout.set("compacted");
-      //window.localStorage.setItem("site-layout", "compacted");
     }
   }
 
   const themeBuilderDrawerOpen: any = () => {
-    themeBuilderDrawer.set(true);
+    const settings: DrawerSettings = { id: "theme", position: "right", width: "w-full md:w-3/4 lg:w-1/2" };
+    drawerStore.open(settings);
   };
 
   applyInitialLayout();
@@ -73,10 +66,9 @@
         <p class="text-lg">Dyslexia</p>
       </li>
 
-    <hr />
-    <li
-        class="option"
-        on:click="{themeBuilderDrawerOpen}">
+      <hr />
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <li class="option" on:click="{themeBuilderDrawerOpen}">
         <p class="text-lg">Theme Builder</p>
       </li>
     </ul>

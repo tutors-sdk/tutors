@@ -1,17 +1,20 @@
 <script lang="ts">
-  import { courseUrl, currentCourse, calendarDrawer, infoDrawer, themeBuilderDrawer, tocDrawer } from "tutors-reader-lib/src/stores/stores";
+  import { courseUrl, currentCourse } from "tutors-reader-lib/src/stores/stores";
   import { LayoutMenu, NavTitle, NavUser } from "tutors-ui";
   import Icon from "tutors-ui/lib/Atoms/Icon/Icon.svelte";
-  import { AppBar, Divider } from "@skeletonlabs/skeleton";
+  import { AppBar, Divider, drawerStore, type DrawerSettings } from "@skeletonlabs/skeleton";
 
   const infoDrawerOpen: any = () => {
-    infoDrawer.set(true);
+    const settings: DrawerSettings = { id: "info", position: "left" };
+    drawerStore.open(settings);
   };
   const calendarDrawerOpen: any = () => {
-    calendarDrawer.set(true);
+    const settings: DrawerSettings = { id: "calendar", position: "left" };
+    drawerStore.open(settings);
   };
   const tocDrawerOpen: any = () => {
-    tocDrawer.set(true);
+    const settings: DrawerSettings = { id: "toc", position: "right" };
+    drawerStore.open(settings);
   };
 </script>
 

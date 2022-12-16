@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { onlineDrawer, studentsOnline } from "tutors-reader-lib/src/stores/stores";
+  import { drawerStore } from "@skeletonlabs/skeleton";
+  import { studentsOnline } from "tutors-reader-lib/src/stores/stores";
   import { StudentCardDeck } from "tutors-ui";
 
   const drawerClose: any = () => {
-    onlineDrawer.set(false);
+    drawerStore.close();
   };
 </script>
 
