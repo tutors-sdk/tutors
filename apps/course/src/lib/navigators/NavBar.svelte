@@ -1,9 +1,10 @@
 <script lang="ts">
   import { courseUrl, currentCourse } from "tutors-reader-lib/src/stores/stores";
-  import { NavTitle, NavUser } from "tutors-ui";
+  import { NavTitle } from "tutors-ui";
   import Icon from "tutors-ui/lib/Atoms/Icon/Icon.svelte";
   import { AppBar, Divider, drawerStore, type DrawerSettings } from "@skeletonlabs/skeleton";
   import LayoutMenu from "./LayoutMenu.svelte";
+    import NavUser from "./NavUser.svelte";
 
   const infoDrawerOpen: any = () => {
     const settings: DrawerSettings = { id: "info", position: "left" };
