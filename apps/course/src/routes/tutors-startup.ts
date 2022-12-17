@@ -32,7 +32,6 @@ export async function initServices() {
   page.subscribe((path) => {
     if (path.url.hash.startsWith("#/course")) {
       const relPath = path.url.hash.slice(1);
-      console.log(relPath);
       goto(relPath);
     }
     transitionKey.set(path.url.pathname);
