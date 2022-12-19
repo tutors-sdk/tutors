@@ -20,7 +20,6 @@ export const courseService = {
         courseId = courseId.split(".")[0];
       }
       try {
-        console.log(`URL: ${courseUrl}/tutors.json`);
         const response = await axios.get<Lo>(`https://${courseUrl}/tutors.json`);
         course = new Course(response.data, courseId, courseUrl);
         this.courses.set(courseId, course);

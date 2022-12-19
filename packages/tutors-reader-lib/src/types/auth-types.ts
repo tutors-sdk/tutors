@@ -6,3 +6,5 @@ export interface User {
   nickname: string;
   onlineStatus: string;
 }
+
+export type SuccessFunction = (courseId: string) => void;

@@ -8,8 +8,8 @@
   import NavBar from "$lib/navigators/NavBar.svelte";
   import PageHeader from "$lib/navigators/PageHeader.svelte";
   import { Footer } from "tutors-ui";
-  import tutors from "tutors-ui/lib/themes/tutors.css";
-  import dyslexia from "tutors-ui/lib/themes/dyslexia.css";
+  import tutors from "tutors-ui/lib/themes/tutors.css?inline";
+  import dyslexia from "tutors-ui/lib/themes/dyslexia.css?inline";
   import { authenticating, transitionKey, storeTheme, currentCourse, currentLo } from "tutors-reader-lib/src/stores/stores";
   import PageTransition from "$lib/PageTransition.svelte";
   import { getKeys } from "../environment";

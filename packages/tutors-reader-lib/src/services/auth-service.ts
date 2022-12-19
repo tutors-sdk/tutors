@@ -3,6 +3,7 @@ import { currentUser } from "./../stores/stores";
 import { WebAuth } from "auth0-js";
 import type { Course } from "../models/course";
 import { encrypt, fromLocalStorage, isAuthenticated, setSession, toLocalStorage } from "../utils/auth-utils";
+import type { SuccessFunction } from "../types/auth-types";
 
 export const authService = {
   auth0: {},
@@ -38,7 +39,7 @@ export const authService = {
     return status;
   },
 
-  handleAuthentication(result: string, router: any): void {
+  handleAuthentication(result: string, success: SuccessFunction): void {
     const authResult = new URLSearchParams(result);
     const accessToken = authResult.get("access_token");
     const idToken = authResult.get("id_token");
@@ -51,7 +52,7 @@ export const authService = {
         const url = localStorage.getItem("course_url");
         user.userId = encrypt(user.email);
         setSession(authResult);
-        router(`/course/${url}`);
+        success(url);
       });
     }
   },

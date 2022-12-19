@@ -1,18 +1,17 @@
 import { page } from "$app/stores";
 import { authService } from "tutors-reader-lib/src/services/auth-service";
 import { get } from "svelte/store";
-import { transitionKey, currentCourse,  authenticating } from "tutors-reader-lib/src/stores/stores";
+import { transitionKey, currentCourse, authenticating } from "tutors-reader-lib/src/stores/stores";
 import { presenceService } from "tutors-reader-lib/src/services/presence-service";
 import { initFirebase } from "tutors-reader-lib/src/utils/firebase-utils";
 import { getKeys } from "../environment";
 import { goto } from "$app/navigation";
 
 export async function initServices() {
-  initFirebase(getKeys().firebase);
-  authService.setCredentials(getKeys().auth0);
-  presenceService.startPresenceEngine();
-
   if (getKeys().firebase.apiKey !== "XXX") {
+    initFirebase(getKeys().firebase);
+    authService.setCredentials(getKeys().auth0);
+    presenceService.startPresenceEngine();
     const pageVal = get(page);
     if (pageVal.url.hash) {
       if (pageVal.url.hash.startsWith("#/course")) {
@@ -20,7 +19,9 @@ export async function initServices() {
       } else {
         authenticating.set(true);
         const token = pageVal.url.hash.substring(pageVal.url.hash.indexOf("#") + 1);
-        authService.handleAuthentication(token, goto);
+        authService.handleAuthentication(token, (courseId) => {
+          goto(`/course/${courseId}`);
+        });
       }
     } else {
       if (get(currentCourse)) {
