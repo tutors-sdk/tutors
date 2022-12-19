@@ -2,7 +2,7 @@ import { writable, type Writable } from "svelte/store";
 import type { Lo, WeekType } from "../types/lo-types";
 import type { StudentLoEvent } from "../types/metrics-types";
 import type { User } from "../types/auth-types";
-import { localStorageStore } from "@skeletonlabs/skeleton";
+// import { localStorageStore } from "@skeletonlabs/skeleton";
 import type { Course } from "../models/course";
 
 const weekType: WeekType = {
