@@ -39,12 +39,14 @@ export interface StudentMetric {
 
 export interface StudentLoEvent {
   studentName: string;
+  studentId: string;
   studentImg: string;
   courseTitle: string;
   loTitle: string;
   loImage: string;
   loRoute: string;
   loIcon?: IconType;
+  timeout: number;
 }
 
 export type MetricUpdate = (user: User, topic: Topic, lab: Lo, time: number) => void;
