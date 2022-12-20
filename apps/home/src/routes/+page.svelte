@@ -19,7 +19,7 @@
 </div>
 <div class="container py-20 mx-auto justify-center items-center">
 	<div class="w-full m-4">
-		<h2 class="font-bold text-6xl inline-block my-4">Supports 3 <GradientHeading class="font-bold !text-6xl inline-block">Complimentary</GradientHeading> Perspectives</h2>
+		<h2 class="font-bold text-6xl inline-block my-4">The <GradientHeading class="font-bold !text-6xl inline-block">Values</GradientHeading> of the project</h2>
 	</div>
 	<div class="w-full lg:flex justify-center my-12">
 		<a href="https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-03-DX/unit-0/book-plans/01" target="_blank" rel="noreferrer">
