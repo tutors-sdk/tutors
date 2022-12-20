@@ -8,8 +8,8 @@
 		<h1 class="font-bold text-6xl inline-block my-4">An <GradientHeading class="font-bold !text-6xl inline-block">Open Learning</GradientHeading> Web Toolkit</h1>
 		<p class="font-bold !text-xl my-4">A collection of open source components & services supporting the creation of transformative learning experiences using open web standards.</p>
 		<div class="space-x-4 space-y-4">
-			<a class="btn btn-xl bg-primary-500 text-white font-bold" href="https://reader.tutors.dev/#/course/full-stack-web-dev-oth-2022.netlify.app" target="_blank" rel="noreferrer">View Demo</a>
-			<a class="btn btn-xl bg-surface-100-800-token font-bold" href="https://docs.tutors.dev/" target="_blank" rel="noreferrer">Documentation</a>
+			<a class="btn btn-xl bg-primary-500 text-white font-bold hover:scale-105 transition-all" href="https://reader.tutors.dev/#/course/full-stack-web-dev-oth-2022.netlify.app" target="_blank" rel="noreferrer">View Demo</a>
+			<a class="btn btn-xl bg-surface-100-800-token font-bold hover:scale-105 transition-all" href="https://docs.tutors.dev/" target="_blank" rel="noreferrer">Documentation</a>
 		</div>
 	</div>
 	<div class="w-full lg:w-1/2">
