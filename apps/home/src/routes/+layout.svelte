@@ -3,6 +3,7 @@
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import '../app.postcss';
 	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
+	import 'iconify-icon';
 </script>
 
 <!-- App Shell -->
@@ -17,6 +18,9 @@
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<LightSwitch />
+				<a class="btn btn-icon hover:bg-primary-100-800-token hover:scale-105 transition-all" href="https://github.com/tutors-sdk/tutors" target="_blank" rel="noreferrer"><iconify-icon icon="mdi:github" height="25" /></a>
+				<a class="btn btn-icon hover:bg-primary-100-800-token hover:scale-105 transition-all" href="https://fosstodon.org/@tutors" target="_blank" rel="noreferrer"><iconify-icon icon="mdi:mastodon" height="25" /></a>
+				<a class="btn btn-icon hover:bg-primary-100-800-token hover:scale-105 transition-all" href="https://twitter.com/tutors_dev" target="_blank" rel="noreferrer"><iconify-icon icon="mdi:twitter" height="25" /></a>
 			</svelte:fragment>
 		</AppBar>
 	</svelte:fragment>
@@ -24,7 +28,7 @@
 	<slot />
 
 	<svelte:fragment slot="pageFooter">
-        <div class="bg-surface-100-800-token bottom-0 mt-2 py-16">
+        <div class="bg-surface-100-800-token bottom-0 py-16">
           <footer class="mx-auto w-11/12 py-8">
             <div class="grid grid-cols-1 lg:grid-cols-[auto_auto_auto_auto] gap-10">
               <div class="space-y-4">
