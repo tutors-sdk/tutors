@@ -2,10 +2,15 @@ import path from "path-browserify";
 import type { Lo } from "../types/lo-types";
 
 export function injectCourseUrl(lo: Lo, id: string, url: string) {
-  if (lo.route) lo.route = lo.route.replace("{{COURSEURL}}", id);
+  if (lo.type === "archive") {
+    if (lo.route) lo.route = lo.route.replace("{{COURSEURL}}", url);
+  } else {
+    if (lo.route) lo.route = lo.route.replace("{{COURSEURL}}", id);
+  }
   if (lo.img) lo.img = lo.img.replace("{{COURSEURL}}", url);
   if (lo.video) lo.video = lo.video.replace("{{COURSEURL}}", id);
   if (lo.pdf) lo.pdf = lo.pdf.replace("{{COURSEURL}}", url);
+
   if (lo.los) {
     lo.los.forEach((lo) => {
       injectCourseUrl(lo, id, url);
