@@ -2,7 +2,7 @@
 	import { GradientHeading, storeLightSwitch } from "@skeletonlabs/skeleton";
 	import 'iconify-icon';
 </script>
-<div class="bg-gradient-to-l from-primary-50 dark:from-primary-900 to-accent-50 dark:to-accent-900 bg-opacity-90">
+<div class="bg-gradient-to-l from-primary-50 dark:from-primary-900 to-accent-50 dark:to-accent-900">
 	<div class="container lg:flex justify-center items-center mx-auto py-32">
 	<div class="lg:w-1/2 mx-4">
 		<h1 class="font-bold text-6xl inline-block my-4">An <GradientHeading class="font-bold !text-6xl inline-block">Open Learning</GradientHeading> Web Toolkit</h1>
@@ -17,7 +17,7 @@
 	</div>
 	</div>
 </div>
-<div class="container my-20 mx-auto justify-center items-center">
+<div class="container py-20 mx-auto justify-center items-center">
 	<div class="w-full m-4">
 		<h2 class="font-bold text-6xl inline-block my-4">Supports 3 <GradientHeading class="font-bold !text-6xl inline-block">Complimentary</GradientHeading> Perspectives</h2>
 	</div>

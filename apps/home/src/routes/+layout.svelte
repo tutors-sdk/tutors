@@ -24,7 +24,7 @@
 	<slot />
 
 	<svelte:fragment slot="pageFooter">
-        <div class="bg-surface-100-800-token bottom-0 mt-2 py-8">
+        <div class="bg-surface-100-800-token bottom-0 mt-2 py-16">
           <footer class="mx-auto w-11/12 py-8">
             <div class="grid grid-cols-1 lg:grid-cols-[auto_auto_auto_auto] gap-10">
               <div class="space-y-4">
@@ -33,7 +33,7 @@
                 >
                   <div>
                     <img src="/logo.svg" />
-                    <p>
+                    <p class="font-bold !text-xl mt-4">
                       Tutors Open Source Project
                       <br />Licensed under the <a
                         href="https://github.com/tutors-sdk/tutors/blob/main/LICENSE"
@@ -46,7 +46,7 @@
                 </div>
               </div>
               <div class="space-y-4">
-                <h6>Community</h6>
+                <h6 class="font-bold !text-xl">Community</h6>
                 <ul class="space-y-2">
                   <li>
                     <a href="https://github.com/tutors-sdk/tutors" target="_blank" rel="noreferrer"
@@ -66,7 +66,7 @@
                 </ul>
               </div>
               <div class="space-y-4">
-                <h6>Links</h6>
+                <h6 class="font-bold !text-xl">Links</h6>
                 <ul class="space-y-2">
                   <li>
                     <a href="https://docs.tutors.dev" target="_blank" rel="noreferrer"
@@ -83,7 +83,7 @@
                 </ul>
               </div>
               <div class="space-y-4">
-                <h6>More</h6>
+                <h6 class="font-bold !text-xl">More</h6>
                 <ul class="space-y-2">
                   <li>
                     <a href="https://www.netlify.com">
