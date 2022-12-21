@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import "@skeletonlabs/skeleton/styles/all.css";
-  import { AppShell } from "@skeletonlabs/skeleton";
+  import { AppShell, Toast } from "@skeletonlabs/skeleton";
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import Blank from "$lib/support/Blank.svelte";
@@ -51,6 +51,7 @@
   <title>{$currentLo?.title}</title>
 </svelte:head>
 
+<Toast />
 <div id="app" class="h-full overflow-hidden">
   {#if $authenticating}
     <TutorsTerms />

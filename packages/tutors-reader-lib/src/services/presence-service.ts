@@ -1,6 +1,6 @@
 import { Course } from "../models/course";
 import { currentCourse, currentUser, studentsOnline, studentsOnlineList } from "tutors-reader-lib/src/stores/stores";
-import type { StudentLoEvent } from "../types/metrics-types";
+import type { StudentLoEvent, StudentLoUpdate } from "../types/metrics-types";
 import { decrypt, isAuthenticated } from "../utils/auth-utils";
 import { child, get, getDatabase, onValue, ref, off } from "firebase/database";
 import { readObj, sanitise } from "../utils/firebase-utils";
@@ -10,17 +10,33 @@ let canUpdate = false;
 
 export const presenceService = {
   db: {},
-  user: {},
+  user: <User>{},
   course: Course,
   lastCourse: Course,
   students: new Map<string, StudentLoEvent>(),
-  los: [],
+  los: new Array<StudentLoEvent>(),
+  listeners: new Map<string, StudentLoUpdate>(),
 
-  sweepAndPurge() {
+  startListening(key: string, listener: StudentLoUpdate) {
+    this.listeners.set(key, listener);
+  },
+
+  stopListening(key: string) {
+    this.listeners.delete(key);
+  },
+
+  updateListeners(kind: string, event: StudentLoEvent) {
+    this.listeners.forEach((listener, key, map) => {
+      listener(kind, event);
+    });
+  },
+
+  sweepAndPurge(): void {
     this.los.forEach((lo, index, obj) => {
       lo.timeout--;
       if (lo.timeout == 0) {
         obj.splice(index, 1);
+        this.updateListeners("leave", lo);
         this.students.delete(lo.studentId);
         studentsOnlineList.set([...this.los]);
         studentsOnline.set(this.los.length);
@@ -44,18 +60,20 @@ export const presenceService = {
             loImage: lo.img,
             loRoute: lo.subRoute,
             loIcon: lo.icon,
-            timeout: 5
+            timeout: 2
           };
           const studentUpdate = this.students.get(userId);
           if (!studentUpdate) {
             this.students.set(userId, event);
             this.los.push(event);
+            this.updateListeners("enter", event);
           } else {
             studentUpdate.loTitle = event.loTitle;
             studentUpdate.loImage = event.loImage;
             studentUpdate.loRoute = event.loRoute;
             studentUpdate.loIcon = event.loIcon;
-            studentUpdate.timeout = 5;
+            studentUpdate.timeout = 2;
+            this.updateListeners("update", event);
           }
           studentsOnlineList.set([...this.los]);
           studentsOnline.set(this.los.length);
@@ -71,7 +89,7 @@ export const presenceService = {
     canUpdate = false;
     setTimeout(function () {
       canUpdate = true;
-    }, 10000);
+    }, 5000);
     const statusRef = ref(this.db, `all-course-access/${course.id}/visits`);
     onValue(statusRef, async () => {
       if (canUpdate) {
