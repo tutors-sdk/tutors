@@ -1,6 +1,6 @@
 import showdown from "showdown";
 import showdownHighlight from "showdown-highlight";
-import showdownKatex from "showdown-katex";
+//import showdownKatex from "showdown-katex";
 import customClassExt from "showdown-custom-class";
 
 const converter = new showdown.Converter({
@@ -9,15 +9,15 @@ const converter = new showdown.Converter({
   openLinksInNewWindow: true,
   extensions: [
     showdownHighlight,
-    customClassExt,
-    showdownKatex({
-      // maybe you want katex to throwOnError
-      throwOnError: false,
-      // disable displayMode
-      displayMode: false,
-      // change errorColor to blue
-      errorColor: "red"
-    })
+    customClassExt
+    // showdownKatex({
+    //   // maybe you want katex to throwOnError
+    //   throwOnError: false,
+    //   // disable displayMode
+    //   displayMode: false,
+    //   // change errorColor to blue
+    //   errorColor: "red"
+    // })
   ]
 });
 
