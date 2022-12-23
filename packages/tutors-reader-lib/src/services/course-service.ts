@@ -1,7 +1,6 @@
 import { courseUrl, currentCourse, currentLo, week } from "../stores/stores";
 import { Course } from "../models/course";
 import { Lab } from "../models/lab";
-import axios from "axios";
 import type { Lo } from "../types/lo-types";
 import type { Topic } from "../models/topic";
 
@@ -20,8 +19,9 @@ export const courseService = {
         courseId = courseId.split(".")[0];
       }
       try {
-        const response = await axios.get<Lo>(`https://${courseUrl}/tutors.json`);
-        course = new Course(response.data, courseId, courseUrl);
+        const response = await fetch(`https://${courseUrl}/tutors.json`);
+        const data = await response.json();
+        course = new Course(data, courseId, courseUrl);
         this.courses.set(courseId, course);
         return course;
       } catch (error) {
@@ -51,7 +51,7 @@ export const courseService = {
   async readLab(courseId: string, labId: string): Promise<Lab> {
     const course = await this.readCourse(courseId);
 
-    const lastSegment = labId.substr(labId.lastIndexOf("/") + 1);
+    const lastSegment = labId.substring(labId.lastIndexOf("/") + 1);
     if (!lastSegment.startsWith("book")) {
       labId = labId.substr(0, labId.lastIndexOf("/"));
     }
