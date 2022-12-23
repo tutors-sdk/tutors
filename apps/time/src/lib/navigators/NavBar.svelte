@@ -1,7 +1,9 @@
 <script lang="ts">
-  import { LayoutMenu, NavTimeUser, Metric } from "tutors-ui";
+  import { Metric } from "tutors-ui";
   import { AppBar, Divider } from "@skeletonlabs/skeleton";
   import TutorsIcon from "./TutorsIcon.svelte";
+  import NavTimeUser from "./NavTimeUser.svelte";
+  import LayoutMenu from "./LayoutMenu.svelte";
 
   export let title = "Tutors Time";
   export let subTitle = "";
