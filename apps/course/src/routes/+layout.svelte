@@ -25,6 +25,12 @@
     mounted = true;
     storeTheme.subscribe(setBodyThemeAttribute);
     initServices();
+    const func = () => {
+      if (!document.hidden) {
+        analyticsService.updatePageCount();
+      }
+    };
+    setInterval(func, 30 * 1000);
   });
 
   afterNavigate((params: any) => {
