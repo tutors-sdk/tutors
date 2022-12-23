@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+import { getApp, initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { child, get, getDatabase, ref, runTransaction, remove, set } from "firebase/database";
 
@@ -144,9 +144,13 @@ export function formatDate(date: Date): string {
 
 export async function initFirebase(keys: any) {
   if (keys.apiKey !== "XXX") {
-    initializeApp(keys);
-    const auth = getAuth();
-    await signInWithEmailAndPassword(auth, keys.tutorStoreId, keys.tutorStoreSecret);
+    try {
+      return getApp();
+    } catch {
+      initializeApp(keys);
+      const auth = getAuth();
+      await signInWithEmailAndPassword(auth, keys.tutorStoreId, keys.tutorStoreSecret);
+    }
   }
 }
 
