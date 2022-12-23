@@ -16,15 +16,6 @@ currentUser.subscribe((current) => {
   user = current;
 });
 
-let mins = 0;
-const func = () => {
-  mins = mins + 0.5;
-  if (course && !document.hidden) {
-    analyticsService.updatePageCount();
-  }
-};
-setInterval(func, 30 * 1000);
-
 export const analyticsService = {
   courseId: "",
   courseUrl: "",
