@@ -5,12 +5,13 @@
   import { writable, type Writable } from "svelte/store";
   import { Tab, TabGroup } from "@skeletonlabs/skeleton";
 
-  import { currentUser } from "tutors-reader-lib/src/stores/stores";
+  import { currentUser, currentCourse } from "tutors-reader-lib/src/stores/stores";
   import LabTime from "$lib/time/LabTime.svelte";
   import InstructorLabTime from "$lib/time/InstructorLabTime.svelte";
   import InstructorCalendarTime from "$lib/time/InstructorCalendarTime.svelte";
   import NavBar from "$lib/navigators/NavBar.svelte";
   import CalendarTime from "$lib/time/CalendarTime.svelte";
+  import { authService } from "tutors-reader-lib/src/services/auth-service";
 
   export let data: PageData;
   const storeTab: Writable<string> = writable("Labs");
@@ -19,6 +20,7 @@
 
   onMount(async () => {
     window.addEventListener("keydown", keypressInput);
+    authService.checkAuth($currentCourse);
   });
 
   function keypressInput(e: KeyboardEvent) {
