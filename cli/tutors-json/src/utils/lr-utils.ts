@@ -30,6 +30,16 @@ export function getFileWithType(lr: LearningResource, types: string[]): string {
   }
 }
 
+export function getFilesWithType(lr: LearningResource, type: string): string[] {
+  const files = lr.files.filter((file) => type.includes(getFileType(file)));
+  return files;
+}
+
+export function getFilesWithTypes(lr: LearningResource, types: string[]): string[] {
+  const files = lr.files.filter((file) => types.includes(getFileType(file)));
+  return files;
+}
+
 export function getId(lr: LearningResource): string {
   return path.basename(lr.route);
 }
@@ -40,6 +50,20 @@ export function getImage(lr: LearningResource): string {
     imageFile = `https://{{COURSEURL}}${imageFile.replace(lr.courseRoot, "")}`;
   }
   return imageFile;
+}
+
+export function getLabImage(lr: LearningResource): string {
+  let foundFilePath = "";
+  const imageLrs = lr.lrs.filter((lr) => lr.id === "img");
+  if (imageLrs.length > 0) {
+    const imageFiles = getFilesWithTypes(imageLrs[0], ["png", "jpg", "jpeg", "gif"]);
+    imageFiles.forEach((filePath) => {
+      if (filePath.includes("/img/main")) {
+        foundFilePath = `https://{{COURSEURL}}${filePath.replace(lr.courseRoot, "")}`;
+      }
+    });
+  }
+  return foundFilePath;
 }
 
 export function getPdf(lr: LearningResource): string {

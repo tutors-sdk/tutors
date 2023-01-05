@@ -1,5 +1,7 @@
 import * as fs from "fs";
 import * as sh from "shelljs";
+import * as yaml from "js-yaml";
+import { Properties } from "../builders/lo-types";
 
 export function writeFile(folder: string, filename: string, contents: string): void {
   if (!fs.existsSync(folder)) {
@@ -74,4 +76,20 @@ export function copyFileToFolder(src: string, dest: string): void {
     sh.mkdir("-p", dest);
     sh.cp("-rf", src, dest);
   }
+}
+
+export function readYamlFile(yamlFilePath: string): any {
+  let yamlData = null;
+  try {
+    yamlData = yaml.load(fs.readFileSync(yamlFilePath, "utf8"));
+  } catch (err: any) {
+    console.log(`Tutors encountered an error reading ${yamlFilePath}:`);
+    console.log("--------------------------------------------------------------");
+    console.log(err.mark.buffer);
+    console.log("--------------------------------------------------------------");
+    console.log(err.message);
+    console.log("Review this file and try again....");
+    sh.exit(1);
+  }
+  return yamlData;
 }
