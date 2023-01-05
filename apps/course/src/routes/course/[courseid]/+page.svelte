@@ -6,13 +6,29 @@
   import { initFirebase } from "tutors-reader-lib/src/utils/firebase-utils";
   import { getKeys } from "../../../environment";
   export let data: PageData;
+
   let standardDeck = true;
+  let pinBuffer = "";
+  let ignorePin = "";
+
+  function keypressInput(e: { key: string }) {
+    pinBuffer = pinBuffer.concat(e.key);
+    if (pinBuffer === ignorePin) {
+      data.course.showAllLos();
+      data.course.standardLos = data.course.allLos;
+      standardDeck = false;
+    }
+  }
 
   onMount(async () => {
     if (getKeys().firebase.apiKey !== "XXX") {
       initFirebase(getKeys().firebase);
       authService.setCredentials(getKeys().auth0);
       authService.checkAuth(data.course);
+      if (data.course.lo.properties.ignorepin) {
+        ignorePin = data.course.lo.properties.ignorepin.toString();
+        window.addEventListener("keydown", keypressInput);
+      }
     }
   });
 </script>
