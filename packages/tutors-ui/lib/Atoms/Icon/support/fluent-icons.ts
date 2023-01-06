@@ -48,7 +48,7 @@ export const FluentIconLib = {
   toc: { icon: "fluent:line-horizontal-3-20-filled", colour: "bg-base-content" },
   compacted: { icon: "fluent:re-order-dots-vertical-24-filled", colour: "success" },
   expanded: { icon: "fluent:re-order-dots-horizontal-24-filled", colour: "success" },
-  courseprimary: { icon: "fluent:primary-28-regular", colour: "bg-base-content" },
+  courseinfo: { icon: "fluent:info-28-regular", colour: "bg-base-content" },
   calendar: { icon: "fluent:calendar-ltr-12-regular", colour: "bg-base-content" },
   appSettings: { icon: "fluent:settings-24-filled", colour: "primary" },
   listOnline: { icon: "fluent:people-list-24-filled", colour: "primary" },
