@@ -43,7 +43,7 @@ export const HeroIconLib = {
   toc: { icon: "heroicons-outline:menu-alt-2", colour: "bg-base-content" },
   compacted: { icon: "heroicons-outline:dots-vertical", colour: "success" },
   expanded: { icon: "heroicons-outline:dots-horizontal", colour: "success" },
-  courseinfo: { icon: "heroicons-outline:information-circle", colour: "bg-base-content" },
+  courseprimary: { icon: "heroicons-outline:primaryrmation-circle", colour: "bg-base-content" },
 
   default: { icon: "heroicons-outline:dots-vertical", colour: "primary" }
 };
