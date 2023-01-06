@@ -15,7 +15,7 @@
   "dependencies": {
     "@types/js-yaml": "^4.0.5",
     "@types/lodash": "^4.14.186",
-    "@types/node": "^18.8.4",
+    "@types/node": "^18.11.18",
     "@types/shelljs": "^0.8.11",
     "commander": "^9.4.1",
     "front-matter": "^4.0.2",
