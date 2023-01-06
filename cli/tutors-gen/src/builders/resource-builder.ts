@@ -1,6 +1,5 @@
 import * as fs from "fs";
 import path from "path";
-import { getId } from "../utils/lr-utils";
 import { findFirstMatchingString } from "../utils/utils";
 import { LearningResource, loTypes } from "./lo-types";
 
@@ -38,6 +37,6 @@ export const resourceBuilder = {
   buildTree(dir: string) {
     this.root = dir;
     this.lr = this.build(dir);
-    this.lr.lrs = this.lr.lrs.filter((lr) => lr.route.includes("/topic"));
+    this.lr.lrs = this.lr.lrs.filter((lr) => lr.route.includes("/topic") || lr.route.includes("/unit"));
   },
 };

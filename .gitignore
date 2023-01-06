@@ -8,6 +8,9 @@
 **/cli/tutors-json/src/**/*.js
 **/cli/tutors-json/src/**/*.js.map
 **/cli/tutors-json/src/**/*.d.ts
+**/cli/tutors-gen/src/**/*.js
+**/cli/tutors-gen/src/**/*.js.map
+**/cli/tutors-gen/src/**/*.d.ts
 **/packages/tutors-lib/src/**/*.js
 **/packages/tutors-lib/src/**/*.js.map
 **/packages/tutors-lib/src/**/*.d.ts

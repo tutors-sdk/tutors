@@ -1,7 +1,6 @@
-import { copyFolder } from "tutors-lib/src/utils/futils";
 import { getFilesWithType, getFileWithName, getId, getImage, getLabImage, getMarkdown, getPdf, getRoute, getVideo, readVideoIds } from "../utils/lr-utils";
 import { LearningObject, LearningResource, preOrder } from "./lo-types";
-import { copyFileToFolder, readWholeFile, readYamlFile, writeFile } from "../utils/utils";
+import { copyFileToFolder, copyFolder, readWholeFile, readYamlFile, writeFile } from "../utils/utils";
 import fm from "front-matter";
 
 export const courseBuilder = {
@@ -35,7 +34,7 @@ export const courseBuilder = {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       lo.los.sort((a, b) => preOrder.get(a.type)! - preOrder.get(b.type)!);
     });
-    process.stdout.write(".");
+
     return lo;
   },
 
@@ -82,9 +81,11 @@ export const courseBuilder = {
   },
 
   log(lo: LearningObject, level: number) {
-    console.log(`${" ".repeat(level * 2)}${lo.type} : ${lo.title}`);
+    console.log(`${" ".repeat(level * 2)}${lo.id} : ${lo.title}`);
     lo.los?.forEach((lo) => {
-      if (lo.type !== "labstep") this.log(lo, level + 1);
+      if (lo.type !== "labstep") {
+        this.log(lo, level + 1);
+      }
     });
   },
 
