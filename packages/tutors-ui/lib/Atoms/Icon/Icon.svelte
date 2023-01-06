@@ -12,11 +12,11 @@
     if (colourInput === "info") {
       return "rgba(var(--color-primary-500))";
     } else if (colourInput === "success") {
-      return "rgba(var(--color-accent-500))";
+      return "rgba(var(--color-success-500))";
     } else if (colourInput === "warning") {
-      return "rgba(var(--color-tertiary-500))";
-    } else if (colourInput === "error") {
       return "rgba(var(--color-warning-500))";
+    } else if (colourInput === "error") {
+      return "rgba(var(--color-error-500))";
     } else {
       return "rgba(var(--color-primary-500))";
     }

@@ -1,22 +1,28 @@
 <script lang="ts">
-	import { tailwindNumbers, type HexRgb, type TailwindNumbers } from './colors';
-	/**
-	 * A record that contains the Tailwind color numbers and the corresponding hex / RGB values.
-	 * @type {Record<TailwindNumbers, HexRgb>}
-	 */
-	export let palette: Record<TailwindNumbers, HexRgb>;
+	import { swatchColorClasses } from './settings';
+
+	/** Pass the color key name. */
+	export let color = 'primary';
 </script>
 
-<div class="swatches grid grid-cols-10 w-full ring-inset">
-	{#each Object.values(palette) as shade, i}
-		<div class="swatch flex flex-col-reverse xl:flex-col">
+<div class="grid grid-cols-11 gap-0">
+	{#each Object.entries(swatchColorClasses[color]) as [shade, shadeClasses]}
+		<div class="grid grid-rows-[1fr_40px] text-center" class:col-span-2={shade === '500'}>
 			<!-- Label -->
-			<div class="swatch-label text-xs mt-2 xl:mb-2 text-center" class:underline={i === 5}>{tailwindNumbers[i]}</div>
-			<!-- Color -->
-			<div
-				class="swatch-color h-4 md:h-[40px] ring-[1px] ring-black/5 dark:ring-white/5 transition-colors duration-200"
-				style:background={shade.hex ? shade.hex : shade.rgb}
-			/>
+			<div class="text-surface-700 dark:text-surface-300 text-sm">
+				{shade}
+			</div>
+			<!-- Swatch -->
+			<div class="bg-black/5 dark:bg-white/5">
+				<div class="h-full flex justify-center items-center {shadeClasses}">
+					{#if shade === '500'}
+						<div class="grid grid-cols-[auto_1fr] gap-1.5 place-items-center">
+							<i class="fa-solid fa-skull" />
+							<span class="hidden xl:inline-block">Text</span>
+						</div>
+					{/if}
+				</div>
+			</div>
 		</div>
 	{/each}
 </div>
