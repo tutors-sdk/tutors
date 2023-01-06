@@ -40,11 +40,11 @@
     if (colourInput === "info") {
       return "border-primary-500";
     } else if (colourInput === "success") {
-      return "border-success-500";
+      return "border-accent-500";
     } else if (colourInput === "warning") {
-      return "border-warning-500";
+      return "border-tertiary-500";
     } else if (colourInput === "error") {
-      return "border-error-500";
+      return "border-warning-500";
     } else return "border-warning-500";
   }
 
