@@ -7,18 +7,18 @@ export const HeroIconLib = {
   moodle: { icon: "map:university", colour: "warning" },
   youtube: { icon: "logos:youtube-icon", colour: "error" },
   video: { icon: "heroicons-outline:play", colour: "error" },
-  zoom: { icon: "grommet-icons:zoom", colour: "primary" },
+  zoom: { icon: "grommet-icons:zoom", colour: "info" },
   teams: { icon: "logos:microsoft-teams", colour: "bg-base-content" },
 
   // LoTypes icons
-  course: { icon: "heroicons-outline:book-open", colour: "primary" },
-  topic: { icon: "heroicons-outline:view-boards", colour: "primary" },
+  course: { icon: "heroicons-outline:book-open", colour: "info" },
+  topic: { icon: "heroicons-outline:view-boards", colour: "info" },
   unit: { icon: "heroicons-outline:collection", colour: "success" },
-  talk: { icon: "heroicons-outline:presentation-chart-bar", colour: "primary" },
+  talk: { icon: "heroicons-outline:presentation-chart-bar", colour: "info" },
   reference: { icon: "heroicons-outline:document-duplicate", colour: "warning" },
   lab: { icon: "heroicons-outline:beaker", colour: "success" },
-  archive: { icon: "heroicons-outline:archive", colour: "primary" },
-  web: { icon: "heroicons-outline:bookmark", colour: "primary" },
+  archive: { icon: "heroicons-outline:archive", colour: "info" },
+  web: { icon: "heroicons-outline:bookmark", colour: "info" },
   github: { icon: "heroicons-outline:terminal", colour: "warning" },
   panelvideo: { icon: "heroicons-outline:play", colour: "error" },
 
@@ -31,19 +31,19 @@ export const HeroIconLib = {
   fullScreen: { icon: "heroicons-outline:arrows-expand", colour: "success" },
 
   // tutors time icons
-  tutorsTime: { icon: "heroicons-outline:clock", colour: "primary" },
+  tutorsTime: { icon: "heroicons-outline:clock", colour: "info" },
   timeExport: { icon: "heroicons-outline:save-as", colour: "success" },
   live: { icon: "heroicons-outline:users", colour: "success" },
 
   // app icons
-  search: { icon: "heroicons-outline:search", colour: "primary" },
+  search: { icon: "heroicons-outline:search", colour: "info" },
   tutors: { icon: "fa-solid:chalkboard-teacher", colour: "bg-base-content" },
   logout: { icon: "heroicons-outline:logout", colour: "error" },
   dark: { icon: "heroicons-outline:moon", colour: "warning" },
   toc: { icon: "heroicons-outline:menu-alt-2", colour: "bg-base-content" },
   compacted: { icon: "heroicons-outline:dots-vertical", colour: "success" },
   expanded: { icon: "heroicons-outline:dots-horizontal", colour: "success" },
-  courseprimary: { icon: "heroicons-outline:primaryrmation-circle", colour: "bg-base-content" },
+  courseinfo: { icon: "heroicons-outline:information-circle", colour: "bg-base-content" },
 
-  default: { icon: "heroicons-outline:dots-vertical", colour: "primary" }
+  default: { icon: "heroicons-outline:dots-vertical", colour: "info" }
 };
