@@ -2,44 +2,36 @@
   "version": "0.1.0",
   "configurations": [
     {
-      "name": "Tutors-Json",
-      "program": "${workspaceFolder}//apps/tutors-json/src/tutors-json.js",
+      "name": "tutors-json",
+      "program": "${workspaceFolder}//cli/tutors-json/src/tutors-json.js",
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "node",
-      "cwd": "${workspaceFolder}/courses/tutors-reference/"
+      "cwd": "${workspaceFolder}/test/reference-course"
     },
     {
-      "name": "Tutors-Html",
-      "program": "${workspaceFolder}//apps/tutors-html/src/tutors-html.js",
+      "name": "tutors-html",
+      "program": "${workspaceFolder}//cli/tutors-html/src/tutors-html.js",
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "node",
-      "cwd": "${workspaceFolder}/courses/tutors-reference"
-    },
-    {
-      "name": "Tutors-Time",
-      "program": "${workspaceFolder}//apps/tutors-time/src/tutors-time.js",
-      "request": "launch",
-      "skipFiles": ["<node_internals>/**"],
-      "type": "node",
-      "cwd": "${workspaceFolder}/apps/tutors-time"
+      "cwd": "${workspaceFolder}/test/reference-course"
     },
     {
       "type": "chrome",
       "request": "attach",
-      "name": "Tutors-Course-Reader",
+      "name": "reader",
       "port": 9222,
-      "urlFilter": "http://localhost:5001/*",
-      "webRoot": "${workspaceFolder}/sites/tutors-course-reader"
+      "urlFilter": "http://localhost:3000/*",
+      "webRoot": "${workspaceFolder}/apps/course"
     },
     {
       "type": "chrome",
       "request": "attach",
-      "name": "Tutors-Time-Reader",
+      "name": "time",
       "port": 9222,
-      "urlFilter": "http://localhost:5001/*",
-      "webRoot": "${workspaceFolder}/sites/tutors-time-reader"
+      "urlFilter": "http://localhost:3001/*",
+      "webRoot": "${workspaceFolder}/apps/timer"
     }
   ]
 }
