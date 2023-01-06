@@ -87,7 +87,7 @@
             <a on:click="{onlineDrawerOpen}">
               <Icon type="listOnline" />
               <div class="ml-2">
-                View <span class="badge bg-error-500 text-white">{$studentsOnline}</span> Online
+                View <span class="badge bg-warning-500 text-white">{$studentsOnline}</span> Online
               </div>
             </a>
           </li>
