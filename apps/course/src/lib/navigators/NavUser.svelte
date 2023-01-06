@@ -49,7 +49,7 @@
     <button class="btn btn-sm space-x-1" use:menu="{{ menu: 'avatar', interactive: true }}">
       <div class="relative inline-block">
         {#if status && studentsOnline}
-          <span class="badge badge-filled-error absolute -top-2 -right-2 z-10 text-white">{$studentsOnline}</span>
+          <span class="badge-icon bg-warning-500 absolute -top-2 -right-2 z-10 text-white">{$studentsOnline}</span>
         {/if}
         <span class="badge-icon absolute -bottom-2 -right-2 z-10 text-white">
           {#if status}
