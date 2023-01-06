@@ -44,7 +44,7 @@
     } else if (colourInput === "warning") {
       return "border-warning-500";
     } else if (colourInput === "error") {
-      return "border-warning-500";
+      return "border-error-500";
     } else return "border-warning-500";
   }
 
