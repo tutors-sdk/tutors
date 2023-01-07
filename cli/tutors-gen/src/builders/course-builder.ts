@@ -29,6 +29,10 @@ export const courseBuilder = {
       lo.los = this.buildLab(lr);
       lo.img = getLabImage(lr);
     }
+    if (lo.type === "unit") {
+      lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
+      lo.route = lo.route.replace("/unit", "/topic");
+    }
     lr.lrs.forEach((lr) => {
       lo.los.push(this.buildLo(lr, level + 1));
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
