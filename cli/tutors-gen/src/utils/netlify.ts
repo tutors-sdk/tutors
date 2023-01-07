@@ -37,7 +37,7 @@ function redirectHtmlFile(): string {
         <script>
           const host = window.location.host;
           const subdomain = host.split('.')[0];
-          window.location = "https://next.tutors.dev/course/" + subdomain;
+          window.location = "https://reader.tutors.dev/course/" + subdomain;
         </script>
       </body>
     </html>`;
