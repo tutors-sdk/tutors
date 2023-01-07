@@ -26,26 +26,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const fs = __importStar(require("fs"));
 const course_1 = require("tutors-lib/src/models/course");
-const course_builder_1 = require("./builders/course-builder");
-const resource_builder_1 = require("./builders/resource-builder");
 const json_emitter_1 = require("./controllers/json-emitter");
 const netlify_1 = require("./controllers/netlify");
 const version = `tutors-json 2.6.2 (tutors-lib: 2.6.2)`;
-const newVersion = true;
 if (fs.existsSync("course.md")) {
     const course = new course_1.Course();
     const folder = process.cwd() + "/json";
     console.log(`Static course generator ${version}`);
-    if (newVersion) {
-        resource_builder_1.resourceBuilder.buildTree(process.cwd());
-        course_builder_1.courseBuilder.buildCourse(resource_builder_1.resourceBuilder.lr);
-        course_builder_1.courseBuilder.generateCourse("json");
-    }
-    else {
-        course.publish(folder);
-        const emitter = new json_emitter_1.JsonEmitter();
-        emitter.generateCourse(version, folder, course);
-    }
+    course.publish(folder);
+    const emitter = new json_emitter_1.JsonEmitter();
+    emitter.generateCourse(version, folder, course);
     (0, netlify_1.generateNetlifyToml)(folder);
     console.log(` ${version}`);
 }
