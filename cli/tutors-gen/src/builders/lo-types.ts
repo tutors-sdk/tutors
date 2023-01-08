@@ -1,3 +1,7 @@
+export const imageTypes = ["png", "jpg", "jpeg", "gif"];
+
+export const assetTypes = imageTypes.concat(["pdf", "zip"]);
+
 export class Properties {
   [key: string]: string;
 }

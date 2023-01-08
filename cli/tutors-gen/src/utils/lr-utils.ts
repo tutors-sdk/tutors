@@ -1,3 +1,4 @@
+import { imageTypes } from "./../builders/lo-types";
 import path from "path";
 import * as sh from "shelljs";
 import fm from "front-matter";
@@ -45,7 +46,7 @@ export function getId(lr: LearningResource): string {
 }
 
 export function getImage(lr: LearningResource): string {
-  let imageFile = getFileWithType(lr, ["png", "jpg", "jpeg", "gif"]);
+  let imageFile = getFileWithType(lr, imageTypes);
   if (imageFile) {
     imageFile = `https://{{COURSEURL}}${imageFile.replace(lr.courseRoot, "")}`;
   }
@@ -56,7 +57,7 @@ export function getLabImage(lr: LearningResource): string {
   let foundFilePath = "";
   const imageLrs = lr.lrs.filter((lr) => lr.id === "img");
   if (imageLrs.length > 0) {
-    const imageFiles = getFilesWithTypes(imageLrs[0], ["png", "jpg", "jpeg", "gif"]);
+    const imageFiles = getFilesWithTypes(imageLrs[0], imageTypes);
     imageFiles.forEach((filePath) => {
       if (filePath.includes("/img/main")) {
         foundFilePath = `https://{{COURSEURL}}${filePath.replace(lr.courseRoot, "")}`;
