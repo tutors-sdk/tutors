@@ -18,8 +18,10 @@ export const courseBuilder = {
       }
       lr.lrs.forEach((lr) => {
         lo.los.push(this.buildLo(lr, level + 1));
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        lo.los.sort((a, b) => preOrder.get(a.type)! - preOrder.get(b.type)!);
+        lo.los.sort((a: any, b: any) => {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          return preOrder.get(a.type)! - preOrder.get(b.type)!;
+        });
       });
     }
 
@@ -62,7 +64,6 @@ export const courseBuilder = {
         shortTitle: shortTitle,
         contentMd: contents.body,
         route: `${getRoute(lr)}/${shortTitle}`,
-        type: "labstep",
       };
       lo.los.push(labStep);
     });
@@ -81,7 +82,7 @@ export const courseBuilder = {
       if (ignoreList) {
         const los = this.lo.los.filter((lo) => ignoreList.indexOf(lo.id) >= 0);
         los.forEach((lo) => {
-          lo.hide = true;
+          if ("type" in lo) lo.hide = true;
         });
       }
     }
@@ -92,6 +93,6 @@ export const courseBuilder = {
   },
 
   generateCourse(outputFolder: string) {
-    writeFile(process.cwd(), `${outputFolder}/tutors.json`, JSON.stringify(this.lo));
+    writeFile(outputFolder, "tutors.json", JSON.stringify(this.lo));
   },
 };

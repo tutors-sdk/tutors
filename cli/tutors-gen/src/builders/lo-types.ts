@@ -30,7 +30,6 @@ export interface LabStep {
   shortTitle: string;
   contentMd: string;
   route: string;
-  type: string;
 }
 
 export interface LearningObject {
@@ -66,4 +65,5 @@ export const preOrder = new Map([
   ["panelvideo", 10],
   ["topic", 11],
   ["unknown", 12],
+  ["", 0],
 ]);

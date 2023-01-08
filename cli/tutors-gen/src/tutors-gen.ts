@@ -6,14 +6,14 @@ import { generateNetlifyToml } from "./utils/netlify";
 const version = `tutors-gen 2.8.7`;
 
 if (fs.existsSync("course.md")) {
-  const folder = process.cwd();
+  const srcFolder = process.cwd();
+  const destFolder = `${srcFolder}/json`;
   console.log(`Static course generator ${version}`);
-  resourceBuilder.buildTree(folder);
+  resourceBuilder.buildTree(srcFolder);
   courseBuilder.buildCourse(resourceBuilder.lr);
-  resourceBuilder.copyAssets("json");
-  courseBuilder.generateCourse("json");
-  generateNetlifyToml("json");
-
+  resourceBuilder.copyAssets(destFolder);
+  courseBuilder.generateCourse(destFolder);
+  generateNetlifyToml(destFolder);
   console.log(`${version}`);
 } else {
   console.log("Cannot locate course.md. Please Change to course folder and try again. ");
