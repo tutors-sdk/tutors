@@ -1,5 +1,5 @@
 import { getFilesWithType, getFileWithName, getId, getImage, getLabImage, getMarkdown, getPdf, getRoute, getVideo, readVideoIds } from "../utils/lr-utils";
-import { LearningObject, LearningResource, preOrder } from "./lo-types";
+import { LabStep, LearningObject, LearningResource, preOrder } from "./lo-types";
 import { readWholeFile, readYamlFile, writeFile } from "../utils/utils";
 import fm from "front-matter";
 
@@ -22,6 +22,7 @@ export const courseBuilder = {
         lo.los.sort((a, b) => preOrder.get(a.type)! - preOrder.get(b.type)!);
       });
     }
+
     return lo;
   },
 
@@ -48,13 +49,15 @@ export const courseBuilder = {
 
   buildLab(lo: LearningObject, lr: LearningResource): LearningObject {
     const mdFiles = getFilesWithType(lr, "md");
+    lo.title = "";
     mdFiles.forEach((chapterName) => {
       const wholeFile = readWholeFile(chapterName);
       const contents = fm(wholeFile);
-      let theTitle = contents.body.substr(0, contents.body.indexOf("\n"));
+      let theTitle = contents.body.substring(0, contents.body.indexOf("\n"));
       theTitle = theTitle.replace("\r", "");
       const shortTitle = chapterName.substring(chapterName.indexOf(".") + 1, chapterName.lastIndexOf("."));
-      const labStep = {
+      if (lo.title == "") lo.title = shortTitle;
+      const labStep: LabStep = {
         title: theTitle,
         shortTitle: shortTitle,
         contentMd: contents.body,
@@ -64,9 +67,6 @@ export const courseBuilder = {
       lo.los.push(labStep);
     });
     lo.img = getLabImage(lr);
-    if (lo.los.length > 0) {
-      lo.title = lo.los[0].shortTitle;
-    }
     return lo;
   },
 
