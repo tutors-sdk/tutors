@@ -1,13 +1,34 @@
-import { copyFolder } from "tutors-lib/src/utils/futils";
 import { getFilesWithType, getFileWithName, getId, getImage, getLabImage, getMarkdown, getPdf, getRoute, getVideo, readVideoIds } from "../utils/lr-utils";
-import { LearningObject, LearningResource, preOrder } from "./lo-types";
-import { copyFileToFolder, readWholeFile, readYamlFile, writeFile } from "../utils/utils";
+import { LabStep, LearningObject, LearningResource, preOrder } from "./lo-types";
+import { readWholeFile, readYamlFile, writeFile } from "../utils/utils";
 import fm from "front-matter";
 
 export const courseBuilder = {
   lo: <LearningObject>{},
 
   buildLo(lr: LearningResource, level: number): LearningObject {
+    let lo = this.buildDefaultLo(lr);
+    console.log(`${"-".repeat(level * 2)}: ${lo.id} : ${lo.title}`);
+    if (lo.type === "lab") {
+      lo = this.buildLab(lo, lr);
+    } else {
+      if (lo.type === "unit") {
+        lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
+        lo.route = lo.route.replace("/unit", "/topic");
+      }
+      lr.lrs.forEach((lr) => {
+        lo.los.push(this.buildLo(lr, level + 1));
+        lo.los.sort((a: any, b: any) => {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          return preOrder.get(a.type)! - preOrder.get(b.type)!;
+        });
+      });
+    }
+
+    return lo;
+  },
+
+  buildDefaultLo(lr: LearningResource): LearningObject {
     const [title, summary, contentMd, frontMatter] = getMarkdown(lr);
     const videoids = readVideoIds(lr);
     const lo: LearningObject = {
@@ -25,39 +46,29 @@ export const courseBuilder = {
       los: [],
       hide: false,
     };
-
-    if (lo.type === "lab") {
-      lo.los = this.buildLab(lr);
-      lo.img = getLabImage(lr);
-    }
-    lr.lrs.forEach((lr) => {
-      lo.los.push(this.buildLo(lr, level + 1));
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      lo.los.sort((a, b) => preOrder.get(a.type)! - preOrder.get(b.type)!);
-    });
-    process.stdout.write(".");
     return lo;
   },
 
-  buildLab(lr: LearningResource): LearningObject[] {
-    const los: any = [];
+  buildLab(lo: LearningObject, lr: LearningResource): LearningObject {
     const mdFiles = getFilesWithType(lr, "md");
+    lo.title = "";
     mdFiles.forEach((chapterName) => {
       const wholeFile = readWholeFile(chapterName);
       const contents = fm(wholeFile);
-      let theTitle = contents.body.substr(0, contents.body.indexOf("\n"));
+      let theTitle = contents.body.substring(0, contents.body.indexOf("\n"));
       theTitle = theTitle.replace("\r", "");
       const shortTitle = chapterName.substring(chapterName.indexOf(".") + 1, chapterName.lastIndexOf("."));
-      const lo = {
+      if (lo.title == "") lo.title = shortTitle;
+      const labStep: LabStep = {
         title: theTitle,
         shortTitle: shortTitle,
         contentMd: contents.body,
         route: `${getRoute(lr)}/${shortTitle}`,
-        type: "labstep",
       };
-      los.push(lo);
+      lo.los.push(labStep);
     });
-    return los;
+    lo.img = getLabImage(lr);
+    return lo;
   },
 
   buildCourse(lr: LearningResource) {
@@ -71,7 +82,7 @@ export const courseBuilder = {
       if (ignoreList) {
         const los = this.lo.los.filter((lo) => ignoreList.indexOf(lo.id) >= 0);
         los.forEach((lo) => {
-          lo.hide = true;
+          if ("type" in lo) lo.hide = true;
         });
       }
     }
@@ -81,17 +92,7 @@ export const courseBuilder = {
     }
   },
 
-  log(lo: LearningObject, level: number) {
-    console.log(`${" ".repeat(level * 2)}${lo.type} : ${lo.title}`);
-    lo.los?.forEach((lo) => {
-      if (lo.type !== "labstep") this.log(lo, level + 1);
-    });
-  },
-
-  generateCourse(folder: string) {
-    copyFileToFolder("course.png", "json");
-    this.lo.los.forEach((lo) => copyFolder(lo.id, "json"));
-    writeFile(process.cwd(), `${folder}/tutors.json`, JSON.stringify(this.lo));
-    this.log(this.lo, 1);
+  generateCourse(outputFolder: string) {
+    writeFile(outputFolder, "tutors.json", JSON.stringify(this.lo));
   },
 };

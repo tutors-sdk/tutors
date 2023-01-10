@@ -35,16 +35,9 @@ function redirectHtmlFile(): string {
       </head>
       <body>
         <script>
-          var domain = window.location.hostname.substring(window.location.hostname.lastIndexOf(".", window.location.hostname.lastIndexOf(".") - 1) + 1);
-          var url = window.location.href;
-          var baseUrl = url.substring(url.indexOf('//') + 2);
-          var array = baseUrl.split('/');
-          array.pop();
-          var tutorsUrl = array.join('/');
-          window.location = "https://reader.tutors.dev" + "/#/course/" + tutorsUrl;
-          // const host = window.location.host;
-          // const subdomain = host.split('.')[0];
-          // window.location = "https://reader.tutors.dev/course/" + subdomain;
+        const host = window.location.host;
+        const subdomain = host.split('.')[0];
+        window.location = "https://reader.tutors.dev/course/" + subdomain;
         </script>
       </body>
     </html>`;

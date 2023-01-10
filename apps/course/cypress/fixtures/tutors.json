@@ -12,7 +12,7 @@
       "piazza": {
         "link": "https://piazza.com/",
         "title": "Piazza Q & A for this course",
-        "icon": { "icon": "academicons:piazza", "colour": "info" }
+        "icon": { "icon": "academicons:piazza", "colour": "primary" }
       },
       "teams": { "link": "https://teams.com", "title": "Teams channel for this course", "icon": { "icon": "logos:microsoft-teams" } }
     },

@@ -49,7 +49,7 @@
   <input bind:value="{searchTerm}" type="text" name="email" id="search" class="m-2 p-2" placeholder="..." />
   <div class="flex flex-wrap justify-center">
     {#each searchResults as result}
-      <div class="card m-2 w-full p-4 lg:w-72 2xl:w-96">
+      <div class="card m-1 w-full p-4 lg:w-72 2xl:w-96">
         <div>
           <div>
             {@html result.html}

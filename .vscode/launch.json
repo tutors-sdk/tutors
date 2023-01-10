@@ -10,6 +10,17 @@
       "cwd": "${workspaceFolder}/test/reference-course"
     },
     {
+      "name": "tutors-gen",
+      "program": "${workspaceFolder}//cli/tutors-gen/src/tutors-gen.js",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node",
+      "cwd": "${workspaceFolder}/test/reference-course",
+      "console": "integratedTerminal"
+      // "cwd": "/Users/edeleastar/repos/modules/hdip/2022/course-portfolio-2022"
+      //"cwd": "/Users/edeleastar/repos/modules/hdip/2021/sem-3/full-stack-web-dev-2021"
+    },
+    {
       "name": "tutors-html",
       "program": "${workspaceFolder}//cli/tutors-html/src/tutors-html.js",
       "request": "launch",

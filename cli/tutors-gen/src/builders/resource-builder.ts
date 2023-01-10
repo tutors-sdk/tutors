@@ -1,8 +1,7 @@
 import * as fs from "fs";
 import path from "path";
-import { getId } from "../utils/lr-utils";
-import { findFirstMatchingString } from "../utils/utils";
-import { LearningResource, loTypes } from "./lo-types";
+import { copyFileToFolder, findFirstMatchingString, getFileName, getFileType } from "../utils/utils";
+import { assetTypes, LearningResource, loTypes } from "./lo-types";
 
 export const resourceBuilder = {
   lr: <LearningResource>{},
@@ -38,6 +37,21 @@ export const resourceBuilder = {
   buildTree(dir: string) {
     this.root = dir;
     this.lr = this.build(dir);
-    this.lr.lrs = this.lr.lrs.filter((lr) => lr.route.includes("/topic"));
+    this.lr.lrs = this.lr.lrs.filter((lr) => lr.route.includes("/topic") || lr.route.includes("/unit"));
+  },
+
+  copyAssetFiles(lr: LearningResource, dest: string) {
+    lr.files.forEach((file) => {
+      if (assetTypes.includes(getFileType(file))) {
+        const fileName = getFileName(file);
+        const filePath = file.replace(lr.courseRoot, "");
+        const destPath = `${dest}${filePath.replace(fileName, "")}`;
+        copyFileToFolder(file, destPath);
+      }
+    });
+    lr.lrs.forEach((lr) => this.copyAssetFiles(lr, dest));
+  },
+  copyAssets(dest: string) {
+    this.copyAssetFiles(this.lr, dest);
   },
 };

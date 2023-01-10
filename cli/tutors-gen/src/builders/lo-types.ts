@@ -1,3 +1,7 @@
+export const imageTypes = ["png", "jpg", "jpeg", "gif"];
+
+export const assetTypes = imageTypes.concat(["pdf", "zip"]);
+
 export class Properties {
   [key: string]: string;
 }
@@ -21,6 +25,13 @@ export interface LearningResource {
   type: string;
 }
 
+export interface LabStep {
+  title: string;
+  shortTitle: string;
+  contentMd: string;
+  route: string;
+}
+
 export interface LearningObject {
   id: string;
   route: string;
@@ -33,7 +44,7 @@ export interface LearningObject {
   video: string;
   videoids: VideoIdentifiers;
   frontMatter: Properties;
-  los: LearningObject[];
+  los: Array<LearningObject | LabStep>;
   properties?: Properties;
   calendar?: Properties;
   hide: boolean;
@@ -54,4 +65,5 @@ export const preOrder = new Map([
   ["panelvideo", 10],
   ["topic", 11],
   ["unknown", 12],
+  ["", 0],
 ]);

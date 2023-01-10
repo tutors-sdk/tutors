@@ -1,7 +1,6 @@
 import * as fs from "fs";
 import * as sh from "shelljs";
 import * as yaml from "js-yaml";
-import { Properties } from "../builders/lo-types";
 
 export function writeFile(folder: string, filename: string, contents: string): void {
   if (!fs.existsSync(folder)) {
@@ -69,6 +68,10 @@ export function withoutHeaderFromBody(body: string): string {
 export function copyFolder(src: string, dest: string): void {
   sh.mkdir("-p", dest);
   sh.cp("-rf", src, dest);
+}
+
+export function copyFile(src: string, dest: string): void {
+  sh.cp(src, dest);
 }
 
 export function copyFileToFolder(src: string, dest: string): void {

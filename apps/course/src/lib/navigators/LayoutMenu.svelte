@@ -28,7 +28,7 @@
     <Icon type="dark" />
     <span class="hidden text-sm font-bold lg:block">Layout <span class="pl-2 opacity-50">▾</span></span>
   </button>
-  <nav class="list-nav card card-body px-4 pt-2 w-56 space-y-4 shadow-lg" data-menu="design">
+  <nav class="list-nav card card-body p-4 w-56 space-y-4 shadow-lg" data-menu="design">
     <h6>Toggles</h6>
     <section class="flex justify-between">
       <p class="text-lg">Dark Mode</p>

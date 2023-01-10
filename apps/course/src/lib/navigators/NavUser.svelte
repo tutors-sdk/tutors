@@ -49,7 +49,7 @@
     <button class="btn btn-sm space-x-1" use:menu="{{ menu: 'avatar', interactive: true }}">
       <div class="relative inline-block">
         {#if status && studentsOnline}
-          <span class="badge-icon bg-warning-500 absolute -top-2 -right-2 z-10 text-white">{$studentsOnline}</span>
+          <span class="badge-icon badge-filled-error absolute -top-2 -right-2 z-10 text-white">{$studentsOnline}</span>
         {/if}
         <span class="badge-icon absolute -bottom-2 -right-2 z-10 text-white">
           {#if status}
@@ -62,7 +62,7 @@
         <Avatar width="w-10" src="{$currentUser.picture}" alt="{$currentUser?.nickname}" />
       </div>
     </button>
-    <nav class="list-nav card card-body w-56 space-y-4 shadow-lg" data-menu="avatar">
+    <nav class="list-nav card card-body w-56 p-4 space-y-4 shadow-lg" data-menu="avatar">
       <span class="mt-2 ml-4 text-xs">Logged in as:</span><br />
       <span class="ml-4 text-sm">{$currentUser.name}</span>
       <Divider />
@@ -87,7 +87,7 @@
             <a on:click="{onlineDrawerOpen}">
               <Icon type="listOnline" />
               <div class="ml-2">
-                View <span class="badge bg-warning-500 text-white">{$studentsOnline}</span> Online
+                View <span class="badge bg-error-500 text-white">{$studentsOnline}</span> Online
               </div>
             </a>
           </li>

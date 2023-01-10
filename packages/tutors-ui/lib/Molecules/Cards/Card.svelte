@@ -36,23 +36,11 @@
     }
   });
 
-  function getColor(colourInput): string {
-    if (colourInput === "info") {
-      return "border-primary-500";
-    } else if (colourInput === "success") {
-      return "border-accent-500";
-    } else if (colourInput === "warning") {
-      return "border-tertiary-500";
-    } else if (colourInput === "error") {
-      return "border-warning-500";
-    } else return "border-warning-500";
-  }
-
   onDestroy(unsubscribe);
 </script>
 
 <a href="{lo.route}" target="{target}">
-  <div transition:cardTransition class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 {getColor(getIcon(lo.type).colour)} m-2 {cardWidths} transition-all hover:scale-105">
+  <div transition:cardTransition class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 border-{getIcon(lo.type).colour}-500 m-2 {cardWidths} transition-all hover:scale-105">
     <header class="card-header flex flex-row items-center justify-between p-3">
       <div class="inline-flex w-full">
         <div class="line-clamp-2 flex-auto {headingText}">{lo.title}</div>

@@ -20,7 +20,7 @@
   };
 </script>
 
-<AppBar class="h-24 space-x-1 lg:space-x-4">
+<AppBar class="h-24 space-x-1 lg:space-x-4 shadow-none border-b-[1px] border-surface-900/5">
   <svelte:fragment slot="lead">
     <div class="flex items-center">
       {#if $currentCourse?.lo.contentMd}
