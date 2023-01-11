@@ -30,6 +30,7 @@ export interface LabStep {
   shortTitle: string;
   contentMd: string;
   route: string;
+  id: string;
 }
 
 export interface LearningObject {
