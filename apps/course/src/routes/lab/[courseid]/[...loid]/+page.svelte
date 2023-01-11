@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import type { PageData } from "./$types";
-  import { goto } from "$app/navigation";
+  import { goto, afterNavigate } from "$app/navigation";
   export let data: PageData;
 
   onMount(async () => {
@@ -10,6 +10,11 @@
 
   onDestroy(() => {
     window.removeEventListener("keydown", keypressInput);
+  });
+
+  afterNavigate(() => {
+    const elemPage = document.querySelector("#page");
+    elemPage.scrollTop = 0;
   });
 
   async function keypressInput(e: KeyboardEvent) {
@@ -27,14 +32,14 @@
 
 <svelte:head>
   <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.js"
+    src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.4/katex.min.js"
     integrity="sha512-DAZH0Wu7q9Hnm0Fw8tRZsTeQBzIugiUy6k2r7E0KKMlC2nBvvrNSH/LVnGueCXRfDs5epP+Ieoh3L+VzSKi0Aw=="
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
   ></script>
   <link
     rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.18/katex.min.css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.4/katex.min.css"
     integrity="sha512-nii0D5CrWiLjtPcfU3pQJifaRLxKKVut/hbsazsodCcIOERZbwLH7dQxzOKy3Ey/Fv8fXCA9+Rf+wQzqklbEJQ=="
     crossorigin="anonymous"
     referrerpolicy="no-referrer"

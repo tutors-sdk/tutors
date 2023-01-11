@@ -75,7 +75,7 @@
         </PageTransition>
       </div>
       <svelte:fragment slot="pageFooter">
-        <div class="bg-surface-100-800-token border-t-[1px] border-surface-900/5 bottom-0 mt-2">
+        <div class="bg-surface-100-800-token border-t-[1px] border-surface-200-700-token bottom-0 mt-2">
           <Footer />
         </div>
       </svelte:fragment>
