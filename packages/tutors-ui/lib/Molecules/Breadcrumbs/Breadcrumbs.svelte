@@ -1,6 +1,5 @@
 <script lang="ts">
   import { currentCourse, currentLo } from "tutors-reader-lib/src/stores/stores";
-  import { Breadcrumb, Crumb } from "@skeletonlabs/skeleton";
   import { Icon } from "tutors-ui";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
 
@@ -43,20 +42,20 @@
 </script>
 
 <div class="my-2 mx-8 overflow-hidden p-1">
-  <Breadcrumb text="text-xs" separator=" ">
+  <ol class="breadcrumb-nonresponsive text-xs">
     {#if $currentCourse?.lo.properties?.parent != null}
-      <Crumb href="/{$currentCourse.lo.properties?.parent}" class="!space-x-[-1rem] lg:!space-x-0">
-        <svelte:fragment slot="lead"><Icon type="programHome" /></svelte:fragment>
-      </Crumb>
+      <li class="crumb"><a href="/{$currentCourse.lo.properties?.parent}" class="!space-x-[-1rem] lg:!space-x-0">
+        <Icon type="programHome" />
+      </a></li>
     {/if}
     {#each crumbs($currentLo, []) as lo, i}
-      <span class="mt-[0.1rem]">›</span>
-      <Crumb href="{lo.route}{getUnitId(lo.type, lo.id)}" class="!space-x-[-1rem] lg:!space-x-0">
-        <svelte:fragment slot="lead">
-          <Icon type="{lo.type}" />
-        </svelte:fragment>
+
+	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
+    <li class="crumb">
+      <a href="{lo.route}{getUnitId(lo.type, lo.id)}" class="!space-x-[-1rem] lg:!space-x-0 inline-flex">
+          <span><Icon type="{lo.type}" /></span>
         <span
-          class="hidden lg:block"
+          class="hidden lg:inline-flex pl-2 items-center"
           on:mouseenter="{() => {
             truncated[i] = false;
           }}"
@@ -64,7 +63,7 @@
             truncated[i] = true;
           }}">{title(lo.title, truncated[i], i)}</span
         >
-      </Crumb>
+        </a></li>
     {/each}
-  </Breadcrumb>
+    </ol>
 </div>
