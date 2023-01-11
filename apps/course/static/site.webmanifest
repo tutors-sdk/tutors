@@ -1,6 +1,8 @@
 {
     "name": "Tutors Course Reader",
     "short_name": "Tutors",
+    "scope": "/",
+    "id": "tutors",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -8,7 +10,7 @@
             "type": "image/png"
         }
     ],
-    "theme_color": "#ffffff",
+    "theme_color": "#37919b",
     "background_color": "#ffffff",
     "display": "standalone"
 }
