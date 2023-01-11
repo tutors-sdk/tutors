@@ -49,10 +49,9 @@
   onMount(async () => {
     mounted = true;
     window.addEventListener("beforeinstallprompt", e => {
-	    e.preventDefault();
-	    deferredInstallEvent = e;
+	    e.preventDefault()
       toastStore.trigger(installToast);
-    })
+     })
     storeTheme.subscribe(setBodyThemeAttribute);
     initServices();
     const func = () => {
