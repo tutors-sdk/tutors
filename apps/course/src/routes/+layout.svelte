@@ -21,10 +21,31 @@
   import Sidebars from "$lib/navigators/sidebars/Sidebars.svelte";
 
   let mounted = false;
+  let deferredPrompt: any = null;
   const themes: any = { tutors, dyslexia };
+
+
+  const installToast: ToastSettings = {
+		message: 'Install this site as an application.',
+		preset: 'primary',
+		autohide: true,
+		timeout: 30000,
+		action: {
+			label: 'Install Now',
+			response: () => deferredPrompt.prompt()
+		}
+	};
 
   onMount(async () => {
     mounted = true;
+    window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent the mini-infobar from appearing on mobile
+  e.preventDefault();
+  // Stash the event so it can be triggered later.
+  deferredPrompt = e;
+  // Update UI notify the user they can install the PWA
+  toastStore.trigger(installToast);
+});
     storeTheme.subscribe(setBodyThemeAttribute);
     initServices();
     const func = () => {
