@@ -21,37 +21,10 @@
   import Sidebars from "$lib/navigators/sidebars/Sidebars.svelte";
 
   let mounted = false;
-  let deferredInstallEvent: any = null;
   const themes: any = { tutors, dyslexia };
-
-  async function handleInstall() {
-     deferredInstallEvent.prompt()
-     let choice = await deferredInstallEvent.userChoice
-     if (choice.outcome === "accepted") {
-	 // User accepted to install the application
-     } else {
-	 // User dismissed the prompt
-     }
-     deferredInstallEvent = undefined
- }
-
-  const installToast: ToastSettings = {
-		message: 'Install this site as an application.',
-		preset: 'primary',
-		autohide: true,
-		timeout: 30000,
-		action: {
-			label: 'Install Now',
-			response: () => handleInstall()
-		}
-	};
 
   onMount(async () => {
     mounted = true;
-    window.addEventListener("beforeinstallprompt", e => {
-	    e.preventDefault()
-      toastStore.trigger(installToast);
-     })
     storeTheme.subscribe(setBodyThemeAttribute);
     initServices();
     const func = () => {
