@@ -13,7 +13,7 @@ export const courseService = {
     let course = this.courses.get(courseId);
     let courseUrl = courseId;
     if (!course) {
-      if (!courseId.includes(".netlify.app")) {
+      if (!courseId.includes(".netlify.app") && !courseId.includes(".tutors.dev")) {
         courseUrl = `${courseId}.netlify.app`;
       } else {
         courseId = courseId.split(".")[0];
