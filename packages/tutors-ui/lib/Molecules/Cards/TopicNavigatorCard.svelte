@@ -33,10 +33,10 @@
 </script>
 
 <div class="{cardWidths}">
-  <div class="card">
-    <h3 class="px-4 pt-6 pb-2 text-center">{topic?.lo?.title}</h3>
+  <div class="card px-4 py-2">
+    <h3 class="px-4 py-2 text-center">{topic?.lo?.title}</h3>
     <div class="card-body">
-      <figure class="flex justify-center">
+      <figure class="flex justify-center p-2">
         <Image lo="{lo}" />
       </figure>
       <TopicNavigator topic="{topic}" />
