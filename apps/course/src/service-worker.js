@@ -18,7 +18,7 @@ const PRECACHE = "precache-v1";
 const RUNTIME = "runtime";
 
 // A list of local resources we always want to be cached.
-const PRECACHE_URLS = ["./"];
+const PRECACHE_URLS = ["./", "/_app/immutable/assets"];
 
 // The install handler takes care of precaching the resources we always need.
 self.addEventListener("install", (event) => {
