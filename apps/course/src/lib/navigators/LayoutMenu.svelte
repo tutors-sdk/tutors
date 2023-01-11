@@ -32,7 +32,7 @@
     <h6>Toggles</h6>
     <section class="flex justify-between">
       <p class="text-lg">Dark Mode</p>
-      <LightSwitch origin="tr" />
+      <LightSwitch />
     </section>
     <button class="w-full" on:click="{() => toggleLayout()}">
       <section class="flex justify-between">
