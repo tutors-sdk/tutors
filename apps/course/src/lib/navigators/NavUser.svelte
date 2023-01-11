@@ -10,7 +10,7 @@
   let status = false;
   const timeApp = "https://tutors-time-kit.netlify.app";
   let timeUrl = "";
-  let liveUrl = `https://next.tutors.dev/live/${$currentCourse.id}`;
+  let liveUrl = `https://reader.tutors.dev/live/${$currentCourse.id}`;
   let gitUrl = "";
 
   function setTimeUrls(user: User, course: Course) {
@@ -30,7 +30,7 @@
   });
 
   currentCourse.subscribe((newCourse: Course) => {
-    liveUrl = `https://next.tutors.dev/live/${$currentCourse?.id}`;
+    liveUrl = `https://reader.tutors.dev/live/${$currentCourse?.id}`;
   });
 
   function handleClick() {

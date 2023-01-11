@@ -64,6 +64,7 @@ export const courseBuilder = {
         shortTitle: shortTitle,
         contentMd: contents.body,
         route: `${getRoute(lr)}/${shortTitle}`,
+        id: shortTitle,
       };
       lo.los.push(labStep);
     });
