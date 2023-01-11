@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import type { PageData } from "./$types";
-  import { goto } from "$app/navigation";
+  import { goto, afterNavigate } from "$app/navigation";
   export let data: PageData;
 
   onMount(async () => {
@@ -10,6 +10,11 @@
 
   onDestroy(() => {
     window.removeEventListener("keydown", keypressInput);
+  });
+
+  afterNavigate(() => {
+    const elemPage = document.querySelector("#page");
+    elemPage.scrollTop = 0;
   });
 
   async function keypressInput(e: KeyboardEvent) {
