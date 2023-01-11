@@ -1,13 +1,13 @@
 <script lang="ts">
 	import type { Writable } from 'svelte/store';
+  import { storePreview } from "tutors-reader-lib/src/stores/stores";
 	// Components
 	import { ProgressBar, SlideToggle, LightSwitch, CodeBlock } from '@skeletonlabs/skeleton';
 	import Swatch from './Swatches.svelte';
 	// Utilities
-	import { localStorageStore } from './LocalStorageStore';
+	import { localStorageStore } from '@skeletonlabs/skeleton';
 
 	// Local Utils
-	import { storePreview } from './stores';
 	import type { ColorSettings, FormTheme } from './types';
 	import { inputSettings, fontSettings } from './settings';
 	import { type Palette, generatePalette, generateA11yOnColor } from './colors';
