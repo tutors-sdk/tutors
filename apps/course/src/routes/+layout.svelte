@@ -1,7 +1,9 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import "@skeletonlabs/skeleton/styles/all.css";
-  import { AppShell, Toast } from "@skeletonlabs/skeleton";
+  import { AppShell, Toast, toastStore } from "@skeletonlabs/skeleton";
+  import type { ToastSettings } from '@skeletonlabs/skeleton';
+  import { browser } from '$app/environment';
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import Blank from "$lib/support/Blank.svelte";
