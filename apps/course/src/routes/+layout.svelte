@@ -1,7 +1,9 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import "@skeletonlabs/skeleton/styles/all.css";
-  import { AppShell, Toast } from "@skeletonlabs/skeleton";
+  import { AppShell, Toast, toastStore } from "@skeletonlabs/skeleton";
+  import type { ToastSettings } from '@skeletonlabs/skeleton';
+  import { browser } from '$app/environment';
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import Blank from "$lib/support/Blank.svelte";
@@ -19,10 +21,38 @@
   import Sidebars from "$lib/navigators/sidebars/Sidebars.svelte";
 
   let mounted = false;
+  let deferredInstallEvent: any = null;
   const themes: any = { tutors, dyslexia };
+
+  async function handleInstall() {
+     deferredInstallEvent.prompt()
+     let choice = await deferredInstallEvent.userChoice
+     if (choice.outcome === "accepted") {
+	 // User accepted to install the application
+     } else {
+	 // User dismissed the prompt
+     }
+     deferredInstallEvent = undefined
+ }
+
+  const installToast: ToastSettings = {
+		message: 'Install this site as an application.',
+		preset: 'primary',
+		autohide: true,
+		timeout: 30000,
+		action: {
+			label: 'Install Now',
+			response: () => handleInstall()
+		}
+	};
 
   onMount(async () => {
     mounted = true;
+    window.addEventListener("beforeinstallprompt", e => {
+	    e.preventDefault();
+	    deferredInstallEvent = e;
+      toastStore.trigger(installToast);
+    })
     storeTheme.subscribe(setBodyThemeAttribute);
     initServices();
     const func = () => {
