@@ -14,5 +14,5 @@
   {#each data.topic.units as unit}
     <UnitCard unit="{unit}" />
   {/each}
-  <CardDeck los="{data.topic.standardLos}" />
+  <CardDeck los="{data.topic.standardLos}" border />
 </div>

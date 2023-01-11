@@ -37,7 +37,7 @@
   <UnitCard unit="{unit}" />
 {/each}
 {#if standardDeck}
-  <CardDeck los="{data.course.standardLos}" />
+  <CardDeck los="{data.course.standardLos}" border />
 {:else}
-  <CardDeck los="{data.course.allLos}" />
+  <CardDeck los="{data.course.allLos}" border />
 {/if}
