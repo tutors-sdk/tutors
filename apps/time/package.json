@@ -12,7 +12,7 @@
     "format": "prettier --write --ignore-path=../../.prettierignore ."
   },
   "devDependencies": {
-    "@skeletonlabs/skeleton": "^0.92.0",
+    "@skeletonlabs/skeleton": "^0.92.2",
     "@sveltejs/adapter-auto": "latest",
     "@sveltejs/adapter-netlify": "^1.0.0",
     "@sveltejs/kit": "latest",
