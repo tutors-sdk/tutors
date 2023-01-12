@@ -22,8 +22,8 @@ export const currentUser: Writable<User> = writable();
 export const portfolio = writable(false);
 export const layout = writable("");
 export const transitionKey = writable("");
-export const storeTheme: Writable<string> = writable("tutors"); //localStorageStore("storeTheme", "tutors");
-export const storePreview: Writable<boolean> = localStorageStore("storePreview", false);
+export const storeTheme = localStorageStore("storeTheme", "tutors");
+export const storePreview = localStorageStore("storePreview", false);
 export const authenticating: Writable<boolean> = writable(false);
 
 const students: StudentLoEvent[] = [];

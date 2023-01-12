@@ -65,7 +65,6 @@
 	function onPreviewToggle(): void {
 		if ($storePreview === false) {
 			localStorage.removeItem('storeThemGenForm');
-			location.reload(); // required
 		}
 	}
 

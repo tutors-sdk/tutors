@@ -1,9 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import "@skeletonlabs/skeleton/styles/all.css";
-  import { AppShell, Toast, toastStore } from "@skeletonlabs/skeleton";
-  import type { ToastSettings } from '@skeletonlabs/skeleton';
-  import { browser } from '$app/environment';
+  import { AppShell, Toast } from "@skeletonlabs/skeleton";
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import Blank from "$lib/support/Blank.svelte";
@@ -26,6 +24,7 @@
   onMount(async () => {
     mounted = true;
     storeTheme.subscribe(setBodyThemeAttribute);
+    setColorScheme();
     initServices();
     const func = () => {
       if (!document.hidden) {
@@ -43,8 +42,18 @@
     }
   });
 
+  function setColorScheme() {
+    if (localStorage.getItem('storeLightSwitch') === 'true' ||
+        (!('storeLightSwitch' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+    }
+    else {
+        document.documentElement.classList.remove('dark');
+    }
+}
+
   function setBodyThemeAttribute(): void {
-    document.body.setAttribute("data-theme", $storeTheme);
+      document.body.setAttribute("data-theme", $storeTheme);
   }
 
   page.subscribe((path) => {
