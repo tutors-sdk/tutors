@@ -2,7 +2,7 @@ import { writable, type Writable } from "svelte/store";
 import type { Lo, WeekType } from "../types/lo-types";
 import type { StudentLoEvent } from "../types/metrics-types";
 import type { User } from "../types/auth-types";
-// import { localStorageStore } from "@skeletonlabs/skeleton";
+import { localStorageStore } from "@skeletonlabs/skeleton";
 import type { Course } from "../models/course";
 
 const weekType: WeekType = {
@@ -22,7 +22,8 @@ export const currentUser: Writable<User> = writable();
 export const portfolio = writable(false);
 export const layout = writable("");
 export const transitionKey = writable("");
-export const storeTheme: Writable<string> = writable("tutors"); //localStorageStore("storeTheme", "tutors");
+export const storeTheme = localStorageStore("storeTheme", "tutors");
+export const storePreview = localStorageStore("storePreview", false);
 export const authenticating: Writable<boolean> = writable(false);
 
 const students: StudentLoEvent[] = [];

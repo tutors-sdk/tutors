@@ -7,7 +7,7 @@
   "svelte": "index.ts",
   "devDependencies": {
     "svrollbar": "^0.12.0",
-    "@skeletonlabs/skeleton": "^0.92.0",
+    "@skeletonlabs/skeleton": "^0.92.2",
     "svelte-inview": "^3.0.1",
     "@iconify/svelte": "^3.0.1",
     "@iconify/types": "^2.0.0",
