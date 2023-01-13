@@ -31,7 +31,7 @@
   }
 
   onMount(async () => {
-    presenceService.startListening("live", update);
+    // presenceService.startListening("live", update);
   });
 </script>
 
