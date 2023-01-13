@@ -32,8 +32,7 @@
 </script>
 
 <svelte:head>
-  <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css" />
-  <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css" />
 </svelte:head>
 
 <NavBar title="{data.course.lo.title}" subTitle="{$currentUser?.name}" />
