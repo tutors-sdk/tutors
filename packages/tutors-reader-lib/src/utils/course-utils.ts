@@ -37,7 +37,7 @@ export async function getCourseSummary(courseId: string): Promise<CourseSummary>
     title: lo.title,
     img: lo.img.replace("{{COURSEURL}}", `${courseId}.netlify.app`),
     icon: lo.properties?.icon,
-    route: `https://reader.tutors.dev//#/course/${courseId}.netlify.app`,
+    route: `https://reader.tutors.dev/course/${courseId}.netlify.app`,
     visits: 0,
     count: 0,
     isPrivate: lo.properties?.private,
