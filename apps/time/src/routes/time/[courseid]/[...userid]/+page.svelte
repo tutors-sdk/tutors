@@ -38,7 +38,7 @@
 
 <NavBar title="{data.course.lo.title}" subTitle="{$currentUser?.name}" />
 
-<div in:fade="{{ duration: 500 }}" class="bg-base-200 mt-4 ">
+<div in:fade="{{ duration: 500 }}" class="bg-base-200 mt-3 ">
   <TabGroup selected="{storeTab}">
     <Tab value="Labs">Labs</Tab>
     <Tab value="LabsChart">Labs Chart</Tab>
