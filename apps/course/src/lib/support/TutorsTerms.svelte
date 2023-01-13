@@ -30,7 +30,7 @@
           <a target="_blank" rel="noopener noreferrer" href="https://github.com/tutors-sdk/tutors-faqs/blob/main/tutors-time-faq.md"> Tutors Time FAQ </a>
         </li>
         <li>
-          <a target="_blank" rel="noopener noreferrer" href="https://github.com/tutors-sdk/tutors/blob/main/sites/tutors-time-reader/tutors-time-faq.md">Tutors Live FAQ </a>
+          <a target="_blank" rel="noopener noreferrer" href="https://github.com/tutors-sdk/tutors-faqs/blob/main/tutors-live-faq.md">Tutors Live FAQ </a>
         </li>
       </ul>
       <p class="p-2">
