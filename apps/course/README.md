@@ -6,11 +6,11 @@ Part of the [Tutors SDK](https://github.com/tutors-sdk) project, tutors-next is 
 
 The reader is intended for educational content, some representative examples:
 
-- <https://wit-hdip-comp-sci.github.io>
-- <https://oth-mobile-app-dev-2019.netlify.app>
-- <https://wit-msc-agile-2019.netlify.app>
-- <https://classic-design-patterns.netlify.app>
-- <https://wit-hdip-comp-sci-2019.netlify.app>
+- <https://reader.tutors.dev/course/wit-hdip-comp-sci-showcase>
+- <https://reader.tutors.dev/course/full-stack-web-dev-oth-2022>
+- <https://reader.tutors.dev/course/agile-dev-2021>
+- <https://tutors-svelte.netlify.app/course/classic-design-patterns>
+- <https://tutors-svelte.netlify.app/course/wit-hdip-comp-sci-2019>
 
 Documentation for the Tutors SDK can be found at the [Tutors Docs](http://tutors-docs.netlify.app/) website.
 
