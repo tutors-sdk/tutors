@@ -1,8 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import "@skeletonlabs/skeleton/styles/all.css";
-  import "@skeletonlabs/skeleton/themes/theme-skeleton.css";
-  import "../app.postcss";
   import tutors from "tutors-ui/lib/themes/tutors.css?inline";
   import dyslexia from "tutors-ui/lib/themes/dyslexia.css?inline";
   import { AppShell } from "@skeletonlabs/skeleton";
