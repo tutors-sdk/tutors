@@ -16,16 +16,30 @@
 			</p>
 			<div class="space-x-4 space-y-4">
 				<a
-					class="btn btn-xl bg-primary-500 text-white font-bold hover:scale-105 transition-all"
+					class="btn btn-xl bg-primary-500 text-white font-bold hover:scale-105 transition-all w-64"
 					href="https://reader.tutors.dev/course/full-stack-web-dev-oth-2022"
 					target="_blank"
 					rel="noreferrer">View Demo</a
 				>
 				<a
-					class="btn btn-xl bg-surface-100-800-token font-bold hover:scale-105 transition-all"
+					class="btn btn-xl bg-surface-100-800-token font-bold hover:scale-105 transition-all w-64"
 					href="https://reader.tutors.dev/course/tutors-docs"
 					target="_blank"
 					rel="noreferrer">Documentation</a
+				>
+			</div>
+			<div class="space-x-4 space-y-4">
+				<a
+					class="btn btn-xl bg-surface-100-800-token font-bold hover:scale-105 transition-all w-64"
+					href="https://time.tutors.dev/catalogue"
+					target="_blank"
+					rel="noreferrer">Catalogue</a
+				>
+				<a
+					class="btn btn-xl bg-primary-500 text-white font-bold hover:scale-105 transition-all w-64"
+					href="https://time.tutors.dev/live"
+					target="_blank"
+					rel="noreferrer">Live</a
 				>
 			</div>
 		</div>
