@@ -50,6 +50,8 @@ export const authService = {
         }
         toLocalStorage(user);
         const url = localStorage.getItem("course_url");
+        const courseId = url.replace(".netlify.app", "");
+        analyticsService.updateLogin(courseId, user);
         user.userId = encrypt(user.email);
         setSession(authResult);
         success(url);

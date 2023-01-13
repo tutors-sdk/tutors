@@ -31,7 +31,7 @@
 </script>
 
 <svelte:head>
-  <script
+  <!-- <script
     src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.4/katex.min.js"
     integrity="sha512-DAZH0Wu7q9Hnm0Fw8tRZsTeQBzIugiUy6k2r7E0KKMlC2nBvvrNSH/LVnGueCXRfDs5epP+Ieoh3L+VzSKi0Aw=="
     crossorigin="anonymous"
@@ -43,7 +43,7 @@
     integrity="sha512-nii0D5CrWiLjtPcfU3pQJifaRLxKKVut/hbsazsodCcIOERZbwLH7dQxzOKy3Ey/Fv8fXCA9+Rf+wQzqklbEJQ=="
     crossorigin="anonymous"
     referrerpolicy="no-referrer"
-  />
+  /> -->
 </svelte:head>
 
 <div class="flex w-full lg:w-10/12 2xl:w-3/4 mx-auto">
