@@ -49,6 +49,7 @@ export const authService = {
           console.log("Error loading the Profile", err);
         }
         toLocalStorage(user);
+        analyticsService.updateLogin(user);
         const url = localStorage.getItem("course_url");
         user.userId = encrypt(user.email);
         setSession(authResult);
