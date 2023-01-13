@@ -47,10 +47,13 @@
       <li class="crumb"><a href="/{$currentCourse.lo.properties?.parent}" class="!space-x-[-1rem] lg:!space-x-0">
         <Icon type="programHome" />
       </a></li>
-    {/if}
-    {#each crumbs($currentLo, []) as lo, i}
 
 	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
+    {/if}
+    {#each crumbs($currentLo, []) as lo, i}
+    {#if i >= 1}
+	<li class="crumb-separator" aria-hidden>&rsaquo;</li>
+  {/if}
     <li class="crumb">
       <a href="{lo.route}{getUnitId(lo.type, lo.id)}" class="!space-x-[-1rem] lg:!space-x-0 inline-flex">
           <span><Icon type="{lo.type}" /></span>

@@ -22,11 +22,13 @@ Tutors: An Open Learning Web Toolkit
 
 A collection of open source components & services supporting the creation of transformative learning experiences using open web standards. Some representative examples:
 
-- [Higher Diploma in Computer Science at SETU](https://reader.tutors.dev/#/course/wit-hdip-comp-sci-showcase.netlify.app)
-- [Full Stack Development](https://reader.tutors.dev/#/course/full-stack-web-dev-oth-2022.netlify.app)
-- [Classic Design Patterns](https://tutors-svelte.netlify.app/#/course/classic-design-patterns.netlify.app)
-- [Agile Software Development](https://reader.tutors.dev/#/course/agile-dev-2021.netlify.app)
-- [Technologische Fähigkeiten](https://reader.tutors.dev/#/course/zusatzstudium-digital-skills-semester1.netlify.app)
+- [Higher Diploma in Computer Science Portal](https://reader.tutors.dev/course/wit-hdip-comp-sci-showcase)
+- [Full Stack Development](https://reader.tutors.dev/course/full-stack-web-dev-oth-2022)
+- [Reference Course](https://reader.tutors.dev/course/tutors-reference)
+- [Higher Diploma in Computer Science at SETU: 2020-2022](https://reader.tutors.dev/course/wit-hdip-comp-sci-2020)
+- [Classic Design Patterns](https://tutors-svelte.netlify.app/course/classic-design-patterns)
+- [Agile Software Development](https://reader.tutors.dev/course/agile-dev-2021)
+- [Technologische Fähigkeiten](https://reader.tutors.dev/course/zusatzstudium-digital-skills-semester1)
 
 # Getting Started
 
@@ -55,64 +57,66 @@ Cached:   0 cached, 6 total
 Change directory into sites/tutors-course-reader
 
 ```bash
-cd sites/tutors-course-reader
+cd apps/course
 ```
 
 and copy the file `.env.example` to `.env`
 
 ```bash
-cp .\.env.example .env
-```
-
-Now navigate back to the root folder for the project:
-
-```bash
-cd ../../
+cp .env.example .env
 ```
 
 Now to start our reader with this command:
 
 ```bash
-npm run reader
+npm run dev
 ```
 
 You should see an output similar to below:
 
 ```bash
-> tutors@6.1.0 reader
-> turbo run dev --filter tutors-course-reader
+> tutors-course@8.1.0 dev
+> vite dev --port 3000 --open
 
-• Packages in scope: tutors-course-reader
-• Running dev in 1 packages
-cache bypass, force executing 41ecfc6ec2765918
 
-> tutors-course-reader@6.0.4 dev
-> vite
 
-VITE v3.1.3  ready in 212 ms
+  VITE v4.0.4  ready in 1344 ms
 
-➜  Local:   http://localhost:5000/
-➜  Network: http://192.168.112.86:5000/
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: use --host to expose
+  ➜  press h to show help
+18:16:18 [vite-plugin-svelte] ssr compile in progress ...
+Using browser-only version of superagent in non-browser environment
+18:16:30 [vite-plugin-svelte] ssr compile done.
+package                 files    time      avg
+@skeletonlabs/skeleton     45   0.33s    7.4ms
+tutors-course              19   0.22s   11.3ms
+tutors-ui                  21   0.11s    5.4ms
+@iconify/svelte             1   8.8ms    8.8ms
 ```
 
-Now our Reader is up and running and you can browse to it by opening the <a href="http://localhost:5000/">local location</a> in your browser. You should see a holding page informing you that you are running a reader with no content.
+Now our Reader is up and running and you can browse to it by opening the <a href="http://localhost:3000/">local location</a> in your browser. You should see a holding page informing you that you are running a reader with no content.
 The reader relies on a segment of the url to locate the course to display. Any of the samples above can be 'read' with an appropriate url segments appended to the local url you now have running. So for instance:
 
 ```bash
-https://reader.tutors.dev/#/course/full-stack-web-dev-oth-2022.netlify.app
+https://reader.tutors.dev/course/tutors-reference
 ```
 
 ... can be loaded locally by:
 
 ```bash
-http://localhost:5000/#/course/full-stack-web-dev-oth-2022.netlify.app
+http://localhost:3000/course/tutors-reference
 ```
 
-(Note the port number may vary - for example 5001)
+(Note the port number may vary - for example 3000)
+
+The 'source' for the above course is here:
+
+- https://github.com/tutors-sdk/tutors-template
 
 You could try any of the other sample courses above.
 
-If you would like to build your own course then [this workshop here](https://reader.tutors.dev/#/topic/docs.tutors.dev/topic-00-WX) would be a good place to start. In particular, [this lab here](https://reader.tutors.dev/#/lab/docs.tutors.dev/topic-00-WX/unit-1-creating/book-a) will get you up and running with a sample course in a few minutes. More guidance and examples are on our [Educator documentation](https://reader.tutors.dev/#/topic/docs.tutors.dev/topic-02-EX) site. To learn more about the project, explore the core principles at https://tutors.dev/.
+If you would like to build your own course then [this workshop here](https://reader.tutors.dev/topic/tutors-docs/topic-00-WX) would be a good place to start. In particular, [this lab here](https://reader.tutors.dev/lab/tutors-docs/topic-00-WX/unit-1-creating/book-a) will get you up and running with a sample course in a few minutes. More guidance and examples are on our [Educator documentation](https://reader.tutors.dev/topic/tutors-docs/topic-02-EX) site. To learn more about the project, explore the core principles at https://tutors.dev/.
 
 If you have VSCode, you should be able to open project.
 
@@ -126,7 +130,7 @@ These are the student facing web applications for browsing a course, an applicat
 
 ### [tutors-course-reader](https://github.com/tutors-sdk/tutors/tree/main/sites/tutors-course-reader)
 
-The main tutors user experience - demonstrated in the links above. This can be built and launched via the instructions above. It is a Svelte application that renders a course in an appealing, context sensitive user experience. An [overview of the user experience is presented here](https://reader.tutors.dev/#/talk/docs.tutors.dev/topic-00-WX/unit-1-creating/talk-1/tutor-ux.pdf). This is deployed to https://reader.tutors.dev
+The main tutors user experience - demonstrated in the links above. This can be built and launched via the instructions above. It is a SvelteKit application that renders a course in an appealing, context sensitive user experience. An [overview of the user experience is presented here](https://reader.tutors.dev/talk/docs.tutors.dev/topic-00-WX/unit-1-creating/talk-1/tutor-ux.pdf). This is deployed to https://reader.tutors.dev
 
 ### [tutors-time-reader](https://github.com/tutors-sdk/tutors/tree/main/sites/tutors-time-reader)
 
