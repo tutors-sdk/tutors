@@ -94,8 +94,8 @@ export const analyticsService = {
     }
   },
 
-  updateLogin(user: User) {
-    const key = `${this.courseId}/users/${sanitise(user.email)}`;
+  updateLogin(courseId: string, user: User) {
+    const key = `${courseId}/users/${sanitise(user.email)}`;
     updateStr(`${key}/email`, user.email);
     updateStr(`${key}/name`, user.name);
     updateStr(`${key}/id`, user.userId);

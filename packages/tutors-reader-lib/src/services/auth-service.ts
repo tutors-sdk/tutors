@@ -49,8 +49,9 @@ export const authService = {
           console.log("Error loading the Profile", err);
         }
         toLocalStorage(user);
-        analyticsService.updateLogin(user);
         const url = localStorage.getItem("course_url");
+        const courseId = url.replace(".netlify.app", "");
+        analyticsService.updateLogin(courseId, user);
         user.userId = encrypt(user.email);
         setSession(authResult);
         success(url);
