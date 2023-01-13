@@ -17,7 +17,7 @@
     "@types/lodash": "^4.14.186",
     "@types/node": "^18.8.4",
     "@types/shelljs": "^0.8.11",
-    "commander": "^9.4.1",
+    "commander": "^9.5.0",
     "front-matter": "^4.0.2",
     "glob": "^8.0.3",
     "install": "^0.13.0",
