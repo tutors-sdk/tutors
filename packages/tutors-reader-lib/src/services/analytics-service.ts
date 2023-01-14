@@ -62,6 +62,9 @@ export const analyticsService = {
       this.courseId = course.url.substring(0, course.url.indexOf("."));
       const key = `${this.courseId}/users/${sanitise(user.email)}/onlineStatus`;
       status = await readValue(key);
+      if (status == null) {
+        status = "online";
+      }
     }
     return status;
   },

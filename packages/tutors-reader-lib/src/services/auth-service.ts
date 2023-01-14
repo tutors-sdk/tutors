@@ -23,6 +23,7 @@ export const authService = {
     const user = fromLocalStorage();
     user.onlineStatus = await analyticsService.getOnlineStatus(course, user);
     currentUser.set(user);
+    analyticsService.updateLogin(course.id, user);
   },
 
   async checkAuth(course: Course) {
