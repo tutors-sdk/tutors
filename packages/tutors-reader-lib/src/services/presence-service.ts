@@ -60,7 +60,7 @@ export const presenceService = {
             loImage: lo.img,
             loRoute: lo.subRoute,
             loIcon: lo.icon,
-            timeout: 2
+            timeout: 7
           };
           const studentUpdate = this.students.get(userId);
           if (!studentUpdate) {
@@ -72,7 +72,7 @@ export const presenceService = {
             studentUpdate.loImage = event.loImage;
             studentUpdate.loRoute = event.loRoute;
             studentUpdate.loIcon = event.loIcon;
-            studentUpdate.timeout = 2;
+            studentUpdate.timeout = 7;
             this.updateListeners("update", event);
           }
           studentsOnlineList.set([...this.los]);

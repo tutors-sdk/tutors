@@ -36,6 +36,6 @@
 </script>
 
 <svelte:head>
-  <title>{data.course.lo.title} Students online now ...</title>
+  <title>{data.course.lo.title} Students online now :</title>
 </svelte:head>
 <StudentCardDeck />
