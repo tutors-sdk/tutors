@@ -1,10 +1,5 @@
 import type { Topic } from "../models/topic";
 
-export interface Student {
-  name: string;
-  github: string;
-}
-
 export interface WeekType {
   title: string;
   type: string;
@@ -30,7 +25,7 @@ export interface VideoIdentifiers {
 export interface Lo {
   parentLo: Lo;
   properties: { [prop: string]: string };
-  enrollment: { students: Student[] };
+  enrollment: string[];
   calendar: any;
   version: string;
   type: string;
