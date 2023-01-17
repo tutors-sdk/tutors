@@ -45,7 +45,7 @@ export class Course extends LearningObject {
     if (fs.existsSync("enrollment.yaml")) {
       this.enrollment = readEnrollment("enrollment.yaml");
       if (this.enrollment) {
-        console.log(`Enrolment file detected with ${this.enrollment.students.length} students`);
+        console.log(`Enrolment file detected with ${this.enrollment.length} students`);
       }
     }
     if (fs.existsSync("calendar.yaml")) {
