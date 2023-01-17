@@ -28,7 +28,7 @@ const fs = __importStar(require("fs"));
 const course_1 = require("tutors-lib/src/models/course");
 const json_emitter_1 = require("./controllers/json-emitter");
 const netlify_1 = require("./controllers/netlify");
-const version = `tutors-json 2.6.2 (tutors-lib: 2.6.2)`;
+const version = `tutors-json 2.6.5 (tutors-lib: 2.6.5)`;
 if (fs.existsSync("course.md")) {
     const course = new course_1.Course();
     const folder = process.cwd() + "/json";
