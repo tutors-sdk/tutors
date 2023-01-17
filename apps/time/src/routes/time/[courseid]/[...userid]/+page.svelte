@@ -12,6 +12,7 @@
   import NavBar from "$lib/navigators/NavBar.svelte";
   import CalendarTime from "$lib/time/CalendarTime.svelte";
   import { authService } from "tutors-reader-lib/src/services/auth-service";
+  import { page } from "$app/stores";
 
   export let data: PageData;
   const storeTab: Writable<string> = writable("Labs");
@@ -44,6 +45,9 @@
     <Tab value="Calendar">Calendar</Tab>
     {#if instructorMode}
       <Tab value="allLabs">Labs All Students</Tab>
+      {#if data.course.hasEnrollment()}
+        <Tab value="allEnrolledLabs">Labs All Enrolled Students</Tab>
+      {/if}
       <Tab value="allLabsChart">Labs All Students - Chart</Tab>
       <Tab value="allCalendar">Calendar All Students</Tab>
     {/if}
@@ -59,6 +63,9 @@
   {/if}
   {#if $storeTab === "allLabs"}
     <InstructorLabTime userMap="{data.users}" allLabs="{data.allLabs}" chart="{false}" />
+  {/if}
+  {#if $storeTab === "allEnrolledLabs"}
+    <InstructorLabTime userMap="{data.enrolledUsers}" allLabs="{data.allLabs}" chart="{false}" />
   {/if}
   {#if $storeTab === "allLabsChart"}
     <InstructorLabTime userMap="{data.users}" allLabs="{data.allLabs}" chart="{true}" />

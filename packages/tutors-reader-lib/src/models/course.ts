@@ -29,7 +29,7 @@ export class Course {
     bar: []
   };
 
-  constructor(lo: Lo, courseId: string, courseUrl:string) {
+  constructor(lo: Lo, courseId: string, courseUrl: string) {
     this.id = courseId;
     this.url = courseUrl;
     injectCourseUrl(lo, courseId, courseUrl);
@@ -132,8 +132,8 @@ export class Course {
     return this.hasEnrollment() && whitelist;
   }
 
-  getStudents(): Student[] {
-    return this.lo.enrollment.students;
+  getEnrolledStudentIds(): string[] {
+    return this.lo.enrollment;
   }
 
   createCompanions() {

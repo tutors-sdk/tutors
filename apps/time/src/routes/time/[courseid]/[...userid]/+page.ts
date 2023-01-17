@@ -14,12 +14,25 @@ export const load: PageLoad = async ({ params }) => {
   const user: UserMetric = await fetchUserById(params.courseid, params.userid, allLabs);
   currentUser.set(user);
   const users: Map<string, UserMetric> = await fetchAllUsers(params.courseid, allLabs);
+  const enrolledUsers: Map<string, UserMetric> = new Map<string, UserMetric>();
+  if (course.hasEnrollment()) {
+    const students = course.getEnrolledStudentIds();
+    for (const githubId of users.keys()) {
+      if (students.includes(githubId)) {
+        const enrolledUser = users.get(githubId);
+        if (enrolledUser) {
+          enrolledUsers.set(githubId, enrolledUser);
+        }
+      }
+    }
+  }
   return {
     user: user,
     course: course,
     allLabs: course.walls.get("lab"),
     calendar: course.calendar,
     ignorePin: course.lo.properties?.ignorepin?.toString(),
-    users: users
+    users: users,
+    enrolledUsers
   };
 };

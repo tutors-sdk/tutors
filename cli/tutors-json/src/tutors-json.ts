@@ -3,7 +3,7 @@ import * as fs from "fs";
 import { Course } from "tutors-lib/src/models/course";
 import { JsonEmitter } from "./controllers/json-emitter";
 import { generateNetlifyToml } from "./controllers/netlify";
-const version = `tutors-json 2.6.2 (tutors-lib: 2.6.2)`;
+const version = `tutors-json 2.6.5 (tutors-lib: 2.6.5)`;
 
 if (fs.existsSync("course.md")) {
   const course = new Course();
