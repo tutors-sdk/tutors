@@ -1,8 +1,6 @@
 {
     "name": "Tutors Course Reader",
     "short_name": "Tutors",
-    "scope": "/",
-    "start_url": "/",
     "id": "tutors",
     "icons": [
         {
