@@ -44,11 +44,7 @@
   function updateCourseSummary(courseSummary: CourseSummary) {
     courseSummary.currentLo.route = `https://reader.tutors.dev${courseSummary.currentLo?.subRoute}`;
     courseSummary.img = courseSummary.currentLo?.img;
-    if (courseSummary.currentLo.icon) {
-      courseSummary.icon = courseSummary.currentLo.icon;
-    } else {
-      courseSummary.icon = null;
-    }
+    courseSummary.icon = courseSummary.currentLo.icon || null;
   }
 
   async function visitUpdate(courseId: string) {

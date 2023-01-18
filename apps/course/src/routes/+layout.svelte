@@ -26,34 +26,34 @@
     storeTheme.subscribe(setBodyThemeAttribute);
     setColorScheme();
     initServices();
-    const func = () => {
+    setInterval(() => {
       if (!document.hidden) {
         analyticsService.updatePageCount();
       }
-    };
-    setInterval(func, 30 * 1000);
+    }, 30 * 1000);
   });
 
-  afterNavigate((params: any) => {
-    const isNewPage: boolean = params.from && params.to && params.from.route.id !== params.to.route.id;
-    const elemPage = document.querySelector("#page");
-    if (isNewPage && elemPage !== null) {
-      elemPage.scrollTop = 0;
+  afterNavigate((params) => {
+    const isNewPage = params.from && params.to && params.from.route.id !== params.to.route.id;
+    const page = document.querySelector("#page");
+    if (isNewPage && page) {
+      page.scrollTop = 0;
     }
   });
 
   function setColorScheme() {
-    if (localStorage.getItem('storeLightSwitch') === 'true' ||
-        (!('storeLightSwitch' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = localStorage.getItem("storeLightSwitch") === "true" || (!("storeLightSwitch" in localStorage) && prefersDark);
+
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
-    else {
-        document.documentElement.classList.remove('dark');
-    }
-}
+  }
 
   function setBodyThemeAttribute(): void {
-      document.body.setAttribute("data-theme", $storeTheme);
+    document.body.setAttribute("data-theme", $storeTheme);
   }
 
   page.subscribe((path) => {

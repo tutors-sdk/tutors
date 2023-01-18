@@ -207,28 +207,28 @@ export class Course {
   }
 
   initCalendar() {
-    const calendar: Calendar = {
+    this.calendar = {
       title: "unknown",
       weeks: []
     };
-    this.calendar = calendar;
     try {
       if (this.lo.calendar) {
         const calendarObj = this.lo.calendar;
-        calendar.title = calendarObj.title;
-        for (let i = 0; i < calendarObj.weeks.length; i++) {
-          const week = {
-            date: Object.entries(calendarObj.weeks[i])[0][0],
-            title: Object.entries(calendarObj.weeks[i])[0][1].title,
-            type: Object.entries(calendarObj.weeks[i])[0][1].type,
-            dateObj: new Date(Object.entries(calendarObj.weeks[i])[0][0])
-          };
-          calendar.weeks.push(week);
+        this.calendar.title = calendarObj.title;
+        for (const week of calendarObj.weeks) {
+          const date = Object.keys(week)[0];
+          const weekDetail = week[date];
+          this.calendar.weeks.push({
+            date,
+            title: weekDetail.title,
+            type: weekDetail.type,
+            dateObj: new Date(date)
+          });
         }
         const today = Date.now();
-        for (let i = 0; i < calendar.weeks.length - 1; i++) {
-          if (today > Date.parse(calendar.weeks[i].date) && today <= Date.parse(calendar.weeks[i + 1].date)) {
-            this.currentWeek = calendar.weeks[i];
+        for (let i = 0; i < this.calendar.weeks.length - 1; i++) {
+          if (today > Date.parse(this.calendar.weeks[i].date) && today <= Date.parse(this.calendar.weeks[i + 1].date)) {
+            this.currentWeek = this.calendar.weeks[i];
           }
         }
       }
