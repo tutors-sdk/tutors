@@ -130,3 +130,21 @@ code.hljs {
     font-weight: 700;
   }
 }
+
+.copy-code {
+  padding: 3px 5px 3px 5px;
+  color: #ffffff;
+  margin-top: 4px;
+  background: #37919b;
+  border-radius: 5px;
+  float:right;
+}
+
+.copy-code:hover {
+  background: #73b2b9;
+}
+
+.prose :where(pre):not(:where([class~="not-prose"] *)) {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
