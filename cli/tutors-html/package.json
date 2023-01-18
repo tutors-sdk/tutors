@@ -29,7 +29,7 @@
     "tutors-lib": "^2.6.2"
   },
   "devDependencies": {
-    "prettier": "2.8.2",
+    "prettier": "2.8.3",
     "typescript": "^4.8.4"
   },
   "prettier": {
