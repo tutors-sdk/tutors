@@ -23,14 +23,15 @@
 
   function transformResults(results: ResultType[]) {
     results.forEach((result) => {
-      result.html = convertMd(
-        [
-          result.fenced ? `~~~${result.language}` : "",
-          result.contentMd,
-          result.fenced ? "~~~" : ""
-        ].join("\n"),
-        course.url
-      );
+      let resultStrs: string[] = [];
+      if (result.fenced) {
+        resultStrs.push(`~~~${result.language}`);
+      }
+      resultStrs.push(result.contentMd);
+      if (result.fenced) {
+        resultStrs.push("~~~");
+      }
+      result.html = convertMd(resultStrs.join("\n"), course.url);
       result.link = `https://reader.tutors.dev/${result.link}`;
     });
   }
