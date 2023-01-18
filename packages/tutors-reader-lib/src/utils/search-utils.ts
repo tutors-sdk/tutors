@@ -57,8 +57,6 @@ export function searchHits(los: Lo[], searchTerm: string): ResultType[] {
         html: ""
       };
       result.link = result.link.substring(1);
-      // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-      result.link = "#/" + result.link;
       results.push(result);
     }
   });
