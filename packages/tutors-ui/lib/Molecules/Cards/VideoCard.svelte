@@ -66,9 +66,9 @@
       </div>
     {:else}
       {#if firefox}
-        <iframe title="{lo.title}" class="relative mx-auto aspect-video w-5/6" src="https://www.youtube.com/embed/{defaultId}" allow="encrypted-media" allowfullscreen></iframe>
+        <iframe title="{lo.title}" class="relative mx-auto aspect-video w-5/6 xl:w-2/3" src="https://www.youtube.com/embed/{defaultId}" allow="encrypted-media" allowfullscreen></iframe>
       {:else}
-        <div class="relative mx-auto aspect-video w-5/6" style="padding-top: 40%;">
+        <div class="relative mx-auto aspect-video w-5/6 xl:w-2/3" style="padding-top: 40%;">
           <iframe title="{lo.title}" class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/{defaultId}" allow="encrypted-media" allowfullscreen></iframe>
         </div>
       {/if}
