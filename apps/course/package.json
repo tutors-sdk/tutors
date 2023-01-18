@@ -15,7 +15,7 @@
     "@bobthered/tailwindcss-palette-generator": "^3.1.1",
     "@skeletonlabs/skeleton": "^0.92.2",
     "@sveltejs/adapter-auto": "latest",
-    "@sveltejs/adapter-netlify": "^1.0.0",
+    "@sveltejs/adapter-netlify": "^1.0.3",
     "@sveltejs/kit": "latest",
     "@types/auth0-js": "^9.14.7",
     "auth0-js": "^9.20.0",
