@@ -19,7 +19,7 @@
     "@types/shelljs": "^0.8.11",
     "commander": "^9.5.0",
     "front-matter": "^4.0.2",
-    "glob": "^8.0.3",
+    "glob": "^8.1.0",
     "install": "^0.13.0",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
