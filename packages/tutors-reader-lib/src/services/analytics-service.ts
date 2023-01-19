@@ -78,7 +78,9 @@ export const analyticsService = {
     updateCount(course.id);
     if (user) {
       updateCount(`all-course-access/${course.id}`);
-      updateLo(`all-course-access/${course.id}`, course, lo);
+      if (user.onlineStatus === "online") {
+        updateLo(`all-course-access/${course.id}`, course, lo);
+      }
       const key = `${course.id}/users/${sanitise(user.email)}/${this.loRoute}`;
       updateLastAccess(key, lo.title);
       updateCount(key);
