@@ -75,7 +75,8 @@ npm run dev
 You should see an output similar to below:
 
 ```bash
-> tutors-course@8.1.0 dev
+> tutors-course@8.2.0 dev
+
 > vite dev --port 3000 --open
 
 

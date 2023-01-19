@@ -10,6 +10,8 @@
   import { Footer } from "tutors-ui";
   import tutors from "tutors-ui/lib/themes/tutors.css?inline";
   import dyslexia from "tutors-ui/lib/themes/dyslexia.css?inline";
+  import halloween from "tutors-ui/lib/themes/halloween.css?inline";
+  import valentines from "tutors-ui/lib/themes/valentines.css?inline";
   import { authenticating, transitionKey, storeTheme, currentCourse, currentLo } from "tutors-reader-lib/src/stores/stores";
   import PageTransition from "$lib/PageTransition.svelte";
   import { getKeys } from "../environment";
@@ -19,7 +21,7 @@
   import Sidebars from "$lib/navigators/sidebars/Sidebars.svelte";
 
   let mounted = false;
-  const themes: any = { tutors, dyslexia };
+  const themes: any = { tutors, dyslexia, halloween, valentines };
 
   onMount(async () => {
     mounted = true;
