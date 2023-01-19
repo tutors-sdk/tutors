@@ -11,7 +11,7 @@
     id = data[0].sha.slice(0, 7);
     sha = data[0].sha;
   });
-  const version = "8.1.0";
+  const version = "8.2.0";
 </script>
 
 <footer class="mx-auto w-11/12 py-8">
