@@ -90,7 +90,13 @@ export const presenceService = {
     setTimeout(function () {
       canUpdate = true;
     }, 5000);
-    const statusRef = ref(this.db, `all-course-access/${course.id}/visits`);
+    let statusRef = ref(this.db, `all-course-access/${course.id}/visits`);
+    onValue(statusRef, async () => {
+      if (canUpdate) {
+        await this.visitUpdate(course.id);
+      }
+    });
+    statusRef = ref(this.db, `all-course-access/${course.id}/count`);
     onValue(statusRef, async () => {
       if (canUpdate) {
         await this.visitUpdate(course.id);

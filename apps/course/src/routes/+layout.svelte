@@ -34,32 +34,31 @@
     setInterval(func, 30 * 1000);
   });
 
+  page.subscribe((path) => {
+    if (mounted && path.params.courseid && getKeys().firebase.apiKey !== "XXX") {
+      analyticsService.learningEvent(path.params);
+    }
+  });
+
   afterNavigate((params: any) => {
+    const isNewPage: boolean = params.from && params.to && params.from.route.id !== params.to.route.id;
     const elemPage = document.querySelector("#page");
-    if (elemPage !== null) {
+    if (isNewPage && elemPage !== null) {
       elemPage.scrollTop = 0;
     }
   });
 
   function setColorScheme() {
-    if (localStorage.getItem('storeLightSwitch') === 'true' ||
-        (!('storeLightSwitch' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
+    if (localStorage.getItem("storeLightSwitch") === "true" || (!("storeLightSwitch" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
-    else {
-        document.documentElement.classList.remove('dark');
-    }
-}
-
-  function setBodyThemeAttribute(): void {
-      document.body.setAttribute("data-theme", $storeTheme);
   }
 
-  page.subscribe((path) => {
-    if (mounted && path.params.courseid && getKeys().firebase.apiKey !== "XXX") {
-      analyticsService.learningEvent(path.params, path.data);
-    }
-  });
+  function setBodyThemeAttribute(): void {
+    document.body.setAttribute("data-theme", $storeTheme);
+  }
 </script>
 
 <svelte:head>
