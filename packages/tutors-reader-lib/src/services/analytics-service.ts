@@ -89,6 +89,7 @@ export const analyticsService = {
   updatePageCount() {
     updateLastAccess(`${this.courseId}/usage/${this.loRoute}`, this.title);
     updateCount(this.courseId);
+    updateCount(`all-course-access/${this.courseId}`);
     if (user) {
       const key = `${this.courseId}/users/${sanitise(user.email)}/${this.loRoute}`;
       updateLastAccess(key, this.title);
