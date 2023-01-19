@@ -8,7 +8,7 @@
   "devDependencies": {
     "svrollbar": "^0.12.0",
     "@skeletonlabs/skeleton": "^0.92.2",
-    "svelte-inview": "^3.0.1",
+    "svelte-inview": "^3.0.2",
     "@iconify/svelte": "^3.0.1",
     "@iconify/types": "^2.0.0",
     "tailwindcss": "^3.2.4",
