@@ -22,6 +22,7 @@
 
   let mounted = false;
   const themes: any = { tutors, dyslexia, halloween, valentines };
+  let currentRoute = "";
 
   onMount(async () => {
     mounted = true;
@@ -29,7 +30,7 @@
     setColorScheme();
     initServices();
     const func = () => {
-      if (!document.hidden) {
+      if (!document.hidden && !currentRoute?.startsWith("/live")) {
         analyticsService.updatePageCount();
       }
     };
@@ -37,6 +38,9 @@
   });
 
   page.subscribe((path) => {
+    if (path.route.id) {
+      currentRoute = path.route.id;
+    }
     if (mounted && path.params.courseid && getKeys().firebase.apiKey !== "XXX") {
       analyticsService.learningEvent(path.params);
     }
