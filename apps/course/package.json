@@ -20,6 +20,7 @@
     "@types/auth0-js": "^9.14.7",
     "auth0-js": "^9.20.0",
     "autoprefixer": "^10.4.13",
+    "buffer": "^6.0.3",
     "eslint-config-custom": "*",
     "moment": "^2.29.4",
     "postcss": "^8.4.20",
