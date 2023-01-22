@@ -36,12 +36,12 @@
   });
 
   const manifest = {"name":"Tutors Course Reader","short_name":"Tutors","id":"tutors","icons":[{"src":"icons/icon-512x512.png","sizes":"512x512","type":"image/png","purpose":"maskable any"}],"theme_color":"#37919b","background_color":"#ffffff","display":"standalone","start_url":$page.url.pathname};
-const manifestString = JSON.stringify(manifest);
+const manifestString = Buffer.from(JSON.stringify(manifest), 'utf8').toString('base64');
 </script>
 
 <svelte:head>
   {#if manifestString}
-    <link rel="manifest" href='data:application/manifest+json,{manifestString}' />
+    <link rel="manifest" href='data:application/manifest+json;base64,{manifestString}' />
   {/if}
 </svelte:head>
 
