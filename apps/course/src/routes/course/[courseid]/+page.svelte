@@ -100,12 +100,12 @@
   display: "standalone",
   start_url: $page.url.pathname
 };
-const base64 = Buffer.from(JSON.stringify(manifest), 'utf8').toString('base64');
+const manifestString = JSON.stringify(manifest);
 </script>
 
 <svelte:head>
-  {#if base64}
-    <link rel="manifest" href="data:application/manifest+json,{manifest}" />
+  {#if manifestString}
+    <link rel="manifest" href="data:application/manifest+json,{manifestString}" />
   {/if}
 </svelte:head>
 
