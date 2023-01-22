@@ -36,10 +36,10 @@
   });
 
   const manifest = {
-  name: "Tutors Course Reader",
-  short_name: "Tutors",
-  id: "tutors",
-  icons: [
+  "name": "Tutors Course Reader",
+  "short_name": "Tutors",
+  "id": "tutors",
+  "icons": [
         {
         "src": "icons/icon-512x512.png",
         "sizes": "512x512",
@@ -47,10 +47,10 @@
         "purpose": "maskable any"
         }
     ],
-  theme_color: "#37919b",
-  background_color: "#ffffff",
-  display: "standalone",
-  start_url: $page.url.pathname
+  "theme_color": "#37919b",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": $page.url.pathname
 };
 const manifestString = JSON.stringify(manifest);
 </script>
