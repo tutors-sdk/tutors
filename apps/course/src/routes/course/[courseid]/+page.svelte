@@ -5,6 +5,9 @@
   import { authService } from "tutors-reader-lib/src/services/auth-service";
   import { initFirebase } from "tutors-reader-lib/src/utils/firebase-utils";
   import { getKeys } from "../../../environment";
+  import { page } from "$app/stores";
+  import {Buffer} from 'buffer';
+
   export let data: PageData;
 
   let standardDeck = true;
@@ -20,8 +23,6 @@
     }
   }
 
-  let base64 = "";
-
   onMount(async () => {
     if (getKeys().firebase.apiKey !== "XXX") {
       initFirebase(getKeys().firebase);
@@ -32,6 +33,7 @@
         window.addEventListener("keydown", keypressInput);
       }
     }
+  });
 
   const manifest = {
   name: "Tutors Course Reader",
@@ -47,15 +49,15 @@
   theme_color: "#37919b",
   background_color: "#ffffff",
   display: "standalone",
-  start_url: window.location.href
+  start_url: $page.url.pathname
 };
-const buff = Buffer.from(JSON.stringify(manifest), 'utf-8');
-base64 = buff.toString('base64');
-  });
+const base64 = Buffer.from(JSON.stringify(manifest), 'utf-8').toString('base64');
 </script>
 
 <svelte:head>
-<link rel="manifest" href="data:application/json;base64,{base64}" />
+  {#if base64}
+    <link rel="manifest" href="data:application/json;base64,{base64}" />
+  {/if}
 </svelte:head>
 
 {#each data.course.units as unit}
