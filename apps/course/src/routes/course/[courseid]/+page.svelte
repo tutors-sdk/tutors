@@ -20,6 +20,8 @@
     }
   }
 
+  let base64 = "";
+
   onMount(async () => {
     if (getKeys().firebase.apiKey !== "XXX") {
       initFirebase(getKeys().firebase);
@@ -30,8 +32,31 @@
         window.addEventListener("keydown", keypressInput);
       }
     }
+
+  const manifest = {
+  name: "Tutors Course Reader",
+  short_name: "Tutors",
+  id: "tutors",
+  icons: [
+    {
+      src: "/android-chrome-192x192.png",
+      sizes: "192x192",
+      type: "image/png"
+    }
+  ],
+  theme_color: "#37919b",
+  background_color: "#ffffff",
+  display: "standalone",
+  start_url: window.location.href
+};
+const buff = Buffer.from(JSON.stringify(manifest), 'utf-8');
+base64 = buff.toString('base64');
   });
 </script>
+
+<svelte:head>
+<link rel="manifest" href="data:application/json;base64,{base64}" />
+</svelte:head>
 
 {#each data.course.units as unit}
   <UnitCard unit="{unit}" />
