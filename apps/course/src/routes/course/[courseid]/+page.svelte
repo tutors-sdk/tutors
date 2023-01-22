@@ -40,16 +40,11 @@
   short_name: "Tutors",
   id: "tutors",
   icons: [
-    {
-      src: "/icon.png",
-      sizes: "512x512",
-      type: "image/png"
-    },
 		{
 			src: "/maskable_icon.png",
 			sizes: "512x512",
       type: "image/png",
-			purpose: "maskable"
+			purpose: "any maskable"
 		}
   ],
   theme_color: "#37919b",
