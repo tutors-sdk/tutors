@@ -6,7 +6,7 @@
   import { initFirebase } from "tutors-reader-lib/src/utils/firebase-utils";
   import { getKeys } from "../../../environment";
   import { page } from "$app/stores";
-  import {Buffer} from 'buffer';
+  import { Buffer } from 'buffer';
 
   export let data: PageData;
 
@@ -41,10 +41,15 @@
   id: "tutors",
   icons: [
     {
-      src: "/android-chrome-192x192.png",
-      sizes: "192x192",
+      src: "/icon.png",
+      sizes: "512x512",
       type: "image/png"
-    }
+    },
+		{
+			"src": "/maskable_icon.png",
+			"sizes": "512x512",
+			"purpose": "maskable"
+		}
   ],
   theme_color: "#37919b",
   background_color: "#ffffff",
