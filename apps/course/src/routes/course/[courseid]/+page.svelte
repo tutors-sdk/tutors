@@ -105,7 +105,7 @@ const base64 = Buffer.from(JSON.stringify(manifest), 'utf-8').toString('base64')
 
 <svelte:head>
   {#if base64}
-    <link rel="manifest" href="data:application/json;base64,{base64}" />
+    <link rel="manifest" href="data:application/manifest+json;base64,{base64}" />
   {/if}
 </svelte:head>
 
