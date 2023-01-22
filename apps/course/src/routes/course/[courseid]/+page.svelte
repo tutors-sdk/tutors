@@ -35,7 +35,7 @@
     }
   });
 
-  const manifest = {"name":"Tutors Course Reader","short_name":"Tutors","id":"tutors","icons":[{"src":"icons/icon-512x512.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"icons/icon-512x512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}],"theme_color":"#37919b","background_color":"#ffffff","display":"standalone","start_url":$page.url.pathname};
+  const manifest = {"name":"Tutors Course Reader","short_name":"Tutors","id":"tutors","icons":[{"src":"icons/icon.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"icons/icon.png","sizes":"512x512","type":"image/png","purpose":"maskable"}],"theme_color":"#37919b","background_color":"#ffffff","display":"standalone","start_url":$page.url.pathname};
 const manifestString = Buffer.from(JSON.stringify(manifest), 'utf8').toString('base64');
 </script>
 
