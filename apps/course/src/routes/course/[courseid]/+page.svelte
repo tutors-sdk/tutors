@@ -46,9 +46,10 @@
       type: "image/png"
     },
 		{
-			"src": "/maskable_icon.png",
-			"sizes": "512x512",
-			"purpose": "maskable"
+			src: "/maskable_icon.png",
+			sizes: "512x512",
+      type: "image/png",
+			purpose: "maskable"
 		}
   ],
   theme_color: "#37919b",
