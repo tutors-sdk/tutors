@@ -29,10 +29,10 @@
   const unsubscribe = layout.subscribe((layout) => {
     if (layout === "compacted") {
       headingText = "!text-md font-medium";
-      cardWidths = "w-36 h-[21rem]";
+      cardWidths = "w-36 h-[18rem]";
     } else {
       headingText = "!text-lg font-semibold";
-      cardWidths = "w-60 h-[25rem]";
+      cardWidths = "w-60 h-[24rem]";
     }
   });
 
