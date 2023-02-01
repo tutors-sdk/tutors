@@ -33,14 +33,15 @@
   </svelte:fragment>
   {#if $currentCourse?.currentWeek}
     <div class="hidden w-full lg:flex">
-      <button class="mx-auto inline-flex rounded-lg bg-surface-200-700-token p-2 border-[1px] border-surface-300-600-token"  on:click="{calendarDrawerOpen}">
-        <div class="my-auto pl-2 pr-4">
+      <button class="mx-auto inline-flex rounded-lg variant-ghost-surface p-2"  on:click="{calendarDrawerOpen}">
+        <span class="my-auto pl-2 pr-4">
           <Icon type="calendar" />
-          <span class="divider-vertical h-10 hidden lg:block" />
-        <div class="px-2">
-          <div class="pt-1 text-sm">Current Week</div>
-          <div class="text-l pb-1 font-bold">{$currentCourse.currentWeek.title}</div>
-        </div>
+        </span>
+          <span class="divider-vertical h-12 hidden lg:flex my-auto" />
+        <span class="px-2">
+          <span class="pt-1 text-sm">Current Week</span><br />
+          <span class="text-lg pb-1 font-bold">{$currentCourse.currentWeek.title}</span>
+        </span>
       </button>
     </div>
   {/if}
