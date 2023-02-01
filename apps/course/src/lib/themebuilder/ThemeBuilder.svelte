@@ -14,19 +14,19 @@
 // Stores
 const storeThemGenForm: Writable<FormTheme> = localStorageStore('storeThemGenForm', {
 		colors: [
-			{ key: 'primary', label: 'Primary', hex: '#0FBA81', rgb: '0 0 0', on: '0 0 0' },
-			{ key: 'secondary', label: 'Secondary', hex: '#4F46E5', rgb: '0 0 0', on: '255 255 255' },
-			{ key: 'tertiary', label: 'Tertiary', hex: '#0EA5E9', rgb: '0 0 0', on: '0 0 0' },
-			{ key: 'success', label: 'Success', hex: '#84cc16', rgb: '0 0 0', on: '0 0 0' },
-			{ key: 'warning', label: 'Warning', hex: '#EAB308', rgb: '0 0 0', on: '0 0 0' },
-			{ key: 'error', label: 'Error', hex: '#D41976', rgb: '0 0 0', on: '255 255 255' },
-			{ key: 'surface', label: 'Surface', hex: '#495a8f', rgb: '0 0 0', on: '255 255 255' }
+			{ key: 'primary', label: 'Primary', hex: '#37919b', rgb: '0 0 0', on: '0 0 0' },
+			{ key: 'secondary', label: 'Secondary', hex: '#3dae81', rgb: '0 0 0', on: '255 255 255' },
+			{ key: 'tertiary', label: 'Tertiary', hex: '#e2ac08', rgb: '0 0 0', on: '0 0 0' },
+			{ key: 'success', label: 'Success', hex: '#3dae81', rgb: '0 0 0', on: '0 0 0' },
+			{ key: 'warning', label: 'Warning', hex: '#e2ac08', rgb: '0 0 0', on: '0 0 0' },
+			{ key: 'error', label: 'Error', hex: '#de0d30', rgb: '0 0 0', on: '255 255 255' },
+			{ key: 'surface', label: 'Surface', hex: '#2a2e37', rgb: '0 0 0', on: '255 255 255' }
 		],
 		fontBase: 'system',
 		fontHeadings: 'system',
 		textColorLight: '0 0 0',
 		textColorDark: '255 255 255',
-		roundedBase: '9999px',
+		roundedBase: '8px',
 		roundedContainer: '8px',
 		borderBase: '1px'
 	});
