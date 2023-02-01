@@ -10,7 +10,7 @@
 				An <GradientHeading class="font-bold !text-6xl inline-block">Open Learning</GradientHeading>
 				Web Toolkit
 			</h1>
-			<p class="font-bold !text-xl my-4">
+			<p class="font-bold !text-lg my-4">
 				A collection of open source components & services supporting the creation of transformative
 				learning experiences using open web standards.
 			</p>
@@ -146,7 +146,7 @@
 					>Open Source</GradientHeading
 				> project
 			</h1>
-			<p class="font-bold !text-xl my-4">
+			<p class="font-bold !text-lg my-4">
 				Tutors is an open source project available for free under the MIT license on GitHub. It
 				exists due to the hard work and dedication of all individuals who have contributed to
 				project.

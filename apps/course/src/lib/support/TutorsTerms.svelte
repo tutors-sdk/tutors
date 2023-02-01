@@ -13,7 +13,7 @@
 <div class="flex min-h-screen items-center justify-center overflow-auto bg-surface-600">
   <div class="card m-8 flex w-11/12 flex-wrap justify-items-center p-4 shadow-xl lg:w-2/3">
     <div class="flex w-full justify-between border-b-2 border-surface-300 p-2">
-      <div class="font-sm text-center text-xl font-light">TutorsTime</div>
+      <div class="font-sm text-center text-lg font-light">TutorsTime</div>
     </div>
 
     <div class="font-sm text-l p-2 text-left font-light">
