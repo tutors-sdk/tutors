@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Metric } from "tutors-ui";
-  import { AppBar, Divider } from "@skeletonlabs/skeleton";
+  import { AppBar } from "@skeletonlabs/skeleton";
   import TutorsIcon from "./TutorsIcon.svelte";
   import NavTimeUser from "./NavTimeUser.svelte";
   import LayoutMenu from "./LayoutMenu.svelte";
@@ -37,7 +37,7 @@
   <svelte:fragment slot="trail">
     <div class="flex items-center space-x-1 lg:space-x-4">
       <LayoutMenu />
-      <Divider vertical="{true}" borderWidth="border-l" class="hidden lg:block" />
+      <span class="divider-vertical h-10 hidden lg:block" />
       <NavTimeUser />
     </div>
   </svelte:fragment>

@@ -3,7 +3,7 @@
   import type { User } from "tutors-reader-lib/src/types/auth-types";
   import type { Course } from "tutors-reader-lib/src/models/course";
   import { analyticsService } from "tutors-reader-lib/src/services/analytics-service";
-  import { menu, Avatar, Divider, drawerStore, type DrawerSettings } from "@skeletonlabs/skeleton";
+  import { menu, Avatar, drawerStore, type DrawerSettings } from "@skeletonlabs/skeleton";
   import { Icon } from "tutors-ui";
 
   let user: User;
@@ -49,7 +49,7 @@
     <button class="btn btn-sm space-x-1" use:menu="{{ menu: 'avatar', interactive: true }}">
       <div class="relative inline-block">
         {#if status && studentsOnline}
-          <span class="badge-icon badge-filled-error absolute -top-2 -right-2 z-10 text-white">{$studentsOnline}</span>
+          <span class="badge-icon variant-filled-error absolute -top-2 -right-2 z-10 text-white">{$studentsOnline}</span>
         {/if}
         <span class="badge-icon absolute -bottom-2 -right-2 z-10 text-white">
           {#if status}
@@ -65,7 +65,7 @@
     <nav class="list-nav card card-body w-56 p-4 space-y-4 shadow-lg" data-menu="avatar">
       <span class="mt-2 ml-4 text-xs">Logged in as:</span><br />
       <span class="ml-4 text-sm">{$currentUser.name}</span>
-      <Divider />
+      <hr />
       <ul>
         <li class="flex">
           <!-- svelte-ignore a11y-missing-attribute -->
@@ -93,7 +93,7 @@
           </li>
         {/if}
       </ul>
-      <Divider />
+      <hr />
       <ul>
         {#if status}
           <li>

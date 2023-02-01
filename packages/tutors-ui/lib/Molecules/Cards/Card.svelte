@@ -28,10 +28,10 @@
 
   const unsubscribe = layout.subscribe((layout) => {
     if (layout === "compacted") {
-      headingText = "text-md font-medium";
+      headingText = "!text-md font-medium";
       cardWidths = "w-36 h-[21rem]";
     } else {
-      headingText = "text-lg font-semibold";
+      headingText = "!text-lg font-semibold";
       cardWidths = "w-60 h-[25rem]";
     }
   });
@@ -60,7 +60,7 @@
       </figure>
     </div>
     <footer class="card-footer">
-      <div class="prose dark:prose-invert line-clamp-3 text-center">
+      <div class="prose dark:prose-invert line-clamp-3 text-center leading-6">
         {@html lo.summary}
       </div>
     </footer>

@@ -215,14 +215,14 @@
 			<hr class="opacity-50" />
 			<!-- Badges -->
 			<div class="grid grid-cols-4 gap-4 place-items-center">
-				<span class="badge badge-filled-surface">surface</span>
-				<span class="badge badge-filled-primary">primary</span>
-				<span class="badge badge-filled-secondary">secondary</span>
-				<span class="badge badge-filled-tertiary">tertiary</span>
+				<span class="badge variant-filled-surface">surface</span>
+				<span class="badge variant-filled-primary">primary</span>
+				<span class="badge variant-filled-secondary">secondary</span>
+				<span class="badge variant-filled-tertiary">tertiary</span>
 				<span class="badge badge-glass">glass</span>
-				<span class="badge badge-filled-success">success</span>
-				<span class="badge badge-filled-warning">warning</span>
-				<span class="badge badge-filled-error">error</span>
+				<span class="badge variant-filled-success">success</span>
+				<span class="badge variant-filled-warning">warning</span>
+				<span class="badge variant-filled-error">error</span>
 			</div>
 			<hr class="opacity-50" />
 			<!-- Slide Toggles -->
