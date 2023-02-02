@@ -90,7 +90,6 @@
       {#if isHalloween}
       <li
         class="option !p-0"
-        class:!bg-primary-500="{$storeTheme === 'halloween'}"
         on:click="{() => {
           storeTheme.set('halloween');
         }}"
@@ -103,7 +102,7 @@
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       {#if isValentines}
       <li
-        class="option"
+        class="option !p-0"
         on:click="{() => {
           storeTheme.set('valentines');
         }}"
