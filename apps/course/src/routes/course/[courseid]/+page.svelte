@@ -5,6 +5,9 @@
   import { authService } from "tutors-reader-lib/src/services/auth-service";
   import { initFirebase } from "tutors-reader-lib/src/utils/firebase-utils";
   import { getKeys } from "../../../environment";
+  import { page } from "$app/stores";
+  import { Buffer } from 'buffer';
+
   export let data: PageData;
 
   let standardDeck = true;
@@ -31,7 +34,16 @@
       }
     }
   });
+
+  const manifest = {"name":"Tutors Course Reader","short_name":"Tutors","id":"tutors","icons":[{"src":"icons/icon.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"icons/icon.png","sizes":"512x512","type":"image/png","purpose":"maskable"}],"theme_color":"#37919b","background_color":"#ffffff","display":"standalone","start_url":$page.url.pathname};
+const manifestString = Buffer.from(JSON.stringify(manifest), 'utf8').toString('base64');
 </script>
+
+<svelte:head>
+  {#if manifestString}
+    <link rel="manifest" href='data:application/manifest+json;base64,{manifestString}' />
+  {/if}
+</svelte:head>
 
 {#each data.course.units as unit}
   <UnitCard unit="{unit}" />

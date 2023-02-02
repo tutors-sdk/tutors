@@ -9,12 +9,12 @@
   const panelNotes = unit.los.filter((lo) => lo.type == "panelnote");
   const standardLos = unit.los.filter((lo) => lo.type != "panelvideo" && lo.type != "paneltalk" && lo.type != "panelnote");
 
-  let text = "text-xl font-semibold";
+  let text = "!text-xl font-semibold";
   const unsubscribe = layout.subscribe((layout) => {
     if (layout === "compacted") {
-      text = "text-lg font-semibold";
+      text = "!text-xl font-semibold";
     } else {
-      text = "text-xl font-semibold";
+      text = "!text-xl font-semibold";
     }
   });
   onDestroy(unsubscribe);

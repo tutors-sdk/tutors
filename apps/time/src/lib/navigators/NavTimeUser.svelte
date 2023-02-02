@@ -1,7 +1,7 @@
 <script lang="ts">
   import { currentCourse, currentUser } from "tutors-reader-lib/src/stores/stores";
   import { Icon } from "tutors-ui";
-  import { menu, Avatar, Divider } from "@skeletonlabs/skeleton";
+  import { menu, Avatar } from "@skeletonlabs/skeleton";
   let gitUrl = "";
 </script>
 
@@ -15,7 +15,7 @@
     <nav class="list-nav card card-body w-56 space-y-4 shadow-lg" data-menu="avatar">
       <span class="mt-2 ml-4 text-xs">Logged in as:</span><br />
       <span class="ml-4 text-sm">{$currentUser.name}</span>
-      <Divider />
+      <hr />
       <ul>
         <li>
           <a href="{gitUrl}" target="_blank" rel="noreferrer">

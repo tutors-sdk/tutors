@@ -4,7 +4,7 @@
 </script>
 
 {#if !$currentCourse?.isPortfolio() && !$portfolio}
-  <div class="z-10 flex h-12 bg-primary-100 dark:bg-primary-900">
+  <div class="z-10 flex h-12 bg-primary-50 dark:bg-primary-900">
     <Breadcrumbs />
     {#if $currentCourse}
       <div class="flex flex-auto"></div>

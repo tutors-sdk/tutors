@@ -47,11 +47,15 @@
 </svelte:head>
 
 <div class="flex w-full lg:w-10/12 2xl:w-3/4 mx-auto">
-  <div class="hidden lg:block w-1/3">
-    <ul class="card bg-surface-100-800-token py-4 m-2 rounded-xl sticky top-6">
+  <div class="hidden lg:block w-1/3 h-auto">
+  <div class="sticky h-auto card bg-surface-100-800-token py-4 m-2 rounded-xl top-6">
+    <nav class="nav-list">
+      <ul>
       {@html data.lab.navbarHtml}
     </ul>
+    </nav>
   </div>
+</div>
   <div id="lab-panel" class="w-full">
     <header class="block lg:hidden">
       <nav class="flex flex-wrap justify-between card mx-2 p-2">
@@ -59,7 +63,7 @@
       </nav>
     </header>
     <div class="card bg-surface-100-800-token p-8 lg:px-4 py-8 m-2 rounded-xl">
-      <article class="mx-auto prose dark:prose-invert max-w-full lg:max-w-[85%]">
+      <article class="mx-auto prose dark:prose-invert max-w-prose">
         {@html data.lab.content}
       </article>
     </div>

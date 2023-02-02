@@ -1,5 +1,6 @@
 {
   "task.allowAutomaticTasks": "on",
+  "editor.formatOnSave": true,
   "files.exclude": {
     "**/*.js": { "when": "$(basename).ts" },
     "**/*.js.map": true,

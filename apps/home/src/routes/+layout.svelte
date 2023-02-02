@@ -52,7 +52,7 @@
 						>
 							<div>
 								<img src="/logo.svg" />
-								<p class="font-bold !text-xl mt-4">
+								<p class="font-bold !text-lg mt-4">
 									Tutors Open Source Project
 									<br />Licensed under the
 									<a
@@ -66,7 +66,7 @@
 						</div>
 					</div>
 					<div class="space-y-4">
-						<h6 class="font-bold !text-xl">Community</h6>
+						<h6 class="font-bold !text-lg">Community</h6>
 						<ul class="space-y-2">
 							<li>
 								<a href="https://github.com/tutors-sdk/tutors" target="_blank" rel="noreferrer"
@@ -86,7 +86,7 @@
 						</ul>
 					</div>
 					<div class="space-y-4">
-						<h6 class="font-bold !text-xl">Links</h6>
+						<h6 class="font-bold !text-lg">Links</h6>
 						<ul class="space-y-2">
 							<li>
 								<a
@@ -105,7 +105,7 @@
 						</ul>
 					</div>
 					<div class="space-y-4">
-						<h6 class="font-bold !text-xl">More</h6>
+						<h6 class="font-bold !text-lg">More</h6>
 						<ul class="space-y-2">
 							<li>
 								<a href="https://www.netlify.com">
