@@ -13,6 +13,7 @@
   });
 
   export let lo: Lo;
+  export let autoplay: boolean = false;
   let heanet = false;
   let vimp = false;
   let vimpId = "";
@@ -66,11 +67,21 @@
       </div>
     {:else}
       {#if firefox}
+      {#if autoplay}
+        <iframe title="{lo.title}" class="relative mx-auto aspect-video w-3/4" src="https://www.youtube.com/embed/{defaultId}?&autoplay=1" allow="encrypted-media" allowfullscreen></iframe>
+        {:else}
         <iframe title="{lo.title}" class="relative mx-auto aspect-video w-3/4" src="https://www.youtube.com/embed/{defaultId}" allow="encrypted-media" allowfullscreen></iframe>
+        {/if}
       {:else}
+      {#if autoplay}
+        <div class="relative mx-auto aspect-video w-3/4" style="padding-top: 40%;">
+          <iframe title="{lo.title}" class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/{defaultId}?&autoplay=1" allow="encrypted-media" allowfullscreen></iframe>
+        </div>
+        {:else}
         <div class="relative mx-auto aspect-video w-3/4" style="padding-top: 40%;">
           <iframe title="{lo.title}" class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/{defaultId}" allow="encrypted-media" allowfullscreen></iframe>
         </div>
+        {/if}
       {/if}
     {/if}<br />
     <p class="text-center text-lg italic">{lo.title}</p>
