@@ -35,13 +35,15 @@
     }
   });
 
-  const manifest = {"name":"Tutors Course Reader","short_name":"Tutors","id":"tutors","icons":[{"src":"icons/icon.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"icons/icon.png","sizes":"512x512","type":"image/png","purpose":"maskable"}],"theme_color":"#37919b","background_color":"#ffffff","display":"standalone","start_url":$page.url.pathname};
+  const manifest = {"name":"Tutors Course Reader","short_name":"Tutors","id":"tutors","icons":[{"src":"https://reader.tutors.dev/icons/icon.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"https://reader.tutors.dev/icons/icon.png","sizes":"512x512","type":"image/png","purpose":"maskable"}],"theme_color":"#37919b","background_color":"#121317","display":"standalone","scope":$page.url,"start_url":$page.url};
 const manifestString = Buffer.from(JSON.stringify(manifest), 'utf8').toString('base64');
 </script>
 
 <svelte:head>
   {#if manifestString}
     <link rel="manifest" href='data:application/manifest+json;base64,{manifestString}' />
+    <meta name="theme-color" content="#37919b">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
   {/if}
 </svelte:head>
 
