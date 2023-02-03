@@ -42,6 +42,8 @@ const manifestString = Buffer.from(JSON.stringify(manifest), 'utf8').toString('b
 <svelte:head>
   {#if manifestString}
     <link rel="manifest" href='data:application/manifest+json;base64,{manifestString}' />
+    <meta name="theme-color" content="#37919b">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
   {/if}
 </svelte:head>
 
