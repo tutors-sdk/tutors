@@ -90,7 +90,9 @@ function triggerInstallToast(): void {
     }
   });
 
-  const manifest = {"name":"Tutors Course Reader","short_name":"Tutors","id":"tutors","icons":[{"src":"https://reader.tutors.dev/icons/icon.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"https://reader.tutors.dev/icons/icon.png","sizes":"512x512","type":"image/png","purpose":"maskable"}],"theme_color":"#37919b","background_color":"#121317","display":"standalone","scope":"/","start_url":$page.url};
+  const currentUrl = $page.url.toString().slice(0, $page.url.toString().indexOf("course"))
+
+  const manifest = {"name":"Tutors Course Reader","short_name":"Tutors","id":"tutors","icons":[{"src":"https://reader.tutors.dev/icons/icon.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"https://reader.tutors.dev/icons/icon.png","sizes":"512x512","type":"image/png","purpose":"maskable"}],"theme_color":"#37919b","background_color":"#121317","display":"standalone","scope":currentUrl,"start_url":$page.url};
 const manifestString = Buffer.from(JSON.stringify(manifest), 'utf8').toString('base64');
 </script>
 
