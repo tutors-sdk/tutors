@@ -7,12 +7,17 @@
   import { getKeys } from "../../../environment";
   import { page } from "$app/stores";
   import { Buffer } from 'buffer';
+  import { Toast, toastStore } from '@skeletonlabs/skeleton';
+  import type { ToastSettings } from '@skeletonlabs/skeleton';
 
   export let data: PageData;
 
   let standardDeck = true;
   let pinBuffer = "";
   let ignorePin = "";
+  let isRunning: boolean = false;
+  let isInstalled: boolean = false;
+  let deferredPrompt: any;
 
   function keypressInput(e: { key: string }) {
     pinBuffer = pinBuffer.concat(e.key);
@@ -23,6 +28,55 @@
     }
   }
 
+  window.addEventListener('beforeinstallprompt', (e: Event) => {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  if (window.matchMedia('(display-mode: standalone)' || '(display-mode: fullscreen)' || '(display-mode: minimal-ui)').matches) {
+    isRunning = true;
+  } else {
+    isRunning = false;
+  }
+
+  if ('getInstalledRelatedApps' in navigator) {
+    window.navigator.getInstalledRelatedApps().then(function(relatedApps) {
+      isInstalled = relatedApps.length > 0;
+    });
+  }
+
+  const installPWA = () => {
+    // Show the prompt
+    deferredPrompt.prompt();
+    // Wait for the user to respond to the prompt
+    deferredPrompt.userChoice.then((choiceResult: { outcome: string }) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the A2HS prompt');
+      } else {
+        console.log('User dismissed the A2HS prompt');
+      }
+      deferredPrompt = null;
+    });
+  };
+
+function triggerInstallToast(): void {
+	const t: ToastSettings = {
+		message: 'Install Tutors to your home screen for easy access',
+		// Optional: Presets for primary | secondary | tertiary | warning
+		preset: 'primary',
+		// Optional: The auto-hide settings
+		autohide: true,
+		timeout: 10000,
+		// Optional: Adds a custom action button
+		action: {
+			label: 'Install',
+			response: () => installPWA(),
+		}
+	};
+  toastStore.clear();
+	toastStore.trigger(t);
+}
+
   onMount(async () => {
     if (getKeys().firebase.apiKey !== "XXX") {
       initFirebase(getKeys().firebase);
@@ -32,6 +86,9 @@
         ignorePin = data.course.lo.properties.ignorepin.toString();
         window.addEventListener("keydown", keypressInput);
       }
+    }
+    if (!isInstalled && !isRunning) {
+      triggerInstallToast();
     }
   });
 
