@@ -16,6 +16,7 @@
   let pinBuffer = "";
   let ignorePin = "";
   let isRunning: boolean = true;
+  let isiOS: boolean = false;
   let deferredPrompt: any;
 
   function keypressInput(e: { key: string }) {
@@ -36,6 +37,10 @@
     isRunning = true;
   } else {
     isRunning = false;
+  }
+
+  if (['iPad Simulator', 'iPhone Simulator','iPod Simulator', 'iPad','iPhone','iPod'].includes(navigator.platform) || navigator.userAgent.includes("Mac") && "ontouchend" in document) {
+   isiOS = true;
   }
 
   const installPWA = () => {
@@ -80,7 +85,7 @@ function triggerInstallToast(): void {
         window.addEventListener("keydown", keypressInput);
       }
     }
-    if (!isRunning) {
+    if (!isiOS && !isRunning) {
       triggerInstallToast();
     }
   });
