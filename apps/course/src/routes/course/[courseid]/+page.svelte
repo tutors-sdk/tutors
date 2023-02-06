@@ -15,8 +15,7 @@
   let standardDeck = true;
   let pinBuffer = "";
   let ignorePin = "";
-  let isRunning: boolean = false;
-  let isInstalled: boolean = false;
+  let isRunning: boolean = true;
   let deferredPrompt: any;
 
   function keypressInput(e: { key: string }) {
@@ -37,12 +36,6 @@
     isRunning = true;
   } else {
     isRunning = false;
-  }
-
-  if ('getInstalledRelatedApps' in navigator) {
-    window.navigator.getInstalledRelatedApps().then(function(relatedApps) {
-      isInstalled = relatedApps.length > 0;
-    });
   }
 
   const installPWA = () => {
@@ -87,7 +80,7 @@ function triggerInstallToast(): void {
         window.addEventListener("keydown", keypressInput);
       }
     }
-    if (!isInstalled && !isRunning) {
+    if (!isRunning) {
       triggerInstallToast();
     }
   });
