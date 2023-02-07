@@ -16,7 +16,7 @@
   let pinBuffer = "";
   let ignorePin = "";
   let isRunning: boolean = true;
-  let isiOS: boolean = false;
+  let isMobile: boolean = false;
   let deferredPrompt: any;
 
   function keypressInput(e: { key: string }) {
@@ -39,8 +39,8 @@
     isRunning = false;
   }
 
-  if (['iPad Simulator', 'iPhone Simulator','iPod Simulator', 'iPad','iPhone','iPod'].includes(navigator.platform) || navigator.userAgent.includes("Mac") && "ontouchend" in document) {
-   isiOS = true;
+  if (['iPad Simulator', 'iPhone Simulator','iPod Simulator', 'iPad','iPhone','iPod'].includes(navigator.platform) || navigator.userAgent.includes("Mac") && "ontouchend" in document || navigator.userAgent.includes("Mobile")) {
+   isMobile = true;
   }
 
   const installPWA = () => {
@@ -59,7 +59,7 @@
 
 function triggerInstallToast(): void {
 	const t: ToastSettings = {
-		message: 'Install Tutors to your home screen for easy access',
+		message: 'Install Tutors to your computer for easy access',
 		// Optional: Presets for primary | secondary | tertiary | warning
 		preset: 'primary',
 		// Optional: The auto-hide settings
@@ -67,13 +67,18 @@ function triggerInstallToast(): void {
 		timeout: 10000,
 		// Optional: Adds a custom action button
 		action: {
-			label: 'Install',
+			label: 'Install Now',
 			response: () => installPWA(),
 		}
 	};
   toastStore.clear();
 	toastStore.trigger(t);
 }
+
+
+if (!isMobile && !isRunning) {
+      triggerInstallToast();
+    }
 
   onMount(async () => {
     if (getKeys().firebase.apiKey !== "XXX") {
@@ -84,9 +89,6 @@ function triggerInstallToast(): void {
         ignorePin = data.course.lo.properties.ignorepin.toString();
         window.addEventListener("keydown", keypressInput);
       }
-    }
-    if (!isiOS && !isRunning) {
-      triggerInstallToast();
     }
   });
 
