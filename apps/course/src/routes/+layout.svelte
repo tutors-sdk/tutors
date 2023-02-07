@@ -72,11 +72,11 @@
   <title>{$currentLo?.title}</title>
 </svelte:head>
 
-<Toast />
 <div id="app" class="h-full overflow-hidden">
   {#if $authenticating}
     <TutorsTerms />
   {:else if $currentCourse}
+    <Toast />
     <Sidebars />
     <AppShell class="h-screen">
       <svelte:fragment slot="header">
