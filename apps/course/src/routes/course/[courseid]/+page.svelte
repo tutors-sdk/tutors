@@ -75,6 +75,11 @@ function triggerInstallToast(): void {
 	toastStore.trigger(t);
 }
 
+
+if (!isiOS && !isRunning) {
+      triggerInstallToast();
+    }
+
   onMount(async () => {
     if (getKeys().firebase.apiKey !== "XXX") {
       initFirebase(getKeys().firebase);
@@ -84,9 +89,6 @@ function triggerInstallToast(): void {
         ignorePin = data.course.lo.properties.ignorepin.toString();
         window.addEventListener("keydown", keypressInput);
       }
-    }
-    if (!isiOS && !isRunning) {
-      triggerInstallToast();
     }
   });
 
