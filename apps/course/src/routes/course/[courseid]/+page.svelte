@@ -66,7 +66,7 @@ function triggerInstallToast(): void {
 			label: 'Install Now',
 			response: () => installPWA(),
 		},
-    classes: 'variant-glass-surface text-white shadow-lg'
+    classes: 'variant-glass-surface'
 	};
   toastStore.clear();
 	toastStore.trigger(t);
