@@ -76,7 +76,7 @@ function triggerInstallToast(): void {
 }
 
 
-if (!isMobile && !isRunning) {
+if (!isMobile && !isRunning && data.course.units.length > 0) {
       triggerInstallToast();
     }
 
