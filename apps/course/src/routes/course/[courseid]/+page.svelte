@@ -59,17 +59,14 @@
 
 function triggerInstallToast(): void {
 	const t: ToastSettings = {
-		message: 'Install Tutors to your computer for easy access',
-		// Optional: Presets for primary | secondary | tertiary | warning
-		preset: 'primary',
-		// Optional: The auto-hide settings
+		message: 'Install this course for easy access.',
 		autohide: true,
 		timeout: 10000,
-		// Optional: Adds a custom action button
 		action: {
 			label: 'Install Now',
 			response: () => installPWA(),
-		}
+		},
+    classes: 'variant-glass-surface text-white shadow-lg'
 	};
   toastStore.clear();
 	toastStore.trigger(t);
@@ -94,7 +91,7 @@ if (!isMobile && !isRunning && data.course.units.length > 0) {
 
   const currentUrl = $page.url.toString().slice(0, $page.url.toString().indexOf("course"))
 
-  const manifest = {"name":"Tutors Course Reader","short_name":"Tutors","id":"tutors","icons":[{"src": "https://reader.tutors.dev/icons/icon-48x48.png","sizes": "48x48","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-72x72.png","sizes": "72x72","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-96x96.png","sizes": "96x96","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-128x128.png","sizes": "128x128","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-144x144.png","sizes": "144x144","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-152x152.png","sizes": "152x152","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-192x192.png","sizes": "192x192","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-384x384.png","sizes": "384x384","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-512x512.png","sizes": "512x512","type": "image/png","purpose": "maskable any"}],"theme_color":"#37919b","background_color":"#121317","display":"standalone","scope":currentUrl,"start_url":$page.url};
+  const manifest = {"name":data.course.lo.title,"short_name":data.course.lo.title,"id":data.course.lo.title,"icons":[{"src": "https://reader.tutors.dev/icons/icon-48x48.png","sizes": "48x48","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-72x72.png","sizes": "72x72","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-96x96.png","sizes": "96x96","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-128x128.png","sizes": "128x128","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-144x144.png","sizes": "144x144","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-152x152.png","sizes": "152x152","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-192x192.png","sizes": "192x192","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-384x384.png","sizes": "384x384","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-512x512.png","sizes": "512x512","type": "image/png","purpose": "maskable any"}],"theme_color":"#37919b","background_color":"#121317","display":"standalone","scope":currentUrl,"start_url":$page.url};
 const manifestString = Buffer.from(JSON.stringify(manifest), 'utf8').toString('base64');
 </script>
 
