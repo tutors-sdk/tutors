@@ -125,8 +125,8 @@ export async function deleteCourseFromList(url: string) {
   try {
     const db = getDatabase();
     const obj = ref(db, `all-course-access/${url}`);
-    await remove(obj);
-    console.log(`deleting: ${url} as invalid`);
+    const val = await readValue(obj);
+    console.log(val);
   } catch (error: any) {
     console.log(`TutorStore Error: ${error.message}`);
   }
@@ -167,6 +167,15 @@ export async function readAllCourseIds(keys: any): Promise<string[]> {
     if (value) courseList.push(key);
   }
   return courseList;
+}
+
+export async function readVisits(courseId: string): Promise<number> {
+  try {
+    const visits = await readValue(`${courseId}/visits`);
+    return parseInt(visits);
+  } catch (error: any) {
+    console.log(`TutorStore Error: ${error.message}`);
+  }
 }
 
 export async function readAllCourseAccessIds(keys: any): Promise<any[]> {
