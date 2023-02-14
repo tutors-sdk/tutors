@@ -13,7 +13,7 @@ const config = {
       pattern: /border|text/
     }
   ],
-  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/line-clamp"), require("@skeletonlabs/skeleton/tailwind/skeleton.cjs")],
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/line-clamp"), ...require("@skeletonlabs/skeleton/tailwind/skeleton.cjs")()],
   darkMode: "class"
 };
 
