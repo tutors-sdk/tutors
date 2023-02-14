@@ -64,9 +64,9 @@
             <a href="{lo.currentLo.route}" target="_blank" rel="noreferrer">{lo.currentLo.title}</a>
           </div>
         {/if}
-        <div class="mt-2">
+        <!-- <div class="mt-2">
           <Metric value="{lo.visits}" title="Page Loads" />
-        </div>
+        </div> -->
       </div>
     </footer>
   </div>
