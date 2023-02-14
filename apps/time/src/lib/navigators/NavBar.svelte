@@ -23,7 +23,7 @@
       <div class="ml-4 flex-nowrap">
         <h2 class="mr-4 hidden text-sm font-bold sm:text-lg md:inline-block">{title}</h2>
         <!-- Badge -->
-        <div class="hidden md:block" target="_blank">
+        <div class="hidden md:block">
           <span class="text-xs">{subTitle}</span>
         </div>
       </div>
@@ -31,7 +31,7 @@
   </svelte:fragment>
   <div class="hidden md:inline-block">
     <Metric value="{modules}" title="Active Modules" />
-    <!-- <Metric value="{visits}" title="Page Loads" /> -->
+    <Metric value="{visits}" title="Page Loads" />
     <Metric value="{users}" title="Students Online" />
   </div>
   <svelte:fragment slot="trail">
