@@ -31,13 +31,13 @@
   </svelte:fragment>
   <div class="hidden md:inline-block">
     <Metric value="{modules}" title="Active Modules" />
-    <Metric value="{visits}" title="Page Loads" />
+    <!-- <Metric value="{visits}" title="Page Loads" /> -->
     <Metric value="{users}" title="Students Online" />
   </div>
   <svelte:fragment slot="trail">
     <div class="flex items-center space-x-1 lg:space-x-4">
       <LayoutMenu />
-      <span class="divider-vertical h-10 hidden lg:block" />
+      <span class="divider-vertical h-10 hidden lg:block"></span>
       <NavTimeUser />
     </div>
   </svelte:fragment>
