@@ -23,7 +23,7 @@
       <div class="ml-4 flex-nowrap">
         <h2 class="mr-4 hidden text-sm font-bold sm:text-lg md:inline-block">{title}</h2>
         <!-- Badge -->
-        <div class="hidden md:block" target="_blank">
+        <div class="hidden md:block">
           <span class="text-xs">{subTitle}</span>
         </div>
       </div>
@@ -37,7 +37,7 @@
   <svelte:fragment slot="trail">
     <div class="flex items-center space-x-1 lg:space-x-4">
       <LayoutMenu />
-      <span class="divider-vertical h-10 hidden lg:block" />
+      <span class="divider-vertical h-10 hidden lg:block"></span>
       <NavTimeUser />
     </div>
   </svelte:fragment>
