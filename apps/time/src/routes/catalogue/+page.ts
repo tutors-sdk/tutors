@@ -15,7 +15,7 @@ export const load: PageLoad = async ({ params }) => {
       deleteObj("all-course-access", course.courseId);
     });
     allCourseAccess = allCourseAccess.filter((usage) => isValidCourseName(usage.courseId));
-    allCourseAccess = allCourseAccess.filter((usage) => usage?.visits > 50);
+    allCourseAccess = allCourseAccess.filter((usage) => usage?.visits > 10);
   }
   return {
     allCourses: allCourseAccess
