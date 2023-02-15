@@ -8,9 +8,7 @@ export const load: PageLoad = async ({ params }) => {
   initFirebase(getKeys().firebase);
   const courses = await readAllCourseIds(getKeys().firebase);
   const validCourses = courses.filter((courseId) => isValidCourseName(courseId));
-  const validFilteredCourses: string[] = [];
 
-  console.log(validFilteredCourses);
   return {
     allCourses: validCourses
   };

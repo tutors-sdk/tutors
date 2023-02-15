@@ -20,12 +20,12 @@
   const unsubscribe = layout.subscribe((layout) => {
     if (layout === "compacted") {
       headingText = "!text-md font-medium";
-      cardWidths = "w-36 h-[21rem]";
+      cardWidths = "w-36 h-[13rem]";
       iconHeight = "90";
       imageHeight = "h-20";
     } else {
       headingText = "!text-lg font-semibold";
-      cardWidths = "w-60 h-[25rem]";
+      cardWidths = "w-60 h-[21rem]";
       iconHeight = "180";
       imageHeight = "h-48";
     }
