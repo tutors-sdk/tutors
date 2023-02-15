@@ -2,5 +2,6 @@
   "singleQuote": false,
   "trailingComma": "none",
   "printWidth": 180,
-  "svelteStrictMode": true
+  "svelteStrictMode": true,
+  "bracketSameLine": true
 }
