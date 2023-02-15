@@ -1,0 +1,37 @@
+{
+  "name": "tutors-time-utils",
+  "version": "0.1.1",
+  "description": "Tutors Time Utilities",
+  "main": "./src/tutors-time.js",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean & rm -f tsconfig.tsbuildinfo"
+  },
+  "author": "Eamonn de Leastar (edeleastar@setu.ie)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tutors-sdk/tutors-json.git"
+  },
+  "bin": {
+    "tutors-time": "./src/tutors-time.js"
+  },
+  "dependencies": {
+    "@types/node": "^18.8.4",
+    "@types/shelljs": "^0.8.11",
+    "axios": "^1.1.2",
+    "commander": "^9.4.1",
+    "dotenv": "^16.0.3",
+    "firebase": "^9.9.3",
+    "googleapis": "^108.0.0",
+    "shelljs": "^0.8.5"
+  },
+  "devDependencies": {
+    "prettier": "2.7.1",
+    "typescript": "^4.8.4"
+  },
+  "prettier": {
+    "singleQuote": false,
+    "printWidth": 180
+  }
+}
