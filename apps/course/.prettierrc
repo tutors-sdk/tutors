@@ -1,0 +1,7 @@
+{
+  "singleQuote": false,
+  "trailingComma": "none",
+  "printWidth": 180,
+  "svelteStrictMode": true,
+  "bracketSameLine": true
+}
