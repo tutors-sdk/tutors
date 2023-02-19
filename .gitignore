@@ -11,6 +11,9 @@
 **/cli/tutors-gen/src/**/*.js
 **/cli/tutors-gen/src/**/*.js.map
 **/cli/tutors-gen/src/**/*.d.ts
+**/cli/tutors-time/src/**/*.js
+**/cli/tutors-time/src/**/*.js.map
+**/cli/tutors-time/src/**/*.d.ts
 **/packages/tutors-lib/src/**/*.js
 **/packages/tutors-lib/src/**/*.js.map
 **/packages/tutors-lib/src/**/*.d.ts

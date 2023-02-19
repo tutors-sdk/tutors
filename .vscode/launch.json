@@ -29,6 +29,14 @@
       "cwd": "${workspaceFolder}/test/reference-course"
     },
     {
+      "name": "tutors-time",
+      "program": "${workspaceFolder}//cli/tutors-time/src/tutors-time.js",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node",
+      "cwd": "${workspaceFolder}/cli/tutors-time"
+    },
+    {
       "type": "chrome",
       "request": "attach",
       "name": "reader",

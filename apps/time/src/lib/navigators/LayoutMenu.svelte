@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { type DrawerSettings, drawerStore, LightSwitch, menu } from "@skeletonlabs/skeleton";
+  import { LightSwitch, menu } from "@skeletonlabs/skeleton";
   import { layout, storeTheme } from "tutors-reader-lib/src/stores/stores";
+
   import { Icon } from "tutors-ui";
 
   function applyInitialLayout() {
@@ -15,11 +16,6 @@
     }
   }
 
-  const themeBuilderDrawerOpen: any = () => {
-    const settings: DrawerSettings = { id: "theme", position: "right", width: "w-full md:w-3/4 lg:w-1/2" };
-    drawerStore.open(settings);
-  };
-
   applyInitialLayout();
 </script>
 
@@ -28,49 +24,47 @@
     <Icon type="dark" />
     <span class="hidden text-sm font-bold lg:block">Layout <span class="pl-2 opacity-50">▾</span></span>
   </button>
-  <nav class="list-nav card card-body px-4 pt-2 w-56 space-y-4 shadow-lg" data-menu="design">
+  <nav class="list-nav card card-body p-4 w-56 space-y-4 shadow-lg" data-menu="design">
     <h6>Toggles</h6>
-    <section class="flex justify-between">
-      <p class="text-lg">Dark Mode</p>
-      <LightSwitch origin="tr" />
-    </section>
-    <button class="w-full" on:click="{() => toggleLayout()}">
-      <section class="flex justify-between">
-        <p class="text-lg">Compact</p>
-        <div class="mr-3">
+    <ul>
+      <li class="option !p-0">
+        <button class="btn w-full flex justify-between">
+          <span class="flex-none">Dark Mode</span>
+          <LightSwitch />
+        </button>
+      </li>
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <li class="option !p-0" on:click="{() => toggleLayout()}">
+        <button class="btn w-full flex justify-between">
+          <span class="flex-none">Compact</span>
           <Icon type="{$layout}" />
-        </div>
-      </section>
-    </button>
+        </button>
+      </li>
+    </ul>
     <hr />
     <h6>Themes</h6>
-    <ul>
+    <ul class="list">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <li
-        class="option"
-        class:!bg-primary-500="{$storeTheme === 'tutors'}"
+        class="option !p-0"
         on:click="{() => {
           storeTheme.set('tutors');
-        }}"
-      >
-        <p class="text-lg">Tutors</p>
+        }}">
+        <button class="btn w-full flex justify-between" class:!variant-soft-primary="{$storeTheme === 'tutors'}">
+          <span class="flex-none">Tutors</span>
+        </button>
       </li>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <li
-        class="option"
-        class:!bg-primary-500="{$storeTheme === 'dyslexia'}"
+        class="option !p-0"
         on:click="{() => {
           storeTheme.set('dyslexia');
-        }}"
-      >
-        <p class="text-lg">Dyslexia</p>
+        }}">
+        <button class="btn w-full flex justify-between" class:!variant-soft-primary="{$storeTheme === 'dyslexia'}">
+          <span class="flex-none">Dyslexia</span>
+        </button>
       </li>
-
       <hr />
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <li class="option" on:click="{themeBuilderDrawerOpen}">
-        <p class="text-lg">Theme Builder</p>
-      </li>
     </ul>
   </nav>
 </div>
