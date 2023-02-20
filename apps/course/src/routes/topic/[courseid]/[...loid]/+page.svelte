@@ -1,10 +1,13 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import { UnitCard } from "tutors-ui";
+  import { UnitCard, VideoCard } from "tutors-ui";
   import Topic from "./topic.svelte";
   export let data: PageData;
 </script>
 
+{#each data.topic.panelVideos as lo}
+  <VideoCard lo="{lo}" />
+{/each}
 {#if data.topic.sideBar.length > 0}
   <div class="flex w-full mx-auto">
     <div class="w-full">
