@@ -3,6 +3,13 @@ import { convertMd } from "../utils/markdown-utils";
 import { removeLeadingHashes } from "../utils/lo-utils";
 import type { Course } from "./course";
 
+function truncate(input: string) {
+  if (input.length > 16) {
+    return input.substring(0, 15) + "...";
+  }
+  return input;
+}
+
 export class Lab {
   course: Course;
   lo: Lo = null;
@@ -48,14 +55,14 @@ export class Lab {
       if (encodeURI(chapter.shortTitle) == this.currentChapterShortTitle) {
         if (this.lo.los[i - 1] !== undefined) {
           const nav = this.lo.los[i - 1];
-          const title = this.chaptersTitles.get(nav.shortTitle);
+          const title = truncate(this.chaptersTitles.get(nav.shortTitle));
           this.horizontalNavbarHtml = this.horizontalNavbarHtml.concat(
             `<a class="btn btn-sm capitalize" href="${this.url}/${encodeURI(nav.shortTitle)}"> <span aria-hidden="true">&larr;</span>&nbsp; ${number}${title} </a>`
           );
         }
         if (this.lo.los[i + 1] !== undefined) {
           const nav = this.lo.los[i + 1];
-          const title = this.chaptersTitles.get(nav.shortTitle);
+          const title = truncate(this.chaptersTitles.get(nav.shortTitle));
           this.horizontalNavbarHtml = this.horizontalNavbarHtml.concat(
             `<a class="ml-auto btn btn-sm capitalize" style="margin-left: auto" href="${this.url}/${encodeURI(
               nav.shortTitle
