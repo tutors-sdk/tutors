@@ -56,12 +56,12 @@
       </nav>
     </div>
   </div>
-  <div id="lab-panel" class="w-full">
-    <header class="block lg:hidden">
-      <nav class="flex flex-wrap justify-between card mx-2 p-2">
-        {@html data.lab.horizontalNavbarHtml}
-      </nav>
-    </header>
+  <div class="block fixed w-full mx-auto bottom-0 lg:hidden bg-primary-50-900-token">
+    <nav class="flex flex-wrap justify-between p-2 z-100">
+      {@html data.lab.horizontalNavbarHtml}
+    </nav>
+  </div>
+  <div id="lab-panel" class="w-full min-h-screen">
     <div class="card bg-surface-100-800-token p-8 lg:px-4 py-8 m-2 rounded-xl">
       <article class="mx-auto prose dark:prose-invert max-w-prose">
         {@html data.lab.content}
