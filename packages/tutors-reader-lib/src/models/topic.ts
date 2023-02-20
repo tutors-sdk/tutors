@@ -43,11 +43,12 @@ export class Topic {
     this.toc.push(...this.panelTalks);
     this.toc.push(...this.units);
     this.toc.push(...this.standardLos);
+    this.toc.push(...this.sideBar);
 
     fixRoutePaths(lo);
     this.toc.forEach((lo) => {
       lo.parent = this;
-      if (lo.type === "unit") {
+      if (lo.type === "unit" || lo.type === "side") {
         lo.los.forEach((subLo) => {
           subLo.parent = this;
         });
