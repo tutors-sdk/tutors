@@ -23,6 +23,7 @@ export class Topic {
   course: Course;
   lo: Lo;
   units: Lo[];
+  sideBar: Lo[];
   panelVideos: Lo[];
   panelTalks: Lo[];
   standardLos: Lo[];
@@ -33,9 +34,10 @@ export class Topic {
     this.course = course;
 
     this.units = getSortedUnits(this.lo.los);
+    this.sideBar = this.lo.los.filter((lo) => lo.type === "side");
     this.panelVideos = lo.los.filter((lo) => lo.type == "panelvideo");
     this.panelTalks = lo.los.filter((lo) => lo.type == "paneltalk");
-    this.standardLos = lo.los.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk");
+    this.standardLos = lo.los.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "side");
 
     this.toc.push(...this.panelVideos);
     this.toc.push(...this.panelTalks);
