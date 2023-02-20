@@ -51,20 +51,21 @@ export interface LearningObject {
   hide: boolean;
 }
 
-export const loTypes = ["/note", "/book", "/archive", "/web", "/github", "/panelnote", "/paneltalk", "/panelvideo", "/talk", "/unit", "/topic"];
+export const loTypes = ["/note", "/book", "/archive", "/web", "/github", "/panelnote", "/paneltalk", "/panelvideo", "/talk", "/unit", "/side", "/topic"];
 
 export const preOrder = new Map([
   ["unit", 1],
-  ["talk", 2],
-  ["lab", 3],
-  ["note", 4],
-  ["web", 5],
-  ["github", 6],
-  ["panelnote", 7],
-  ["paneltalk", 8],
-  ["archive", 9],
-  ["panelvideo", 10],
-  ["topic", 11],
-  ["unknown", 12],
+  ["side", 2],
+  ["talk", 3],
+  ["lab", 4],
+  ["note", 5],
+  ["web", 6],
+  ["github", 7],
+  ["panelnote", 8],
+  ["paneltalk", 9],
+  ["archive", 10],
+  ["panelvideo", 11],
+  ["topic", 12],
+  ["unknown", 13],
   ["", 0],
 ]);
