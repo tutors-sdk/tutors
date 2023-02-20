@@ -67,8 +67,5 @@
         {@html data.lab.content}
       </article>
     </div>
-    <nav class="flex flex-wrap justify-between card mx-2 p-2">
-      {@html data.lab.horizontalNavbarHtml}
-    </nav>
   </div>
 </div>
