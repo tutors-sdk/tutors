@@ -14,6 +14,7 @@ export const FluentIconLib = {
   course: { icon: "fluent:notebook-24-filled", colour: "primary" },
   topic: { icon: "fluent:bookmark-24-filled", colour: "primary" },
   unit: { icon: "fluent:dual-screen-group-24-filled", colour: "success" },
+  side: { icon: "fluent:dual-screen-group-24-filled", colour: "success" },
   talk: { icon: "fluent:presenter-24-filled", colour: "primary" },
   reference: { icon: "fluent:document-copy-24-filled", colour: "warning" },
   lab: { icon: "fluent:beaker-24-filled", colour: "success" },

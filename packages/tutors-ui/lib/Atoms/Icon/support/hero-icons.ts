@@ -14,6 +14,7 @@ export const HeroIconLib = {
   course: { icon: "heroicons-outline:book-open", colour: "primary" },
   topic: { icon: "heroicons-outline:view-boards", colour: "primary" },
   unit: { icon: "heroicons-outline:collection", colour: "success" },
+  side: { icon: "heroicons-outline:collection", colour: "success" },
   talk: { icon: "heroicons-outline:presentation-chart-bar", colour: "primary" },
   reference: { icon: "heroicons-outline:document-duplicate", colour: "warning" },
   lab: { icon: "heroicons-outline:beaker", colour: "success" },

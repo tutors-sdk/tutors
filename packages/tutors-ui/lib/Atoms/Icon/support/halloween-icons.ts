@@ -14,6 +14,7 @@ export const HalloweenIconLib = {
   course: { icon: "fa-solid:book-dead", colour: "warning" },
   topic: { icon: "ph:sword-duotone", colour: "warning" },
   unit: { icon: "icon-park-outline:pumpkin", colour: "warning" },
+  side: { icon: "icon-park-outline:pumpkin", colour: "warning" },
   talk: { icon: "carbon:bat", colour: "warning" },
   reference: { icon: "emojione-monotone:skull", colour: "warning" },
   lab: { icon: "mdi:spider-thread", colour: "warning" },

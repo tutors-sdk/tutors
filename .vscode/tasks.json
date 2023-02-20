@@ -36,6 +36,17 @@
     },
     {
       "type": "typescript",
+      "tsconfig": "cli/tutors-time/tsconfig.json",
+      "option": "watch",
+      "problemMatcher": ["$tsc-watch"],
+      "group": "build",
+      "label": "tsc: watch - cli/tutors-time/tsconfig.json",
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "type": "typescript",
       "tsconfig": "packages/tutors-lib/tsconfig.json",
       "option": "watch",
       "problemMatcher": ["$tsc-watch"],

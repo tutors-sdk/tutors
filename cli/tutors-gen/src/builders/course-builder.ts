@@ -15,6 +15,9 @@ export const courseBuilder = {
       if (lo.type === "unit") {
         lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
         lo.route = lo.route.replace("/unit", "/topic");
+      } else if (lo.type === "side") {
+        lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
+        lo.route = lo.route.replace("/side", "/topic");
       }
       lr.lrs.forEach((lr) => {
         lo.los.push(this.buildLo(lr, level + 1));

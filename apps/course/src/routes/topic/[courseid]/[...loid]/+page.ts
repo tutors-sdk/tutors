@@ -7,7 +7,12 @@ export const ssr = false;
 export const load: PageLoad = async ({ params }) => {
   let topicId = params.loid;
   let unitId = "";
-  const unitPos = topicId.indexOf("/unit");
+  let unitPos = topicId.indexOf("/unit");
+  if (unitPos !== -1) {
+    unitId = topicId.slice(unitPos + 1);
+    topicId = topicId.slice(0, unitPos);
+  }
+  unitPos = topicId.indexOf("/side");
   if (unitPos !== -1) {
     unitId = topicId.slice(unitPos + 1);
     topicId = topicId.slice(0, unitPos);

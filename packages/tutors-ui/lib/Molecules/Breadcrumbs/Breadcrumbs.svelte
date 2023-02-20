@@ -6,7 +6,7 @@
   function crumbs(lo: Lo, los: Lo[]) {
     if (lo) {
       crumbs(lo.parentLo, los);
-      if (!(lo.type === "unit" && lo.parentLo.type === "course")) {
+      if (!((lo.type === "unit" || lo.type === "side") && lo.parentLo.type === "course")) {
         los.push(lo);
       }
     }
@@ -18,7 +18,7 @@
   let unitId = "";
 
   function getUnitId(type: string, id: string) {
-    if (type == "unit") {
+    if (type == "unit" || type == "side") {
       unitId = id;
     } else {
       unitId = "";
@@ -66,8 +66,7 @@
             }}"
             on:mouseleave="{() => {
               truncated[i] = true;
-            }}">{title(lo.title, truncated[i], i)}</span
-          >
+            }}">{title(lo.title, truncated[i], i)}</span>
         </a>
       </li>
     {/each}
