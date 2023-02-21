@@ -1,5 +1,6 @@
 const clientId = import.meta.env.VITE_auth0_clientId;
 const domain = import.meta.env.VITE_auth0_domain;
+const customdomain = import.meta.env.VITE_auth0_customdomain;
 const redirectUri = import.meta.env.VITE_auth0_redirectUri;
 const apiKey = import.meta.env.VITE_firebase_apiKey;
 const databaseUrl = import.meta.env.VITE_firebase_databaseUrl;
@@ -11,6 +12,7 @@ const keys = {
   auth0: {
     clientId: clientId,
     domain: domain,
+    customdomain: customdomain,
     redirectUri: redirectUri
   },
   firebase: {
