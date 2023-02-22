@@ -20,6 +20,7 @@
     "@tailwindcss/line-clamp": "^0.4.2",
     "@tailwindcss/typography": "^0.5.8",
     "@tsconfig/svelte": "^3.0.0",
+    "autoprefixer": "^10.4.13",
     "eslint-config-custom": "*",
     "file-saver": "^2.0.5",
     "pdfjs-dist": "^3.3.122",
@@ -32,8 +33,8 @@
     "svelte-preprocess": "^5.0.1",
     "svrollbar": "^0.12.0",
     "tailwindcss": "^3.2.4",
-    "typescript": "^4.9.4",
-    "tutors-reader-lib": "*"
+    "tutors-reader-lib": "*",
+    "typescript": "^4.9.4"
   },
   "scripts": {
     "storybook": "storybook dev -p 6006",
