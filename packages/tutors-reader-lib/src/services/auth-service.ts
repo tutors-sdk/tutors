@@ -10,7 +10,7 @@ export const authService = {
 
   setCredentials(credentials: any) {
     this.auth0 = new WebAuth({
-      domain: credentials.domain,
+      domain: credentials.customdomain,
       clientID: credentials.clientId,
       redirectUri: credentials.redirectUri,
       audience: `https://${credentials.domain}/userinfo`,
