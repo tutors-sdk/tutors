@@ -75,6 +75,14 @@ export function getPdf(lr: LearningResource): string {
   return pdfFile;
 }
 
+export function getUrl(lr: LearningResource): string {
+  let urlFile = getFileWithType(lr, [""]);
+  if (urlFile) {
+    urlFile = readWholeFile(urlFile);
+  }
+  return urlFile;
+}
+
 export function getVideo(lr: LearningResource, id: string): string {
   let videoId = "";
   if (id) {
