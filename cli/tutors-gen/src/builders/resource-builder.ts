@@ -1,24 +1,14 @@
 import * as fs from "fs";
 import path from "path";
-import { copyFileToFolder, findFirstMatchingString, getFileName, getFileType } from "../utils/utils";
-import { assetTypes, LearningResource, loTypes } from "./lo-types";
+import { copyFileToFolder, getFileName, getFileType } from "../utils/utils";
+import { assetTypes, LearningResource } from "./lo-types";
 
 export const resourceBuilder = {
   lr: <LearningResource>{},
   root: "",
 
-  getLoType(route: string): string {
-    let lotype = findFirstMatchingString(loTypes, route);
-    if (lotype == "book") {
-      lotype = "lab";
-    } else if (lotype == "") {
-      lotype = "unknown";
-    }
-    return lotype;
-  },
-
   build(dir: string): LearningResource {
-    const tree: LearningResource = { courseRoot: this.root, route: dir, type: this.getLoType(dir), lrs: [], files: [], id: path.basename(dir) };
+    const tree: LearningResource = { courseRoot: this.root, route: dir, type: "unknown", lrs: [], files: [], id: path.basename(dir) };
     const files = fs.readdirSync(dir);
     if (files.length > 0) {
       for (const file of files) {

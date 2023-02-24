@@ -1,6 +1,6 @@
 import { getFilesWithType, getFileWithName, getId, getImage, getLabImage, getMarkdown, getPdf, getRoute, getUrl, getVideo, readVideoIds } from "../utils/lr-utils";
 import { LabStep, LearningObject, LearningResource, preOrder } from "./lo-types";
-import { readWholeFile, readYamlFile, writeFile } from "../utils/utils";
+import { getLoType, readWholeFile, readYamlFile, writeFile } from "../utils/utils";
 import fm from "front-matter";
 
 export const courseBuilder = {
@@ -19,8 +19,8 @@ export const courseBuilder = {
           break;
         case "unit":
           lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
-        lo.route = lo.route.replace("/unit", "/topic");
-        break;
+          lo.route = lo.route.replace("/unit", "/topic");
+          break;
         case "side":
           lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
           lo.route = lo.route.replace("/side", "/topic");
@@ -40,11 +40,14 @@ export const courseBuilder = {
   },
 
   buildDefaultLo(lr: LearningResource): LearningObject {
+    let route = getRoute(lr);
+    const type = getLoType(route);
+    route = route.replace("{{LOTYPE}}", type);
     const [title, summary, contentMd, frontMatter] = getMarkdown(lr);
     const videoids = readVideoIds(lr);
     const lo: LearningObject = {
-      route: getRoute(lr),
-      type: lr.type,
+      route: route,
+      type: type,
       title: title,
       summary: summary,
       contentMd: contentMd,

@@ -19,7 +19,7 @@ export function getFileWithName(lr: LearningResource, file: string) {
 }
 
 export function getRoute(lr: LearningResource): string {
-  return `/${lr.type}/{{COURSEURL}}${lr.route.replace(lr.courseRoot, "")}`;
+  return `/{{LOTYPE}}/{{COURSEURL}}${lr.route.replace(lr.courseRoot, "")}`;
 }
 
 export function getFileWithType(lr: LearningResource, types: string[]): string {
