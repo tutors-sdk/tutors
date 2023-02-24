@@ -11,7 +11,7 @@ export function writeFile(folder: string, filename: string, contents: string): v
 
 export function findFirstMatchingString(strings: string[], search: string): string {
   for (const str of strings) {
-    if (search.includes(str)) {
+    if (search.lastIndexOf(str) > 0) {
       return str.slice(1);
     }
   }
