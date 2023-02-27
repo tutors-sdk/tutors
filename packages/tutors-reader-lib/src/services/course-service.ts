@@ -13,10 +13,12 @@ export const courseService = {
     let course = this.courses.get(courseId);
     let courseUrl = courseId;
     if (!course) {
-      if (!courseId.includes(".netlify.app") && !courseId.includes(".tutors.dev")) {
-        courseUrl = `${courseId}.netlify.app`;
+      let urlCheck = courseId.split(".");
+      if (urlCheck.length > 2) {
+        let subdomain = urlCheck.slice(0, -2).join(".");
+        courseUrl = `${subdomain}.${urlCheck.slice(-2).join(".")}`;
       } else {
-        courseId = courseId.split(".")[0];
+        courseUrl = `${courseId}.netlify.app`;
       }
       try {
         const response = await fetch(`https://${courseUrl}/tutors.json`);
