@@ -35,7 +35,7 @@
 		"tslib": "^2.4.1",
 		"tutors-ui": "*",
 		"typescript": "^4.9.4",
-		"vite": "^4.0.4"
+		"vite": "^4.1.4"
 	},
 	"type": "module"
 }
