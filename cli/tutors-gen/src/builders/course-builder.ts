@@ -1,6 +1,6 @@
-import { getFilesWithType, getFileWithName, getId, getImage, getLabImage, getMarkdown, getPdf, getRoute, getVideo, readVideoIds } from "../utils/lr-utils";
+import { getFilesWithType, getFileWithName, getId, getImage, getLabImage, getMarkdown, getPdf, getRoute, getUrl, getVideo, readVideoIds } from "../utils/lr-utils";
 import { LabStep, LearningObject, LearningResource, preOrder } from "./lo-types";
-import { readWholeFile, readYamlFile, writeFile } from "../utils/utils";
+import { getLoType, readWholeFile, readYamlFile, writeFile } from "../utils/utils";
 import fm from "front-matter";
 
 export const courseBuilder = {
@@ -12,15 +12,23 @@ export const courseBuilder = {
     if (lo.type === "lab") {
       lo = this.buildLab(lo, lr);
     } else {
-      if (lo.type === "unit") {
-        lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
-        lo.route = lo.route.replace("/unit", "/topic");
-      } else if (lo.type === "side") {
-        lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
-        lo.route = lo.route.replace("/side", "/topic");
+      switch (lo.type) {
+        case "web":
+        case "github":
+          lo.route = getUrl(lr);
+          break;
+        case "unit":
+          lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
+          lo.route = lo.route.replace("/unit", "/topic");
+          break;
+        case "side":
+          lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
+          lo.route = lo.route.replace("/side", "/topic");
+          break;
       }
       lr.lrs.forEach((lr) => {
         lo.los.push(this.buildLo(lr, level + 1));
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         lo.los.sort((a: any, b: any) => {
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           return preOrder.get(a.type)! - preOrder.get(b.type)!;
@@ -32,11 +40,14 @@ export const courseBuilder = {
   },
 
   buildDefaultLo(lr: LearningResource): LearningObject {
+    let route = getRoute(lr);
+    const type = getLoType(route);
+    route = route.replace("{{LOTYPE}}", type);
     const [title, summary, contentMd, frontMatter] = getMarkdown(lr);
     const videoids = readVideoIds(lr);
     const lo: LearningObject = {
-      route: getRoute(lr),
-      type: lr.type,
+      route: route,
+      type: type,
       title: title,
       summary: summary,
       contentMd: contentMd,

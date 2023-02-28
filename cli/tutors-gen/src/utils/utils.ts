@@ -1,6 +1,7 @@
 import * as fs from "fs";
 import * as sh from "shelljs";
 import * as yaml from "js-yaml";
+import { loTypes } from "../builders/lo-types";
 
 export function writeFile(folder: string, filename: string, contents: string): void {
   if (!fs.existsSync(folder)) {
@@ -11,12 +12,22 @@ export function writeFile(folder: string, filename: string, contents: string): v
 
 export function findFirstMatchingString(strings: string[], search: string): string {
   for (const str of strings) {
-    if (search.includes(str)) {
+    if (search.lastIndexOf(str) > 0) {
       return str.slice(1);
     }
   }
   return "unknown";
 }
+
+export function getLoType(route: string): string {
+  let lotype = findFirstMatchingString(loTypes, route);
+  if (lotype == "book") {
+    lotype = "lab";
+  } else if (lotype == "") {
+    lotype = "unknown";
+  }
+  return lotype;
+},
 
 export function getFileName(filePath: string) {
   const fileName = filePath.replace(/^.*[\\\/]/, "");
