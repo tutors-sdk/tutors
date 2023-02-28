@@ -19,7 +19,7 @@ export function getFileWithName(lr: LearningResource, file: string) {
 }
 
 export function getRoute(lr: LearningResource): string {
-  return `/{{LOTYPE}}/{{COURSEURL}}${lr.route.replace(lr.courseRoot, "")}`;
+  return `/${lr.type}/{{COURSEURL}}${lr.route.replace(lr.courseRoot, "")}`;
 }
 
 export function getFileWithType(lr: LearningResource, types: string[]): string {
@@ -73,14 +73,6 @@ export function getPdf(lr: LearningResource): string {
     pdfFile = `https://{{COURSEURL}}${pdfFile.replace(lr.courseRoot, "")}`;
   }
   return pdfFile;
-}
-
-export function getUrl(lr: LearningResource): string {
-  let urlFile = getFileWithType(lr, [""]);
-  if (urlFile) {
-    urlFile = readWholeFile(urlFile);
-  }
-  return urlFile;
 }
 
 export function getVideo(lr: LearningResource, id: string): string {
