@@ -22,7 +22,7 @@
   "devDependencies": {
     "eslint": "^8.30.0",
     "eslint-config-custom": "*",
-    "prettier": "^2.8.3",
+    "prettier": "^2.8.4",
     "prettier-plugin-svelte": "^2.9.0",
     "turbo": "latest"
   },
