@@ -20,5 +20,7 @@
     </div>
   </div>
 {:else}
-  <Topic topic="{data.topic}" />
+  <div class="w-11/12 mx-auto">
+    <Topic topic="{data.topic}" />
+  </div>
 {/if}
