@@ -3,7 +3,7 @@ import { currentCourse, currentUser, studentsOnline, studentsOnlineList } from "
 import type { StudentLoEvent, StudentLoUpdate } from "../types/metrics-types";
 import { decrypt, isAuthenticated } from "../utils/auth-utils";
 import { child, get, getDatabase, onValue, ref, off } from "firebase/database";
-import { readObj, sanitise } from "../utils/firebase-utils";
+import { readObj, readUser, sanitise } from "../utils/firebase-utils";
 import type { User } from "src/types/auth-types";
 
 let canUpdate = false;
@@ -49,7 +49,8 @@ export const presenceService = {
     if (lo) {
       const userId = decrypt(lo.tutorsTimeId);
       if (userId && this.user.email !== userId) {
-        const user = await readObj(`${courseId}/users/${sanitise(userId)}`);
+        // const user = await readObj(`${courseId}/users/${sanitise(userId)}`);
+        const user = await readUser(courseId, userId);
         if (user) {
           const event: StudentLoEvent = {
             studentName: user.name,

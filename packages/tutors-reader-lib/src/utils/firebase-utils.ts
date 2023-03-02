@@ -1,6 +1,7 @@
 import { getApp, initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { child, get, getDatabase, ref, runTransaction, remove, set } from "firebase/database";
+import type { UserSummary } from "src/types/auth-types";
 
 export function getNode(lotype: string, url: string, path: string): string {
   let node = "";
@@ -191,4 +192,11 @@ export async function readAllCourseAccessIds(keys: any): Promise<any[]> {
     if (value) courseList.push(key);
   }
   return courseList;
+}
+
+export async function readUser(courseId: string, userId: string): Promise<UserSummary> {
+  return {
+    picture: await readObj(`${courseId}/users/${sanitise(userId)}/picture`),
+    name: await readObj(`${courseId}/users/${sanitise(userId)}/name`)
+  };
 }
