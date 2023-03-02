@@ -7,4 +7,9 @@ export interface User {
   onlineStatus: string;
 }
 
+export interface UserSummary {
+  picture: string;
+  name: string;
+}
+
 export type SuccessFunction = (courseId: string) => void;
