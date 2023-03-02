@@ -31,21 +31,13 @@ export function isValidCourseName(course: string) {
 }
 
 export async function getCourseSummary(courseId: string): Promise<CourseSummary> {
-  let courseUrl;
-  let urlCheck = courseId.split(".");
-  if (urlCheck.length > 2) {
-    let subdomain = urlCheck.slice(0, -2).join(".");
-    courseUrl = `${subdomain}.${urlCheck.slice(-2).join(".")}`;
-  } else {
-    courseUrl = `${courseId}.netlify.app`;
-  }
-  const response = await fetch(`https://${courseUrl}/tutors.json`);
+  const response = await fetch(`https://${courseId}.netlify.app/tutors.json`);
   const lo = await response.json();
   const courseTime: CourseSummary = {
     title: lo.title,
-    img: lo.img.replace("{{COURSEURL}}", `${courseUrl}`),
+    img: lo.img.replace("{{COURSEURL}}", `${courseId}.netlify.app`),
     icon: lo.properties?.icon,
-    route: `https://reader.tutors.dev/course/${courseUrl}`,
+    route: `https://reader.tutors.dev/course/${courseId}.netlify.app`,
     visits: 0,
     count: 0,
     isPrivate: lo.properties?.private,
