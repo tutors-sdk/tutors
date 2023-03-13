@@ -51,7 +51,7 @@
     <ul>
       <li class="option !p-0">
         <div class="w-full flex justify-between">
-        <button class="flex-1" on:click="{setModeCurrent($modeCurrent = !$modeCurrent) && setModeUserPrefers(!$modeCurrent)}">
+        <button class="flex-1" on:click="{() => setModeCurrent($modeCurrent = !$modeCurrent)}">
           <span class="flex-none">Dark Mode</span>
         </button>
         <LightSwitch class="mt-2" />
