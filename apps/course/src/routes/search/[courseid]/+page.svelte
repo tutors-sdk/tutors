@@ -45,8 +45,8 @@
 </script>
 
 <div class="card container mx-auto p-4">
-  <label for="search" class="block py-2 text-lg font-bold">Enter search term:</label>
-  <input bind:value="{searchTerm}" type="text" name="email" id="search" class="m-2 p-2" placeholder="..." />
+  <label for="search" class="label"><span>Enter search term:</span>
+  <input bind:value="{searchTerm}" type="text" name="search" id="search" class="m-2 p-2 input" placeholder="..." /></label>
   <div class="flex flex-wrap justify-center">
     {#each searchResults as result}
       <div class="card m-1 w-full p-4 lg:w-72 2xl:w-96">
