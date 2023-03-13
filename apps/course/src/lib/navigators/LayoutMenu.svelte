@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type DrawerSettings, drawerStore, LightSwitch, popup, setModeCurrent, modeCurrent } from "@skeletonlabs/skeleton";
+  import { type DrawerSettings, drawerStore, LightSwitch, popup, setModeCurrent, modeCurrent, modeUserPrefers, getModeUserPrefers, setModeUserPrefers } from "@skeletonlabs/skeleton";
   import { layout, storeTheme } from "tutors-reader-lib/src/stores/stores";
   import moment from 'moment';
   import { Icon } from "tutors-ui";
@@ -17,7 +17,7 @@
   }
 
   const themeBuilderDrawerOpen: any = () => {
-    const settings: DrawerSettings = { id: "theme", position: "right", width: "w-full md:w-3/4 lg:w-1/2" };
+    const settings: DrawerSettings = { id: "theme", position: "right", width: "w-full md:w-3/4" };
     drawerStore.open(settings);
   };
 
@@ -36,6 +36,8 @@
     isValentines = true;
   }
 
+  setModeCurrent($modeUserPrefers ? false : true)
+  
   applyInitialLayout();
 </script>
 
@@ -49,7 +51,7 @@
     <ul>
       <li class="option !p-0">
         <div class="w-full flex justify-between">
-        <button class="flex-1" on:click="{setModeCurrent($modeCurrent ? false : true)}">
+        <button class="flex-1" on:click="{setModeCurrent($modeCurrent = !$modeCurrent) && setModeUserPrefers(!$modeCurrent)}">
           <span class="flex-none">Dark Mode</span>
         </button>
         <LightSwitch class="mt-2" />
