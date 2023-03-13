@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { LightSwitch, popup } from "@skeletonlabs/skeleton";
+  import { LightSwitch, menu } from "@skeletonlabs/skeleton";
   import { layout, storeTheme } from "tutors-reader-lib/src/stores/stores";
 
   import { Icon } from "tutors-ui";
@@ -20,11 +20,11 @@
 </script>
 
 <div class="relative">
-  <button class="btn btn-sm" use:popup="{{ event: 'click', target: 'design' }}">
+  <button class="btn btn-sm" use:menu="{{ menu: 'design', interactive: true }}">
     <Icon type="dark" />
     <span class="hidden text-sm font-bold lg:block">Layout <span class="pl-2 opacity-50">▾</span></span>
   </button>
-  <nav class="list-nav card card-body p-4 w-56 space-y-4 shadow-lg" data-popup="design">
+  <nav class="list-nav card card-body p-4 w-56 space-y-4 shadow-lg" data-menu="design">
     <h6>Toggles</h6>
     <ul>
       <li class="option !p-0">

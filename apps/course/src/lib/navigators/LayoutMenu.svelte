@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { type DrawerSettings, drawerStore, LightSwitch, popup, setModeCurrent, modeCurrent, modeUserPrefers, getModeUserPrefers, setModeUserPrefers } from "@skeletonlabs/skeleton";
+	import { afterUpdate } from 'svelte';
+  import { type DrawerSettings, drawerStore, LightSwitch, menu, storeLightSwitch } from "@skeletonlabs/skeleton";
   import { layout, storeTheme } from "tutors-reader-lib/src/stores/stores";
   import moment from 'moment';
   import { Icon } from "tutors-ui";
@@ -17,7 +18,7 @@
   }
 
   const themeBuilderDrawerOpen: any = () => {
-    const settings: DrawerSettings = { id: "theme", position: "right", width: "w-full md:w-3/4" };
+    const settings: DrawerSettings = { id: "theme", position: "right", width: "w-full md:w-3/4 lg:w-1/2" };
     drawerStore.open(settings);
   };
 
@@ -36,26 +37,22 @@
     isValentines = true;
   }
 
-  setModeCurrent($modeUserPrefers ? false : true)
-  
   applyInitialLayout();
 </script>
 
 <div class="relative">
-  <button class="btn btn-sm" use:popup="{{ event: 'click', target: 'design' }}">
+  <button class="btn btn-sm" use:menu="{{ menu: 'design', interactive: true }}">
     <Icon type="dark" />
     <span class="hidden text-sm font-bold lg:block">Layout <span class="pl-2 opacity-50">▾</span></span>
   </button>
-  <nav class="list-nav card card-body p-4 w-56 space-y-4 shadow-lg" data-popup="design">
+  <nav class="list-nav card card-body p-4 w-56 space-y-4 shadow-lg" data-menu="design">
     <h6>Toggles</h6>
     <ul>
       <li class="option !p-0">
-        <div class="w-full flex justify-between">
-        <button class="flex-1" on:click="{() => setModeCurrent($modeCurrent = !$modeCurrent)}">
+        <button class="btn w-full flex justify-between">
           <span class="flex-none">Dark Mode</span>
+          <LightSwitch />
         </button>
-        <LightSwitch class="mt-2" />
-        </div>
       </li>
       <li class="option !p-0" on:click="{() => toggleLayout()}">
         <button class="btn w-full flex justify-between">

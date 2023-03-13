@@ -1,9 +1,8 @@
 <script lang="ts">
-	import type { SemanticNames } from './tailwind';
 	import { swatchColorClasses } from './settings';
 
 	/** Pass the color key name. */
-	export let color: SemanticNames = 'primary';
+	export let color = 'primary';
 </script>
 
 <div class="grid grid-cols-11 gap-0">

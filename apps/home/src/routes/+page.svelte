@@ -1,5 +1,5 @@
 <script>
-	import { modeCurrent } from '@skeletonlabs/skeleton';
+	import { storeLightSwitch } from '@skeletonlabs/skeleton';
 	import 'iconify-icon';
 </script>
 
@@ -45,7 +45,7 @@
 		</div>
 		<div class="w-full lg:w-1/2">
 			<img
-				src={$modeCurrent ? '/tutors-reader-light.png' : '/tutors-reader-dark.png'}
+				src={$storeLightSwitch === false ? '/tutors-reader-light.png' : '/tutors-reader-dark.png'}
 				alt="tutors reader screenshot"
 			/>
 		</div>
