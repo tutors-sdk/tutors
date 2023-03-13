@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { afterUpdate } from 'svelte';
-  import { type DrawerSettings, drawerStore, LightSwitch, popup } from "@skeletonlabs/skeleton";
+  import { type DrawerSettings, drawerStore, LightSwitch, popup, setModeCurrent, modeCurrent } from "@skeletonlabs/skeleton";
   import { layout, storeTheme } from "tutors-reader-lib/src/stores/stores";
   import moment from 'moment';
   import { Icon } from "tutors-ui";
@@ -49,10 +48,12 @@
     <h6>Toggles</h6>
     <ul>
       <li class="option !p-0">
-        <button class="btn w-full flex justify-between">
+        <div class="w-full flex justify-between">
+        <button class="flex-1" on:click="{setModeCurrent($modeCurrent ? false : true)}">
           <span class="flex-none">Dark Mode</span>
-          <LightSwitch />
         </button>
+        <LightSwitch class="mt-2" />
+        </div>
       </li>
       <li class="option !p-0" on:click="{() => toggleLayout()}">
         <button class="btn w-full flex justify-between">
