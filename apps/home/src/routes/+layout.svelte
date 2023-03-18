@@ -51,7 +51,7 @@
 							class="grid grid-cols-1 gap-2 place-content-center place-items-center md:place-items-start"
 						>
 							<div>
-								<img src="/logo.svg" />
+								<img src="/logo.svg" alt="Tutors Logo" />
 								<p class="font-bold !text-lg mt-4">
 									Tutors Open Source Project
 									<br />Licensed under the
@@ -59,6 +59,7 @@
 										href="https://github.com/tutors-sdk/tutors/blob/main/LICENSE"
 										target="_blank"
 										class="link"
+										rel="noreferrer"
 										>MIT License
 									</a>
 								</p>
@@ -74,7 +75,7 @@
 								>
 							</li>
 							<li>
-								<a rel="me" href="https://fosstodon.org/@tutors" target="_blank"
+								<a rel="noreferrer" href="https://fosstodon.org/@tutors" target="_blank"
 									>Follow on Mastodon</a
 								>
 							</li>
@@ -121,6 +122,7 @@
 									href="https://setu.ie"
 									target="_blank"
 									class="btn !rounded-md bg-[#435465] !py-2 !px-4"
+									rel="noreferrer"
 								>
 									<img
 										src="https://www.setu.ie/img/logos/setu-logo.svg"
