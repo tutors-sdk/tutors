@@ -1,4 +1,4 @@
-import { getFilesWithType, getFileWithName, getId, getImage, getLabImage, getMarkdown, getPdf, getRoute, getVideo, readVideoIds } from "../utils/lr-utils";
+import { getArchive, getFilesWithType, getFileWithName, getId, getImage, getLabImage, getMarkdown, getPdf, getRoute, getVideo, readVideoIds } from "../utils/lr-utils";
 import { LabStep, LearningObject, LearningResource, preOrder } from "./lo-types";
 import { readWholeFile, readYamlFile, writeFile } from "../utils/utils";
 import fm from "front-matter";
@@ -52,6 +52,9 @@ export const courseBuilder = {
       los: [],
       hide: false,
     };
+    if (lo.type === "archive") {
+      lo.route = getArchive(lr);
+    }
     return lo;
   },
 

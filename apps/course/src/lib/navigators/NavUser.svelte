@@ -3,7 +3,7 @@
   import type { User } from "tutors-reader-lib/src/types/auth-types";
   import type { Course } from "tutors-reader-lib/src/models/course";
   import { analyticsService } from "tutors-reader-lib/src/services/analytics-service";
-  import { menu, Avatar, drawerStore, type DrawerSettings } from "@skeletonlabs/skeleton";
+  import { popup, Avatar, drawerStore, type DrawerSettings } from "@skeletonlabs/skeleton";
   import { Icon } from "tutors-ui";
 
   let user: User;
@@ -46,7 +46,7 @@
 
 {#if $currentUser && $currentCourse.authLevel > 0}
   <div class="relative">
-    <button class="btn btn-sm space-x-1" use:menu="{{ menu: 'avatar', interactive: true }}">
+    <button class="btn btn-sm space-x-1" use:popup="{{ event: 'click', target: 'avatar' }}">
       <div class="relative inline-block">
         {#if status && studentsOnline}
           <span class="badge-icon variant-filled-error absolute -top-2 -right-2 z-10 text-white">{$studentsOnline}</span>
@@ -62,7 +62,7 @@
         <Avatar width="w-10" src="{$currentUser.picture}" alt="{$currentUser?.nickname}" />
       </div>
     </button>
-    <nav class="list-nav card card-body w-56 p-4 space-y-4 shadow-lg" data-menu="avatar">
+    <nav class="list-nav card card-body w-56 p-4 space-y-4 shadow-lg" data-popup="avatar">
       <span class="mt-2 ml-4 text-xs">Logged in as:</span><br />
       <span class="ml-4 text-sm">{$currentUser.name}</span>
       <hr />

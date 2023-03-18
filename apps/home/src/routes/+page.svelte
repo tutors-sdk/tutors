@@ -1,4 +1,5 @@
 <script>
+	import { modeCurrent } from '@skeletonlabs/skeleton';
 	import 'iconify-icon';
 </script>
 
@@ -6,7 +7,10 @@
 	<div class="container lg:flex justify-center items-center mx-auto py-32">
 		<div class="lg:w-1/2 mx-4">
 			<h1 class="font-bold !text-5xl inline-block my-4">
-				An <span class="font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone">Open Learning</span>
+				An <span
+					class="font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone"
+					>Open Learning</span
+				>
 				Web Toolkit
 			</h1>
 			<p class="font-bold !text-lg my-4">
@@ -44,7 +48,7 @@
 		</div>
 		<div class="w-full lg:w-1/2">
 			<img
-				src='/tutors-reader-light.png'
+				src={$modeCurrent ? '/tutors-reader-light.png' : '/tutors-reader-dark.png'}
 				alt="tutors reader screenshot"
 			/>
 		</div>
@@ -53,7 +57,10 @@
 <div class="container py-20 mx-auto justify-center items-center">
 	<div class="w-full m-4">
 		<h2 class="font-bold !text-5xl inline-block my-4">
-			The <span class="font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone">Values</span> of the project
+			The <span
+				class="font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone"
+				>Values</span
+			> of the project
 		</h2>
 	</div>
 	<div class="w-full lg:flex justify-center my-12">
@@ -141,7 +148,10 @@
 	<div class="container lg:flex justify-center items-center mx-auto py-20">
 		<div class="w-full px-4">
 			<h1 class="font-bold !text-5xl inline-block my-4">
-				A fully <span class="font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone">Open Source</span> project
+				A fully <span
+					class="font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone"
+					>Open Source</span
+				> project
 			</h1>
 			<p class="font-bold !text-lg my-4">
 				Tutors is an open source project available for free under the MIT license on GitHub. It

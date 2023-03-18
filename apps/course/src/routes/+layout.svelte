@@ -1,7 +1,8 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import "@skeletonlabs/skeleton/styles/all.css";
-  import { AppShell, Toast } from "@skeletonlabs/skeleton";
+  import { AppShell, Toast, storePopup } from "@skeletonlabs/skeleton";
+  import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import Blank from "$lib/support/Blank.svelte";
@@ -23,6 +24,8 @@
   let mounted = false;
   const themes: any = { tutors, dyslexia, halloween, valentines };
   let currentRoute = "";
+
+  storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
   onMount(async () => {
     mounted = true;
