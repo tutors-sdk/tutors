@@ -1,6 +1,5 @@
 <script lang="js">
   import Icon from "../../Atoms/Icon/Icon.svelte";
-  import { BarLoader } from "svelte-loading-spinners";
   import FileSaver from "file-saver";
   import { onDestroy, tick } from "svelte";
 
@@ -161,7 +160,7 @@
   </div>
 {:else}
   <div class="mt-28 flex flex-col items-center justify-center">
-    <BarLoader size="100" color="#37919B" unit="px" />
+    Loading
     <br />
     <span class="text-lg">Loading...</span>
   </div>
