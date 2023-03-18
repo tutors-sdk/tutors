@@ -83,7 +83,7 @@ You should see an output similar to below:
 
 
 
-  VITE v4.0.4  ready in 1344 ms
+  VITE v4.2.0  ready in 1344 ms
 
   ➜  Local:   http://localhost:3000/
   ➜  Network: use --host to expose
