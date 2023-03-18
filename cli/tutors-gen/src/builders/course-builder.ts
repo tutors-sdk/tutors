@@ -9,25 +9,28 @@ export const courseBuilder = {
   buildLo(lr: LearningResource, level: number): LearningObject {
     let lo = this.buildDefaultLo(lr);
     console.log(`${"-".repeat(level * 2)}: ${lo.id} : ${lo.title}`);
-    if (lo.type === "lab") {
-      lo = this.buildLab(lo, lr);
-    } else {
-      if (lo.type === "unit") {
-        lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
-        lo.route = lo.route.replace("/unit", "/topic");
-      } else if (lo.type === "side") {
-        lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
-        lo.route = lo.route.replace("/side", "/topic");
-      }
-      lr.lrs.forEach((lr) => {
-        lo.los.push(this.buildLo(lr, level + 1));
-        lo.los.sort((a: any, b: any) => {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          return preOrder.get(a.type)! - preOrder.get(b.type)!;
-        });
-      });
+    switch (lo.type) {
+      case "lab":
+        lo = this.buildLab(lo, lr);
+        break;
+      case "unit":
+        this.buildUnit(lo);
+        break;
+      case "side":
+        this.buildSide(lo);
+        break;
+      case "panelvideo":
+        this.buildPanelvideo(lo);
+        break;
+      default:
     }
-
+    lr.lrs.forEach((lr) => {
+      lo.los.push(this.buildLo(lr, level + 1));
+      lo.los.sort((a: any, b: any) => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return preOrder.get(a.type)! - preOrder.get(b.type)!;
+      });
+    });
     return lo;
   },
 
@@ -50,6 +53,20 @@ export const courseBuilder = {
       hide: false,
     };
     return lo;
+  },
+
+  buildUnit(lo: LearningObject) {
+    lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
+    lo.route = lo.route.replace("/unit", "/topic");
+  },
+
+  buildSide(lo: LearningObject) {
+    lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
+    lo.route = lo.route.replace("/side", "/topic");
+  },
+
+  buildPanelvideo(lo: LearningObject) {
+    lo.route = lo.video;
   },
 
   buildLab(lo: LearningObject, lr: LearningResource): LearningObject {
