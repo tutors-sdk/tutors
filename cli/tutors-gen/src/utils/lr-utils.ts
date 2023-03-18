@@ -53,14 +53,6 @@ export function getImage(lr: LearningResource): string {
   return imageFile;
 }
 
-export function getArchive(lr: LearningResource): string {
-  let archiveFile = getFileWithType(lr, ["zip"]);
-  if (archiveFile) {
-    archiveFile = `https://{{COURSEURL}}${archiveFile.replace(lr.courseRoot, "")}`;
-  }
-  return archiveFile;
-}
-
 export function getLabImage(lr: LearningResource): string {
   let foundFilePath = "";
   const imageLrs = lr.lrs.filter((lr) => lr.id === "img");

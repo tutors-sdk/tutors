@@ -6,10 +6,9 @@
   "module": "index.ts",
   "svelte": "index.ts",
   "devDependencies": {
-    "@floating-ui/dom": "^1.2.3",
     "@iconify/svelte": "^3.0.1",
     "@iconify/types": "^2.0.0",
-    "@skeletonlabs/skeleton": "^1.0.0",
+    "@skeletonlabs/skeleton": "^0.124.2",
     "@storybook/addon-essentials": "^7.0.0-beta.53",
     "@storybook/addon-interactions": "^7.0.0-beta.53",
     "@storybook/addon-links": "^7.0.0-beta.53",

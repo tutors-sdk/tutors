@@ -103,7 +103,6 @@ const manifestString = Buffer.from(JSON.stringify(manifest), 'utf8').toString('b
   {/if}
 </svelte:head>
 
-<div class="w-11/12 mx-auto">
 {#each data.course.units as unit}
   <UnitCard unit="{unit}" />
 {/each}
@@ -112,4 +111,3 @@ const manifestString = Buffer.from(JSON.stringify(manifest), 'utf8').toString('b
 {:else}
   <CardDeck los="{data.course.allLos}" border />
 {/if}
-</div>
