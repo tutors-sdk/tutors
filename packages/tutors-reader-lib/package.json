@@ -13,7 +13,7 @@
     "url": "https://github.com/tutors-sdk/tutors-kit.git"
   },
   "devDependencies": {
-    "@iconify/svelte": "^3.0.1",
+    "@iconify/svelte": "^3.1.0",
     "@types/remove-markdown": "^0.3.1",
     "@types/showdown": "2.0.0",
     "auth0-js": "^9.20.0",
