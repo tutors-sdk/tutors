@@ -181,6 +181,10 @@ Please ensure to read the [Code of Conduct](./CODE_OF_CONDUCT.md) before contrib
 
 When contributing, pull requests should be opened to the 'development' branch, and once tested this will be merged to main.
 
+![Tutors Holopin](assets/tutors-holopin.png)
+
+All contributors are eligible to earn a [Holopin](https://holopin.io) - a digital badge that represents your contributions to the project. These badges evolve the more contributions you make to the project!
+
 # Sponsors
 
 This project is powered by [Netlify Open Source](https://www.netlify.com/open-source/).
