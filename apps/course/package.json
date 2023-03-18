@@ -1,6 +1,6 @@
 {
   "name": "tutors-course",
-  "version": "8.3.0",
+  "version": "8.4.0",
   "scripts": {
     "dev": "vite dev --port 3000 --open",
     "build": "vite build",
@@ -13,7 +13,8 @@
   },
   "devDependencies": {
     "@bobthered/tailwindcss-palette-generator": "^3.1.1",
-    "@skeletonlabs/skeleton": "^0.124.2",
+    "@floating-ui/dom": "^1.2.3",
+    "@skeletonlabs/skeleton": "^1.0.0",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/adapter-netlify": "^1.0.5",
     "@sveltejs/kit": "latest",
