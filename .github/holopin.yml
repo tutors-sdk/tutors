@@ -1,6 +1,5 @@
 organization: tutors
-defaultSticker: clf4df38a30880flaoopkb8dr
-stickers:
-  -
-    id: clf4df38a30880flaoopkb8dr
-    alias: tutors-owl
+defaultSticker: clfcipj5e77590fldrznuruus
+holobytes:
+  - evolvingStickerId: clfcipj5e77590fldrznuruus
+    alias: Evolving Owl
