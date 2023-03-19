@@ -2,6 +2,7 @@
   import Icon from "../../Atoms/Icon/Icon.svelte";
   import FileSaver from "file-saver";
   import { onDestroy, tick } from "svelte";
+  import { ProgressRadial } from "@skeletonlabs/skeleton";
 
   import * as pdfjs from "pdfjs-dist/build/pdf.js";
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
@@ -162,6 +163,6 @@
   <div class="mt-28 flex flex-col items-center justify-center">
     Loading
     <br />
-    <span class="text-lg">Loading...</span>
+    <ProgressRadial stroke={100} meter="stroke-primary-500" track="stroke-primary-500/30" width="w-20" />
   </div>
 {/if}
