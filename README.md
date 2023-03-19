@@ -185,6 +185,8 @@ When contributing, pull requests should be opened to the 'development' branch, a
 
 All contributors are eligible to earn a [Holopin](https://holopin.io) - a digital badge that represents your contributions to the project. These badges evolve the more contributions you make to the project!
 
+Every time you open a PR that is accepted, you will be assigned holobytes. Collect these holobytes to see your owl evolve!
+
 # Sponsors
 
 This project is powered by [Netlify Open Source](https://www.netlify.com/open-source/).
