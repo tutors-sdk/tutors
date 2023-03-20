@@ -6,18 +6,12 @@
   import { initFirebase } from "tutors-reader-lib/src/utils/firebase-utils";
   import { getKeys } from "../../../environment";
   import { page } from "$app/stores";
-  import { Buffer } from 'buffer';
-  import { Toast, toastStore } from '@skeletonlabs/skeleton';
-  import type { ToastSettings } from '@skeletonlabs/skeleton';
 
   export let data: PageData;
 
   let standardDeck = true;
   let pinBuffer = "";
   let ignorePin = "";
-  let isRunning: boolean = true;
-  let isMobile: boolean = false;
-  let deferredPrompt: any;
 
   function keypressInput(e: { key: string }) {
     pinBuffer = pinBuffer.concat(e.key);
@@ -27,55 +21,6 @@
       standardDeck = false;
     }
   }
-
-  window.addEventListener('beforeinstallprompt', (e: Event) => {
-    e.preventDefault();
-    deferredPrompt = e;
-  });
-
-  if (window.matchMedia('(display-mode: standalone)' || '(display-mode: fullscreen)' || '(display-mode: minimal-ui)').matches) {
-    isRunning = true;
-  } else {
-    isRunning = false;
-  }
-
-  if (['iPad Simulator', 'iPhone Simulator','iPod Simulator', 'iPad','iPhone','iPod'].includes(navigator.platform) || navigator.userAgent.includes("Mac") && "ontouchend" in document || navigator.userAgent.includes("Mobile")) {
-   isMobile = true;
-  }
-
-  const installPWA = () => {
-    // Show the prompt
-    deferredPrompt.prompt();
-    // Wait for the user to respond to the prompt
-    deferredPrompt.userChoice.then((choiceResult: { outcome: string }) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the A2HS prompt');
-      } else {
-        console.log('User dismissed the A2HS prompt');
-      }
-      deferredPrompt = null;
-    });
-  };
-
-function triggerInstallToast(): void {
-	const t: ToastSettings = {
-		message: 'Install this course for easy access.',
-		autohide: true,
-		timeout: 10000,
-		action: {
-			label: 'Install Now',
-			response: () => installPWA(),
-		},
-    classes: 'variant-glass-surface'
-	};
-  toastStore.clear();
-	toastStore.trigger(t);
-}
-
-
-if (!isMobile && !isRunning && data.course.units.length > 0) {
-      triggerInstallToast();
-    }
 
   onMount(async () => {
     if (getKeys().firebase.apiKey !== "XXX") {
@@ -88,20 +33,7 @@ if (!isMobile && !isRunning && data.course.units.length > 0) {
       }
     }
   });
-
-  const currentUrl = $page.url.toString().slice(0, $page.url.toString().indexOf("course"))
-
-  const manifest = {"name":data.course.lo.title,"short_name":data.course.lo.title,"id":data.course.lo.title,"icons":[{"src": "https://reader.tutors.dev/icons/icon-48x48.png","sizes": "48x48","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-72x72.png","sizes": "72x72","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-96x96.png","sizes": "96x96","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-128x128.png","sizes": "128x128","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-144x144.png","sizes": "144x144","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-152x152.png","sizes": "152x152","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-192x192.png","sizes": "192x192","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-384x384.png","sizes": "384x384","type": "image/png","purpose": "maskable any"},{"src": "https://reader.tutors.dev/icons/icon-512x512.png","sizes": "512x512","type": "image/png","purpose": "maskable any"}],"theme_color":"#37919b","background_color":"#121317","display":"standalone","scope":currentUrl,"start_url":$page.url};
-const manifestString = Buffer.from(JSON.stringify(manifest), 'utf8').toString('base64');
 </script>
-
-<svelte:head>
-  {#if manifestString}
-    <link rel="manifest" href='data:application/manifest+json;base64,{manifestString}' />
-    <meta name="theme-color" content="#37919b">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  {/if}
-</svelte:head>
 
 <div class="w-11/12 mx-auto">
 {#each data.course.units as unit}
