@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type DrawerSettings, drawerStore, LightSwitch, popup, setModeCurrent, modeCurrent, modeUserPrefers, getModeUserPrefers, setModeUserPrefers } from "@skeletonlabs/skeleton";
+  import { type DrawerSettings, drawerStore, popup } from "@skeletonlabs/skeleton";
   import { layout, storeTheme } from "tutors-reader-lib/src/stores/stores";
   import moment from 'moment';
   import { Icon } from "tutors-ui";
@@ -35,8 +35,6 @@
   if(now.isBetween(valentinesStart, valentinesEnd, 'days', '[]')){
     isValentines = true;
   }
-
-  setModeCurrent($modeUserPrefers ? false : true)
   
   applyInitialLayout();
 </script>
@@ -49,14 +47,6 @@
   <nav class="list-nav card card-body p-4 w-56 space-y-4 shadow-lg" data-popup="design">
     <h6>Toggles</h6>
     <ul>
-      <li class="option !p-0">
-        <div class="w-full flex justify-between">
-        <button class="flex-1" on:click="{() => setModeCurrent($modeCurrent = !$modeCurrent)}">
-          <span class="flex-none">Dark Mode</span>
-        </button>
-        <LightSwitch class="mt-2" />
-        </div>
-      </li>
       <li class="option !p-0" on:click="{() => toggleLayout()}">
         <button class="btn w-full flex justify-between">
           <span class="flex-none">Compact</span>
