@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { type DrawerSettings, drawerStore, popup } from "@skeletonlabs/skeleton";
+  import { type DrawerSettings, drawerStore, popup, modeCurrent, setModeCurrent } from "@skeletonlabs/skeleton";
   import { layout, storeTheme } from "tutors-reader-lib/src/stores/stores";
   import moment from 'moment';
   import { Icon } from "tutors-ui";
@@ -47,6 +47,16 @@
   <nav class="list-nav card card-body p-4 w-56 space-y-4 shadow-lg" data-popup="design">
     <h6>Toggles</h6>
     <ul>
+      <li class="option !p-0">
+        <button class="btn w-full flex justify-between" on:click="{setModeCurrent(!$modeCurrent)}">
+          <span class="flex-none">Dark Mode</span>
+          {#if $modeCurrent}
+          <Icon icon="fluent:weather-moon-48-filled" color="rgba(var(--color-warning-500))" />
+          {:else}
+            <Icon icon="fluent:weather-sunny-32-filled" color="rgba(var(--color-warning-500))" />
+          {/if}
+        </button>
+      </li>
       <li class="option !p-0" on:click="{() => toggleLayout()}">
         <button class="btn w-full flex justify-between">
           <span class="flex-none">Compact</span>

@@ -1,7 +1,8 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import { page } from "$app/stores";
   import "@skeletonlabs/skeleton/styles/all.css";
-  import { AppShell, Toast, storePopup } from "@skeletonlabs/skeleton";
+  import { AppShell, Toast, storePopup, setInitialClassState } from "@skeletonlabs/skeleton";
   import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
@@ -31,6 +32,7 @@
     mounted = true;
     storeTheme.subscribe(setBodyThemeAttribute);
     setColorScheme();
+    setInitialClassState();
     initServices();
     const func = () => {
       if (!document.hidden && !currentRoute?.startsWith("/live")) {
