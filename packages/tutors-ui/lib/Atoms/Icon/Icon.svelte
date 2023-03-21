@@ -2,13 +2,15 @@
   import { getIcon } from "./themes";
   import Icon from "@iconify/svelte";
 
-  export let type = "default";
-  export let link = "";
-  export let target = "";
-  export let width = 20;
-  export let height = 20;
+  export let type: string = "";
+  export let icon: string = "";
+  export let color: string = "";
+  export let link: string = "";
+  export let target: string = "";
+  export let width: string = "";
+  export let height: string = "20";
 
-  function iconColour(colourInput: string) {
+  function legacyIconColour(colourInput: string) {
     if (colourInput === "info") {
       return "rgba(var(--color-primary-500))";
     } else if (colourInput === "success") {
@@ -23,10 +25,20 @@
   }
 </script>
 
-{#if link}
-  <a target="{target}" href="{link}">
-    <Icon icon="{getIcon(type).icon}" color="{iconColour(getIcon(type).colour)}" width="{width}" height="{height}" />
-  </a>
+{#if type}
+  {#if link}
+    <a target="{target}" href="{link}">
+      <Icon icon="{getIcon(type).icon}" color="{legacyIconColour(getIcon(type).colour)}" width="{width}" height="{height}" />
+    </a>
+  {:else}
+    <Icon icon="{getIcon(type).icon}" color="{legacyIconColour(getIcon(type).colour)}" width="{width}" height="{height}" />
+  {/if}
 {:else}
-  <Icon icon="{getIcon(type).icon}" color="{iconColour(getIcon(type).colour)}" width="{width}" height="{height}" />
+  {#if link}
+    <a target="{target}" href="{link}">
+      <Icon icon="{icon}" color="{color}" width="{width}" height="{height}" />
+    </a>
+  {:else}
+    <Icon icon="{icon}" color="{color}" width="{width}" height="{height}" />
+  {/if}
 {/if}
