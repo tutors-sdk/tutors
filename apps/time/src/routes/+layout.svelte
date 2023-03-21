@@ -3,7 +3,8 @@
   import "@skeletonlabs/skeleton/styles/all.css";
   import tutors from "tutors-ui/lib/themes/tutors.css?inline";
   import dyslexia from "tutors-ui/lib/themes/dyslexia.css?inline";
-  import { AppShell } from "@skeletonlabs/skeleton";
+  import { AppShell, storePopup } from "@skeletonlabs/skeleton";
+  import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
   import { storeTheme } from "tutors-reader-lib/src/stores/stores";
 
   const themes: any = { tutors, dyslexia };
@@ -14,6 +15,9 @@
   function setBodyThemeAttribute(): void {
     document.body.setAttribute("data-theme", $storeTheme);
   }
+
+  storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+
 </script>
 
 <svelte:head>
