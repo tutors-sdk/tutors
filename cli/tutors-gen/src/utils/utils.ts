@@ -42,6 +42,16 @@ export function readWholeFile(path: string): string {
   return "";
 }
 
+export function readFirstLineFromFile(path: string): string {
+  if (fs.existsSync(path)) {
+    const array = fs.readFileSync(path).toString().split("\n");
+    return array[0].replace("\r", "");
+  } else {
+    console.log("unable to locate " + path);
+  }
+  return "";
+}
+
 export function getHeaderFromBody(body: string): string {
   let header = "";
   const array = body.split("\n");

@@ -5,7 +5,7 @@ import fm from "front-matter";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
 import { LearningResource, VideoIdentifier, VideoIdentifiers } from "../builders/lo-types";
-import { getFileType, getHeaderFromBody, readWholeFile, withoutHeaderFromBody } from "./utils";
+import { getFileType, getHeaderFromBody, readFirstLineFromFile, readWholeFile, withoutHeaderFromBody } from "./utils";
 
 export function getFileWithName(lr: LearningResource, file: string) {
   let foundFilePath = "";
@@ -59,6 +59,16 @@ export function getArchive(lr: LearningResource): string {
     archiveFile = `https://{{COURSEURL}}${archiveFile.replace(lr.courseRoot, "")}`;
   }
   return archiveFile;
+}
+
+export function getWebLink(lr: LearningResource): string {
+  const webLinkFile = getFileWithName(lr, "weburl");
+  return readFirstLineFromFile(webLinkFile);
+}
+
+export function getGitLink(lr: LearningResource): string {
+  const webLinkFile = getFileWithName(lr, "githubid");
+  return readFirstLineFromFile(webLinkFile);
 }
 
 export function getLabImage(lr: LearningResource): string {
