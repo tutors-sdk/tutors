@@ -45,6 +45,9 @@ export const courseBuilder = {
       case "archive":
         lo.route = getArchive(lr);
         break;
+      case "note":
+        lr.lrs = [];
+        break;
       default:
     }
     lr.lrs.forEach((lr) => {

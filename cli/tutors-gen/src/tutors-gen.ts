@@ -3,7 +3,7 @@ import * as fs from "fs";
 import { courseBuilder } from "./builders/course-builder";
 import { resourceBuilder } from "./builders/resource-builder";
 import { generateNetlifyToml } from "./utils/netlify";
-const version = `tutors-gen 2.9.7`;
+const version = `tutors-gen 2.9.8`;
 
 if (fs.existsSync("course.md")) {
   const srcFolder = process.cwd();
