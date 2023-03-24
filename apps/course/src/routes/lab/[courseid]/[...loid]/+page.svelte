@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import { onDestroy, onMount } from "svelte";
   import type { PageData } from "./$types";
   import { goto, afterNavigate } from "$app/navigation";
@@ -9,7 +10,7 @@
   });
 
   onDestroy(() => {
-    window.removeEventListener("keydown", keypressInput);
+    browser ? window.removeEventListener("keydown", keypressInput) : null
   });
 
   afterNavigate(() => {
