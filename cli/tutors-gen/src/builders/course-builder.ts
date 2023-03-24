@@ -96,6 +96,7 @@ export const courseBuilder = {
   },
 
   buildLab(lo: LearningObject, lr: LearningResource): LearningObject {
+    lr.lrs = [];
     const mdFiles = getFilesWithType(lr, "md");
     lo.title = "";
     mdFiles.forEach((chapterName) => {
