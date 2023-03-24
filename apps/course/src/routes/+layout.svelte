@@ -21,6 +21,7 @@
   import { analyticsService } from "tutors-reader-lib/src/services/analytics-service";
   import { initServices } from "./tutors-startup";
   import Sidebars from "$lib/navigators/sidebars/Sidebars.svelte";
+    import Loading from "$lib/support/Loading.svelte";
 
   let mounted = false;
   const themes: any = { tutors, dyslexia, halloween, valentines };
@@ -74,7 +75,11 @@
 
 <svelte:head>
   {@html `\<style\>${themes[$storeTheme]}}\</style\>`}
+  {#if currentLo}
   <title>{$currentLo?.title}</title>
+  {:else}
+  <title>Tutors Course Reader</title>
+  {/if}
 </svelte:head>
 
 <div id="app" class="h-full overflow-hidden">

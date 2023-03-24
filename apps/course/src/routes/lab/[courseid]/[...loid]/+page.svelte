@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { browser } from "$app/environment";
   import { onDestroy, onMount } from "svelte";
   import type { PageData } from "./$types";
   import { goto, afterNavigate } from "$app/navigation";
@@ -9,7 +10,7 @@
   });
 
   onDestroy(() => {
-    window.removeEventListener("keydown", keypressInput);
+    browser ? window.removeEventListener("keydown", keypressInput) : null
   });
 
   afterNavigate(() => {
@@ -63,7 +64,7 @@
   </div>
   <div id="lab-panel" class="w-full min-h-screen">
     <div class="card bg-surface-100-800-token p-8 lg:px-4 py-8 m-2 rounded-xl">
-      <article class="mx-auto prose dark:prose-invert max-w-prose">
+      <article class="mx-auto prose dark:prose-invert w-[90%] lg:max-w-prose xl:max-w-[75%]">
         {@html data.lab.content}
       </article>
     </div>
