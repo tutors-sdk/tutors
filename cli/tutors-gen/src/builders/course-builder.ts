@@ -1,4 +1,18 @@
-import { getArchive, getFilesWithType, getFileWithName, getId, getImage, getLabImage, getMarkdown, getPdf, getRoute, getVideo, readVideoIds } from "../utils/lr-utils";
+import {
+  getArchive,
+  getFilesWithType,
+  getFileWithName,
+  getGitLink,
+  getId,
+  getImage,
+  getLabImage,
+  getMarkdown,
+  getPdf,
+  getRoute,
+  getVideo,
+  getWebLink,
+  readVideoIds,
+} from "../utils/lr-utils";
 import { LabStep, LearningObject, LearningResource, preOrder } from "./lo-types";
 import { readWholeFile, readYamlFile, writeFile } from "../utils/utils";
 import fm from "front-matter";
@@ -21,6 +35,18 @@ export const courseBuilder = {
         break;
       case "panelvideo":
         this.buildPanelvideo(lo);
+        break;
+      case "web":
+        lo.route = getWebLink(lr);
+        break;
+      case "github":
+        lo.route = getGitLink(lr);
+        break;
+      case "archive":
+        lo.route = getArchive(lr);
+        break;
+      case "note":
+        lr.lrs = [];
         break;
       default:
     }
@@ -52,9 +78,6 @@ export const courseBuilder = {
       los: [],
       hide: false,
     };
-    if (lo.type === "archive") {
-      lo.route = getArchive(lr);
-    }
     return lo;
   },
 
@@ -73,6 +96,7 @@ export const courseBuilder = {
   },
 
   buildLab(lo: LearningObject, lr: LearningResource): LearningObject {
+    lr.lrs = [];
     const mdFiles = getFilesWithType(lr, "md");
     lo.title = "";
     mdFiles.forEach((chapterName) => {
