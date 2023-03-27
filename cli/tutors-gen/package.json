@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@types/js-yaml": "^4.0.5",
-    "@types/node": "^18.14.4",
+    "@types/node": "^18.15.10",
     "@types/shelljs": "^0.8.11",
     "commander": "^10.0.0",
     "front-matter": "^4.0.2",
