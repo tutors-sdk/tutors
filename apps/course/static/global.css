@@ -138,6 +138,8 @@ code.hljs {
   background: #37919b;
   border-radius: 5px;
   float:right;
+  position: relative;
+  z-index: 25;
 }
 
 .copy-code:hover {
