@@ -96,7 +96,6 @@ export const courseBuilder = {
   },
 
   buildLab(lo: LearningObject, lr: LearningResource): LearningObject {
-    lr.lrs = [];
     const mdFiles = getFilesWithType(lr, "md");
     lo.title = "";
     mdFiles.forEach((chapterName) => {
@@ -116,6 +115,7 @@ export const courseBuilder = {
       lo.los.push(labStep);
     });
     lo.img = getLabImage(lr);
+    lr.lrs = [];
     return lo;
   },
 
