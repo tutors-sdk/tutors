@@ -20,18 +20,33 @@ import fm from "front-matter";
 export const courseBuilder = {
   lo: <LearningObject>{},
 
-  buildLo(lr: LearningResource, level: number): LearningObject {
-    let lo = this.buildDefaultLo(lr);
-    console.log(`${"-".repeat(level * 2)}: ${lo.id} : ${lo.title}`);
+  buildCompositeLo(lo: LearningObject, lr: LearningResource, level: number): LearningObject {
     switch (lo.type) {
-      case "lab":
-        lo = this.buildLab(lo, lr);
-        break;
       case "unit":
         this.buildUnit(lo);
         break;
       case "side":
         this.buildSide(lo);
+        break;
+      default:
+    }
+    lr.lrs.forEach((lr) => {
+      lo.los.push(this.buildLo(lr, level + 1));
+      lo.los.sort((a: any, b: any) => {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        return preOrder.get(a.type)! - preOrder.get(b.type)!;
+      });
+    });
+    return lo;
+  },
+
+  buildSimpleLo(lo: LearningObject, lr: LearningResource): LearningObject {
+    switch (lo.type) {
+      case "lab":
+        lo = this.buildLab(lo, lr);
+        break;
+      case "talk":
+        this.buildTalk(lo);
         break;
       case "panelvideo":
         this.buildPanelvideo(lo);
@@ -45,18 +60,19 @@ export const courseBuilder = {
       case "archive":
         lo.route = getArchive(lr);
         break;
-      case "note":
-        lr.lrs = [];
-        break;
       default:
     }
-    lr.lrs.forEach((lr) => {
-      lo.los.push(this.buildLo(lr, level + 1));
-      lo.los.sort((a: any, b: any) => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        return preOrder.get(a.type)! - preOrder.get(b.type)!;
-      });
-    });
+    return lo;
+  },
+
+  buildLo(lr: LearningResource, level: number): LearningObject {
+    let lo = this.buildDefaultLo(lr);
+    console.log(`${"-".repeat(level * 2)}: ${lo.id} : ${lo.title}`);
+    if (lo.type === "unit" || lo.type == "side" || lo.type == "topic" || lo.type == "course") {
+      lo = this.buildCompositeLo(lo, lr, level);
+    } else {
+      lo = this.buildSimpleLo(lo, lr);
+    }
     return lo;
   },
 
@@ -84,6 +100,12 @@ export const courseBuilder = {
   buildUnit(lo: LearningObject) {
     lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
     lo.route = lo.route.replace("/unit", "/topic");
+  },
+
+  buildTalk(lo: LearningObject) {
+    if (!lo.pdf) {
+      lo.route = lo.video;
+    }
   },
 
   buildSide(lo: LearningObject) {
@@ -115,7 +137,7 @@ export const courseBuilder = {
       lo.los.push(labStep);
     });
     lo.img = getLabImage(lr);
-    lr.lrs = [];
+    // lr.lrs = [];
     return lo;
   },
 

@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import path from "path";
-import { copyFileToFolder, findFirstMatchingString, getFileName, getFileType } from "../utils/utils";
+import { copyFileToFolder, findFirstMatchingString, findLastMatchingString, getFileName, getFileType } from "../utils/utils";
 import { assetTypes, LearningResource, loTypes } from "./lo-types";
 
 export const resourceBuilder = {
@@ -8,7 +8,7 @@ export const resourceBuilder = {
   root: "",
 
   getLoType(route: string): string {
-    let lotype = findFirstMatchingString(loTypes, route);
+    let lotype = findFirstMatchingString(loTypes, route, this.root);
     if (lotype == "book") {
       lotype = "lab";
     } else if (lotype == "") {
@@ -37,6 +37,7 @@ export const resourceBuilder = {
   buildTree(dir: string) {
     this.root = dir;
     this.lr = this.build(dir);
+    this.lr.type = "course";
     this.lr.lrs = this.lr.lrs.filter((lr) => lr.route.includes("/topic") || lr.route.includes("/unit"));
   },
 
