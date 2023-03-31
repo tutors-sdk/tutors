@@ -70,7 +70,7 @@ export function findLos(los: Lo[], lotype: string): Lo[] {
     if (lo.type === lotype) {
       result.push(lo);
     }
-    if (lo.type == "unit") {
+    if (lo.type == "unit" || lo.type == "side") {
       result = result.concat(findLos(lo.los, lotype));
     }
   });
