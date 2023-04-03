@@ -17,7 +17,7 @@
     "tutors-html": "./src/tutors-html.js"
   },
   "dependencies": {
-    "@types/node": "^18.14.4",
+    "@types/node": "^18.15.11",
     "@types/shelljs": "^0.8.11",
     "commander": "^10.0.0",
     "nunjucks": "^3.2.3",
