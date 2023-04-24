@@ -11,6 +11,7 @@
   const courseUrl = $currentCourse.url;
   url = url.replace(courseId, courseUrl);
   contentHtml = convertMd(lo.contentMd, url.replace("/note/", ""));
+  contentHtml = convertMd(lo.contentMd, url.replace("/panelnote/", ""));
   contentHtml = generateToc(contentHtml);
 </script>
 

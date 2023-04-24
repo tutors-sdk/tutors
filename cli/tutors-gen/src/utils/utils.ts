@@ -9,10 +9,21 @@ export function writeFile(folder: string, filename: string, contents: string): v
   return fs.writeFileSync(folder + "/" + filename, contents);
 }
 
-export function findFirstMatchingString(strings: string[], search: string): string {
+export function findFirstMatchingString(strings: string[], search: string, courseRoot: string): string {
+  search = search.replace(courseRoot, "");
   for (const str of strings) {
     if (search.includes(str)) {
       return str.slice(1);
+    }
+  }
+  return "unknown";
+}
+
+export function findLastMatchingString(strings: string[], search: string): string {
+  for (let index = strings.length - 1; index >= 0; index--) {
+    const match = strings[index];
+    if (search.includes(match)) {
+      return match.slice(1);
     }
   }
   return "unknown";
