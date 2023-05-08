@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "tutors-lib": "^2.6.4",
-    "@types/node": "^18.14.4",
+    "@types/node": "^20.1.0",
     "@types/shelljs": "^0.8.11",
     "commander": "^10.0.0",
     "shelljs": "^0.8.5"
