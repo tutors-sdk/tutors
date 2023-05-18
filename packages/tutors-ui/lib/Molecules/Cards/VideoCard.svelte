@@ -47,41 +47,37 @@
   <div class="mr-2 w-full p-8">
     {#if heanet}
       {#if showVime}
-        <vime-player controls cross-origin="true">
-          <vime-hls version="latest" cross-origin="true">
-            <source data-src="https://media.heanet.ie/m3u8/{heanetId}" type="application/x-mpegURL" />
-          </vime-hls>
-        </vime-player>
+        <div class="relative mx-auto aspect-video w-3/4" style="padding-top: 40%;">
+          <iframe title="{lo.title}" class="absolute inset-0 h-full w-full" src="https://media.heanet.ie/player/{heanetId}" allow="encrypted-media" allowfullscreen></iframe>
+        </div>
       {/if}
     {:else if vimp}
-      <div class="mx-auto block h-[405px] w-[720px]">
-        <iframe
-          title="{lo.title}"
-          src="https://vimp.oth-regensburg.de/media/embed?key={vimpId}&autoplay=false&controls=true"
-          class="iframeLoaded"
-          width="720"
-          height="405"
-          aria-label="media embed code"
-          allowtransparency="{true}"
-          allowfullscreen></iframe>
-      </div>
+      <iframe
+        title="{lo.title}"
+        src="https://vimp.oth-regensburg.de/media/embed?key={vimpId}&autoplay=false&controls=true"
+        class="iframeLoaded"
+        width="720"
+        height="405"
+        aria-label="media embed code"
+        allowtransparency="{true}"
+        allowfullscreen></iframe>
     {:else}
       {#if firefox}
-      {#if autoplay}
-        <iframe title="{lo.title}" class="relative mx-auto aspect-video w-3/4" src="https://www.youtube.com/embed/{defaultId}?&autoplay=1" allow="encrypted-media" allowfullscreen></iframe>
+        {#if autoplay}
+          <iframe title="{lo.title}" class="relative mx-auto aspect-video w-3/4" src="https://www.youtube.com/embed/{defaultId}?&autoplay=1" allow="encrypted-media" allowfullscreen
+          ></iframe>
         {:else}
-        <iframe title="{lo.title}" class="relative mx-auto aspect-video w-3/4" src="https://www.youtube.com/embed/{defaultId}" allow="encrypted-media" allowfullscreen></iframe>
+          <iframe title="{lo.title}" class="relative mx-auto aspect-video w-3/4" src="https://www.youtube.com/embed/{defaultId}" allow="encrypted-media" allowfullscreen></iframe>
         {/if}
-      {:else}
-      {#if autoplay}
+      {:else if autoplay}
         <div class="relative mx-auto aspect-video w-3/4" style="padding-top: 40%;">
-          <iframe title="{lo.title}" class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/{defaultId}?&autoplay=1" allow="encrypted-media" allowfullscreen></iframe>
+          <iframe title="{lo.title}" class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/{defaultId}?&autoplay=1" allow="encrypted-media" allowfullscreen
+          ></iframe>
         </div>
-        {:else}
+      {:else}
         <div class="relative mx-auto aspect-video w-3/4" style="padding-top: 40%;">
           <iframe title="{lo.title}" class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/{defaultId}" allow="encrypted-media" allowfullscreen></iframe>
         </div>
-        {/if}
       {/if}
     {/if}<br />
     <p class="text-center text-lg italic">{lo.title}</p>
