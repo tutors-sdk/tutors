@@ -17,7 +17,7 @@
     "tutors-time": "./src/tutors-time.js"
   },
   "dependencies": {
-    "@types/node": "^18.14.4",
+    "@types/node": "^20.2.5",
     "@types/shelljs": "^0.8.11",
     "axios": "^1.1.2",
     "commander": "^9.4.1",
