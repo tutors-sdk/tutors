@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
+  import { Meta, Story } from '@storybook/addon-svelte-csf';
+  import { CodeBlock } from '@skeletonlabs/skeleton';
 
   import Card from "../Components/Card/Card.svelte";
   import CardHeader from "../Components/Card/CardHeader.svelte";
@@ -15,4 +16,11 @@
     <CardImage image="https://picsum.photos/400" />
     <CardFooter summary="Card Summary" />
   </Card>
+
+  <CodeBlock language="svelte" code={`
+<Card href="#" target="_blank" type="primary" width="w-96">
+  <CardHeader title="Card Title" type="talk" />
+  <CardImage image="https://picsum.photos/400" />
+  <CardFooter summary="Card Summary" />
+</Card>`} />
 </Story>
