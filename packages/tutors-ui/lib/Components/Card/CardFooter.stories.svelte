@@ -4,7 +4,7 @@
   import CardFooter from "./CardFooter.svelte";
 </script>
 
-<Meta title="Tutors UI/Card/Components" component={CardFooter} />
+<Meta title="Tutors UI/Components/Card" component={CardFooter} />
 
 <Template let:args>
   <CardFooter {...args}>

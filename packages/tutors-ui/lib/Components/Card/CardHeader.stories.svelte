@@ -4,7 +4,7 @@
   import CardHeader from "./CardHeader.svelte";
 </script>
 
-<Meta title="Tutors UI/Card/Components" component={CardHeader} />
+<Meta title="Tutors UI/Components/Card" component={CardHeader} />
 
 <Template let:args>
   <CardHeader {...args}>

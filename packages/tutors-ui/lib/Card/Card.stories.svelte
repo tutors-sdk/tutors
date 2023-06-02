@@ -1,10 +1,10 @@
 <script lang="ts">
   import { Meta, Story, Template } from '@storybook/addon-svelte-csf';
 
-  import Card from "./Components/Card.svelte";
-  import CardHeader from "./Components/CardHeader.svelte";
-  import CardImage from "./Components/CardImage.svelte";
-  import CardFooter from "./Components/CardFooter.svelte";
+  import Card from "../Components/Card/Card.svelte";
+  import CardHeader from "../Components/Card/CardHeader.svelte";
+  import CardImage from "../Components/Card/CardImage.svelte";
+  import CardFooter from "../Components/Card/CardFooter.svelte";
 </script>
 
 <Meta title="Tutors UI/Card" />
