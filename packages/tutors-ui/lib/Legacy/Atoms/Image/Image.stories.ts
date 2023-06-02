@@ -4,7 +4,7 @@ import Image from "./Image.svelte";
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/svelte/writing-stories/introduction
 const meta = {
-  title: "Tutors/Atoms/Image",
+  title: "Tutors/Legacy/Atoms/Image",
   component: Image,
   tags: ["autodocs"]
 } satisfies Meta<Image>;
