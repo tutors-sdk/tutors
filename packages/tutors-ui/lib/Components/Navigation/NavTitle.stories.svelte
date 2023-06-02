@@ -4,7 +4,7 @@
   import NavTitle from "./NavTitle.svelte";
 </script>
 
-<Meta title="Tutors UI/Navigation" component={NavTitle} />
+<Meta title="Tutors UI/Components/Navigation" component={NavTitle} />
 
 <Template let:args>
   <div class="flex">
