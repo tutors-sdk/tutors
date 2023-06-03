@@ -2,6 +2,7 @@
   import { browser } from '$app/environment';
   import type { Topic } from "tutors-reader-lib/src/models/topic";
   import { CardDeck, UnitCard, TalkCard } from "tutors-ui";
+  import UnitCardDeck from '$lib/components/UnitCardDeck.svelte';
   import { ProgressRadial } from "@skeletonlabs/skeleton";
   export let topic: Topic;
 </script>
@@ -11,7 +12,7 @@
   <TalkCard lo="{lo}" />
   {/each}
 {#each topic.units as unit}
-<UnitCard unit="{unit}" />
+<UnitCardDeck unit="{unit}" />
 {/each}
 <CardDeck los="{topic.standardLos}" border />
 {:else} 

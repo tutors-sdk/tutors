@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { PageData } from "./$types";
+  import UnitCardDeck from "$lib/components/UnitCardDeck.svelte";
   import { UnitCard, VideoCard } from "tutors-ui";
   import Topic from "./topic.svelte";
   export let data: PageData;
@@ -15,7 +16,7 @@
     </div>
     <div class="block w-full md:w-[30rem] md:ml-2">
       {#each data.topic.sideBar as unit}
-        <UnitCard unit="{unit}" />
+        <UnitCardDeck unit="{unit}" />
       {/each}
     </div>
   </div>

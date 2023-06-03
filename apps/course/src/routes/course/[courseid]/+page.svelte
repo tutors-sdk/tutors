@@ -2,7 +2,8 @@
   import { browser } from "$app/environment";
   import { onMount } from "svelte";
   import type { PageData } from "./$types";
-  import { CardDeck, UnitCard } from "tutors-ui";
+  import CardDeck from "$lib/components/CardDeck.svelte";
+  import UnitCardDeck from "$lib/components/UnitCardDeck.svelte";
   import { authService } from "tutors-reader-lib/src/services/auth-service";
   import { initFirebase } from "tutors-reader-lib/src/utils/firebase-utils";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
@@ -40,7 +41,7 @@
 <div class="w-11/12 mx-auto">
   {#if browser}
     {#each data.course.units as unit}
-      <UnitCard unit="{unit}" />
+      <UnitCardDeck unit="{unit}" />
     {/each}
     {#if standardDeck}
       <CardDeck los="{data.course.standardLos}" border />

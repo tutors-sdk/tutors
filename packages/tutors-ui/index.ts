@@ -21,3 +21,8 @@ export { default as CourseCardDeck } from "./lib/Legacy/Organisms/CardDeck/Cours
 export { default as StudentCardDeck } from "./lib/Legacy/Organisms/CardDeck/StudentCardDeck.svelte";
 export { default as TopicNavigator } from "./lib/Legacy/Organisms/TopicNavigator/TopicNavigator.svelte";
 export { default as UnitCard } from "./lib/Legacy/Organisms/UnitCard/UnitCard.svelte";
+
+export { default as NewCard } from "./lib/Components/Card/Card.svelte";
+export { default as CardHeader } from "./lib/Components/Card/CardHeader.svelte";
+export { default as CardImage } from "./lib/Components/Card/CardImage.svelte";
+export { default as CardFooter } from "./lib/Components/Card/CardFooter.svelte";
