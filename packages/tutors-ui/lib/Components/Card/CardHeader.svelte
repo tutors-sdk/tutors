@@ -6,9 +6,9 @@
 </script>
 
 
-<header class="card-header flex flex-row items-center justify-between p-3">
+<header class="card-header p-2 flex flex-row items-center justify-between">
   <div class="inline-flex w-full">
-    <div class="line-clamp-2 flex-auto !text-black dark:!text-white">{title}</div>
+    <div class="line-clamp-2 flex-auto !text-black dark:!text-white"><h4>{title}</h4></div>
     {#if video}
       <a href="{video}">
         <Icon type="video" />
