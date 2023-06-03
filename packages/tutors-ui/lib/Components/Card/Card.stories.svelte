@@ -4,7 +4,7 @@
   import Card from "./Card.svelte";
 </script>
 
-<Meta title="Tutors UI/Components/Card" component={Card} />
+<Meta title="Components/Card" component={Card} />
 
 <Template let:args>
   <Card {...args}>

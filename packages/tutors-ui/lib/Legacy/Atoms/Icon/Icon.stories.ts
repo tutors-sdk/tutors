@@ -4,7 +4,7 @@ import Icon from "./Icon.svelte";
 
 // More on how to set up stories at: https://storybook.js.org/docs/7.0/svelte/writing-stories/introduction
 const meta = {
-  title: "Tutors/Legacy/Atoms/Icon",
+  title: "Legacy/Atoms/Icon",
   component: Icon,
   tags: ["autodocs"],
   argTypes: {
