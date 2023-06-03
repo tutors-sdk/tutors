@@ -11,14 +11,26 @@
 <Meta title="Tutors UI/Card" />
 
 <Story name="Card with Image">
-  <Card href="#" target="_blank" type="primary" width="w-96">
+  <div class="flex">
+  <Card href="#" target="_blank" type="primary" compact={false}>
     <CardHeader title="Card Title" type="talk" />
     <CardImage image="https://picsum.photos/400" />
     <CardFooter summary="Card Summary" />
   </Card>
+  <Card href="#" target="_blank" type="primary" compact={false}>
+    <CardHeader title="Card Title" type="talk" />
+    <CardImage image="https://picsum.photos/400" />
+    <CardFooter summary="Card Summary" />
+  </Card>
+  <Card href="#" target="_blank" type="primary" compact={false}>
+    <CardHeader title="Card Title" type="talk" />
+    <CardImage image="https://picsum.photos/400" />
+    <CardFooter summary="Card Summary" />
+  </Card>
+  </div>
 
   <CodeBlock language="svelte" code={`
-<Card href="#" target="_blank" type="primary" width="w-96">
+<Card href="#" target="_blank" type="primary" compact={false}>
   <CardHeader title="Card Title" type="talk" />
   <CardImage image="https://picsum.photos/400" />
   <CardFooter summary="Card Summary" />
@@ -26,14 +38,26 @@
 </Story>
 
 <Story name="Card with Icon">
-  <Card href="#" target="_blank" type="primary" width="w-96">
+  <div class="flex">
+  <Card href="#" target="_blank" type="primary" compact={false}>
     <CardHeader title="Card Title" type="talk" />
     <CardImage icon="ic:twotone-webhook" iconColor="#ffc34d" />
     <CardFooter summary="Card Summary" />
   </Card>
+  <Card href="#" target="_blank" type="primary" compact={false}>
+    <CardHeader title="Card Title" type="talk" />
+    <CardImage icon="ic:twotone-webhook" iconColor="#ffc34d" />
+    <CardFooter summary="Card Summary" />
+  </Card>
+  <Card href="#" target="_blank" type="primary" compact={false}>
+    <CardHeader title="Card Title" type="talk" />
+    <CardImage icon="ic:twotone-webhook" iconColor="#ffc34d" />
+    <CardFooter summary="Card Summary" />
+  </Card>
+  </div>
 
   <CodeBlock language="svelte" code={`
-<Card href="#" target="_blank" type="primary" width="w-96">
+<Card href="#" target="_blank" type="primary" compact={false}>
   <CardHeader title="Card Title" type="talk" />
   <CardImage icon="ic:twotone-webhook" iconColor="#ffc34d" />
   <CardFooter summary="Card Summary" />
