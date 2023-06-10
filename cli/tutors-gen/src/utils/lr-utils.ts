@@ -101,8 +101,13 @@ export function getVideo(lr: LearningResource, id: string): string {
   return videoId;
 }
 
-export function getMarkdown(lr: LearningResource): [string, string, string, any] {
-  const mdFile = getFileWithType(lr, ["md"]);
+export function getMarkdown(lr: LearningResource, keyFileName: string = ""): [string, string, string, any] {
+  let mdFile = "";
+  if (keyFileName) {
+    mdFile = getFileWithName(lr, keyFileName);
+  } else {
+    mdFile = getFileWithType(lr, ["md"]);
+  }
   if (mdFile) {
     const contents = fm(readWholeFile(mdFile));
     const frontMatter = contents.attributes;

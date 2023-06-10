@@ -65,8 +65,8 @@ export const courseBuilder = {
     return lo;
   },
 
-  buildLo(lr: LearningResource, level: number): LearningObject {
-    let lo = this.buildDefaultLo(lr);
+  buildLo(lr: LearningResource, level: number, keyFileName: string = ""): LearningObject {
+    let lo = this.buildDefaultLo(lr, keyFileName);
     console.log(`${"-".repeat(level * 2)}: ${lo.id} : ${lo.title}`);
     if (lo.type === "unit" || lo.type == "side" || lo.type == "topic" || lo.type == "course") {
       lo = this.buildCompositeLo(lo, lr, level);
@@ -76,8 +76,8 @@ export const courseBuilder = {
     return lo;
   },
 
-  buildDefaultLo(lr: LearningResource): LearningObject {
-    const [title, summary, contentMd, frontMatter] = getMarkdown(lr);
+  buildDefaultLo(lr: LearningResource, keyFileName: string = ""): LearningObject {
+    const [title, summary, contentMd, frontMatter] = getMarkdown(lr, keyFileName);
     const videoids = readVideoIds(lr);
     const lo: LearningObject = {
       route: getRoute(lr),
@@ -137,12 +137,11 @@ export const courseBuilder = {
       lo.los.push(labStep);
     });
     lo.img = getLabImage(lr);
-    // lr.lrs = [];
     return lo;
   },
 
   buildCourse(lr: LearningResource) {
-    this.lo = this.buildLo(lr, 0);
+    this.lo = this.buildLo(lr, 0, "course.md");
     this.lo.type = "course";
     this.lo.route = "/";
     const propertiesFile = getFileWithName(lr, "properties.yaml");
