@@ -22,16 +22,27 @@ export const resourceBuilder = {
     const files = fs.readdirSync(dir);
     if (files.length > 0) {
       for (const file of files) {
-        const filePath = `${dir}/${file}`;
-        const stat = fs.statSync(filePath);
-        if (stat.isDirectory()) {
-          tree.lrs.push(this.build(filePath));
-        } else {
-          tree.files.push(filePath);
+        if (!file.startsWith(".")) {
+          const filePath = `${dir}/${file}`;
+          const stat = fs.statSync(filePath);
+          if (stat.isDirectory()) {
+            tree.lrs.push(this.build(filePath));
+          } else {
+            tree.files.push(filePath);
+          }
         }
       }
     }
     return tree;
+  },
+
+  pruneTree(lr: LearningResource) {
+    lr.lrs.forEach((resource, index) => {
+      if (resource.type === "unknown") {
+        lr.lrs.splice(index, 1);
+      }
+      this.pruneTree(resource);
+    });
   },
 
   buildTree(dir: string) {
@@ -39,6 +50,7 @@ export const resourceBuilder = {
     this.lr = this.build(dir);
     this.lr.type = "course";
     this.lr.lrs = this.lr.lrs.filter((lr) => lr.route.includes("/topic") || lr.route.includes("/unit"));
+    this.pruneTree(this.lr);
   },
 
   copyAssetFiles(lr: LearningResource, dest: string) {
