@@ -49,7 +49,7 @@ export const resourceBuilder = {
     this.root = dir;
     this.lr = this.build(dir);
     this.lr.type = "course";
-    this.lr.lrs = this.lr.lrs.filter((lr) => lr.route.includes("/topic") || lr.route.includes("/unit"));
+    this.lr.lrs = this.lr.lrs.filter((lr) => lr.route.includes("/topic") || lr.route.includes("/unit") || lr.route.includes("/side"));
     this.pruneTree(this.lr);
   },
 
