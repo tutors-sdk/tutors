@@ -13,7 +13,11 @@ export function findFirstMatchingString(strings: string[], search: string, cours
   search = search.replace(courseRoot, "");
   for (const str of strings) {
     if (search.includes(str)) {
-      return str.slice(1);
+      if (str === "/topic" && search.slice(1).includes("/")) {
+        return "unknown";
+      } else {
+        return str.slice(1);
+      }
     }
   }
   return "unknown";
