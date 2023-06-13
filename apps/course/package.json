@@ -17,7 +17,7 @@
     "@skeletonlabs/skeleton": "^1.0.0",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/adapter-netlify": "^1.0.5",
-    "@sveltejs/kit": "latest",
+    "@sveltejs/kit": "1.20.2",
     "@types/auth0-js": "^9.14.7",
     "auth0-js": "^9.20.0",
     "autoprefixer": "^10.4.13",
