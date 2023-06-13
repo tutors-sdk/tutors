@@ -1,5 +1,7 @@
 ---
 order: 6
+icon: 
+  type: fxemoji:note
 ---
 
 # This is a note with at TOC

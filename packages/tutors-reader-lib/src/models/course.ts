@@ -10,6 +10,7 @@ export class Course {
   lo: Lo;
   topics: Topic[] = [];
   units: Lo[];
+  sideBar: Lo[];
   standardLos: Lo[];
   allLos: Lo[];
   authLevel = 0;
@@ -77,6 +78,7 @@ export class Course {
     this.addWall("archive");
 
     this.units = getSortedUnits(this.lo.los);
+    this.sideBar = this.lo.los.filter((lo) => lo.type === "side");
     this.standardLos = this.lo.los.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk");
   }
 
