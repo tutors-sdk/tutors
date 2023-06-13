@@ -42,12 +42,12 @@
   <div class="block md:flex w-11/12 mx-auto">
     <div class="w-full">
       {#each data.course.units as unit}
-        <UnitCard unit="{unit}" />
+        <UnitCardDeck unit="{unit}" />
       {/each}
     </div>
     <div class="block w-full md:w-[30rem] md:ml-2">
       {#each data.course.sideBar as unit}
-        <UnitCard unit="{unit}" />
+        <UnitCardDeck unit="{unit}" />
       {/each}
     </div>
   </div>
