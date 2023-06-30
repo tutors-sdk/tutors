@@ -21,14 +21,14 @@ let showdownConverter = new showdown.Converter({
     showdownHighlight,
     customClassExt,
     showdownCopyCode,
-    showdownKatex({
-      // maybe you want katex to throwOnError
-      throwOnError: false,
-      // disable displayMode
-      displayMode: false,
-      // change errorColor to blue
-      errorColor: "red"
-    })
+    // showdownKatex({
+    //   // maybe you want katex to throwOnError
+    //   throwOnError: false,
+    //   // disable displayMode
+    //   displayMode: false,
+    //   // change errorColor to blue
+    //   errorColor: "red"
+    // })
   ]
 })
 
