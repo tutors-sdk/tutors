@@ -1,0 +1,1 @@
+export type ConvertMdToHtml = (md: string) => string;

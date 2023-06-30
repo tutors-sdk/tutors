@@ -1,27 +1,10 @@
-import showdown from "showdown";
-import showdownHighlight from "showdown-highlight";
-import { showdownCopyCode } from "showdown-copy-code";
-//import showdownKatex from "showdown-katex";
-import customClassExt from "showdown-custom-class";
+import type { ConvertMdToHtml } from "src/types/md-types";
 
-const converter = new showdown.Converter({
-  tables: true,
-  emoji: true,
-  openLinksInNewWindow: true,
-  extensions: [
-    showdownHighlight,
-    customClassExt,
-    showdownCopyCode
-    // showdownKatex({
-    //   // maybe you want katex to throwOnError
-    //   throwOnError: false,
-    //   // disable displayMode
-    //   displayMode: false,
-    //   // change errorColor to blue
-    //   errorColor: "red"
-    // })
-  ]
-});
+let converter: ConvertMdToHtml = null;
+
+export function initConverter(converterFunction: ConvertMdToHtml) {
+  converter = converterFunction;
+}
 
 function replaceAll(str: string, find: string, replace: string) {
   return str.replace(new RegExp(find, "g"), replace);
@@ -37,7 +20,9 @@ export function convertMd(md: string, url: string): string {
     filtered = replaceAll(filtered, "./archive\\/", `archive/`);
     filtered = replaceAll(filtered, "archive\\/", `https://${url}/archive/`);
     filtered = replaceAll(filtered, "\\]\\(\\#", `](https://${url}#/`);
-    html = converter.makeHtml(filtered);
+    if (converter) {
+      html = converter(filtered);
+    }
   }
   return html;
 }
