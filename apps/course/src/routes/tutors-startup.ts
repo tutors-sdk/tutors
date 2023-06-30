@@ -13,30 +13,32 @@ import showdownKatex from "showdown-katex";
 import customClassExt from "showdown-custom-class";
 import { initConverter } from "tutors-reader-lib/src/utils/markdown-utils";
 
-let showdownConverter = new showdown.Converter({
-  tables: true,
-  emoji: true,
-  openLinksInNewWindow: true,
-  extensions: [
-    showdownHighlight,
-    customClassExt,
-    showdownCopyCode,
-    // showdownKatex({
-    //   // maybe you want katex to throwOnError
-    //   throwOnError: false,
-    //   // disable displayMode
-    //   displayMode: false,
-    //   // change errorColor to blue
-    //   errorColor: "red"
-    // })
-  ]
-})
+let converter: any;
 
 function convertMdToHtml(md: string): string {
-  return showdownConverter.makeHtml(md);
+  return converter.makeHtml(md);
 }
 
 export function initMarkdownParser() {
+  let showdownConverter = new showdown.Converter({
+    tables: true,
+    emoji: true,
+    openLinksInNewWindow: true,
+    extensions: [
+      showdownHighlight,
+      customClassExt,
+      showdownCopyCode,
+      // showdownKatex({
+      //   // maybe you want katex to throwOnError
+      //   throwOnError: false,
+      //   // disable displayMode
+      //   displayMode: false,
+      //   // change errorColor to blue
+      //   errorColor: "red"
+      // })
+    ]
+  })
+  converter = showdownConverter;
   initConverter(convertMdToHtml);
 }
 

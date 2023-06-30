@@ -25,7 +25,7 @@
   let mounted = false;
   const themes: any = { tutors, dyslexia, halloween, valentines };
   let currentRoute = "";
-  // initMarkdownParser();
+  initMarkdownParser();
 
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
