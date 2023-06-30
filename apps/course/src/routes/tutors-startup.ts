@@ -6,6 +6,39 @@ import { presenceService } from "tutors-reader-lib/src/services/presence-service
 import { initFirebase } from "tutors-reader-lib/src/utils/firebase-utils";
 import { getKeys } from "../environment";
 import { goto } from "$app/navigation";
+import showdown from "showdown";
+import showdownHighlight from "showdown-highlight";
+import { showdownCopyCode } from "showdown-copy-code";
+import showdownKatex from "showdown-katex";
+import customClassExt from "showdown-custom-class";
+import { initConverter } from "tutors-reader-lib/src/utils/markdown-utils";
+
+let showdownConverter = new showdown.Converter({
+  tables: true,
+  emoji: true,
+  openLinksInNewWindow: true,
+  extensions: [
+    showdownHighlight,
+    customClassExt,
+    showdownCopyCode,
+    showdownKatex({
+      // maybe you want katex to throwOnError
+      throwOnError: false,
+      // disable displayMode
+      displayMode: false,
+      // change errorColor to blue
+      errorColor: "red"
+    })
+  ]
+})
+
+function convertMdToHtml(md: string): string {
+  return showdownConverter.makeHtml(md);
+}
+
+export function initMarkdownParser() {
+  initConverter(convertMdToHtml);
+}
 
 export async function initServices() {
   if (getKeys().firebase.apiKey !== "XXX") {
