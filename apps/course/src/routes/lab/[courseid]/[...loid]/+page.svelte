@@ -6,6 +6,7 @@
   export let data: PageData;
 
   onMount(async () => {
+    console.log("mounting");
     window.addEventListener("keydown", keypressInput);
   });
 
