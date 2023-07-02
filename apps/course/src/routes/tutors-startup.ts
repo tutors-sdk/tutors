@@ -10,7 +10,6 @@ import showdown from "showdown";
 import showdownHighlight from "showdown-highlight";
 import { showdownCopyCode } from "showdown-copy-code";
 import showdownKatex from "showdown-katex";
-//const showdownKatex = await import('showdown-katex');
 import customClassExt from "showdown-custom-class";
 import { initConverter } from "tutors-reader-lib/src/utils/markdown-utils";
 
