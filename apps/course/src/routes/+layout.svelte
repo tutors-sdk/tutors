@@ -30,6 +30,7 @@
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
   onMount(async () => {
+    console.log("init 1");
     mounted = true;
     storeTheme.subscribe(setBodyThemeAttribute);
     setColorScheme();
@@ -44,6 +45,7 @@
   });
 
   page.subscribe((path) => {
+    console.log("init 2");
     if (path.route.id) {
       currentRoute = path.route.id;
     }
@@ -53,6 +55,7 @@
   });
 
   afterNavigate((params: any) => {
+    console.log("init 2");
     const isNewPage: boolean = params.from && params.to && params.from.route.id !== params.to.route.id;
     const elemPage = document.querySelector("#page");
     if (isNewPage && elemPage !== null) {
