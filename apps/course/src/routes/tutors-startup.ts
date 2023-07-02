@@ -28,14 +28,14 @@ export function initMarkdownParser() {
       showdownHighlight,
       customClassExt,
       showdownCopyCode,
-      showdownKatex({
-        // maybe you want katex to throwOnError
-        throwOnError: true,
-        // disable displayMode
-        displayMode: true,
-        // change errorColor to blue
-        errorColor: "red"
-      })
+      // showdownKatex({
+      //   // maybe you want katex to throwOnError
+      //   throwOnError: true,
+      //   // disable displayMode
+      //   displayMode: true,
+      //   // change errorColor to blue
+      //   errorColor: "red"
+      // })
     ]
   })
   converter = showdownConverter;
