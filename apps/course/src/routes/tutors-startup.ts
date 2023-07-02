@@ -30,9 +30,9 @@ export function initMarkdownParser() {
       showdownCopyCode,
       showdownKatex({
         // maybe you want katex to throwOnError
-        throwOnError: false,
+        throwOnError: true,
         // disable displayMode
-        displayMode: false,
+        displayMode: true,
         // change errorColor to blue
         errorColor: "red"
       })
