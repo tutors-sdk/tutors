@@ -4,10 +4,45 @@
   import type { PageData } from "./$types";
   import { goto, afterNavigate } from "$app/navigation";
   export let data: PageData;
+  import showdown from "showdown";
+  import showdownHighlight from "showdown-highlight";
+  import { showdownCopyCode } from "showdown-copy-code";
+  import customClassExt from "showdown-custom-class";
+  import { initConverter } from "tutors-reader-lib/src/utils/markdown-utils";
+
+  let converter: any;
+
+  function convertMdToHtml(md: string): string {
+    return converter.makeHtml(md);
+  }
 
   onMount(async () => {
     console.log("mounting");
     window.addEventListener("keydown", keypressInput);
+
+    import("showdown-katex").then((katex) => {
+      let showdownConverter = new showdown.Converter({
+        tables: true,
+        emoji: true,
+        openLinksInNewWindow: true,
+        extensions: [
+          showdownHighlight,
+          customClassExt,
+          showdownCopyCode,
+          katex.default({
+            // maybe you want katex to throwOnError
+            throwOnError: true,
+            // disable displayMode
+            displayMode: true,
+            // change errorColor to blue
+            errorColor: "red"
+          })
+        ]
+      });
+      converter = showdownConverter;
+      initConverter(convertMdToHtml);
+      data.lab.convertMd();
+    });
   });
 
   onDestroy(() => {
