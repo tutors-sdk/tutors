@@ -26,7 +26,6 @@
     "showdown-custom-class": "^1.0.0",
     "showdown-emoji": "^3.0.0",
     "showdown-highlight": "3.1.0",
-    "showdown-katex": "^0.8.0",
     "typescript": "^5.1.3"
   }
 }
