@@ -1,4 +1,3 @@
-import { initMarkdownParser } from "../../../tutors-startup";
 import type { PageLoad } from "./$types";
 import { courseService } from "tutors-reader-lib/src/services/course-service";
 

@@ -1,8 +1,5 @@
 import type { ConvertMdToHtml } from "src/types/md-types";
 import showdown from "showdown";
-import showdownHighlight from "showdown-highlight";
-import { showdownCopyCode } from "showdown-copy-code";
-import customClassExt from "showdown-custom-class";
 
 const converter = new showdown.Converter({
   tables: true,
@@ -11,7 +8,6 @@ const converter = new showdown.Converter({
   extensions: [
   ]
 });
-
 
 let richConverter: ConvertMdToHtml = null;
 

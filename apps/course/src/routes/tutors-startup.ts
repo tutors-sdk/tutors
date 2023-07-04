@@ -6,32 +6,6 @@ import { presenceService } from "tutors-reader-lib/src/services/presence-service
 import { initFirebase } from "tutors-reader-lib/src/utils/firebase-utils";
 import { getKeys } from "../environment";
 import { goto } from "$app/navigation";
-import showdown from "showdown";
-import showdownHighlight from "showdown-highlight";
-import { showdownCopyCode } from "showdown-copy-code";
-import customClassExt from "showdown-custom-class";
-//import { initConverter } from "tutors-reader-lib/src/utils/markdown-utils";
-
-let converter: any;
-
-function convertMdToHtml(md: string): string {
-  return converter.makeHtml(md);
-}
-
-export function initMarkdownParser() {
-  // let showdownConverter = new showdown.Converter({
-  //   tables: true,
-  //   emoji: true,
-  //   openLinksInNewWindow: true,
-  //   extensions: [
-  //     showdownHighlight,
-  //     customClassExt,
-  //     showdownCopyCode,
-  //   ]
-  // })
-  // converter = showdownConverter;
-  // initConverter(convertMdToHtml);
-}
 
 export async function initServices() {
   if (getKeys().firebase.apiKey !== "XXX") {
