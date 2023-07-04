@@ -4,54 +4,22 @@
   import type { PageData } from "./$types";
   import { goto, afterNavigate } from "$app/navigation";
   export let data: PageData;
-  import showdown from "showdown";
-  import showdownHighlight from "showdown-highlight";
-  import { showdownCopyCode } from "showdown-copy-code";
-  import customClassExt from "showdown-custom-class";
   import { page } from "$app/stores";
+  import { initKaytex } from "$lib/markdown/rich-markdown";
 
-  import { initRichConverter } from "tutors-reader-lib/src/utils/markdown-utils";
-
-  let converter: any;
-  let first = true;
-
-  function convertMdToHtml(md: string): string {
-    return converter.makeHtml(md);
-  }
+  let refresh = true;
 
   onMount(async () => {
     window.addEventListener("keydown", keypressInput);
-
-    import("showdown-katex").then((katex) => {
-      let showdownConverter = new showdown.Converter({
-        tables: true,
-        emoji: true,
-        openLinksInNewWindow: true,
-        extensions: [
-          showdownHighlight,
-          customClassExt,
-          showdownCopyCode,
-          katex.default({
-            // maybe you want katex to throwOnError
-            throwOnError: true,
-            // disable displayMode
-            displayMode: true,
-            // change errorColor to blue
-            errorColor: "red"
-          })
-        ]
-      });
-      converter = showdownConverter;
-      initRichConverter(convertMdToHtml);
-      data.lab.convertMd();
-      const lastSegment = $page.url.pathname.substring($page.url.pathname.lastIndexOf("/") + 1);
-      if (lastSegment.startsWith("book")) {
-        data.lab.setFirstPageActive();
-      } else {
-        data.lab.setActivePage(lastSegment);
-      }
-      first = !first;
-    });
+    await initKaytex();
+    data.lab.convertMd();
+    const lastSegment = $page.url.pathname.substring($page.url.pathname.lastIndexOf("/") + 1);
+    if (lastSegment.startsWith("book")) {
+      data.lab.setFirstPageActive();
+    } else {
+      data.lab.setActivePage(lastSegment);
+    }
+    refresh = !refresh;
   });
 
   onDestroy(() => {
@@ -60,7 +28,7 @@
 
   afterNavigate(() => {
     const elemPage = document.querySelector("#page");
-    elemPage.scrollTop = 0;
+    if (elemPage) elemPage.scrollTop = 0;
   });
 
   async function keypressInput(e: KeyboardEvent) {
@@ -104,7 +72,7 @@
     <div id="lab-panel" class="flex-1 w-1/2 min-h-screen">
       <div class="card bg-surface-100-800-token p-8 lg:px-4 py-8 m-2 rounded-xl">
         <article class="mx-auto prose dark:prose-invert max-w-none w-[80%]">
-          {#key first}
+          {#key refresh}
             {@html data.lab.content}
           {/key}
         </article>
