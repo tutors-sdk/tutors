@@ -1,22 +1,20 @@
 <script lang="ts">
-  import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import { convertMd } from "tutors-reader-lib/src/utils/markdown-utils";
-  import { generateToc } from "tutors-reader-lib/src/utils/markdown-toc-lib";
   import { currentCourse } from "tutors-reader-lib/src/stores/stores";
+  import { generateToc } from "tutors-reader-lib/src/utils/markdown-toc-lib";
+  import { convertMd } from "tutors-reader-lib/src/utils/markdown-utils";
 
-  export let lo: Lo;
-  let contentHtml = "";
-  let url = lo.route.replace("/note/", "");
-  const courseId = $currentCourse.id;
-  const courseUrl = $currentCourse.url;
-  url = url.replace(courseId, courseUrl);
-  contentHtml = convertMd(lo.contentMd, url.replace("/note/", ""));
-  contentHtml = convertMd(lo.contentMd, url.replace("/panelnote/", ""));
-  contentHtml = generateToc(contentHtml);
+  //export let contentHtml = "";
+  export let lo;
+  if (lo.contentHtml == undefined) {
+    let url = lo.route.replace("/panelnote/", "");
+    url = url.replace($currentCourse.id, $currentCourse.url);
+    let contentHtml = convertMd(lo.contentMd, url);
+    lo.contentHtml = generateToc(contentHtml);
+  }
 </script>
 
 <article class="notecontent prose dark:prose-invert">
-  {@html contentHtml}
+  {@html lo.contentHtml}
 </article>
 
 <style>

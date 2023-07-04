@@ -11,6 +11,7 @@
 
   onMount(async () => {
     window.addEventListener("keydown", keypressInput);
+
     await initKaytex();
     data.lab.convertMd();
     const lastSegment = $page.url.pathname.substring($page.url.pathname.lastIndexOf("/") + 1);

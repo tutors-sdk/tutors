@@ -1,11 +1,17 @@
 import type { ConvertMdToHtml } from "src/types/md-types";
 import showdown from "showdown";
+import showdownHighlight from "showdown-highlight";
+import { showdownCopyCode } from "showdown-copy-code";
+import customClassExt from "showdown-custom-class";
 
-const converter = new showdown.Converter({
+let converter = new showdown.Converter({
   tables: true,
   emoji: true,
   openLinksInNewWindow: true,
   extensions: [
+    showdownHighlight,
+    customClassExt,
+    showdownCopyCode
   ]
 });
 
@@ -22,7 +28,14 @@ function replaceAll(str: string, find: string, replace: string) {
 export function convertMd(md: string, url: string): string {
   let html = "";
   if (md) {
-    html = converter.makeHtml(md);
+    let filtered = replaceAll(md, "./img\\/", `img/`);
+    filtered = replaceAll(filtered, "img\\/", `https://${url}/img/`);
+    filtered = replaceAll(filtered, "./archives\\/", `archives/`);
+    filtered = replaceAll(filtered, "archives\\/", `https://${url}/archives/`);
+    filtered = replaceAll(filtered, "./archive\\/", `archive/`);
+    filtered = replaceAll(filtered, "archive\\/", `https://${url}/archive/`);
+    filtered = replaceAll(filtered, "\\]\\(\\#", `](https://${url}#/`);
+    html = converter.makeHtml(filtered);
   }
   return html;
 }

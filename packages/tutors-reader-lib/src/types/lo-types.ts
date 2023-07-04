@@ -38,6 +38,7 @@ export interface Lo {
   pdf: string;
   summary: string;
   contentMd: string;
+  contentHtml: string;
   route: string;
   id: string;
   hide: boolean;
