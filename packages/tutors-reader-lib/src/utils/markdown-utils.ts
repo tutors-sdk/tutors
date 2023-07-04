@@ -1,9 +1,22 @@
 import type { ConvertMdToHtml } from "src/types/md-types";
+import showdown from "showdown";
+import showdownHighlight from "showdown-highlight";
+import { showdownCopyCode } from "showdown-copy-code";
+import customClassExt from "showdown-custom-class";
 
-let converter: ConvertMdToHtml = null;
+const converter = new showdown.Converter({
+  tables: true,
+  emoji: true,
+  openLinksInNewWindow: true,
+  extensions: [
+  ]
+});
 
-export function initConverter(converterFunction: ConvertMdToHtml) {
-  converter = converterFunction;
+
+let richConverter: ConvertMdToHtml = null;
+
+export function initRichConverter(converterFunction: ConvertMdToHtml) {
+  richConverter = converterFunction;
 }
 
 function replaceAll(str: string, find: string, replace: string) {
@@ -13,6 +26,14 @@ function replaceAll(str: string, find: string, replace: string) {
 export function convertMd(md: string, url: string): string {
   let html = "";
   if (md) {
+    html = converter.makeHtml(md);
+  }
+  return html;
+}
+
+export function convertRichMd(md: string, url: string): string {
+  let html = "";
+  if (md) {
     let filtered = replaceAll(md, "./img\\/", `img/`);
     filtered = replaceAll(filtered, "img\\/", `https://${url}/img/`);
     filtered = replaceAll(filtered, "./archives\\/", `archives/`);
@@ -20,8 +41,8 @@ export function convertMd(md: string, url: string): string {
     filtered = replaceAll(filtered, "./archive\\/", `archive/`);
     filtered = replaceAll(filtered, "archive\\/", `https://${url}/archive/`);
     filtered = replaceAll(filtered, "\\]\\(\\#", `](https://${url}#/`);
-    if (converter) {
-      html = converter(filtered);
+    if (richConverter) {
+      html = richConverter(filtered);
     }
   }
   return html;

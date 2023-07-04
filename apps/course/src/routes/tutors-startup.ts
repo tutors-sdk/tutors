@@ -10,7 +10,7 @@ import showdown from "showdown";
 import showdownHighlight from "showdown-highlight";
 import { showdownCopyCode } from "showdown-copy-code";
 import customClassExt from "showdown-custom-class";
-import { initConverter } from "tutors-reader-lib/src/utils/markdown-utils";
+//import { initConverter } from "tutors-reader-lib/src/utils/markdown-utils";
 
 let converter: any;
 
@@ -19,18 +19,18 @@ function convertMdToHtml(md: string): string {
 }
 
 export function initMarkdownParser() {
-  let showdownConverter = new showdown.Converter({
-    tables: true,
-    emoji: true,
-    openLinksInNewWindow: true,
-    extensions: [
-      showdownHighlight,
-      customClassExt,
-      showdownCopyCode,
-    ]
-  })
-  converter = showdownConverter;
-  initConverter(convertMdToHtml);
+  // let showdownConverter = new showdown.Converter({
+  //   tables: true,
+  //   emoji: true,
+  //   openLinksInNewWindow: true,
+  //   extensions: [
+  //     showdownHighlight,
+  //     customClassExt,
+  //     showdownCopyCode,
+  //   ]
+  // })
+  // converter = showdownConverter;
+  // initConverter(convertMdToHtml);
 }
 
 export async function initServices() {

@@ -10,7 +10,7 @@
   import customClassExt from "showdown-custom-class";
   import { page } from "$app/stores";
 
-  import { initConverter } from "tutors-reader-lib/src/utils/markdown-utils";
+  import { initRichConverter } from "tutors-reader-lib/src/utils/markdown-utils";
 
   let converter: any;
   let first = true;
@@ -42,7 +42,7 @@
         ]
       });
       converter = showdownConverter;
-      initConverter(convertMdToHtml);
+      initRichConverter(convertMdToHtml);
       data.lab.convertMd();
       const lastSegment = $page.url.pathname.substring($page.url.pathname.lastIndexOf("/") + 1);
       if (lastSegment.startsWith("book")) {
