@@ -5,11 +5,7 @@ import { courseService } from "tutors-reader-lib/src/services/course-service";
 export const ssr = false;
 
 export const load: PageLoad = async ({ url, params }) => {
-  // initMarkdownParser();
-  console.log("one");
   const lab = await courseService.readLab(params.courseid, url.pathname);
-  console.log("two");
-
   const lastSegment = url.pathname.substring(url.pathname.lastIndexOf("/") + 1);
   if (lastSegment.startsWith("book")) {
     lab.setFirstPageActive();

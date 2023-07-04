@@ -9,7 +9,6 @@ import { goto } from "$app/navigation";
 import showdown from "showdown";
 import showdownHighlight from "showdown-highlight";
 import { showdownCopyCode } from "showdown-copy-code";
-// import showdownKatex from "showdown-katex";
 import customClassExt from "showdown-custom-class";
 import { initConverter } from "tutors-reader-lib/src/utils/markdown-utils";
 
@@ -28,14 +27,6 @@ export function initMarkdownParser() {
       showdownHighlight,
       customClassExt,
       showdownCopyCode,
-      // showdownKatex({
-      //   // maybe you want katex to throwOnError
-      //   throwOnError: true,
-      //   // disable displayMode
-      //   displayMode: true,
-      //   // change errorColor to blue
-      //   errorColor: "red"
-      // })
     ]
   })
   converter = showdownConverter;

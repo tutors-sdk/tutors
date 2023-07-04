@@ -8,16 +8,18 @@
   import showdownHighlight from "showdown-highlight";
   import { showdownCopyCode } from "showdown-copy-code";
   import customClassExt from "showdown-custom-class";
+  import { page } from "$app/stores";
+
   import { initConverter } from "tutors-reader-lib/src/utils/markdown-utils";
 
   let converter: any;
+  let first = true;
 
   function convertMdToHtml(md: string): string {
     return converter.makeHtml(md);
   }
 
   onMount(async () => {
-    console.log("mounting");
     window.addEventListener("keydown", keypressInput);
 
     import("showdown-katex").then((katex) => {
@@ -42,6 +44,13 @@
       converter = showdownConverter;
       initConverter(convertMdToHtml);
       data.lab.convertMd();
+      const lastSegment = $page.url.pathname.substring($page.url.pathname.lastIndexOf("/") + 1);
+      if (lastSegment.startsWith("book")) {
+        data.lab.setFirstPageActive();
+      } else {
+        data.lab.setActivePage(lastSegment);
+      }
+      first = !first;
     });
   });
 
@@ -95,7 +104,9 @@
     <div id="lab-panel" class="flex-1 w-1/2 min-h-screen">
       <div class="card bg-surface-100-800-token p-8 lg:px-4 py-8 m-2 rounded-xl">
         <article class="mx-auto prose dark:prose-invert max-w-none w-[80%]">
-          {@html data.lab.content}
+          {#key first}
+            {@html data.lab.content}
+          {/key}
         </article>
       </div>
     </div>
