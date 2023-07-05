@@ -3,7 +3,7 @@
   import { page } from "$app/stores";
   import "@skeletonlabs/skeleton/styles/all.css";
   import { AppShell, Toast, storePopup, setInitialClassState } from "@skeletonlabs/skeleton";
-  import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
+  import { computePosition, autoUpdate, flip, shift, offset, arrow } from "@floating-ui/dom";
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import Blank from "$lib/support/Blank.svelte";
@@ -21,7 +21,6 @@
   import { analyticsService } from "tutors-reader-lib/src/services/analytics-service";
   import { initServices } from "./tutors-startup";
   import Sidebars from "$lib/navigators/sidebars/Sidebars.svelte";
-    import Loading from "$lib/support/Loading.svelte";
 
   let mounted = false;
   const themes: any = { tutors, dyslexia, halloween, valentines };
@@ -76,9 +75,9 @@
 <svelte:head>
   {@html `\<style\>${themes[$storeTheme]}}\</style\>`}
   {#if currentLo}
-  <title>{$currentLo?.title}</title>
+    <title>{$currentLo?.title}</title>
   {:else}
-  <title>Tutors Course Reader</title>
+    <title>Tutors Course Reader</title>
   {/if}
 </svelte:head>
 

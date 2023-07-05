@@ -32,7 +32,7 @@ export function getFileWithType(lr: LearningResource, types: string[]): string {
 }
 
 export function getFilesWithType(lr: LearningResource, type: string): string[] {
-  const files = lr.files.filter((file) => type.includes(getFileType(file)));
+  const files = lr.files.filter((file) => type === getFileType(file));
   return files;
 }
 

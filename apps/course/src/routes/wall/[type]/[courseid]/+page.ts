@@ -2,6 +2,8 @@ import type { PageLoad } from "./$types";
 import { courseService } from "tutors-reader-lib/src/services/course-service";
 import { currentLo } from "tutors-reader-lib/src/stores/stores";
 
+export const ssr = false;
+
 export const load: PageLoad = async ({ params }) => {
   const course = await courseService.readCourse(params.courseid);
   const los = await courseService.readWall(params.courseid, params.type);
