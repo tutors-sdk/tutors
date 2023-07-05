@@ -1,10 +1,10 @@
 import type { Lo } from "../types/lo-types";
-import { convertMd } from "../utils/markdown-utils";
+import { convertMd, convertRichMd } from "../utils/markdown-utils";
 import { removeLeadingHashes } from "../utils/lo-utils";
 import type { Course } from "./course";
 
 function truncate(input: string) {
-  if (input.length > 16) {
+  if (input?.length > 16) {
     return input.substring(0, 15) + "...";
   }
   return input;
@@ -32,10 +32,14 @@ export class Lab {
     this.autoNumber = course.areLabStepsAutoNumbered();
     this.url = labId;
     this.lo = lo;
-    const assetUrl = labId.replace(`/lab/${course.id}`, course.url);
-    this.objectivesHtml = convertMd(this.lo.los[0].contentMd, assetUrl);
+    this.convertMd();
+  }
+
+  convertMd() {
+    const assetUrl = this.url.replace(`/lab/${this.course.id}`, this.course.url);
+    this.objectivesHtml = convertRichMd(this.lo.los[0].contentMd, assetUrl);
     this.lo.los.forEach((chapter) => {
-      this.chaptersHtml.set(encodeURI(chapter.shortTitle), convertMd(chapter.contentMd, assetUrl));
+      this.chaptersHtml.set(encodeURI(chapter.shortTitle), convertRichMd(chapter.contentMd, assetUrl));
       this.chaptersTitles.set(chapter.shortTitle, removeLeadingHashes(chapter.title));
     });
     this.steps = Array.from(this.chaptersHtml.keys());

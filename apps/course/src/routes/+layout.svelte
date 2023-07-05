@@ -19,13 +19,12 @@
   import { getKeys } from "../environment";
   import TutorsTerms from "$lib/support/TutorsTerms.svelte";
   import { analyticsService } from "tutors-reader-lib/src/services/analytics-service";
-  import { initMarkdownParser, initServices } from "./tutors-startup";
+  import { initServices } from "./tutors-startup";
   import Sidebars from "$lib/navigators/sidebars/Sidebars.svelte";
 
   let mounted = false;
   const themes: any = { tutors, dyslexia, halloween, valentines };
   let currentRoute = "";
-  initMarkdownParser();
 
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 

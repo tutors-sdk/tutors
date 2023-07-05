@@ -4,9 +4,23 @@
   import type { PageData } from "./$types";
   import { goto, afterNavigate } from "$app/navigation";
   export let data: PageData;
+  import { page } from "$app/stores";
+  import { initKaytex } from "tutors-reader-lib/src/utils/markdown-utils";
+
+  let refresh = true;
 
   onMount(async () => {
     window.addEventListener("keydown", keypressInput);
+
+    await initKaytex();
+    data.lab.convertMd();
+    const lastSegment = $page.url.pathname.substring($page.url.pathname.lastIndexOf("/") + 1);
+    if (lastSegment.startsWith("book")) {
+      data.lab.setFirstPageActive();
+    } else {
+      data.lab.setActivePage(lastSegment);
+    }
+    refresh = !refresh;
   });
 
   onDestroy(() => {
@@ -15,7 +29,7 @@
 
   afterNavigate(() => {
     const elemPage = document.querySelector("#page");
-    elemPage.scrollTop = 0;
+    if (elemPage) elemPage.scrollTop = 0;
   });
 
   async function keypressInput(e: KeyboardEvent) {
@@ -32,19 +46,11 @@
 </script>
 
 <svelte:head>
-  <!-- <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.4/katex.min.js"
-    integrity="sha512-DAZH0Wu7q9Hnm0Fw8tRZsTeQBzIugiUy6k2r7E0KKMlC2nBvvrNSH/LVnGueCXRfDs5epP+Ieoh3L+VzSKi0Aw=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  ></script>
   <link
     rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.4/katex.min.css"
-    integrity="sha512-nii0D5CrWiLjtPcfU3pQJifaRLxKKVut/hbsazsodCcIOERZbwLH7dQxzOKy3Ey/Fv8fXCA9+Rf+wQzqklbEJQ=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  /> -->
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+    integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn"
+    crossorigin="anonymous" />
 </svelte:head>
 
 <div class="block fixed w-full mx-auto bottom-0 lg:hidden bg-primary-50-900-token z-30">
@@ -67,7 +73,9 @@
     <div id="lab-panel" class="flex-1 w-1/2 min-h-screen">
       <div class="card bg-surface-100-800-token p-8 lg:px-4 py-8 m-2 rounded-xl">
         <article class="mx-auto prose dark:prose-invert max-w-none w-[80%]">
-          {@html data.lab.content}
+          {#key refresh}
+            {@html data.lab.content}
+          {/key}
         </article>
       </div>
     </div>
