@@ -1,21 +1,31 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { currentCourse } from "tutors-reader-lib/src/stores/stores";
   import { generateToc } from "tutors-reader-lib/src/utils/markdown-toc-lib";
-  import { convertMd } from "tutors-reader-lib/src/utils/markdown-utils";
+  import { convertMd, convertRichMd, initKaytex } from "tutors-reader-lib/src/utils/markdown-utils";
 
-  //export let contentHtml = "";
   export let lo;
-  if (lo.contentHtml == undefined) {
+  onMount(async () => {
+    await initKaytex();
     let url = lo.route.replace("/panelnote/", "");
+    url = lo.route.replace("/note/", "");
     url = url.replace($currentCourse.id, $currentCourse.url);
-    let contentHtml = convertMd(lo.contentMd, url);
-    lo.contentHtml = generateToc(contentHtml);
-  }
+    const html = convertRichMd(lo.contentMd, url);
+    lo.contentHtml = generateToc(html);
+  });
 </script>
 
 <article class="notecontent prose dark:prose-invert">
   {@html lo.contentHtml}
 </article>
+
+<svelte:head>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"
+    integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn"
+    crossorigin="anonymous" />
+</svelte:head>
 
 <style>
   :global(.notecontent pre) {

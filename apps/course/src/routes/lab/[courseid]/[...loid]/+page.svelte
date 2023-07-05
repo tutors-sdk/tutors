@@ -5,7 +5,7 @@
   import { goto, afterNavigate } from "$app/navigation";
   export let data: PageData;
   import { page } from "$app/stores";
-  import { initKaytex } from "$lib/markdown/rich-markdown";
+  import { initKaytex } from "tutors-reader-lib/src/utils/markdown-utils";
 
   let refresh = true;
 
