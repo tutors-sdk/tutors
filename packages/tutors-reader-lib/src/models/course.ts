@@ -74,8 +74,9 @@ export class Course {
     this.addWall("talk");
     this.addWall("note");
     this.addWall("lab");
-    this.addWall("github");
+    this.addWall("web");
     this.addWall("archive");
+    this.addWall("github");
 
     this.units = getSortedUnits(this.lo.los);
     this.sideBar = this.lo.los.filter((lo) => lo.type === "side");

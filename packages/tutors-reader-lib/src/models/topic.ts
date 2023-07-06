@@ -28,6 +28,7 @@ export class Topic {
   panelTalks: Lo[];
   standardLos: Lo[];
   toc: Lo[] = [];
+  panelNotes: Lo[];
 
   constructor(lo: Lo, courseUrl: string, course: Course) {
     this.lo = lo;
@@ -37,7 +38,8 @@ export class Topic {
     this.sideBar = this.lo.los.filter((lo) => lo.type === "side");
     this.panelVideos = lo.los.filter((lo) => lo.type == "panelvideo");
     this.panelTalks = lo.los.filter((lo) => lo.type == "paneltalk");
-    this.standardLos = lo.los.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "side");
+    this.panelNotes = lo.los.filter((lo) => lo.type == "panelnote");
+    this.standardLos = lo.los.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "panelnote" && lo.type !== "side");
 
     this.toc.push(...this.panelVideos);
     this.toc.push(...this.panelTalks);
