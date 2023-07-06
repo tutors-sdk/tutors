@@ -4,9 +4,14 @@
 
   export let los: Lo[] = [];
   export let border: boolean = false;
-  let orderedLos = los.filter((lo) => lo?.frontMatter?.order);
-  let unOrderedLos = los.filter((lo) => !lo?.frontMatter?.order);
-  orderedLos.sort((a, b) => Number(a.frontMatter?.order) - Number(b.frontMatter?.order));
+  export let disableSort = false;
+  let orderedLos = los;
+  let unOrderedLos: Lo[] = [];
+  if (!disableSort) {
+    orderedLos = los.filter((lo) => lo?.frontMatter?.order);
+    unOrderedLos = los.filter((lo) => !lo?.frontMatter?.order);
+    orderedLos.sort((a, b) => Number(a.frontMatter?.order) - Number(b.frontMatter?.order));
+  }
   let bordered = "border-[1px] border-surface-200-700-token";
   let unbordered = "";
 </script>
