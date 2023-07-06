@@ -7,7 +7,7 @@
 <div class="container mx-auto">
   {#key data.los}
     {#if data.type !== "video"}
-      <CardDeck los="{data.los}" />
+      <CardDeck los="{data.los}" disableSort="{true}" />
     {:else}
       <div class="flex flex-wrap justify-center">
         {#each data.panelVideos as lo}
