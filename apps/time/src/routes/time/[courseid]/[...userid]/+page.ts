@@ -7,6 +7,8 @@ import { getKeys } from "../../../../environment";
 import { initFirebase } from "tutors-reader-lib/src/utils/firebase-utils";
 import { currentUser } from "tutors-reader-lib/src/stores/stores";
 
+export const ssr = false;
+
 const isStringArray = (test: any[]): boolean => {
   return Array.isArray(test) && !test.some((value) => typeof value !== "string");
 };
