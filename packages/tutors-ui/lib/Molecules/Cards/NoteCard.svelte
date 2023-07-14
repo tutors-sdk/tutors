@@ -1,18 +1,7 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { currentCourse } from "tutors-reader-lib/src/stores/stores";
-  import { generateToc } from "tutors-reader-lib/src/utils/markdown-toc-lib";
-  import { convertRichMd, initKaytex } from "tutors-reader-lib/src/utils/markdown-utils";
+  import { Lo } from "tutors-reader-lib/src/types/lo-types";
 
-  export let lo;
-  onMount(async () => {
-    await initKaytex();
-    let url = lo.route.replace("/panelnote/", "");
-    url = url.replace("/note/", "");
-    url = url.replace($currentCourse.id, $currentCourse.url);
-    const html = convertRichMd(lo.contentMd, url);
-    lo.contentHtml = generateToc(html);
-  });
+  export let lo: Lo;
 </script>
 
 <article class="notecontent prose dark:prose-invert">
