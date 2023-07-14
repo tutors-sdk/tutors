@@ -3,10 +3,10 @@
   import type { ResultType } from "tutors-reader-lib/src/utils/search-utils";
   import { isValid, searchHits } from "tutors-reader-lib/src/utils/search-utils";
   import type { Lo } from "tutors-reader-lib/src/types/lo-types";
-  import { convertMd } from "tutors-reader-lib/src/utils/markdown-utils";
   import type { Course } from "tutors-reader-lib/src/models/course";
   import { currentLo } from "tutors-reader-lib/src/stores/stores";
   import { allLos } from "tutors-reader-lib/src/utils/lo-utils";
+  import { convertMdToHtml } from "$lib/markdown/rich-markdown";
 
   export let data: PageData;
 
@@ -31,7 +31,7 @@
       if (result.fenced) {
         resultStrs.push("~~~");
       }
-      result.html = convertMd(resultStrs.join("\n"), course.url);
+      result.html = convertMdToHtml(resultStrs.join("\n"), course.url);
       result.link = `https://reader.tutors.dev/${result.link}`;
     });
   }
@@ -45,8 +45,9 @@
 </script>
 
 <div class="card container mx-auto p-4">
-  <label for="search" class="label"><span>Enter search term:</span>
-  <input bind:value="{searchTerm}" type="text" name="search" id="search" class="m-2 p-2 input" placeholder="..." /></label>
+  <label for="search" class="label"
+    ><span>Enter search term:</span>
+    <input bind:value="{searchTerm}" type="text" name="search" id="search" class="m-2 p-2 input" placeholder="..." /></label>
   <div class="flex flex-wrap justify-center">
     {#each searchResults as result}
       <div class="card m-1 w-full p-4 lg:w-72 2xl:w-96">

@@ -4,23 +4,9 @@
   import type { PageData } from "./$types";
   import { goto, afterNavigate } from "$app/navigation";
   export let data: PageData;
-  import { page } from "$app/stores";
-  import { initKaytex } from "tutors-reader-lib/src/utils/markdown-utils";
-
-  let refresh = true;
 
   onMount(async () => {
     window.addEventListener("keydown", keypressInput);
-
-    await initKaytex();
-    data.lab.convertMd();
-    const lastSegment = $page.url.pathname.substring($page.url.pathname.lastIndexOf("/") + 1);
-    if (lastSegment.startsWith("book")) {
-      data.lab.setFirstPageActive();
-    } else {
-      data.lab.setActivePage(lastSegment);
-    }
-    refresh = !refresh;
   });
 
   onDestroy(() => {
@@ -73,9 +59,7 @@
     <div id="lab-panel" class="flex-1 w-1/2 min-h-screen">
       <div class="card bg-surface-100-800-token p-8 lg:px-4 py-8 m-2 rounded-xl">
         <article class="mx-auto prose dark:prose-invert max-w-none w-[80%]">
-          {#key refresh}
-            {@html data.lab.content}
-          {/key}
+          {@html data.lab.content}
         </article>
       </div>
     </div>
