@@ -1,6 +1,4 @@
 import type { Lo } from "../types/lo-types";
-import { convertMd, convertRichMd } from "../utils/markdown-utils";
-import { removeLeadingHashes } from "../utils/lo-utils";
 import type { Course } from "./course";
 
 function truncate(input: string) {
@@ -32,17 +30,6 @@ export class Lab {
     this.autoNumber = course.areLabStepsAutoNumbered();
     this.url = labId;
     this.lo = lo;
-    this.convertMd();
-  }
-
-  convertMd() {
-    const assetUrl = this.url.replace(`/lab/${this.course.id}`, this.course.url);
-    this.objectivesHtml = convertRichMd(this.lo.los[0].contentMd, assetUrl);
-    this.lo.los.forEach((chapter) => {
-      this.chaptersHtml.set(encodeURI(chapter.shortTitle), convertRichMd(chapter.contentMd, assetUrl));
-      this.chaptersTitles.set(chapter.shortTitle, removeLeadingHashes(chapter.title));
-    });
-    this.steps = Array.from(this.chaptersHtml.keys());
   }
 
   refreshNav() {
