@@ -1,7 +1,8 @@
 <script lang="ts">
   import { Lo } from "tutors-reader-lib/src/types/lo-types";
-
+  import { convertNoteMdToHtml } from "tutors-reader-lib/src/utils/markdown-utils";
   export let lo: Lo;
+  convertNoteMdToHtml(lo);
 </script>
 
 <article class="notecontent prose dark:prose-invert">

@@ -3,11 +3,11 @@
   import type { Topic } from "tutors-reader-lib/src/models/topic";
   import { CardDeck, UnitCard, TalkCard, NoteCard } from "tutors-ui";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
-  import { convertNoteMdToHtml } from "$lib/markdown/rich-markdown";
+  //import { convertNoteMdToHtml } from "tutors-reader-lib/src/utils/markdown-utils";
   export let topic: Topic;
-  topic.panelNotes.forEach((note) => {
-    convertNoteMdToHtml(note);
-  });
+  // topic.panelNotes.forEach((note) => {
+  //   convertNoteMdToHtml(note);
+  // });
 </script>
 
 {#if browser}

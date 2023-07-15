@@ -1,5 +1,7 @@
+import { convertMdToHtml } from "../utils/markdown-utils";
 import type { Lo } from "../types/lo-types";
 import type { Course } from "./course";
+import { removeLeadingHashes } from "../utils/lo-utils";
 
 function truncate(input: string) {
   if (input?.length > 16) {
@@ -30,6 +32,17 @@ export class Lab {
     this.autoNumber = course.areLabStepsAutoNumbered();
     this.url = labId;
     this.lo = lo;
+    this.convertMdToHtml();
+  }
+
+  convertMdToHtml() {
+    const assetUrl = this.url.replace(`/lab/${this.course.id}`, this.course.url);
+    this.objectivesHtml = convertMdToHtml(this.lo.los[0].contentMd, assetUrl);
+    this.lo.los.forEach((chapter) => {
+      this.chaptersHtml.set(encodeURI(chapter.shortTitle), convertMdToHtml(chapter.contentMd, assetUrl));
+      this.chaptersTitles.set(chapter.shortTitle, removeLeadingHashes(chapter.title));
+    });
+    this.steps = Array.from(this.chaptersHtml.keys());
   }
 
   refreshNav() {

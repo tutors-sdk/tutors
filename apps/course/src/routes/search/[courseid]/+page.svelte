@@ -6,7 +6,7 @@
   import type { Course } from "tutors-reader-lib/src/models/course";
   import { currentLo } from "tutors-reader-lib/src/stores/stores";
   import { allLos } from "tutors-reader-lib/src/utils/lo-utils";
-  import { convertMdToHtml } from "$lib/markdown/rich-markdown";
+  import { convertMdToHtml } from "tutors-reader-lib/src/utils/markdown-utils";
 
   export let data: PageData;
 

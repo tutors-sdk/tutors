@@ -13,8 +13,6 @@ import mark from "markdown-it-mark";
 import footnote from "markdown-it-footnote";
 import deflist from "markdown-it-deflist";
 import container from "markdown-it-container";
-import type { Lab } from 'tutors-reader-lib/src/models/lab';
-import { removeLeadingHashes } from 'tutors-reader-lib/src/utils/lo-utils';
 
 const markdownIt: any = new MarkdownIt({
     html: false,        // Enable HTML tags in source
@@ -79,12 +77,3 @@ export function convertNoteMdToHtml(lo: Lo) {
     }
 }
 
-export function convertLabMdToHtml(lab: Lab) {
-    const assetUrl = lab.url.replace(`/lab/${lab.course.id}`, lab.course.url);
-    lab.objectivesHtml = convertMdToHtml(lab.lo.los[0].contentMd, assetUrl);
-    lab.lo.los.forEach((chapter) => {
-        lab.chaptersHtml.set(encodeURI(chapter.shortTitle), convertMdToHtml(chapter.contentMd, assetUrl));
-        lab.chaptersTitles.set(chapter.shortTitle, removeLeadingHashes(chapter.title));
-    });
-    lab.steps = Array.from(lab.chaptersHtml.keys());
-}
