@@ -36,7 +36,10 @@ const markdownIt: any = new MarkdownIt({
 
 const tocOptions = { "includeLevel": [1, 2, 3] };
 markdownIt.use(latex);
-markdownIt.use(anchor);
+markdownIt.use(anchor, {
+    permalink: anchor.permalink.headerLink()
+});
+
 markdownIt.use(toc, tocOptions);
 markdownIt.use(emoji);
 markdownIt.use(sub);
@@ -67,12 +70,11 @@ export function convertMdToHtml(md: string, url: string): string {
 }
 
 export function convertNoteMdToHtml(lo: Lo) {
-    let loPath = lo.route.replace("/panelnote/", "");
-    loPath = loPath.replace("/note/", "");
-    const course = get(currentCourse)
-    loPath = loPath.replace(course.id, course.url);
-
     if (!lo.contentHtml) {
+        let loPath = lo.route.replace("/panelnote/", "");
+        loPath = loPath.replace("/note/", "");
+        const course = get(currentCourse)
+        loPath = loPath.replace(course.id, course.url);
         lo.contentHtml = convertMdToHtml(lo.contentMd, loPath);
     }
 }
