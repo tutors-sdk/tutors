@@ -49,7 +49,7 @@
     if (mounted && path.params.courseid && getKeys().firebase.apiKey !== "XXX") {
       analyticsService.learningEvent(path.params);
     }
-    if (path.url.hash) {
+    if (path?.url.hash && !path?.url.hash.startsWith("#access_token")) {
       const el = document.querySelector(path.url.hash);
       if (el) {
         el.scrollIntoView({
