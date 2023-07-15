@@ -5,6 +5,7 @@ export const ssr = false;
 
 export const load: PageLoad = async ({ url, params }) => {
   const lab = await courseService.readLab(params.courseid, url.pathname);
+
   const lastSegment = url.pathname.substring(url.pathname.lastIndexOf("/") + 1);
   if (lastSegment.startsWith("book")) {
     lab.setFirstPageActive();
