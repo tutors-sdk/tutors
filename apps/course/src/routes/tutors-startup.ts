@@ -36,7 +36,7 @@ export async function initServices() {
       goto(relPath);
     }
     transitionKey.set(path.url.pathname);
-    if (path.url.pathname.includes("book") || path.url.pathname.includes("pdf") || path.url.pathname.includes("video")) {
+    if (path.url.pathname.includes("book") || path.url.pathname.includes("pdf") || path.url.pathname.includes("video") || path.url.pathname.includes("note")) {
       transitionKey.set("none");
     }
   });
