@@ -59,13 +59,15 @@
     }
   });
 
-  // afterNavigate((params: any) => {
-  //   const isNewPage: boolean = params.from && params.to && params.from.route.id !== params.to.route.id;
-  //   const elemPage = document.querySelector("#page");
-  //   if (isNewPage && elemPage !== null) {
-  //     elemPage.scrollTop = 0;
-  //   }
-  // });
+  afterNavigate((params: any) => {
+    if (!$page.url.hash) {
+      const isNewPage: boolean = params.from && params.to && params.from.route.id !== params.to.route.id;
+      const elemPage = document.querySelector("#page");
+      if (isNewPage && elemPage !== null) {
+        elemPage.scrollTop = 0;
+      }
+    }
+  });
 
   function setColorScheme() {
     if (localStorage.getItem("storeLightSwitch") === "true" || (!("storeLightSwitch" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches)) {

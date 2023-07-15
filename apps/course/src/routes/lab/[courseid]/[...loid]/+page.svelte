@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from "$app/stores";
   import { browser } from "$app/environment";
   import { onDestroy, onMount } from "svelte";
   import type { PageData } from "./$types";
@@ -13,10 +14,12 @@
     browser ? window.removeEventListener("keydown", keypressInput) : null;
   });
 
-  // afterNavigate(() => {
-  //   const elemPage = document.querySelector("#page");
-  //   if (elemPage) elemPage.scrollTop = 0;
-  // });
+  afterNavigate(() => {
+    if (!$page.url.hash) {
+      const elemPage = document.querySelector("#page");
+      if (elemPage) elemPage.scrollTop = 0;
+    }
+  });
 
   async function keypressInput(e: KeyboardEvent) {
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {
