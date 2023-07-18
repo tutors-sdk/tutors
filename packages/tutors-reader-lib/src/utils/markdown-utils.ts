@@ -12,14 +12,13 @@ import sup from "markdown-it-sup";
 import mark from "markdown-it-mark";
 import footnote from "markdown-it-footnote";
 import deflist from "markdown-it-deflist";
-import container from "markdown-it-container";
 
 const markdownIt: any = new MarkdownIt({
     html: false,        // Enable HTML tags in source
     xhtmlOut: false,        // Use '/' to close single tags (<br />).
     breaks: false,        // Convert '\n' in paragraphs into <br>
     langPrefix: 'language-',  // CSS language prefix for fenced blocks. Can be
-    linkify: true,        // Autoconvert URL-like text to links
+    linkify: false,        // Autoconvert URL-like text to links
     typographer: true,
     quotes: '“”‘’',
     highlight: function (str, lang) {
@@ -47,7 +46,26 @@ markdownIt.use(sup);
 markdownIt.use(mark);
 markdownIt.use(footnote);
 markdownIt.use(deflist);
-markdownIt.use(container);
+
+var defaultRender = markdownIt.renderer.rules.link_open || function (tokens, idx, options, env, self) {
+    return self.renderToken(tokens, idx, options);
+};
+markdownIt.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+    // If you are sure other plugins can't add `target` - drop check below
+    var aIndex = tokens[idx].attrIndex('target');
+    if (aIndex < 0) {
+        if ((tokens[idx]?.attrs.length > 0) && (tokens[idx].attrs[0][1] === "header-anchor")) {
+            ; // do not set target in anchor tags
+        } else {
+            tokens[idx].attrPush(['target', '_blank']); // add new attribute
+        }
+    } else {
+        tokens[idx].attrs[aIndex][1] = '_blank';    // replace value of existing attr
+    }
+    // pass token to default renderer.
+    return defaultRender(tokens, idx, options, env, self);
+};
+
 
 function replaceAll(str: string, find: string, replace: string) {
     return str.replace(new RegExp(find, "g"), replace);
