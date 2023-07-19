@@ -49,13 +49,24 @@
     if (mounted && path.params.courseid && getKeys().firebase.apiKey !== "XXX") {
       analyticsService.learningEvent(path.params);
     }
+    if (path?.url.hash && !path?.url.hash.startsWith("#access_token")) {
+      console.log(path?.url.hash);
+      const el = document.querySelector(`[id="${path.url.hash}"]`);
+      if (el) {
+        el.scrollIntoView({
+          behavior: "smooth"
+        });
+      }
+    }
   });
 
   afterNavigate((params: any) => {
-    const isNewPage: boolean = params.from && params.to && params.from.route.id !== params.to.route.id;
-    const elemPage = document.querySelector("#page");
-    if (isNewPage && elemPage !== null) {
-      elemPage.scrollTop = 0;
+    if (!$page.url.hash) {
+      const isNewPage: boolean = params.from && params.to && params.from.route.id !== params.to.route.id;
+      const elemPage = document.querySelector("#page");
+      if (isNewPage && elemPage !== null) {
+        elemPage.scrollTop = 0;
+      }
     }
   });
 

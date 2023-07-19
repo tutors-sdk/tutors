@@ -5,7 +5,6 @@
   import { currentCourse, layout } from "tutors-reader-lib/src/stores/stores";
   import { onDestroy } from "svelte";
   import { Image } from "tutors-ui";
-  import { convertMd } from "tutors-reader-lib/src/utils/markdown-utils";
   import { cardTransition } from "../../animations";
 
   export let lo: Lo;
@@ -20,7 +19,6 @@
     if (lo.type == "video") {
       lo.route = lo.video;
     }
-    lo.summary = convertMd(lo.summary, "");
   }
 
   let headingText = "";

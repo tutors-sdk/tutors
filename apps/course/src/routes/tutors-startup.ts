@@ -16,7 +16,7 @@ export async function initServices() {
     if (pageVal.url.hash) {
       if (pageVal.url.hash.startsWith("#/course")) {
         goto(pageVal.url.hash.slice(2));
-      } else {
+      } else if (pageVal.url.hash.startsWith("#access_token")) {
         authenticating.set(true);
         const token = pageVal.url.hash.substring(pageVal.url.hash.indexOf("#") + 1);
         authService.handleAuthentication(token, (courseId) => {
@@ -36,7 +36,7 @@ export async function initServices() {
       goto(relPath);
     }
     transitionKey.set(path.url.pathname);
-    if (path.url.pathname.includes("book") || path.url.pathname.includes("pdf") || path.url.pathname.includes("video")) {
+    if (path.url.pathname.includes("book") || path.url.pathname.includes("pdf") || path.url.pathname.includes("video") || path.url.pathname.includes("note")) {
       transitionKey.set("none");
     }
   });
