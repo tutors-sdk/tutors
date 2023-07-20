@@ -22,30 +22,25 @@ function fixRoutePaths(lo: Lo) {
 export class Topic {
   course: Course;
   lo: Lo;
-  units: Lo[];
-  sideBar: Lo[];
-  panelVideos: Lo[];
-  panelTalks: Lo[];
-  standardLos: Lo[];
   toc: Lo[] = [];
-  panelNotes: Lo[];
 
   constructor(lo: Lo, courseUrl: string, course: Course) {
     this.lo = lo;
     this.course = course;
 
-    this.units = getSortedUnits(this.lo.los);
-    this.sideBar = this.lo.los.filter((lo) => lo.type === "side");
-    this.panelVideos = lo.los.filter((lo) => lo.type == "panelvideo");
-    this.panelTalks = lo.los.filter((lo) => lo.type == "paneltalk");
-    this.panelNotes = lo.los.filter((lo) => lo.type == "panelnote");
-    this.standardLos = lo.los.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "panelnote" && lo.type !== "side");
+    const units = getSortedUnits(this.lo.los);
+    const sideBar = this.lo.los.filter((lo) => lo.type === "side");
+    const panelVideos = lo.los.filter((lo) => lo.type == "panelvideo");
+    const panelTalks = lo.los.filter((lo) => lo.type == "paneltalk");
+    const panelNotes = lo.los.filter((lo) => lo.type == "panelnote");
+    const standardLos = lo.los.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "panelnote" && lo.type !== "side");
 
-    this.toc.push(...this.panelVideos);
-    this.toc.push(...this.panelTalks);
-    this.toc.push(...this.units);
-    this.toc.push(...this.standardLos);
-    this.toc.push(...this.sideBar);
+    this.toc.push(...panelVideos);
+    this.toc.push(...panelTalks);
+    this.toc.push(...panelNotes);
+    this.toc.push(...units);
+    this.toc.push(...standardLos);
+    this.toc.push(...sideBar);
 
     fixRoutePaths(lo);
     this.toc.forEach((lo) => {
