@@ -16,13 +16,15 @@
   let unbordered = "";
 </script>
 
-<div class="bg-surface-100-800-token mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4 {border ? bordered : unbordered}">
-  <div class="flex flex-wrap justify-center">
-    {#each orderedLos as lo}
-      <Card lo="{lo}" />
-    {/each}
-    {#each unOrderedLos as lo}
-      <Card lo="{lo}" />
-    {/each}
+{#if los.length > 0}
+  <div class="bg-surface-100-800-token mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4 {border ? bordered : unbordered}">
+    <div class="flex flex-wrap justify-center">
+      {#each orderedLos as lo}
+        <Card lo="{lo}" />
+      {/each}
+      {#each unOrderedLos as lo}
+        <Card lo="{lo}" />
+      {/each}
+    </div>
   </div>
-</div>
+{/if}
