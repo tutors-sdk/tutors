@@ -17,7 +17,9 @@ export { default as TopicNavigatorCard } from "./lib/Molecules/Cards/TopicNaviga
 export { default as VideoCard } from "./lib/Molecules/Cards/VideoCard.svelte";
 
 export { default as CardDeck } from "./lib/Organisms/CardDeck/CardDeck.svelte";
+export { default as UnitCard } from "./lib/Organisms/CardDeck/UnitCard.svelte";
+export { default as TopDeck } from "./lib/Organisms/CardDeck/TopDeck.svelte";
 export { default as CourseCardDeck } from "./lib/Organisms/CardDeck/CourseCardDeck.svelte";
 export { default as StudentCardDeck } from "./lib/Organisms/CardDeck/StudentCardDeck.svelte";
 export { default as TopicNavigator } from "./lib/Organisms/TopicNavigator/TopicNavigator.svelte";
-export { default as UnitCard } from "./lib/Organisms/UnitCard/UnitCard.svelte";
+

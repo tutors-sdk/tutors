@@ -6,7 +6,7 @@
 
 {#if data.lo}
   <div class="min-h-screen flex w-11/12 mx-auto">
-    <div class="w-full">
+    <div class="flex flex-wrap justify-center w-full">
       <NoteCard lo="{data.lo}" />
     </div>
     <div class="hidden md:block">
