@@ -49,7 +49,7 @@
     </div>
   </div>
 {:else}
-  <div class="w-11/12 mx-auto">
+  <div class="flex flex-wrap justify-center w-11/12 mx-auto">
     <PanelDeck lo="{lo}" />
     <UnitDeck units="{units}" />
     {#if standardDeck}
