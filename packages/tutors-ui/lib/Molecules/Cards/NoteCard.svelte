@@ -5,7 +5,7 @@
   convertNoteMdToHtml(lo);
 </script>
 
-<article class="notecontent prose dark:prose-invert">
+<article class="notecontent prose dark:prose-invert max-w-none w-[80%]">
   {@html lo.contentHtml}
 </article>
 
