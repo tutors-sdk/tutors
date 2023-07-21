@@ -20,13 +20,13 @@
 			<div class="space-x-4 space-y-4">
 				<a
 					class="btn btn-xl bg-primary-500 text-white font-bold hover:scale-105 transition-all w-64"
-					href="https://reader.tutors.dev/course/full-stack-web-dev-oth-2022"
+					href="https://reader.tutors.dev/course/reference-course"
 					target="_blank"
 					rel="noreferrer">View Demo</a
 				>
 				<a
 					class="btn btn-xl bg-surface-100-800-token font-bold hover:scale-105 transition-all w-64"
-					href="https://reader.tutors.dev/course/tutors-docs"
+					href="https://reader.tutors.dev/course/tutors-reference-manual"
 					target="_blank"
 					rel="noreferrer">Documentation</a
 				>
