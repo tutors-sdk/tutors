@@ -27,37 +27,51 @@ export const authService = {
   },
 
   async checkAuth(course: Course) {
-    let status = true;
     if (course.authLevel > 0) {
       if (!isAuthenticated()) {
-        status = false;
         localStorage.setItem("course_url", course.url);
         this.login(this.auth0);
+        return false;
       } else {
         this.loadUser(course);
       }
     }
-    return status;
+    return true;
   },
 
-  handleAuthentication(result: string, success: SuccessFunction): void {
+  async handleAuthentication(result: string, success: SuccessFunction): Promise<void> {
     const authResult = new URLSearchParams(result);
     const accessToken = authResult.get("access_token");
     const idToken = authResult.get("id_token");
+
     if (accessToken && idToken) {
-      this.auth0.client.userInfo(accessToken, function (err: any, user: any) {
-        if (err) {
-          console.log("Error loading the Profile", err);
-        }
+      try {
+        const user = await this.getUserInfo(accessToken);
         toLocalStorage(user);
+
         const url = localStorage.getItem("course_url");
         const courseId = url.replace(".netlify.app", "");
         analyticsService.updateLogin(courseId, user);
+
         user.userId = encrypt(user.email);
         setSession(authResult);
         success(url);
-      });
+      } catch (err) {
+        console.log("Error loading the Profile", err);
+      }
     }
+  },
+
+  async getUserInfo(accessToken: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+      this.auth0.client.userInfo(accessToken, (err: any, user: any) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(user);
+        }
+      });
+    });
   },
 
   login(auth0) {
