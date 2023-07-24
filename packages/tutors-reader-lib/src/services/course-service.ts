@@ -12,23 +12,25 @@ export const courseService = {
   async getOrLoadCourse(courseId: string): Promise<Course> {
     let course = this.courses.get(courseId);
     let courseUrl = courseId;
+
     if (!course) {
       if (!courseId.includes(".netlify.app") && !courseId.includes(".tutors.dev")) {
         courseUrl = `${courseId}.netlify.app`;
       } else {
         courseId = courseId.split(".")[0];
       }
+
       try {
         const response = await fetch(`https://${courseUrl}/tutors.json`);
         const data = await response.json();
         course = new Course(data, courseId, courseUrl);
         this.courses.set(courseId, course);
-        return course;
       } catch (error) {
         console.log(error);
         throw error;
       }
     }
+
     return course;
   },
 
@@ -53,14 +55,13 @@ export const courseService = {
 
     const lastSegment = labId.substring(labId.lastIndexOf("/") + 1);
     if (!lastSegment.startsWith("book")) {
-      labId = labId.substr(0, labId.lastIndexOf("/"));
+      labId = labId.slice(0, labId.lastIndexOf("/"));
     }
+
     const lo = course.loIndex.get(labId);
-    let lab = course.hydratedLabs.get(labId);
-    if (!lab) {
-      lab = new Lab(course, lo, labId);
-      course.hydratedLabs.set(labId, lab);
-    }
+    const lab = course.hydratedLabs.get(labId) || new Lab(course, lo, labId);
+    course.hydratedLabs.set(labId, lab);
+
     currentLo.set(lab.lo);
     return lab;
   },
