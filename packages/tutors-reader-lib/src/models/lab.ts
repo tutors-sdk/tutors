@@ -38,77 +38,66 @@ export class Lab {
   convertMdToHtml() {
     const assetUrl = this.url.replace(`/lab/${this.course.id}`, this.course.url);
     this.objectivesHtml = convertMdToHtml(this.lo.los[0].contentMd, assetUrl);
-    this.lo.los.forEach((chapter) => {
-      this.chaptersHtml.set(encodeURI(chapter.shortTitle), convertMdToHtml(chapter.contentMd, assetUrl));
-      this.chaptersTitles.set(chapter.shortTitle, removeLeadingHashes(chapter.title));
-    });
+    this.chaptersHtml = new Map(this.lo.los.map((chapter) => [encodeURI(chapter.shortTitle), convertMdToHtml(chapter.contentMd, assetUrl)]));
+    this.chaptersTitles = new Map(this.lo.los.map((chapter) => [chapter.shortTitle, removeLeadingHashes(chapter.title)]));
     this.steps = Array.from(this.chaptersHtml.keys());
   }
 
   refreshNav() {
-    let nav = "";
-    this.horizontalNavbarHtml = "";
+    const number = this.autoNumber ? this.lo.shortTitle + ": " : "";
 
-    this.lo.los.forEach((chapter, i) => {
-      const number = this.autoNumber == true ? chapter.shortTitle + ": " : "";
-      const active = encodeURI(chapter.shortTitle) == this.currentChapterShortTitle ? "font-bold bg-surface-200 dark:bg-surface-600 pl-4" : "";
-      const title = this.chaptersTitles.get(chapter.shortTitle);
-      nav = nav.concat(`<a href="${this.url}/${encodeURI(chapter.shortTitle)}"><li class="py-2 px-4 ${active} !text-black dark:!text-white">${number}${title}</li></a>`);
+    this.navbarHtml = this.lo.los
+      .map((chapter) => {
+        const active = encodeURI(chapter.shortTitle) === this.currentChapterShortTitle ? "font-bold bg-surface-200 dark:bg-surface-600 pl-4" : "";
+        const title = this.chaptersTitles.get(chapter.shortTitle);
+        return `<a href="${this.url}/${encodeURI(chapter.shortTitle)}"><li class="py-2 px-4 ${active} !text-black dark:!text-white">${number}${title}</li></a>`;
+      })
+      .join("");
 
-      // horizontal nav
-      if (encodeURI(chapter.shortTitle) == this.currentChapterShortTitle) {
-        if (this.lo.los[i - 1] !== undefined) {
-          const nav = this.lo.los[i - 1];
-          const title = truncate(this.chaptersTitles.get(nav.shortTitle));
-          this.horizontalNavbarHtml = this.horizontalNavbarHtml.concat(
-            `<a class="btn btn-sm capitalize" href="${this.url}/${encodeURI(nav.shortTitle)}"> <span aria-hidden="true">&larr;</span>&nbsp; ${number}${title} </a>`
-          );
-        }
-        if (this.lo.los[i + 1] !== undefined) {
-          const nav = this.lo.los[i + 1];
-          const title = truncate(this.chaptersTitles.get(nav.shortTitle));
-          this.horizontalNavbarHtml = this.horizontalNavbarHtml.concat(
-            `<a class="ml-auto btn btn-sm capitalize" style="margin-left: auto" href="${this.url}/${encodeURI(
-              nav.shortTitle
-            )}"> ${number}${title} &nbsp;<span aria-hidden="true">&rarr;</span></a>`
-          );
-        }
-      }
-    });
-    this.navbarHtml = nav;
+    const currentChapterIndex = this.lo.los.findIndex((chapter) => encodeURI(chapter.shortTitle) === this.currentChapterShortTitle);
+    if (currentChapterIndex !== -1) {
+      const prevChapter = this.lo.los[currentChapterIndex - 1];
+      const prevTitle = prevChapter ? truncate(this.chaptersTitles.get(prevChapter.shortTitle)) : "";
+      this.horizontalNavbarHtml = prevChapter
+        ? `<a class="btn btn-sm capitalize" href="${this.url}/${encodeURI(prevChapter.shortTitle)}"> <span aria-hidden="true">&larr;</span>&nbsp; ${number}${prevTitle} </a>`
+        : "";
+
+      const nextChapter = this.lo.los[currentChapterIndex + 1];
+      const nextTitle = nextChapter ? truncate(this.chaptersTitles.get(nextChapter.shortTitle)) : "";
+      this.horizontalNavbarHtml += nextChapter
+        ? `<a class="ml-auto btn btn-sm capitalize" style="margin-left: auto" href="${this.url}/${encodeURI(
+            nextChapter.shortTitle
+          )}"> ${number}${nextTitle} &nbsp;<span aria-hidden="true">&rarr;</span></a>`
+        : "";
+    } else {
+      this.horizontalNavbarHtml = "";
+    }
   }
 
-  setFirstPageActive() {
-    const startStep = encodeURI(this.lo.los[0].shortTitle);
-    this.currentChapterShortTitle = startStep;
-    this.currentChapterTitle = this.chaptersTitles.get(startStep);
-    this.content = this.chaptersHtml.get(startStep);
-    this.refreshNav();
-  }
-
-  setActivePage(step: string) {
-    if (this.steps.indexOf(step) < 0) return;
+  setCurrentChapter(step: string) {
+    if (!this.steps.includes(step)) return;
     this.currentChapterShortTitle = step;
     this.currentChapterTitle = this.chaptersTitles.get(step);
     this.content = this.chaptersHtml.get(step);
     this.refreshNav();
   }
 
+  setFirstPageActive() {
+    const startStep = encodeURI(this.lo.los[0].shortTitle);
+    this.setCurrentChapter(startStep);
+  }
+
+  setActivePage(step: string) {
+    this.setCurrentChapter(step);
+  }
+
   nextStep(): string {
-    let step = "";
     const itemIndex = this.steps.indexOf(this.currentChapterShortTitle);
-    if (itemIndex < this.steps.length - 1) {
-      step = this.steps[itemIndex + 1];
-    }
-    return step;
+    return itemIndex < this.steps.length - 1 ? this.steps[itemIndex + 1] : "";
   }
 
   prevStep(): string {
-    let step = "";
     const itemIndex = this.steps.indexOf(this.currentChapterShortTitle);
-    if (itemIndex > 0) {
-      step = this.steps[itemIndex - 1];
-    }
-    return step;
+    return itemIndex > 0 ? this.steps[itemIndex - 1] : "";
   }
 }
