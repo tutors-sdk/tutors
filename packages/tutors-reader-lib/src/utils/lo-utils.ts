@@ -1,19 +1,19 @@
-import path from "path-browserify";
 import type { Lo } from "../types/lo-types";
 
 export function injectCourseUrl(lo: Lo, id: string, url: string) {
-  if (lo.type === "archive") {
-    if (lo.route) lo.route = lo.route.replace("{{COURSEURL}}", url);
+  if (lo.type === "archive" || lo.type === "otherType") {
+    lo.route = lo.route?.replace("{{COURSEURL}}", url);
   } else {
-    if (lo.route) lo.route = lo.route.replace("{{COURSEURL}}", id);
+    lo.route = lo.route?.replace("{{COURSEURL}}", id);
   }
-  if (lo.img) lo.img = lo.img.replace("{{COURSEURL}}", url);
-  if (lo.video) lo.video = lo.video.replace("{{COURSEURL}}", id);
-  if (lo.pdf) lo.pdf = lo.pdf.replace("{{COURSEURL}}", url);
+
+  lo.img = lo.img?.replace("{{COURSEURL}}", url);
+  lo.video = lo.video?.replace("{{COURSEURL}}", id);
+  lo.pdf = lo.pdf?.replace("{{COURSEURL}}", url);
 
   if (lo.los) {
-    lo.los.forEach((lo) => {
-      injectCourseUrl(lo, id, url);
+    lo.los.forEach((childLo) => {
+      injectCourseUrl(childLo, id, url);
     });
   }
 }
@@ -27,106 +27,104 @@ export function flattenLos(los: Lo[]): Lo[] {
   return result;
 }
 
-function removeLastDirectory(the_url: string) {
-  const the_arr = the_url.split("/");
-  the_arr.pop();
-  return the_arr.join("/");
-}
-
-export function removeLeadingHashes(str: string): string {
-  if (str.includes("#")) {
-    str = str.substr(str.lastIndexOf("#") + 1);
-  }
-  return str;
+export function removeLastDirectory(the_url: string): string {
+  const lastSlashIndex = the_url.lastIndexOf("/");
+  return the_url.substring(0, lastSlashIndex);
 }
 
 export function findCourseUrls(labUrl: string): string[] {
   let topicUrl = removeLastDirectory(labUrl);
-  if (path.basename(topicUrl).startsWith("unit") && topicUrl.includes("topic")) {
+
+  const lastSlashIndex = topicUrl.lastIndexOf("/");
+  const topicUrlBasename = topicUrl.substring(lastSlashIndex + 1);
+
+  if (topicUrlBasename.startsWith("unit") && topicUrl.includes("topic")) {
     topicUrl = removeLastDirectory(topicUrl);
   }
+
   const courseUrl = removeLastDirectory(topicUrl);
   return [courseUrl, topicUrl];
 }
 
+export function removeLeadingHashes(str: string): string {
+  const hashIndex = str.lastIndexOf("#");
+  return hashIndex >= 0 ? str.substring(hashIndex + 1) : str;
+}
+
 export function lastSegment(url: string) {
   const parts = url.split("/");
-  const lastSegment = parts.pop() || parts.pop();
-  return lastSegment;
+  return parts[parts.length - 1];
 }
 
 export function threadLos(parent: Lo) {
-  parent.los.forEach((lo) => {
+  for (const lo of parent.los) {
     lo.parentLo = parent;
     if (lo.los) {
       threadLos(lo);
     }
-  });
+  }
 }
 
 export function findLos(los: Lo[], lotype: string): Lo[] {
-  let result: Lo[] = [];
-  los.forEach((lo) => {
+  const result: Lo[] = [];
+  for (const lo of los) {
     if (lo.type === lotype) {
       result.push(lo);
     }
-    if (lo.type == "unit" || lo.type == "side") {
-      result = result.concat(findLos(lo.los, lotype));
+    if (lo.type === "unit" || lo.type === "side") {
+      result.push(...findLos(lo.los, lotype));
     }
-  });
+  }
   return result;
 }
 
 export function findVideoLos(los: Lo[]): Lo[] {
-  let result: Lo[] = [];
-  los.forEach((lo) => {
+  const result: Lo[] = [];
+  for (const lo of los) {
     if (lo.video) {
       result.push(lo);
     }
-    if (lo.type == "unit") {
-      result = result.concat(findVideoLos(lo.los));
+    if (lo.type === "unit") {
+      result.push(...findVideoLos(lo.los));
     }
-  });
+  }
   return result;
 }
 
-export function allLos(lotype: string, los: Lo[]) {
-  let allLos: Lo[] = [];
+export function allLos(lotype: string, los: Lo[]): Lo[] {
+  const allLos: Lo[] = [];
   for (const topic of los) {
-    allLos = allLos.concat(findLos(topic.los, lotype));
+    allLos.push(...findLos(topic.los, lotype));
   }
   return allLos;
 }
 
-export function allVideoLos(los: Lo[]) {
-  let allLos: Lo[] = [];
+export function allVideoLos(los: Lo[]): Lo[] {
+  const allLos: Lo[] = [];
   for (const topic of los) {
-    allLos = allLos.concat(findVideoLos(topic.los));
+    allLos.push(...findVideoLos(topic.los));
   }
   return allLos;
 }
 
 export function fixRoutes(lo: Lo) {
-  if (lo.route && lo.route[0] == "#") {
-    lo.route = lo.route.slice(1);
-    lo.route = "/" + lo.route;
+  if (lo.route && lo.route.startsWith("#")) {
+    lo.route = `/${lo.route.slice(1)}`;
   }
-  if (lo.route.endsWith("md") && lo.video) {
+  if (lo.route.endsWith(".md") && lo.video) {
     lo.route = lo.video;
   }
 }
 
 export function getSortedUnits(los: Lo[]) {
-  const allUnits = los.filter((lo) => lo.type == "unit");
+  const allUnits = los.filter((lo) => lo.type === "unit");
   for (const unit of allUnits) {
-    const panelVideos = unit.los.filter((lo) => lo.type == "panelvideo");
-    const panelTalks = unit.los.filter((lo) => lo.type == "paneltalk");
-    const standardLos = unit.los.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk");
-    const sortedLos: Lo[] = [];
-    sortedLos.push(...panelVideos);
-    sortedLos.push(...panelTalks);
-    sortedLos.push(...standardLos);
-    unit.los = sortedLos;
+    const [panelVideos, panelTalks, standardLos] = [
+      unit.los.filter((lo) => lo.type === "panelvideo"),
+      unit.los.filter((lo) => lo.type === "paneltalk"),
+      unit.los.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk")
+    ];
+    unit.los = [...panelVideos, ...panelTalks, ...standardLos];
   }
   return allUnits;
 }
