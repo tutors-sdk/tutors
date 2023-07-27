@@ -27,9 +27,9 @@ export const presenceService = {
   },
 
   updateListeners(kind: string, event: StudentLoEvent) {
-    this.listeners.forEach((listener, key, map) => {
+    for (const listener of this.listeners.values()) {
       listener(kind, event);
-    });
+    }
   },
 
   sweepAndPurge(): void {
