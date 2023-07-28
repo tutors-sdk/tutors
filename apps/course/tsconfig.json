@@ -7,7 +7,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "sourceMap": true,
+    "types": ["cypress", "cypress-real-events", "./support"],
     "strict": true
   }
 }
