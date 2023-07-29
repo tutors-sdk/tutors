@@ -3,7 +3,7 @@
 	import type { PageData } from './$types';
 	import { authService } from 'tutors-reader-lib/src/services/auth-service';
 	import { initFirebase } from 'tutors-reader-lib/src/utils/firebase-utils';
-	import { getKeys } from '../../../environment';
+	import { getKeys } from '$lib/environment';
 	import TopDeck from 'tutors-ui/lib/Organisms/CardDeck/TopDeck.svelte';
 
 	export let data: PageData;

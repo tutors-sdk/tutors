@@ -1,5 +1,5 @@
 import type { PageLoad } from './$types';
-import { getKeys } from '../../../environment';
+import { getKeys } from '$lib/environment';
 import { initFirebase } from '$lib/utils/firebase';
 import { courseService } from '$lib/services/course';
 import type { Course } from '$lib/models/course';

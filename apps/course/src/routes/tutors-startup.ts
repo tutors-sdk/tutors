@@ -4,7 +4,7 @@ import { get } from 'svelte/store';
 import { transitionKey, currentCourse, authenticating } from '$lib/stores';
 import { presenceService } from '$lib/services/presence';
 import { initFirebase } from '$lib/utils/firebase';
-import { getKeys } from '../environment';
+import { getKeys } from '$lib/environment';
 import { goto } from '$app/navigation';
 
 export async function initServices() {

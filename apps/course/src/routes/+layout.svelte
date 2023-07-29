@@ -16,7 +16,7 @@
 	import valentines from 'tutors-ui/lib/themes/valentines.css?inline';
 	import { authenticating, transitionKey, storeTheme, currentCourse, currentLo } from '$lib/stores';
 	import PageTransition from '$lib/ui/PageTransition.svelte';
-	import { getKeys } from '../environment';
+	import { getKeys } from '$lib/environment';
 	import TutorsTerms from '$lib/ui/support/TutorsTerms.svelte';
 	import { analyticsService } from '$lib/services/analytics';
 	import { initServices } from './tutors-startup';
