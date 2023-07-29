@@ -19,7 +19,7 @@
 	import { getKeys } from '$lib/environment';
 	import TutorsTerms from '$lib/ui/support/TutorsTerms.svelte';
 	import { analyticsService } from '$lib/services/analytics';
-	import { initServices } from './tutors-startup';
+	import { initServices } from '$lib/tutors-startup';
 	import Sidebars from '$lib/ui/navigators/sidebars/Sidebars.svelte';
 
 	let mounted = false;
