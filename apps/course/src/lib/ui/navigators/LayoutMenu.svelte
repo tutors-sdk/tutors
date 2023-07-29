@@ -6,7 +6,7 @@
 		modeCurrent,
 		setModeCurrent
 	} from '@skeletonlabs/skeleton';
-	import { layout, storeTheme } from 'tutors-reader-lib/src/stores/stores';
+	import { layout, storeTheme } from '$lib/stores';
 	import moment from 'moment';
 	import { Icon } from 'tutors-ui';
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Course } from 'tutors-reader-lib/src/models/course';
+	import type { Course } from '$lib/models/course';
 	import { TopicNavigator } from 'tutors-ui';
 	import { Accordion, AccordionItem } from '@skeletonlabs/skeleton';
 

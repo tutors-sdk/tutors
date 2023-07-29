@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { currentCourse, currentUser, studentsOnline } from 'tutors-reader-lib/src/stores/stores';
-	import type { User } from 'tutors-reader-lib/src/types/auth-types';
-	import type { Course } from 'tutors-reader-lib/src/models/course';
-	import { analyticsService } from 'tutors-reader-lib/src/services/analytics-service';
+	import { currentCourse, currentUser, studentsOnline } from '$lib/stores';
+	import type { User } from '$lib/types/auth';
+	import type { Course } from '$lib/models/course';
+	import { analyticsService } from '$lib/services/analytics';
 	import { popup, Avatar, drawerStore, type DrawerSettings } from '@skeletonlabs/skeleton';
 	import { Icon } from 'tutors-ui';
 

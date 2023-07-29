@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { drawerStore } from '@skeletonlabs/skeleton';
-	import { studentsOnline } from 'tutors-reader-lib/src/stores/stores';
+	import { studentsOnline } from '$lib/stores';
 	import { StudentCardDeck } from 'tutors-ui';
 
 	const drawerClose: any = () => {

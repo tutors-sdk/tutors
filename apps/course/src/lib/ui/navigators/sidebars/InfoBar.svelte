@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { currentCourse } from 'tutors-reader-lib/src/stores/stores';
+	import { currentCourse } from '$lib/stores';
 	import { drawerStore } from '@skeletonlabs/skeleton';
-	import { convertMdToHtml } from 'tutors-reader-lib/src/utils/markdown-utils';
+	import { convertMdToHtml } from '$lib/utils/markdown';
 	const courseInfo = convertMdToHtml($currentCourse.lo.contentMd, '');
 
 	const drawerClose: any = () => {

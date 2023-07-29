@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { currentCourse, portfolio } from 'tutors-reader-lib/src/stores/stores';
+	import { currentCourse, portfolio } from '$lib/stores';
 	import { onDestroy, onMount } from 'svelte';
 
 	onMount(() => {
