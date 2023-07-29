@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { clearLocalStorage, logout } from 'tutors-reader-lib/src/utils/auth-utils';
-	import { currentCourse, currentUser } from 'tutors-reader-lib/src/stores/stores';
+	import { clearLocalStorage, logout } from '$lib/utils/auth';
+	import { currentCourse, currentUser } from '$lib/stores';
 	onMount(() => {
 		currentUser.set(null);
 		currentCourse.set(null);

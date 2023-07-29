@@ -6,27 +6,21 @@
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
-	import Blank from '$lib/support/Blank.svelte';
-	import NavBar from '$lib/navigators/NavBar.svelte';
-	import PageHeader from '$lib/navigators/PageHeader.svelte';
+	import Blank from '$lib/ui/support/Blank.svelte';
+	import NavBar from '$lib/ui/navigators/NavBar.svelte';
+	import PageHeader from '$lib/ui/navigators/PageHeader.svelte';
 	import { Footer } from 'tutors-ui';
 	import tutors from 'tutors-ui/lib/themes/tutors.css?inline';
 	import dyslexia from 'tutors-ui/lib/themes/dyslexia.css?inline';
 	import halloween from 'tutors-ui/lib/themes/halloween.css?inline';
 	import valentines from 'tutors-ui/lib/themes/valentines.css?inline';
-	import {
-		authenticating,
-		transitionKey,
-		storeTheme,
-		currentCourse,
-		currentLo
-	} from 'tutors-reader-lib/src/stores/stores';
-	import PageTransition from '$lib/PageTransition.svelte';
+	import { authenticating, transitionKey, storeTheme, currentCourse, currentLo } from '$lib/stores';
+	import PageTransition from '$lib/ui/PageTransition.svelte';
 	import { getKeys } from '../environment';
-	import TutorsTerms from '$lib/support/TutorsTerms.svelte';
-	import { analyticsService } from 'tutors-reader-lib/src/services/analytics-service';
+	import TutorsTerms from '$lib/ui/support/TutorsTerms.svelte';
+	import { analyticsService } from '$lib/services/analytics';
 	import { initServices } from './tutors-startup';
-	import Sidebars from '$lib/navigators/sidebars/Sidebars.svelte';
+	import Sidebars from '$lib/ui/navigators/sidebars/Sidebars.svelte';
 
 	let mounted = false;
 	const themes: any = { tutors, dyslexia, halloween, valentines };

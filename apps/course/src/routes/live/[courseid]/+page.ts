@@ -1,9 +1,9 @@
 import type { PageLoad } from './$types';
 import { getKeys } from '../../../environment';
-import { initFirebase } from 'tutors-reader-lib/src/utils/firebase-utils';
-import { courseService } from 'tutors-reader-lib/src/services/course-service';
-import type { Course } from 'tutors-reader-lib/src/models/course';
-import { currentLo } from 'tutors-reader-lib/src/stores/stores';
+import { initFirebase } from '$lib/utils/firebase';
+import { courseService } from '$lib/services/course';
+import type { Course } from '$lib/models/course';
+import { currentLo } from '$lib/stores';
 
 export const load: PageLoad = async ({ params }) => {
 	initFirebase(getKeys().firebase);

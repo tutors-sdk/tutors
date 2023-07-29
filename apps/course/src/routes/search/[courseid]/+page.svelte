@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { ResultType } from 'tutors-reader-lib/src/utils/search-utils';
-	import { isValid, searchHits } from 'tutors-reader-lib/src/utils/search-utils';
-	import type { Lo } from 'tutors-reader-lib/src/types/lo-types';
-	import type { Course } from 'tutors-reader-lib/src/models/course';
-	import { currentLo } from 'tutors-reader-lib/src/stores/stores';
-	import { allLos } from 'tutors-reader-lib/src/utils/lo-utils';
-	import { convertMdToHtml } from 'tutors-reader-lib/src/utils/markdown-utils';
+	import type { ResultType } from '$lib/utils/search';
+	import { isValid, searchHits } from '$lib/utils/search';
+	import type { Lo } from '$lib/types/lo';
+	import type { Course } from '$lib/models/course';
+	import { currentLo } from '$lib/stores';
+	import { allLos } from '$lib/utils/lo';
+	import { convertMdToHtml } from '$lib/utils/markdown';
 
 	export let data: PageData;
 

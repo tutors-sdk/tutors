@@ -1,9 +1,9 @@
 import { page } from '$app/stores';
-import { authService } from 'tutors-reader-lib/src/services/auth-service';
+import { authService } from '$lib/services/auth';
 import { get } from 'svelte/store';
-import { transitionKey, currentCourse, authenticating } from 'tutors-reader-lib/src/stores/stores';
-import { presenceService } from 'tutors-reader-lib/src/services/presence-service';
-import { initFirebase } from 'tutors-reader-lib/src/utils/firebase-utils';
+import { transitionKey, currentCourse, authenticating } from '$lib/stores';
+import { presenceService } from '$lib/services/presence';
+import { initFirebase } from '$lib/utils/firebase';
 import { getKeys } from '../environment';
 import { goto } from '$app/navigation';
 

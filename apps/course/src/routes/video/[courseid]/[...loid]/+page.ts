@@ -1,5 +1,5 @@
 import type { PageLoad } from './$types';
-import { courseService } from 'tutors-reader-lib/src/services/course-service';
+import { courseService } from '$lib/services/course';
 
 export const ssr = false;
 
