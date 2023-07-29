@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { presenceService } from 'tutors-reader-lib/src/services/presence-service';
-	import { StudentCardDeck } from 'tutors-ui';
+	import { StudentCardDeck } from '$lib/ui/legacy';
 	import type { PageData } from './$types';
 	import { toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import { onMount } from 'svelte';

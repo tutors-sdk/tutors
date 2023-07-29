@@ -9,11 +9,11 @@
 	import Blank from '$lib/ui/support/Blank.svelte';
 	import NavBar from '$lib/ui/navigators/NavBar.svelte';
 	import PageHeader from '$lib/ui/navigators/PageHeader.svelte';
-	import { Footer } from 'tutors-ui';
-	import tutors from 'tutors-ui/lib/themes/tutors.css?inline';
-	import dyslexia from 'tutors-ui/lib/themes/dyslexia.css?inline';
-	import halloween from 'tutors-ui/lib/themes/halloween.css?inline';
-	import valentines from 'tutors-ui/lib/themes/valentines.css?inline';
+	import { Footer } from '$lib/ui/legacy';
+	import tutors from '$lib/ui/legacy/themes/tutors.css?inline';
+	import dyslexia from '$lib/ui/legacy/themes/dyslexia.css?inline';
+	import halloween from '$lib/ui/legacy/themes/halloween.css?inline';
+	import valentines from '$lib/ui/legacy/themes/valentines.css?inline';
 	import { authenticating, transitionKey, storeTheme, currentCourse, currentLo } from '$lib/stores';
 	import PageTransition from '$lib/ui/PageTransition.svelte';
 	import { getKeys } from '$lib/environment';

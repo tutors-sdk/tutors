@@ -9,7 +9,7 @@ import {
 } from '$lib/utils/lo';
 import { Topic } from '$lib/models/topic';
 import type { IconNav, IconNavBar } from '$lib/types/icon';
-import { addIcon } from 'tutors-ui/lib/Atoms/Icon/themes';
+import { addIcon } from '$lib/ui/legacy/Atoms/Icon/themes';
 
 export class Course {
 	url = '';

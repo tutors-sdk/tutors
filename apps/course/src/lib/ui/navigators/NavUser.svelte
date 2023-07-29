@@ -4,7 +4,7 @@
 	import type { Course } from '$lib/models/course';
 	import { analyticsService } from '$lib/services/analytics';
 	import { popup, Avatar, drawerStore, type DrawerSettings } from '@skeletonlabs/skeleton';
-	import { Icon } from 'tutors-ui';
+	import { Icon } from '$lib/ui/legacy';
 
 	let user: User;
 	let status = false;

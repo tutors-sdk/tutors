@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { courseUrl, currentCourse } from '$lib/stores';
-	import { NavTitle } from 'tutors-ui';
-	import Icon from 'tutors-ui/lib/Atoms/Icon/Icon.svelte';
+	import { NavTitle } from '$lib/ui/legacy';
+	import Icon from '$lib/ui/legacy/Atoms/Icon/Icon.svelte';
 	import { AppBar, drawerStore, type DrawerSettings } from '@skeletonlabs/skeleton';
 	import LayoutMenu from './LayoutMenu.svelte';
 	import NavUser from './NavUser.svelte';

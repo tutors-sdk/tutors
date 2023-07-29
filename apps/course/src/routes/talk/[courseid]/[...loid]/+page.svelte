@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import type { PageData } from './$types';
-	import { TopicNavigatorCard, TalkCard } from 'tutors-ui';
+	import { TopicNavigatorCard, TalkCard } from '$lib/ui/legacy';
 	export let data: PageData;
 </script>
 

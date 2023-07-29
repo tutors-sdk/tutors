@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { currentCourse, portfolio } from '$lib/stores';
-	import { Breadcrumbs, IconBar } from 'tutors-ui';
+	import { Breadcrumbs, IconBar } from '$lib/ui/legacy';
 </script>
 
 {#if !$currentCourse?.isPortfolio() && !$portfolio}

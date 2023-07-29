@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { drawerStore } from '@skeletonlabs/skeleton';
 	import { studentsOnline } from '$lib/stores';
-	import { StudentCardDeck } from 'tutors-ui';
+	import { StudentCardDeck } from '$lib/ui/legacy';
 
 	const drawerClose: any = () => {
 		drawerStore.close();

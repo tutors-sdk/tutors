@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { VideoCard, TopicNavigatorCard } from 'tutors-ui';
+	import { VideoCard, TopicNavigatorCard } from '$lib/ui/legacy';
 	export let data: PageData;
 </script>
 
