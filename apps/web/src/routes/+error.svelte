@@ -29,17 +29,17 @@
 				</g>
 			</svg>
 		</div>
-		<h2 class="flex-none pt-4 font-bold">Tutors Course Reader</h2>
+		<h2 class="flex-none pt-4 font-bold">Tutors</h2>
 	</div>
 
 	<div class="container pb-12">
 		<div class="card rounded-box mx-auto mb-2 p-20">
 			<div class="text-center">
-				<h2>Tutors Open Source Project</h2>
+				<h1>404</h1>
 				<br />
-				<p class="text-lg">This is a reader for Tutors Courses</p>
-				<p class="p-4">See below for details</p>
-				<a class="btn mt-6 bg-primary-500 text-white" href="https://tutors.dev">Tutors Homepage</a>
+				<p class="text-lg">Not Found</p>
+				<p class="p-4">Unfortunately the route you tried to visit cannot be found.</p>
+				<a class="btn mt-6 bg-primary-500 text-white" href="/">Tutors Homepage</a>
 			</div>
 		</div>
 	</div>

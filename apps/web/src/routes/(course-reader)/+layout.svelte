@@ -1,12 +1,10 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import '@skeletonlabs/skeleton/styles/all.css';
 	import { AppShell, Toast, storePopup, setInitialClassState } from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
-	import Blank from '$lib/ui/support/Blank.svelte';
 	import NavBar from '$lib/ui/navigators/NavBar.svelte';
 	import PageHeader from '$lib/ui/navigators/PageHeader.svelte';
 	import { Footer } from '$lib/ui/legacy';
@@ -122,7 +120,5 @@
 				</div>
 			</svelte:fragment>
 		</AppShell>
-	{:else}
-		<Blank />
 	{/if}
 </div>

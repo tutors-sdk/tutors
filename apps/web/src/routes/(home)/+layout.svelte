@@ -1,7 +1,4 @@
 <script>
-	import 'tutors-ui/lib/themes/tutors.css';
-	import '@skeletonlabs/skeleton/styles/all.css';
-	import './app.postcss';
 	import { AppShell, AppBar, LightSwitch } from '@skeletonlabs/skeleton';
 	import 'iconify-icon';
 </script>
