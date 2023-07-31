@@ -4,6 +4,7 @@
 	import './app.postcss';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
 	import { AppBar, Avatar, LightSwitch } from '@skeletonlabs/skeleton';
 
@@ -27,10 +28,21 @@
 
 <AppBar background="bg-surface-100-800-token" shadow="none" class="h-20 justify-center">
 	<svelte:fragment slot="lead">
-		<div class="flex space-x-4">
-			<img src="logo.svg" alt="tutors logo" />
-			<span class="text-2xl font-bold">Tutors</span>
-		</div>
+		{#if $page.url.pathname === '/' || $page.url.pathname === '/auth' || $page.url.pathname === '/dashboard'}
+			<a href="/">
+				<div class="flex space-x-4">
+					<img src="/logo.svg" alt="tutors logo" />
+					<span class="text-2xl font-bold">Tutors</span>
+				</div>
+			</a>
+		{:else}
+			<a href="/">
+				<div class="flex space-x-4">
+					<img src="/logo.svg" alt="tutors logo" />
+					<span class="text-2xl font-bold">Tutors Course</span>
+				</div>
+			</a>
+		{/if}
 	</svelte:fragment>
 
 	<svelte:fragment slot="trail">
