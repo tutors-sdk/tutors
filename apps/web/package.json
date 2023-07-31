@@ -61,5 +61,9 @@
 		"typescript": "^5.1.6",
 		"vite": "^4.3.9"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"@supabase/auth-helpers-sveltekit": "0.10.1",
+		"@supabase/supabase-js": "2.31.0"
+	}
 }
