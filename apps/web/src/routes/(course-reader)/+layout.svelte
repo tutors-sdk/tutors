@@ -67,11 +67,17 @@
 	{/if}
 </svelte:head>
 
-<div id="app" class="overflow-hidden">
+<div id="app" class="h-full overflow-hidden">
 	{#if $authenticating}
 		<TutorsTerms />
 	{:else if $currentCourse}
-		<AppShell class="h-[calc(screen-5rem)]">
+		<Toast />
+		<Sidebars />
+		<AppShell class="h-screen">
+			<svelte:fragment slot="header">
+				<NavBar />
+				<PageHeader />
+			</svelte:fragment>
 			<div id="top" />
 			<div class="mx-auto my-4">
 				<PageTransition url={$transitionKey}>
