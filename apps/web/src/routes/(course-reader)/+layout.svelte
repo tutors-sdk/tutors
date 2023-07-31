@@ -1,18 +1,12 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
-	import { AppShell, Toast, storePopup, setInitialClassState } from '@skeletonlabs/skeleton';
-	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
+	import { AppShell, Toast, setInitialClassState } from '@skeletonlabs/skeleton';
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
 	import NavBar from '$lib/ui/navigators/NavBar.svelte';
 	import PageHeader from '$lib/ui/navigators/PageHeader.svelte';
 	import { Footer } from '$lib/ui/legacy';
-	import tutors from '$lib/ui/legacy/themes/tutors.css?inline';
-	import dyslexia from '$lib/ui/legacy/themes/dyslexia.css?inline';
-	import halloween from '$lib/ui/legacy/themes/halloween.css?inline';
-	import valentines from '$lib/ui/legacy/themes/valentines.css?inline';
-	import { authenticating, transitionKey, storeTheme, currentCourse, currentLo } from '$lib/stores';
+	import { authenticating, transitionKey, currentCourse, currentLo } from '$lib/stores';
 	import PageTransition from '$lib/ui/PageTransition.svelte';
 	import { getKeys } from '$lib/environment';
 	import TutorsTerms from '$lib/ui/support/TutorsTerms.svelte';
@@ -21,15 +15,10 @@
 	import Sidebars from '$lib/ui/navigators/sidebars/Sidebars.svelte';
 
 	let mounted = false;
-	const themes: any = { tutors, dyslexia, halloween, valentines };
 	let currentRoute = '';
-
-	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
 	onMount(async () => {
 		mounted = true;
-		storeTheme.subscribe(setBodyThemeAttribute);
-		setColorScheme();
 		setInitialClassState();
 		initServices();
 		const func = () => {
@@ -68,26 +57,9 @@
 			}
 		}
 	});
-
-	function setColorScheme() {
-		if (
-			localStorage.getItem('storeLightSwitch') === 'true' ||
-			(!('storeLightSwitch' in localStorage) &&
-				window.matchMedia('(prefers-color-scheme: dark)').matches)
-		) {
-			document.documentElement.classList.add('dark');
-		} else {
-			document.documentElement.classList.remove('dark');
-		}
-	}
-
-	function setBodyThemeAttribute(): void {
-		document.body.setAttribute('data-theme', $storeTheme);
-	}
 </script>
 
 <svelte:head>
-	{@html `\<style\>${themes[$storeTheme]}}\</style\>`}
 	{#if currentLo}
 		<title>{$currentLo?.title}</title>
 	{:else}
