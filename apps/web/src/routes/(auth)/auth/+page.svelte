@@ -1,10 +1,17 @@
 <script lang="ts">
 	import { Tab, TabGroup } from '@skeletonlabs/skeleton';
 	import Icon from '@iconify/svelte';
+	import { onMount } from 'svelte';
 
 	export let data;
 	let { supabase } = data;
 	$: ({ supabase } = data);
+
+	onMount(async () => {
+		if (data.session) {
+			window.location.href = '/dashboard';
+		}
+	});
 
 	let email: any;
 	let password: any;
