@@ -15,7 +15,7 @@
 	<div class="flex flex-wrap">
 		{#if data.courses}
 			{#each data.courses[0].course_list.courses as course}
-				<a class="card w-1/3 m-2 p-4" href={'/course/' + course.id}>
+				<a class="card w-full lg:w-1/3 m-2 p-4" href={'/course/' + course.id}>
 					<div>
 						<p class="font-bold">{course.name}</p>
 						<p>Last Accessed: {course.last_accessed}</p>
@@ -24,35 +24,5 @@
 				</a>
 			{/each}
 		{/if}
-	</div>
-	<div class="table-container">
-		<table class="table table-hover">
-			<thead>
-				<tr>
-					<th>Course Name</th>
-					<th>Last Accessed</th>
-					<th>No Of Visits</th>
-					<th />
-				</tr>
-			</thead>
-			<tbody>
-				{#if data.courses}
-					{#each data.courses[0].course_list.courses as course}
-						<tr>
-							<td><a href={'/course/' + course.id}>{course.name}</a></td>
-							<td>{course.last_accessed}</td>
-							<td>{course.visits}</td>
-							<td
-								><button class="btn btn-icon-sm btn-icon variant-filled-error"
-									><Icon icon="mdi:delete" /></button
-								></td
-							>
-						</tr>
-					{/each}
-				{:else}
-					Oops, looks like you haven't visited any courses yet!
-				{/if}
-			</tbody>
-		</table>
 	</div>
 </div>
