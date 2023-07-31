@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Table } from '@skeletonlabs/skeleton';
+	import Icon from '@iconify/svelte';
 
 	export let data;
 </script>
@@ -19,10 +19,14 @@
 				{#if data.courses}
 					{#each data.courses[0].course_list.courses as course}
 						<tr>
-							<td>{course.name}</td>
+							<td><a href={'/course/' + course.id}>{course.name}</a></td>
 							<td>{course.last_accessed}</td>
 							<td>{course.visits}</td>
-							<td />
+							<td
+								><button class="btn btn-icon-sm btn-icon variant-filled-error"
+									><Icon icon="mdi:delete" /></button
+								></td
+							>
 						</tr>
 					{/each}
 				{:else}
