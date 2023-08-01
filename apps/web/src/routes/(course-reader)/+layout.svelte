@@ -1,18 +1,13 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { AppShell, Toast, setInitialClassState } from '@skeletonlabs/skeleton';
+	import { setInitialClassState } from '@skeletonlabs/skeleton';
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
-	import NavBar from '$lib/ui/navigators/NavBar.svelte';
-	import PageHeader from '$lib/ui/navigators/PageHeader.svelte';
-	import { Footer } from '$lib/ui/legacy';
-	import { authenticating, transitionKey, currentCourse, currentLo } from '$lib/stores';
+	import { transitionKey, currentLo } from '$lib/stores';
 	import PageTransition from '$lib/ui/PageTransition.svelte';
 	import { getKeys } from '$lib/environment';
-	import TutorsTerms from '$lib/ui/support/TutorsTerms.svelte';
 	import { analyticsService } from '$lib/services/analytics';
 	import { initServices } from '$lib/tutors-startup';
-	import Sidebars from '$lib/ui/navigators/sidebars/Sidebars.svelte';
 
 	let mounted = false;
 	let currentRoute = '';
@@ -68,29 +63,10 @@
 </svelte:head>
 
 <div id="app" class="h-full overflow-hidden">
-	{#if $authenticating}
-		<TutorsTerms />
-	{:else if $currentCourse}
-		<Toast />
-		<Sidebars />
-		<AppShell class="h-screen">
-			<svelte:fragment slot="header">
-				<NavBar />
-				<PageHeader />
-			</svelte:fragment>
-			<div id="top" />
-			<div class="mx-auto my-4">
-				<PageTransition url={$transitionKey}>
-					<slot />
-				</PageTransition>
-			</div>
-			<svelte:fragment slot="pageFooter">
-				<div
-					class="bg-surface-100-800-token border-t-[1px] border-surface-200-700-token bottom-0 mt-2"
-				>
-					<Footer />
-				</div>
-			</svelte:fragment>
-		</AppShell>
-	{/if}
+	<div id="top" />
+	<div class="mx-auto my-4">
+		<PageTransition url={$transitionKey}>
+			<slot />
+		</PageTransition>
+	</div>
 </div>

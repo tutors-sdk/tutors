@@ -11,8 +11,8 @@
 	onMount(async () => {
 		if (getKeys().firebase.apiKey !== 'XXX') {
 			initFirebase(getKeys().firebase);
-			authService.setCredentials(getKeys().auth0);
-			authService.checkAuth(data.course);
+			// authService.setCredentials(getKeys().auth0);
+			// authService.checkAuth(data.course);
 		}
 	});
 </script>
