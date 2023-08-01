@@ -1,0 +1,34 @@
+{% from "css/tailwindcss.njk" import videocardcontainer %}
+
+{% macro videoCard (lo, path) %}
+  <div class="{{ videocardcontainer }}">
+    {% if ((lo.videoids.videoIds.length > 0) and (lo.videoids.videoIds[lo.videoids.videoIds.length - 1].service === 'heanet')) %}
+      <vime-player controls cross-origin="true">
+        <vime-hls version="latest" cross-origin="true">
+          <source
+            data-src="https://media.heanet.ie/m3u8/{{lo.videoids.videoIds[lo.videoids.videoIds.length - 1].id}}"
+            type="application/x-mpegURL"/>
+        </vime-hls>
+      </vime-player>
+    {% elseif ((lo.videoids.videoIds.length > 0) and (lo.videoids.videoIds[lo.videoids.videoIds.length - 1].service === 'vimp')) %}
+      <div class="mx-auto block h-[405px] w-[720px]">
+        <iframe
+          title="{lo.title}"
+          src="https://vimp.oth-regensburg.de/media/embed?key={{lo.videoids.videoIds[lo.videoids.videoIds.length - 1].id}}&autoplay=false&controls=true"
+          class="iframeLoaded"
+          width="720"
+          height="405"
+          aria-label="media embed code"
+          allowtransparency="{true}"
+          allowfullscreen></iframe>
+      </div>
+    {% else %}
+      <div class="relative aspect-video" style="padding-top: 40%;">
+        <iframe title="{[lo.title}}" class="absolute inset-0 w-full h-full"
+              src="https://www.youtube.com/embed/{{ lo.videoid }}" allow="encrypted-media" allowfullscreen
+              uk-responsive>
+        </iframe>
+      </div>
+   {% endif %}
+  </div>
+{% endmacro %}

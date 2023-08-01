@@ -1,0 +1,36 @@
+{% from "css/tailwindcss.njk" import tutorscard, tutorscardheader %}
+{% from "components/cards/Image.njk" import image %}
+{% from "components/cards/url.njk" import urlStart, urlEnd %}
+{% from "components/iconography/Icon.njk" import icon %}
+{% from "components/iconography/styles.njk" import icons, iconColours %}
+{% macro card (lo, path) %}
+  <div class="{{ tutorscard }} border-[{{ iconColours[lo.lotype] }}]">
+    {{ urlStart(lo, path) }}
+    <div class="{{ tutorscardheader }}">
+      <h3 class="card-title text-md font-normal">{{ lo.title }}</h3>
+      {{ icon(lo.lotype, 20, "", "") }}
+    </div>
+    <figure class="flex justify-center">
+      {{ image (lo, path) }}
+    </figure>
+    <div class="card-body">
+      <div class="tutorscard-body">
+        {% if (lo.videoid) and (lo.videoid != 'none') %}
+          <div class="flex justify-center">
+            {% if ((lo.videoids.videoIds.length > 0) and (lo.videoids.videoIds[lo.videoids.videoIds.length - 1].service === 'heanet')) %}
+              {{ icon("video", 30, "https://media.heanet.ie/page/" + lo.videoids.videoIds[lo.videoids.videoIds.length - 1].id, "Play") }}
+            {% elseif ((lo.videoids.videoIds.length > 0) and (lo.videoids.videoIds[lo.videoids.videoIds.length - 1].service === 'vimp')) %}
+              {{ icon("video", 30, "https://vimp.oth-regensburg.de/media/embed?key=" + lo.videoids.videoIds[lo.videoids.videoIds.length - 1].id, "Play") }}
+            {% else %}
+              {{ icon("video", 30, "https://www.youtube.com/watch?v=" + lo.videoid, "Play") }}
+            {% endif %}
+          </div>
+        {% endif %}
+        <div class="{text} prose">
+          {{ lo.summary }}
+        </div>
+      </div>
+    </div>
+    {{ urlEnd(lo) }}
+  </div>
+{% endmacro %}

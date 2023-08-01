@@ -1,0 +1,12 @@
+{% from "css/tailwindcss.njk" import talkcardcontainer %}
+
+{% macro talkCard (lo, path) %}
+
+  <div class="{{ talkcardcontainer }}">
+    {% if (lo.parent.lotype == "unit") %}
+      <iframe src=" ./{{ lo.parent.folder }}/{{ lo.folder }}/{{ lo.link }}" width="100%" height="800px"></iframe>
+    {% else %}
+      <iframe src=" ./{{ lo.folder }}/{{ lo.link }}" width="100%" height="800px"></iframe>
+    {% endif %}
+  </div>
+{% endmacro %}

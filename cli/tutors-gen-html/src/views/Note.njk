@@ -1,0 +1,9 @@
+{% from "css/tailwindcss.njk" import notecontent %}
+{% from "components/navigators/MainNavigator.njk" import mainNavigator %}
+{% from "components/cards/NoteCard.njk" import noteCard %}
+{% extends "layouts/main.html" %}
+
+{% block content %}
+  {{ mainNavigator(lo) }}
+  {{ noteCard(lo) }}
+{% endblock %}

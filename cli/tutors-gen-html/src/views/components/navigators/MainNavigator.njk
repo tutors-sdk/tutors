@@ -1,0 +1,15 @@
+{% from "css/tailwindcss.njk" import navbar, navbartitle, navbarsecondary %}
+{% from "components/cards/Image.njk" import image %}
+{% from "components/navigators/support/TitleCard.njk" import titleCard %}
+{% from "components/navigators/support/Breadcrumbs.njk" import breadcrumbs %}
+{% from "components/navigators/support/Companions.njk" import companions %}
+
+{% macro mainNavigator (lo) %}
+  <div class="{{ navbar }}">
+    {{ titleCard(lo) }}
+  </div>
+  <div class="{{ navbarsecondary }}">
+    {{ breadcrumbs(lo) }}
+    {{ companions(lo.course.properties) }}
+  </div>
+{% endmacro %}
