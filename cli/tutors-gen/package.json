@@ -17,17 +17,8 @@
     "tutors-gen": "./src/tutors-gen.js"
   },
   "dependencies": {
-    "@types/js-yaml": "^4.0.5",
-    "@types/node": "^20.2.6",
-    "@types/shelljs": "^0.8.12",
-    "commander": "^10.0.1",
-    "front-matter": "^4.0.2",
-    "glob": "^10.2.7",
-    "install": "^0.13.0",
-    "js-yaml": "^4.1.0",
-    "npm": "^9.7.1",
-    "path": "^0.12.7",
-    "shelljs": "^0.8.5"
+    "tutors-gen-lib": "^0.0.1",
+    "front-matter": "^4.0.2"
   },
   "devDependencies": {
     "prettier": "2.8.8",

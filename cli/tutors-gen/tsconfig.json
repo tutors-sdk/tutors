@@ -13,5 +13,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["**/*"]
+  "include": [
+    "**/*",
+    "../tutors-gen-lib/index.ts"
+  ]
 }

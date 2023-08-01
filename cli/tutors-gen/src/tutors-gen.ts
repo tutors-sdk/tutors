@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import * as fs from "fs";
-import { courseBuilder } from "./builders/course-builder";
-import { resourceBuilder } from "./builders/resource-builder";
-import { generateNetlifyToml } from "./utils/netlify";
+import { courseBuilder } from "tutors-gen-lib/src/lo/course-builder";
+import { resourceBuilder } from "tutors-gen-lib/src/lo/resource-builder";
+import { generateNetlifyToml } from "tutors-gen-lib/src/utils/netlify";
+import { writeFile } from "tutors-gen-lib/src/utils/utils";
 const version = `tutors-gen 2.9.15`;
 
 if (fs.existsSync("course.md")) {
@@ -12,7 +13,7 @@ if (fs.existsSync("course.md")) {
   resourceBuilder.buildTree(srcFolder);
   courseBuilder.buildCourse(resourceBuilder.lr);
   resourceBuilder.copyAssets(destFolder);
-  courseBuilder.generateCourse(destFolder);
+  writeFile(destFolder, "tutors.json", JSON.stringify(courseBuilder.lo));
   generateNetlifyToml(destFolder);
   console.log(`${version}`);
 } else {
