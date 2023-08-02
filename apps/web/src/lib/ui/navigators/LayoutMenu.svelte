@@ -4,11 +4,15 @@
 		drawerStore,
 		popup,
 		modeCurrent,
-		setModeCurrent
+		setModeCurrent,
+		setModeUserPrefers,
+		getModeOsPrefers,
+		setInitialClassState
 	} from '@skeletonlabs/skeleton';
 	import { layout, storeTheme } from '$lib/stores';
 	import moment from 'moment';
 	import { Icon } from '$lib/ui/legacy';
+	import { onMount } from 'svelte';
 
 	function applyInitialLayout() {
 		layout.set('expanded');
@@ -20,6 +24,19 @@
 		} else {
 			layout.set('compacted');
 		}
+	}
+
+	onMount(() => {
+		// Sync lightswitch with the theme
+		if (!('modeCurrent' in localStorage)) {
+			setModeCurrent(getModeOsPrefers());
+		}
+	});
+
+	function onDarkModeToggleHandler(): void {
+		$modeCurrent = !$modeCurrent;
+		setModeUserPrefers($modeCurrent);
+		setModeCurrent($modeCurrent);
 	}
 
 	const themeBuilderDrawerOpen: any = () => {
@@ -45,6 +62,11 @@
 	applyInitialLayout();
 </script>
 
+<svelte:head>
+	<!-- Workaround for a svelte parsing error: https://github.com/sveltejs/eslint-plugin-svelte/issues/492 -->
+	{@html `<\u{73}cript nonce="%sveltekit.nonce%">(${setInitialClassState.toString()})();</script>`}
+</svelte:head>
+
 <div class="relative">
 	<button class="btn btn-sm" use:popup={{ event: 'click', target: 'design' }}>
 		<Icon type="dark" />
@@ -56,8 +78,8 @@
 		<h6>Toggles</h6>
 		<ul>
 			<li class="option !p-0">
-				<button class="btn w-full flex justify-between" on:click={setModeCurrent(!$modeCurrent)}>
-					<span class="flex-none">Dark Mode</span>
+				<button class="btn w-full flex justify-between" on:click={onDarkModeToggleHandler}>
+					<span class="flex-none">{$modeCurrent === true ? 'Dark' : 'Light'} Mode</span>
 					{#if $modeCurrent}
 						<Icon icon="fluent:weather-moon-48-filled" color="rgba(var(--color-warning-500))" />
 					{:else}
