@@ -23,7 +23,7 @@
 		initServices(data.session);
 		const func = () => {
 			if (!document.hidden && !currentRoute?.startsWith('/live')) {
-				analyticsService.updatePageCount();
+				analyticsService.updatePageCount(data.course, session);
 			}
 		};
 		setInterval(func, 30 * 1000);
@@ -34,7 +34,7 @@
 			currentRoute = path.route.id;
 		}
 		if (mounted && path.params.courseid && getKeys().firebase.apiKey !== 'XXX') {
-			analyticsService.learningEvent(path.params);
+			analyticsService.learningEvent(path.params, session);
 		}
 		if (path?.url.hash && !path?.url.hash.startsWith('#access_token')) {
 			console.log(path?.url.hash);

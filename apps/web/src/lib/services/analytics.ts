@@ -1,7 +1,7 @@
 import { updateLo } from '$lib/utils/course';
 import type { Lo } from '$lib/types/lo';
 import type { Course } from '$lib/models/course';
-import type { Token, User } from '$lib/types/auth';
+import type { TokenResponse } from '$lib/types/auth';
 import { currentCourse, currentLo, currentUser } from '$lib/stores';
 
 import {
@@ -16,7 +16,7 @@ import {
 } from '$lib/utils/firebase';
 
 let course: Course;
-let user: User;
+let user: TokenResponse;
 let lo: Lo;
 
 currentCourse.subscribe((current) => {
@@ -32,71 +32,73 @@ currentLo.subscribe((current) => {
 export const analyticsService = {
 	loRoute: '',
 
-	learningEvent(params: Record<string, string>) {
+	learningEvent(params: Record<string, string>, session: TokenResponse) {
 		if (params.loid) {
 			this.loRoute = sanitise(params.loid);
 		}
-		this.reportPageLoad();
+		this.reportPageLoad(session);
 	},
 
-	setOnlineStatus(status: boolean, session: Token) {
+	setOnlineStatus(status: boolean, session: TokenResponse) {
 		const onlineStatus = status ? 'online' : 'offline';
-		const key = `${course.id}/users/${sanitise(session.user_metadata.email)}/onlineStatus`;
+		const key = `${course.id}/users/${sanitise(session.user.user_metadata.email)}/onlineStatus`;
 		updateStr(key, onlineStatus);
 		user.onlineStatus = onlineStatus;
 	},
 
-	async getOnlineStatus(course: Course, session: Token): Promise<string> {
+	async getOnlineStatus(course: Course, session: TokenResponse): Promise<string> {
 		if (!course || !user) {
 			return 'online';
 		}
 		const courseId = course.url.substring(0, course.url.indexOf('.'));
-		const key = `${courseId}/users/${sanitise(session.user_metadata.email)}/onlineStatus`;
+		const key = `${courseId}/users/${sanitise(session.user.user_metadata.email)}/onlineStatus`;
 		const status = await readValue(key);
 		return status || 'online';
 	},
 
-	reportPageLoad(course: any, session: Token) {
-		updateLastAccess(`${course.id}/usage/${this.loRoute}`, course.title);
+	reportPageLoad(session: TokenResponse) {
+		updateLastAccess(`${course.id}/usage/${this.loRoute}`, course.lo.title);
 		updateVisits(course.url.substring(0, course.url.indexOf('.')));
 
 		if (!session || (session && session.onlineStatus === 'online')) {
-			updateLastAccess(`all-course-access/${course.id}`, this.title);
+			updateLastAccess(`all-course-access/${course.id}`, course.lo.title);
 			updateVisits(`all-course-access/${course.id}`);
 			updateLo(`all-course-access/${course.id}`, course, lo);
 		}
 
-		if (user) {
+		if (session) {
 			const key = `${course.url.substring(0, course.url.indexOf('.'))}/users/${sanitise(
-				user.email
+				session.user.user_metadata.email
 			)}/${this.loRoute}`;
 			updateLastAccess(key, lo.title);
 			updateVisits(key);
 		}
 	},
 
-	updatePageCount() {
-		updateLastAccess(`${course.id}/usage/${this.loRoute}`, this.title);
+	updatePageCount(session: TokenResponse) {
+		updateLastAccess(`${course.id}/usage/${this.loRoute}`, course.lo.title);
 		updateCount(course.id);
 		if (user) {
 			updateCount(`all-course-access/${course.id}`);
 			if (user.onlineStatus === 'online') {
 				updateLo(`all-course-access/${course.id}`, course, lo);
 			}
-			const key = `${course.id}/users/${sanitise(user.email)}/${this.loRoute}`;
+			const key = `${course.id}/users/${sanitise(session.user.user_metadata.email)}/${
+				this.loRoute
+			}`;
 			updateLastAccess(key, lo.title);
 			updateCount(key);
-			updateCalendar(`${course.id}/users/${sanitise(user.email)}`);
+			updateCalendar(`${course.id}/users/${sanitise(session.user.user_metadata.email)}`);
 		}
 	},
 
-	updateLogin(courseId: string, session: Token) {
-		const key = `${courseId}/users/${sanitise(session.user_metadata.email)}`;
-		updateStr(`${key}/email`, session.user_metadata.email);
-		updateStr(`${key}/name`, session.user_metadata.full_name);
-		updateStr(`${key}/id`, session.sub);
-		updateStr(`${key}/nickname`, session.user_metadata.preferred_username);
-		updateStr(`${key}/picture`, session.user_metadata.avatar_url);
+	updateLogin(courseId: string, session: TokenResponse) {
+		const key = `${courseId}/users/${sanitise(session.user.user_metadata.email)}`;
+		updateStr(`${key}/email`, session.user.user_metadata.email);
+		updateStr(`${key}/name`, session.user.user_metadata.full_name);
+		updateStr(`${key}/id`, session.user.id);
+		updateStr(`${key}/nickname`, session.user.user_metadata.preferred_username);
+		updateStr(`${key}/picture`, session.user.user_metadata.avatar_url);
 		updateStr(`${key}/last`, new Date().toString());
 		updateCountValue(`${key}/count`);
 	}
