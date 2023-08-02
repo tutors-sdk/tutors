@@ -41,9 +41,8 @@ export const analyticsService = {
 
 	setOnlineStatus(status: boolean, session: TokenResponse) {
 		const onlineStatus = status ? 'online' : 'offline';
-		const key = `${course.id}/users/${sanitise(session.user.user_metadata.email)}/onlineStatus`;
+		const key = `${course.id}/users/${sanitise(session.user.email)}/onlineStatus`;
 		updateStr(key, onlineStatus);
-		user.onlineStatus = onlineStatus;
 	},
 
 	async getOnlineStatus(course: Course, session: TokenResponse): Promise<string> {
@@ -51,7 +50,7 @@ export const analyticsService = {
 			return 'online';
 		}
 		const courseId = course.url.substring(0, course.url.indexOf('.'));
-		const key = `${courseId}/users/${sanitise(session.user.user_metadata.email)}/onlineStatus`;
+		const key = `${courseId}/users/${sanitise(session.user.email)}/onlineStatus`;
 		const status = await readValue(key);
 		return status || 'online';
 	},
@@ -68,7 +67,7 @@ export const analyticsService = {
 
 		if (session) {
 			const key = `${course.url.substring(0, course.url.indexOf('.'))}/users/${sanitise(
-				session.user.user_metadata.email
+				session.user.email
 			)}/${this.loRoute}`;
 			updateLastAccess(key, lo.title);
 			updateVisits(key);
@@ -83,18 +82,16 @@ export const analyticsService = {
 			if (user.onlineStatus === 'online') {
 				updateLo(`all-course-access/${course.id}`, course, lo);
 			}
-			const key = `${course.id}/users/${sanitise(session.user.user_metadata.email)}/${
-				this.loRoute
-			}`;
+			const key = `${course.id}/users/${sanitise(session.user.email)}/${this.loRoute}`;
 			updateLastAccess(key, lo.title);
 			updateCount(key);
-			updateCalendar(`${course.id}/users/${sanitise(session.user.user_metadata.email)}`);
+			updateCalendar(`${course.id}/users/${sanitise(session.user.email)}`);
 		}
 	},
 
 	updateLogin(courseId: string, session: TokenResponse) {
-		const key = `${courseId}/users/${sanitise(session.user.user_metadata.email)}`;
-		updateStr(`${key}/email`, session.user.user_metadata.email);
+		const key = `${courseId}/users/${sanitise(session.user.email)}`;
+		updateStr(`${key}/email`, session.user.email);
 		updateStr(`${key}/name`, session.user.user_metadata.full_name);
 		updateStr(`${key}/id`, session.user.id);
 		updateStr(`${key}/nickname`, session.user.user_metadata.preferred_username);

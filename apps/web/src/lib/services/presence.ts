@@ -3,13 +3,12 @@ import { currentCourse, currentUser, studentsOnline, studentsOnlineList } from '
 import type { StudentLoEvent, StudentLoUpdate } from '$lib/types/metrics';
 import { child, get, getDatabase, onValue, ref, off } from 'firebase/database';
 import { readObj, readUser, sanitise } from '$lib/utils/firebase';
-import type { Token, User, UserSummary } from '$lib/types/auth';
+import type { Token, TokenResponse, User, UserSummary } from '$lib/types/auth';
 
 let canUpdate = false;
 
 export const presenceService = {
 	db: {},
-	user: <User>{},
 	userSummaryCache: new Map<string, UserSummary>(),
 	course: Course,
 	lastCourse: Course,
@@ -54,11 +53,11 @@ export const presenceService = {
 		studentsOnline.set(this.los.length);
 	},
 
-	async visitUpdate(courseId: string) {
+	async visitUpdate(courseId: string, session: TokenResponse) {
 		const lo = await (await get(child(ref(this.db), `all-course-access/${courseId}/lo`))).val();
 		if (lo) {
-			const userId = decrypt(lo.tutorsTimeId);
-			if (userId && this.user.email !== userId) {
+			const userId = session.user.id;
+			if (userId && session.user.email !== userId) {
 				let user = await readUser(courseId, userId);
 				if (!user) {
 					// const user = await readObj(`${courseId}/users/${sanitise(userId)}`);
@@ -66,9 +65,9 @@ export const presenceService = {
 				}
 				if (user) {
 					const event: StudentLoEvent = {
-						studentName: user.name,
+						studentName: session.user.user_metadata.full_name,
 						studentId: userId,
-						studentImg: user.picture,
+						studentImg: session.user.user_metadata.avatar_url,
 						courseTitle: lo.courseTitle,
 						loTitle: lo.title,
 						loImage: lo.img,
@@ -96,7 +95,7 @@ export const presenceService = {
 		}
 	},
 
-	initService(course: Course) {
+	initService(course: Course, session: TokenResponse) {
 		setInterval(this.sweepAndPurge.bind(this), 1000 * 60);
 		studentsOnline.set(0);
 		studentsOnlineList.set([]);
@@ -107,18 +106,18 @@ export const presenceService = {
 		let statusRef = ref(this.db, `all-course-access/${course.id}/visits`);
 		onValue(statusRef, async () => {
 			if (canUpdate) {
-				await this.visitUpdate(course.id);
+				await this.visitUpdate(course.id, session);
 			}
 		});
 		statusRef = ref(this.db, `all-course-access/${course.id}/count`);
 		onValue(statusRef, async () => {
 			if (canUpdate) {
-				await this.visitUpdate(course.id);
+				await this.visitUpdate(course.id, session);
 			}
 		});
 	},
 
-	startPresenceEngine(session: Token) {
+	startPresenceEngine(session: TokenResponse) {
 		this.db = getDatabase();
 		currentUser.subscribe((newUser: User) => {
 			this.user = newUser;
@@ -131,7 +130,7 @@ export const presenceService = {
 				}
 				this.lastCourse = newCourse;
 				if (session && newCourse?.authLevel > 0) {
-					this.initService(newCourse);
+					this.initService(newCourse, session);
 				}
 			}
 		});
