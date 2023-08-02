@@ -13,6 +13,10 @@
 	let liveUrl = `https://reader.tutors.dev/live/${$currentCourse.id}`;
 	let gitUrl = '';
 
+	export let data: any;
+
+	$: ({ supabase, session } = data);
+
 	function setTimeUrls(user: User, course: Course) {
 		timeUrl = `${timeApp}/time/${course?.url}/${user.userId}`;
 	}
@@ -35,7 +39,7 @@
 
 	function handleClick() {
 		status = !status;
-		analyticsService.setOnlineStatus(status);
+		analyticsService.setOnlineStatus(status, session);
 	}
 
 	const onlineDrawerOpen: any = () => {

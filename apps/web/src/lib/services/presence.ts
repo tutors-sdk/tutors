@@ -3,7 +3,7 @@ import { currentCourse, currentUser, studentsOnline, studentsOnlineList } from '
 import type { StudentLoEvent, StudentLoUpdate } from '$lib/types/metrics';
 import { child, get, getDatabase, onValue, ref, off } from 'firebase/database';
 import { readObj, readUser, sanitise } from '$lib/utils/firebase';
-import type { User, UserSummary } from '$lib/types/auth';
+import type { Token, User, UserSummary } from '$lib/types/auth';
 
 let canUpdate = false;
 
@@ -118,7 +118,7 @@ export const presenceService = {
 		});
 	},
 
-	startPresenceEngine(session: any) {
+	startPresenceEngine(session: Token) {
 		this.db = getDatabase();
 		currentUser.subscribe((newUser: User) => {
 			this.user = newUser;

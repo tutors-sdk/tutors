@@ -42,7 +42,7 @@
 
 	function handleClick() {
 		status = !status;
-		analyticsService.setOnlineStatus(status);
+		analyticsService.setOnlineStatus(status, session);
 	}
 
 	function setBodyThemeAttribute(): void {

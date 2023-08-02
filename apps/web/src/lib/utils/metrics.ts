@@ -1,6 +1,7 @@
 import { child, get, getDatabase, ref } from 'firebase/database';
 import type { DayMeasure, Metric, UserMetric } from '$lib/types/metrics';
 import type { Lo } from '$lib/types/lo';
+import type { Token } from '$lib/types/auth';
 
 function populateCalendar(user: UserMetric) {
 	user.calendarActivity = [];
@@ -75,7 +76,7 @@ function expandGenericMetrics(id: string, fbData): any {
 	return metric;
 }
 
-export async function fetchUserById(courseUrl: string, session: any, allLabs) {
+export async function fetchUserById(courseUrl: string, session: Token, allLabs) {
 	const courseBase = courseUrl.substr(0, courseUrl.indexOf('.'));
 	const userEmail = session.user_metadata.email;
 	// eslint-disable-next-line no-useless-escape

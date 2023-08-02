@@ -1,7 +1,7 @@
 import { updateLo } from '$lib/utils/course';
 import type { Lo } from '$lib/types/lo';
 import type { Course } from '$lib/models/course';
-import type { User } from '$lib/types/auth';
+import type { Token, User } from '$lib/types/auth';
 import { currentCourse, currentLo, currentUser } from '$lib/stores';
 
 import {
@@ -39,36 +39,37 @@ export const analyticsService = {
 		this.reportPageLoad();
 	},
 
-	setOnlineStatus(status: boolean) {
+	setOnlineStatus(status: boolean, session: Token) {
 		const onlineStatus = status ? 'online' : 'offline';
-		const key = `${course.id}/users/${sanitise(user.email)}/onlineStatus`;
+		const key = `${course.id}/users/${sanitise(session.user_metadata.email)}/onlineStatus`;
 		updateStr(key, onlineStatus);
 		user.onlineStatus = onlineStatus;
 	},
 
-	async getOnlineStatus(course: Course, user: User): Promise<string> {
+	async getOnlineStatus(course: Course, session: Token): Promise<string> {
 		if (!course || !user) {
 			return 'online';
 		}
-		this.user = user;
-		this.courseId = course.url.substring(0, course.url.indexOf('.'));
-		const key = `${this.courseId}/users/${sanitise(user.email)}/onlineStatus`;
+		const courseId = course.url.substring(0, course.url.indexOf('.'));
+		const key = `${courseId}/users/${sanitise(session.user_metadata.email)}/onlineStatus`;
 		const status = await readValue(key);
 		return status || 'online';
 	},
 
-	reportPageLoad() {
-		updateLastAccess(`${course.id}/usage/${this.loRoute}`, this.title);
-		updateVisits(this.courseId);
+	reportPageLoad(course: any, session: Token) {
+		updateLastAccess(`${course.id}/usage/${this.loRoute}`, course.title);
+		updateVisits(course.url.substring(0, course.url.indexOf('.')));
 
-		if (!user || (user && user.onlineStatus === 'online')) {
+		if (!session || (session && session.onlineStatus === 'online')) {
 			updateLastAccess(`all-course-access/${course.id}`, this.title);
 			updateVisits(`all-course-access/${course.id}`);
 			updateLo(`all-course-access/${course.id}`, course, lo);
 		}
 
 		if (user) {
-			const key = `${this.courseId}/users/${sanitise(user.email)}/${this.loRoute}`;
+			const key = `${course.url.substring(0, course.url.indexOf('.'))}/users/${sanitise(
+				user.email
+			)}/${this.loRoute}`;
 			updateLastAccess(key, lo.title);
 			updateVisits(key);
 		}
@@ -89,13 +90,13 @@ export const analyticsService = {
 		}
 	},
 
-	updateLogin(courseId: string, user: User) {
-		const key = `${courseId}/users/${sanitise(user.email)}`;
-		updateStr(`${key}/email`, user.email);
-		updateStr(`${key}/name`, user.name);
-		updateStr(`${key}/id`, user.userId);
-		updateStr(`${key}/nickname`, user.nickname);
-		updateStr(`${key}/picture`, user.picture);
+	updateLogin(courseId: string, session: Token) {
+		const key = `${courseId}/users/${sanitise(session.user_metadata.email)}`;
+		updateStr(`${key}/email`, session.user_metadata.email);
+		updateStr(`${key}/name`, session.user_metadata.full_name);
+		updateStr(`${key}/id`, session.sub);
+		updateStr(`${key}/nickname`, session.user_metadata.preferred_username);
+		updateStr(`${key}/picture`, session.user_metadata.avatar_url);
 		updateStr(`${key}/last`, new Date().toString());
 		updateCountValue(`${key}/count`);
 	}

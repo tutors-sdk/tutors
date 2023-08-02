@@ -6,8 +6,9 @@ import { presenceService } from '$lib/services/presence';
 import { initFirebase } from '$lib/utils/firebase';
 import { getKeys } from '$lib/environment';
 import { goto } from '$app/navigation';
+import type { Token } from '$lib/types/auth';
 
-export async function initServices(session: any) {
+export async function initServices(session: Token) {
 	if (getKeys().firebase.apiKey !== 'XXX') {
 		initFirebase(getKeys().firebase);
 		presenceService.startPresenceEngine(session);
@@ -20,9 +21,8 @@ export async function initServices(session: any) {
 			if (get(currentCourse)) {
 				const course = get(currentCourse);
 				if (session) {
-					const user = session.user;
-					user.onlineStatus = await analyticsService.getOnlineStatus(course, user);
-					analyticsService.updateLogin(course.id, user);
+					session.onlineStatus = await analyticsService.getOnlineStatus(course, session);
+					analyticsService.updateLogin(course.id, session);
 				}
 			}
 		}
