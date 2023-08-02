@@ -253,7 +253,7 @@
 									</li>
 								{/if}
 								<li>
-									<a href="#" target="_blank" rel="noreferrer">
+									<a href="/" target="_blank" rel="noreferrer">
 										<Icon
 											icon="fluent:clock-alarm-24-filled"
 											color="rgba(var(--color-primary-500))"

@@ -1,5 +1,5 @@
 import { page } from '$app/stores';
-import { authService } from '$lib/services/auth';
+import { analyticsService } from '$lib/services/analytics';
 import { get } from 'svelte/store';
 import { transitionKey, currentCourse } from '$lib/stores';
 import { presenceService } from '$lib/services/presence';
@@ -7,11 +7,10 @@ import { initFirebase } from '$lib/utils/firebase';
 import { getKeys } from '$lib/environment';
 import { goto } from '$app/navigation';
 
-export async function initServices() {
+export async function initServices(session: any) {
 	if (getKeys().firebase.apiKey !== 'XXX') {
 		initFirebase(getKeys().firebase);
-		// authService.setCredentials(getKeys().auth0);
-		presenceService.startPresenceEngine();
+		presenceService.startPresenceEngine(session);
 		const pageVal = get(page);
 		if (pageVal.url.hash) {
 			if (pageVal.url.hash.startsWith('#/course')) {
@@ -19,7 +18,12 @@ export async function initServices() {
 			}
 		} else {
 			if (get(currentCourse)) {
-				await authService.checkAuth(get(currentCourse));
+				const course = get(currentCourse);
+				if (session) {
+					const user = session.user;
+					user.onlineStatus = await analyticsService.getOnlineStatus(course, user);
+					analyticsService.updateLogin(course.id, user);
+				}
 			}
 		}
 	}

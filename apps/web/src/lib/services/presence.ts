@@ -1,7 +1,6 @@
 import { Course } from '$lib/models/course';
 import { currentCourse, currentUser, studentsOnline, studentsOnlineList } from '$lib/stores';
 import type { StudentLoEvent, StudentLoUpdate } from '$lib/types/metrics';
-import { decrypt, isAuthenticated } from '$lib/utils/auth';
 import { child, get, getDatabase, onValue, ref, off } from 'firebase/database';
 import { readObj, readUser, sanitise } from '$lib/utils/firebase';
 import type { User, UserSummary } from '$lib/types/auth';
@@ -119,7 +118,7 @@ export const presenceService = {
 		});
 	},
 
-	startPresenceEngine() {
+	startPresenceEngine(session: any) {
 		this.db = getDatabase();
 		currentUser.subscribe((newUser: User) => {
 			this.user = newUser;
@@ -131,7 +130,7 @@ export const presenceService = {
 					off(statusRef);
 				}
 				this.lastCourse = newCourse;
-				if (isAuthenticated() && newCourse?.authLevel > 0) {
+				if (session && newCourse?.authLevel > 0) {
 					this.initService(newCourse);
 				}
 			}

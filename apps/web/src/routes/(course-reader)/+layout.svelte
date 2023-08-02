@@ -12,10 +12,15 @@
 	let mounted = false;
 	let currentRoute = '';
 
+	export let data: any;
+
+	let { supabase, session } = data;
+	$: ({ supabase, session } = data);
+
 	onMount(async () => {
 		mounted = true;
 		setInitialClassState();
-		initServices();
+		initServices(data.session);
 		const func = () => {
 			if (!document.hidden && !currentRoute?.startsWith('/live')) {
 				analyticsService.updatePageCount();

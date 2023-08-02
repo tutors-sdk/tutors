@@ -4,6 +4,14 @@
 	import DeveloperExperience from '$lib/home/DeveloperExperience.svelte';
 	import EducatorExperience from '$lib/home/EducatorExperience.svelte';
 	import LearnerExperience from '$lib/home/LearnerExperience.svelte';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		if (localStorage.isAuthenticating && localStorage.course_url) {
+			localStorage.removeItem('isAuthenticating');
+			window.location.href = '/course/' + localStorage.course_url;
+		}
+	});
 </script>
 
 <div class="bg-gradient-to-l from-primary-50 dark:from-primary-900 to-accent-50 dark:to-accent-900">

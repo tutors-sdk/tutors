@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { clearLocalStorage, logout } from '$lib/utils/auth';
 	import { currentCourse, currentUser } from '$lib/stores';
 
 	export let data;
@@ -12,11 +11,9 @@
 	};
 
 	onMount(() => {
-		currentUser.set(null);
 		currentCourse.set(null);
-		clearLocalStorage();
+		currentUser.set(null);
 		handleSignOut();
-		logout();
 	});
 </script>
 

@@ -1,6 +1,4 @@
 import { child, get, getDatabase, ref } from 'firebase/database';
-
-import { decrypt } from '$lib/utils/auth';
 import type { DayMeasure, Metric, UserMetric } from '$lib/types/metrics';
 import type { Lo } from '$lib/types/lo';
 
@@ -77,9 +75,9 @@ function expandGenericMetrics(id: string, fbData): any {
 	return metric;
 }
 
-export async function fetchUserById(courseUrl: string, userId: string, allLabs) {
+export async function fetchUserById(courseUrl: string, session: any, allLabs) {
 	const courseBase = courseUrl.substr(0, courseUrl.indexOf('.'));
-	const userEmail = decrypt(userId);
+	const userEmail = session.user_metadata.email;
 	// eslint-disable-next-line no-useless-escape
 	const userEmailSanitised = userEmail.replace(/[`#$.\[\]\/]/gi, '*');
 	let user = null;

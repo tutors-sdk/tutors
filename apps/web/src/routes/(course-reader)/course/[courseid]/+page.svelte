@@ -1,18 +1,30 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { PageData } from './$types';
-	import { authService } from '$lib/services/auth';
+	import { goto } from '$app/navigation';
+	import { analyticsService } from '$lib/services/analytics';
 	import { initFirebase } from '$lib/utils/firebase';
 	import { getKeys } from '$lib/environment';
 	import TopDeck from '$lib/ui/legacy/Organisms/CardDeck/TopDeck.svelte';
 
-	export let data: PageData;
+	export let data: any;
+
+	$: ({ supabase, session } = data);
 
 	onMount(async () => {
+		if (data.course.authLevel > 0) {
+			if (!session) {
+				localStorage.setItem('course_url', data.course.url);
+				localStorage.setItem('isAuthenticating', 'true');
+				goto('/auth');
+			} else {
+				session.onlineStatus = await analyticsService.getOnlineStatus(data.course, session);
+				if (session) {
+					// analyticsService.updateLogin(data.course.id, data.session);
+				}
+			}
+		}
 		if (getKeys().firebase.apiKey !== 'XXX') {
 			initFirebase(getKeys().firebase);
-			// authService.setCredentials(getKeys().auth0);
-			// authService.checkAuth(data.course);
 		}
 	});
 </script>
