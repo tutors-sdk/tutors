@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { modeCurrent } from '@skeletonlabs/skeleton';
 	import 'iconify-icon';
 	import DeveloperExperience from '$lib/home/DeveloperExperience.svelte';

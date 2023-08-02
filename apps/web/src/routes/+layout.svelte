@@ -87,7 +87,11 @@
 	<Toast />
 	<Sidebars />
 	<svelte:fragment slot="header">
-		<AppBar background="bg-surface-100-800-token" shadow="none" class="h-20 justify-center">
+		<AppBar
+			background="bg-surface-100-800-token"
+			shadow="none"
+			class="h-20 justify-center border-b-[1px] border-surface-200 dark:border-surface-700"
+		>
 			<svelte:fragment slot="lead">
 				{#if $page.url.pathname === '/' || $page.url.pathname === '/auth' || $page.url.pathname === '/dashboard' || $page.url.pathname === '/terms'}
 					<a href="/">
@@ -134,7 +138,7 @@
 
 			<svelte:fragment slot="trail">
 				{#if !$currentCourse?.isPortfolio()}
-					<a class="btn btn-sm" href="/course/{$courseUrl}/search">
+					<a class="btn btn-sm" href="/search/{$courseUrl}">
 						<Icon
 							icon="fluent:search-24-filled"
 							color="rgba(var(--color-primary-500))"
@@ -192,9 +196,9 @@
 									</a>
 								</li>
 							</ul>
-							<hr />
-							<ul>
-								{#if $currentCourse}
+							{#if $currentCourse}
+								<hr />
+								<ul>
 									<li class="flex">
 										<!-- svelte-ignore a11y-missing-attribute -->
 										<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -232,8 +236,8 @@
 											</a>
 										</li>
 									{/if}
-								{/if}
-							</ul>
+								</ul>
+							{/if}
 							<hr />
 							<ul>
 								{#if status}
@@ -287,10 +291,9 @@
 					</a>
 				{/if}
 				<span class="divider-vertical h-10 hidden lg:block" />
-
 				<LayoutMenu />
-				<span class="divider-vertical h-10 hidden lg:block" />
 				{#if $currentCourse}
+					<span class="divider-vertical h-10 hidden lg:block" />
 					<button class="btn btn-sm" on:click={tocDrawerOpen}>
 						<Icon
 							icon="fluent:line-horizontal-3-20-filled"

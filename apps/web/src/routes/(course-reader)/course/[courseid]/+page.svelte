@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { PageData } from './$types';
-	import { authService } from 'tutors-reader-lib/src/services/auth-service';
-	import { initFirebase } from 'tutors-reader-lib/src/utils/firebase-utils';
+	import { authService } from '$lib/services/auth';
+	import { initFirebase } from '$lib/utils/firebase';
 	import { getKeys } from '$lib/environment';
 	import TopDeck from '$lib/ui/legacy/Organisms/CardDeck/TopDeck.svelte';
 
