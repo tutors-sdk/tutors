@@ -73,7 +73,9 @@ exports.courseBuilder = {
             title: title,
             summary: summary,
             contentMd: contentMd,
+            contentHtml: "",
             frontMatter: frontMatter,
+            icon: { type: "", color: "" },
             id: (0, lr_utils_1.getId)(lr),
             img: (0, lr_utils_1.getImage)(lr),
             imgFile: (0, lr_utils_1.getImageFile)(lr),
@@ -83,7 +85,6 @@ exports.courseBuilder = {
             videoids: videoids,
             los: [],
             hide: false,
-            contentHtml: "",
             parentLo: undefined
         };
         return lo;

@@ -88,7 +88,9 @@ export const courseBuilder = {
       title: title,
       summary: summary,
       contentMd: contentMd,
+      contentHtml: "",
       frontMatter: frontMatter,
+      icon: { type: "", color: "" },
       id: getId(lr),
       img: getImage(lr),
       imgFile: getImageFile(lr),
@@ -98,7 +100,6 @@ export const courseBuilder = {
       videoids: videoids,
       los: [],
       hide: false,
-      contentHtml: "",
       parentLo: undefined
     };
     return lo;
@@ -138,7 +139,7 @@ export const courseBuilder = {
         title: theTitle,
         shortTitle: shortTitle,
         contentMd: contents.body,
-        contentHtml:"",
+        contentHtml: "",
         route: `${getRoute(lr)}/${shortTitle}`,
         id: shortTitle,
         type: "step",

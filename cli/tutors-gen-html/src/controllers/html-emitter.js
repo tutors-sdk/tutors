@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.courseBuilderHtml = exports.publishTemplate = void 0;
+exports.courseBuilderHtml = exports.threadLos = exports.publishTemplate = void 0;
 const sh = __importStar(require("shelljs"));
 const utils_1 = require("tutors-gen-lib/src/utils/utils");
 const nunjucks = __importStar(require("nunjucks"));
@@ -32,59 +32,31 @@ function publishTemplate(path, file, template, lo) {
     (0, utils_1.writeFile)(path, file, nunjucks.render(template, lo));
 }
 exports.publishTemplate = publishTemplate;
-exports.courseBuilderHtml = {
-    emitObjectves(lo) {
-        var _a, _b;
-        // if (lo.frontMatter && lo.frontMatter.icon) {
-        //   lo.icon = {
-        //     type: lo.frontMatter.icon["type"],
-        //     color: lo.frontMatter.icon["color"],
-        //   };
-        // }
-        if (lo && lo.contentMd && lo.contentMd.length > 60) {
-            lo.contentMd = (_a = lo === null || lo === void 0 ? void 0 : lo.contentMd) === null || _a === void 0 ? void 0 : _a.substring(0, 60);
-            lo.contentMd = (_b = lo === null || lo === void 0 ? void 0 : lo.contentMd) === null || _b === void 0 ? void 0 : _b.concat("...");
-        }
-        if (lo.contentMd)
+function threadLos(parent) {
+    for (const lo of parent.los) {
+        if (lo.contentMd) {
             lo.contentHtml = (0, markdown_utils_1.convertMdToHtml)(lo.contentMd);
-    },
-    emitNote(note, path) {
-        note.contentHtml = (0, markdown_utils_1.convertMdToHtml)(note.contentMd);
-        const notePath = `${path}/${note.id}`;
-        const obj = {
-            lo: note
-        };
-        publishTemplate(notePath, "index.html", "Note.njk", obj);
-    },
-    emitLab(lab, path) {
-        lab.los.forEach((chapter) => {
-            chapter.contentHtml = (0, markdown_utils_1.convertMdToHtml)(chapter.contentMd);
-            //chapter.title = convertMdToHtml(chapter.title);
-        });
-        const labPath = `${path}/${lab.id}`;
-        const obj = {
-            lo: lab
-        };
-        publishTemplate(labPath, "index.html", "Lab.njk", obj);
-    },
-    emitUnit(unit, path) {
-        unit.los.forEach((lo) => {
-            //this.emitObjectves(lo as LearningObject);
-            if (lo.type == "lab") {
-                this.emitLab(lo, path);
-            }
-            if (lo.type == "note") {
-                this.emitNote(lo, path);
-            }
-            if (lo.type == "panelnote") {
-                const note = lo;
-                note.contentMd = this.parser.parse(note.contentMd);
-            }
-        });
-        // unit.standardLos = sortLos(unit.standardLos);
-    },
+        }
+        const obj = lo;
+        obj.parentLo = parent;
+        if (obj.frontMatter && obj.frontMatter.icon) {
+            obj.icon = {
+                type: obj.frontMatter.icon["type"],
+                color: obj.frontMatter.icon["color"],
+            };
+        }
+        else {
+            obj.icon = null;
+        }
+        if (obj.los) {
+            threadLos(obj);
+        }
+    }
+}
+exports.threadLos = threadLos;
+exports.courseBuilderHtml = {
     emitLo(lo, path) {
-        if (lo.type == "unit") {
+        if (lo.type == "unit" || lo.type == "side") {
             const unitPath = `${path}/${lo.id}`;
             this.emitUnit(lo, unitPath);
         }
@@ -92,42 +64,66 @@ exports.courseBuilderHtml = {
             if (lo.type == "lab") {
                 this.emitLab(lo, path);
             }
-            if (lo.type == "panelnote") {
+            if (lo.type == "note" || lo.type == "panelnote") {
                 this.emitNote(lo, path);
             }
-            if (lo.type == "note") {
-                this.emitNote(lo, path);
-            }
-            this.emitObjectves(lo);
         }
     },
-    emitTopic(topic, path) {
+    emitNote(note, path) {
+        const notePath = `${path}/${note.id}`;
+        publishTemplate(notePath, "index.html", "Note.njk", {
+            lo: note
+        });
+    },
+    emitLab(lab, path) {
+        const labPath = `${path}/${lab.id}`;
+        publishTemplate(labPath, "index.html", "Lab.njk", {
+            lo: lab
+        });
+    },
+    emitUnit(unit, path) {
         var _a, _b, _c;
-        sh.cd(topic.id);
-        this.emitObjectves(topic);
-        const topicPath = `${path}/${topic.id}`;
-        (_a = topic === null || topic === void 0 ? void 0 : topic.los) === null || _a === void 0 ? void 0 : _a.forEach((lo) => {
+        unit.los.forEach((lo) => {
+            if (lo.type == "lab") {
+                this.emitLab(lo, path);
+            }
+            if (lo.type == "note" || lo.type == "panelnote") {
+                this.emitNote(lo, path);
+            }
+        });
+        unit.panels = {
+            panelVideos: (_a = unit.los) === null || _a === void 0 ? void 0 : _a.filter((lo) => lo.type === "panelvideo"),
+            panelTalks: (_b = unit.los) === null || _b === void 0 ? void 0 : _b.filter((lo) => lo.type === "paneltalk"),
+            panelNotes: (_c = unit.los) === null || _c === void 0 ? void 0 : _c.filter((lo) => lo.type === "panelnote")
+        };
+    },
+    emitTopic(lo, path) {
+        var _a, _b, _c, _d, _e, _f, _g;
+        sh.cd(lo.id);
+        const topicPath = `${path}/${lo.id}`;
+        (_a = lo === null || lo === void 0 ? void 0 : lo.los) === null || _a === void 0 ? void 0 : _a.forEach((lo) => {
             this.emitLo(lo, topicPath);
         });
-        const units = (_b = topic === null || topic === void 0 ? void 0 : topic.los) === null || _b === void 0 ? void 0 : _b.filter((lo) => lo.lotype !== "unit");
-        const standardLos = (_c = topic === null || topic === void 0 ? void 0 : topic.los) === null || _c === void 0 ? void 0 : _c.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk");
-        const obj = {
-            lo: topic,
-            standardLos: standardLos,
-            units: units
+        lo.panels = {
+            panelVideos: (_b = lo === null || lo === void 0 ? void 0 : lo.los) === null || _b === void 0 ? void 0 : _b.filter((lo) => lo.type === "panelvideo"),
+            panelTalks: (_c = lo === null || lo === void 0 ? void 0 : lo.los) === null || _c === void 0 ? void 0 : _c.filter((lo) => lo.type === "paneltalk"),
+            panelNotes: (_d = lo === null || lo === void 0 ? void 0 : lo.los) === null || _d === void 0 ? void 0 : _d.filter((lo) => lo.type === "panelnote")
         };
-        publishTemplate(topicPath, "index.html", "Topic.njk", obj);
+        lo.units = (_e = lo === null || lo === void 0 ? void 0 : lo.los) === null || _e === void 0 ? void 0 : _e.filter((lo) => lo.type === "unit");
+        lo.sides = (_f = lo === null || lo === void 0 ? void 0 : lo.los) === null || _f === void 0 ? void 0 : _f.filter((lo) => lo.type === "side");
+        lo.standardLos = (_g = lo === null || lo === void 0 ? void 0 : lo.los) === null || _g === void 0 ? void 0 : _g.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "side");
+        publishTemplate(topicPath, "index.html", "Topic.njk", {
+            lo: lo,
+        });
         sh.cd("..");
     },
-    emitCourse(course, path) {
-        course.los.forEach((lo) => {
+    generateCourse(path, lo) {
+        threadLos(lo);
+        sh.cd(path);
+        lo.los.forEach((lo) => {
             this.emitTopic(lo, path);
         });
-        publishTemplate(path, "index.html", "Course.njk", { lo: course });
-    },
-    generateCourse(path, course) {
-        sh.cd(path);
-        this.emitCourse(course, path);
+        publishTemplate(path, "index.html", "Course.njk", { lo: lo });
     }
 };
 //# sourceMappingURL=html-emitter.js.map

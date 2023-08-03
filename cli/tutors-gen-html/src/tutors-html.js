@@ -30,7 +30,6 @@ const course_builder_1 = require("tutors-gen-lib/src/lo/course-builder");
 const utils_1 = require("tutors-gen-lib/src/utils/utils");
 const nunjucks = __importStar(require("nunjucks"));
 const html_emitter_1 = require("./controllers/html-emitter");
-const lo_types_1 = require("tutors-gen-lib/src/lo/lo-types");
 const version = `tutors-html: 2.6.2 (tutors-lib: 2.6.2)`;
 const root = __dirname;
 nunjucks.configure(root + "/views", { autoescape: false });
@@ -43,7 +42,6 @@ if (fs.existsSync("course.md")) {
     course_builder_1.courseBuilder.buildCourse(resource_builder_1.resourceBuilder.lr);
     resource_builder_1.resourceBuilder.copyAssets(destFolder);
     (0, utils_1.writeFile)(destFolder, "tutors.json", JSON.stringify(course_builder_1.courseBuilder.lo));
-    (0, lo_types_1.threadLos)(course_builder_1.courseBuilder.lo);
     html_emitter_1.courseBuilderHtml.generateCourse(destFolder, course_builder_1.courseBuilder.lo);
     console.log(`${version}`);
 }

@@ -16,6 +16,11 @@ export interface VideoIdentifiers {
   videoIds: VideoIdentifier[];
 }
 
+export interface IconType {
+  type: string;
+  color: string;
+}
+
 export interface LearningResource {
   courseRoot: string;
   route: string;
@@ -29,7 +34,7 @@ export interface LabStep {
   title: string;
   shortTitle: string;
   contentMd: string;
-  contentHtml:string;
+  contentHtml: string;
   route: string;
   id: string;
   type: string;
@@ -37,6 +42,7 @@ export interface LabStep {
 }
 
 export interface LearningObject {
+  parentLo?: LearningObject;
   id: string;
   route: string;
   type: string;
@@ -46,6 +52,7 @@ export interface LearningObject {
   imgFile: string;
   pdf: string;
   pdfFile: string;
+  icon: IconType;
   contentMd: string;
   contentHtml: string;
   video: string;
@@ -55,7 +62,10 @@ export interface LearningObject {
   properties?: Properties;
   calendar?: Properties;
   hide: boolean;
-  parentLo?: LearningObject;
+  panels?: any;
+  units?: any;
+  sides?: any;
+  standardLos?: any;
 }
 
 export const loTypes = ["/note", "/book", "/archive", "/web", "/github", "/panelnote", "/paneltalk", "/panelvideo", "/talk", "/unit", "/side", "/topic"];
@@ -77,13 +87,3 @@ export const preOrder = new Map([
   ["", 0],
 ]);
 
-
-export function threadLos(parent: LearningObject) {
-  for (const lo of parent.los) {
-    const obj = lo as LearningObject
-    obj.parentLo = parent;
-    if (obj.los) {
-      threadLos(obj);
-    }
-  }
-}

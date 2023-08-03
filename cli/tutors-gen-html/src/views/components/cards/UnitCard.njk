@@ -12,7 +12,7 @@
         {{ lo.title }}
       </h2>
     </div>
-    {{ panelCards (lo, "./") }}
+    {{ panelCards (lo.panels, "./") }}
     <div class="flex flex-wrap justify-center">
       {{ cardDeck(lo.los, './' + lo.id) }}
     </div>

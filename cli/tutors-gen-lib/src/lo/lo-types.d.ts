@@ -11,6 +11,10 @@ export interface VideoIdentifiers {
     videoid: string;
     videoIds: VideoIdentifier[];
 }
+export interface IconType {
+    type: string;
+    color: string;
+}
 export interface LearningResource {
     courseRoot: string;
     route: string;
@@ -30,6 +34,7 @@ export interface LabStep {
     hide: boolean;
 }
 export interface LearningObject {
+    parentLo?: LearningObject;
     id: string;
     route: string;
     type: string;
@@ -39,6 +44,7 @@ export interface LearningObject {
     imgFile: string;
     pdf: string;
     pdfFile: string;
+    icon: IconType;
     contentMd: string;
     contentHtml: string;
     video: string;
@@ -48,8 +54,10 @@ export interface LearningObject {
     properties?: Properties;
     calendar?: Properties;
     hide: boolean;
-    parentLo?: LearningObject;
+    panels?: any;
+    units?: any;
+    sides?: any;
+    standardLos?: any;
 }
 export declare const loTypes: string[];
 export declare const preOrder: Map<string, number>;
-export declare function threadLos(parent: LearningObject): void;

@@ -1,16 +1,10 @@
 {% macro urlStart (lo, path) %}
-  {% if (lo.type == "course") and (lo.route) %}
-    {% set url = lo.route %}
-  {% elif (lo.type == "web") or ((lo.type == "github") ) %}
+  {% if (lo.type == "web") or ((lo.type == "github") ) %}
     {% set url = lo.route + ' target="_blank"' %}
   {% elif (lo.type == "talk") %}
     {% set url = path + '/' + lo.id + '/' + lo.pdfFile + ' target="_blank"' %}
   {% else %}
-    {% set url = path +   '/' +lo.id + "/index.html" %}
-  {% endif %}
-  {% set regExp = r/.md.*/g %}
-  {% if regExp.test(lo.route) %}
-    {% set url = '#' %}
+    {% set url = path + '/' +lo.id + "/index.html" %}
   {% endif %}
   <a href={{ url }}>
   {% endmacro %}

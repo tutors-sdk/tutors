@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.threadLos = exports.preOrder = exports.loTypes = exports.Properties = exports.assetTypes = exports.imageTypes = void 0;
+exports.preOrder = exports.loTypes = exports.Properties = exports.assetTypes = exports.imageTypes = void 0;
 exports.imageTypes = ["png", "jpg", "jpeg", "gif", "PNG", "JPG", "JPEG", "GIF"];
 exports.assetTypes = exports.imageTypes.concat(["pdf", "zip"]);
 class Properties {
@@ -23,14 +23,4 @@ exports.preOrder = new Map([
     ["unknown", 13],
     ["", 0],
 ]);
-function threadLos(parent) {
-    for (const lo of parent.los) {
-        const obj = lo;
-        obj.parentLo = parent;
-        if (obj.los) {
-            threadLos(obj);
-        }
-    }
-}
-exports.threadLos = threadLos;
 //# sourceMappingURL=lo-types.js.map

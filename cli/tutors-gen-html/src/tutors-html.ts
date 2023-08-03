@@ -5,7 +5,6 @@ import { courseBuilder } from "tutors-gen-lib/src/lo/course-builder";
 import { writeFile } from "tutors-gen-lib/src/utils/utils";
 import * as nunjucks from "nunjucks";
 import { courseBuilderHtml } from "./controllers/html-emitter";
-import { threadLos } from "tutors-gen-lib/src/lo/lo-types";
 
 const version = `tutors-html: 2.6.2 (tutors-lib: 2.6.2)`;
 
@@ -21,7 +20,6 @@ if (fs.existsSync("course.md")) {
   courseBuilder.buildCourse(resourceBuilder.lr);
   resourceBuilder.copyAssets(destFolder);
   writeFile(destFolder, "tutors.json", JSON.stringify(courseBuilder.lo));
-  threadLos(courseBuilder.lo);
   courseBuilderHtml.generateCourse(destFolder, courseBuilder.lo)
   console.log(`${version}`);
 } else {
