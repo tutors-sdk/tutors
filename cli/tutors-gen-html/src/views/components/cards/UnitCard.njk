@@ -14,7 +14,7 @@
     </div>
     {{ panelCards (lo.panels, "./") }}
     <div class="flex flex-wrap justify-center">
-      {{ cardDeck(lo.los, './' + lo.id) }}
+      {{ cardDeck(lo.units.standardLos, './' + lo.id) }}
     </div>
   </div>
 {% endmacro %}

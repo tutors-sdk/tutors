@@ -5,30 +5,30 @@
 {% extends "layouts/main.html" %}
 {% block content %}
   {{ mainNavigator(lo) }}
-  {% if (lo.sides.length > 0) %}
+  {% if (lo.units.sides.length > 0) %}
     <div class="block md:flex w-11/12 mx-auto">
       <div class="w-full">
         {{ panelCards(lo.panels, "./") }}
-        {% for lo in lo.units %}
+        {% for lo in lo.units.units %}
           <div class="mt-2">
             {{ unitCard (lo) }}
           </div>
         {% endfor %}
-        {{ cardDeck(lo.standardLos, "") }}
+        {{ cardDeck(lo.units.standardLos, "") }}
       </div>
       <div class="block w-full md:w-[30rem] md:ml-2">
-        {% for side in lo.sides %}
+        {% for side in lo.units.sides %}
           {{ unitCard (side) }}
         {% endfor %}
       </div>
     </div>
   {% else %}
     {{ panelCards(lo.panels, "./") }}
-    {% for lo in lo.units %}
+    {% for lo in lo.units.units %}
       <div class="mt-2">
         {{ unitCard (lo) }}
       </div>
     {% endfor %}
-    {{ cardDeck(lo.standardLos, "./") }}
+    {{ cardDeck(lo.units.standardLos, "./") }}
   {% endif %}
 {% endblock %}
