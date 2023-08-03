@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUnits = exports.getPanels = exports.buildCourseTree = void 0;
-const markdown_utils_1 = require("../utils/markdown-utils");
+const markdown_1 = require("./markdown");
 function buildCourseTree(parent) {
     for (const lo of parent.los) {
         if (lo.contentMd) {
-            lo.contentHtml = (0, markdown_utils_1.convertMdToHtml)(lo.contentMd);
+            lo.contentHtml = (0, markdown_1.convertMdToHtml)(lo.contentMd);
         }
         const obj = lo;
         obj.parentLo = parent;

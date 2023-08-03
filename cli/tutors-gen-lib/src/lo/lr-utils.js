@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.readYaml = exports.readVideoIds = exports.getMarkdown = exports.getVideo = exports.getPdfFile = exports.getPdf = exports.getLabImageFile = exports.getLabImage = exports.getGitLink = exports.getWebLink = exports.getArchive = exports.getImageFile = exports.getImage = exports.getId = exports.getFilesWithTypes = exports.getFilesWithType = exports.getFileWithType = exports.getRoute = exports.getFileWithName = void 0;
+exports.removeLeadingHashes = exports.readYaml = exports.readVideoIds = exports.getMarkdown = exports.getVideo = exports.getPdfFile = exports.getPdf = exports.getLabImageFile = exports.getLabImage = exports.getGitLink = exports.getWebLink = exports.getArchiveFile = exports.getArchive = exports.getImageFile = exports.getImage = exports.getId = exports.getFilesWithTypes = exports.getFilesWithType = exports.getFileWithType = exports.getRoute = exports.getFileWithName = void 0;
 const lo_types_1 = require("./lo-types");
 const path_1 = __importDefault(require("path"));
 const sh = __importStar(require("shelljs"));
@@ -83,7 +83,7 @@ function getImage(lr) {
 exports.getImage = getImage;
 function getImageFile(lr) {
     let imageFile = getFileWithType(lr, lo_types_1.imageTypes);
-    return imageFile.replace(/^.*[\\\/]/, '');
+    return imageFile.replace(/^.*[\\\/]/, "");
 }
 exports.getImageFile = getImageFile;
 function getArchive(lr) {
@@ -94,6 +94,11 @@ function getArchive(lr) {
     return archiveFile;
 }
 exports.getArchive = getArchive;
+function getArchiveFile(lr) {
+    let archiveFile = getFileWithType(lr, ["zip"]);
+    return archiveFile.replace(/^.*[\\\/]/, "");
+}
+exports.getArchiveFile = getArchiveFile;
 function getWebLink(lr) {
     const webLinkFile = getFileWithName(lr, "weburl");
     return (0, utils_1.readFirstLineFromFile)(webLinkFile);
@@ -125,7 +130,7 @@ function getLabImageFile(lr) {
         const imageFiles = getFilesWithTypes(imageLrs[0], lo_types_1.imageTypes);
         imageFiles.forEach((filePath) => {
             if (filePath.includes("/img/main")) {
-                foundFilePath = filePath.replace(/^.*[\\\/]/, '');
+                foundFilePath = filePath.replace(/^.*[\\\/]/, "");
                 //foundFilePath = `https://{{COURSEURL}}${filePath.replace(lr.courseRoot, "")}`;
             }
         });
@@ -143,7 +148,7 @@ function getPdf(lr) {
 exports.getPdf = getPdf;
 function getPdfFile(lr) {
     let pdfFile = getFileWithType(lr, ["pdf"]);
-    return pdfFile.replace(/^.*[\\\/]/, '');
+    return pdfFile.replace(/^.*[\\\/]/, "");
 }
 exports.getPdfFile = getPdfFile;
 function getVideo(lr, id) {
@@ -227,4 +232,9 @@ function readYaml(lr) {
     return yamlData;
 }
 exports.readYaml = readYaml;
+function removeLeadingHashes(str) {
+    const hashIndex = str.lastIndexOf("#");
+    return hashIndex >= 0 ? str.substring(hashIndex + 1) : str;
+}
+exports.removeLeadingHashes = removeLeadingHashes;
 //# sourceMappingURL=lr-utils.js.map

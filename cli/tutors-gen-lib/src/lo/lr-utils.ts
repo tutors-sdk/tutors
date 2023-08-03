@@ -55,7 +55,7 @@ export function getImage(lr: LearningResource): string {
 
 export function getImageFile(lr: LearningResource): string {
   let imageFile = getFileWithType(lr, imageTypes);
-  return imageFile.replace(/^.*[\\\/]/, '')
+  return imageFile.replace(/^.*[\\\/]/, "");
 }
 
 export function getArchive(lr: LearningResource): string {
@@ -64,6 +64,11 @@ export function getArchive(lr: LearningResource): string {
     archiveFile = `https://{{COURSEURL}}${archiveFile.replace(lr.courseRoot, "")}`;
   }
   return archiveFile;
+}
+
+export function getArchiveFile(lr: LearningResource): string {
+  let archiveFile = getFileWithType(lr, ["zip"]);
+  return archiveFile.replace(/^.*[\\\/]/, "");
 }
 
 export function getWebLink(lr: LearningResource): string {
@@ -97,7 +102,7 @@ export function getLabImageFile(lr: LearningResource): string {
     const imageFiles = getFilesWithTypes(imageLrs[0], imageTypes);
     imageFiles.forEach((filePath) => {
       if (filePath.includes("/img/main")) {
-        foundFilePath = filePath.replace(/^.*[\\\/]/, '')
+        foundFilePath = filePath.replace(/^.*[\\\/]/, "");
         //foundFilePath = `https://{{COURSEURL}}${filePath.replace(lr.courseRoot, "")}`;
       }
     });
@@ -115,7 +120,7 @@ export function getPdf(lr: LearningResource): string {
 
 export function getPdfFile(lr: LearningResource): string {
   let pdfFile = getFileWithType(lr, ["pdf"]);
-  return pdfFile.replace(/^.*[\\\/]/, '')
+  return pdfFile.replace(/^.*[\\\/]/, "");
 }
 
 export function getVideo(lr: LearningResource, id: string): string {
@@ -196,4 +201,9 @@ export function readYaml(lr: LearningResource): any {
     }
   }
   return yamlData;
+}
+
+export function removeLeadingHashes(str: string): string {
+  const hashIndex = str.lastIndexOf("#");
+  return hashIndex >= 0 ? str.substring(hashIndex + 1) : str;
 }

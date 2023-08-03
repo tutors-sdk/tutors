@@ -34,29 +34,29 @@ export interface LabStep {
     hide: boolean;
 }
 export interface LearningObject {
-    parentLo?: LearningObject;
     id: string;
     route: string;
     type: string;
     title: string;
     summary: string;
+    contentMd: string;
+    contentHtml?: string;
+    hide: boolean;
     img: string;
     imgFile: string;
     pdf: string;
     pdfFile: string;
-    icon: IconType;
-    contentMd: string;
-    contentHtml: string;
+    archiveFile?: string;
     video: string;
     videoids: VideoIdentifiers;
     frontMatter: Properties;
     los: Array<LearningObject | LabStep>;
     properties?: Properties;
     calendar?: Properties;
-    hide: boolean;
+    icon?: IconType;
+    parentLo?: LearningObject;
     panels?: any;
     units?: any;
-    sides?: any;
     standardLos?: any;
 }
 export declare const loTypes: string[];

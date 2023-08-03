@@ -1,5 +1,5 @@
 import { LearningObject } from "tutors-gen-lib/src/lo/lo-types";
-import { convertMdToHtml } from "../utils/markdown-utils";
+import { convertMdToHtml } from "./markdown";
 
 export function buildCourseTree(parent: LearningObject) {
   for (const lo of parent.los) {

@@ -3,6 +3,8 @@
     {% set url = lo.route + ' target="_blank"' %}
   {% elif (lo.type == "talk") %}
     {% set url = path + '/' + lo.id + '/' + lo.pdfFile + ' target="_blank"' %}
+  {% elif (lo.type == "archive") %}
+    {% set url = path + '/' +lo.id + "/" + lo.archiveFile %}
   {% else %}
     {% set url = path + '/' +lo.id + "/index.html" %}
   {% endif %}

@@ -48,6 +48,7 @@ exports.courseBuilder = {
                 break;
             case "archive":
                 lo.route = (0, lr_utils_1.getArchive)(lr);
+                lo.archiveFile = (0, lr_utils_1.getArchiveFile)(lr);
                 break;
             default:
         }
@@ -73,9 +74,7 @@ exports.courseBuilder = {
             title: title,
             summary: summary,
             contentMd: contentMd,
-            contentHtml: "",
             frontMatter: frontMatter,
-            icon: { type: "", color: "" },
             id: (0, lr_utils_1.getId)(lr),
             img: (0, lr_utils_1.getImage)(lr),
             imgFile: (0, lr_utils_1.getImageFile)(lr),
@@ -85,7 +84,7 @@ exports.courseBuilder = {
             videoids: videoids,
             los: [],
             hide: false,
-            parentLo: undefined
+            parentLo: undefined,
         };
         return lo;
     },
@@ -113,6 +112,7 @@ exports.courseBuilder = {
             const contents = (0, front_matter_1.default)(wholeFile);
             let theTitle = contents.body.substring(0, contents.body.indexOf("\n"));
             theTitle = theTitle.replace("\r", "");
+            theTitle = (0, lr_utils_1.removeLeadingHashes)(theTitle);
             const shortTitle = chapterName.substring(chapterName.indexOf(".") + 1, chapterName.lastIndexOf("."));
             if (lo.title == "")
                 lo.title = shortTitle;
@@ -124,7 +124,7 @@ exports.courseBuilder = {
                 route: `${(0, lr_utils_1.getRoute)(lr)}/${shortTitle}`,
                 id: shortTitle,
                 type: "step",
-                hide: false
+                hide: false,
             };
             lo.los.push(labStep);
         });

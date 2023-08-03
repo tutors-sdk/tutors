@@ -1,5 +1,6 @@
 import {
   getArchive,
+  getArchiveFile,
   getFilesWithType,
   getFileWithName,
   getGitLink,
@@ -15,6 +16,7 @@ import {
   getVideo,
   getWebLink,
   readVideoIds,
+  removeLeadingHashes,
 } from "./lr-utils";
 import { LabStep, LearningObject, LearningResource, preOrder } from "./lo-types";
 import { readWholeFile, readYamlFile, writeFile } from "../utils/utils";
@@ -62,6 +64,7 @@ export const courseBuilder = {
         break;
       case "archive":
         lo.route = getArchive(lr);
+        lo.archiveFile = getArchiveFile(lr);
         break;
       default:
     }
@@ -88,9 +91,7 @@ export const courseBuilder = {
       title: title,
       summary: summary,
       contentMd: contentMd,
-      contentHtml: "",
       frontMatter: frontMatter,
-      icon: { type: "", color: "" },
       id: getId(lr),
       img: getImage(lr),
       imgFile: getImageFile(lr),
@@ -100,7 +101,7 @@ export const courseBuilder = {
       videoids: videoids,
       los: [],
       hide: false,
-      parentLo: undefined
+      parentLo: undefined,
     };
     return lo;
   },
@@ -133,6 +134,7 @@ export const courseBuilder = {
       const contents = fm(wholeFile);
       let theTitle = contents.body.substring(0, contents.body.indexOf("\n"));
       theTitle = theTitle.replace("\r", "");
+      theTitle = removeLeadingHashes(theTitle);
       const shortTitle = chapterName.substring(chapterName.indexOf(".") + 1, chapterName.lastIndexOf("."));
       if (lo.title == "") lo.title = shortTitle;
       const labStep: LabStep = {
@@ -143,7 +145,7 @@ export const courseBuilder = {
         route: `${getRoute(lr)}/${shortTitle}`,
         id: shortTitle,
         type: "step",
-        hide: false
+        hide: false,
       };
       lo.los.push(labStep);
     });

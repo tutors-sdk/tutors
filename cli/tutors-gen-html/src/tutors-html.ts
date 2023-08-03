@@ -4,7 +4,7 @@ import { resourceBuilder } from "tutors-gen-lib/src/lo/resource-builder";
 import { courseBuilder } from "tutors-gen-lib/src/lo/course-builder";
 import { writeFile } from "tutors-gen-lib/src/utils/utils";
 import * as nunjucks from "nunjucks";
-import { courseBuilderHtml } from "./controllers/html-emitter";
+import { courseBuilderHtml } from "./lo/html-emitter";
 
 const version = `tutors-html: 2.6.2 (tutors-lib: 2.6.2)`;
 
@@ -20,7 +20,7 @@ if (fs.existsSync("course.md")) {
   courseBuilder.buildCourse(resourceBuilder.lr);
   resourceBuilder.copyAssets(destFolder);
   writeFile(destFolder, "tutors.json", JSON.stringify(courseBuilder.lo));
-  courseBuilderHtml.generateCourse(destFolder, courseBuilder.lo)
+  courseBuilderHtml.generateCourse(destFolder, courseBuilder.lo);
   console.log(`${version}`);
 } else {
   console.log("Cannot locate course.md. Change to course folder and try again. ");

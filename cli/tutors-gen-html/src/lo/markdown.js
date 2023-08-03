@@ -19,26 +19,24 @@ const markdownIt = new markdown_it_1.default({
     html: false,
     xhtmlOut: false,
     breaks: false,
-    langPrefix: 'language-',
+    langPrefix: "language-",
     linkify: false,
     typographer: true,
-    quotes: '“”‘’',
+    quotes: "“”‘’",
     highlight: function (str, lang) {
         if (lang && highlight_js_1.default.getLanguage(lang)) {
             try {
-                return '<pre class="hljs"><code>' +
-                    highlight_js_1.default.highlight(str, { language: lang, ignoreIllegals: true }).value +
-                    '</code></pre>';
+                return '<pre class="hljs"><code>' + highlight_js_1.default.highlight(str, { language: lang, ignoreIllegals: true }).value + "</code></pre>";
             }
             catch (__) { }
         }
-        return '<pre class="hljs"><code>' + markdownIt.utils.escapeHtml(str) + '</code></pre>';
-    }
+        return '<pre class="hljs"><code>' + markdownIt.utils.escapeHtml(str) + "</code></pre>";
+    },
 });
-const tocOptions = { "includeLevel": [1, 2, 3] };
+const tocOptions = { includeLevel: [1, 2, 3] };
 markdownIt.use(markdown_it_katex_1.default);
 markdownIt.use(markdown_it_anchor_1.default, {
-    permalink: markdown_it_anchor_1.default.permalink.headerLink()
+    permalink: markdown_it_anchor_1.default.permalink.headerLink(),
 });
 markdownIt.use(markdown_it_table_of_contents_1.default, tocOptions);
 markdownIt.use(markdown_it_emoji_1.default);
@@ -51,4 +49,4 @@ function convertMdToHtml(md) {
     return markdownIt.render(md);
 }
 exports.convertMdToHtml = convertMdToHtml;
-//# sourceMappingURL=markdown-utils.js.map
+//# sourceMappingURL=markdown.js.map
