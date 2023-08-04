@@ -11,7 +11,7 @@ export default defineConfig({
       cypressFailFastPlugin.default(on, config);
       return config;
     },
-    baseUrl: "http://localhost:3000/course/full-stack-web-dev-oth-2022",
+    baseUrl: "https://reader.tutors.dev/course/tutors-cypress-testing",
     specPattern: "cypress/e2e/**/**.cy.ts"
   }
 });
