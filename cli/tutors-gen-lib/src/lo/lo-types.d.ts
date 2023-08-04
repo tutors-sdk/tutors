@@ -57,7 +57,6 @@ export interface LearningObject {
     parentLo?: LearningObject;
     panels?: any;
     units?: any;
-    standardLos?: any;
 }
 export declare const loTypes: string[];
 export declare const preOrder: Map<string, number>;

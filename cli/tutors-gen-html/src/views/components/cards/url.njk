@@ -6,7 +6,11 @@
   {% elif (lo.type == "archive") %}
     {% set url = path + '/' +lo.id + "/" + lo.archiveFile %}
   {% else %}
-    {% set url = path + '/' +lo.id + "/index.html" %}
+    {% if (lo.type == "topic") %}
+      {% set url = './' +lo.id + "/index.html" %}
+    {% else %}
+      {% set url = path + '/' +lo.id + "/index.html" %}
+    {% endif %}
   {% endif %}
   <a href={{ url }}>
   {% endmacro %}

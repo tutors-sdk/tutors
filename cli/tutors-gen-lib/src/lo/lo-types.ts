@@ -65,7 +65,6 @@ export interface LearningObject {
   parentLo?: LearningObject;
   panels?: any;
   units?: any;
-  standardLos?: any;
 }
 
 export const loTypes = ["/note", "/book", "/archive", "/web", "/github", "/panelnote", "/paneltalk", "/panelvideo", "/talk", "/unit", "/side", "/topic"];

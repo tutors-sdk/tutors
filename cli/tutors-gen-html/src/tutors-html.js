@@ -30,7 +30,7 @@ const course_builder_1 = require("tutors-gen-lib/src/lo/course-builder");
 const utils_1 = require("tutors-gen-lib/src/utils/utils");
 const nunjucks = __importStar(require("nunjucks"));
 const html_emitter_1 = require("./lo/html-emitter");
-const version = `tutors-html: 2.6.2 (tutors-lib: 2.6.2)`;
+const version = `tutors-html: 3.0.0 (tutors-gen-lib: 0.0.1)`;
 const root = __dirname;
 nunjucks.configure(root + "/views", { autoescape: false });
 nunjucks.installJinjaCompat();
