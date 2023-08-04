@@ -5,7 +5,9 @@
       "type": "typescript",
       "tsconfig": "cli/tutors-json/tsconfig.json",
       "option": "watch",
-      "problemMatcher": ["$tsc-watch"],
+      "problemMatcher": [
+        "$tsc-watch"
+      ],
       "group": "build",
       "label": "tsc: watch - cli/tutors-json/tsconfig.json",
       "runOptions": {
@@ -16,7 +18,9 @@
       "type": "typescript",
       "tsconfig": "cli/tutors-html/tsconfig.json",
       "option": "watch",
-      "problemMatcher": ["$tsc-watch"],
+      "problemMatcher": [
+        "$tsc-watch"
+      ],
       "group": "build",
       "label": "tsc: watch - cli/tutors-html/tsconfig.json",
       "runOptions": {
@@ -27,7 +31,9 @@
       "type": "typescript",
       "tsconfig": "cli/tutors-gen/tsconfig.json",
       "option": "watch",
-      "problemMatcher": ["$tsc-watch"],
+      "problemMatcher": [
+        "$tsc-watch"
+      ],
       "group": "build",
       "label": "tsc: watch - cli/tutors-gen/tsconfig.json",
       "runOptions": {
@@ -38,7 +44,9 @@
       "type": "typescript",
       "tsconfig": "cli/tutors-time/tsconfig.json",
       "option": "watch",
-      "problemMatcher": ["$tsc-watch"],
+      "problemMatcher": [
+        "$tsc-watch"
+      ],
       "group": "build",
       "label": "tsc: watch - cli/tutors-time/tsconfig.json",
       "runOptions": {
@@ -47,9 +55,37 @@
     },
     {
       "type": "typescript",
+      "tsconfig": "cli/tutors-gen-lib/tsconfig.json",
+      "option": "watch",
+      "problemMatcher": [
+        "$tsc-watch"
+      ],
+      "group": "build",
+      "label": "tsc: watch - cli/tutors-gen-lib/tsconfig.json",
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "type": "typescript",
+      "tsconfig": "cli/tutors-gen-html/tsconfig.json",
+      "option": "watch",
+      "problemMatcher": [
+        "$tsc-watch"
+      ],
+      "group": "build",
+      "label": "tsc: watch - cli/tutors-gen-html/tsconfig.json",
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    },
+    {
+      "type": "typescript",
       "tsconfig": "packages/tutors-lib/tsconfig.json",
       "option": "watch",
-      "problemMatcher": ["$tsc-watch"],
+      "problemMatcher": [
+        "$tsc-watch"
+      ],
       "group": "build",
       "label": "tsc: watch - packages/tutors-lib/tsconfig.json",
       "runOptions": {

@@ -1,21 +1,27 @@
 #!/usr/bin/env node
 import * as fs from "fs";
-import { courseBuilder } from "tutors-gen-lib/src/lo/course-builder";
 import { resourceBuilder } from "tutors-gen-lib/src/lo/resource-builder";
-import { generateNetlifyToml } from "tutors-gen-lib/src/utils/netlify";
+import { courseBuilder } from "tutors-gen-lib/src/lo/course-builder";
 import { writeFile } from "tutors-gen-lib/src/utils/utils";
-const version = `tutors-gen 3.0.0 (tutors-gen-lib: 0.0.1)`;
+import * as nunjucks from "nunjucks";
+import { courseBuilderHtml } from "./lo/html-emitter";
+
+const version = `tutors-html: 3.0.0 (tutors-gen-lib: 0.0.1)`;
+
+const root = __dirname;
+nunjucks.configure(root + "/views", { autoescape: false });
+nunjucks.installJinjaCompat();
 
 if (fs.existsSync("course.md")) {
   const srcFolder = process.cwd();
-  const destFolder = `${srcFolder}/json`;
+  const destFolder = `${srcFolder}/html`;
   console.log(`Static course generator ${version}`);
   resourceBuilder.buildTree(srcFolder);
   courseBuilder.buildCourse(resourceBuilder.lr);
   resourceBuilder.copyAssets(destFolder);
   writeFile(destFolder, "tutors.json", JSON.stringify(courseBuilder.lo));
-  generateNetlifyToml(destFolder);
+  courseBuilderHtml.generateCourse(destFolder, courseBuilder.lo);
   console.log(`${version}`);
 } else {
-  console.log("Cannot locate course.md. Please Change to course folder and try again. ");
+  console.log("Cannot locate course.md. Change to course folder and try again. ");
 }

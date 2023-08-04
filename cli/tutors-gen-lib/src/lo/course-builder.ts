@@ -1,18 +1,23 @@
 import {
   getArchive,
+  getArchiveFile,
   getFilesWithType,
   getFileWithName,
   getGitLink,
   getId,
   getImage,
+  getImageFile,
   getLabImage,
+  getLabImageFile,
   getMarkdown,
   getPdf,
+  getPdfFile,
   getRoute,
   getVideo,
   getWebLink,
   readVideoIds,
-} from "../utils/lr-utils";
+  removeLeadingHashes,
+} from "./lr-utils";
 import { LabStep, LearningObject, LearningResource, preOrder } from "./lo-types";
 import { readWholeFile, readYamlFile, writeFile } from "../utils/utils";
 import fm from "front-matter";
@@ -59,6 +64,7 @@ export const courseBuilder = {
         break;
       case "archive":
         lo.route = getArchive(lr);
+        lo.archiveFile = getArchiveFile(lr);
         break;
       default:
     }
@@ -88,11 +94,14 @@ export const courseBuilder = {
       frontMatter: frontMatter,
       id: getId(lr),
       img: getImage(lr),
+      imgFile: getImageFile(lr),
       pdf: getPdf(lr),
+      pdfFile: getPdfFile(lr),
       video: getVideo(lr, videoids.videoid),
       videoids: videoids,
       los: [],
       hide: false,
+      parentLo: undefined,
     };
     return lo;
   },
@@ -125,18 +134,23 @@ export const courseBuilder = {
       const contents = fm(wholeFile);
       let theTitle = contents.body.substring(0, contents.body.indexOf("\n"));
       theTitle = theTitle.replace("\r", "");
+      theTitle = removeLeadingHashes(theTitle);
       const shortTitle = chapterName.substring(chapterName.indexOf(".") + 1, chapterName.lastIndexOf("."));
       if (lo.title == "") lo.title = shortTitle;
       const labStep: LabStep = {
         title: theTitle,
         shortTitle: shortTitle,
         contentMd: contents.body,
+        contentHtml: "",
         route: `${getRoute(lr)}/${shortTitle}`,
         id: shortTitle,
+        type: "step",
+        hide: false,
       };
       lo.los.push(labStep);
     });
     lo.img = getLabImage(lr);
+    lo.imgFile = `img/${getLabImageFile(lr)}`;
     return lo;
   },
 
@@ -159,9 +173,5 @@ export const courseBuilder = {
     if (calendarFile) {
       this.lo.calendar = readYamlFile(calendarFile);
     }
-  },
-
-  generateCourse(outputFolder: string) {
-    writeFile(outputFolder, "tutors.json", JSON.stringify(this.lo));
   },
 };

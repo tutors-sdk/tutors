@@ -16,6 +16,11 @@ export interface VideoIdentifiers {
   videoIds: VideoIdentifier[];
 }
 
+export interface IconType {
+  type: string;
+  color: string;
+}
+
 export interface LearningResource {
   courseRoot: string;
   route: string;
@@ -29,8 +34,11 @@ export interface LabStep {
   title: string;
   shortTitle: string;
   contentMd: string;
+  contentHtml: string;
   route: string;
   id: string;
+  type: string;
+  hide: boolean;
 }
 
 export interface LearningObject {
@@ -39,16 +47,24 @@ export interface LearningObject {
   type: string;
   title: string;
   summary: string;
-  img: string;
-  pdf: string;
   contentMd: string;
+  contentHtml?: string;
+  hide: boolean;
+  img: string;
+  imgFile: string;
+  pdf: string;
+  pdfFile: string;
+  archiveFile?: string;
   video: string;
   videoids: VideoIdentifiers;
   frontMatter: Properties;
   los: Array<LearningObject | LabStep>;
   properties?: Properties;
   calendar?: Properties;
-  hide: boolean;
+  icon?: IconType;
+  parentLo?: LearningObject;
+  panels?: any;
+  units?: any;
 }
 
 export const loTypes = ["/note", "/book", "/archive", "/web", "/github", "/panelnote", "/paneltalk", "/panelvideo", "/talk", "/unit", "/side", "/topic"];

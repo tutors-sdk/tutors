@@ -1,0 +1,16 @@
+{% from "components/iconography/styles.njk" import icons, iconColours %}
+
+{% macro icon (type, size, link, tip) %}
+  {% if (link === "") %}
+   <div>
+  {% else %}
+     <a href="{{ link }}" target="_blank">
+    <div class="tooltip tooltip-bottom" data-tip="{{ tip }}">
+  {% endif %}
+    <span class="mx-2 iconify" data-icon="{{ icons[type] }}" data-height="{{ size }}" style="color:{{ iconColours[type] }}">
+  </span>
+  </div>
+  {% if (link != "") %}
+     </a>
+  {% endif %}
+{% endmacro %}
