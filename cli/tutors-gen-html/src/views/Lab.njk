@@ -22,18 +22,24 @@
       {{ chapter.contentHtml }}</div>
   {% endfor %}
   <script>
-    function showtab(tabs) {
+
+    function resettabs() {
       let menuItem;
-      {% for chapter in lo.chapters %}
-        menuItem = document.getElementById('{{ chapter.shortTitle }}');
+      {% for chapter in lo.los %}
+        menuItem = document.getElementById('menu-{{ chapter.shortTitle }}');
         menuItem.className = "p-4 py-3 text-base";
       {% endfor %}
+    }
+
+    function showtab(tabs) {
+      resettabs();
+      let menuItem;
       var tab = tabs;
       switch (tab){
         {% for chapter in lo.los %}
           case "{{ chapter.shortTitle }}" : 
-              menuItem = document.getElementById('{{ chapter.shortTitle }}');
-              menuItem.className = "p-4 py-3 text-base font-bold bordered";
+              menuItem = document.getElementById('menu-{{ chapter.shortTitle }}');
+              menuItem.className = "p-4 py-3 text-xl font-bold bordered";
               document.getElementById('tab-container').innerHTML = document.getElementById("{{ chapter.shortTitle }}").innerHTML;
           break;
         {% endfor %}
@@ -42,5 +48,6 @@
         break;
     }
   }
+
   </script>
 {% endblock %}
