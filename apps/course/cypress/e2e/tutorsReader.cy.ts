@@ -30,7 +30,6 @@ describe("Loading the JSON fixture", function () {
     cy.get('.z-10').contains(course.title.trim());
     course.los.forEach((topic) => {
       if (!topic.hide) {
-
         cy.get('.card').contains(topic.title.trim())
         cy.get('.card-footer').contains(topic.summary.trim())
       }
