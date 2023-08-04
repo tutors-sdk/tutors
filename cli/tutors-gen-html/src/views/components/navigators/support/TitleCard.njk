@@ -1,15 +1,24 @@
 {% from "css/tailwindcss.njk" import navbartitle %}
-{% from "components/cards/Image.njk" import image  %}
-
+{% from "components/cards/Image.njk" import image %}
+{% from "components/cards/Image.njk" import image %}
 {% macro titleCard (lo) %}
-  <div class="flex-1">
-    <div class="{{ navbartitle }}">
-      <p class="text-sm font-bold">{{ lo.title }}</p>
-      {% if (lo.lotype == "course") %}
-        <p class="text-sm font-bold">{{ lo.properties.credits }}</p>
+  <div class="flex flex-row">
+    <div>
+      {% if (lo.icon) %}
+        <span class="iconify" data-icon="{{ lo.icon.type }}" data-width="50" style="color:{{ lo.icon.color }};"></span>
       {% else %}
-        <p class="text-sm font-bold">{{ lo.parent.title }}</p>
+        <img loading="lazy" class="h-12" src="./{{ lo.imgFile }}" alt="{{ lo.title }}"/>
       {% endif %}
+    </div>
+    <div class="ml-4 flex-nowrap">
+      <h2 class="mr-4 font-bold">{{ lo.title }}</h2>
+      <h2>
+        {% if (lo.type == "course") %}
+          {{ lo.properties.credits }}
+        {% else %}
+          {{ lo.parentLo.title }}
+        {% endif %}
+      </h2>
     </div>
   </div>
 {% endmacro %}

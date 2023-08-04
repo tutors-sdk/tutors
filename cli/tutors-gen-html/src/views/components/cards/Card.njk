@@ -4,11 +4,11 @@
 {% from "components/iconography/Icon.njk" import icon %}
 {% from "components/iconography/styles.njk" import icons, iconColours %}
 {% macro card (lo, path) %}
-  <div class="{{ tutorscard }} border-[{{ iconColours[lo.lotype] }}]">
+  <div class="{{ tutorscard }} border-[{{ iconColours[lo.type] }}]">
     {{ urlStart(lo, path) }}
     <div class="{{ tutorscardheader }}">
       <h3 class="card-title text-md font-normal">{{ lo.title }}</h3>
-      {{ icon(lo.lotype, 20, "", "") }}
+      {{ icon(lo.type, 20, "", "") }}
     </div>
     <figure class="flex justify-center">
       {{ image (lo, path) }}
