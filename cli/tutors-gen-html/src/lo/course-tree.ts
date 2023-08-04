@@ -33,9 +33,18 @@ export function getPanels(los: any): any {
 }
 
 export function getUnits(los: any): any {
+  let standardLos = los?.filter((lo: any) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "side");
+  standardLos = sortLos(standardLos);
   return {
     units: los?.filter((lo: any) => lo.type === "unit"),
     sides: los?.filter((lo: any) => lo.type === "side"),
-    standardLos: los?.filter((lo: any) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "side"),
+    standardLos: standardLos,
   };
+}
+
+export function sortLos(los: Array<LearningObject>): LearningObject[] {
+  const orderedLos = los.filter((lo) => lo.frontMatter?.order);
+  const unOrderedLos = los.filter((lo) => !lo.frontMatter?.order);
+  orderedLos.sort((a: any, b: any) => a.frontMatter.order - b.frontMatter.order);
+  return orderedLos.concat(unOrderedLos);
 }
