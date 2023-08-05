@@ -15,10 +15,13 @@
 	<div class="flex flex-wrap">
 		{#if data.courses}
 			{#each data.courses[0].course_list.courses as course}
-				<a class="card w-full lg:w-1/3 m-2 p-4" href={'/course/' + course.id}>
+				<a class="card w-full lg:w-96 m-2 p-4" href={'/course/' + course.id}>
 					<div>
 						<p class="font-bold">{course.name}</p>
-						<p>Last Accessed: {course.last_accessed}</p>
+						<p>
+							Last Accessed: {course.last_accessed.slice(0, 10)}
+							{course.last_accessed.slice(11, 19)}
+						</p>
 						<p>Visits: {course.visits}</p>
 					</div>
 				</a>

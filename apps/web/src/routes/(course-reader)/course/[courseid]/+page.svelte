@@ -18,11 +18,10 @@
 				goto('/auth');
 			} else {
 				session.onlineStatus = await analyticsService.getOnlineStatus(data.course, session);
-				if (session) {
-					// analyticsService.updateLogin(data.course.id, data.session);
-				}
+				// analyticsService.updateLogin(data.course.id, data.session);
 			}
 		}
+
 		if (getKeys().firebase.apiKey !== 'XXX') {
 			initFirebase(getKeys().firebase);
 		}
