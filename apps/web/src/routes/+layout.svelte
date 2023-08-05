@@ -1,5 +1,5 @@
 <script lang="ts">
-	import 'tutors-ui/lib/themes/tutors.css';
+	import '$lib/ui/legacy/themes/tutors.css';
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import './app.postcss';
 	import { invalidate } from '$app/navigation';
