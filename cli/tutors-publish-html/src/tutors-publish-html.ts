@@ -6,7 +6,7 @@ import { writeFile } from "tutors-gen-lib/src/utils/utils";
 import * as nunjucks from "nunjucks";
 import { courseBuilderHtml } from "./lo/html-emitter";
 
-const version = `tutors-publish-html: 3.0.1 (tutors-gen-lib: 1.0.0)`;
+const version = `tutors-publish-html: 3.0.1 (tutors-gen-lib: 1.0.1)`;
 
 const root = __dirname;
 nunjucks.configure(root + "/views", { autoescape: false });

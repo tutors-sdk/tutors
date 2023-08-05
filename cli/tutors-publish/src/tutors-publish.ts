@@ -4,7 +4,7 @@ import { courseBuilder } from "tutors-gen-lib/src/lo/course-builder";
 import { resourceBuilder } from "tutors-gen-lib/src/lo/resource-builder";
 import { generateNetlifyToml } from "tutors-gen-lib/src/utils/netlify";
 import { writeFile } from "tutors-gen-lib/src/utils/utils";
-const version = `tutors-publish 3.0.0 (tutors-gen-lib: 1.0.0)`;
+const version = `tutors-publish 3.0.1 (tutors-gen-lib: 1.0.1)`;
 
 if (fs.existsSync("course.md")) {
   const srcFolder = process.cwd();
