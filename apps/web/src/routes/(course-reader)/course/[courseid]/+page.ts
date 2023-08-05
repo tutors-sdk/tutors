@@ -25,7 +25,7 @@ export const load = async ({ params, parent }) => {
 			.select(`course_list`)
 			.eq('id', data.session.user.id);
 
-		if (userCourseList.length === 0) {
+		if (!userCourseList || userCourseList.length === 0) {
 			// do something
 		} else {
 			const courseList = userCourseList[0].course_list;
