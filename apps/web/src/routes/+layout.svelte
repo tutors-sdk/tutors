@@ -248,7 +248,7 @@
 							{/if}
 							<hr />
 							<ul>
-								{#if status}
+								{#if status && $currentCourse}
 									<li>
 										<a href="/live/{$currentCourse.id}" target="_blank" rel="noreferrer">
 											<Icon
@@ -309,13 +309,13 @@
 							height="20"
 						/>
 					</button>
-				{/if}
+				{:else}{/if}
 			</svelte:fragment>
 		</AppBar>
 
 		{#if $currentCourse}
 			<PageHeader />
-		{/if}
+		{:else}{/if}
 	</svelte:fragment>
 	<slot />
 	<svelte:fragment slot="pageFooter">

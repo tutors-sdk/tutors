@@ -9,8 +9,6 @@ export const load = async ({ params, parent }) => {
 
 	const data = await parent();
 
-	console.log(data);
-
 	if (!data.session) {
 		currentLo.set(course.lo);
 		return {
@@ -57,8 +55,6 @@ export const load = async ({ params, parent }) => {
 				courseList.courses[courseIndex].last_accessed = new Date().toISOString();
 				courseList.courses[courseIndex].visits++;
 			}
-
-			console.log(courseList);
 
 			await data.supabase
 				.from('accessed_courses')
