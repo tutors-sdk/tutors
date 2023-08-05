@@ -12,9 +12,6 @@
     "type": "git",
     "url": "https://github.com/tutors-sdk/tutors.git"
   },
-  "bin": {
-    "tutors-gen": "./src/tutors-gen.js"
-  },
   "dependencies": {
     "@types/js-yaml": "^4.0.5",
     "@types/node": "^20.2.6",

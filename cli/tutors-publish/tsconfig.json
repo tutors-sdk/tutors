@@ -15,6 +15,6 @@
   },
   "include": [
     "**/*",
-    "../tutors-gen-lib/index.ts"
+    "../tutors/index.ts"
   ]
 }
