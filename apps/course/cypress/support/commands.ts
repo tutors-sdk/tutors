@@ -7,35 +7,72 @@ import "cypress-fail-fast";
 
 const delay = 1000;
 
-Cypress.Commands.add("clickBreadcrumb", (lo: any) => {
-  // cy.get(".crumb-lead").contains(lo.title.trim()).click();
+Cypress.Commands.add("goBack", () => {
+  cy.go("back");
+  cy.wait(delay);
+});
+
+Cypress.Commands.add("clickBreadCrumb", (step: number) => {
+  cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+  // Now you can interact with the <li> elements
+  cy.get('li.crumb').eq(step).click();
   cy.go("back");
   cy.wait(delay);
 });
 
 Cypress.Commands.add("clickCard", (lo: any) => {
-  if (!lo.hide && lo.type != "github" && lo.type != "archive" && lo.type != "web" && lo.type != "unit") {
+  if (!lo.hide && lo.type != "web" && lo.type != "archive" && lo.type != "paneltalk" && lo.type != "github" && lo.type != "unit") {
     if (lo.type == "lab") {
-      cy.contains(lo.title.trim()).click();
-      for (let i = 1; i < 7; i++) cy.clickLabStep(i);
+      cy.clickLabCard(lo)
     } else {
-      cy.contains(lo.title.trim()).click();
+      cy.triggerCardAction(lo);
     }
     cy.wait(delay);
   }
 });
 
-Cypress.Commands.add("clickLabStep", (step: number) => {
-  cy.get(`div.labmenu-container > ul > li:nth-child(${step}) > a`).click();
-  cy.wait(delay);
+Cypress.Commands.add("clickLabStep", (lo: any) => {
+  //The slice is being used here because in the JSON the title starts with # and a space
+  //If the JSON will not have the # as in my test json, it must be removed to function
+  cy.contains(`nav.nav-list ul a`, lo.title.slice(2).trim()).click({ force: true });
+});
+
+Cypress.Commands.add("triggerCardAction", (lo: any) => {
+  cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+  if (lo.title.includes('#')) {
+    // Do something if text contains 'desired-text'
+    cy.contains(lo.title.slice(2).trim()).click({ force: true });
+  } else {
+    const text = lo.title.trim(); // Get and trim the text content
+    cy.findByText(text)
+      .scrollIntoView()
+      .should("be.visible")
+      .click();
+  }
+});
+
+Cypress.Commands.add("clickLabCard", (lo: any) => {
+  cy.contains(lo.title.trim()).click({ force: true });
+  lo.los.forEach((l, i) => {
+    cy.clickLabStep(l)
+    if (lo.los.length - 1 === i) {
+      // Temporarily modify CSS to make the parent container visible
+      cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+      // Now you can interact with the <li> elements
+      cy.get('li.crumb').eq(2).click();
+    }
+  });
 });
 
 declare global {
   namespace Cypress {
     interface Chainable {
-      clickBreadcrumb(lo: any): Chainable<any>;
+      goBack(): Chainable<any>;
+      clickBreadCrumb(step: number): Chainable<any>;
       clickCard(lo: any): Chainable<any>;
       clickLabStep(lo: any): Chainable<any>;
+      clickLabCard(lo: any): Chainable<any>;
+      triggerCardAction(lo: any): Chainable<any>;
     }
   }
 }
