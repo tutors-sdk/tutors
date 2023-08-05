@@ -19,7 +19,7 @@ export const load = async ({ params, parent }) => {
 		};
 	}
 
-	if (data.session && !course.lo.properties?.parent) {
+	if (data.session && !course.lo?.properties?.parent) {
 		const { data: userCourseList } = await data.supabase
 			.from('accessed_courses')
 			.select(`course_list`)
@@ -65,13 +65,12 @@ export const load = async ({ params, parent }) => {
 				.update({ course_list: courseList })
 				.eq('id', data.session.user.id);
 		}
-
-		currentLo.set(course.lo);
-
-		return {
-			course,
-			lo: course.lo,
-			userCourseList
-		};
 	}
+
+	currentLo.set(course.lo);
+
+	return {
+		course,
+		lo: course.lo
+	};
 };
