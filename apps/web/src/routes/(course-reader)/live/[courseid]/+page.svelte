@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { presenceService } from 'tutors-reader-lib/src/services/presence-service';
+	import { presenceService } from '$lib/services/presence';
 	import { StudentCardDeck } from '$lib/ui/legacy';
 	import type { PageData } from './$types';
 	import { toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import { onMount } from 'svelte';
-	import type { StudentLoEvent } from 'tutors-reader-lib/src/types/metrics-types';
+	import type { StudentLoEvent } from '$lib/types/metrics';
 
 	export let data: PageData;
 
