@@ -66,6 +66,12 @@
 		drawerStore.open(settings);
 	};
 
+	page.subscribe((value) => {
+		if (value.url.pathname.startsWith('/dashboard') || value.url.pathname.length === 1) {
+			currentCourse.set(null);
+		}
+	});
+
 	onMount(() => {
 		const {
 			data: { subscription }
