@@ -19,53 +19,51 @@ export const load = async ({ params, parent }) => {
 		};
 	}
 
-	if (data.session) {
+	if (data.session && !course.lo.properties?.parent) {
 		const { data: userCourseList } = await data.supabase
 			.from('accessed_courses')
 			.select(`course_list`)
 			.eq('id', data.session.user.id);
 
-		if (course.lo.properties?.parent == null) {
-			if (!userCourseList || userCourseList.length === 0) {
-				await data.supabase.from('accessed_courses').insert([
-					{
-						id: data.session.user.id,
-						course_list: {
-							courses: [
-								{
-									id: course.id,
-									name: course.lo.title,
-									last_accessed: new Date().toISOString(),
-									visits: 1
-								}
-							]
-						}
+		if (!userCourseList || userCourseList.length === 0) {
+			await data.supabase.from('accessed_courses').insert([
+				{
+					id: data.session.user.id,
+					course_list: {
+						courses: [
+							{
+								id: course.id,
+								name: course.lo.title,
+								last_accessed: new Date().toISOString(),
+								visits: 1
+							}
+						]
 					}
-				]);
-			} else {
-				const courseList = userCourseList[0].course_list;
-
-				const courseIndex = courseList.courses.findIndex((c) => c.id === course.id);
-
-				if (courseIndex === -1) {
-					courseList.courses.push({
-						id: course.id,
-						name: course.lo.title,
-						last_accessed: new Date().toISOString(),
-						visits: 1
-					});
-				} else {
-					courseList.courses[courseIndex].last_accessed = new Date().toISOString();
-					courseList.courses[courseIndex].visits++;
 				}
+			]);
+		} else {
+			const courseList = userCourseList[0].course_list;
 
-				console.log(courseList);
+			const courseIndex = courseList.courses.findIndex((c) => c.id === course.id);
 
-				await data.supabase
-					.from('accessed_courses')
-					.update({ course_list: courseList })
-					.eq('id', data.session.user.id);
+			if (courseIndex === -1) {
+				courseList.courses.push({
+					id: course.id,
+					name: course.lo.title,
+					last_accessed: new Date().toISOString(),
+					visits: 1
+				});
+			} else {
+				courseList.courses[courseIndex].last_accessed = new Date().toISOString();
+				courseList.courses[courseIndex].visits++;
 			}
+
+			console.log(courseList);
+
+			await data.supabase
+				.from('accessed_courses')
+				.update({ course_list: courseList })
+				.eq('id', data.session.user.id);
 		}
 
 		currentLo.set(course.lo);
