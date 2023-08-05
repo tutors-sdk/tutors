@@ -13,7 +13,7 @@
 	import Swatch from './Swatches.svelte';
 
 	// Local Utils
-	import { storePreview } from 'tutors-reader-lib/src/stores/stores';
+	import { storePreview } from '$lib/stores';
 	import type { ColorSettings, FormTheme, ContrastReport } from './types';
 	import { inputSettings, fontSettings } from './settings';
 	import {
