@@ -26,7 +26,21 @@ export const load = async ({ params, parent }) => {
 			.eq('id', data.session.user.id);
 
 		if (!userCourseList || userCourseList.length === 0) {
-			// do something
+			await data.supabase.from('accessed_courses').insert([
+				{
+					id: data.session.user.id,
+					course_list: {
+						courses: [
+							{
+								id: course.id,
+								name: course.lo.title,
+								last_accessed: new Date().toISOString(),
+								visits: 1
+							}
+						]
+					}
+				}
+			]);
 		} else {
 			const courseList = userCourseList[0].course_list;
 
