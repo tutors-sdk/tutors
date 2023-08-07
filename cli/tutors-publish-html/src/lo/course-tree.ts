@@ -63,8 +63,6 @@ function getIcon(lo: LearningObject) {
 function crumbs(lo: LearningObject, los: LearningObject[]) {
   if (lo) {
     crumbs(lo.parentLo, los);
-    if (!((lo.type === "unit" || lo.type === "side") && lo.parentLo.type === "course")) {
-      los.push(lo);
-    }
+    los.push(lo);
   }
 }

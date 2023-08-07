@@ -18,8 +18,10 @@
   </a>
 {% endmacro %}
 {% macro crumbUrlStart (index, lo) %}
-  {% if lo.type == "lab" or lo.type == "unit" or lo.type == "side" or index ==  0 %}
+  {% if lo.type == "lab" or index ==  0 %}
     {% set url = "#" %}
+  {% elif lo.type == "unit" or lo.type == "side" %}
+    {% set url = "../../index.html" %}
   {% elif index == 1 %}
     {% set url = "../index.html" %}
   {% elif index == 2 %}
