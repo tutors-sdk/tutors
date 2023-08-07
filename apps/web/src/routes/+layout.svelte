@@ -93,20 +93,13 @@
 	<Toast />
 	<Sidebars />
 	<svelte:fragment slot="header">
-		<AppBar
-			background="bg-surface-100-800-token"
-			shadow="none"
-			class="h-20 justify-center border-b-[1px] border-surface-200 dark:border-surface-700"
-		>
-			<svelte:fragment slot="lead">
-				{#if $page.url.pathname === '/' || $page.url.pathname === '/auth' || $page.url.pathname === '/dashboard' || $page.url.pathname === '/terms'}
-					<a href="/">
-						<div class="flex space-x-4">
-							<img src="/logo.svg" alt="tutors logo" />
-							<span class="text-2xl font-bold">Tutors</span>
-						</div>
-					</a>
-				{:else if $currentCourse}
+		{#if $currentCourse}
+			<AppBar
+				background="bg-surface-100-800-token"
+				shadow="none"
+				class="h-20 justify-center border-b-[1px] border-surface-200 dark:border-surface-700"
+			>
+				<svelte:fragment slot="lead">
 					{#if $currentCourse?.lo.contentMd}
 						<button class="btn btn-sm" on:click={infoDrawerOpen}>
 							<Icon
@@ -115,35 +108,33 @@
 								height="20"
 							/>
 						</button>
+						<NavTitle />
 					{/if}
-					<NavTitle />
+				</svelte:fragment>
+
+				{#if $currentCourse?.currentWeek}
+					<div class="hidden w-full lg:flex">
+						<button
+							class="mx-auto inline-flex rounded-lg variant-soft-primary p-2"
+							on:click={calendarDrawerOpen}
+						>
+							<span class="my-auto pl-2 pr-4">
+								<Icon
+									icon="fluent:calendar-ltr-12-regular"
+									color="rgba(var(--color-primary-500))"
+									height="20"
+								/>
+							</span>
+							<span class="divider-vertical h-12 hidden lg:flex my-auto" />
+							<span class="px-2">
+								<span class="pt-1 text-sm">Current Week</span><br />
+								<span class="text-lg pb-1 font-bold">{$currentCourse.currentWeek.title}</span>
+							</span>
+						</button>
+					</div>
 				{/if}
-			</svelte:fragment>
 
-			{#if $currentCourse?.currentWeek}
-				<div class="hidden w-full lg:flex">
-					<button
-						class="mx-auto inline-flex rounded-lg variant-soft-primary p-2"
-						on:click={calendarDrawerOpen}
-					>
-						<span class="my-auto pl-2 pr-4">
-							<Icon
-								icon="fluent:calendar-ltr-12-regular"
-								color="rgba(var(--color-primary-500))"
-								height="20"
-							/>
-						</span>
-						<span class="divider-vertical h-12 hidden lg:flex my-auto" />
-						<span class="px-2">
-							<span class="pt-1 text-sm">Current Week</span><br />
-							<span class="text-lg pb-1 font-bold">{$currentCourse.currentWeek.title}</span>
-						</span>
-					</button>
-				</div>
-			{/if}
-
-			<svelte:fragment slot="trail">
-				{#if $currentCourse && !$currentCourse?.isPortfolio()}
+				<svelte:fragment slot="trail">
 					<a class="btn btn-sm" href="/search/{$courseUrl}">
 						<Icon
 							icon="fluent:search-24-filled"
@@ -153,18 +144,16 @@
 						<span class="hidden text-sm font-bold lg:block">Search</span>
 					</a>
 					<span class="divider-vertical h-10 hidden lg:block" />
-				{/if}
-				{#if data.session}
-					<div class="relative">
-						<button class="btn btn-sm space-x-1" use:popup={{ event: 'click', target: 'avatar' }}>
-							<div class="relative inline-block">
-								{#if status && studentsOnline}
-									<span
-										class="badge-icon variant-filled-error absolute -top-2 -right-2 z-10 text-white"
-										>{$studentsOnline}</span
-									>
-								{/if}
-								{#if $currentCourse}
+					{#if data.session}
+						<div class="relative">
+							<button class="btn btn-sm space-x-1" use:popup={{ event: 'click', target: 'avatar' }}>
+								<div class="relative inline-block">
+									{#if status && studentsOnline}
+										<span
+											class="badge-icon variant-filled-error absolute -top-2 -right-2 z-10 text-white"
+											>{$studentsOnline}</span
+										>
+									{/if}
 									<span class="badge-icon absolute -bottom-2 -right-2 z-10 text-white">
 										{#if status}
 											<Icon
@@ -181,30 +170,28 @@
 											/>
 										{/if}</span
 									>
-								{/if}
-								<Avatar
-									width="w-10"
-									src={data.session.user.user_metadata.avatar_url}
-									alt={data.session.user.user_metadata.name}
-								/>
-							</div>
-						</button>
-						<nav class="list-nav card card-body w-56 p-4 space-y-4 shadow-lg" data-popup="avatar">
-							<span class="mt-2 ml-4 text-xs">Logged in as:</span><br />
-							<span class="ml-4 text-sm">{data.session.user.user_metadata.name}</span>
-							<ul>
-								<li>
-									<a href="/dashboard">
-										<Icon
-											icon="fluent:home-24-filled"
-											color="rgba(var(--color-primary-500))"
-											height="20"
-										/>
-										<div class="ml-2">Dashboard</div>
-									</a>
-								</li>
-							</ul>
-							{#if $currentCourse}
+									<Avatar
+										width="w-10"
+										src={data.session.user.user_metadata.avatar_url}
+										alt={data.session.user.user_metadata.name}
+									/>
+								</div>
+							</button>
+							<nav class="list-nav card card-body w-56 p-4 space-y-4 shadow-lg" data-popup="avatar">
+								<span class="mt-2 ml-4 text-xs">Logged in as:</span><br />
+								<span class="ml-4 text-sm">{data.session.user.user_metadata.name}</span>
+								<ul>
+									<li>
+										<a href="/dashboard">
+											<Icon
+												icon="fluent:home-24-filled"
+												color="rgba(var(--color-primary-500))"
+												height="20"
+											/>
+											<div class="ml-2">Dashboard</div>
+										</a>
+									</li>
+								</ul>
 								<hr />
 								<ul>
 									<li class="flex">
@@ -245,62 +232,60 @@
 										</li>
 									{/if}
 								</ul>
-							{/if}
-							<hr />
-							<ul>
-								{#if status && $currentCourse}
+								<hr />
+								<ul>
+									{#if status}
+										<li>
+											<a href="/live/{$currentCourse.id}" target="_blank" rel="noreferrer">
+												<Icon
+													icon="fluent:people-list-24-filled"
+													color="rgba(var(--color-primary-500))"
+													height="20"
+												/>
+												<div class="ml-2">Tutors Live</div>
+											</a>
+										</li>
+									{/if}
 									<li>
-										<a href="/live/{$currentCourse.id}" target="_blank" rel="noreferrer">
+										<a href="/" target="_blank" rel="noreferrer">
 											<Icon
-												icon="fluent:people-list-24-filled"
+												icon="fluent:clock-alarm-24-filled"
 												color="rgba(var(--color-primary-500))"
 												height="20"
 											/>
-											<div class="ml-2">Tutors Live</div>
+											<div class="ml-2">Tutors Time</div>
 										</a>
 									</li>
-								{/if}
-								<li>
-									<a href="/" target="_blank" rel="noreferrer">
-										<Icon
-											icon="fluent:clock-alarm-24-filled"
-											color="rgba(var(--color-primary-500))"
-											height="20"
-										/>
-										<div class="ml-2">Tutors Time</div>
-									</a>
-								</li>
-								<li>
-									<a
-										href="https://github.com/{data.session.user.user_metadata.preferred_username}"
-										target="_blank"
-										rel="noreferrer"
-									>
-										<Icon icon="mdi:github" height="20" />
-										<div class="ml-2">Github Profile</div>
-									</a>
-								</li>
-								<li>
-									<a href="/logout" rel="noreferrer">
-										<Icon
-											icon="fluent:sign-out-24-filled"
-											color="rgba(var(--color-error-500))"
-											height="20"
-										/>
-										<div class="ml-2">Logout</div>
-									</a>
-								</li>
-							</ul>
-						</nav>
-					</div>
-				{:else}
-					<a class="btn btn-sm" href="/auth">
-						<span class="hidden text-sm font-bold lg:block">Login / Register</span>
-					</a>
-				{/if}
-				<span class="divider-vertical h-10 hidden lg:block" />
-				<LayoutMenu />
-				{#if $currentCourse}
+									<li>
+										<a
+											href="https://github.com/{data.session.user.user_metadata.preferred_username}"
+											target="_blank"
+											rel="noreferrer"
+										>
+											<Icon icon="mdi:github" height="20" />
+											<div class="ml-2">Github Profile</div>
+										</a>
+									</li>
+									<li>
+										<a href="/logout" rel="noreferrer">
+											<Icon
+												icon="fluent:sign-out-24-filled"
+												color="rgba(var(--color-error-500))"
+												height="20"
+											/>
+											<div class="ml-2">Logout</div>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					{:else}
+						<a class="btn btn-sm" href="/auth">
+							<span class="hidden text-sm font-bold lg:block">Login / Register</span>
+						</a>
+					{/if}
+					<span class="divider-vertical h-10 hidden lg:block" />
+					<LayoutMenu />
 					<span class="divider-vertical h-10 hidden lg:block" />
 					<button class="btn btn-sm" on:click={tocDrawerOpen}>
 						<Icon
@@ -309,13 +294,87 @@
 							height="20"
 						/>
 					</button>
-				{:else}{/if}
-			</svelte:fragment>
-		</AppBar>
+				</svelte:fragment>
+			</AppBar>
 
-		{#if $currentCourse}
 			<PageHeader />
-		{:else}{/if}
+		{:else}
+			<AppBar
+				background="bg-surface-100-800-token"
+				shadow="none"
+				class="h-20 justify-center border-b-[1px] border-surface-200 dark:border-surface-700"
+			>
+				<svelte:fragment slot="lead">
+					<a href="/">
+						<div class="flex space-x-4">
+							<img src="/logo.svg" alt="tutors logo" />
+							<span class="text-2xl font-bold">Tutors</span>
+						</div>
+					</a>
+				</svelte:fragment>
+				<svelte:fragment slot="trail">
+					{#if data.session}
+						<div class="relative">
+							<button class="btn btn-sm space-x-1" use:popup={{ event: 'click', target: 'avatar' }}>
+								<div class="relative inline-block">
+									{#if status && studentsOnline}
+										<span
+											class="badge-icon variant-filled-error absolute -top-2 -right-2 z-10 text-white"
+											>{$studentsOnline}</span
+										>
+									{/if}
+									{#if $currentCourse}
+										<span class="badge-icon absolute -bottom-2 -right-2 z-10 text-white">
+											{#if status}
+												<Icon
+													icon="fluent:presence-available-24-filled"
+													color="rgba(var(--color-success-500))"
+													height="20"
+												/>
+											{/if}
+											{#if !status}
+												<Icon
+													icon="fluent:presence-available-24-regular"
+													color="rgba(var(--color-error-500))"
+													height="20"
+												/>
+											{/if}</span
+										>
+									{/if}
+									<Avatar
+										width="w-10"
+										src={data.session.user.user_metadata.avatar_url}
+										alt={data.session.user.user_metadata.name}
+									/>
+								</div>
+							</button>
+							<nav class="list-nav card card-body w-56 p-4 space-y-4 shadow-lg" data-popup="avatar">
+								<span class="mt-2 ml-4 text-xs">Logged in as:</span><br />
+								<span class="ml-4 text-sm">{data.session.user.user_metadata.name}</span>
+								<ul>
+									<li>
+										<a href="/dashboard">
+											<Icon
+												icon="fluent:home-24-filled"
+												color="rgba(var(--color-primary-500))"
+												height="20"
+											/>
+											<div class="ml-2">Dashboard</div>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					{:else}
+						<a class="btn btn-sm" href="/auth">
+							<span class="hidden text-sm font-bold lg:block">Login / Register</span>
+						</a>
+					{/if}
+					<span class="divider-vertical h-10 hidden lg:block" />
+					<LayoutMenu />
+				</svelte:fragment>
+			</AppBar>
+		{/if}
 	</svelte:fragment>
 	<slot />
 	<svelte:fragment slot="pageFooter">
