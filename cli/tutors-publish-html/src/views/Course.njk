@@ -1,8 +1,10 @@
 {% from "css/tailwindcss.njk" import tutorscontainer %}
+{% from "components/cards/TopicCard.njk" import topicCard %}
 {% from "components/cards/CardDeck.njk" import cardDeck %}
 {% from "components/navigators/MainNavigator.njk" import mainNavigator %}
 {% extends "layouts/main.html" %}
 {% block content %}
   {{ mainNavigator(lo) }}
-  {{ cardDeck(lo.los, "./") }}
+  {{ topicCard(lo) }}
+  {# {{ cardDeck(lo.los, "./") }} #}
 {% endblock %}

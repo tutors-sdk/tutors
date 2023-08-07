@@ -56,7 +56,7 @@ export const courseBuilderHtml = {
   generateCourse(path: string, lo: LearningObject) {
     buildCourseTree(lo);
     sh.cd(path);
-    lo.los.forEach((lo) => {
+    lo?.los?.forEach((lo) => {
       this.emitTopic(lo as LearningObject, path);
     });
     publishTemplate(path, "index.html", "Course.njk", lo);

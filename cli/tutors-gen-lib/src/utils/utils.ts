@@ -4,7 +4,8 @@ import * as yaml from "js-yaml";
 
 export function writeFile(folder: string, filename: string, contents: string): void {
   if (!fs.existsSync(folder)) {
-    sh.mkdir(folder);
+    //sh.mkdir(folder);
+    fs.mkdirSync(folder, { recursive: true });
   }
   return fs.writeFileSync(folder + "/" + filename, contents);
 }

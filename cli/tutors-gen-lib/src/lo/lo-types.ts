@@ -39,6 +39,7 @@ export interface LabStep {
   id: string;
   type: string;
   hide: boolean;
+  parentLo?: LearningObject;
 }
 
 export interface LearningObject {

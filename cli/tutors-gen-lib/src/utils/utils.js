@@ -29,7 +29,8 @@ const sh = __importStar(require("shelljs"));
 const yaml = __importStar(require("js-yaml"));
 function writeFile(folder, filename, contents) {
     if (!fs.existsSync(folder)) {
-        sh.mkdir(folder);
+        //sh.mkdir(folder);
+        fs.mkdirSync(folder, { recursive: true });
     }
     return fs.writeFileSync(folder + "/" + filename, contents);
 }

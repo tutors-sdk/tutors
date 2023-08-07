@@ -1,0 +1,32 @@
+{% from "components/cards/CardDeck.njk" import cardDeck %}
+{% from "components/cards/UnitCard.njk" import unitCard %}
+{% from "components/cards/PanelCards.njk" import panelCards %}
+{% from "components/navigators/MainNavigator.njk" import mainNavigator %}
+{% macro topicCard (lo) %}
+    {% if (lo.units.sides.length > 0) %}
+        <div class="block md:flex w-11/12 mx-auto">
+            <div class="w-full">
+                {{ panelCards(lo.panels, "./") }}
+                {% for lo in lo.units.units %}
+                    <div class="mt-2">
+                        {{ unitCard (lo) }}
+                    </div>
+                {% endfor %}
+                {{ cardDeck(lo.units.standardLos, "") }}
+            </div>
+            <div class="block w-full md:w-[30rem] md:ml-2">
+                {% for side in lo.units.sides %}
+                    {{ unitCard (side) }}
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        {{ panelCards(lo.panels, "./") }}
+        {% for lo in lo.units.units %}
+            <div class="mt-2">
+                {{ unitCard (lo) }}
+            </div>
+        {% endfor %}
+        {{ cardDeck(lo.units.standardLos, "./") }}
+    {% endif %}
+{% endmacro %}

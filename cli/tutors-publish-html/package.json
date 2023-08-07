@@ -1,6 +1,6 @@
 {
   "name": "tutors-publish-html",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "Static course web site generator - html emitter",
   "main": "./src/tutors-html.js",
   "scripts": {

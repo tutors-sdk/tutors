@@ -43,5 +43,9 @@ markdownIt.use(footnote);
 markdownIt.use(deflist);
 
 export function convertMdToHtml(md: string): string {
-  return markdownIt.render(md);
+  if (md) {
+    return markdownIt.render(md);
+  } else {
+    return "";
+  }
 }

@@ -1,30 +1,23 @@
 import { LearningObject } from "tutors-gen-lib/src/lo/lo-types";
 import { convertMdToHtml } from "./markdown";
 
-export function buildCourseTree(parent: LearningObject) {
-  for (const lo of parent.los) {
-    if (lo.contentMd) {
-      lo.contentHtml = convertMdToHtml(lo.contentMd);
-    }
-    const obj = lo as LearningObject;
-    obj.parentLo = parent;
-    if (obj.frontMatter && obj.frontMatter.icon) {
-      obj.icon = {
-        type: obj.frontMatter.icon["type"],
-        color: obj.frontMatter.icon["color"],
-      };
-    } else {
-      obj.icon = null;
-    }
-    if (obj.los) {
-      obj.panels = getPanels(obj.los);
-      obj.units = getUnits(obj.los);
-      buildCourseTree(obj);
+export function buildCourseTree(lo: LearningObject) {
+  lo.contentHtml = convertMdToHtml(lo?.contentMd);
+  lo.summary = convertMdToHtml(lo?.summary);
+  lo.icon = getIcon(lo);
+  if (lo.los) {
+    lo.panels = getPanels(lo.los);
+    lo.units = getUnits(lo.los);
+    for (const childLo of lo.los) {
+      childLo.parentLo = lo;
+      if (lo.los) {
+        buildCourseTree(childLo as LearningObject);
+      }
     }
   }
 }
 
-export function getPanels(los: any): any {
+function getPanels(los: any) {
   return {
     panelVideos: los?.filter((lo: any) => lo.type === "panelvideo"),
     panelTalks: los?.filter((lo: any) => lo.type === "paneltalk"),
@@ -32,7 +25,7 @@ export function getPanels(los: any): any {
   };
 }
 
-export function getUnits(los: any): any {
+function getUnits(los: any) {
   let standardLos = los?.filter((lo: any) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "side");
   standardLos = sortLos(standardLos);
   return {
@@ -42,9 +35,19 @@ export function getUnits(los: any): any {
   };
 }
 
-export function sortLos(los: Array<LearningObject>): LearningObject[] {
+function sortLos(los: Array<LearningObject>): LearningObject[] {
   const orderedLos = los.filter((lo) => lo.frontMatter?.order);
   const unOrderedLos = los.filter((lo) => !lo.frontMatter?.order);
   orderedLos.sort((a: any, b: any) => a.frontMatter.order - b.frontMatter.order);
   return orderedLos.concat(unOrderedLos);
+}
+
+function getIcon(lo: LearningObject) {
+  if (lo.frontMatter && lo.frontMatter.icon) {
+    return {
+      type: lo.frontMatter.icon["type"],
+      color: lo.frontMatter.icon["color"],
+    };
+  }
+  return null;
 }
