@@ -1,10 +1,18 @@
 import { LearningObject } from "tutors-gen-lib/src/lo/lo-types";
 import { convertMdToHtml } from "./markdown";
 
+let rootCourse: LearningObject = null;
+
 export function buildCourseTree(lo: LearningObject) {
+  if (lo.type === "course") {
+    rootCourse = lo;
+  }
   lo.contentHtml = convertMdToHtml(lo?.contentMd);
   lo.summary = convertMdToHtml(lo?.summary);
   lo.icon = getIcon(lo);
+  lo.parentCourse = rootCourse;
+  lo.breadCrumbs = [];
+  crumbs(lo, lo.breadCrumbs);
   if (lo.los) {
     lo.panels = getPanels(lo.los);
     lo.units = getUnits(lo.los);
@@ -50,4 +58,13 @@ function getIcon(lo: LearningObject) {
     };
   }
   return null;
+}
+
+function crumbs(lo: LearningObject, los: LearningObject[]) {
+  if (lo) {
+    crumbs(lo.parentLo, los);
+    if (!((lo.type === "unit" || lo.type === "side") && lo.parentLo.type === "course")) {
+      los.push(lo);
+    }
+  }
 }

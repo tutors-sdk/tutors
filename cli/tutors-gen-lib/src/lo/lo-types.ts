@@ -40,6 +40,7 @@ export interface LabStep {
   type: string;
   hide: boolean;
   parentLo?: LearningObject;
+  parentCourse?: LearningObject;
 }
 
 export interface LearningObject {
@@ -64,8 +65,10 @@ export interface LearningObject {
   calendar?: Properties;
   icon?: IconType;
   parentLo?: LearningObject;
+  parentCourse?: LearningObject;
   panels?: any;
   units?: any;
+  breadCrumbs?: LearningObject[];
 }
 
 export const loTypes = ["/note", "/book", "/archive", "/web", "/github", "/panelnote", "/paneltalk", "/panelvideo", "/talk", "/unit", "/side", "/topic"];
