@@ -7,7 +7,6 @@
 	import { Icon } from '$lib/ui/legacy';
 
 	let user: User;
-	let status = false;
 	const timeApp = 'https://time.tutors.dev';
 	let timeUrl = '';
 	let liveUrl = `https://reader.tutors.dev/live/${$currentCourse.id}`;
@@ -21,6 +20,11 @@
 		timeUrl = `${timeApp}/time/${course?.url}/${user.userId}`;
 	}
 
+	let currentStatus: boolean;
+	onlineStatus.subscribe((value) => {
+		currentStatus = value;
+	});
+
 	currentUser.subscribe(async (newUser: User) => {
 		if (newUser) {
 			user = newUser;
@@ -28,7 +32,7 @@
 			let course = await $currentCourse;
 			if (user && course) {
 				setTimeUrls(user, course);
-				status = user.onlineStatus === 'online';
+				onlineStatus.set(true);
 			}
 		}
 	});
@@ -38,9 +42,8 @@
 	});
 
 	function handleClick() {
-		status = !status;
-		onlineStatus.set(status);
-		analyticsService.setOnlineStatus(status, session);
+		onlineStatus.set(currentStatus);
+		// analyticsService.setOnlineStatus(status, session);
 	}
 
 	const onlineDrawerOpen: any = () => {
@@ -59,10 +62,10 @@
 					>
 				{/if}
 				<span class="badge-icon absolute -bottom-2 -right-2 z-10 text-white">
-					{#if status}
+					{#if currentStatus}
 						<Icon type="online" />
 					{/if}
-					{#if !status}
+					{#if !currentStatus}
 						<Icon type="offline" />
 					{/if}</span
 				>
@@ -87,7 +90,7 @@
 						<div class="ml-2">Share Presence</div>
 					</a>
 				</li>
-				{#if status}
+				{#if currentStatus}
 					<li>
 						<!-- svelte-ignore a11y-missing-attribute -->
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -102,7 +105,7 @@
 			</ul>
 			<hr />
 			<ul>
-				{#if status}
+				{#if currentStatus}
 					<li>
 						<a href={liveUrl} target="_blank" rel="noreferrer">
 							<Icon type="listOnline" />

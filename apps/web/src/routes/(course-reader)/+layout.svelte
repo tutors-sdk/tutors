@@ -4,7 +4,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import { get } from 'svelte/store';
 
-	import { setInitialClassState } from '@skeletonlabs/skeleton';
+	import { setInitialClassState, toastStore, type ToastSettings } from '@skeletonlabs/skeleton';
 	import {
 		transitionKey,
 		currentLo,
@@ -19,7 +19,6 @@
 	import type { RealtimeChannel } from '@supabase/supabase-js';
 
 	let currentRoute = '';
-	let isSubscribed = false;
 	let presenceChannel: RealtimeChannel;
 
 	export let data: any;
@@ -51,7 +50,6 @@
 				.filter(([key, _]) => key === $page.params.courseid)
 				.map(([, value]) => value[0]);
 
-			console.log(Object.entries(presenceState));
 			studentsOnline.set(onlineUsersObj.length);
 			studentsOnlineList.set(onlineUsersObj);
 		});
@@ -67,18 +65,30 @@
 				list.filter((item) => !leftPresences.includes(item.studentEmail))
 			);
 		});
-		presenceChannel.subscribe(async (status) => {
-			if (status === 'SUBSCRIBED') {
-				const trackingStatus = await presenceChannel.track({
-					online_at: new Date().toISOString(),
-					studentName: session?.user?.user_metadata?.full_name,
-					studentEmail: session?.user?.email,
-					studentImg: session?.user?.user_metadata?.avatar_url,
-					course_id: $page.params.courseid,
-					lo_id: $page.params.loid
-				});
-			}
-		});
+
+		try {
+			presenceChannel.subscribe(async (status) => {
+				if (status === 'SUBSCRIBED') {
+					const trackingStatus = await presenceChannel.track({
+						online_at: new Date().toISOString(),
+						studentName: session?.user?.user_metadata?.full_name,
+						studentEmail: session?.user?.email,
+						studentImg: session?.user?.user_metadata?.avatar_url,
+						course_id: $page.params.courseid,
+						lo_id: $page.params.loid
+					});
+					console.log(trackingStatus);
+				}
+			});
+		} catch (error) {
+			console.log(error);
+			onlineStatus.set(false);
+			const t: ToastSettings = {
+				message: 'Presence can only be re-enabled once per session. Please refresh and try again.',
+				background: 'variant-filled-error'
+			};
+			toastStore.trigger(t);
+		}
 	}
 
 	let currentStatus: boolean;
@@ -86,14 +96,14 @@
 		currentStatus = value;
 	});
 
-	$: if (currentStatus && !isSubscribed) {
-		isSubscribed = true;
-		setupPresenceChannel();
-		console.log('subscribed');
-	} else if (!currentStatus && isSubscribed) {
-		isSubscribed = false;
-		presenceChannel.unsubscribe();
-		console.log('unsubscribed');
+	$: {
+		if (currentStatus) {
+			setupPresenceChannel();
+			console.log('subscribed');
+		} else if (!currentStatus) {
+			presenceChannel.unsubscribe();
+			console.log('unsubscribed');
+		}
 	}
 
 	onMount(() => {
