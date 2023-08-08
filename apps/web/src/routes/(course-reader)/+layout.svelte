@@ -1,8 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { setInitialClassState } from '@skeletonlabs/skeleton';
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
+	import { get } from 'svelte/store';
+
+	import { setInitialClassState } from '@skeletonlabs/skeleton';
 	import {
 		transitionKey,
 		currentLo,
@@ -15,65 +17,55 @@
 	import { analyticsService } from '$lib/services/analytics';
 	import { initServices } from '$lib/tutors-startup';
 	import type { RealtimeChannel } from '@supabase/supabase-js';
-	import { get } from 'svelte/store';
 
-	let mounted = false;
 	let currentRoute = '';
+	let isSubscribed = false;
 	let presenceChannel: RealtimeChannel;
 
 	export let data: any;
-
 	let { supabase, session } = data;
-	$: ({ supabase, session } = data);
 
-	onMount(async () => {
-		mounted = true;
-		setInitialClassState();
-		initServices(data.session);
-		const func = () => {
-			if (!document.hidden && !currentRoute?.startsWith('/live' || '/dashboard')) {
-				analyticsService.updatePageCount(data.course, session);
-			}
-		};
-		setInterval(func, 30 * 1000);
-		presenceChannel = supabase.channel('online-users', {
-			config: {
-				presence: {
-					enabled: true,
-					key: $page.params.courseid
-				}
-			}
-		});
+	function updatePageCount() {
+		if (
+			!document.hidden &&
+			!currentRoute.startsWith('/live') &&
+			!currentRoute.startsWith('/dashboard')
+		) {
+			analyticsService.updatePageCount(data.course, session);
+		}
+	}
 
+	presenceChannel = supabase.channel('online-users', {
+		config: {
+			presence: {
+				enabled: true,
+				key: $page.params.courseid
+			}
+		}
+	});
+
+	function setupPresenceChannel() {
 		presenceChannel.on('presence', { event: 'sync' }, () => {
-			let onlineUsersObj = [];
 			const presenceState = presenceChannel.presenceState();
-			console.log('presence sync', presenceState);
-			for (const [key, value] of Object.entries(presenceState)) {
-				if (key === $page.params.courseid) {
-					onlineUsersObj.push(value[0]);
-				}
-			}
+			const onlineUsersObj = Object.entries(presenceState)
+				.filter(([key, _]) => key === $page.params.courseid)
+				.map(([, value]) => value[0]);
+
+			console.log(Object.entries(presenceState));
 			studentsOnline.set(onlineUsersObj.length);
 			studentsOnlineList.set(onlineUsersObj);
 		});
 
 		presenceChannel.on('presence', { event: 'join' }, ({ newPresences }) => {
-			console.log('users have joined:', newPresences);
-			studentsOnline.set(get(studentsOnline) + newPresences.length);
-			studentsOnlineList.update((list) => {
-				return [...list, ...newPresences];
-			});
+			studentsOnline.update((count) => count + newPresences.length);
+			studentsOnlineList.update((list) => [...list, ...newPresences]);
 		});
 
 		presenceChannel.on('presence', { event: 'leave' }, ({ leftPresences }) => {
-			console.log('users have left:', leftPresences);
-			studentsOnline.set(get(studentsOnline) - leftPresences.length);
-			studentsOnlineList.update((list) => {
-				return list.filter((item) => {
-					return !leftPresences.includes(item.studentEmail);
-				});
-			});
+			studentsOnline.update((count) => count - leftPresences.length);
+			studentsOnlineList.update((list) =>
+				list.filter((item) => !leftPresences.includes(item.studentEmail))
+			);
 		});
 
 		const currentStatus = get(onlineStatus);
@@ -81,7 +73,7 @@
 		if (currentStatus) {
 			presenceChannel.subscribe(async (status) => {
 				if (status === 'SUBSCRIBED') {
-					const status = await presenceChannel.track({
+					const trackingStatus = await presenceChannel.track({
 						online_at: new Date().toISOString(),
 						studentName: session?.user?.user_metadata?.full_name,
 						studentEmail: session?.user?.email,
@@ -89,47 +81,60 @@
 						course_id: $page.params.courseid,
 						lo_id: $page.params.loid
 					});
-					console.log(status);
 				}
 			});
 		} else {
 			presenceChannel.unsubscribe();
 		}
+	}
+
+	onMount(() => {
+		setInitialClassState();
+		initServices(data.session);
+		setInterval(updatePageCount, 30 * 1000);
 	});
 
 	page.subscribe((path) => {
 		if (path.route.id) {
 			currentRoute = path.route.id;
 		}
-		if (mounted && path.params.courseid && getKeys().firebase.apiKey !== 'XXX') {
+		if (path.params.courseid && getKeys().firebase.apiKey !== 'XXX') {
 			analyticsService.learningEvent(path.params, session);
 		}
-		if (path?.url.hash && !path?.url.hash.startsWith('#access_token')) {
-			console.log(path?.url.hash);
+		if (path.url.hash && !path.url.hash.startsWith('#access_token')) {
 			const el = document.querySelector(`[id="${path.url.hash}"]`);
 			if (el) {
-				el.scrollIntoView({
-					behavior: 'smooth'
-				});
+				el.scrollIntoView({ behavior: 'smooth' });
 			}
 		}
 	});
 
-	afterNavigate((params: any) => {
+	afterNavigate((params) => {
 		if (!$page.url.hash) {
-			const isNewPage: boolean =
-				params.from && params.to && params.from.route.id !== params.to.route.id;
+			const isNewPage = params.from && params.to && params.from.route.id !== params.to.route.id;
 			const elemPage = document.querySelector('#page');
 			if (isNewPage && elemPage !== null) {
 				elemPage.scrollTop = 0;
 			}
 		}
 	});
+
+	$: {
+		const currentStatus = get(onlineStatus);
+
+		if (currentStatus && !isSubscribed) {
+			isSubscribed = true;
+			setupPresenceChannel();
+		} else if (!currentStatus && isSubscribed) {
+			isSubscribed = false;
+			presenceChannel.unsubscribe();
+		}
+	}
 </script>
 
 <svelte:head>
 	{#if currentLo}
-		<title>{$currentLo?.title}</title>
+		<title>{$currentLo.title}</title>
 	{:else}
 		<title>Tutors Course Reader</title>
 	{/if}
