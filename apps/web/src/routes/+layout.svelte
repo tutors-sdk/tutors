@@ -67,7 +67,7 @@
 	};
 
 	page.subscribe((value) => {
-		if (value.url.pathname.startsWith('/dashboard') || value.url.pathname.length === 1) {
+		if (value.url.pathname.startsWith('/dashboard') || value.url.pathname.length <= 1) {
 			currentCourse.set(null);
 		}
 	});
@@ -360,6 +360,26 @@
 												height="20"
 											/>
 											<div class="ml-2">Dashboard</div>
+										</a>
+									</li>
+									<li>
+										<a
+											href="https://github.com/{data.session.user.user_metadata.preferred_username}"
+											target="_blank"
+											rel="noreferrer"
+										>
+											<Icon icon="mdi:github" height="20" />
+											<div class="ml-2">Github Profile</div>
+										</a>
+									</li>
+									<li>
+										<a href="/logout" rel="noreferrer">
+											<Icon
+												icon="fluent:sign-out-24-filled"
+												color="rgba(var(--color-error-500))"
+												height="20"
+											/>
+											<div class="ml-2">Logout</div>
 										</a>
 									</li>
 								</ul>
