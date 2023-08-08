@@ -50,7 +50,9 @@
 			const presenceState = presenceChannel.presenceState();
 			console.log('presence sync', presenceState);
 			for (const [key, value] of Object.entries(presenceState)) {
-				onlineUsersObj.push(value[0]);
+				if (key === $page.params.courseid) {
+					onlineUsersObj.push(value[0]);
+				}
 			}
 			studentsOnline.set(onlineUsersObj.length);
 			studentsOnlineList.set(onlineUsersObj);
@@ -58,10 +60,20 @@
 
 		presenceChannel.on('presence', { event: 'join' }, ({ newPresences }) => {
 			console.log('users have joined:', newPresences);
+			studentsOnline.set(get(studentsOnline) + newPresences.length);
+			studentsOnlineList.update((list) => {
+				return [...list, ...newPresences];
+			});
 		});
 
 		presenceChannel.on('presence', { event: 'leave' }, ({ leftPresences }) => {
 			console.log('users have left:', leftPresences);
+			studentsOnline.set(get(studentsOnline) - leftPresences.length);
+			studentsOnlineList.update((list) => {
+				return list.filter((item) => {
+					return !leftPresences.includes(item.studentEmail);
+				});
+			});
 		});
 
 		const currentStatus = get(onlineStatus);
