@@ -3,14 +3,17 @@
 	import { setInitialClassState } from '@skeletonlabs/skeleton';
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
-	import { transitionKey, currentLo } from '$lib/stores';
+	import { transitionKey, currentLo, onlineStatus } from '$lib/stores';
 	import PageTransition from '$lib/ui/PageTransition.svelte';
 	import { getKeys } from '$lib/environment';
 	import { analyticsService } from '$lib/services/analytics';
 	import { initServices } from '$lib/tutors-startup';
+	import type { RealtimeChannel } from '@supabase/supabase-js';
+	import { get } from 'svelte/store';
 
 	let mounted = false;
 	let currentRoute = '';
+	let presenceChannel: RealtimeChannel;
 
 	export let data: any;
 
@@ -27,6 +30,46 @@
 			}
 		};
 		setInterval(func, 30 * 1000);
+		presenceChannel = supabase.channel('online-users', {
+			config: {
+				presence: {
+					enabled: true,
+					key: $page.params.courseid
+				}
+			}
+		});
+
+		presenceChannel.on('presence', { event: 'sync' }, () => {
+			console.log('presence sync', presenceChannel.presenceState());
+		});
+
+		presenceChannel.on('presence', { event: 'join' }, ({ newPresences }) => {
+			console.log('users have joined:', newPresences);
+		});
+
+		presenceChannel.on('presence', { event: 'leave' }, ({ leftPresences }) => {
+			console.log('users have left:', leftPresences);
+		});
+
+		const currentStatus = get(onlineStatus);
+
+		if (currentStatus) {
+			presenceChannel.subscribe(async (status) => {
+				if (status === 'SUBSCRIBED') {
+					const status = await presenceChannel.track({
+						online_at: new Date().toISOString(),
+						user_name: session?.user?.user_metadata?.full_name,
+						user_email: session?.user?.email,
+						user_avatar: session?.user?.user_metadata?.avatar_url,
+						course_id: $page.params.courseid,
+						lo_id: $page.params.loid
+					});
+					console.log(status);
+				}
+			});
+		} else {
+			presenceChannel.unsubscribe();
+		}
 	});
 
 	page.subscribe((path) => {

@@ -5,7 +5,7 @@
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
-	import { courseUrl, currentCourse, storeTheme, studentsOnline } from '$lib/stores';
+	import { courseUrl, currentCourse, onlineStatus, storeTheme, studentsOnline } from '$lib/stores';
 
 	import {
 		AppBar,
@@ -29,6 +29,7 @@
 	import { Footer, NavTitle } from '$lib/ui/legacy';
 	import { analyticsService } from '$lib/services/analytics';
 	import Icon from '@iconify/svelte';
+	import { get } from 'svelte/store';
 
 	const themes: any = { tutors, dyslexia, halloween, valentines };
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
@@ -38,10 +39,11 @@
 	let { supabase, session } = data;
 	$: ({ supabase, session } = data);
 
-	let status = false;
+	let status: boolean;
 
 	function handleClick() {
 		status = !status;
+		onlineStatus.set(status);
 		analyticsService.setOnlineStatus(status, session);
 	}
 
@@ -73,6 +75,7 @@
 	});
 
 	onMount(() => {
+		status = get(onlineStatus);
 		const {
 			data: { subscription }
 		} = supabase.auth.onAuthStateChange((event: any, _session: any) => {
