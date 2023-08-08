@@ -3,7 +3,13 @@
 	import { setInitialClassState } from '@skeletonlabs/skeleton';
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
-	import { transitionKey, currentLo, onlineStatus } from '$lib/stores';
+	import {
+		transitionKey,
+		currentLo,
+		onlineStatus,
+		studentsOnlineList,
+		studentsOnline
+	} from '$lib/stores';
 	import PageTransition from '$lib/ui/PageTransition.svelte';
 	import { getKeys } from '$lib/environment';
 	import { analyticsService } from '$lib/services/analytics';
@@ -40,7 +46,14 @@
 		});
 
 		presenceChannel.on('presence', { event: 'sync' }, () => {
-			console.log('presence sync', presenceChannel.presenceState());
+			let onlineUsersObj = [];
+			const presenceState = presenceChannel.presenceState();
+			console.log('presence sync', presenceState);
+			for (const [key, value] of Object.entries(presenceState)) {
+				onlineUsersObj.push(value[0]);
+			}
+			studentsOnline.set(onlineUsersObj.length);
+			studentsOnlineList.set(onlineUsersObj);
 		});
 
 		presenceChannel.on('presence', { event: 'join' }, ({ newPresences }) => {
@@ -58,9 +71,9 @@
 				if (status === 'SUBSCRIBED') {
 					const status = await presenceChannel.track({
 						online_at: new Date().toISOString(),
-						user_name: session?.user?.user_metadata?.full_name,
-						user_email: session?.user?.email,
-						user_avatar: session?.user?.user_metadata?.avatar_url,
+						studentName: session?.user?.user_metadata?.full_name,
+						studentEmail: session?.user?.email,
+						studentImg: session?.user?.user_metadata?.avatar_url,
 						course_id: $page.params.courseid,
 						lo_id: $page.params.loid
 					});
