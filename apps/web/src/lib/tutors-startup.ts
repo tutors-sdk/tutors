@@ -2,7 +2,6 @@ import { page } from '$app/stores';
 import { analyticsService } from '$lib/services/analytics';
 import { get } from 'svelte/store';
 import { transitionKey, currentCourse } from '$lib/stores';
-import { presenceService } from '$lib/services/presence';
 import { initFirebase } from '$lib/utils/firebase';
 import { getKeys } from '$lib/environment';
 import { goto } from '$app/navigation';
@@ -11,7 +10,6 @@ import type { Token } from '$lib/types/auth';
 export async function initServices(session: Token) {
 	if (getKeys().firebase.apiKey !== 'XXX') {
 		initFirebase(getKeys().firebase);
-		presenceService.startPresenceEngine(session);
 		const pageVal = get(page);
 		if (pageVal.url.hash) {
 			if (pageVal.url.hash.startsWith('#/course')) {
@@ -20,8 +18,7 @@ export async function initServices(session: Token) {
 		} else {
 			if (get(currentCourse)) {
 				const course = get(currentCourse);
-				if (session) {
-					session.onlineStatus = await analyticsService.getOnlineStatus(course, session);
+				if (session && course) {
 					analyticsService.updateLogin(course.id, session);
 				}
 			}

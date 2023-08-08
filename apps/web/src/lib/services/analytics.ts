@@ -74,7 +74,7 @@ export const analyticsService = {
 		}
 	},
 
-	updatePageCount(session: TokenResponse) {
+	updatePageCount(course: Course, session: TokenResponse) {
 		updateLastAccess(`${course.id}/usage/${this.loRoute}`, course.lo.title);
 		updateCount(course.id);
 		if (user) {
@@ -89,7 +89,7 @@ export const analyticsService = {
 		}
 	},
 
-	updateLogin(courseId: string, session: TokenResponse) {
+	updateLogin(courseId: string, session: any) {
 		const key = `${courseId}/users/${sanitise(session.user.email)}`;
 		updateStr(`${key}/email`, session.user.email);
 		updateStr(`${key}/name`, session.user.user_metadata.full_name);

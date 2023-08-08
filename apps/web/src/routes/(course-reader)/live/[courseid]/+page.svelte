@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { presenceService } from '$lib/services/presence';
 	import { StudentCardDeck } from '$lib/ui/legacy';
 	import type { PageData } from './$types';
 	import { toastStore, type ToastSettings } from '@skeletonlabs/skeleton';

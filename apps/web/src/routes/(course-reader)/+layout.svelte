@@ -22,7 +22,7 @@
 		setInitialClassState();
 		initServices(data.session);
 		const func = () => {
-			if (!document.hidden && !currentRoute?.startsWith('/live')) {
+			if (!document.hidden && !currentRoute?.startsWith('/live' || '/dashboard')) {
 				analyticsService.updatePageCount(data.course, session);
 			}
 		};
