@@ -9,7 +9,7 @@ export const courseService = {
 	courses: new Map<string, Course>(),
 	courseUrl: '',
 
-	async getOrLoadCourse(courseId: string, fetch: any): Promise<Course> {
+	async getOrLoadCourse(courseId: string): Promise<Course> {
 		let course = this.courses.get(courseId);
 		let courseUrl = courseId;
 
@@ -34,8 +34,8 @@ export const courseService = {
 		return course;
 	},
 
-	async readCourse(courseId: string, fetch: any): Promise<Course> {
-		const course = await this.getOrLoadCourse(courseId, fetch);
+	async readCourse(courseId: string): Promise<Course> {
+		const course = await this.getOrLoadCourse(courseId);
 		currentCourse.set(course);
 		courseUrl.set(course.url);
 		week.set(course?.currentWeek);
