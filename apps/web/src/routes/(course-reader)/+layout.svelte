@@ -67,25 +67,33 @@
 				list.filter((item) => !leftPresences.includes(item.studentEmail))
 			);
 		});
+		presenceChannel.subscribe(async (status) => {
+			if (status === 'SUBSCRIBED') {
+				const trackingStatus = await presenceChannel.track({
+					online_at: new Date().toISOString(),
+					studentName: session?.user?.user_metadata?.full_name,
+					studentEmail: session?.user?.email,
+					studentImg: session?.user?.user_metadata?.avatar_url,
+					course_id: $page.params.courseid,
+					lo_id: $page.params.loid
+				});
+			}
+		});
+	}
 
-		const currentStatus = get(onlineStatus);
+	let currentStatus: boolean;
+	onlineStatus.subscribe((value) => {
+		currentStatus = value;
+	});
 
-		if (currentStatus) {
-			presenceChannel.subscribe(async (status) => {
-				if (status === 'SUBSCRIBED') {
-					const trackingStatus = await presenceChannel.track({
-						online_at: new Date().toISOString(),
-						studentName: session?.user?.user_metadata?.full_name,
-						studentEmail: session?.user?.email,
-						studentImg: session?.user?.user_metadata?.avatar_url,
-						course_id: $page.params.courseid,
-						lo_id: $page.params.loid
-					});
-				}
-			});
-		} else {
-			presenceChannel.unsubscribe();
-		}
+	$: if (currentStatus && !isSubscribed) {
+		isSubscribed = true;
+		setupPresenceChannel();
+		console.log('subscribed');
+	} else if (!currentStatus && isSubscribed) {
+		isSubscribed = false;
+		presenceChannel.unsubscribe();
+		console.log('unsubscribed');
 	}
 
 	onMount(() => {
@@ -118,18 +126,6 @@
 			}
 		}
 	});
-
-	$: {
-		const currentStatus = get(onlineStatus);
-
-		if (currentStatus && !isSubscribed) {
-			isSubscribed = true;
-			setupPresenceChannel();
-		} else if (!currentStatus && isSubscribed) {
-			isSubscribed = false;
-			presenceChannel.unsubscribe();
-		}
-	}
 </script>
 
 <svelte:head>

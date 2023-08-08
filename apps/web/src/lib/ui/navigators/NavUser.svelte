@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { currentCourse, currentUser, studentsOnline } from '$lib/stores';
+	import { currentCourse, currentUser, onlineStatus, studentsOnline } from '$lib/stores';
 	import type { User } from '$lib/types/auth';
 	import type { Course } from '$lib/models/course';
 	import { analyticsService } from '$lib/services/analytics';
@@ -39,6 +39,7 @@
 
 	function handleClick() {
 		status = !status;
+		onlineStatus.set(status);
 		analyticsService.setOnlineStatus(status, session);
 	}
 
