@@ -38,6 +38,16 @@ describe("Loading the JSON fixture", function () {
     cy.contains('[data-testid="drawer"]').should("not.exist");
   });
 
+  it('Test for Info Bar in top left', function () {
+    cy.clickInfoButton(course.contentMd)
+
+  });
+
+  // it("Test that the content matches what it should", function () {
+  //   cy.errorHandler()
+  //   cy.get('drawer').contains(course.contentMd);
+  // });
+
   it("Topics", function () {
     course.los.forEach((topic) => {
       if (!topic.hide) {

@@ -16,7 +16,6 @@ Cypress.Commands.add("clickBreadCrumb", (step: number) => {
   cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
   // Now you can interact with the <li> elements
   cy.get('li.crumb').eq(step).click();
-  cy.go("back");
   cy.wait(delay);
 });
 
@@ -64,6 +63,28 @@ Cypress.Commands.add("clickLabCard", (lo: any) => {
   });
 });
 
+Cypress.Commands.add("clickInfoButton", (contentMd: any) => {
+  cy.wait(1000);
+  // cy.get('header#shell-header')
+  //   .find('div[data-testid="app-bar"]')
+  //   .find('button.btn.btn-sm').each(($element) => {
+  //     cy.wrap($element).first()
+  //       .click({ force: true });
+  //     //cy.wait(1000);
+      
+  //   });
+    //cy.get('div[data-testid="drawer-backdrop"]').eq(0).contains(contentMd.slice(2).trim()).click({ force: true });
+    cy.get('button.btn.btn-sm').eq(0).click('topLeft', { force: true })
+    cy.wait(1000);
+           // Replace with your actual selector
+    let newText = contentMd.slice(2).trim().replace(/\r\n/g, '\n');
+    console.log(`newText: ${newText}`);
+    cy.get('div.drawer-backdrop')  // Replace with your actual selector
+    .find('div.drawer')
+    .should('contain', newText); 
+  
+});
+
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -73,6 +94,7 @@ declare global {
       clickLabStep(lo: any): Chainable<any>;
       clickLabCard(lo: any): Chainable<any>;
       triggerCardAction(lo: any): Chainable<any>;
+      clickInfoButton(lo: any): Chainable<any>
     }
   }
 }
