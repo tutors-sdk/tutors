@@ -17,9 +17,9 @@
 	import { analyticsService } from '$lib/services/analytics';
 	import { initServices } from '$lib/tutors-startup';
 	import type { RealtimeChannel } from '@supabase/supabase-js';
+	import { setupPresence, subscribePresence, unsubscribePresence } from '$lib/services/presence';
 
 	let currentRoute = '';
-	let presenceChannel: RealtimeChannel;
 
 	export let data: any;
 	let { supabase, session } = data;
@@ -34,79 +34,36 @@
 		}
 	}
 
-	presenceChannel = supabase.channel('online-users', {
-		config: {
-			presence: {
-				enabled: true,
-				key: $page.params.courseid
-			}
-		}
-	});
-
-	function setupPresenceChannel() {
-		presenceChannel.on('presence', { event: 'sync' }, () => {
-			const presenceState = presenceChannel.presenceState();
-			const onlineUsersObj = Object.entries(presenceState)
-				.filter(([key, _]) => key === $page.params.courseid)
-				.map(([, value]) => value[0]);
-
-			studentsOnline.set(onlineUsersObj.length);
-			studentsOnlineList.set(onlineUsersObj);
-		});
-
-		presenceChannel.on('presence', { event: 'join' }, ({ newPresences }) => {
-			studentsOnline.update((count) => count + newPresences.length);
-			studentsOnlineList.update((list) => [...list, ...newPresences]);
-		});
-
-		presenceChannel.on('presence', { event: 'leave' }, ({ leftPresences }) => {
-			studentsOnline.update((count) => count - leftPresences.length);
-			studentsOnlineList.update((list) =>
-				list.filter((item) => !leftPresences.includes(item.studentEmail))
-			);
-		});
-
-		try {
-			presenceChannel.subscribe(async (status) => {
-				if (status === 'SUBSCRIBED') {
-					const trackingStatus = await presenceChannel.track({
-						online_at: new Date().toISOString(),
-						studentName: session?.user?.user_metadata?.full_name,
-						studentEmail: session?.user?.email,
-						studentImg: session?.user?.user_metadata?.avatar_url,
-						course_id: $page.params.courseid,
-						lo_id: $page.params.loid
-					});
-					console.log(trackingStatus);
-				}
-			});
-		} catch (error) {
-			console.log(error);
-			onlineStatus.set(false);
-			const t: ToastSettings = {
-				message: 'Presence can only be re-enabled once per session. Please refresh and try again.',
-				background: 'variant-filled-error'
-			};
-			toastStore.trigger(t);
-		}
-	}
-
 	let currentStatus: boolean;
 	onlineStatus.subscribe((value) => {
 		currentStatus = value;
 	});
 
+	$: currentLo;
+
 	$: {
 		if (currentStatus) {
-			setupPresenceChannel();
+			subscribePresence(
+				{
+					studentName: session.user.user_metadata.full_name,
+					studentEmail: session.user.user_metadata.email,
+					studentImg: session.user.user_metadata.avatar_url,
+					loTitle: get(currentLo).title,
+					loImage: get(currentLo).img,
+					loRoute: get(currentLo).route,
+					loIcon: get(currentLo).icon
+				},
+				$page.params.courseid
+			);
 			console.log('subscribed');
 		} else if (!currentStatus) {
-			presenceChannel.unsubscribe();
+			unsubscribePresence();
 			console.log('unsubscribed');
 		}
 	}
 
 	onMount(() => {
+		setupPresence(supabase, $page.params.courseid);
 		setInitialClassState();
 		initServices(data.session);
 		setInterval(updatePageCount, 30 * 1000);
