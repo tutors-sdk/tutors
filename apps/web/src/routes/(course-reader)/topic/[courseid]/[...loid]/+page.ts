@@ -28,6 +28,7 @@ export const load: PageLoad = async ({ params }) => {
 	}
 
 	return {
+		course: topic.course,
 		topic: topic,
 		lo: topic.lo,
 		unitId: unitId

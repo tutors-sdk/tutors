@@ -14,6 +14,20 @@ export function setupPresence(supabase: SupabaseClient, courseid: string) {
 	});
 }
 
+export function updatePresence(presence: Presence) {
+	presenceChannel.track({
+		online_at: new Date().toISOString(),
+		studentName: presence.studentName,
+		studentEmail: presence.studentEmail,
+		studentImg: presence.studentImg,
+		courseTitle: presence.courseTitle,
+		loTitle: presence.loTitle,
+		loImage: presence.loImage,
+		loRoute: presence.loRoute,
+		loIcon: presence.loIcon
+	});
+}
+
 export function subscribePresence(presence: Presence, courseid: string) {
 	try {
 		presenceChannel.subscribe(async (status) => {
@@ -23,6 +37,7 @@ export function subscribePresence(presence: Presence, courseid: string) {
 					studentName: presence.studentName,
 					studentEmail: presence.studentEmail,
 					studentImg: presence.studentImg,
+					courseTitle: presence.courseTitle,
 					loTitle: presence.loTitle,
 					loImage: presence.loImage,
 					loRoute: presence.loRoute,

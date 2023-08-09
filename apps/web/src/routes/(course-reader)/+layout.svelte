@@ -17,7 +17,12 @@
 	import { analyticsService } from '$lib/services/analytics';
 	import { initServices } from '$lib/tutors-startup';
 	import type { RealtimeChannel } from '@supabase/supabase-js';
-	import { setupPresence, subscribePresence, unsubscribePresence } from '$lib/services/presence';
+	import {
+		setupPresence,
+		subscribePresence,
+		unsubscribePresence,
+		updatePresence
+	} from '$lib/services/presence';
 
 	let currentRoute = '';
 
@@ -34,20 +39,24 @@
 		}
 	}
 
-	let currentStatus: boolean;
-	onlineStatus.subscribe((value) => {
-		currentStatus = value;
-	});
+	let presenceSetup: boolean = false;
 
-	$: currentLo;
+	onMount(() => {
+		!presenceSetup && setupPresence(supabase, $page.params.courseid);
+		presenceSetup = true;
+		setInitialClassState();
+		initServices(data.session);
+		setInterval(updatePageCount, 30 * 1000);
 
-	$: {
-		if (currentStatus) {
+		if ($onlineStatus) {
 			subscribePresence(
 				{
 					studentName: session.user.user_metadata.full_name,
 					studentEmail: session.user.user_metadata.email,
 					studentImg: session.user.user_metadata.avatar_url,
+					courseTitle: get(currentLo).parentLo
+						? get(currentLo).parentLo.title
+						: get(currentLo).title,
 					loTitle: get(currentLo).title,
 					loImage: get(currentLo).img,
 					loRoute: get(currentLo).route,
@@ -56,18 +65,26 @@
 				$page.params.courseid
 			);
 			console.log('subscribed');
-		} else if (!currentStatus) {
+			console.log(get(studentsOnlineList));
+		} else if (!$onlineStatus) {
 			unsubscribePresence();
 			console.log('unsubscribed');
 		}
-	}
-
-	onMount(() => {
-		setupPresence(supabase, $page.params.courseid);
-		setInitialClassState();
-		initServices(data.session);
-		setInterval(updatePageCount, 30 * 1000);
 	});
+
+	$: $currentLo &&
+		$onlineStatus &&
+		presenceSetup &&
+		updatePresence({
+			studentName: session.user.user_metadata.full_name,
+			studentEmail: session.user.user_metadata.email,
+			studentImg: session.user.user_metadata.avatar_url,
+			courseTitle: get(currentLo).parentLo ? get(currentLo).parentLo.title : get(currentLo).title,
+			loTitle: get(currentLo).title,
+			loImage: get(currentLo).img,
+			loRoute: get(currentLo).route,
+			loIcon: get(currentLo).icon
+		});
 
 	page.subscribe((path) => {
 		if (path.route.id) {
