@@ -51,30 +51,45 @@ export function subscribePresence(presence: Presence, courseid: string) {
 
 	presenceChannel.on('presence', { event: 'sync' }, () => {
 		const presenceState = presenceChannel.presenceState();
-		console.log('raw presence result:');
-		console.log(Object.entries(presenceState));
+
+		const courseIDWithoutNetlify = courseid.replace('.netlify.app', '');
+		const courseIDWithNetlify = `${courseIDWithoutNetlify}.netlify.app`;
+
 		const onlineUsersObj = Object.entries(presenceState)
-			.filter(([key, _]) => key === courseid)
+			.filter(([key, _]) => key === courseIDWithoutNetlify || key === courseIDWithNetlify)
 			.map(([, value]) => value[0]);
-		console.log('filtered online users:');
-		console.log(onlineUsersObj);
+
 		studentsOnline.set(onlineUsersObj.length);
 		studentsOnlineList.set(onlineUsersObj);
 	});
 
 	presenceChannel.on('presence', { event: 'join' }, ({ newPresences }) => {
-		console.log('new presence:');
-		console.log(newPresences);
-		studentsOnline.update((count) => count + newPresences.length);
-		studentsOnlineList.update((list) => [...list, ...newPresences]);
+		const courseIDWithoutNetlify = courseid.replace('.netlify.app', '');
+		const courseIDWithNetlify = `${courseIDWithoutNetlify}.netlify.app`;
+
+		const filteredNewPresences = newPresences.filter(
+			(presence) =>
+				presence.channel === courseIDWithoutNetlify || presence.channel === courseIDWithNetlify
+		);
+
+		studentsOnline.update((count) => count + filteredNewPresences.length);
+		studentsOnlineList.update((list) => [...list, ...filteredNewPresences]);
 	});
 
 	presenceChannel.on('presence', { event: 'leave' }, ({ leftPresences }) => {
-		console.log('left presence:');
-		console.log(leftPresences);
-		studentsOnline.update((count) => count - leftPresences.length);
+		const courseIDWithoutNetlify = courseid.replace('.netlify.app', '');
+		const courseIDWithNetlify = `${courseIDWithoutNetlify}.netlify.app`;
+
+		const filteredLeftPresences = leftPresences.filter(
+			(presence) =>
+				presence.channel === courseIDWithoutNetlify || presence.channel === courseIDWithNetlify
+		);
+
+		studentsOnline.update((count) => count - filteredLeftPresences.length);
 		studentsOnlineList.update((list) =>
-			list.filter((item) => !leftPresences.includes(item.studentEmail))
+			list.filter(
+				(item) => !filteredLeftPresences.some((presence) => presence.user_id === item.studentEmail)
+			)
 		);
 	});
 }
