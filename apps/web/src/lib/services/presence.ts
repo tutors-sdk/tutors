@@ -73,5 +73,7 @@ export function subscribePresence(presence: Presence, courseid: string) {
 }
 
 export function unsubscribePresence() {
-	presenceChannel.unsubscribe();
+	presenceChannel.untrack().then(() => {
+		console.log('untrack');
+	});
 }

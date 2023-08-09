@@ -47,29 +47,6 @@
 		setInitialClassState();
 		initServices(data.session);
 		setInterval(updatePageCount, 30 * 1000);
-
-		if ($onlineStatus) {
-			subscribePresence(
-				{
-					studentName: session.user.user_metadata.full_name,
-					studentEmail: session.user.user_metadata.email,
-					studentImg: session.user.user_metadata.avatar_url,
-					courseTitle: get(currentLo).parentLo
-						? get(currentLo).parentLo.title
-						: get(currentLo).title,
-					loTitle: get(currentLo).title,
-					loImage: get(currentLo).img,
-					loRoute: get(currentLo).route,
-					loIcon: get(currentLo).icon
-				},
-				$page.params.courseid
-			);
-			console.log('subscribed');
-			console.log(get(studentsOnlineList));
-		} else if (!$onlineStatus) {
-			unsubscribePresence();
-			console.log('unsubscribed');
-		}
 	});
 
 	$: $currentLo &&
@@ -85,6 +62,25 @@
 			loRoute: get(currentLo).route,
 			loIcon: get(currentLo).icon
 		});
+
+	$: $onlineStatus &&
+		subscribePresence(
+			{
+				studentName: session.user.user_metadata.full_name,
+				studentEmail: session.user.user_metadata.email,
+				studentImg: session.user.user_metadata.avatar_url,
+				courseTitle: get(currentLo).parentLo ? get(currentLo).parentLo.title : get(currentLo).title,
+				loTitle: get(currentLo).title,
+				loImage: get(currentLo).img,
+				loRoute: get(currentLo).route,
+				loIcon: get(currentLo).icon
+			},
+			$page.params.courseid
+		);
+	console.log('subscribed');
+	console.log(get(studentsOnlineList));
+
+	$: !$onlineStatus && unsubscribePresence();
 
 	page.subscribe((path) => {
 		if (path.route.id) {

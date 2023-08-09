@@ -56,7 +56,7 @@
 	<div class="relative">
 		<button class="btn btn-sm space-x-1" use:popup={{ event: 'click', target: 'avatar' }}>
 			<div class="relative inline-block">
-				{#if status && studentsOnline}
+				{#if status && $studentsOnline && $currentCourse}
 					<span class="badge-icon variant-filled-error absolute -top-2 -right-2 z-10 text-white"
 						>{$studentsOnline}</span
 					>
