@@ -54,9 +54,10 @@
 		}, 1000);
 	}
 
-	$: !presenceSetup && $onlineStatus && setupPresenceLocally();
+	$: !presenceSetup && data.session && $onlineStatus && setupPresenceLocally();
 
 	$: $currentLo &&
+		data.session &&
 		$onlineStatus &&
 		presenceSetup &&
 		updatePresence({
@@ -71,6 +72,7 @@
 		});
 
 	$: $onlineStatus &&
+		data.session &&
 		subscribePresence(
 			{
 				studentName: session.user.user_metadata.full_name,
@@ -85,7 +87,7 @@
 			$page.params.courseid
 		);
 
-	$: !$onlineStatus && unsubscribePresence();
+	$: !$onlineStatus && data.session && unsubscribePresence();
 
 	page.subscribe((path) => {
 		if (path.route.id) {
