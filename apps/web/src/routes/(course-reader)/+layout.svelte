@@ -39,13 +39,13 @@
 		}
 	}
 
-	let presenceSetup: boolean = false;
-
 	onMount(() => {
 		setInitialClassState();
 		initServices(data.session);
 		setInterval(updatePageCount, 30 * 1000);
 	});
+
+	let presenceSetup: boolean = false;
 
 	function setupPresenceLocally() {
 		setupPresence(supabase, $page.params.courseid);
@@ -59,27 +59,22 @@
 		presenceSetup = false;
 	}
 
-	$: !presenceSetup && data.session && $onlineStatus && setupPresenceLocally();
+	$: {
+		if (!presenceSetup && data.session && $onlineStatus) {
+			setupPresenceLocally();
+		} else if (!$onlineStatus && presenceSetup) {
+			unsubscribePresenceLocally();
+		}
+	}
 
-	$: $currentLo &&
-		data.session &&
-		$onlineStatus &&
-		presenceSetup &&
-		updatePresence({
-			studentName: session.user.user_metadata.full_name,
-			studentEmail: session.user.user_metadata.email,
-			studentImg: session.user.user_metadata.avatar_url,
-			courseTitle: get(currentLo).parentLo ? get(currentLo).parentLo.title : get(currentLo).title,
-			loTitle: get(currentLo).title,
-			loImage: get(currentLo).img,
-			loRoute: get(currentLo).route,
-			loIcon: get(currentLo).icon
-		});
-
-	$: $onlineStatus &&
-		data.session &&
-		subscribePresence(
-			{
+	$: {
+		if (
+			$currentLo &&
+			data.session &&
+			presenceSetup &&
+			($onlineStatus || $onlineStatus === undefined)
+		) {
+			updatePresence({
 				studentName: session.user.user_metadata.full_name,
 				studentEmail: session.user.user_metadata.email,
 				studentImg: session.user.user_metadata.avatar_url,
@@ -88,11 +83,34 @@
 				loImage: get(currentLo).img,
 				loRoute: get(currentLo).route,
 				loIcon: get(currentLo).icon
-			},
-			$page.params.courseid
-		);
+			});
+		}
+	}
 
-	$: !$onlineStatus && data.session && presenceSetup && unsubscribePresenceLocally();
+	$: {
+		if (
+			$onlineStatus &&
+			data.session &&
+			presenceSetup &&
+			($onlineStatus || $onlineStatus === undefined)
+		) {
+			subscribePresence(
+				{
+					studentName: session.user.user_metadata.full_name,
+					studentEmail: session.user.user_metadata.email,
+					studentImg: session.user.user_metadata.avatar_url,
+					courseTitle: get(currentLo).parentLo
+						? get(currentLo).parentLo.title
+						: get(currentLo).title,
+					loTitle: get(currentLo).title,
+					loImage: get(currentLo).img,
+					loRoute: get(currentLo).route,
+					loIcon: get(currentLo).icon
+				},
+				$page.params.courseid
+			);
+		}
+	}
 
 	page.subscribe((path) => {
 		if (path.route.id) {

@@ -20,11 +20,6 @@
 		timeUrl = `${timeApp}/time/${course?.url}/${user.userId}`;
 	}
 
-	let currentStatus: boolean;
-	onlineStatus.subscribe((value) => {
-		currentStatus = value;
-	});
-
 	currentUser.subscribe(async (newUser: User) => {
 		if (newUser) {
 			user = newUser;
@@ -42,7 +37,7 @@
 	});
 
 	function handleClick() {
-		onlineStatus.set(currentStatus);
+		onlineStatus.set(!$onlineStatus);
 		// analyticsService.setOnlineStatus(status, session);
 	}
 
@@ -62,10 +57,10 @@
 					>
 				{/if}
 				<span class="badge-icon absolute -bottom-2 -right-2 z-10 text-white">
-					{#if currentStatus}
+					{#if $onlineStatus}
 						<Icon type="online" />
 					{/if}
-					{#if !currentStatus}
+					{#if !onlineStatus}
 						<Icon type="offline" />
 					{/if}</span
 				>
@@ -90,7 +85,7 @@
 						<div class="ml-2">Share Presence</div>
 					</a>
 				</li>
-				{#if currentStatus}
+				{#if $onlineStatus}
 					<li>
 						<!-- svelte-ignore a11y-missing-attribute -->
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -105,7 +100,7 @@
 			</ul>
 			<hr />
 			<ul>
-				{#if currentStatus}
+				{#if $onlineStatus}
 					<li>
 						<a href={liveUrl} target="_blank" rel="noreferrer">
 							<Icon type="listOnline" />
