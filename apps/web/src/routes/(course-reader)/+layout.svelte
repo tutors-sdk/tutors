@@ -42,12 +42,12 @@
 	let presenceSetup: boolean = false;
 
 	onMount(() => {
-		!presenceSetup && setupPresence(supabase, $page.params.courseid);
-		presenceSetup = true;
 		setInitialClassState();
 		initServices(data.session);
 		setInterval(updatePageCount, 30 * 1000);
 	});
+
+	$: !presenceSetup && onlineStatus && setupPresence(supabase, $page.params.courseid);
 
 	$: $currentLo &&
 		$onlineStatus &&
@@ -77,8 +77,6 @@
 			},
 			$page.params.courseid
 		);
-	console.log('subscribed');
-	console.log(get(studentsOnlineList));
 
 	$: !$onlineStatus && unsubscribePresence();
 
