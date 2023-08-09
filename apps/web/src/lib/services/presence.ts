@@ -51,20 +51,27 @@ export function subscribePresence(presence: Presence, courseid: string) {
 
 	presenceChannel.on('presence', { event: 'sync' }, () => {
 		const presenceState = presenceChannel.presenceState();
+		console.log('raw presence result:');
+		console.log(Object.entries(presenceState));
 		const onlineUsersObj = Object.entries(presenceState)
 			.filter(([key, _]) => key === courseid)
 			.map(([, value]) => value[0]);
-
+		console.log('filtered online users:');
+		console.log(onlineUsersObj);
 		studentsOnline.set(onlineUsersObj.length);
 		studentsOnlineList.set(onlineUsersObj);
 	});
 
 	presenceChannel.on('presence', { event: 'join' }, ({ newPresences }) => {
+		console.log('new presence:');
+		console.log(newPresences);
 		studentsOnline.update((count) => count + newPresences.length);
 		studentsOnlineList.update((list) => [...list, ...newPresences]);
 	});
 
 	presenceChannel.on('presence', { event: 'leave' }, ({ leftPresences }) => {
+		console.log('left presence:');
+		console.log(leftPresences);
 		studentsOnline.update((count) => count - leftPresences.length);
 		studentsOnlineList.update((list) =>
 			list.filter((item) => !leftPresences.includes(item.studentEmail))
