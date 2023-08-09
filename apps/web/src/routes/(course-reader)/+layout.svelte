@@ -54,6 +54,11 @@
 		}, 1000);
 	}
 
+	function unsubscribePresenceLocally() {
+		unsubscribePresence();
+		presenceSetup = false;
+	}
+
 	$: !presenceSetup && data.session && $onlineStatus && setupPresenceLocally();
 
 	$: $currentLo &&
@@ -87,7 +92,7 @@
 			$page.params.courseid
 		);
 
-	$: !$onlineStatus && data.session && unsubscribePresence();
+	$: !$onlineStatus && data.session && presenceSetup && unsubscribePresenceLocally();
 
 	page.subscribe((path) => {
 		if (path.route.id) {
