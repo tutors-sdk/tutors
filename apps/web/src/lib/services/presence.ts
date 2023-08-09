@@ -52,9 +52,6 @@ export function subscribePresence(presence: Presence, courseid: string) {
 	presenceChannel.on('presence', { event: 'sync' }, () => {
 		const presenceState = presenceChannel.presenceState();
 
-		console.log('raw presence state:');
-		console.log(presenceState);
-
 		const courseIDWithoutNetlify = courseid.replace('.netlify.app', '');
 		const courseIDWithNetlify = `${courseIDWithoutNetlify}.netlify.app`;
 
@@ -64,9 +61,6 @@ export function subscribePresence(presence: Presence, courseid: string) {
 				onlineUsersObj.push(...value);
 			}
 		}
-
-		console.log('online users:');
-		console.log(onlineUsersObj);
 
 		studentsOnline.set(onlineUsersObj.length);
 		studentsOnlineList.set(onlineUsersObj);
@@ -81,9 +75,6 @@ export function subscribePresence(presence: Presence, courseid: string) {
 				presence.channel === courseIDWithoutNetlify || presence.channel === courseIDWithNetlify
 		);
 
-		console.log('new presence:');
-		console.log(filteredNewPresences);
-
 		studentsOnline.update((count) => count + filteredNewPresences.length);
 		studentsOnlineList.update((list) => [...list, ...filteredNewPresences]);
 	});
@@ -96,9 +87,6 @@ export function subscribePresence(presence: Presence, courseid: string) {
 			(presence) =>
 				presence.channel === courseIDWithoutNetlify || presence.channel === courseIDWithNetlify
 		);
-
-		console.log('left presence:');
-		console.log(filteredLeftPresences);
 
 		studentsOnline.update((count) => count - filteredLeftPresences.length);
 		studentsOnlineList.update((list) =>
