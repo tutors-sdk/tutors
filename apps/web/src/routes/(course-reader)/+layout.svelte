@@ -47,7 +47,14 @@
 		setInterval(updatePageCount, 30 * 1000);
 	});
 
-	$: !presenceSetup && onlineStatus && setupPresence(supabase, $page.params.courseid);
+	function setupPresenceLocally() {
+		setupPresence(supabase, $page.params.courseid);
+		setTimeout(() => {
+			presenceSetup = true;
+		}, 1000);
+	}
+
+	$: !presenceSetup && $onlineStatus && setupPresenceLocally();
 
 	$: $currentLo &&
 		$onlineStatus &&
