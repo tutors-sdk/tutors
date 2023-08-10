@@ -76,9 +76,9 @@ function expandGenericMetrics(id: string, fbData): any {
 	return metric;
 }
 
-export async function fetchUserById(courseUrl: string, session: Token, allLabs) {
+export async function fetchUserById(courseUrl: string, session: any, allLabs) {
 	const courseBase = courseUrl.substr(0, courseUrl.indexOf('.'));
-	const userEmail = session.user_metadata.email;
+	const userEmail = session.user.user_metadata.email;
 	// eslint-disable-next-line no-useless-escape
 	const userEmailSanitised = userEmail.replace(/[`#$.\[\]\/]/gi, '*');
 	let user = null;

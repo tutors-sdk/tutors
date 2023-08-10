@@ -1,5 +1,5 @@
 import type { Topic } from '../models/topic';
-import type { User } from './auth';
+import type { Token } from './auth';
 import type { IconType } from './icon';
 import type { Lo } from './lo';
 
@@ -18,7 +18,7 @@ export interface DayMeasure {
 	metric: number;
 }
 
-export interface UserMetric extends User {
+export interface UserMetric extends Token {
 	title: string;
 	count: number;
 	last: string;

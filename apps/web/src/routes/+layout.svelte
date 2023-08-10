@@ -68,11 +68,9 @@
 		drawerStore.open(settings);
 	};
 
-	page.subscribe((value) => {
-		if (value.url.pathname.startsWith('/dashboard') || value.url.pathname.length <= 1) {
-			currentCourse.set(null);
-		}
-	});
+	$: if ($page.url.pathname.startsWith('/dashboard') || $page.url.pathname.length <= 1) {
+		currentCourse.set(null);
+	}
 
 	onMount(() => {
 		status = get(onlineStatus);
@@ -250,7 +248,11 @@
 										</li>
 									{/if}
 									<li>
-										<a href="/" target="_blank" rel="noreferrer">
+										<a
+											href="/time/{$currentCourse?.url}/{session.user.id}"
+											target="_blank"
+											rel="noreferrer"
+										>
 											<Icon
 												icon="fluent:clock-alarm-24-filled"
 												color="rgba(var(--color-primary-500))"
