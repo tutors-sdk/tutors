@@ -4,9 +4,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.courseBuilder = void 0;
-const lr_utils_1 = require("./lr-utils");
+const lr_utils_1 = require("../lr/lr-utils");
 const lo_types_1 = require("./lo-types");
-const utils_1 = require("../utils/utils");
+const file_utils_1 = require("../utils/file-utils");
 const front_matter_1 = __importDefault(require("front-matter"));
 exports.courseBuilder = {
     lo: {},
@@ -108,7 +108,7 @@ exports.courseBuilder = {
         const mdFiles = (0, lr_utils_1.getFilesWithType)(lr, "md");
         lo.title = "";
         mdFiles.forEach((chapterName) => {
-            const wholeFile = (0, utils_1.readWholeFile)(chapterName);
+            const wholeFile = (0, file_utils_1.readWholeFile)(chapterName);
             const contents = (0, front_matter_1.default)(wholeFile);
             let theTitle = contents.body.substring(0, contents.body.indexOf("\n"));
             theTitle = theTitle.replace("\r", "");
@@ -139,7 +139,7 @@ exports.courseBuilder = {
         this.lo.route = "/";
         const propertiesFile = (0, lr_utils_1.getFileWithName)(lr, "properties.yaml");
         if (propertiesFile) {
-            this.lo.properties = (0, utils_1.readYamlFile)(propertiesFile);
+            this.lo.properties = (0, file_utils_1.readYamlFile)(propertiesFile);
             const ignoreList = (_a = this.lo.properties) === null || _a === void 0 ? void 0 : _a.ignore;
             if (ignoreList) {
                 const los = this.lo.los.filter((lo) => ignoreList.indexOf(lo.id) >= 0);
@@ -151,7 +151,7 @@ exports.courseBuilder = {
         }
         const calendarFile = (0, lr_utils_1.getFileWithName)(lr, "calendar.yaml");
         if (calendarFile) {
-            this.lo.calendar = (0, utils_1.readYamlFile)(calendarFile);
+            this.lo.calendar = (0, file_utils_1.readYamlFile)(calendarFile);
         }
     },
 };

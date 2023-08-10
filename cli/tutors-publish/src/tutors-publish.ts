@@ -1,21 +1,16 @@
 #!/usr/bin/env node
 import * as fs from "fs";
-import { courseBuilder } from "tutors-gen-lib/src/lo/course-builder";
-import { resourceBuilder } from "tutors-gen-lib/src/lo/resource-builder";
-import { generateNetlifyToml } from "tutors-gen-lib/src/utils/netlify";
-import { writeFile } from "tutors-gen-lib/src/utils/utils";
-const version = `tutors-publish 3.0.5 (tutors-gen-lib: 1.0.5)`;
+import { buildCourse, generateCourse, version } from "tutors-gen-lib/src/tutors";
 
-if (fs.existsSync("course.md")) {
+const versionStr = `tutors-publish: ${version}`;
+console.log(versionStr);
+
+if (!fs.existsSync("course.md")) {
+  console.log("Cannot locate course.md. Please Change to course folder and try again. ");
+} else {
   const srcFolder = process.cwd();
   const destFolder = `${srcFolder}/json`;
-  console.log(`Static course generator ${version}`);
-  resourceBuilder.buildTree(srcFolder);
-  courseBuilder.buildCourse(resourceBuilder.lr);
-  resourceBuilder.copyAssets(destFolder);
-  writeFile(destFolder, "tutors.json", JSON.stringify(courseBuilder.lo));
-  generateNetlifyToml(destFolder);
-  console.log(`${version}`);
-} else {
-  console.log("Cannot locate course.md. Please Change to course folder and try again. ");
+  const lo = buildCourse(srcFolder);
+  generateCourse(lo, destFolder);
 }
+console.log(versionStr);

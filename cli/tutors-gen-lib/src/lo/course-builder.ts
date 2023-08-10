@@ -17,15 +17,16 @@ import {
   getWebLink,
   readVideoIds,
   removeLeadingHashes,
-} from "./lr-utils";
-import { LabStep, LearningObject, LearningResource, preOrder } from "./lo-types";
-import { readWholeFile, readYamlFile, writeFile } from "../utils/utils";
+} from "../lr/lr-utils";
+import { LabStep, Lo, preOrder } from "./lo-types";
+import { readWholeFile, readYamlFile } from "../utils/file-utils";
 import fm from "front-matter";
+import { LearningResource } from "../lr/lr-types";
 
 export const courseBuilder = {
-  lo: <LearningObject>{},
+  lo: <Lo>{},
 
-  buildCompositeLo(lo: LearningObject, lr: LearningResource, level: number): LearningObject {
+  buildCompositeLo(lo: Lo, lr: LearningResource, level: number): Lo {
     switch (lo.type) {
       case "unit":
         this.buildUnit(lo);
@@ -45,7 +46,7 @@ export const courseBuilder = {
     return lo;
   },
 
-  buildSimpleLo(lo: LearningObject, lr: LearningResource): LearningObject {
+  buildSimpleLo(lo: Lo, lr: LearningResource): Lo {
     switch (lo.type) {
       case "lab":
         lo = this.buildLab(lo, lr);
@@ -71,7 +72,7 @@ export const courseBuilder = {
     return lo;
   },
 
-  buildLo(lr: LearningResource, level: number, keyFileName: string = ""): LearningObject {
+  buildLo(lr: LearningResource, level: number, keyFileName: string = ""): Lo {
     let lo = this.buildDefaultLo(lr, keyFileName);
     console.log(`${"-".repeat(level * 2)}: ${lo.id} : ${lo.title}`);
     if (lo.type === "unit" || lo.type == "side" || lo.type == "topic" || lo.type == "course") {
@@ -82,10 +83,10 @@ export const courseBuilder = {
     return lo;
   },
 
-  buildDefaultLo(lr: LearningResource, keyFileName: string = ""): LearningObject {
+  buildDefaultLo(lr: LearningResource, keyFileName: string = ""): Lo {
     const [title, summary, contentMd, frontMatter] = getMarkdown(lr, keyFileName);
     const videoids = readVideoIds(lr);
-    const lo: LearningObject = {
+    const lo: Lo = {
       route: getRoute(lr),
       type: lr.type,
       title: title,
@@ -106,27 +107,27 @@ export const courseBuilder = {
     return lo;
   },
 
-  buildUnit(lo: LearningObject) {
+  buildUnit(lo: Lo) {
     lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
     lo.route = lo.route.replace("/unit", "/topic");
   },
 
-  buildTalk(lo: LearningObject) {
+  buildTalk(lo: Lo) {
     if (!lo.pdf) {
       lo.route = lo.video;
     }
   },
 
-  buildSide(lo: LearningObject) {
+  buildSide(lo: Lo) {
     lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
     lo.route = lo.route.replace("/side", "/topic");
   },
 
-  buildPanelvideo(lo: LearningObject) {
+  buildPanelvideo(lo: Lo) {
     lo.route = lo.video;
   },
 
-  buildLab(lo: LearningObject, lr: LearningResource): LearningObject {
+  buildLab(lo: Lo, lr: LearningResource): Lo {
     const mdFiles = getFilesWithType(lr, "md");
     lo.title = "";
     mdFiles.forEach((chapterName) => {

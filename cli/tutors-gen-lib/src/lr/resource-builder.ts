@@ -1,14 +1,18 @@
 import * as fs from "fs";
 import path from "path";
-import { copyFileToFolder, findFirstMatchingString, findLastMatchingString, getFileName, getFileType } from "../utils/utils";
-import { assetTypes, LearningResource, loTypes } from "./lo-types";
+import { copyFileToFolder, findFirstMatchingString, getFileName, getFileType } from "../utils/file-utils";
+import { assetTypes, LearningResource } from "./lr-types";
+import { loTypes } from "../lo/lo-types";
+
+const loSignatures: string[] = [];
+loTypes.forEach((type) => loSignatures.push(`/${type}`));
 
 export const resourceBuilder = {
   lr: <LearningResource>{},
   root: "",
 
   getLoType(route: string): string {
-    let lotype = findFirstMatchingString(loTypes, route, this.root);
+    let lotype = findFirstMatchingString(loSignatures, route, this.root);
     if (lotype == "book") {
       lotype = "lab";
     } else if (lotype == "") {
@@ -22,7 +26,7 @@ export const resourceBuilder = {
     const files = fs.readdirSync(dir);
     if (files.length > 0) {
       for (const file of files) {
-        if (!file.startsWith(".")) {
+        if (!(file.startsWith(".") || file.startsWith("json") || file.startsWith("html"))) {
           const filePath = `${dir}/${file}`;
           const stat = fs.statSync(filePath);
           if (stat.isDirectory()) {
@@ -49,7 +53,6 @@ export const resourceBuilder = {
     this.root = dir;
     this.lr = this.build(dir);
     this.lr.type = "course";
-    this.lr.lrs = this.lr.lrs.filter((lr) => lr.route.includes("/topic") || lr.route.includes("/unit") || lr.route.includes("/side"));
     this.pruneTree(this.lr);
   },
 
@@ -64,6 +67,7 @@ export const resourceBuilder = {
     });
     lr.lrs.forEach((lr) => this.copyAssetFiles(lr, dest));
   },
+
   copyAssets(dest: string) {
     this.copyAssetFiles(this.lr, dest);
   },

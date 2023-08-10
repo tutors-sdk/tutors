@@ -1,33 +1,14 @@
-export const imageTypes = ["png", "jpg", "jpeg", "gif", "PNG", "JPG", "JPEG", "GIF"];
+import { VideoIdentifiers } from "../lr/lr-types";
 
-export const assetTypes = imageTypes.concat(["pdf", "zip"]);
+export const loTypes = ["note", "book", "archive", "web", "github", "panelnote", "paneltalk", "panelvideo", "talk", "unit", "side", "topic"];
 
 export class Properties {
   [key: string]: string;
 }
 
-export interface VideoIdentifier {
-  service: string;
-  id: string;
-}
-
-export interface VideoIdentifiers {
-  videoid: string;
-  videoIds: VideoIdentifier[];
-}
-
 export interface IconType {
   type: string;
   color: string;
-}
-
-export interface LearningResource {
-  courseRoot: string;
-  route: string;
-  id: string;
-  lrs: LearningResource[];
-  files: Array<string>;
-  type: string;
 }
 
 export interface LabStep {
@@ -39,15 +20,23 @@ export interface LabStep {
   id: string;
   type: string;
   hide: boolean;
-  parentLo?: LearningObject;
-  parentCourse?: LearningObject;
+  parentLo?: Lo;
+  parentCourse?: Lo;
 }
 
-export interface LearningObject {
-  id: string;
-  route: string;
+export interface Lo {
+  // type of lo, one of loTypes above
   type: string;
+
+  // folder name containing the lo
+  id: string;
+
+  // url to the lo, used for dynamic version only
+  route: string;
+  // extracted from first line of markdown file
   title: string;
+
+  //
   summary: string;
   contentMd: string;
   contentHtml?: string;
@@ -60,18 +49,16 @@ export interface LearningObject {
   video: string;
   videoids: VideoIdentifiers;
   frontMatter: Properties;
-  los: Array<LearningObject | LabStep>;
+  los: Array<Lo | LabStep>;
   properties?: Properties;
   calendar?: Properties;
   icon?: IconType;
-  parentLo?: LearningObject;
-  parentCourse?: LearningObject;
+  parentLo?: Lo;
+  parentCourse?: Lo;
   panels?: any;
   units?: any;
-  breadCrumbs?: LearningObject[];
+  breadCrumbs?: Lo[];
 }
-
-export const loTypes = ["/note", "/book", "/archive", "/web", "/github", "/panelnote", "/paneltalk", "/panelvideo", "/talk", "/unit", "/side", "/topic"];
 
 export const preOrder = new Map([
   ["unit", 1],

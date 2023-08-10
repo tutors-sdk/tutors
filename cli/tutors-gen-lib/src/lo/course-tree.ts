@@ -1,9 +1,9 @@
-import { LearningObject } from "tutors-gen-lib/src/lo/lo-types";
-import { convertMdToHtml } from "./markdown";
+import { Lo } from "./lo-types";
+import { convertMdToHtml } from "../utils/markdown";
 
-let rootCourse: LearningObject = null;
+let rootCourse: Lo = null;
 
-export function buildCourseTree(lo: LearningObject) {
+export function decorateCourseTree(lo: Lo) {
   if (lo.type === "course") {
     rootCourse = lo;
   }
@@ -19,7 +19,7 @@ export function buildCourseTree(lo: LearningObject) {
     for (const childLo of lo.los) {
       childLo.parentLo = lo;
       if (lo.los) {
-        buildCourseTree(childLo as LearningObject);
+        decorateCourseTree(childLo as Lo);
       }
     }
   }
@@ -43,14 +43,14 @@ function getUnits(los: any) {
   };
 }
 
-function sortLos(los: Array<LearningObject>): LearningObject[] {
+function sortLos(los: Array<Lo>): Lo[] {
   const orderedLos = los.filter((lo) => lo.frontMatter?.order);
   const unOrderedLos = los.filter((lo) => !lo.frontMatter?.order);
   orderedLos.sort((a: any, b: any) => a.frontMatter.order - b.frontMatter.order);
   return orderedLos.concat(unOrderedLos);
 }
 
-function getIcon(lo: LearningObject) {
+function getIcon(lo: Lo) {
   if (lo.frontMatter && lo.frontMatter.icon) {
     return {
       type: lo.frontMatter.icon["type"],
@@ -60,7 +60,7 @@ function getIcon(lo: LearningObject) {
   return null;
 }
 
-function crumbs(lo: LearningObject, los: LearningObject[]) {
+function crumbs(lo: Lo, los: Lo[]) {
   if (lo) {
     crumbs(lo.parentLo, los);
     los.push(lo);
