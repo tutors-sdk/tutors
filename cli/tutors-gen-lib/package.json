@@ -1,6 +1,6 @@
 {
   "name": "tutors-gen-lib",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "Library for tutors generators",
   "scripts": {
     "build": "tsc --build",
@@ -13,19 +13,17 @@
     "url": "https://github.com/tutors-sdk/tutors.git"
   },
   "dependencies": {
+    "@iktakahiro/markdown-it-katex": "^4.0.1",
+    "@types/js-yaml": "^4.0.5",
     "@types/markdown-it-emoji": "^2.0.2",
     "@types/markdown-it-footnote": "^3.0.0",
-    "@types/js-yaml": "^4.0.5",
     "@types/node": "^20.2.6",
     "@types/shelljs": "^0.8.12",
     "commander": "^10.0.1",
     "front-matter": "^4.0.2",
     "glob": "^10.2.7",
-    "js-yaml": "^4.1.0",
-    "npm": "^9.7.1",
-    "path": "^0.12.7",
-    "shelljs": "^0.8.5",
     "highlight.js": "^11.8.0",
+    "js-yaml": "^4.1.0",
     "markdown-it": "^13.0.1",
     "markdown-it-anchor": "^8.6.7",
     "markdown-it-container": "^3.0.0",
@@ -35,7 +33,10 @@
     "markdown-it-mark": "^3.0.1",
     "markdown-it-sub": "^1.0.0",
     "markdown-it-sup": "^1.0.0",
-    "markdown-it-table-of-contents": "^0.6.0"
+    "markdown-it-table-of-contents": "^0.6.0",
+    "npm": "^9.7.1",
+    "path": "^0.12.7",
+    "shelljs": "^0.8.5"
   },
   "devDependencies": {
     "prettier": "2.8.8",
