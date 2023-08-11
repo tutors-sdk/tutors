@@ -1,4 +1,4 @@
-import { IconType, Lo } from "./lo-types";
+import { IconType, Lo, Panels } from "./lo-types";
 import { convertMdToHtml } from "../utils/markdown";
 
 let rootCourse: Lo;
@@ -25,16 +25,16 @@ export function decorateCourseTree(lo: Lo) {
   }
 }
 
-function getPanels(los: any) {
+function getPanels(los: Lo[]): Panels {
   return {
-    panelVideos: los?.filter((lo: any) => lo.type === "panelvideo"),
-    panelTalks: los?.filter((lo: any) => lo.type === "paneltalk"),
-    panelNotes: los?.filter((lo: any) => lo.type === "panelnote"),
+    panelVideos: los?.filter((lo: Lo) => lo.type === "panelvideo"),
+    panelTalks: los?.filter((lo: Lo) => lo.type === "paneltalk"),
+    panelNotes: los?.filter((lo: Lo) => lo.type === "panelnote"),
   };
 }
 
-function getUnits(los: any) {
-  let standardLos = los?.filter((lo: any) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "side");
+function getUnits(los: Lo[]) {
+  let standardLos = los?.filter((lo: any) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "panelnote" && lo.type !== "side");
   standardLos = sortLos(standardLos);
   return {
     units: los?.filter((lo: any) => lo.type === "unit"),

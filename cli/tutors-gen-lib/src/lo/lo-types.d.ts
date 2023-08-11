@@ -7,17 +7,15 @@ export interface IconType {
     type: string;
     color: string;
 }
-export interface LabStep {
-    title: string;
-    shortTitle: string;
-    contentMd: string;
-    contentHtml: string;
-    route: string;
-    id: string;
-    type: string;
-    hide: boolean;
-    parentLo?: Lo;
-    parentCourse?: Lo;
+export interface Panels {
+    panelVideos: Lo[];
+    panelTalks: Lo[];
+    panelNotes: Lo[];
+}
+export interface Units {
+    units: Lo[];
+    sides: Lo[];
+    standardLos: Lo[];
 }
 export interface Lo {
     type: string;
@@ -27,7 +25,8 @@ export interface Lo {
     contentMd: string;
     frontMatter: Properties;
     contentHtml?: string;
-    los: Array<Lo | LabStep>;
+    shortTitle?: string;
+    los: Lo[];
     route: string;
     img: string;
     imgFile: string;
@@ -38,12 +37,14 @@ export interface Lo {
     video: string;
     videoids: VideoIdentifiers;
     hide: boolean;
+    parentLo?: Lo;
+    parentCourse?: Course;
+    panels?: Panels;
+    units?: Units;
+    breadCrumbs?: Lo[];
+}
+export interface Course extends Lo {
     properties?: Properties;
     calendar?: Properties;
-    parentLo?: Lo;
-    parentCourse?: Lo;
-    panels?: any;
-    units?: any;
-    breadCrumbs?: Lo[];
 }
 export declare const preOrder: Map<string, number>;
