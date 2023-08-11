@@ -1,7 +1,7 @@
-import { Lo } from "./lo-types";
+import { IconType, Lo } from "./lo-types";
 import { convertMdToHtml } from "../utils/markdown";
 
-let rootCourse: Lo = null;
+let rootCourse: Lo;
 
 export function decorateCourseTree(lo: Lo) {
   if (lo.type === "course") {
@@ -50,17 +50,19 @@ function sortLos(los: Array<Lo>): Lo[] {
   return orderedLos.concat(unOrderedLos);
 }
 
-function getIcon(lo: Lo) {
+function getIcon(lo: Lo): IconType | undefined {
   if (lo.frontMatter && lo.frontMatter.icon) {
     return {
+      // @ts-ignore
       type: lo.frontMatter.icon["type"],
+      // @ts-ignore
       color: lo.frontMatter.icon["color"],
     };
   }
-  return null;
+  return undefined;
 }
 
-function crumbs(lo: Lo, los: Lo[]) {
+function crumbs(lo: Lo | undefined, los: Lo[]) {
   if (lo) {
     crumbs(lo.parentLo, los);
     los.push(lo);
