@@ -59,6 +59,7 @@ export interface Lo {
 }
 
 export interface Course extends Lo {
+  walls?: Lo[][];
   properties?: Properties; // contents of properties.yaml
   calendar?: Properties; // contents of calendar.yaml
 }

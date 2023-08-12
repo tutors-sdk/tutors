@@ -1,11 +1,14 @@
-import { IconType, Lo, Panels } from "./lo-types";
+import { Course, IconType, Lo, Panels } from "./lo-types";
 import { convertMdToHtml } from "../utils/markdown";
+import { allLos } from "./lo-utils";
 
-let rootCourse: Lo;
+let rootCourse: Course;
 
 export function decorateCourseTree(lo: Lo) {
   if (lo.type === "course") {
     rootCourse = lo;
+    rootCourse.walls = [];
+    ["talk", "note", "lab", "web", "archive", "github"].forEach((type) => addWall(rootCourse, type));
   }
   lo.contentHtml = convertMdToHtml(lo?.contentMd);
   lo.summary = convertMdToHtml(lo?.summary);
@@ -66,5 +69,12 @@ function crumbs(lo: Lo | undefined, los: Lo[]) {
   if (lo) {
     crumbs(lo.parentLo, los);
     los.push(lo);
+  }
+}
+
+function addWall(course: Course, type: string) {
+  const los = allLos(type, course.los);
+  if (los.length > 0) {
+    course.walls?.push(los);
   }
 }

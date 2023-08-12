@@ -22,6 +22,7 @@ import { Course, Lo, preOrder } from "./lo-types";
 import { readWholeFile, readYamlFile } from "../utils/file-utils";
 import fm from "front-matter";
 import { LearningResource } from "../lr/lr-types";
+import { allLos } from "./lo-utils";
 
 function buildCompositeLo(lo: Lo, lr: LearningResource, level: number): Lo {
   switch (lo.type) {
@@ -170,5 +171,6 @@ export function buildCourse(lr: LearningResource): Course {
   if (calendarFile) {
     course.calendar = readYamlFile(calendarFile);
   }
+
   return course;
 }

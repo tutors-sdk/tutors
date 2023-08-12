@@ -1,5 +1,5 @@
 import * as sh from "shelljs";
-import { Lo } from "tutors-gen-lib/src/lo/lo-types";
+import { Course, Lo } from "tutors-gen-lib/src/lo/lo-types";
 import { writeFile } from "tutors-gen-lib/src/utils/file-utils";
 import * as nunjucks from "nunjucks";
 
@@ -55,10 +55,24 @@ function emitTopic(lo: Lo, path: string) {
   sh.cd("..");
 }
 
-export function emitCourse(path: string, lo: Lo) {
+export function emitWalls(path: string, lo: Course) {
+  lo.walls?.forEach((los) => {
+    const type = los[0].type;
+    lo.los = los;
+    lo.breadCrumbs = [];
+    lo.breadCrumbs.push(lo);
+    if (lo.properties) {
+      lo.properties["credits"] = `All ${type}'s in course`;
+    }
+    publishTemplate(path, `${type}.html`, "Wall.njk", lo);
+  });
+}
+
+export function emitCourse(path: string, lo: Course) {
   sh.cd(path);
   lo?.los?.forEach((lo) => {
     emitTopic(lo as Lo, path);
   });
   publishTemplate(path, "index.html", "Course.njk", lo);
+  emitWalls(path, lo);
 }

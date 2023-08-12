@@ -44,6 +44,7 @@ export interface Lo {
     breadCrumbs?: Lo[];
 }
 export interface Course extends Lo {
+    walls?: Lo[][];
     properties?: Properties;
     calendar?: Properties;
 }
