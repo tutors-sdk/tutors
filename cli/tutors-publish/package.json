@@ -1,6 +1,6 @@
 {
   "name": "tutors-publish",
-  "version": "3.0.11",
+  "version": "3.0.12",
   "description": "Static course web site generator - json emitter",
   "main": "./src/tutors-gen.js",
   "scripts": {
@@ -17,7 +17,7 @@
     "tutors-publish": "./src/tutors-publish.js"
   },
   "dependencies": {
-    "tutors-gen-lib": "^3.0.11"
+    "tutors-gen-lib": "^3.0.12"
   },
   "devDependencies": {
     "prettier": "2.8.8",

@@ -5,7 +5,7 @@ import { resourceBuilder } from "./lr/resource-builder";
 import { writeFile } from "./utils/file-utils";
 import { generateNetlifyToml } from "./utils/netlify";
 
-export const version = "3.0.11";
+export const version = "3.0.12";
 
 export function parseCourse(folder: string): Lo {
   resourceBuilder.buildTree(folder);
