@@ -4,21 +4,34 @@
 {% macro breadcrumbs (lo) %}
   <div class="{{ navbarsecondarybg }}">
     <ul>
-      {% for lo in lo.breadCrumbs %}
-        {% set count = loop.length - loop.index %}
+      {% if lo.type == "wall" %}
+        <h1>
+          Hello
+        </h1>
         <li class="ml-2">
-          {% if lo.type == "course" %}
-            {{ icon("moduleHome", 20, "", "") }}
-          {% else %}
-            {{ icon("topic", 20, "") }}
-          {% endif %}
-          {{ crumbUrlStart(count, lo) }}
-          <span class="hidden text-xs lg:block lg:pl-2">
-            {{ lo.title }}
-          </span>
-          {{ crumbUrlEnd() }}
+          <a href="./index.html">
+            <span class="hidden text-xs lg:block lg:pl-2">
+              {{ lo.title }}
+            </span>
+          </a>
         </li>
-      {% endfor %}
+      {% else %}
+        {% for lo in lo.breadCrumbs %}
+          {% set count = loop.length - loop.index %}
+          <li class="ml-2">
+            {% if lo.type == "course" %}
+              {{ icon("moduleHome", 20, "", "") }}
+            {% else %}
+              {{ icon("topic", 20, "") }}
+            {% endif %}
+            {{ crumbUrlStart(count, lo) }}
+            <span class="hidden text-xs lg:block lg:pl-2">
+              {{ lo.title }}
+            </span>
+            {{ crumbUrlEnd() }}
+          </li>
+        {% endfor %}
+      {% endif %}
     </ul>
   </div>
 {% endmacro %}

@@ -4,7 +4,7 @@
 {% from "components/navigators/support/Breadcrumbs.njk" import breadcrumbs %}
 {% from "components/navigators/support/Companions.njk" import companions %}
 {% from "components/navigators/support/Walls.njk" import walls %}
-{% macro mainNavigator (lo) %}
+{% macro mainNavigator (lo, isWall) %}
   <div class="{{ navbar }}">
     {{ titleCard(lo) }}
   </div>

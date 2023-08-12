@@ -59,8 +59,6 @@ export function emitWalls(path: string, lo: Course) {
   lo.walls?.forEach((los) => {
     const type = los[0].type;
     lo.los = los;
-    lo.breadCrumbs = [];
-    lo.breadCrumbs.push(lo);
     if (lo.properties) {
       lo.properties["credits"] = `All ${type}'s in course`;
     }
