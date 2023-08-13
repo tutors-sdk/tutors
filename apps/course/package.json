@@ -25,6 +25,7 @@
     "auth0-js": "^9.21.0",
     "autoprefixer": "^10.4.14",
     "buffer": "^6.0.3",
+    "cy-verify-downloads": "^0.1.15",
     "cypress": "12.17.2",
     "cypress-axe": "1.4.0",
     "cypress-fail-fast": "7.0.1",
