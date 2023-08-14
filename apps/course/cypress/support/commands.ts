@@ -63,17 +63,30 @@ Cypress.Commands.add("clickLabCard", (lo: any) => {
   });
 });
 
-Cypress.Commands.add("clickInfoButton", (course: any) => {
-  //locates the info button in the top left
-  cy.get('button.btn.btn-sm', { timeout: 5000 }).eq(0).click('topLeft', { force: true })
+Cypress.Commands.add("toggleTOCWithVerification", (contents: any) => {
+  //locates the Table of Contents button in the top right
+  cy.get('button.btn.btn-sm', { timeout: 5000 }).eq(2).click("topRight", { force: true })
+  //loops through the titles to verify that each title is shown on screen as should
+  contents.forEach(element => {
+    if(element.title != " Hidden\r"){
+      cy.log(element.title)
+      cy.get('div.drawer-backdrop')
+        .find('div.drawer')
+        .should('include.text', element.title);
+    }
+  });
+});
 
-  const contents = [course.title.trim(), course.summary.trim()];
-  for (let i = 0; i < 2; i++) {
-    cy.log(contents[i])
-    cy.get('div.drawer-backdrop')  
-      .find('div.drawer')
-      .should('include.text', contents[i]);
-  }
+Cypress.Commands.add("toggleInfoWithVerification", (contents: any) => {
+  //locates the info button button in the top left
+  cy.get('button.btn.btn-sm', { timeout: 5000 }).eq(0).click("topLeft", { force: true })
+  //loops through the array of title and summary to verify that each title is shown on screen as should
+  contents.forEach(element => {
+      cy.log(element)
+      cy.get('div.drawer-backdrop')
+        .find('div.drawer')
+        .should('include.text', element);
+  });
 });
 
 declare global {
@@ -85,7 +98,9 @@ declare global {
       clickLabStep(lo: any): Chainable<any>;
       clickLabCard(lo: any): Chainable<any>;
       triggerCardAction(lo: any): Chainable<any>;
-      clickInfoButton(lo: any): Chainable<any>
+      toggleTOCWithVerification(contents: any): Chainable<any>;
+      toggleInfoWithVerification(contents: any): Chainable<any>
+
     }
   }
 }

@@ -39,14 +39,13 @@ describe("Loading the JSON fixture", function () {
   });
 
   it('Test for Info Bar in top left', function () {
-    cy.clickInfoButton(course)
-
+    let contents = [course.title.trim(), course.summary.trim()]
+    cy.toggleInfoWithVerification(contents)
   });
 
-  // it("Test that the content matches what it should", function () {
-  //   cy.errorHandler()
-  //   cy.get('drawer').contains(course.contentMd);
-  // });
+  it('Test for the TOC in top right', function () {
+    cy.toggleTOCWithVerification(course.los)
+  });
 
   it("Topics", function () {
     course.los.forEach((topic) => {
