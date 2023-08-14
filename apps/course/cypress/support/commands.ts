@@ -63,26 +63,17 @@ Cypress.Commands.add("clickLabCard", (lo: any) => {
   });
 });
 
-Cypress.Commands.add("clickInfoButton", (contentMd: any) => {
-  cy.wait(1000);
-  // cy.get('header#shell-header')
-  //   .find('div[data-testid="app-bar"]')
-  //   .find('button.btn.btn-sm').each(($element) => {
-  //     cy.wrap($element).first()
-  //       .click({ force: true });
-  //     //cy.wait(1000);
-      
-  //   });
-    //cy.get('div[data-testid="drawer-backdrop"]').eq(0).contains(contentMd.slice(2).trim()).click({ force: true });
-    cy.get('button.btn.btn-sm').eq(0).click('topLeft', { force: true })
-    cy.wait(1000);
-           // Replace with your actual selector
-    let newText = contentMd.slice(2).trim().replace(/\r\n/g, '\n');
-    console.log(`newText: ${newText}`);
-    cy.get('div.drawer-backdrop')  // Replace with your actual selector
-    .find('div.drawer')
-    .should('contain', newText); 
-  
+Cypress.Commands.add("clickInfoButton", (course: any) => {
+  //locates the info button in the top left
+  cy.get('button.btn.btn-sm', { timeout: 5000 }).eq(0).click('topLeft', { force: true })
+
+  const contents = [course.title.trim(), course.summary.trim()];
+  for (let i = 0; i < 2; i++) {
+    cy.log(contents[i])
+    cy.get('div.drawer-backdrop')  
+      .find('div.drawer')
+      .should('include.text', contents[i]);
+  }
 });
 
 declare global {

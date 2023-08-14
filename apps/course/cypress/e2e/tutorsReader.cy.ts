@@ -39,7 +39,7 @@ describe("Loading the JSON fixture", function () {
   });
 
   it('Test for Info Bar in top left', function () {
-    cy.clickInfoButton(course.contentMd)
+    cy.clickInfoButton(course)
 
   });
 
