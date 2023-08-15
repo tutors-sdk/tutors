@@ -37,8 +37,6 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css" />
 </svelte:head>
 
-<NavBar title={data.course.lo.title} subTitle={$currentUser?.name} />
-
 <div in:fade={{ duration: 500 }} class="bg-base-200 mt-3 ">
 	<TabGroup selected={storeTab}>
 		<Tab bind:group={tabSet} name="Labs" value={0}>Labs</Tab>

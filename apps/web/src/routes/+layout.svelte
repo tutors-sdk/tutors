@@ -68,9 +68,10 @@
 		drawerStore.open(settings);
 	};
 
-	$: if ($page.url.pathname.startsWith('/dashboard') || $page.url.pathname.length <= 1) {
+	$: ($page.url.pathname.startsWith('/dashboard') ||
+		$page.url.pathname.startsWith('/time') ||
+		$page.url.pathname.length <= 1) &&
 		currentCourse.set(null);
-	}
 
 	onMount(() => {
 		status = get(onlineStatus);
