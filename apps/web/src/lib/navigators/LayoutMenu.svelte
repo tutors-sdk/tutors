@@ -8,7 +8,7 @@
 	} from '@skeletonlabs/skeleton';
 	import { layout, storeTheme } from '$lib/stores';
 	import moment from 'moment';
-	import { Icon } from 'tutors-ui';
+	import { Icon } from '$lib/ui/legacy';
 
 	function applyInitialLayout() {
 		layout.set('expanded');
