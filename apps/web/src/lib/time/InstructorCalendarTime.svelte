@@ -3,7 +3,7 @@
   import { Grid } from "ag-grid-community";
   import "ag-grid-enterprise";
   import { CalendarSheet, options } from "$lib/sheets/calendar-sheet";
-  import Icon from "tutors-ui/lib/Atoms/Icon/Icon.svelte";
+  // import Icon from "tutors-ui/lib/Atoms/Icon/Icon.svelte";
   import type { Calendar } from "tutors-reader-lib/src/types/lo-types";
   import type { UserMetric } from "tutors-reader-lib/src/types/metrics-types";
 
@@ -34,7 +34,7 @@
   </div>
   <div class="w-1/4">
     <button on:click="{exportExcel}">
-      <Icon type="timeExport" />
+      <!-- <Icon type="timeExport" /> -->
     </button>
   </div>
 </div>
