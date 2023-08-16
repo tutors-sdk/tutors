@@ -158,7 +158,7 @@
 										</a>
 									</li>
 									<li>
-										<button on:click={handleSignOut}>
+										<button on:click={handleSignOut} class="w-full">
 											<Icon
 												icon="fluent:sign-out-24-filled"
 												color="rgba(var(--color-error-500))"
@@ -357,7 +357,7 @@
 										</a>
 									</li>
 									<li>
-										<button on:click={handleSignOut}>
+										<button on:click={handleSignOut} class="w-full">
 											<Icon
 												icon="fluent:sign-out-24-filled"
 												color="rgba(var(--color-error-500))"
