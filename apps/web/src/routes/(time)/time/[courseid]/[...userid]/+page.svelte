@@ -53,19 +53,19 @@
 		{/if}
 	</TabGroup>
 	{#if tabSet === 0}
-		<LabTime user={data.session} allLabs={data.allLabs} chart={false} />
+		<LabTime user={data.user} allLabs={data.allLabs} chart={false} />
 	{:else if tabSet === 1}
-		<LabTime user={data.session} allLabs={data.allLabs} chart={true} />
+		<LabTime user={data.user} allLabs={data.allLabs} chart={true} />
 	{:else if tabSet === 2}
-		<CalendarTime user={data.session} calendarData={data.calendar} />
+		<CalendarTime user={data.user} calendarData={data.calendar} />
 	{:else if tabSet === 3}
-		<InstructorLabTime userMap={data.session} allLabs={data.allLabs} chart={false} />
+		<InstructorLabTime userMap={data.users} allLabs={data.allLabs} chart={false} />
 	{:else if tabSet === 4}
-		<InstructorLabTime userMap={data.session} allLabs={data.allLabs} chart={false} />
+		<InstructorLabTime userMap={data.enrolledUsers} allLabs={data.allLabs} chart={false} />
 	{:else if tabSet === 5}
-		<InstructorLabTime userMap={data.session} allLabs={data.allLabs} chart={true} />
+		<InstructorLabTime userMap={data.users} allLabs={data.allLabs} chart={true} />
 	{:else if tabSet === 6}
-		<InstructorCalendarTime userMap={data.session} calendarData={data.calendar} />
+		<InstructorCalendarTime userMap={data.users} calendarData={data.calendar} />
 	{/if}
 </div>
 
