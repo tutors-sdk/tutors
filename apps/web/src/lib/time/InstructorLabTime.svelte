@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { Grid } from 'ag-grid-community';
 	import 'ag-grid-enterprise';
-	import Icon from 'tutors-ui/lib/Atoms/Icon/Icon.svelte';
+	// import Icon from 'tutors-ui/lib/Atoms/Icon/Icon.svelte';
 	import type { UserMetric } from 'tutors-reader-lib/src/types/metrics-types';
 	import type { Lo } from 'tutors-reader-lib/src/types/lo-types';
 	import { LabCountSheet } from '../sheets/lab-count-sheet';
@@ -36,7 +36,7 @@
 	</div>
 	<div class="w-1/4">
 		<button on:click={exportExcel}>
-			<Icon type="timeExport" />
+			<!-- <Icon type="timeExport" /> -->
 		</button>
 	</div>
 </div>
