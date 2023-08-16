@@ -9,21 +9,21 @@ const tutorStoreId = import.meta.env.VITE_tutors_store_id;
 const tutorStoreSecret = import.meta.env.VITE_tutors_store_secret;
 
 const keys = {
-  auth0: {
-    clientId: clientId,
-    domain: domain,
-    customdomain: customdomain,
-    redirectUri: redirectUri
-  },
-  firebase: {
-    apiKey: apiKey,
-    databaseURL: databaseUrl,
-    projectId: projectId,
-    tutorStoreId: tutorStoreId,
-    tutorStoreSecret: tutorStoreSecret
-  }
+	auth0: {
+		clientId: clientId,
+		domain: domain,
+		customdomain: customdomain,
+		redirectUri: redirectUri
+	},
+	firebase: {
+		apiKey: apiKey,
+		databaseURL: databaseUrl,
+		projectId: projectId,
+		tutorStoreId: tutorStoreId,
+		tutorStoreSecret: tutorStoreSecret
+	}
 };
 
 export function getKeys() {
-  return keys;
+	return keys;
 }

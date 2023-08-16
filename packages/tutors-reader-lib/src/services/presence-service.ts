@@ -27,22 +27,32 @@ export const presenceService = {
   },
 
   updateListeners(kind: string, event: StudentLoEvent) {
-    this.listeners.forEach((listener, key, map) => {
+    for (const listener of this.listeners.values()) {
       listener(kind, event);
-    });
+    }
   },
 
   sweepAndPurge(): void {
-    this.los.forEach((lo, index, obj) => {
+    const losToDelete = [];
+    this.los.forEach((lo) => {
       lo.timeout--;
-      if (lo.timeout == 0) {
-        obj.splice(index, 1);
-        this.updateListeners("leave", lo);
-        this.students.delete(lo.studentId);
-        studentsOnlineList.set([...this.los]);
-        studentsOnline.set(this.los.length);
+      if (lo.timeout === 0) {
+        losToDelete.push(lo);
       }
     });
+
+    losToDelete.forEach((lo) => {
+      const index = this.los.indexOf(lo);
+      if (index !== -1) {
+        this.los.splice(index, 1);
+      }
+
+      this.updateListeners("leave", lo);
+      this.students.delete(lo.studentId);
+    });
+
+    studentsOnlineList.set([...this.los]);
+    studentsOnline.set(this.los.length);
   },
 
   async visitUpdate(courseId: string) {

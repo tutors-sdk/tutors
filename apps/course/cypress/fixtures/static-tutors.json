@@ -1,0 +1,1963 @@
+{
+	"route": "/",
+	"type": "course",
+	"title": " Reference Course\r",
+	"summary": "A short description of the course. This description will be available when the information icon in the top left selected.\r",
+	"contentMd": "# Reference Course\r\n\r\nA short description of the course. This description will be available when the information icon in the top left selected.\r\n\r\nThis can be any markdown document:\r\n\r\n- with the usual\r\n- markdown facilities\r\n\r\n## Can include Headings\r\n\r\nAnd even tables ...\r\n\r\n| Head 1 | Head 2 |\r\n| ------ | ------ |\r\n| cell 1 | cell 2 |\r\n| cell 3 | cell 4 |\r\n",
+	"frontMatter": {},
+	"id": "tutors-reference-course",
+	"img": "https://{{COURSEURL}}/course.png",
+	"imgFile": "course.png",
+	"pdf": "",
+	"pdfFile": "",
+	"video": "",
+	"videoids": {
+		"videoid": "",
+		"videoIds": []
+	},
+	"los": [
+		{
+			"route": "/topic/{{COURSEURL}}/topic-01-typical",
+			"type": "topic",
+			"title": " Simple\r",
+			"summary": "Units with presentations, labs + resources",
+			"contentMd": "# Simple\r\n\r\nUnits with presentations, labs + resources\r\n",
+			"frontMatter": {},
+			"id": "topic-01-typical",
+			"img": "https://{{COURSEURL}}/topic-01-typical/typical.png",
+			"imgFile": "typical.png",
+			"pdf": "",
+			"pdfFile": "",
+			"video": "",
+			"videoids": {
+				"videoid": "",
+				"videoIds": []
+			},
+			"los": [
+				{
+					"route": "/topic/{{COURSEURL}}/topic-01-typical/",
+					"type": "unit",
+					"title": "Main Lesson\r",
+					"summary": "",
+					"contentMd": "Main Lesson\r\n",
+					"frontMatter": {},
+					"id": "unit-1",
+					"img": "",
+					"imgFile": "",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [
+						{
+							"route": "/talk/{{COURSEURL}}/topic-01-typical/unit-1/talk-1-intro",
+							"type": "talk",
+							"title": "Lecture 1\r",
+							"summary": "A short summary of the talk, no more than two sentences.",
+							"contentMd": "Lecture 1\r\n\r\nA short summary of the talk, no more than two sentences.",
+							"frontMatter": {},
+							"id": "talk-1-intro",
+							"img": "https://{{COURSEURL}}/topic-01-typical/unit-1/talk-1-intro/introduction.png",
+							"imgFile": "introduction.png",
+							"pdf": "https://{{COURSEURL}}/topic-01-typical/unit-1/talk-1-intro/introduction.pdf",
+							"pdfFile": "introduction.pdf",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "/talk/{{COURSEURL}}/topic-01-typical/unit-1/talk-2-explore",
+							"type": "talk",
+							"title": "Lecture 2\r",
+							"summary": "Provide a short summary, perhaps supported by a representative image.",
+							"contentMd": "Lecture 2\r\n\r\nProvide a short summary, perhaps supported by a representative image.",
+							"frontMatter": {},
+							"id": "talk-2-explore",
+							"img": "https://{{COURSEURL}}/topic-01-typical/unit-1/talk-2-explore/explore.png",
+							"imgFile": "explore.png",
+							"pdf": "https://{{COURSEURL}}/topic-01-typical/unit-1/talk-2-explore/explore.pdf",
+							"pdfFile": "explore.pdf",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "/lab/{{COURSEURL}}/topic-01-typical/unit-1/book-a",
+							"type": "lab",
+							"title": "Lab-01",
+							"summary": "A set of practical instructions or a walk-though",
+							"contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
+							"frontMatter": {},
+							"id": "book-a",
+							"img": "https://{{COURSEURL}}/topic-01-typical/unit-1/book-a/img/main.png",
+							"imgFile": "img/main.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [
+								{
+									"title": " Objectives",
+									"shortTitle": "Lab-01",
+									"contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-01-typical/unit-1/book-a/Lab-01",
+									"id": "Lab-01",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Text",
+									"shortTitle": "01",
+									"contentMd": "# Text\r\n\r\nIt's very easy to make some words **bold** and other words *italic* with Markdown. You can even [inset a link to Google](http://google.com)\r\n\r\n\r\n## Lists\r\n\r\nSometimes you want numbered lists:\r\n\r\n1. One\r\n2. Two\r\n3. Three\r\n\r\nSometimes you want bullet points:\r\n\r\n* Start a line with a star\r\n* Profit!\r\n\r\nAlternatively,\r\n\r\n- Dashes work just as well\r\n- And if you have sub points, put two spaces before the dash or star:\r\n  - Like this\r\n  - And this\r\n\r\n## Images\r\n\r\nIf you want a link to a local image, place the image in the `img` folder and then insert a link like this:\r\n\r\n![](img/02.png)\r\n\r\nAlternatively you can directly link to images on the web:\r\n\r\n![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)\r\n\r\nThe above includes a title.\r\n\r\n# Structured documents\r\n\r\nSometimes it's useful to have different levels of headings to structure your documents. Start lines with a `#` to create headings. Multiple `##` in a row denote smaller heading sizes.\r\n\r\n### This is a third-tier heading\r\n\r\nYou can use one `#` all the way up to `######` six for different heading sizes.\r\n\r\nIf you'd like to quote someone, use the > character before the line:\r\n\r\n> Coffee. The finest organic suspension ever devised... I beat the Borg with it.\r\n> - Captain Janeway\r\n\r\nThere are many different ways to style code with GitHub's markdown. If you have inline code blocks, wrap them in backticks: `var example = true`.  If you've got a longer block of code, you can indent with four spaces:\r\n\r\n    if (isAwesome){\r\n      return true\r\n    }\r\n\r\nGitHub also supports something called code fencing, which allows for multiple lines without indentation:\r\n\r\n~~~\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\nAnd if you'd like to use syntax highlighting, include the language:\r\n\r\n~~~javascript\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-01-typical/unit-1/book-a/01",
+									"id": "01",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Tables, Lines and Images",
+									"shortTitle": "02",
+									"contentMd": "# Tables, Lines and Images\r\n\r\n\r\nTables can look like this:\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n---\r\n\r\nA horizontal rules above and below\r\n\r\n---\r\n\r\nSome more images:\r\n\r\n![](img/01.png)\r\n\r\nA few sentences on the purpose of the lab. Avoid bullet points here for formatting reasons.\r\nAnd if you'd like to use syntax highlighting, include the language:\r\n\r\n~~~javascript\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\n- Dashes work just as well\r\n- And if you have sub points, put two spaces before the dash or star:\r\n  - Like this\r\n  - And this\r\n\r\n~~~typescript\r\nlet flatLos = flattenNestedLosArrays(los);\r\nlet result: string[] = [];\r\nflatLos.forEach((obj) => {\r\n~~~\r\n\r\nIf you'd like to quote someone, use the > character before the line:\r\nCoffee. The finest organic suspension ever devised... I beat the Borg with it.\r\n\r\n```javascript\r\ntesting ticked fence\r\n```\r\n\r\nSome more code :\r\n\r\n~~~javascript\r\nconst donationSchema = new Schema({\r\n  amount: Number,\r\n  method: String,\r\n  lat: String,\r\n  lng: String,\r\n  donor: {\r\n    type: Schema.Types.ObjectId,\r\n    ref: \"User\",\r\n  },\r\n  candidate: {\r\n    type: Schema.Types.ObjectId,\r\n    ref: \"Candidate\",\r\n  },\r\n});\r\n~~~ \r\n\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-01-typical/unit-1/book-a/02",
+									"id": "02",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Links and Code Blocks",
+									"shortTitle": "03",
+									"contentMd": "# Links and Code Blocks\r\n\r\nYou can inert links in bullet points:\r\n\r\n- <http://github.com>\r\n- <http://bitbucket.dom>\r\n\r\n\r\nMore Code Block examples\r\n\r\n~~~\r\n  publish(path, course) {\r\n    const basePath = '../' + path + '/' + this.folder;\r\n    futils.initEmptyPath(basePath);\r\n    this.resources = this.talks.concat(this.labs);\r\n    console.log(this.title);\r\n    this.publishTalks(basePath);\r\n    this.publishLabs(basePath, course);\r\n  }\r\n~~~\r\n\r\nThis was autodetected as javascript. This one is html:\r\n\r\n~~~html\r\n<div class=\"ui segment pushable\">\r\n  <div class=\"pusher\">\r\n    <div class=\"ui basic segment\">\r\n      <br>\r\n      {% for chapter in chapters %}\r\n      <div  class=\"ui tab segment lab\" data-tab=\"{{chapter.shortTitle}}\">\r\n        {{ chapter.content }}\r\n      </div>\r\n     {% endfor %}\r\n    </div>\r\n  </div>\r\n</div>\r\n~~~\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-01-typical/unit-1/book-a/03",
+									"id": "03",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Images",
+									"shortTitle": "04",
+									"contentMd": "# Images\r\n\r\nSome more images\r\n\r\n![](img/04.png)\r\n\r\n###  You can put a title here\r\n\r\n![](img/03.png)\r\n\r\n\r\nThis is some text ",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-01-typical/unit-1/book-a/04",
+									"id": "04",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Latex",
+									"shortTitle": "05",
+									"contentMd": "# Latex\r\n\r\nLatex support via the [Katex](https://katex.org/) Library.\r\n\r\n### Example 0\r\n\r\n$\r\nE=mc^2\r\n$\r\n\r\n### Example 1\r\n\r\nThis is an inline exampe: $c = \\pm\\sqrt{a^2 + b^2}$ with text before and after\r\n\r\n### Example 2\r\n\r\n\r\n$\r\nx=\\frac{ -b\\pm\\sqrt{ b^2-4ac } } {2a}\r\n$\r\n\r\n### Example 3\r\n\r\n\r\n$\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n$\r\n\r\n### Example 4\r\n\r\n\r\n$\r\ng(x) = 3x^4 + 2x^2\r\n$\r\n\r\n### Example 5\r\n\r\n\r\n$\r\nx=\\frac{ -b\\pm\\sqrt{ b^2-4ac } } {2a}\r\n\\sum_{i=1}^n i^3 = \\left( \\frac{n(g(n)+1)} 2 \\right) ^2\r\nc = \\pm\\sqrt{a^2 + b^2}\r\n$\r\n\r\n### Example 6\r\n\r\n$\r\n\\frac{1}{\\Bigl(\\sqrt{\\phi \\sqrt{5}}-\\phi\\Bigr) e^{\\frac25 \\pi}} = 1+\\frac{e^{-2\\pi}} {1+\\frac{e^{-4\\pi}} {1+\\frac{e^{-6\\pi}} {1+\\frac{e^{-8\\pi}} {1+\\cdots} } } }\r\n$\r\n\r\n### Example 7\r\n\r\n$\r\n1 +  \\frac{q^2}{(1-q)}+\\frac{q^6}{(1-q)(1-q^2)}+\\cdots = \\prod_{j=0}^{\\infty}\\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, \\quad\\quad \\text{for }\\lvert q\\rvert<1.\r\n$",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-01-typical/unit-1/book-a/05",
+									"id": "05",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Reference",
+									"shortTitle": "07",
+									"contentMd": "# Reference\r\n\r\n\r\n# h1 Heading\r\n## h2 Heading\r\n### h3 Heading\r\n#### h4 Heading\r\n##### h5 Heading\r\n###### h6 Heading\r\n\r\n\r\n## Horizontal Rules\r\n\r\n___\r\n\r\n---\r\n\r\n***\r\n\r\n\r\n## Quotes\r\n\r\n\"Smartypants, double quotes\" and 'single quotes' and `back tick` quotes\r\n\r\n\r\n## Emphasis\r\n\r\n**This is bold text**\r\n\r\n__This is bold text__\r\n\r\n*This is italic text*\r\n\r\n_This is italic text_\r\n\r\n~~Strikethrough~~\r\n\r\n\r\n## Blockquotes\r\n\r\n\r\n> Blockquotes can also be nested...\r\n>> ...by using additional greater-than signs right next to each other...\r\n> > > ...or with spaces between arrows.\r\n\r\n\r\n## Lists\r\n\r\nUnordered\r\n\r\n+ Create a list by starting a line with `+`, `-`, or `*`\r\n+ Sub-lists are made by indenting 2 spaces:\r\n  - Marker character change forces new list start:\r\n    * Ac tristique libero volutpat at\r\n    + Facilisis in pretium nisl aliquet\r\n    - Nulla volutpat aliquam velit\r\n+ Very easy!\r\n\r\nOrdered\r\n\r\n1. Lorem ipsum dolor sit amet\r\n2. Consectetur adipiscing elit\r\n3. Integer molestie lorem at massa\r\n\r\n\r\n1. You can use sequential numbers...\r\n1. ...or keep all the numbers as `1.`\r\n\r\nStart numbering with offset:\r\n\r\n57. foo\r\n1. bar\r\n\r\n\r\n## Code\r\n\r\nInline `code`\r\n\r\nIndented code\r\n\r\n    // Some comments\r\n    line 1 of code\r\n    line 2 of code\r\n    line 3 of code\r\n\r\n\r\nBlock code \"fences\"\r\n\r\n```\r\nSample text here...\r\n```\r\n\r\nSyntax highlighting\r\n\r\n``` js\r\nvar foo = function (bar) {\r\n  return bar++;\r\n};\r\n\r\nconsole.log(foo(5));\r\n```\r\n\r\n## Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n## Links\r\n\r\n[link text](http://dev.nodeca.com)\r\n\r\n[link with title](http://nodeca.github.io/pica/demo/ \"title text!\")\r\n\r\n\r\n## Images\r\n\r\n![Minion](https://octodex.github.com/images/minion.png)\r\n![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg \"The Stormtroopocat\")\r\n\r\nLike links, Images also have a footnote style syntax\r\n\r\n![Alt text][id]\r\n\r\nWith a reference later in the document defining the URL location:\r\n\r\n[id]: https://octodex.github.com/images/dojocat.jpg  \"The Dojocat\"\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\nClassic markup: :wink: :crush: :cry: :tear: :laughing: :yum\r\n\r\nsee [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\n> Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:\r\n\r\n### Image Tools\r\n\r\nUse this tool to resize hi definition images to \"canvas\" dimensions:\r\n\r\n- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image\r\n  resize in browser.\r\n\r\n\r\n\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-01-typical/unit-1/book-a/07",
+									"id": "07",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Exercises & Archives",
+									"shortTitle": "Exercises",
+									"contentMd": "# Exercises & Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)\r\n\r\nThis archive must be placed in the `archives` folder as shown above.\r\n\r\n## Exercise 1:\r\n\r\nInstructions for exercise 1.\r\n\r\n## Exercise 2:\r\n\r\nInstructions for exercise 2.\r\n\r\n## Exercise 3:\r\n\r\nInstructions for exercise 3.\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-01-typical/unit-1/book-a/Exercises",
+									"id": "Exercises",
+									"type": "step",
+									"hide": false
+								}
+							],
+							"hide": false
+						}
+					],
+					"hide": false
+				},
+				{
+					"route": "/topic/{{COURSEURL}}/topic-01-typical/",
+					"type": "unit",
+					"title": "Supporting Resources\r",
+					"summary": "",
+					"contentMd": "Supporting Resources\r\n",
+					"frontMatter": {},
+					"id": "unit-2",
+					"img": "",
+					"imgFile": "",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [
+						{
+							"route": "/note/{{COURSEURL}}/topic-01-typical/unit-2/note-1",
+							"type": "note",
+							"title": " Note 1\r",
+							"summary": "This is an example of a note. \r",
+							"contentMd": "# Note 1\r\n\r\nThis is an example of a note. \r\n\r\nIt can have images:\r\n\r\n![](img/01.png)\r\n\r\nA code block with syntax highlighting:\r\n\r\n### user-api-test.js\r\n\r\n~~~javascript\r\nimport { playtimeService } from \"./playtime-service.js\";\r\n\r\nsuite(\"User API tests\", () => {\r\n  setup(async () => {\r\n  });\r\n  teardown(async () => {\r\n  });\r\n\r\n  test(\"create a user\", async () => {\r\n  });\r\n});\r\n~~~\r\n\r\n### Mathematical notation:\r\n\r\n$\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n$\r\n\r\nThis is an inline exampe: $c = \\pm\\sqrt{a^2 + b^2}$ with text before and after\r\n\r\n\r\n### Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n### Links to Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)",
+							"frontMatter": {},
+							"id": "note-1",
+							"img": "https://{{COURSEURL}}/topic-01-typical/unit-2/note-1/note.png",
+							"imgFile": "note.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "https://tutors.dev/",
+							"type": "web",
+							"title": "Web Site 1\r",
+							"summary": "A web site of interest",
+							"contentMd": "Web Site 1\r\n\r\nA web site of interest",
+							"frontMatter": {},
+							"id": "web-1",
+							"img": "https://{{COURSEURL}}/topic-01-typical/unit-2/web-1/tutors-web-site.png",
+							"imgFile": "tutors-web-site.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "https://{{COURSEURL}}/topic-01-typical/unit-2/archive/archive.zip",
+							"type": "archive",
+							"title": "Resource 1\r",
+							"summary": "A link to a zipped archive",
+							"contentMd": "Resource 1\r\n\r\nA link to a zipped archive ",
+							"frontMatter": {},
+							"id": "archive",
+							"img": "https://{{COURSEURL}}/topic-01-typical/unit-2/archive/archive.png",
+							"imgFile": "archive.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false,
+							"archiveFile": "archive.zip"
+						}
+					],
+					"hide": false
+				}
+			],
+			"hide": false
+		},
+		{
+			"route": "/topic/{{COURSEURL}}/topic-02-side",
+			"type": "topic",
+			"title": " Sidebar\r",
+			"summary": "Presentations, links + labs in side bar",
+			"contentMd": "# Sidebar\r\n\r\nPresentations, links + labs in side bar\r\n",
+			"frontMatter": {},
+			"id": "topic-02-side",
+			"img": "https://{{COURSEURL}}/topic-02-side/topic.png",
+			"imgFile": "topic.png",
+			"pdf": "",
+			"pdfFile": "",
+			"video": "",
+			"videoids": {
+				"videoid": "",
+				"videoIds": []
+			},
+			"los": [
+				{
+					"route": "/topic/{{COURSEURL}}/topic-02-side/",
+					"type": "unit",
+					"title": "Main Lesson\r",
+					"summary": "",
+					"contentMd": "Main Lesson\r\n",
+					"frontMatter": {},
+					"id": "unit-1",
+					"img": "",
+					"imgFile": "",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [
+						{
+							"route": "/talk/{{COURSEURL}}/topic-02-side/unit-1/talk-1",
+							"type": "talk",
+							"title": "Lecture 3\r",
+							"summary": "A short summary of the talk, no more than two sentences. Avoid bullet points or links for formatting reasons.",
+							"contentMd": "Lecture 3\r\n\r\nA short summary of the talk, no more than two sentences. Avoid bullet points or links for formatting reasons.",
+							"frontMatter": {},
+							"id": "talk-1",
+							"img": "https://{{COURSEURL}}/topic-02-side/unit-1/talk-1/talk.png",
+							"imgFile": "talk.png",
+							"pdf": "https://{{COURSEURL}}/topic-02-side/unit-1/talk-1/talk.pdf",
+							"pdfFile": "talk.pdf",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "/talk/{{COURSEURL}}/topic-02-side/unit-1/talk-2",
+							"type": "talk",
+							"title": "Lecture 4\r",
+							"summary": "Provide a short summary, perhaps supported by a representative image.",
+							"contentMd": "Lecture 4\r\n\r\nProvide a short summary, perhaps supported by a representative image.",
+							"frontMatter": {},
+							"id": "talk-2",
+							"img": "https://{{COURSEURL}}/topic-02-side/unit-1/talk-2/talk.png",
+							"imgFile": "talk.png",
+							"pdf": "https://{{COURSEURL}}/topic-02-side/unit-1/talk-2/talk.pdf",
+							"pdfFile": "talk.pdf",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "https://tutors.dev/",
+							"type": "web",
+							"title": "Web Site 2\r",
+							"summary": "A web site of interest",
+							"contentMd": "Web Site 2\r\n\r\nA web site of interest",
+							"frontMatter": {
+								"order": 3
+							},
+							"id": "web-1",
+							"img": "https://{{COURSEURL}}/topic-02-side/unit-1/web-1/web.png",
+							"imgFile": "web.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false
+						}
+					],
+					"hide": false
+				},
+				{
+					"route": "/topic/{{COURSEURL}}/topic-02-side/",
+					"type": "unit",
+					"title": "Supporting Resources\r",
+					"summary": "",
+					"contentMd": "Supporting Resources\r\n",
+					"frontMatter": {},
+					"id": "unit-2",
+					"img": "",
+					"imgFile": "",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [
+						{
+							"route": "/note/{{COURSEURL}}/topic-02-side/unit-2/note-1",
+							"type": "note",
+							"title": " Note 1\r",
+							"summary": "This is an example of a note. \r",
+							"contentMd": "# Note 1\r\n\r\nThis is an example of a note. \r\n\r\nIt can have images:\r\n\r\n![](img/01.png)\r\n\r\nA code block with syntax highlighting:\r\n\r\n### user-api-test.js\r\n\r\n~~~javascript\r\nimport { playtimeService } from \"./playtime-service.js\";\r\n\r\nsuite(\"User API tests\", () => {\r\n  setup(async () => {\r\n  });\r\n  teardown(async () => {\r\n  });\r\n\r\n  test(\"create a user\", async () => {\r\n  });\r\n});\r\n~~~\r\n\r\n### Mathematical notation:\r\n\r\n$\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n$\r\n\r\nThis is an inline exampe: $c = \\pm\\sqrt{a^2 + b^2}$ with text before and after\r\n\r\n\r\n### Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n### Links to Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)",
+							"frontMatter": {},
+							"id": "note-1",
+							"img": "https://{{COURSEURL}}/topic-02-side/unit-2/note-1/note.png",
+							"imgFile": "note.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "https://tutors.dev/",
+							"type": "web",
+							"title": "Web Site 1\r",
+							"summary": "A web site of interest",
+							"contentMd": "Web Site 1\r\n\r\nA web site of interest",
+							"frontMatter": {},
+							"id": "web-1",
+							"img": "https://{{COURSEURL}}/topic-02-side/unit-2/web-1/tutors-web-site.png",
+							"imgFile": "tutors-web-site.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "https://{{COURSEURL}}/topic-02-side/unit-2/archive/archive.zip",
+							"type": "archive",
+							"title": "Resource 1\r",
+							"summary": "A link to a zipped archive",
+							"contentMd": "Resource 1\r\n\r\nA link to a zipped archive ",
+							"frontMatter": {},
+							"id": "archive",
+							"img": "https://{{COURSEURL}}/topic-02-side/unit-2/archive/archive.png",
+							"imgFile": "archive.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false,
+							"archiveFile": "archive.zip"
+						}
+					],
+					"hide": false
+				},
+				{
+					"route": "/topic/{{COURSEURL}}/topic-02-side/",
+					"type": "side",
+					"title": " Labs for this Topic\r",
+					"summary": "",
+					"contentMd": "# Labs for this Topic\r\n",
+					"frontMatter": {},
+					"id": "side-unit",
+					"img": "",
+					"imgFile": "",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [
+						{
+							"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-a",
+							"type": "lab",
+							"title": "Lab-02",
+							"summary": "A set of practical instructions or a walk-though",
+							"contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
+							"frontMatter": {},
+							"id": "book-a",
+							"img": "https://{{COURSEURL}}/topic-02-side/side-unit/book-a/img/main.png",
+							"imgFile": "img/main.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [
+								{
+									"title": " Objectives",
+									"shortTitle": "Lab-02",
+									"contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-a/Lab-02",
+									"id": "Lab-02",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Text",
+									"shortTitle": "01",
+									"contentMd": "# Text\r\n\r\nIt's very easy to make some words **bold** and other words *italic* with Markdown. You can even [inset a link to Google](http://google.com)\r\n\r\n\r\n## Lists\r\n\r\nSometimes you want numbered lists:\r\n\r\n1. One\r\n2. Two\r\n3. Three\r\n\r\nSometimes you want bullet points:\r\n\r\n* Start a line with a star\r\n* Profit!\r\n\r\nAlternatively,\r\n\r\n- Dashes work just as well\r\n- And if you have sub points, put two spaces before the dash or star:\r\n  - Like this\r\n  - And this\r\n\r\n## Images\r\n\r\nIf you want a link to a local image, place the image in the `img` folder and then insert a link like this:\r\n\r\n![](img/02.png)\r\n\r\nAlternatively you can directly link to images on the web:\r\n\r\n![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)\r\n\r\nThe above includes a title.\r\n\r\n# Structured documents\r\n\r\nSometimes it's useful to have different levels of headings to structure your documents. Start lines with a `#` to create headings. Multiple `##` in a row denote smaller heading sizes.\r\n\r\n### This is a third-tier heading\r\n\r\nYou can use one `#` all the way up to `######` six for different heading sizes.\r\n\r\nIf you'd like to quote someone, use the > character before the line:\r\n\r\n> Coffee. The finest organic suspension ever devised... I beat the Borg with it.\r\n> - Captain Janeway\r\n\r\nThere are many different ways to style code with GitHub's markdown. If you have inline code blocks, wrap them in backticks: `var example = true`.  If you've got a longer block of code, you can indent with four spaces:\r\n\r\n    if (isAwesome){\r\n      return true\r\n    }\r\n\r\nGitHub also supports something called code fencing, which allows for multiple lines without indentation:\r\n\r\n~~~\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\nAnd if you'd like to use syntax highlighting, include the language:\r\n\r\n~~~javascript\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-a/01",
+									"id": "01",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Tables, Lines and Images",
+									"shortTitle": "02",
+									"contentMd": "# Tables, Lines and Images\r\n\r\n\r\nTables can look like this:\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n---\r\n\r\nA horizontal rules above and below\r\n\r\n---\r\n\r\nSome more images:\r\n\r\n![](img/01.png)\r\n\r\nA few sentences on the purpose of the lab. Avoid bullet points here for formatting reasons.\r\nAnd if you'd like to use syntax highlighting, include the language:\r\n\r\n~~~javascript\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\n- Dashes work just as well\r\n- And if you have sub points, put two spaces before the dash or star:\r\n  - Like this\r\n  - And this\r\n\r\n~~~typescript\r\nlet flatLos = flattenNestedLosArrays(los);\r\nlet result: string[] = [];\r\nflatLos.forEach((obj) => {\r\n~~~\r\n\r\nIf you'd like to quote someone, use the > character before the line:\r\nCoffee. The finest organic suspension ever devised... I beat the Borg with it.\r\n\r\n```javascript\r\ntesting ticked fence\r\n```\r\n\r\nSome more code :\r\n\r\n~~~javascript\r\nconst donationSchema = new Schema({\r\n  amount: Number,\r\n  method: String,\r\n  lat: String,\r\n  lng: String,\r\n  donor: {\r\n    type: Schema.Types.ObjectId,\r\n    ref: \"User\",\r\n  },\r\n  candidate: {\r\n    type: Schema.Types.ObjectId,\r\n    ref: \"Candidate\",\r\n  },\r\n});\r\n~~~ \r\n\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-a/02",
+									"id": "02",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Links and Code Blocks",
+									"shortTitle": "03",
+									"contentMd": "# Links and Code Blocks\r\n\r\nYou can inert links in bullet points:\r\n\r\n- <http://github.com>\r\n- <http://bitbucket.dom>\r\n\r\n\r\nMore Code Block examples\r\n\r\n~~~\r\n  publish(path, course) {\r\n    const basePath = '../' + path + '/' + this.folder;\r\n    futils.initEmptyPath(basePath);\r\n    this.resources = this.talks.concat(this.labs);\r\n    console.log(this.title);\r\n    this.publishTalks(basePath);\r\n    this.publishLabs(basePath, course);\r\n  }\r\n~~~\r\n\r\nThis was autodetected as javascript. This one is html:\r\n\r\n~~~html\r\n<div class=\"ui segment pushable\">\r\n  <div class=\"pusher\">\r\n    <div class=\"ui basic segment\">\r\n      <br>\r\n      {% for chapter in chapters %}\r\n      <div  class=\"ui tab segment lab\" data-tab=\"{{chapter.shortTitle}}\">\r\n        {{ chapter.content }}\r\n      </div>\r\n     {% endfor %}\r\n    </div>\r\n  </div>\r\n</div>\r\n~~~\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-a/03",
+									"id": "03",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Images",
+									"shortTitle": "04",
+									"contentMd": "# Images\r\n\r\nSome more images\r\n\r\n![](img/04.png)\r\n\r\n###  You can put a title here\r\n\r\n![](img/03.png)\r\n\r\n\r\nThis is some text ",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-a/04",
+									"id": "04",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Latex",
+									"shortTitle": "05",
+									"contentMd": "# Latex\r\n\r\nLatex support via the [Katex](https://katex.org/) Library.\r\n\r\n### Example 0\r\n\r\n$\r\nE=mc^2\r\n$\r\n\r\n### Example 1\r\n\r\nThis is an inline exampe: $c = \\pm\\sqrt{a^2 + b^2}$ with text before and after\r\n\r\n### Example 2\r\n\r\n\r\n$\r\nx=\\frac{ -b\\pm\\sqrt{ b^2-4ac } } {2a}\r\n$\r\n\r\n### Example 3\r\n\r\n\r\n$\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n$\r\n\r\n### Example 4\r\n\r\n\r\n$\r\ng(x) = 3x^4 + 2x^2\r\n$\r\n\r\n### Example 5\r\n\r\n\r\n$\r\nx=\\frac{ -b\\pm\\sqrt{ b^2-4ac } } {2a}\r\n\\sum_{i=1}^n i^3 = \\left( \\frac{n(g(n)+1)} 2 \\right) ^2\r\nc = \\pm\\sqrt{a^2 + b^2}\r\n$\r\n\r\n### Example 6\r\n\r\n$\r\n\\frac{1}{\\Bigl(\\sqrt{\\phi \\sqrt{5}}-\\phi\\Bigr) e^{\\frac25 \\pi}} = 1+\\frac{e^{-2\\pi}} {1+\\frac{e^{-4\\pi}} {1+\\frac{e^{-6\\pi}} {1+\\frac{e^{-8\\pi}} {1+\\cdots} } } }\r\n$\r\n\r\n### Example 7\r\n\r\n$\r\n1 +  \\frac{q^2}{(1-q)}+\\frac{q^6}{(1-q)(1-q^2)}+\\cdots = \\prod_{j=0}^{\\infty}\\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, \\quad\\quad \\text{for }\\lvert q\\rvert<1.\r\n$",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-a/05",
+									"id": "05",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Reference",
+									"shortTitle": "07",
+									"contentMd": "# Reference\r\n\r\n\r\n# h1 Heading\r\n## h2 Heading\r\n### h3 Heading\r\n#### h4 Heading\r\n##### h5 Heading\r\n###### h6 Heading\r\n\r\n\r\n## Horizontal Rules\r\n\r\n___\r\n\r\n---\r\n\r\n***\r\n\r\n\r\n## Quotes\r\n\r\n\"Smartypants, double quotes\" and 'single quotes' and `back tick` quotes\r\n\r\n\r\n## Emphasis\r\n\r\n**This is bold text**\r\n\r\n__This is bold text__\r\n\r\n*This is italic text*\r\n\r\n_This is italic text_\r\n\r\n~~Strikethrough~~\r\n\r\n\r\n## Blockquotes\r\n\r\n\r\n> Blockquotes can also be nested...\r\n>> ...by using additional greater-than signs right next to each other...\r\n> > > ...or with spaces between arrows.\r\n\r\n\r\n## Lists\r\n\r\nUnordered\r\n\r\n+ Create a list by starting a line with `+`, `-`, or `*`\r\n+ Sub-lists are made by indenting 2 spaces:\r\n  - Marker character change forces new list start:\r\n    * Ac tristique libero volutpat at\r\n    + Facilisis in pretium nisl aliquet\r\n    - Nulla volutpat aliquam velit\r\n+ Very easy!\r\n\r\nOrdered\r\n\r\n1. Lorem ipsum dolor sit amet\r\n2. Consectetur adipiscing elit\r\n3. Integer molestie lorem at massa\r\n\r\n\r\n1. You can use sequential numbers...\r\n1. ...or keep all the numbers as `1.`\r\n\r\nStart numbering with offset:\r\n\r\n57. foo\r\n1. bar\r\n\r\n\r\n## Code\r\n\r\nInline `code`\r\n\r\nIndented code\r\n\r\n    // Some comments\r\n    line 1 of code\r\n    line 2 of code\r\n    line 3 of code\r\n\r\n\r\nBlock code \"fences\"\r\n\r\n```\r\nSample text here...\r\n```\r\n\r\nSyntax highlighting\r\n\r\n``` js\r\nvar foo = function (bar) {\r\n  return bar++;\r\n};\r\n\r\nconsole.log(foo(5));\r\n```\r\n\r\n## Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n## Links\r\n\r\n[link text](http://dev.nodeca.com)\r\n\r\n[link with title](http://nodeca.github.io/pica/demo/ \"title text!\")\r\n\r\n\r\n## Images\r\n\r\n![Minion](https://octodex.github.com/images/minion.png)\r\n![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg \"The Stormtroopocat\")\r\n\r\nLike links, Images also have a footnote style syntax\r\n\r\n![Alt text][id]\r\n\r\nWith a reference later in the document defining the URL location:\r\n\r\n[id]: https://octodex.github.com/images/dojocat.jpg  \"The Dojocat\"\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\nClassic markup: :wink: :crush: :cry: :tear: :laughing: :yum\r\n\r\nsee [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\n> Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:\r\n\r\n### Image Tools\r\n\r\nUse this tool to resize hi definition images to \"canvas\" dimensions:\r\n\r\n- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image\r\n  resize in browser.\r\n\r\n\r\n\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-a/07",
+									"id": "07",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Exercises & Archives",
+									"shortTitle": "Exercises",
+									"contentMd": "# Exercises & Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)\r\n\r\nThis archive must be placed in the `archives` folder as shown above.\r\n\r\n## Exercise 1:\r\n\r\nInstructions for exercise 1.\r\n\r\n## Exercise 2:\r\n\r\nInstructions for exercise 2.\r\n\r\n## Exercise 3:\r\n\r\nInstructions for exercise 3.\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-a/Exercises",
+									"id": "Exercises",
+									"type": "step",
+									"hide": false
+								}
+							],
+							"hide": false
+						},
+						{
+							"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-b",
+							"type": "lab",
+							"title": "Lab-03",
+							"summary": "A set of practical instructions or a walk-though",
+							"contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
+							"frontMatter": {},
+							"id": "book-b",
+							"img": "https://{{COURSEURL}}/topic-02-side/side-unit/book-b/img/main.png",
+							"imgFile": "img/main.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [
+								{
+									"title": " Objectives",
+									"shortTitle": "Lab-03",
+									"contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-b/Lab-03",
+									"id": "Lab-03",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Text",
+									"shortTitle": "01",
+									"contentMd": "# Text\r\n\r\nIt's very easy to make some words **bold** and other words *italic* with Markdown. You can even [inset a link to Google](http://google.com)\r\n\r\n\r\n## Lists\r\n\r\nSometimes you want numbered lists:\r\n\r\n1. One\r\n2. Two\r\n3. Three\r\n\r\nSometimes you want bullet points:\r\n\r\n* Start a line with a star\r\n* Profit!\r\n\r\nAlternatively,\r\n\r\n- Dashes work just as well\r\n- And if you have sub points, put two spaces before the dash or star:\r\n  - Like this\r\n  - And this\r\n\r\n## Images\r\n\r\nIf you want a link to a local image, place the image in the `img` folder and then insert a link like this:\r\n\r\n![](img/02.png)\r\n\r\nAlternatively you can directly link to images on the web:\r\n\r\n![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)\r\n\r\nThe above includes a title.\r\n\r\n# Structured documents\r\n\r\nSometimes it's useful to have different levels of headings to structure your documents. Start lines with a `#` to create headings. Multiple `##` in a row denote smaller heading sizes.\r\n\r\n### This is a third-tier heading\r\n\r\nYou can use one `#` all the way up to `######` six for different heading sizes.\r\n\r\nIf you'd like to quote someone, use the > character before the line:\r\n\r\n> Coffee. The finest organic suspension ever devised... I beat the Borg with it.\r\n> - Captain Janeway\r\n\r\nThere are many different ways to style code with GitHub's markdown. If you have inline code blocks, wrap them in backticks: `var example = true`.  If you've got a longer block of code, you can indent with four spaces:\r\n\r\n    if (isAwesome){\r\n      return true\r\n    }\r\n\r\nGitHub also supports something called code fencing, which allows for multiple lines without indentation:\r\n\r\n~~~\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\nAnd if you'd like to use syntax highlighting, include the language:\r\n\r\n~~~javascript\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-b/01",
+									"id": "01",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Tables, Lines and Images",
+									"shortTitle": "02",
+									"contentMd": "# Tables, Lines and Images\r\n\r\n\r\nTables can look like this:\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n---\r\n\r\nA horizontal rules above and below\r\n\r\n---\r\n\r\nSome more images:\r\n\r\n![](img/01.png)\r\n\r\nA few sentences on the purpose of the lab. Avoid bullet points here for formatting reasons.\r\nAnd if you'd like to use syntax highlighting, include the language:\r\n\r\n~~~javascript\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\n- Dashes work just as well\r\n- And if you have sub points, put two spaces before the dash or star:\r\n  - Like this\r\n  - And this\r\n\r\n~~~typescript\r\nlet flatLos = flattenNestedLosArrays(los);\r\nlet result: string[] = [];\r\nflatLos.forEach((obj) => {\r\n~~~\r\n\r\nIf you'd like to quote someone, use the > character before the line:\r\nCoffee. The finest organic suspension ever devised... I beat the Borg with it.\r\n\r\n```javascript\r\ntesting ticked fence\r\n```\r\n\r\nSome more code :\r\n\r\n~~~javascript\r\nconst donationSchema = new Schema({\r\n  amount: Number,\r\n  method: String,\r\n  lat: String,\r\n  lng: String,\r\n  donor: {\r\n    type: Schema.Types.ObjectId,\r\n    ref: \"User\",\r\n  },\r\n  candidate: {\r\n    type: Schema.Types.ObjectId,\r\n    ref: \"Candidate\",\r\n  },\r\n});\r\n~~~ \r\n\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-b/02",
+									"id": "02",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Links and Code Blocks",
+									"shortTitle": "03",
+									"contentMd": "# Links and Code Blocks\r\n\r\nYou can inert links in bullet points:\r\n\r\n- <http://github.com>\r\n- <http://bitbucket.dom>\r\n\r\n\r\nMore Code Block examples\r\n\r\n~~~\r\n  publish(path, course) {\r\n    const basePath = '../' + path + '/' + this.folder;\r\n    futils.initEmptyPath(basePath);\r\n    this.resources = this.talks.concat(this.labs);\r\n    console.log(this.title);\r\n    this.publishTalks(basePath);\r\n    this.publishLabs(basePath, course);\r\n  }\r\n~~~\r\n\r\nThis was autodetected as javascript. This one is html:\r\n\r\n~~~html\r\n<div class=\"ui segment pushable\">\r\n  <div class=\"pusher\">\r\n    <div class=\"ui basic segment\">\r\n      <br>\r\n      {% for chapter in chapters %}\r\n      <div  class=\"ui tab segment lab\" data-tab=\"{{chapter.shortTitle}}\">\r\n        {{ chapter.content }}\r\n      </div>\r\n     {% endfor %}\r\n    </div>\r\n  </div>\r\n</div>\r\n~~~\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-b/03",
+									"id": "03",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Images",
+									"shortTitle": "04",
+									"contentMd": "# Images\r\n\r\nSome more images\r\n\r\n![](img/04.png)\r\n\r\n###  You can put a title here\r\n\r\n![](img/03.png)\r\n\r\n\r\nThis is some text ",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-b/04",
+									"id": "04",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Latex",
+									"shortTitle": "05",
+									"contentMd": "# Latex\r\n\r\nLatex support via the [Katex](https://katex.org/) Library.\r\n\r\n### Example 0\r\n\r\n$\r\nE=mc^2\r\n$\r\n\r\n### Example 1\r\n\r\nThis is an inline exampe: $c = \\pm\\sqrt{a^2 + b^2}$ with text before and after\r\n\r\n### Example 2\r\n\r\n\r\n$\r\nx=\\frac{ -b\\pm\\sqrt{ b^2-4ac } } {2a}\r\n$\r\n\r\n### Example 3\r\n\r\n\r\n$\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n$\r\n\r\n### Example 4\r\n\r\n\r\n$\r\ng(x) = 3x^4 + 2x^2\r\n$\r\n\r\n### Example 5\r\n\r\n\r\n$\r\nx=\\frac{ -b\\pm\\sqrt{ b^2-4ac } } {2a}\r\n\\sum_{i=1}^n i^3 = \\left( \\frac{n(g(n)+1)} 2 \\right) ^2\r\nc = \\pm\\sqrt{a^2 + b^2}\r\n$\r\n\r\n### Example 6\r\n\r\n$\r\n\\frac{1}{\\Bigl(\\sqrt{\\phi \\sqrt{5}}-\\phi\\Bigr) e^{\\frac25 \\pi}} = 1+\\frac{e^{-2\\pi}} {1+\\frac{e^{-4\\pi}} {1+\\frac{e^{-6\\pi}} {1+\\frac{e^{-8\\pi}} {1+\\cdots} } } }\r\n$\r\n\r\n### Example 7\r\n\r\n$\r\n1 +  \\frac{q^2}{(1-q)}+\\frac{q^6}{(1-q)(1-q^2)}+\\cdots = \\prod_{j=0}^{\\infty}\\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, \\quad\\quad \\text{for }\\lvert q\\rvert<1.\r\n$",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-b/05",
+									"id": "05",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Reference",
+									"shortTitle": "07",
+									"contentMd": "# Reference\r\n\r\n\r\n# h1 Heading\r\n## h2 Heading\r\n### h3 Heading\r\n#### h4 Heading\r\n##### h5 Heading\r\n###### h6 Heading\r\n\r\n\r\n## Horizontal Rules\r\n\r\n___\r\n\r\n---\r\n\r\n***\r\n\r\n\r\n## Quotes\r\n\r\n\"Smartypants, double quotes\" and 'single quotes' and `back tick` quotes\r\n\r\n\r\n## Emphasis\r\n\r\n**This is bold text**\r\n\r\n__This is bold text__\r\n\r\n*This is italic text*\r\n\r\n_This is italic text_\r\n\r\n~~Strikethrough~~\r\n\r\n\r\n## Blockquotes\r\n\r\n\r\n> Blockquotes can also be nested...\r\n>> ...by using additional greater-than signs right next to each other...\r\n> > > ...or with spaces between arrows.\r\n\r\n\r\n## Lists\r\n\r\nUnordered\r\n\r\n+ Create a list by starting a line with `+`, `-`, or `*`\r\n+ Sub-lists are made by indenting 2 spaces:\r\n  - Marker character change forces new list start:\r\n    * Ac tristique libero volutpat at\r\n    + Facilisis in pretium nisl aliquet\r\n    - Nulla volutpat aliquam velit\r\n+ Very easy!\r\n\r\nOrdered\r\n\r\n1. Lorem ipsum dolor sit amet\r\n2. Consectetur adipiscing elit\r\n3. Integer molestie lorem at massa\r\n\r\n\r\n1. You can use sequential numbers...\r\n1. ...or keep all the numbers as `1.`\r\n\r\nStart numbering with offset:\r\n\r\n57. foo\r\n1. bar\r\n\r\n\r\n## Code\r\n\r\nInline `code`\r\n\r\nIndented code\r\n\r\n    // Some comments\r\n    line 1 of code\r\n    line 2 of code\r\n    line 3 of code\r\n\r\n\r\nBlock code \"fences\"\r\n\r\n```\r\nSample text here...\r\n```\r\n\r\nSyntax highlighting\r\n\r\n``` js\r\nvar foo = function (bar) {\r\n  return bar++;\r\n};\r\n\r\nconsole.log(foo(5));\r\n```\r\n\r\n## Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n## Links\r\n\r\n[link text](http://dev.nodeca.com)\r\n\r\n[link with title](http://nodeca.github.io/pica/demo/ \"title text!\")\r\n\r\n\r\n## Images\r\n\r\n![Minion](https://octodex.github.com/images/minion.png)\r\n![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg \"The Stormtroopocat\")\r\n\r\nLike links, Images also have a footnote style syntax\r\n\r\n![Alt text][id]\r\n\r\nWith a reference later in the document defining the URL location:\r\n\r\n[id]: https://octodex.github.com/images/dojocat.jpg  \"The Dojocat\"\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\nClassic markup: :wink: :crush: :cry: :tear: :laughing: :yum\r\n\r\nsee [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\n> Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:\r\n\r\n### Image Tools\r\n\r\nUse this tool to resize hi definition images to \"canvas\" dimensions:\r\n\r\n- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image\r\n  resize in browser.\r\n\r\n\r\n\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-b/07",
+									"id": "07",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Exercises & Archives",
+									"shortTitle": "Exercises",
+									"contentMd": "# Exercises & Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)\r\n\r\nThis archive must be placed in the `archives` folder as shown above.\r\n\r\n## Exercise 1:\r\n\r\nInstructions for exercise 1.\r\n\r\n## Exercise 2:\r\n\r\nInstructions for exercise 2.\r\n\r\n## Exercise 3:\r\n\r\nInstructions for exercise 3.\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-02-side/side-unit/book-b/Exercises",
+									"id": "Exercises",
+									"type": "step",
+									"hide": false
+								}
+							],
+							"hide": false
+						}
+					],
+					"hide": false
+				}
+			],
+			"hide": false
+		},
+		{
+			"route": "/topic/{{COURSEURL}}/topic-03-media",
+			"type": "topic",
+			"title": " Videos\r",
+			"summary": "Video + Presentataions and labs with videos",
+			"contentMd": "# Videos\r\n\r\nVideo + Presentataions and labs with videos\r\n",
+			"frontMatter": {},
+			"id": "topic-03-media",
+			"img": "https://{{COURSEURL}}/topic-03-media/topic.png",
+			"imgFile": "topic.png",
+			"pdf": "",
+			"pdfFile": "",
+			"video": "",
+			"videoids": {
+				"videoid": "",
+				"videoIds": []
+			},
+			"los": [
+				{
+					"route": "/topic/{{COURSEURL}}/topic-03-media/",
+					"type": "unit",
+					"title": "Main Lesson\r",
+					"summary": "",
+					"contentMd": "Main Lesson\r\n",
+					"frontMatter": {},
+					"id": "unit-1",
+					"img": "",
+					"imgFile": "",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [
+						{
+							"route": "/talk/{{COURSEURL}}/topic-03-media/unit-1/talk-1",
+							"type": "talk",
+							"title": "Lecture 5\r",
+							"summary": "A short summary of the talk, no more than two sentences.",
+							"contentMd": "Lecture 5\r\n\r\nA short summary of the talk, no more than two sentences.",
+							"frontMatter": {},
+							"id": "talk-1",
+							"img": "https://{{COURSEURL}}/topic-03-media/unit-1/talk-1/talk.png",
+							"imgFile": "talk.png",
+							"pdf": "https://{{COURSEURL}}/topic-03-media/unit-1/talk-1/talk.pdf",
+							"pdfFile": "talk.pdf",
+							"video": "/video/{{COURSEURL}}/topic-03-media/unit-1/talk-1/x09E7b2ESE8?start=106&286",
+							"videoids": {
+								"videoid": "x09E7b2ESE8?start=106&286",
+								"videoIds": [
+									{
+										"service": "youtube",
+										"id": "x09E7b2ESE8?start=106&286"
+									}
+								]
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "/talk/{{COURSEURL}}/topic-03-media/unit-1/talk-2",
+							"type": "talk",
+							"title": "Lecture 6\r",
+							"summary": "Provide a short summary, perhaps supported by a representative image.",
+							"contentMd": "Lecture 6\r\n\r\nProvide a short summary, perhaps supported by a representative image.",
+							"frontMatter": {},
+							"id": "talk-2",
+							"img": "https://{{COURSEURL}}/topic-03-media/unit-1/talk-2/talk.png",
+							"imgFile": "talk.png",
+							"pdf": "https://{{COURSEURL}}/topic-03-media/unit-1/talk-2/talk.pdf",
+							"pdfFile": "talk.pdf",
+							"video": "/video/{{COURSEURL}}/topic-03-media/unit-1/talk-2/x09E7b2ESE8?start=106&286",
+							"videoids": {
+								"videoid": "x09E7b2ESE8?start=106&286",
+								"videoIds": [
+									{
+										"service": "youtube",
+										"id": "x09E7b2ESE8?start=106&286"
+									}
+								]
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "/video/{{COURSEURL}}/topic-03-media/unit-1/talk-3/x09E7b2ESE8?start=1068&1370",
+							"type": "talk",
+							"title": "Lecture 7\r",
+							"summary": "This is just a video link, no slides",
+							"contentMd": "Lecture 7\r\n\r\nThis is just a video link, no slides",
+							"frontMatter": {},
+							"id": "talk-3",
+							"img": "https://{{COURSEURL}}/topic-03-media/unit-1/talk-3/debug.png",
+							"imgFile": "debug.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "/video/{{COURSEURL}}/topic-03-media/unit-1/talk-3/x09E7b2ESE8?start=1068&1370",
+							"videoids": {
+								"videoid": "x09E7b2ESE8?start=1068&1370",
+								"videoIds": [
+									{
+										"service": "youtube",
+										"id": "x09E7b2ESE8?start=1068&1370"
+									}
+								]
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "/lab/{{COURSEURL}}/topic-03-media/unit-1/book-a",
+							"type": "lab",
+							"title": "Lab-04",
+							"summary": "A set of practical instructions or a walk-though",
+							"contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
+							"frontMatter": {},
+							"id": "book-a",
+							"img": "https://{{COURSEURL}}/topic-03-media/unit-1/book-a/img/main.png",
+							"imgFile": "img/main.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "/video/{{COURSEURL}}/topic-03-media/unit-1/book-a/x09E7b2ESE8?start=1370&1802",
+							"videoids": {
+								"videoid": "x09E7b2ESE8?start=1370&1802",
+								"videoIds": [
+									{
+										"service": "youtube",
+										"id": "x09E7b2ESE8?start=1370&1802"
+									}
+								]
+							},
+							"los": [
+								{
+									"title": " Objectives",
+									"shortTitle": "Lab-04",
+									"contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-03-media/unit-1/book-a/Lab-04",
+									"id": "Lab-04",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Text",
+									"shortTitle": "01",
+									"contentMd": "# Text\r\n\r\nIt's very easy to make some words **bold** and other words *italic* with Markdown. You can even [inset a link to Google](http://google.com)\r\n\r\n\r\n## Lists\r\n\r\nSometimes you want numbered lists:\r\n\r\n1. One\r\n2. Two\r\n3. Three\r\n\r\nSometimes you want bullet points:\r\n\r\n* Start a line with a star\r\n* Profit!\r\n\r\nAlternatively,\r\n\r\n- Dashes work just as well\r\n- And if you have sub points, put two spaces before the dash or star:\r\n  - Like this\r\n  - And this\r\n\r\n## Images\r\n\r\nIf you want a link to a local image, place the image in the `img` folder and then insert a link like this:\r\n\r\n![](img/02.png)\r\n\r\nAlternatively you can directly link to images on the web:\r\n\r\n![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)\r\n\r\nThe above includes a title.\r\n\r\n# Structured documents\r\n\r\nSometimes it's useful to have different levels of headings to structure your documents. Start lines with a `#` to create headings. Multiple `##` in a row denote smaller heading sizes.\r\n\r\n### This is a third-tier heading\r\n\r\nYou can use one `#` all the way up to `######` six for different heading sizes.\r\n\r\nIf you'd like to quote someone, use the > character before the line:\r\n\r\n> Coffee. The finest organic suspension ever devised... I beat the Borg with it.\r\n> - Captain Janeway\r\n\r\nThere are many different ways to style code with GitHub's markdown. If you have inline code blocks, wrap them in backticks: `var example = true`.  If you've got a longer block of code, you can indent with four spaces:\r\n\r\n    if (isAwesome){\r\n      return true\r\n    }\r\n\r\nGitHub also supports something called code fencing, which allows for multiple lines without indentation:\r\n\r\n~~~\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\nAnd if you'd like to use syntax highlighting, include the language:\r\n\r\n~~~javascript\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-03-media/unit-1/book-a/01",
+									"id": "01",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Tables, Lines and Images",
+									"shortTitle": "02",
+									"contentMd": "# Tables, Lines and Images\r\n\r\n\r\nTables can look like this:\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n---\r\n\r\nA horizontal rules above and below\r\n\r\n---\r\n\r\nSome more images:\r\n\r\n![](img/01.png)\r\n\r\nA few sentences on the purpose of the lab. Avoid bullet points here for formatting reasons.\r\nAnd if you'd like to use syntax highlighting, include the language:\r\n\r\n~~~javascript\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\n- Dashes work just as well\r\n- And if you have sub points, put two spaces before the dash or star:\r\n  - Like this\r\n  - And this\r\n\r\n~~~typescript\r\nlet flatLos = flattenNestedLosArrays(los);\r\nlet result: string[] = [];\r\nflatLos.forEach((obj) => {\r\n~~~\r\n\r\nIf you'd like to quote someone, use the > character before the line:\r\nCoffee. The finest organic suspension ever devised... I beat the Borg with it.\r\n\r\n```javascript\r\ntesting ticked fence\r\n```\r\n\r\nSome more code :\r\n\r\n~~~javascript\r\nconst donationSchema = new Schema({\r\n  amount: Number,\r\n  method: String,\r\n  lat: String,\r\n  lng: String,\r\n  donor: {\r\n    type: Schema.Types.ObjectId,\r\n    ref: \"User\",\r\n  },\r\n  candidate: {\r\n    type: Schema.Types.ObjectId,\r\n    ref: \"Candidate\",\r\n  },\r\n});\r\n~~~ \r\n\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-03-media/unit-1/book-a/02",
+									"id": "02",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Links and Code Blocks",
+									"shortTitle": "03",
+									"contentMd": "# Links and Code Blocks\r\n\r\nYou can inert links in bullet points:\r\n\r\n- <http://github.com>\r\n- <http://bitbucket.dom>\r\n\r\n\r\nMore Code Block examples\r\n\r\n~~~\r\n  publish(path, course) {\r\n    const basePath = '../' + path + '/' + this.folder;\r\n    futils.initEmptyPath(basePath);\r\n    this.resources = this.talks.concat(this.labs);\r\n    console.log(this.title);\r\n    this.publishTalks(basePath);\r\n    this.publishLabs(basePath, course);\r\n  }\r\n~~~\r\n\r\nThis was autodetected as javascript. This one is html:\r\n\r\n~~~html\r\n<div class=\"ui segment pushable\">\r\n  <div class=\"pusher\">\r\n    <div class=\"ui basic segment\">\r\n      <br>\r\n      {% for chapter in chapters %}\r\n      <div  class=\"ui tab segment lab\" data-tab=\"{{chapter.shortTitle}}\">\r\n        {{ chapter.content }}\r\n      </div>\r\n     {% endfor %}\r\n    </div>\r\n  </div>\r\n</div>\r\n~~~\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-03-media/unit-1/book-a/03",
+									"id": "03",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Images",
+									"shortTitle": "04",
+									"contentMd": "# Images\r\n\r\nSome more images\r\n\r\n![](img/04.png)\r\n\r\n###  You can put a title here\r\n\r\n![](img/03.png)\r\n\r\n\r\nThis is some text ",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-03-media/unit-1/book-a/04",
+									"id": "04",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Latex",
+									"shortTitle": "05",
+									"contentMd": "# Latex\r\n\r\nLatex support via the [Katex](https://katex.org/) Library.\r\n\r\n### Example 0\r\n\r\n$\r\nE=mc^2\r\n$\r\n\r\n### Example 1\r\n\r\nThis is an inline exampe: $c = \\pm\\sqrt{a^2 + b^2}$ with text before and after\r\n\r\n### Example 2\r\n\r\n\r\n$\r\nx=\\frac{ -b\\pm\\sqrt{ b^2-4ac } } {2a}\r\n$\r\n\r\n### Example 3\r\n\r\n\r\n$\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n$\r\n\r\n### Example 4\r\n\r\n\r\n$\r\ng(x) = 3x^4 + 2x^2\r\n$\r\n\r\n### Example 5\r\n\r\n\r\n$\r\nx=\\frac{ -b\\pm\\sqrt{ b^2-4ac } } {2a}\r\n\\sum_{i=1}^n i^3 = \\left( \\frac{n(g(n)+1)} 2 \\right) ^2\r\nc = \\pm\\sqrt{a^2 + b^2}\r\n$\r\n\r\n### Example 6\r\n\r\n$\r\n\\frac{1}{\\Bigl(\\sqrt{\\phi \\sqrt{5}}-\\phi\\Bigr) e^{\\frac25 \\pi}} = 1+\\frac{e^{-2\\pi}} {1+\\frac{e^{-4\\pi}} {1+\\frac{e^{-6\\pi}} {1+\\frac{e^{-8\\pi}} {1+\\cdots} } } }\r\n$\r\n\r\n### Example 7\r\n\r\n$\r\n1 +  \\frac{q^2}{(1-q)}+\\frac{q^6}{(1-q)(1-q^2)}+\\cdots = \\prod_{j=0}^{\\infty}\\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, \\quad\\quad \\text{for }\\lvert q\\rvert<1.\r\n$",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-03-media/unit-1/book-a/05",
+									"id": "05",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Reference",
+									"shortTitle": "07",
+									"contentMd": "# Reference\r\n\r\n\r\n# h1 Heading\r\n## h2 Heading\r\n### h3 Heading\r\n#### h4 Heading\r\n##### h5 Heading\r\n###### h6 Heading\r\n\r\n\r\n## Horizontal Rules\r\n\r\n___\r\n\r\n---\r\n\r\n***\r\n\r\n\r\n## Quotes\r\n\r\n\"Smartypants, double quotes\" and 'single quotes' and `back tick` quotes\r\n\r\n\r\n## Emphasis\r\n\r\n**This is bold text**\r\n\r\n__This is bold text__\r\n\r\n*This is italic text*\r\n\r\n_This is italic text_\r\n\r\n~~Strikethrough~~\r\n\r\n\r\n## Blockquotes\r\n\r\n\r\n> Blockquotes can also be nested...\r\n>> ...by using additional greater-than signs right next to each other...\r\n> > > ...or with spaces between arrows.\r\n\r\n\r\n## Lists\r\n\r\nUnordered\r\n\r\n+ Create a list by starting a line with `+`, `-`, or `*`\r\n+ Sub-lists are made by indenting 2 spaces:\r\n  - Marker character change forces new list start:\r\n    * Ac tristique libero volutpat at\r\n    + Facilisis in pretium nisl aliquet\r\n    - Nulla volutpat aliquam velit\r\n+ Very easy!\r\n\r\nOrdered\r\n\r\n1. Lorem ipsum dolor sit amet\r\n2. Consectetur adipiscing elit\r\n3. Integer molestie lorem at massa\r\n\r\n\r\n1. You can use sequential numbers...\r\n1. ...or keep all the numbers as `1.`\r\n\r\nStart numbering with offset:\r\n\r\n57. foo\r\n1. bar\r\n\r\n\r\n## Code\r\n\r\nInline `code`\r\n\r\nIndented code\r\n\r\n    // Some comments\r\n    line 1 of code\r\n    line 2 of code\r\n    line 3 of code\r\n\r\n\r\nBlock code \"fences\"\r\n\r\n```\r\nSample text here...\r\n```\r\n\r\nSyntax highlighting\r\n\r\n``` js\r\nvar foo = function (bar) {\r\n  return bar++;\r\n};\r\n\r\nconsole.log(foo(5));\r\n```\r\n\r\n## Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n## Links\r\n\r\n[link text](http://dev.nodeca.com)\r\n\r\n[link with title](http://nodeca.github.io/pica/demo/ \"title text!\")\r\n\r\n\r\n## Images\r\n\r\n![Minion](https://octodex.github.com/images/minion.png)\r\n![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg \"The Stormtroopocat\")\r\n\r\nLike links, Images also have a footnote style syntax\r\n\r\n![Alt text][id]\r\n\r\nWith a reference later in the document defining the URL location:\r\n\r\n[id]: https://octodex.github.com/images/dojocat.jpg  \"The Dojocat\"\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\nClassic markup: :wink: :crush: :cry: :tear: :laughing: :yum\r\n\r\nsee [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\n> Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:\r\n\r\n### Image Tools\r\n\r\nUse this tool to resize hi definition images to \"canvas\" dimensions:\r\n\r\n- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image\r\n  resize in browser.\r\n\r\n\r\n\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-03-media/unit-1/book-a/07",
+									"id": "07",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Exercises & Archives",
+									"shortTitle": "Exercises",
+									"contentMd": "# Exercises & Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)\r\n\r\nThis archive must be placed in the `archives` folder as shown above.\r\n\r\n## Exercise 1:\r\n\r\nInstructions for exercise 1.\r\n\r\n## Exercise 2:\r\n\r\nInstructions for exercise 2.\r\n\r\n## Exercise 3:\r\n\r\nInstructions for exercise 3.\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-03-media/unit-1/book-a/Exercises",
+									"id": "Exercises",
+									"type": "step",
+									"hide": false
+								}
+							],
+							"hide": false
+						}
+					],
+					"hide": false
+				},
+				{
+					"route": "/topic/{{COURSEURL}}/topic-03-media/",
+					"type": "unit",
+					"title": "HeaNet Hosted Video",
+					"summary": "HeaNet Hosted Video",
+					"contentMd": "HeaNet Hosted Video",
+					"frontMatter": {},
+					"id": "unit-2-heanet",
+					"img": "",
+					"imgFile": "",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [
+						{
+							"route": "/video/{{COURSEURL}}/topic-03-media/unit-2-heanet/panelvideo/7e4f1e9afedb40d5996d0703702eaaa4",
+							"type": "panelvideo",
+							"title": "Heanet Example\r",
+							"summary": "",
+							"contentMd": "Heanet Example\r\n\r\n",
+							"frontMatter": {},
+							"id": "panelvideo",
+							"img": "",
+							"imgFile": "",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "/video/{{COURSEURL}}/topic-03-media/unit-2-heanet/panelvideo/7e4f1e9afedb40d5996d0703702eaaa4",
+							"videoids": {
+								"videoid": "7e4f1e9afedb40d5996d0703702eaaa4",
+								"videoIds": [
+									{
+										"service": "heanet",
+										"id": "7e4f1e9afedb40d5996d0703702eaaa4"
+									}
+								]
+							},
+							"los": [],
+							"hide": false
+						}
+					],
+					"hide": false
+				},
+				{
+					"route": "/video/{{COURSEURL}}/topic-03-media/panelvideo-1/x09E7b2ESE8",
+					"type": "panelvideo",
+					"title": "Main Video",
+					"summary": "Main Video",
+					"contentMd": "Main Video",
+					"frontMatter": {},
+					"id": "panelvideo-1",
+					"img": "",
+					"imgFile": "",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "/video/{{COURSEURL}}/topic-03-media/panelvideo-1/x09E7b2ESE8",
+					"videoids": {
+						"videoid": "x09E7b2ESE8",
+						"videoIds": [
+							{
+								"service": "youtube",
+								"id": "x09E7b2ESE8"
+							}
+						]
+					},
+					"los": [],
+					"hide": false
+				}
+			],
+			"hide": false
+		},
+		{
+			"route": "/topic/{{COURSEURL}}/topic-04-panel-note",
+			"type": "topic",
+			"title": " Panel Note\r",
+			"summary": "A Note can be a topic's content",
+			"contentMd": "# Panel Note\r\n\r\nA Note can be a topic's content\r\n",
+			"frontMatter": {},
+			"id": "topic-04-panel-note",
+			"img": "https://{{COURSEURL}}/topic-04-panel-note/topic.png",
+			"imgFile": "topic.png",
+			"pdf": "",
+			"pdfFile": "",
+			"video": "",
+			"videoids": {
+				"videoid": "",
+				"videoIds": []
+			},
+			"los": [
+				{
+					"route": "/panelnote/{{COURSEURL}}/topic-04-panel-note/panelnote",
+					"type": "panelnote",
+					"title": " Note 1\r",
+					"summary": "This is an example of a note. \r",
+					"contentMd": "# Note 1\r\n\r\nThis is an example of a note. \r\n\r\nIt can have images:\r\n\r\n![](img/01.png)\r\n\r\nA code block with syntax highlighting:\r\n\r\n### user-api-test.js\r\n\r\n~~~javascript\r\nimport { playtimeService } from \"./playtime-service.js\";\r\n\r\nsuite(\"User API tests\", () => {\r\n  setup(async () => {\r\n  });\r\n  teardown(async () => {\r\n  });\r\n\r\n  test(\"create a user\", async () => {\r\n  });\r\n});\r\n~~~\r\n\r\n### Mathematical notation:\r\n\r\n$\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n$\r\n\r\nThis is an inline exampe: $c = \\pm\\sqrt{a^2 + b^2}$ with text before and after\r\n\r\n\r\n### Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n### Links to Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)",
+					"frontMatter": {},
+					"id": "panelnote",
+					"img": "https://{{COURSEURL}}/topic-04-panel-note/panelnote/note.png",
+					"imgFile": "note.png",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [],
+					"hide": false
+				}
+			],
+			"hide": false
+		},
+		{
+			"route": "/topic/{{COURSEURL}}/topic-05-panel-talk",
+			"type": "topic",
+			"title": " Panel Talk\r",
+			"summary": "A Talk can be a topic's content",
+			"contentMd": "# Panel Talk\r\n\r\nA Talk can be a topic's content\r\n",
+			"frontMatter": {},
+			"id": "topic-05-panel-talk",
+			"img": "https://{{COURSEURL}}/topic-05-panel-talk/topic.png",
+			"imgFile": "topic.png",
+			"pdf": "",
+			"pdfFile": "",
+			"video": "",
+			"videoids": {
+				"videoid": "",
+				"videoIds": []
+			},
+			"los": [
+				{
+					"route": "/paneltalk/{{COURSEURL}}/topic-05-panel-talk/paneltalk",
+					"type": "paneltalk",
+					"title": "Lecture 1\r",
+					"summary": "A short summary of the talk, no more than two sentences.",
+					"contentMd": "Lecture 1\r\n\r\nA short summary of the talk, no more than two sentences.",
+					"frontMatter": {},
+					"id": "paneltalk",
+					"img": "https://{{COURSEURL}}/topic-05-panel-talk/paneltalk/talk.png",
+					"imgFile": "talk.png",
+					"pdf": "https://{{COURSEURL}}/topic-05-panel-talk/paneltalk/talk.pdf",
+					"pdfFile": "talk.pdf",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [],
+					"hide": false
+				}
+			],
+			"hide": false
+		},
+		{
+			"route": "/topic/{{COURSEURL}}/topic-07-reference",
+			"type": "topic",
+			"title": " Reference\r",
+			"summary": "Example of all learning resource types",
+			"contentMd": "# Reference\r\n\r\nExample of all learning resource types\r\n",
+			"frontMatter": {},
+			"id": "topic-07-reference",
+			"img": "https://{{COURSEURL}}/topic-07-reference/topic.png",
+			"imgFile": "topic.png",
+			"pdf": "",
+			"pdfFile": "",
+			"video": "",
+			"videoids": {
+				"videoid": "",
+				"videoIds": []
+			},
+			"los": [
+				{
+					"route": "/talk/{{COURSEURL}}/topic-07-reference/talk-1",
+					"type": "talk",
+					"title": "Lecture 8\r",
+					"summary": "A short summary of the talk, no more than two sentences.",
+					"contentMd": "Lecture 8\r\n\r\nA short summary of the talk, no more than two sentences.",
+					"frontMatter": {},
+					"id": "talk-1",
+					"img": "https://{{COURSEURL}}/topic-07-reference/talk-1/talk.png",
+					"imgFile": "talk.png",
+					"pdf": "https://{{COURSEURL}}/topic-07-reference/talk-1/talk.pdf",
+					"pdfFile": "talk.pdf",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [],
+					"hide": false
+				},
+				{
+					"route": "/lab/{{COURSEURL}}/topic-07-reference/book-a",
+					"type": "lab",
+					"title": "Lab-05",
+					"summary": "A set of practical instructions or a walk-though",
+					"contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
+					"frontMatter": {},
+					"id": "book-a",
+					"img": "https://{{COURSEURL}}/topic-07-reference/book-a/img/main.png",
+					"imgFile": "img/main.png",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [
+						{
+							"title": " Objectives",
+							"shortTitle": "Lab-05",
+							"contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-07-reference/book-a/Lab-05",
+							"id": "Lab-05",
+							"type": "step",
+							"hide": false
+						},
+						{
+							"title": " Text",
+							"shortTitle": "01",
+							"contentMd": "# Text\r\n\r\nIt's very easy to make some words **bold** and other words *italic* with Markdown. You can even [inset a link to Google](http://google.com)\r\n\r\n\r\n## Lists\r\n\r\nSometimes you want numbered lists:\r\n\r\n1. One\r\n2. Two\r\n3. Three\r\n\r\nSometimes you want bullet points:\r\n\r\n* Start a line with a star\r\n* Profit!\r\n\r\nAlternatively,\r\n\r\n- Dashes work just as well\r\n- And if you have sub points, put two spaces before the dash or star:\r\n  - Like this\r\n  - And this\r\n\r\n## Images\r\n\r\nIf you want a link to a local image, place the image in the `img` folder and then insert a link like this:\r\n\r\n![](img/02.png)\r\n\r\nAlternatively you can directly link to images on the web:\r\n\r\n![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)\r\n\r\nThe above includes a title.\r\n\r\n# Structured documents\r\n\r\nSometimes it's useful to have different levels of headings to structure your documents. Start lines with a `#` to create headings. Multiple `##` in a row denote smaller heading sizes.\r\n\r\n### This is a third-tier heading\r\n\r\nYou can use one `#` all the way up to `######` six for different heading sizes.\r\n\r\nIf you'd like to quote someone, use the > character before the line:\r\n\r\n> Coffee. The finest organic suspension ever devised... I beat the Borg with it.\r\n> - Captain Janeway\r\n\r\nThere are many different ways to style code with GitHub's markdown. If you have inline code blocks, wrap them in backticks: `var example = true`.  If you've got a longer block of code, you can indent with four spaces:\r\n\r\n    if (isAwesome){\r\n      return true\r\n    }\r\n\r\nGitHub also supports something called code fencing, which allows for multiple lines without indentation:\r\n\r\n~~~\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\nAnd if you'd like to use syntax highlighting, include the language:\r\n\r\n~~~javascript\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\n",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-07-reference/book-a/01",
+							"id": "01",
+							"type": "step",
+							"hide": false
+						},
+						{
+							"title": " Tables, Lines and Images",
+							"shortTitle": "02",
+							"contentMd": "# Tables, Lines and Images\r\n\r\n\r\nTables can look like this:\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n---\r\n\r\nA horizontal rules above and below\r\n\r\n---\r\n\r\nSome more images:\r\n\r\n![](img/01.png)\r\n\r\nA few sentences on the purpose of the lab. Avoid bullet points here for formatting reasons.\r\nAnd if you'd like to use syntax highlighting, include the language:\r\n\r\n~~~javascript\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\n- Dashes work just as well\r\n- And if you have sub points, put two spaces before the dash or star:\r\n  - Like this\r\n  - And this\r\n\r\n~~~typescript\r\nlet flatLos = flattenNestedLosArrays(los);\r\nlet result: string[] = [];\r\nflatLos.forEach((obj) => {\r\n~~~\r\n\r\nIf you'd like to quote someone, use the > character before the line:\r\nCoffee. The finest organic suspension ever devised... I beat the Borg with it.\r\n\r\n```javascript\r\ntesting ticked fence\r\n```\r\n\r\nSome more code :\r\n\r\n~~~javascript\r\nconst donationSchema = new Schema({\r\n  amount: Number,\r\n  method: String,\r\n  lat: String,\r\n  lng: String,\r\n  donor: {\r\n    type: Schema.Types.ObjectId,\r\n    ref: \"User\",\r\n  },\r\n  candidate: {\r\n    type: Schema.Types.ObjectId,\r\n    ref: \"Candidate\",\r\n  },\r\n});\r\n~~~ \r\n\r\n\r\n",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-07-reference/book-a/02",
+							"id": "02",
+							"type": "step",
+							"hide": false
+						},
+						{
+							"title": " Links and Code Blocks",
+							"shortTitle": "03",
+							"contentMd": "# Links and Code Blocks\r\n\r\nYou can inert links in bullet points:\r\n\r\n- <http://github.com>\r\n- <http://bitbucket.dom>\r\n\r\n\r\nMore Code Block examples\r\n\r\n~~~\r\n  publish(path, course) {\r\n    const basePath = '../' + path + '/' + this.folder;\r\n    futils.initEmptyPath(basePath);\r\n    this.resources = this.talks.concat(this.labs);\r\n    console.log(this.title);\r\n    this.publishTalks(basePath);\r\n    this.publishLabs(basePath, course);\r\n  }\r\n~~~\r\n\r\nThis was autodetected as javascript. This one is html:\r\n\r\n~~~html\r\n<div class=\"ui segment pushable\">\r\n  <div class=\"pusher\">\r\n    <div class=\"ui basic segment\">\r\n      <br>\r\n      {% for chapter in chapters %}\r\n      <div  class=\"ui tab segment lab\" data-tab=\"{{chapter.shortTitle}}\">\r\n        {{ chapter.content }}\r\n      </div>\r\n     {% endfor %}\r\n    </div>\r\n  </div>\r\n</div>\r\n~~~\r\n",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-07-reference/book-a/03",
+							"id": "03",
+							"type": "step",
+							"hide": false
+						},
+						{
+							"title": " Images",
+							"shortTitle": "04",
+							"contentMd": "# Images\r\n\r\nSome more images\r\n\r\n![](img/04.png)\r\n\r\n###  You can put a title here\r\n\r\n![](img/03.png)\r\n\r\n\r\nThis is some text ",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-07-reference/book-a/04",
+							"id": "04",
+							"type": "step",
+							"hide": false
+						},
+						{
+							"title": " Latex",
+							"shortTitle": "05",
+							"contentMd": "# Latex\r\n\r\nLatex support via the [Katex](https://katex.org/) Library.\r\n\r\n### Example 0\r\n\r\n$\r\nE=mc^2\r\n$\r\n\r\n### Example 1\r\n\r\nThis is an inline exampe: $c = \\pm\\sqrt{a^2 + b^2}$ with text before and after\r\n\r\n### Example 2\r\n\r\n\r\n$\r\nx=\\frac{ -b\\pm\\sqrt{ b^2-4ac } } {2a}\r\n$\r\n\r\n### Example 3\r\n\r\n\r\n$\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n$\r\n\r\n### Example 4\r\n\r\n\r\n$\r\ng(x) = 3x^4 + 2x^2\r\n$\r\n\r\n### Example 5\r\n\r\n\r\n$\r\nx=\\frac{ -b\\pm\\sqrt{ b^2-4ac } } {2a}\r\n\\sum_{i=1}^n i^3 = \\left( \\frac{n(g(n)+1)} 2 \\right) ^2\r\nc = \\pm\\sqrt{a^2 + b^2}\r\n$\r\n\r\n### Example 6\r\n\r\n$\r\n\\frac{1}{\\Bigl(\\sqrt{\\phi \\sqrt{5}}-\\phi\\Bigr) e^{\\frac25 \\pi}} = 1+\\frac{e^{-2\\pi}} {1+\\frac{e^{-4\\pi}} {1+\\frac{e^{-6\\pi}} {1+\\frac{e^{-8\\pi}} {1+\\cdots} } } }\r\n$\r\n\r\n### Example 7\r\n\r\n$\r\n1 +  \\frac{q^2}{(1-q)}+\\frac{q^6}{(1-q)(1-q^2)}+\\cdots = \\prod_{j=0}^{\\infty}\\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, \\quad\\quad \\text{for }\\lvert q\\rvert<1.\r\n$",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-07-reference/book-a/05",
+							"id": "05",
+							"type": "step",
+							"hide": false
+						},
+						{
+							"title": " Reference",
+							"shortTitle": "07",
+							"contentMd": "# Reference\r\n\r\n\r\n# h1 Heading\r\n## h2 Heading\r\n### h3 Heading\r\n#### h4 Heading\r\n##### h5 Heading\r\n###### h6 Heading\r\n\r\n\r\n## Horizontal Rules\r\n\r\n___\r\n\r\n---\r\n\r\n***\r\n\r\n\r\n## Quotes\r\n\r\n\"Smartypants, double quotes\" and 'single quotes' and `back tick` quotes\r\n\r\n\r\n## Emphasis\r\n\r\n**This is bold text**\r\n\r\n__This is bold text__\r\n\r\n*This is italic text*\r\n\r\n_This is italic text_\r\n\r\n~~Strikethrough~~\r\n\r\n\r\n## Blockquotes\r\n\r\n\r\n> Blockquotes can also be nested...\r\n>> ...by using additional greater-than signs right next to each other...\r\n> > > ...or with spaces between arrows.\r\n\r\n\r\n## Lists\r\n\r\nUnordered\r\n\r\n+ Create a list by starting a line with `+`, `-`, or `*`\r\n+ Sub-lists are made by indenting 2 spaces:\r\n  - Marker character change forces new list start:\r\n    * Ac tristique libero volutpat at\r\n    + Facilisis in pretium nisl aliquet\r\n    - Nulla volutpat aliquam velit\r\n+ Very easy!\r\n\r\nOrdered\r\n\r\n1. Lorem ipsum dolor sit amet\r\n2. Consectetur adipiscing elit\r\n3. Integer molestie lorem at massa\r\n\r\n\r\n1. You can use sequential numbers...\r\n1. ...or keep all the numbers as `1.`\r\n\r\nStart numbering with offset:\r\n\r\n57. foo\r\n1. bar\r\n\r\n\r\n## Code\r\n\r\nInline `code`\r\n\r\nIndented code\r\n\r\n    // Some comments\r\n    line 1 of code\r\n    line 2 of code\r\n    line 3 of code\r\n\r\n\r\nBlock code \"fences\"\r\n\r\n```\r\nSample text here...\r\n```\r\n\r\nSyntax highlighting\r\n\r\n``` js\r\nvar foo = function (bar) {\r\n  return bar++;\r\n};\r\n\r\nconsole.log(foo(5));\r\n```\r\n\r\n## Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n## Links\r\n\r\n[link text](http://dev.nodeca.com)\r\n\r\n[link with title](http://nodeca.github.io/pica/demo/ \"title text!\")\r\n\r\n\r\n## Images\r\n\r\n![Minion](https://octodex.github.com/images/minion.png)\r\n![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg \"The Stormtroopocat\")\r\n\r\nLike links, Images also have a footnote style syntax\r\n\r\n![Alt text][id]\r\n\r\nWith a reference later in the document defining the URL location:\r\n\r\n[id]: https://octodex.github.com/images/dojocat.jpg  \"The Dojocat\"\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\nClassic markup: :wink: :crush: :cry: :tear: :laughing: :yum\r\n\r\nsee [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\n> Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:\r\n\r\n### Image Tools\r\n\r\nUse this tool to resize hi definition images to \"canvas\" dimensions:\r\n\r\n- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image\r\n  resize in browser.\r\n\r\n\r\n\r\n\r\n",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-07-reference/book-a/07",
+							"id": "07",
+							"type": "step",
+							"hide": false
+						},
+						{
+							"title": " Exercises & Archives",
+							"shortTitle": "Exercises",
+							"contentMd": "# Exercises & Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)\r\n\r\nThis archive must be placed in the `archives` folder as shown above.\r\n\r\n## Exercise 1:\r\n\r\nInstructions for exercise 1.\r\n\r\n## Exercise 2:\r\n\r\nInstructions for exercise 2.\r\n\r\n## Exercise 3:\r\n\r\nInstructions for exercise 3.\r\n",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-07-reference/book-a/Exercises",
+							"id": "Exercises",
+							"type": "step",
+							"hide": false
+						}
+					],
+					"hide": false
+				},
+				{
+					"route": "/note/{{COURSEURL}}/topic-07-reference/note-1",
+					"type": "note",
+					"title": "Markdown Options\r",
+					"summary": "Full range of markdown syntax examples\r",
+					"contentMd": "Markdown Options\r\n\r\nFull range of markdown syntax examples\r\n\r\n# h1 Heading 8-)\r\n## h2 Heading\r\n### h3 Heading\r\n#### h4 Heading\r\n##### h5 Heading\r\n###### h6 Heading\r\n\r\n\r\n## Horizontal Rules\r\n\r\n___\r\n\r\n---\r\n\r\n***\r\n\r\n\r\n## Typographic replacements\r\n\r\nEnable typographer option to see result.\r\n\r\n(c) (C) (r) (R) (tm) (TM) (p) (P) +-\r\n\r\ntest.. test... test..... test?..... test!....\r\n\r\n!!!!!! ???? ,,  -- ---\r\n\r\n\"Smartypants, double quotes\" and 'single quotes'\r\n\r\n\r\n## Emphasis\r\n\r\n**This is bold text**\r\n\r\n__This is bold text__\r\n\r\n*This is italic text*\r\n\r\n_This is italic text_\r\n\r\n~~Strikethrough~~\r\n\r\n\r\n## Blockquotes\r\n\r\n\r\n> Blockquotes can also be nested...\r\n>> ...by using additional greater-than signs right next to each other...\r\n> > > ...or with spaces between arrows.\r\n\r\n\r\n## Lists\r\n\r\nUnordered\r\n\r\n+ Create a list by starting a line with `+`, `-`, or `*`\r\n+ Sub-lists are made by indenting 2 spaces:\r\n  - Marker character change forces new list start:\r\n    * Ac tristique libero volutpat at\r\n    + Facilisis in pretium nisl aliquet\r\n    - Nulla volutpat aliquam velit\r\n+ Very easy!\r\n\r\nOrdered\r\n\r\n1. Lorem ipsum dolor sit amet\r\n2. Consectetur adipiscing elit\r\n3. Integer molestie lorem at massa\r\n\r\n\r\n1. You can use sequential numbers...\r\n1. ...or keep all the numbers as `1.`\r\n\r\nStart numbering with offset:\r\n\r\n57. foo\r\n1. bar\r\n\r\n\r\n## Code\r\n\r\nInline `code`\r\n\r\nIndented code\r\n\r\n    // Some comments\r\n    line 1 of code\r\n    line 2 of code\r\n    line 3 of code\r\n\r\n\r\nBlock code \"fences\"\r\n\r\n```\r\nSample text here...\r\n```\r\n\r\nSyntax highlighting\r\n\r\n``` js\r\nvar foo = function (bar) {\r\n  return bar++;\r\n};\r\n\r\nconsole.log(foo(5));\r\n```\r\n\r\n## Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n## Links\r\n\r\n[link text](http://dev.nodeca.com)\r\n\r\n[link with title](http://nodeca.github.io/pica/demo/ \"title text!\")\r\n\r\nAutoconverted link https://github.com/nodeca/pica (enable linkify to see)\r\n\r\n\r\n## Images\r\n\r\n![Minion](https://octodex.github.com/images/minion.png)\r\n![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg \"The Stormtroopocat\")\r\n\r\nLike links, Images also have a footnote style syntax\r\n\r\n![Alt text][id]\r\n\r\nWith a reference later in the document defining the URL location:\r\n\r\n[id]: https://octodex.github.com/images/dojocat.jpg  \"The Dojocat\"\r\n\r\n\r\n## Plugins\r\n\r\nThe killer feature of `markdown-it` is very effective support of\r\n[syntax plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\n> Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:\r\n>\r\n> Shortcuts (emoticons): :-) :-( 8-) ;)\r\n\r\nsee [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.\r\n\r\n\r\n### [Subscript](https://github.com/markdown-it/markdown-it-sub) / [Superscript](https://github.com/markdown-it/markdown-it-sup)\r\n\r\n- 19^th^\r\n- H~2~O\r\n\r\n\r\n### [\\<ins>](https://github.com/markdown-it/markdown-it-ins)\r\n\r\n++Inserted text++\r\n\r\n\r\n### [\\<mark>](https://github.com/markdown-it/markdown-it-mark)\r\n\r\n==Marked text==\r\n\r\n\r\n### [Footnotes](https://github.com/markdown-it/markdown-it-footnote)\r\n\r\nFootnote 1 link[^first].\r\n\r\nFootnote 2 link[^second].\r\n\r\nInline footnote^[Text of inline footnote] definition.\r\n\r\nDuplicated footnote reference[^second].\r\n\r\n[^first]: Footnote **can have markup**\r\n\r\n    and multiple paragraphs.\r\n\r\n[^second]: Footnote text.\r\n\r\n\r\n### [Definition lists](https://github.com/markdown-it/markdown-it-deflist)\r\n\r\nTerm 1\r\n\r\n:   Definition 1\r\nwith lazy continuation.\r\n\r\nTerm 2 with *inline markup*\r\n\r\n:   Definition 2\r\n\r\n        { some code, part of Definition 2 }\r\n\r\n    Third paragraph of definition 2.\r\n\r\n_Compact style:_\r\n\r\nTerm 1\r\n  ~ Definition 1\r\n\r\nTerm 2\r\n  ~ Definition 2a\r\n  ~ Definition 2b\r\n\r\n\r\n### [Abbreviations](https://github.com/markdown-it/markdown-it-abbr)\r\n\r\nThis is HTML abbreviation example.\r\n\r\nIt converts \"HTML\", but keep intact partial entries like \"xxxHTMLyyy\" and so on.\r\n\r\n*[HTML]: Hyper Text Markup Language\r\n\r\n### [Custom containers](https://github.com/markdown-it/markdown-it-container)\r\n\r\n::: warning\r\n*here be dragons*\r\n:::",
+					"frontMatter": {},
+					"id": "note-1",
+					"img": "https://{{COURSEURL}}/topic-07-reference/note-1/note.png",
+					"imgFile": "note.png",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [],
+					"hide": false
+				},
+				{
+					"route": "/note/{{COURSEURL}}/topic-07-reference/note-2",
+					"type": "note",
+					"title": " Note 4\r",
+					"summary": "This note has a linkable table of contents, generated automatically\r",
+					"contentMd": "# Note 4\r\n\r\nThis note has a linkable table of contents, generated automatically\r\n\r\n[[toc]]\r\n\r\n## Part 1\r\n\r\norem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum\r\n\r\n## Part 2\r\n\r\n\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"\r\n\r\n### Part 2a\r\n\r\n\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?\"\r\n\r\n## Part 3\r\n\r\n\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\n\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\n\r\n\r\n## Part 4\r\n\r\n\"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.\"\r\n\r\n\r\n### Part 4A\r\n\r\n\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"\r\nyou're welcome to! :)\r\n\r\n### Part 4B\r\n\r\n\"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.\"\r\n\r\nThe End.",
+					"frontMatter": {},
+					"id": "note-2",
+					"img": "https://{{COURSEURL}}/topic-07-reference/note-2/my-note.png",
+					"imgFile": "my-note.png",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [],
+					"hide": false
+				},
+				{
+					"route": "https://tutors.dev/",
+					"type": "web",
+					"title": "Web Site 4\r",
+					"summary": "A web site of interest",
+					"contentMd": "Web Site 4\r\n\r\nA web site of interest",
+					"frontMatter": {},
+					"id": "web-1",
+					"img": "https://{{COURSEURL}}/topic-07-reference/web-1/link.png",
+					"imgFile": "link.png",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [],
+					"hide": false
+				},
+				{
+					"route": "https://github.com/tutors-sdk/tutors",
+					"type": "github",
+					"title": "Github Repo  1\r",
+					"summary": "A repo in github that captures important lessons from this topic",
+					"contentMd": "Github Repo  1\r\n\r\nA repo in github that captures important lessons from this topic",
+					"frontMatter": {},
+					"id": "github-1-template-1",
+					"img": "https://{{COURSEURL}}/topic-07-reference/github-1-template-1/github.png",
+					"imgFile": "github.png",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [],
+					"hide": false
+				},
+				{
+					"route": "https://{{COURSEURL}}/topic-07-reference/archive/archive.zip",
+					"type": "archive",
+					"title": "Resource 2\r",
+					"summary": "A link to a zipped archive",
+					"contentMd": "Resource 2\r\n\r\nA link to a zipped archive ",
+					"frontMatter": {},
+					"id": "archive",
+					"img": "https://{{COURSEURL}}/topic-07-reference/archive/archive.png",
+					"imgFile": "archive.png",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [],
+					"hide": false,
+					"archiveFile": "archive.zip"
+				}
+			],
+			"hide": false
+		},
+		{
+			"route": "/topic/{{COURSEURL}}/topic-08-ordering",
+			"type": "topic",
+			"title": " Ordering\r",
+			"summary": "Explicit sorting of learning objects",
+			"contentMd": "# Ordering\r\n\r\nExplicit sorting of learning objects\r\n",
+			"frontMatter": {},
+			"id": "topic-08-ordering",
+			"img": "https://{{COURSEURL}}/topic-08-ordering/topic.png",
+			"imgFile": "topic.png",
+			"pdf": "",
+			"pdfFile": "",
+			"video": "",
+			"videoids": {
+				"videoid": "",
+				"videoIds": []
+			},
+			"los": [
+				{
+					"route": "/topic/{{COURSEURL}}/topic-08-ordering/",
+					"type": "unit",
+					"title": "Ordering\r",
+					"summary": "Explicit sorting of learning objects",
+					"contentMd": "Ordering\r\n\r\nExplicit sorting of learning objects",
+					"frontMatter": {},
+					"id": "unit-0",
+					"img": "",
+					"imgFile": "",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [
+						{
+							"route": "/talk/{{COURSEURL}}/topic-08-ordering/unit-0/talk-1",
+							"type": "talk",
+							"title": "Lecture 9\r",
+							"summary": "A short summary of the talk, no more than two sentences.",
+							"contentMd": "Lecture 9\r\n\r\nA short summary of the talk, no more than two sentences.",
+							"frontMatter": {
+								"order": 3
+							},
+							"id": "talk-1",
+							"img": "https://{{COURSEURL}}/topic-08-ordering/unit-0/talk-1/talk.png",
+							"imgFile": "talk.png",
+							"pdf": "https://{{COURSEURL}}/topic-08-ordering/unit-0/talk-1/talk.pdf",
+							"pdfFile": "talk.pdf",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "/lab/{{COURSEURL}}/topic-08-ordering/unit-0/book-a",
+							"type": "lab",
+							"title": "Lab-06",
+							"summary": "A set of practical instructions or a walk-though",
+							"contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
+							"frontMatter": {
+								"order": 2
+							},
+							"id": "book-a",
+							"img": "https://{{COURSEURL}}/topic-08-ordering/unit-0/book-a/img/main.png",
+							"imgFile": "img/main.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [
+								{
+									"title": " Objectives",
+									"shortTitle": "Lab-06",
+									"contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-08-ordering/unit-0/book-a/Lab-06",
+									"id": "Lab-06",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Text",
+									"shortTitle": "01",
+									"contentMd": "# Text\r\n\r\nIt's very easy to make some words **bold** and other words *italic* with Markdown. You can even [inset a link to Google](http://google.com)\r\n\r\n\r\n## Lists\r\n\r\nSometimes you want numbered lists:\r\n\r\n1. One\r\n2. Two\r\n3. Three\r\n\r\nSometimes you want bullet points:\r\n\r\n* Start a line with a star\r\n* Profit!\r\n\r\nAlternatively,\r\n\r\n- Dashes work just as well\r\n- And if you have sub points, put two spaces before the dash or star:\r\n  - Like this\r\n  - And this\r\n\r\n## Images\r\n\r\nIf you want a link to a local image, place the image in the `img` folder and then insert a link like this:\r\n\r\n![](img/02.png)\r\n\r\nAlternatively you can directly link to images on the web:\r\n\r\n![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)\r\n\r\nThe above includes a title.\r\n\r\n# Structured documents\r\n\r\nSometimes it's useful to have different levels of headings to structure your documents. Start lines with a `#` to create headings. Multiple `##` in a row denote smaller heading sizes.\r\n\r\n### This is a third-tier heading\r\n\r\nYou can use one `#` all the way up to `######` six for different heading sizes.\r\n\r\nIf you'd like to quote someone, use the > character before the line:\r\n\r\n> Coffee. The finest organic suspension ever devised... I beat the Borg with it.\r\n> - Captain Janeway\r\n\r\nThere are many different ways to style code with GitHub's markdown. If you have inline code blocks, wrap them in backticks: `var example = true`.  If you've got a longer block of code, you can indent with four spaces:\r\n\r\n    if (isAwesome){\r\n      return true\r\n    }\r\n\r\nGitHub also supports something called code fencing, which allows for multiple lines without indentation:\r\n\r\n~~~\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\nAnd if you'd like to use syntax highlighting, include the language:\r\n\r\n~~~javascript\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-08-ordering/unit-0/book-a/01",
+									"id": "01",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Tables, Lines and Images",
+									"shortTitle": "02",
+									"contentMd": "# Tables, Lines and Images\r\n\r\n\r\nTables can look like this:\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n---\r\n\r\nA horizontal rules above and below\r\n\r\n---\r\n\r\nSome more images:\r\n\r\n![](img/01.png)\r\n\r\nA few sentences on the purpose of the lab. Avoid bullet points here for formatting reasons.\r\nAnd if you'd like to use syntax highlighting, include the language:\r\n\r\n~~~javascript\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\n- Dashes work just as well\r\n- And if you have sub points, put two spaces before the dash or star:\r\n  - Like this\r\n  - And this\r\n\r\n~~~typescript\r\nlet flatLos = flattenNestedLosArrays(los);\r\nlet result: string[] = [];\r\nflatLos.forEach((obj) => {\r\n~~~\r\n\r\nIf you'd like to quote someone, use the > character before the line:\r\nCoffee. The finest organic suspension ever devised... I beat the Borg with it.\r\n\r\n```javascript\r\ntesting ticked fence\r\n```\r\n\r\nSome more code :\r\n\r\n~~~javascript\r\nconst donationSchema = new Schema({\r\n  amount: Number,\r\n  method: String,\r\n  lat: String,\r\n  lng: String,\r\n  donor: {\r\n    type: Schema.Types.ObjectId,\r\n    ref: \"User\",\r\n  },\r\n  candidate: {\r\n    type: Schema.Types.ObjectId,\r\n    ref: \"Candidate\",\r\n  },\r\n});\r\n~~~ \r\n\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-08-ordering/unit-0/book-a/02",
+									"id": "02",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Links and Code Blocks",
+									"shortTitle": "03",
+									"contentMd": "# Links and Code Blocks\r\n\r\nYou can inert links in bullet points:\r\n\r\n- <http://github.com>\r\n- <http://bitbucket.dom>\r\n\r\n\r\nMore Code Block examples\r\n\r\n~~~\r\n  publish(path, course) {\r\n    const basePath = '../' + path + '/' + this.folder;\r\n    futils.initEmptyPath(basePath);\r\n    this.resources = this.talks.concat(this.labs);\r\n    console.log(this.title);\r\n    this.publishTalks(basePath);\r\n    this.publishLabs(basePath, course);\r\n  }\r\n~~~\r\n\r\nThis was autodetected as javascript. This one is html:\r\n\r\n~~~html\r\n<div class=\"ui segment pushable\">\r\n  <div class=\"pusher\">\r\n    <div class=\"ui basic segment\">\r\n      <br>\r\n      {% for chapter in chapters %}\r\n      <div  class=\"ui tab segment lab\" data-tab=\"{{chapter.shortTitle}}\">\r\n        {{ chapter.content }}\r\n      </div>\r\n     {% endfor %}\r\n    </div>\r\n  </div>\r\n</div>\r\n~~~\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-08-ordering/unit-0/book-a/03",
+									"id": "03",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Images",
+									"shortTitle": "04",
+									"contentMd": "# Images\r\n\r\nSome more images\r\n\r\n![](img/04.png)\r\n\r\n###  You can put a title here\r\n\r\n![](img/03.png)\r\n\r\n\r\nThis is some text ",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-08-ordering/unit-0/book-a/04",
+									"id": "04",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Latex",
+									"shortTitle": "05",
+									"contentMd": "# Latex\r\n\r\nLatex support via the [Katex](https://katex.org/) Library.\r\n\r\n### Example 0\r\n\r\n$\r\nE=mc^2\r\n$\r\n\r\n### Example 1\r\n\r\nThis is an inline exampe: $c = \\pm\\sqrt{a^2 + b^2}$ with text before and after\r\n\r\n### Example 2\r\n\r\n\r\n$\r\nx=\\frac{ -b\\pm\\sqrt{ b^2-4ac } } {2a}\r\n$\r\n\r\n### Example 3\r\n\r\n\r\n$\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n$\r\n\r\n### Example 4\r\n\r\n\r\n$\r\ng(x) = 3x^4 + 2x^2\r\n$\r\n\r\n### Example 5\r\n\r\n\r\n$\r\nx=\\frac{ -b\\pm\\sqrt{ b^2-4ac } } {2a}\r\n\\sum_{i=1}^n i^3 = \\left( \\frac{n(g(n)+1)} 2 \\right) ^2\r\nc = \\pm\\sqrt{a^2 + b^2}\r\n$\r\n\r\n### Example 6\r\n\r\n$\r\n\\frac{1}{\\Bigl(\\sqrt{\\phi \\sqrt{5}}-\\phi\\Bigr) e^{\\frac25 \\pi}} = 1+\\frac{e^{-2\\pi}} {1+\\frac{e^{-4\\pi}} {1+\\frac{e^{-6\\pi}} {1+\\frac{e^{-8\\pi}} {1+\\cdots} } } }\r\n$\r\n\r\n### Example 7\r\n\r\n$\r\n1 +  \\frac{q^2}{(1-q)}+\\frac{q^6}{(1-q)(1-q^2)}+\\cdots = \\prod_{j=0}^{\\infty}\\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, \\quad\\quad \\text{for }\\lvert q\\rvert<1.\r\n$",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-08-ordering/unit-0/book-a/05",
+									"id": "05",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Reference",
+									"shortTitle": "07",
+									"contentMd": "# Reference\r\n\r\n\r\n# h1 Heading\r\n## h2 Heading\r\n### h3 Heading\r\n#### h4 Heading\r\n##### h5 Heading\r\n###### h6 Heading\r\n\r\n\r\n## Horizontal Rules\r\n\r\n___\r\n\r\n---\r\n\r\n***\r\n\r\n\r\n## Quotes\r\n\r\n\"Smartypants, double quotes\" and 'single quotes' and `back tick` quotes\r\n\r\n\r\n## Emphasis\r\n\r\n**This is bold text**\r\n\r\n__This is bold text__\r\n\r\n*This is italic text*\r\n\r\n_This is italic text_\r\n\r\n~~Strikethrough~~\r\n\r\n\r\n## Blockquotes\r\n\r\n\r\n> Blockquotes can also be nested...\r\n>> ...by using additional greater-than signs right next to each other...\r\n> > > ...or with spaces between arrows.\r\n\r\n\r\n## Lists\r\n\r\nUnordered\r\n\r\n+ Create a list by starting a line with `+`, `-`, or `*`\r\n+ Sub-lists are made by indenting 2 spaces:\r\n  - Marker character change forces new list start:\r\n    * Ac tristique libero volutpat at\r\n    + Facilisis in pretium nisl aliquet\r\n    - Nulla volutpat aliquam velit\r\n+ Very easy!\r\n\r\nOrdered\r\n\r\n1. Lorem ipsum dolor sit amet\r\n2. Consectetur adipiscing elit\r\n3. Integer molestie lorem at massa\r\n\r\n\r\n1. You can use sequential numbers...\r\n1. ...or keep all the numbers as `1.`\r\n\r\nStart numbering with offset:\r\n\r\n57. foo\r\n1. bar\r\n\r\n\r\n## Code\r\n\r\nInline `code`\r\n\r\nIndented code\r\n\r\n    // Some comments\r\n    line 1 of code\r\n    line 2 of code\r\n    line 3 of code\r\n\r\n\r\nBlock code \"fences\"\r\n\r\n```\r\nSample text here...\r\n```\r\n\r\nSyntax highlighting\r\n\r\n``` js\r\nvar foo = function (bar) {\r\n  return bar++;\r\n};\r\n\r\nconsole.log(foo(5));\r\n```\r\n\r\n## Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n## Links\r\n\r\n[link text](http://dev.nodeca.com)\r\n\r\n[link with title](http://nodeca.github.io/pica/demo/ \"title text!\")\r\n\r\n\r\n## Images\r\n\r\n![Minion](https://octodex.github.com/images/minion.png)\r\n![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg \"The Stormtroopocat\")\r\n\r\nLike links, Images also have a footnote style syntax\r\n\r\n![Alt text][id]\r\n\r\nWith a reference later in the document defining the URL location:\r\n\r\n[id]: https://octodex.github.com/images/dojocat.jpg  \"The Dojocat\"\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\nClassic markup: :wink: :crush: :cry: :tear: :laughing: :yum\r\n\r\nsee [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\n> Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:\r\n\r\n### Image Tools\r\n\r\nUse this tool to resize hi definition images to \"canvas\" dimensions:\r\n\r\n- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image\r\n  resize in browser.\r\n\r\n\r\n\r\n\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-08-ordering/unit-0/book-a/07",
+									"id": "07",
+									"type": "step",
+									"hide": false
+								},
+								{
+									"title": " Exercises & Archives",
+									"shortTitle": "Exercises",
+									"contentMd": "# Exercises & Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)\r\n\r\nThis archive must be placed in the `archives` folder as shown above.\r\n\r\n## Exercise 1:\r\n\r\nInstructions for exercise 1.\r\n\r\n## Exercise 2:\r\n\r\nInstructions for exercise 2.\r\n\r\n## Exercise 3:\r\n\r\nInstructions for exercise 3.\r\n",
+									"contentHtml": "",
+									"route": "/lab/{{COURSEURL}}/topic-08-ordering/unit-0/book-a/Exercises",
+									"id": "Exercises",
+									"type": "step",
+									"hide": false
+								}
+							],
+							"hide": false
+						},
+						{
+							"route": "/note/{{COURSEURL}}/topic-08-ordering/unit-0/note-1",
+							"type": "note",
+							"title": " Note 5\r",
+							"summary": "This is an example of a note. It can have images:\r",
+							"contentMd": "# Note 5\r\n\r\nThis is an example of a note. It can have images:\r\n\r\n![](img/01.png)\r\n\r\nMathematical notation:\r\n\r\n~~~latex\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n~~~\r\n\r\nA code blocks:\r\n\r\n#### user-api-test.js\r\n\r\n~~~javascript\r\nimport { playtimeService } from \"./playtime-service.js\";\r\n\r\nsuite(\"User API tests\", () => {\r\n  setup(async () => {\r\n  });\r\n  teardown(async () => {\r\n  });\r\n\r\n  test(\"create a user\", async () => {\r\n  });\r\n});\r\n~~~\r\n\r\nA table if you like:\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n#### Exercises & Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)",
+							"frontMatter": {
+								"order": 1
+							},
+							"id": "note-1",
+							"img": "https://{{COURSEURL}}/topic-08-ordering/unit-0/note-1/note.png",
+							"imgFile": "note.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false
+						}
+					],
+					"hide": false
+				},
+				{
+					"route": "/topic/{{COURSEURL}}/topic-08-ordering/",
+					"type": "unit",
+					"title": " Ordering\r",
+					"summary": "Explicit sorting of learning objects",
+					"contentMd": "# Ordering\r\n\r\nExplicit sorting of learning objects\r\n",
+					"frontMatter": {},
+					"id": "unit-1",
+					"img": "",
+					"imgFile": "",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [
+						{
+							"route": "/note/{{COURSEURL}}/topic-08-ordering/unit-1/note-2",
+							"type": "note",
+							"title": " Note 6\r",
+							"summary": "This note has a linkable table of contents, generated automatically\r",
+							"contentMd": "# Note 6\r\n\r\nThis note has a linkable table of contents, generated automatically\r\n\r\n[toc]\r\n\r\n## Part 1\r\n\r\norem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum\r\n\r\n## Part 2\r\n\r\n\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"\r\n\r\n### Part 2a\r\n\r\n\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?\"\r\n\r\n## Part 3\r\n\r\n\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\n\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\n\r\n\r\n## Part 4\r\n\r\n\"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.\"\r\n\r\n\r\n### Part 4A\r\n\r\n\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"\r\nyou're welcome to! :)\r\n\r\n### Part 4B\r\n\r\n\"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.\"\r\n\r\nThe End.",
+							"frontMatter": {
+								"order": 4
+							},
+							"id": "note-2",
+							"img": "https://{{COURSEURL}}/topic-08-ordering/unit-1/note-2/my-note.png",
+							"imgFile": "my-note.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "https://tutors.dev/",
+							"type": "web",
+							"title": "Web Site 2\r",
+							"summary": "A web site of interest",
+							"contentMd": "Web Site 2\r\n\r\nA web site of interest",
+							"frontMatter": {
+								"order": 1
+							},
+							"id": "web-1",
+							"img": "https://{{COURSEURL}}/topic-08-ordering/unit-1/web-1/link.png",
+							"imgFile": "link.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "https://github.com/tutors-sdk/tutors",
+							"type": "github",
+							"title": "Github Repo  2\r",
+							"summary": "A repo in github that captures important lessons from this topic",
+							"contentMd": "Github Repo  2\r\n\r\nA repo in github that captures important lessons from this topic",
+							"frontMatter": {
+								"order": 2
+							},
+							"id": "github-1-template-1",
+							"img": "https://{{COURSEURL}}/topic-08-ordering/unit-1/github-1-template-1/github.png",
+							"imgFile": "github.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false
+						},
+						{
+							"route": "https://{{COURSEURL}}/topic-08-ordering/unit-1/archive/archive.zip",
+							"type": "archive",
+							"title": "Resource 3\r",
+							"summary": "A link to a zipped archive",
+							"contentMd": "Resource 3\r\n\r\nA link to a zipped archive ",
+							"frontMatter": {
+								"order": 3
+							},
+							"id": "archive",
+							"img": "https://{{COURSEURL}}/topic-08-ordering/unit-1/archive/archive.png",
+							"imgFile": "archive.png",
+							"pdf": "",
+							"pdfFile": "",
+							"video": "",
+							"videoids": {
+								"videoid": "",
+								"videoIds": []
+							},
+							"los": [],
+							"hide": false,
+							"archiveFile": "archive.zip"
+						}
+					],
+					"hide": false
+				}
+			],
+			"hide": false
+		},
+		{
+			"route": "/topic/{{COURSEURL}}/topic-09-svg",
+			"type": "topic",
+			"title": " Iconify\r",
+			"summary": "Using Iconify defined icons instead of image files",
+			"contentMd": "# Iconify\r\n\r\nUsing Iconify defined icons instead of image files",
+			"frontMatter": {
+				"icon": {
+					"type": "emojione:owl"
+				}
+			},
+			"id": "topic-09-svg",
+			"img": "",
+			"imgFile": "",
+			"pdf": "",
+			"pdfFile": "",
+			"video": "",
+			"videoids": {
+				"videoid": "",
+				"videoIds": []
+			},
+			"los": [
+				{
+					"route": "/talk/{{COURSEURL}}/topic-09-svg/talk-1",
+					"type": "talk",
+					"title": "Lecture 10\r",
+					"summary": "A short summary of the talk, no more than two sentences.",
+					"contentMd": "Lecture 10\r\n\r\nA short summary of the talk, no more than two sentences.",
+					"frontMatter": {
+						"icon": {
+							"type": "vscode-icons:file-type-pdf2"
+						}
+					},
+					"id": "talk-1",
+					"img": "https://{{COURSEURL}}/topic-09-svg/talk-1/talk.png",
+					"imgFile": "talk.png",
+					"pdf": "https://{{COURSEURL}}/topic-09-svg/talk-1/talk.pdf",
+					"pdfFile": "talk.pdf",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [],
+					"hide": false
+				},
+				{
+					"route": "/talk/{{COURSEURL}}/topic-09-svg/talk-2",
+					"type": "talk",
+					"title": "Lecture 11\r",
+					"summary": "Provide a short summary, perhaps supported by a representative image.",
+					"contentMd": "Lecture 11\r\n\r\nProvide a short summary, perhaps supported by a representative image.",
+					"frontMatter": {
+						"icon": {
+							"type": "bi:filetype-pptx",
+							"color": "green"
+						}
+					},
+					"id": "talk-2",
+					"img": "https://{{COURSEURL}}/topic-09-svg/talk-2/talk.png",
+					"imgFile": "talk.png",
+					"pdf": "https://{{COURSEURL}}/topic-09-svg/talk-2/talk.pdf",
+					"pdfFile": "talk.pdf",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [],
+					"hide": false
+				},
+				{
+					"route": "/lab/{{COURSEURL}}/topic-09-svg/book-a",
+					"type": "lab",
+					"title": "Lab-07",
+					"summary": "A set of practical instructions or a walk-though",
+					"contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
+					"frontMatter": {
+						"icon": {
+							"type": "jam:flask",
+							"color": "blue"
+						}
+					},
+					"id": "book-a",
+					"img": "https://{{COURSEURL}}/topic-09-svg/book-a/img/main.png",
+					"imgFile": "img/main.png",
+					"pdf": "",
+					"pdfFile": "",
+					"video": "",
+					"videoids": {
+						"videoid": "",
+						"videoIds": []
+					},
+					"los": [
+						{
+							"title": " Objectives",
+							"shortTitle": "Lab-07",
+							"contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-09-svg/book-a/Lab-07",
+							"id": "Lab-07",
+							"type": "step",
+							"hide": false
+						},
+						{
+							"title": " Text",
+							"shortTitle": "01",
+							"contentMd": "# Text\r\n\r\nIt's very easy to make some words **bold** and other words *italic* with Markdown. You can even [inset a link to Google](http://google.com)\r\n\r\n\r\n## Lists\r\n\r\nSometimes you want numbered lists:\r\n\r\n1. One\r\n2. Two\r\n3. Three\r\n\r\nSometimes you want bullet points:\r\n\r\n* Start a line with a star\r\n* Profit!\r\n\r\nAlternatively,\r\n\r\n- Dashes work just as well\r\n- And if you have sub points, put two spaces before the dash or star:\r\n  - Like this\r\n  - And this\r\n\r\n## Images\r\n\r\nIf you want a link to a local image, place the image in the `img` folder and then insert a link like this:\r\n\r\n![](img/02.png)\r\n\r\nAlternatively you can directly link to images on the web:\r\n\r\n![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)\r\n\r\nThe above includes a title.\r\n\r\n# Structured documents\r\n\r\nSometimes it's useful to have different levels of headings to structure your documents. Start lines with a `#` to create headings. Multiple `##` in a row denote smaller heading sizes.\r\n\r\n### This is a third-tier heading\r\n\r\nYou can use one `#` all the way up to `######` six for different heading sizes.\r\n\r\nIf you'd like to quote someone, use the > character before the line:\r\n\r\n> Coffee. The finest organic suspension ever devised... I beat the Borg with it.\r\n> - Captain Janeway\r\n\r\nThere are many different ways to style code with GitHub's markdown. If you have inline code blocks, wrap them in backticks: `var example = true`.  If you've got a longer block of code, you can indent with four spaces:\r\n\r\n    if (isAwesome){\r\n      return true\r\n    }\r\n\r\nGitHub also supports something called code fencing, which allows for multiple lines without indentation:\r\n\r\n~~~\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\nAnd if you'd like to use syntax highlighting, include the language:\r\n\r\n~~~javascript\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\n",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-09-svg/book-a/01",
+							"id": "01",
+							"type": "step",
+							"hide": false
+						},
+						{
+							"title": " Tables, Lines and Images",
+							"shortTitle": "02",
+							"contentMd": "# Tables, Lines and Images\r\n\r\n\r\nTables can look like this:\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n---\r\n\r\nA horizontal rules above and below\r\n\r\n---\r\n\r\nSome more images:\r\n\r\n![](img/01.png)\r\n\r\nA few sentences on the purpose of the lab. Avoid bullet points here for formatting reasons.\r\nAnd if you'd like to use syntax highlighting, include the language:\r\n\r\n~~~javascript\r\nif (isAwesome){\r\n  return true\r\n}\r\n~~~\r\n\r\n- Dashes work just as well\r\n- And if you have sub points, put two spaces before the dash or star:\r\n  - Like this\r\n  - And this\r\n\r\n~~~typescript\r\nlet flatLos = flattenNestedLosArrays(los);\r\nlet result: string[] = [];\r\nflatLos.forEach((obj) => {\r\n~~~\r\n\r\nIf you'd like to quote someone, use the > character before the line:\r\nCoffee. The finest organic suspension ever devised... I beat the Borg with it.\r\n\r\n```javascript\r\ntesting ticked fence\r\n```\r\n\r\nSome more code :\r\n\r\n~~~javascript\r\nconst donationSchema = new Schema({\r\n  amount: Number,\r\n  method: String,\r\n  lat: String,\r\n  lng: String,\r\n  donor: {\r\n    type: Schema.Types.ObjectId,\r\n    ref: \"User\",\r\n  },\r\n  candidate: {\r\n    type: Schema.Types.ObjectId,\r\n    ref: \"Candidate\",\r\n  },\r\n});\r\n~~~ \r\n\r\n\r\n",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-09-svg/book-a/02",
+							"id": "02",
+							"type": "step",
+							"hide": false
+						},
+						{
+							"title": " Links and Code Blocks",
+							"shortTitle": "03",
+							"contentMd": "# Links and Code Blocks\r\n\r\nYou can inert links in bullet points:\r\n\r\n- <http://github.com>\r\n- <http://bitbucket.dom>\r\n\r\n\r\nMore Code Block examples\r\n\r\n~~~\r\n  publish(path, course) {\r\n    const basePath = '../' + path + '/' + this.folder;\r\n    futils.initEmptyPath(basePath);\r\n    this.resources = this.talks.concat(this.labs);\r\n    console.log(this.title);\r\n    this.publishTalks(basePath);\r\n    this.publishLabs(basePath, course);\r\n  }\r\n~~~\r\n\r\nThis was autodetected as javascript. This one is html:\r\n\r\n~~~html\r\n<div class=\"ui segment pushable\">\r\n  <div class=\"pusher\">\r\n    <div class=\"ui basic segment\">\r\n      <br>\r\n      {% for chapter in chapters %}\r\n      <div  class=\"ui tab segment lab\" data-tab=\"{{chapter.shortTitle}}\">\r\n        {{ chapter.content }}\r\n      </div>\r\n     {% endfor %}\r\n    </div>\r\n  </div>\r\n</div>\r\n~~~\r\n",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-09-svg/book-a/03",
+							"id": "03",
+							"type": "step",
+							"hide": false
+						},
+						{
+							"title": " Images",
+							"shortTitle": "04",
+							"contentMd": "# Images\r\n\r\nSome more images\r\n\r\n![](img/04.png)\r\n\r\n###  You can put a title here\r\n\r\n![](img/03.png)\r\n\r\n\r\nThis is some text ",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-09-svg/book-a/04",
+							"id": "04",
+							"type": "step",
+							"hide": false
+						},
+						{
+							"title": " Latex",
+							"shortTitle": "05",
+							"contentMd": "# Latex\r\n\r\nLatex support via the [Katex](https://katex.org/) Library.\r\n\r\n### Example 0\r\n\r\n$\r\nE=mc^2\r\n$\r\n\r\n### Example 1\r\n\r\nThis is an inline exampe: $c = \\pm\\sqrt{a^2 + b^2}$ with text before and after\r\n\r\n### Example 2\r\n\r\n\r\n$\r\nx=\\frac{ -b\\pm\\sqrt{ b^2-4ac } } {2a}\r\n$\r\n\r\n### Example 3\r\n\r\n\r\n$\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n$\r\n\r\n### Example 4\r\n\r\n\r\n$\r\ng(x) = 3x^4 + 2x^2\r\n$\r\n\r\n### Example 5\r\n\r\n\r\n$\r\nx=\\frac{ -b\\pm\\sqrt{ b^2-4ac } } {2a}\r\n\\sum_{i=1}^n i^3 = \\left( \\frac{n(g(n)+1)} 2 \\right) ^2\r\nc = \\pm\\sqrt{a^2 + b^2}\r\n$\r\n\r\n### Example 6\r\n\r\n$\r\n\\frac{1}{\\Bigl(\\sqrt{\\phi \\sqrt{5}}-\\phi\\Bigr) e^{\\frac25 \\pi}} = 1+\\frac{e^{-2\\pi}} {1+\\frac{e^{-4\\pi}} {1+\\frac{e^{-6\\pi}} {1+\\frac{e^{-8\\pi}} {1+\\cdots} } } }\r\n$\r\n\r\n### Example 7\r\n\r\n$\r\n1 +  \\frac{q^2}{(1-q)}+\\frac{q^6}{(1-q)(1-q^2)}+\\cdots = \\prod_{j=0}^{\\infty}\\frac{1}{(1-q^{5j+2})(1-q^{5j+3})}, \\quad\\quad \\text{for }\\lvert q\\rvert<1.\r\n$",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-09-svg/book-a/05",
+							"id": "05",
+							"type": "step",
+							"hide": false
+						},
+						{
+							"title": " Reference",
+							"shortTitle": "07",
+							"contentMd": "# Reference\r\n\r\n\r\n# h1 Heading\r\n## h2 Heading\r\n### h3 Heading\r\n#### h4 Heading\r\n##### h5 Heading\r\n###### h6 Heading\r\n\r\n\r\n## Horizontal Rules\r\n\r\n___\r\n\r\n---\r\n\r\n***\r\n\r\n\r\n## Quotes\r\n\r\n\"Smartypants, double quotes\" and 'single quotes' and `back tick` quotes\r\n\r\n\r\n## Emphasis\r\n\r\n**This is bold text**\r\n\r\n__This is bold text__\r\n\r\n*This is italic text*\r\n\r\n_This is italic text_\r\n\r\n~~Strikethrough~~\r\n\r\n\r\n## Blockquotes\r\n\r\n\r\n> Blockquotes can also be nested...\r\n>> ...by using additional greater-than signs right next to each other...\r\n> > > ...or with spaces between arrows.\r\n\r\n\r\n## Lists\r\n\r\nUnordered\r\n\r\n+ Create a list by starting a line with `+`, `-`, or `*`\r\n+ Sub-lists are made by indenting 2 spaces:\r\n  - Marker character change forces new list start:\r\n    * Ac tristique libero volutpat at\r\n    + Facilisis in pretium nisl aliquet\r\n    - Nulla volutpat aliquam velit\r\n+ Very easy!\r\n\r\nOrdered\r\n\r\n1. Lorem ipsum dolor sit amet\r\n2. Consectetur adipiscing elit\r\n3. Integer molestie lorem at massa\r\n\r\n\r\n1. You can use sequential numbers...\r\n1. ...or keep all the numbers as `1.`\r\n\r\nStart numbering with offset:\r\n\r\n57. foo\r\n1. bar\r\n\r\n\r\n## Code\r\n\r\nInline `code`\r\n\r\nIndented code\r\n\r\n    // Some comments\r\n    line 1 of code\r\n    line 2 of code\r\n    line 3 of code\r\n\r\n\r\nBlock code \"fences\"\r\n\r\n```\r\nSample text here...\r\n```\r\n\r\nSyntax highlighting\r\n\r\n``` js\r\nvar foo = function (bar) {\r\n  return bar++;\r\n};\r\n\r\nconsole.log(foo(5));\r\n```\r\n\r\n## Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n## Links\r\n\r\n[link text](http://dev.nodeca.com)\r\n\r\n[link with title](http://nodeca.github.io/pica/demo/ \"title text!\")\r\n\r\n\r\n## Images\r\n\r\n![Minion](https://octodex.github.com/images/minion.png)\r\n![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg \"The Stormtroopocat\")\r\n\r\nLike links, Images also have a footnote style syntax\r\n\r\n![Alt text][id]\r\n\r\nWith a reference later in the document defining the URL location:\r\n\r\n[id]: https://octodex.github.com/images/dojocat.jpg  \"The Dojocat\"\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\nClassic markup: :wink: :crush: :cry: :tear: :laughing: :yum\r\n\r\nsee [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\n> Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:\r\n\r\n### Image Tools\r\n\r\nUse this tool to resize hi definition images to \"canvas\" dimensions:\r\n\r\n- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image\r\n  resize in browser.\r\n\r\n\r\n\r\n\r\n",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-09-svg/book-a/07",
+							"id": "07",
+							"type": "step",
+							"hide": false
+						},
+						{
+							"title": " Exercises & Archives",
+							"shortTitle": "Exercises",
+							"contentMd": "# Exercises & Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)\r\n\r\nThis archive must be placed in the `archives` folder as shown above.\r\n\r\n## Exercise 1:\r\n\r\nInstructions for exercise 1.\r\n\r\n## Exercise 2:\r\n\r\nInstructions for exercise 2.\r\n\r\n## Exercise 3:\r\n\r\nInstructions for exercise 3.\r\n",
+							"contentHtml": "",
+							"route": "/lab/{{COURSEURL}}/topic-09-svg/book-a/Exercises",
+							"id": "Exercises",
+							"type": "step",
+							"hide": false
+						}
+					],
+					"hide": false
+				}
+			],
+			"hide": false
+		},
+		{
+			"route": "/topic/{{COURSEURL}}/topic-10-hidden",
+			"type": "topic",
+			"title": " Hidden\r",
+			"summary": "PIN code must be entered to reveal",
+			"contentMd": "# Hidden\r\n\r\nPIN code must be entered to reveal",
+			"frontMatter": {},
+			"id": "topic-10-hidden",
+			"img": "https://{{COURSEURL}}/topic-10-hidden/topic.png",
+			"imgFile": "topic.png",
+			"pdf": "",
+			"pdfFile": "",
+			"video": "",
+			"videoids": {
+				"videoid": "",
+				"videoIds": []
+			},
+			"los": [],
+			"hide": true
+		}
+	],
+	"hide": false,
+	"properties": {
+		"credits": "A reference course containing all supported learning objects",
+		"moodle": "https://moodle.wit.ie",
+		"youtube": "https://www.youtube.com/playlist?list=PLMW4bgOfD3Dwi6FWirJ3AQtXZ-N_hV3Eo",
+		"auth": 0,
+		"labStepsAutoNumber": false,
+		"ignorepin": 4321,
+		"ignore": ["topic-10-hidden"],
+		"companions": {
+			"piazza": {
+				"link": "https://piazza.com/",
+				"title": "Piazza Q & A for this course",
+				"icon": {
+					"icon": "academicons:piazza",
+					"colour": "info"
+				}
+			}
+		},
+		"iconset": {
+			"moodle": {
+				"icon": "fa-solid:graduation-cap",
+				"colour": "warning"
+			}
+		}
+	},
+	"calendar": {
+		"title": "Semester 1 2023",
+		"weeks": [
+			{
+				"Mon Jan 02 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+					"title": "Registration",
+					"type": "reading"
+				}
+			},
+			{
+				"Mon Jan 09 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+					"title": "Reading 0",
+					"type": "reading"
+				}
+			},
+			{
+				"Mon Jan 16 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+					"title": 1,
+					"type": "tuition"
+				}
+			},
+			{
+				"Mon Jan 23 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+					"title": 2,
+					"type": "tuition"
+				}
+			},
+			{
+				"Mon Jan 30 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+					"title": 3,
+					"type": "tuition"
+				}
+			},
+			{
+				"Mon Feb 06 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+					"title": "Reading 1",
+					"type": "reading"
+				}
+			},
+			{
+				"Mon Feb 13 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+					"title": 4,
+					"type": "tuition"
+				}
+			},
+			{
+				"Mon Feb 20 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+					"title": 5,
+					"type": "tuition"
+				}
+			},
+			{
+				"Mon Feb 27 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+					"title": 6,
+					"type": "tuition"
+				}
+			},
+			{
+				"Mon Mar 06 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+					"title": "Reading 2",
+					"type": "reading"
+				}
+			},
+			{
+				"Mon Mar 13 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+					"title": 7,
+					"type": "tuition"
+				}
+			},
+			{
+				"Mon Mar 20 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+					"title": 8,
+					"type": "tuition"
+				}
+			},
+			{
+				"Mon Mar 27 2023 01:00:00 GMT+0100 (British Summer Time)": {
+					"title": 9,
+					"type": "tuition"
+				}
+			},
+			{
+				"Mon Apr 03 2023 01:00:00 GMT+0100 (British Summer Time)": {
+					"title": "Reading 3",
+					"type": "reading"
+				}
+			},
+			{
+				"Mon Apr 10 2023 01:00:00 GMT+0100 (British Summer Time)": {
+					"title": "Reading 4",
+					"type": "reading"
+				}
+			},
+			{
+				"Mon Apr 17 2023 01:00:00 GMT+0100 (British Summer Time)": {
+					"title": 10,
+					"type": "tuition"
+				}
+			},
+			{
+				"Mon Apr 24 2023 01:00:00 GMT+0100 (British Summer Time)": {
+					"title": 11,
+					"type": "tuition"
+				}
+			},
+			{
+				"Mon May 01 2023 01:00:00 GMT+0100 (British Summer Time)": {
+					"title": 12,
+					"type": "tuition"
+				}
+			},
+			{
+				"Mon May 08 2023 01:00:00 GMT+0100 (British Summer Time)": {
+					"title": "Reading 5",
+					"type": "reading"
+				}
+			},
+			{
+				"Mon May 15 2023 01:00:00 GMT+0100 (British Summer Time)": {
+					"title": "Reading 6",
+					"type": "reading"
+				}
+			}
+		]
+	}
+}

@@ -2,7 +2,13 @@
 	import type { Writable } from 'svelte/store';
 
 	// Preview Components
-	import { ProgressBar, CodeBlock, localStorageStore, popup, SlideToggle } from '@skeletonlabs/skeleton';
+	import {
+		ProgressBar,
+		CodeBlock,
+		localStorageStore,
+		popup,
+		SlideToggle
+	} from '@skeletonlabs/skeleton';
 
 	import Swatch from './Swatches.svelte';
 
@@ -10,7 +16,13 @@
 	import { storePreview } from 'tutors-reader-lib/src/stores/stores';
 	import type { ColorSettings, FormTheme, ContrastReport } from './types';
 	import { inputSettings, fontSettings } from './settings';
-	import { type Palette, generatePalette, generateA11yOnColor, hexValueIsValid, getPassReport } from './colors';
+	import {
+		type Palette,
+		generatePalette,
+		generateA11yOnColor,
+		hexValueIsValid,
+		getPassReport
+	} from './colors';
 	import type { PopupSettings } from '@skeletonlabs/skeleton';
 
 	// Stores
@@ -140,7 +152,9 @@
 		<section class="card col-span-2 ">
 			<!-- General Settings -->
 			<header class="p-4 col-span-2 flex justify-between items-center">
-				<button class="btn variant-ghost-surface" on:click={randomize} disabled={!$storePreview}>Randomize Colors</button>
+				<button class="btn variant-ghost-surface" on:click={randomize} disabled={!$storePreview}
+					>Randomize Colors</button
+				>
 			</header>
 			<hr />
 			<div class="p-4 grid grid-cols-1 gap-4">
@@ -149,8 +163,19 @@
 						<label class="label">
 							<span>{colorRow.label}</span>
 							<div class="grid grid-cols-[auto_1fr] gap-4 place-items-end">
-								<input class="input" type="color" bind:value={colorRow.hex} disabled={!$storePreview} />
-								<input class="input" type="text" bind:value={colorRow.hex} placeholder="#BADA55" disabled={!$storePreview} />
+								<input
+									class="input"
+									type="color"
+									bind:value={colorRow.hex}
+									disabled={!$storePreview}
+								/>
+								<input
+									class="input"
+									type="text"
+									bind:value={colorRow.hex}
+									placeholder="#BADA55"
+									disabled={!$storePreview}
+								/>
 							</div>
 						</label>
 						<Swatch color={colorRow.key} />
@@ -161,7 +186,8 @@
 								<div class="input-group input-group-divider grid-cols-[1fr_auto]">
 									<!-- Select -->
 									<select bind:value={colorRow.on} disabled={!$storePreview}>
-										{#each inputSettings.colorProps as c}<option value={c.value}>{c.label}</option>{/each}
+										{#each inputSettings.colorProps as c}<option value={c.value}>{c.label}</option
+											>{/each}
 									</select>
 									<!-- Badge -->
 									{#if $storePreview}
@@ -172,8 +198,10 @@
 											class:!bg-red-500={conReports[i].contrastReport.fails}
 											class:!text-zinc-900={conReports[i].contrastReport.largeAA}
 											class:!bg-amber-500={conReports[i].contrastReport.largeAA}
-											class:!text-slate-900={conReports[i].contrastReport.smallAAA || conReports[i].contrastReport.smallAA}
-											class:!bg-green-500={conReports[i].contrastReport.smallAAA || conReports[i].contrastReport.smallAA}
+											class:!text-slate-900={conReports[i].contrastReport.smallAAA ||
+												conReports[i].contrastReport.smallAA}
+											class:!bg-green-500={conReports[i].contrastReport.smallAAA ||
+												conReports[i].contrastReport.smallAA}
 										>
 											{@html conReports[i].contrastReport.report.emoji}
 										</div>
@@ -185,7 +213,8 @@
 									class="text-xs card variant-filled p-2 whitespace-nowrap"
 									class:!variant-filled-red-500={conReports[i].contrastReport.fails}
 									class:!variant-filled-amber-500={conReports[i].contrastReport.largeAA}
-									class:!variant-filled-green-500={conReports[i].contrastReport.smallAAA || conReports[i].contrastReport.smallAA}
+									class:!variant-filled-green-500={conReports[i].contrastReport.smallAAA ||
+										conReports[i].contrastReport.smallAA}
 								>
 									{conReports[i].contrastReport.report.note}
 									<!-- Arrow -->
@@ -210,7 +239,11 @@
 			</label>
 			<label class="label">
 				<span>Headings</span>
-				<select class="select" bind:value={$storeThemGenForm.fontHeadings} disabled={!$storePreview}>
+				<select
+					class="select"
+					bind:value={$storeThemGenForm.fontHeadings}
+					disabled={!$storePreview}
+				>
 					{#each inputSettings.fonts as f}<option value={f}>{f}</option>{/each}
 				</select>
 			</label>
@@ -218,13 +251,21 @@
 			<h3 class="col-span-2" data-toc-ignore>Text Color</h3>
 			<label class="label">
 				<span>Light Mode</span>
-				<select class="select" bind:value={$storeThemGenForm.textColorLight} disabled={!$storePreview}>
+				<select
+					class="select"
+					bind:value={$storeThemGenForm.textColorLight}
+					disabled={!$storePreview}
+				>
 					{#each inputSettings.colorProps as c}<option value={c.value}>{c.label}</option>{/each}
 				</select>
 			</label>
 			<label class="label">
 				<span>Dark Mode</span>
-				<select class="select" bind:value={$storeThemGenForm.textColorDark} disabled={!$storePreview}>
+				<select
+					class="select"
+					bind:value={$storeThemGenForm.textColorDark}
+					disabled={!$storePreview}
+				>
 					{#each inputSettings.colorProps as c}<option value={c.value}>{c.label}</option>{/each}
 				</select>
 			</label>
@@ -239,7 +280,11 @@
 			</label>
 			<label class="label">
 				<span>Container</span>
-				<select class="select" bind:value={$storeThemGenForm.roundedContainer} disabled={!$storePreview}>
+				<select
+					class="select"
+					bind:value={$storeThemGenForm.roundedContainer}
+					disabled={!$storePreview}
+				>
 					{#each inputSettings.rounded as r}<option value={r}>{r}</option>{/each}
 				</select>
 			</label>

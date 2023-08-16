@@ -31,29 +31,21 @@ export const analyticsService = {
   },
 
   setOnlineStatus(status: boolean) {
-    if (!user) return false;
+    const onlineStatus = status ? "online" : "offline";
     const key = `${course.id}/users/${sanitise(user.email)}/onlineStatus`;
-    if (status) {
-      updateStr(key, "online");
-      user.onlineStatus = "online";
-    } else {
-      updateStr(key, "offline");
-      user.onlineStatus = "offline";
-    }
+    updateStr(key, onlineStatus);
+    user.onlineStatus = onlineStatus;
   },
 
   async getOnlineStatus(course: Course, user: User): Promise<string> {
-    let status = "online";
-    if (course && user) {
-      this.user = user;
-      this.courseId = course.url.substring(0, course.url.indexOf("."));
-      const key = `${this.courseId}/users/${sanitise(user.email)}/onlineStatus`;
-      status = await readValue(key);
-      if (status == null) {
-        status = "online";
-      }
+    if (!course || !user) {
+      return "online";
     }
-    return status;
+    this.user = user;
+    this.courseId = course.url.substring(0, course.url.indexOf("."));
+    const key = `${this.courseId}/users/${sanitise(user.email)}/onlineStatus`;
+    const status = await readValue(key);
+    return status || "online";
   },
 
   reportPageLoad() {

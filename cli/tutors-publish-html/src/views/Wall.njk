@@ -1,0 +1,19 @@
+{% from "components/navigators/MainNavigator.njk" import mainNavigator %}
+{% from "components/cards/Card.njk" import card %}
+{% from "css/tailwindcss.njk" import carddeckbg %}
+{% extends "layouts/main.html" %}
+{% block content %}
+    {{ mainNavigator(lo) }}
+    <div class="{{ carddeckbg }}">
+        <div class="flex flex-wrap justify-center">
+            {% for lo in lo.los %}
+                {% if (lo.parentLo.type == "unit") or (lo.parentLo.type == "side") %}
+                    {% set path = lo.parentLo.parentLo.id + "/" + lo.parentLo.id %}
+                {% else %}
+                    {% set path = lo.parentLo.id %}
+                {% endif %}
+                {{ card (lo, path) }}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

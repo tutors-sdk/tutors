@@ -1,0 +1,38 @@
+{% macro urlStart (lo, path) %}
+  {% if (lo.type == "web") or ((lo.type == "github") ) %}
+    {% set url = lo.route + ' target="_blank"' %}
+  {% elif (lo.type == "talk") %}
+    {% set url = path + '/' + lo.id + '/' + lo.pdfFile + ' target="_blank"' %}
+  {% elif (lo.type == "archive") %}
+    {% set url = path + '/' +lo.id + "/" + lo.archiveFile %}
+  {% else %}
+    {% if (lo.type == "topic") %}
+      {% set url = './' +lo.id + "/index.html" %}
+    {% else %}
+      {% set url = path + '/' +lo.id + "/index.html" %}
+    {% endif %}
+  {% endif %}
+  <a href={{ url }}>
+  {% endmacro %}
+  {% macro urlEnd(lo) %}
+  </a>
+{% endmacro %}
+{% macro crumbUrlStart (index, lo) %}
+  {% if lo.type == "lab" or index ==  0 %}
+    {% set url = "./index.html" %}
+  {% elif lo.type == "unit" or lo.type == "side" %}
+    {% set url = "../../index.html" %}
+  {% elif index == 1 %}
+    {% set url = "../index.html" %}
+  {% elif index == 2 %}
+    {% set url = "../../index.html" %}
+  {% elif index == 3 %}
+    {% set url = "../../../index.html" %}
+  {% elif index == 4 %}
+    {% set url = "../../../../index.html" %}
+  {% endif %}
+  <a href={{ url }}>
+  {% endmacro %}
+  {% macro crumbUrlEnd(lo) %}
+  </a>
+{% endmacro %}

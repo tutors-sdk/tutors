@@ -1,0 +1,16 @@
+{% from "css/tailwindcss.njk" import iconbar %}
+{% from "components/iconography/Icon.njk" import icon, customicon %}
+{% macro walls(lo) %}
+  {% if (lo.type == "course") %}
+    {% set url = './' %}
+  {% elif (lo.type == "topic") %}
+    {% set url = '../' %}
+  {% else %}
+    {% set url = '../../../' %}
+  {% endif %}
+  <div class="{{ iconbar }}">
+    {% for wall in lo.parentCourse.walls %}
+      {{ icon(wall[0].type, 20, url + wall[0].type + ".html", "All " + wall[0].type + "'s in module") }}
+    {% endfor %}
+  </div>
+{% endmacro %}
