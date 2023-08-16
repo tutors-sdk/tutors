@@ -2,10 +2,17 @@
 	import '$lib/ui/legacy/themes/tutors.css';
 	import '@skeletonlabs/skeleton/styles/all.css';
 	import './app.postcss';
-	import { invalidate } from '$app/navigation';
+	import { goto, invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
-	import { courseUrl, currentCourse, onlineStatus, storeTheme, studentsOnline } from '$lib/stores';
+	import {
+		courseUrl,
+		currentCourse,
+		currentUser,
+		onlineStatus,
+		storeTheme,
+		studentsOnline
+	} from '$lib/stores';
 
 	import {
 		AppBar,
@@ -30,6 +37,7 @@
 	import { analyticsService } from '$lib/services/analytics';
 	import Icon from '@iconify/svelte';
 	import { get } from 'svelte/store';
+	import { redirect } from '@sveltejs/kit';
 
 	const themes: any = { tutors, dyslexia, halloween, valentines };
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
@@ -68,6 +76,13 @@
 		drawerStore.open(settings);
 	};
 
+	const handleSignOut = async () => {
+		await supabase.auth.signOut();
+		goto('/');
+		currentCourse.set(null);
+		currentUser.set(null);
+	};
+
 	onMount(() => {
 		status = get(onlineStatus);
 		const {
@@ -90,7 +105,7 @@
 	<Toast />
 	<Sidebars />
 	<svelte:fragment slot="header">
-		{#if !$currentCourse || $page.url.pathname === '/dashboard' || $page.url.pathname === '/time' || $page.url.pathname.length <= 1}
+		{#if !$currentCourse || $page.url.pathname === '/dashboard' || $page.url.pathname === '/time' || $page.url.pathname === '/auth' || $page.url.pathname.length <= 1}
 			<AppBar
 				background="bg-surface-100-800-token"
 				shadow="none"
@@ -141,14 +156,14 @@
 										</a>
 									</li>
 									<li>
-										<a href="/logout" rel="noreferrer">
+										<button on:click={handleSignOut}>
 											<Icon
 												icon="fluent:sign-out-24-filled"
 												color="rgba(var(--color-error-500))"
 												height="20"
 											/>
 											<div class="ml-2">Logout</div>
-										</a>
+										</button>
 									</li>
 								</ul>
 							</nav>
@@ -340,14 +355,14 @@
 										</a>
 									</li>
 									<li>
-										<a href="/logout" rel="noreferrer">
+										<button on:click={handleSignOut}>
 											<Icon
 												icon="fluent:sign-out-24-filled"
 												color="rgba(var(--color-error-500))"
 												height="20"
 											/>
 											<div class="ml-2">Logout</div>
-										</a>
+										</button>
 									</li>
 								</ul>
 							</nav>
