@@ -109,30 +109,6 @@
 						<div class="relative">
 							<button class="btn btn-sm space-x-1" use:popup={{ event: 'click', target: 'avatar' }}>
 								<div class="relative inline-block">
-									{#if status && studentsOnline}
-										<span
-											class="badge-icon variant-filled-error absolute -top-2 -right-2 z-10 text-white"
-											>{$studentsOnline}</span
-										>
-									{/if}
-									{#if $currentCourse}
-										<span class="badge-icon absolute -bottom-2 -right-2 z-10 text-white">
-											{#if status}
-												<Icon
-													icon="fluent:presence-available-24-filled"
-													color="rgba(var(--color-success-500))"
-													height="20"
-												/>
-											{/if}
-											{#if !status}
-												<Icon
-													icon="fluent:presence-available-24-regular"
-													color="rgba(var(--color-error-500))"
-													height="20"
-												/>
-											{/if}</span
-										>
-									{/if}
 									<Avatar
 										width="w-10"
 										src={data.session.user.user_metadata.avatar_url}
