@@ -13,7 +13,7 @@
 <div class="container mx-auto p-8">
 	<p class="text-2xl font-bold py-4">Your previously accessed courses</p>
 	<div class="flex flex-wrap">
-		{#if data.courses}
+		{#if data.courses && data.courses[0]}
 			{#each data.courses[0].course_list.courses as course}
 				<a class="card w-full lg:w-96 m-2 p-4" href={'/course/' + course.id}>
 					<div>
