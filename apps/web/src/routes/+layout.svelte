@@ -68,11 +68,6 @@
 		drawerStore.open(settings);
 	};
 
-	$: ($page.url.pathname.startsWith('/dashboard') ||
-		$page.url.pathname.startsWith('/time') ||
-		$page.url.pathname.length <= 1) &&
-		currentCourse.set(null);
-
 	onMount(() => {
 		status = get(onlineStatus);
 		const {
@@ -95,7 +90,103 @@
 	<Toast />
 	<Sidebars />
 	<svelte:fragment slot="header">
-		{#if $currentCourse}
+		{#if !$currentCourse || $page.url.pathname === '/dashboard' || $page.url.pathname === '/time' || $page.url.pathname.length <= 1}
+			<AppBar
+				background="bg-surface-100-800-token"
+				shadow="none"
+				class="h-20 justify-center border-b-[1px] border-surface-200 dark:border-surface-700"
+			>
+				<svelte:fragment slot="lead">
+					<a href="/">
+						<div class="flex space-x-4">
+							<img src="/logo.svg" alt="tutors logo" />
+							<span class="text-2xl font-bold">Tutors</span>
+						</div>
+					</a>
+				</svelte:fragment>
+				<svelte:fragment slot="trail">
+					{#if data.session}
+						<div class="relative">
+							<button class="btn btn-sm space-x-1" use:popup={{ event: 'click', target: 'avatar' }}>
+								<div class="relative inline-block">
+									{#if status && studentsOnline}
+										<span
+											class="badge-icon variant-filled-error absolute -top-2 -right-2 z-10 text-white"
+											>{$studentsOnline}</span
+										>
+									{/if}
+									{#if $currentCourse}
+										<span class="badge-icon absolute -bottom-2 -right-2 z-10 text-white">
+											{#if status}
+												<Icon
+													icon="fluent:presence-available-24-filled"
+													color="rgba(var(--color-success-500))"
+													height="20"
+												/>
+											{/if}
+											{#if !status}
+												<Icon
+													icon="fluent:presence-available-24-regular"
+													color="rgba(var(--color-error-500))"
+													height="20"
+												/>
+											{/if}</span
+										>
+									{/if}
+									<Avatar
+										width="w-10"
+										src={data.session.user.user_metadata.avatar_url}
+										alt={data.session.user.user_metadata.name}
+									/>
+								</div>
+							</button>
+							<nav class="list-nav card card-body w-56 p-4 space-y-4 shadow-lg" data-popup="avatar">
+								<span class="mt-2 ml-4 text-xs">Logged in as:</span><br />
+								<span class="ml-4 text-sm">{data.session.user.user_metadata.name}</span>
+								<ul>
+									<li>
+										<a href="/dashboard">
+											<Icon
+												icon="fluent:home-24-filled"
+												color="rgba(var(--color-primary-500))"
+												height="20"
+											/>
+											<div class="ml-2">Dashboard</div>
+										</a>
+									</li>
+									<li>
+										<a
+											href="https://github.com/{data.session.user.user_metadata.preferred_username}"
+											target="_blank"
+											rel="noreferrer"
+										>
+											<Icon icon="mdi:github" height="20" />
+											<div class="ml-2">Github Profile</div>
+										</a>
+									</li>
+									<li>
+										<a href="/logout" rel="noreferrer">
+											<Icon
+												icon="fluent:sign-out-24-filled"
+												color="rgba(var(--color-error-500))"
+												height="20"
+											/>
+											<div class="ml-2">Logout</div>
+										</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+					{:else}
+						<a class="btn btn-sm" href="/auth">
+							<span class="hidden text-sm font-bold lg:block">Login / Register</span>
+						</a>
+					{/if}
+					<span class="divider-vertical h-10 hidden lg:block" />
+					<LayoutMenu />
+				</svelte:fragment>
+			</AppBar>
+		{:else if $currentCourse}
 			<AppBar
 				background="bg-surface-100-800-token"
 				shadow="none"
@@ -304,102 +395,6 @@
 			</AppBar>
 
 			<PageHeader />
-		{:else}
-			<AppBar
-				background="bg-surface-100-800-token"
-				shadow="none"
-				class="h-20 justify-center border-b-[1px] border-surface-200 dark:border-surface-700"
-			>
-				<svelte:fragment slot="lead">
-					<a href="/">
-						<div class="flex space-x-4">
-							<img src="/logo.svg" alt="tutors logo" />
-							<span class="text-2xl font-bold">Tutors</span>
-						</div>
-					</a>
-				</svelte:fragment>
-				<svelte:fragment slot="trail">
-					{#if data.session}
-						<div class="relative">
-							<button class="btn btn-sm space-x-1" use:popup={{ event: 'click', target: 'avatar' }}>
-								<div class="relative inline-block">
-									{#if status && studentsOnline}
-										<span
-											class="badge-icon variant-filled-error absolute -top-2 -right-2 z-10 text-white"
-											>{$studentsOnline}</span
-										>
-									{/if}
-									{#if $currentCourse}
-										<span class="badge-icon absolute -bottom-2 -right-2 z-10 text-white">
-											{#if status}
-												<Icon
-													icon="fluent:presence-available-24-filled"
-													color="rgba(var(--color-success-500))"
-													height="20"
-												/>
-											{/if}
-											{#if !status}
-												<Icon
-													icon="fluent:presence-available-24-regular"
-													color="rgba(var(--color-error-500))"
-													height="20"
-												/>
-											{/if}</span
-										>
-									{/if}
-									<Avatar
-										width="w-10"
-										src={data.session.user.user_metadata.avatar_url}
-										alt={data.session.user.user_metadata.name}
-									/>
-								</div>
-							</button>
-							<nav class="list-nav card card-body w-56 p-4 space-y-4 shadow-lg" data-popup="avatar">
-								<span class="mt-2 ml-4 text-xs">Logged in as:</span><br />
-								<span class="ml-4 text-sm">{data.session.user.user_metadata.name}</span>
-								<ul>
-									<li>
-										<a href="/dashboard">
-											<Icon
-												icon="fluent:home-24-filled"
-												color="rgba(var(--color-primary-500))"
-												height="20"
-											/>
-											<div class="ml-2">Dashboard</div>
-										</a>
-									</li>
-									<li>
-										<a
-											href="https://github.com/{data.session.user.user_metadata.preferred_username}"
-											target="_blank"
-											rel="noreferrer"
-										>
-											<Icon icon="mdi:github" height="20" />
-											<div class="ml-2">Github Profile</div>
-										</a>
-									</li>
-									<li>
-										<a href="/logout" rel="noreferrer">
-											<Icon
-												icon="fluent:sign-out-24-filled"
-												color="rgba(var(--color-error-500))"
-												height="20"
-											/>
-											<div class="ml-2">Logout</div>
-										</a>
-									</li>
-								</ul>
-							</nav>
-						</div>
-					{:else}
-						<a class="btn btn-sm" href="/auth">
-							<span class="hidden text-sm font-bold lg:block">Login / Register</span>
-						</a>
-					{/if}
-					<span class="divider-vertical h-10 hidden lg:block" />
-					<LayoutMenu />
-				</svelte:fragment>
-			</AppBar>
 		{/if}
 	</svelte:fragment>
 	<slot />
