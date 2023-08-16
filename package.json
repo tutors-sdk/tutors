@@ -6,15 +6,14 @@
   "version": "0.3.0",
   "private": true,
   "workspaces": [
-    "apps/*",
+    "/*",
     "cli/*",
     "packages/*"
   ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
-    "web": "turbo run dev --filter tutors-web",
-    "time": "turbo run dev --filter tutors-time",
+    "app": "turbo run dev --filter tutors-app",
     "lint": "turbo run lint",
     "format": "prettier --write ."
   },
