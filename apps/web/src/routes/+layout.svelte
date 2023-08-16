@@ -22,7 +22,8 @@
 		Toast,
 		storePopup,
 		type DrawerSettings,
-		drawerStore
+		drawerStore,
+		toastStore
 	} from '@skeletonlabs/skeleton';
 	import LayoutMenu from '$lib/ui/navigators/LayoutMenu.svelte';
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
@@ -81,6 +82,10 @@
 		if (error) {
 			console.log(error);
 		} else {
+			toastStore.trigger({
+				message: 'You have successfully logged out!',
+				background: 'variant-filled-success'
+			});
 			goto('/');
 		}
 	};
@@ -117,7 +122,7 @@
 					<a href="/">
 						<div class="flex space-x-4">
 							<img src="/logo.svg" alt="tutors logo" />
-							<span class="text-2xl font-bold">Tutors</span>
+							<span class="text-2xl font-bold hidden lg:block">Tutors</span>
 						</div>
 					</a>
 				</svelte:fragment>
@@ -172,7 +177,7 @@
 						</div>
 					{:else}
 						<a class="btn btn-sm" href="/auth">
-							<span class="hidden text-sm font-bold lg:block">Login / Register</span>
+							<span class="text-sm font-bold block">Login / Register</span>
 						</a>
 					{/if}
 					<span class="divider-vertical h-10 hidden lg:block" />
@@ -371,7 +376,7 @@
 						</div>
 					{:else}
 						<a class="btn btn-sm" href="/auth">
-							<span class="hidden text-sm font-bold lg:block">Login / Register</span>
+							<span class="text-sm font-boldblock">Login / Register</span>
 						</a>
 					{/if}
 					<span class="divider-vertical h-10 hidden lg:block" />
