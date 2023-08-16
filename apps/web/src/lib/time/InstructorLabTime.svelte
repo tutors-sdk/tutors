@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { Grid } from 'ag-grid-community';
 	import 'ag-grid-enterprise';
-	import Icon from '$lib/ui/legacy';
+	import { Icon } from '$lib/ui/legacy';
 	import type { UserMetric } from '$lib/types/metrics';
 	import type { Lo } from '$lib/types/lo';
 	import { LabCountSheet } from '../sheets/lab-count-sheet';
