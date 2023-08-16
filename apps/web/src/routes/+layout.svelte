@@ -77,10 +77,12 @@
 	};
 
 	const handleSignOut = async () => {
-		await supabase.auth.signOut();
-		goto('/');
-		currentCourse.set(null);
-		currentUser.set(null);
+		const { error } = await supabase.auth.signOut();
+		if (error) {
+			console.log(error);
+		} else {
+			goto('/');
+		}
 	};
 
 	onMount(() => {
