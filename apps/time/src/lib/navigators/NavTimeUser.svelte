@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentCourse, currentUser } from "tutors-reader-lib/src/stores/stores";
+  import { currentCourse, currentUser } from "$lib/stores";
   import { Icon } from "tutors-ui";
   import { popup, Avatar } from "@skeletonlabs/skeleton";
   let gitUrl = "";

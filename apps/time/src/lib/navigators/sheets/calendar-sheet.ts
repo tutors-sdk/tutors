@@ -1,8 +1,8 @@
 import type { ICellRendererParams } from "ag-grid-community";
-import type { Calendar } from "tutors-reader-lib/src/types/lo-types";
-import type { UserMetric } from "tutors-reader-lib/src/types/metrics-types";
+import type { Calendar } from "$lib/types/lo";
+import type { UserMetric } from "$lib/types/metrics";
 import { deepScheme } from "./heat-map-colours";
-import { formatDate } from "tutors-reader-lib/src/utils/firebase-utils";
+import { formatDate } from "$lib/utils/firebase";
 
 interface CalendarSheetColumn {
   headerName: string;
