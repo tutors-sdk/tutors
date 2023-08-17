@@ -6,7 +6,6 @@
       "when": "$(basename).ts"
     },
     "**/*.js.map": true,
-    "**/*.d.ts": true,
     "**/node_modules": true,
     "**/.turbo": true,
     "**/dist": true,
