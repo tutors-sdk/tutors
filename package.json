@@ -6,16 +6,13 @@
   "version": "0.3.0",
   "private": true,
   "workspaces": [
-    "apps/*",
-    "cli/*",
-    "packages/*"
+    "/*",
+    "cli/*"
   ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
-    "course": "turbo run dev --filter tutors-course",
-    "home": "turbo run dev --filter tutors-home",
-    "time": "turbo run dev --filter tutors-time",
+    "app": "turbo run dev --filter tutors-app",
     "lint": "turbo run lint",
     "format": "prettier --write ."
   },
@@ -24,7 +21,7 @@
     "eslint-config-custom": "*",
     "prettier": "^2.8.4",
     "prettier-plugin-svelte": "^2.9.0",
-    "turbo": "latest"
+    "turbo": "1.10.12"
   },
   "packageManager": "npm@8.19.2"
 }
