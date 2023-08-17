@@ -2,21 +2,15 @@
 
 
 # generated files from ts sources in specific ts only modules
-**/cli/tutors-html/src/**/*.js
-**/cli/tutors-html/src/**/*.js.map
-**/cli/tutors-html/src/**/*.d.ts
-**/cli/tutors-json/src/**/*.js
-**/cli/tutors-json/src/**/*.js.map
-**/cli/tutors-json/src/**/*.d.ts
-**/cli/tutors-gen/src/**/*.js
-**/cli/tutors-gen/src/**/*.js.map
-**/cli/tutors-gen/src/**/*.d.ts
-**/cli/tutors-time/src/**/*.js
-**/cli/tutors-time/src/**/*.js.map
-**/cli/tutors-time/src/**/*.d.ts
-**/packages/tutors-lib/src/**/*.js
-**/packages/tutors-lib/src/**/*.js.map
-**/packages/tutors-lib/src/**/*.d.ts
+**/cli/tutors-gen-lib/src/**/*.js
+**/cli/tutors-gen-lib/src/**/*.js.map
+**/cli/tutors-gen-lib/src/**/*.d.ts
+**/cli/tutors-publish/src/**/*.js
+**/cli/tutors-publish/src/**/*.js.map
+**/cli/tutors-publish/src/**/*.d.ts
+**/cli/tutors-publish-html/src/**/*.js
+**/cli/tutors-publish-html/src/**/*.js.map
+**/cli/tutors-publish-html/src/**/*.d.ts
 **/test/reference-course/json
 **/test/reference-course/public-site
 
