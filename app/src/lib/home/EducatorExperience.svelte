@@ -1,9 +1,9 @@
 <script lang="ts">
   import ExperienceCard from "./ExperienceCard.svelte";
 
-  const icon = "ant-design:code-outlined";
+  const icon = "mdi:teacher";
   const title = "Educator Experience";
-  const link = "https://reader.tutors.dev/course/tutors-reference-manual#tutors-values";
+  const link = "https://tutors.dev/course/tutors-reference-manual#tutors-values";
   const content = `
   The <strong><em>Educator Experience</em></strong> prioritises the creation of a
   <strong>guided paths</strong>

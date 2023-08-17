@@ -10,7 +10,7 @@
     class="card w-80 mx-auto my-4 lg:m-4 border-primary-500 border-y-8 hover:scale-105 transition-al"
   >
     <div class="card-header">
-      <h3 class="card-title font-bold">{title}</h3>
+      <h3 class="card-title font-bold text-2xl">{title}</h3>
     </div>
     <figure class="flex justify-center my-4">
       <iconify-icon {icon} height="150" />
