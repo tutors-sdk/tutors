@@ -1,17 +1,17 @@
-import { redirect } from '@sveltejs/kit';
+import { redirect } from "@sveltejs/kit";
 
 export const load = async ({ parent }) => {
-	const data = await parent();
-	const session = data.session;
+  const data = await parent();
+  const session = data.session;
 
-	if (!session) {
-		throw redirect(303, '/auth');
-	}
+  if (!session) {
+    throw redirect(303, "/auth");
+  }
 
-	const { data: courses } = await data.supabase
-		.from('accessed_courses')
-		.select(`course_list`)
-		.eq('id', session.user.id);
+  const { data: courses } = await data.supabase
+    .from("accessed_courses")
+    .select(`course_list`)
+    .eq("id", session.user.id);
 
-	return { session, courses };
+  return { session, courses };
 };

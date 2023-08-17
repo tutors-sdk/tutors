@@ -1,31 +1,31 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
-	import { analyticsService } from '$lib/services/analytics';
-	import { initFirebase } from '$lib/utils/firebase';
-	import { getKeys } from '$lib/environment';
-	import TopDeck from '$lib/ui/legacy/Organisms/CardDeck/TopDeck.svelte';
+  import { onMount } from "svelte";
+  import { goto } from "$app/navigation";
+  import { analyticsService } from "$lib/services/analytics";
+  import { initFirebase } from "$lib/utils/firebase";
+  import { getKeys } from "$lib/environment";
+  import TopDeck from "$lib/ui/legacy/Organisms/CardDeck/TopDeck.svelte";
 
-	export let data: any;
+  export let data: any;
 
-	$: ({ supabase, session } = data);
+  $: ({ supabase, session } = data);
 
-	onMount(async () => {
-		if (data.course.authLevel > 0) {
-			if (!session) {
-				localStorage.setItem('course_url', data.course.url);
-				localStorage.setItem('isAuthenticating', 'true');
-				goto('/auth');
-			} else {
-				session.onlineStatus = await analyticsService.getOnlineStatus(data.course, session);
-				// analyticsService.updateLogin(data.course.id, data.session);
-			}
-		}
+  onMount(async () => {
+    if (data.course.authLevel > 0) {
+      if (!session) {
+        localStorage.setItem("course_url", data.course.url);
+        localStorage.setItem("isAuthenticating", "true");
+        goto("/auth");
+      } else {
+        session.onlineStatus = await analyticsService.getOnlineStatus(data.course, session);
+        // analyticsService.updateLogin(data.course.id, data.session);
+      }
+    }
 
-		if (getKeys().firebase.apiKey !== 'XXX') {
-			initFirebase(getKeys().firebase);
-		}
-	});
+    if (getKeys().firebase.apiKey !== "XXX") {
+      initFirebase(getKeys().firebase);
+    }
+  });
 </script>
 
 <TopDeck lo={data.course.lo} />

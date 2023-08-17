@@ -27,18 +27,26 @@
 
 {#if type}
   {#if link}
-    <a target="{target}" href="{link}">
-      <Icon icon="{getIcon(type).icon}" color="{legacyIconColour(getIcon(type).colour)}" width="{width}" height="{height}" />
+    <a {target} href={link}>
+      <Icon
+        icon={getIcon(type).icon}
+        color={legacyIconColour(getIcon(type).colour)}
+        {width}
+        {height}
+      />
     </a>
   {:else}
-    <Icon icon="{getIcon(type).icon}" color="{legacyIconColour(getIcon(type).colour)}" width="{width}" height="{height}" />
+    <Icon
+      icon={getIcon(type).icon}
+      color={legacyIconColour(getIcon(type).colour)}
+      {width}
+      {height}
+    />
   {/if}
+{:else if link}
+  <a {target} href={link}>
+    <Icon {icon} {color} {width} {height} />
+  </a>
 {:else}
-  {#if link}
-    <a target="{target}" href="{link}">
-      <Icon icon="{icon}" color="{color}" width="{width}" height="{height}" />
-    </a>
-  {:else}
-    <Icon icon="{icon}" color="{color}" width="{width}" height="{height}" />
-  {/if}
+  <Icon {icon} {color} {width} {height} />
 {/if}
