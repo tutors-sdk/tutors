@@ -1,10 +1,9 @@
 const config = {
   mode: "jit",
   content: [
-    "./node_modules/@skeletonlabs/skeleton/**/*.{html,js,svelte,ts}",
-    "../../node_modules/@skeletonlabs/skeleton/**/*.{html,js,svelte,ts}",
-    "./src/**/**/*.{html,js,svelte,ts}",
-    "./src/**/*.{html,js,svelte,ts}"
+    "./src/**/*.{html,js,svelte,ts}",
+    // 2. Append the path for the Skeleton NPM package and files:
+    require("path").join(require.resolve("@skeletonlabs/skeleton"), "../**/*.{html,js,svelte,ts}")
   ],
   safelist: [
     {

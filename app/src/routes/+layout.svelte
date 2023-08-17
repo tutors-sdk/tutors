@@ -1,6 +1,6 @@
 <script lang="ts">
   import "$lib/ui/legacy/themes/tutors.css";
-  import "@skeletonlabs/skeleton/styles/all.css";
+  import "@skeletonlabs/skeleton/styles/skeleton.css";
   import "./app.postcss";
   import { goto, invalidate } from "$app/navigation";
   import { onMount } from "svelte";
@@ -106,6 +106,7 @@
 
 <svelte:head>
   {@html `\<style\>${themes[$storeTheme]}}\</style\>`}
+  <title>Tutors</title>
 </svelte:head>
 
 <AppShell class="h-screen">
