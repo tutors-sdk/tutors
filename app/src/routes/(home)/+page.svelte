@@ -18,10 +18,11 @@
   <div class="container lg:flex justify-center items-center mx-auto py-32">
     <div class="lg:w-1/2 mx-4">
       <h1 class="font-bold !text-5xl inline-block my-4">
-        An <span
+        An
+        <span
           class="font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone"
-          >Open Learning</span
-        >
+          >Open Learning
+        </span>
         Web Toolkit
       </h1>
       <p class="font-bold !text-lg my-4">
@@ -31,29 +32,17 @@
       <div class="space-x-4 space-y-4">
         <a
           class="btn btn-xl bg-primary-500 text-white font-bold hover:scale-105 transition-all w-64"
-          href="https://reader.tutors.dev/course/reference-course"
+          href="https://tutors.dev/course/reference-course"
           target="_blank"
-          rel="noreferrer">View Demo</a
+          rel="noreferrer"
         >
+          View Demo
+        </a>
         <a
           class="btn btn-xl bg-surface-100-800-token font-bold hover:scale-105 transition-all w-64"
-          href="https://reader.tutors.dev/course/tutors-reference-manual"
+          href="https://tutors.dev/course/tutors-reference-manual"
           target="_blank"
           rel="noreferrer">Documentation</a
-        >
-      </div>
-      <div class="space-x-4 space-y-4">
-        <a
-          class="btn btn-xl bg-surface-100-800-token font-bold hover:scale-105 transition-all w-64"
-          href="https://time.tutors.dev/catalogue"
-          target="_blank"
-          rel="noreferrer">Catalogue</a
-        >
-        <a
-          class="btn btn-xl bg-primary-500 text-white font-bold hover:scale-105 transition-all w-64"
-          href="https://time.tutors.dev/live"
-          target="_blank"
-          rel="noreferrer">Live</a
         >
       </div>
     </div>
