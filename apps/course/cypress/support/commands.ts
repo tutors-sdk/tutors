@@ -15,12 +15,13 @@ Cypress.Commands.add("goBack", () => {
 Cypress.Commands.add("clickBreadCrumb", (step: number) => {
   cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
   // Now you can interact with the <li> elements
-  cy.get('li.crumb').eq(step).click();
+  cy.get('li.crumb').eq(step).click({ force: true });
+
 });
 
 Cypress.Commands.add("clickCard", (lo: any) => {
-  if (!lo.hide && lo.type != "web" && lo.type != "archive" && lo.type != "paneltalk" && lo.type != "github" && lo.type != "unit") {
-    cy.log(lo.type)
+  if (!lo.hide && lo.type !="web") {
+    cy.log("TYPE: " + lo.type)
     switch (lo.type) {
       case "lab":
         cy.clickLabCard(lo)
@@ -28,10 +29,31 @@ Cypress.Commands.add("clickCard", (lo: any) => {
       case "step":
         cy.clickLabStep(lo)
         break;
+      case "unit":
+        cy.clickPanelVideo(lo);
+        break;
+      case "github":
+        cy.clickGithubRepo(lo);
+        break;
+      case "archive":
+        cy.verifyDownloadOfArchive(lo);
+        break;
+      case "web":
+        cy.triggerCardAction(lo);
+       // cy.wait(delay);
+        cy.reload();
+        //cy.go(-1);
+        cy.wait(500)
+        cy.clickBreadCrumb(1);
+        break;
+      case "note":
+        cy.triggerCardAction(lo);
+        cy.clickBreadCrumb(1);
+        break;
       default:
         cy.triggerCardAction(lo);
     }
-    cy.wait(500);
+    cy.wait(delay);
   }
 });
 
@@ -45,18 +67,20 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
   cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
 
   if (lo.title.includes('#')) {
-    // Do something if text contains 'desired-text'
-    cy.contains(lo.title.slice(2).trim()).click({ force: true });
+    cy.contains(lo.title.slice(1).trim()).click({ force: true });
   } else {
-    const text = lo.title.trim(); // Get and trim the text content
+    const text = lo.title.trim();
+    cy.log(text);
     // Perform assertions that multiple elements exist
-    cy.findAllByText(text, { timeout: 5000 }).each($elements => {
+    cy.findAllByText(text).should('exist').each($elements => {
       // Check if at least one element is found
       if ($elements.length > 0) {
         $elements.each((_, $el) => {
           // Element(s) found, perform actions on the first element
           cy.wrap($el).click({ force: true });
         });
+      } else {
+        cy.log(`Element with text "${text}" not found.`);
       }
     });
   }
@@ -81,7 +105,7 @@ Cypress.Commands.add("toggleTOCWithVerification", (contents: any) => {
   cy.get('button.btn.btn-sm', { timeout: 5000 }).eq(2).click("topRight", { force: true })
   //loops through the titles to verify that each title is shown on screen as should
   contents.forEach(element => {
-    if(element.title != " Hidden\r"){
+    if (element.title != " Hidden\r") {
       cy.log(element.title)
       cy.get('div.drawer-backdrop')
         .find('div.drawer')
@@ -95,10 +119,10 @@ Cypress.Commands.add("toggleInfoWithVerification", (contents: any) => {
   cy.get('button.btn.btn-sm', { timeout: 5000 }).eq(0).click("topLeft", { force: true })
   //loops through the array of title and summary to verify that each title is shown on screen as should
   contents.forEach(element => {
-      cy.log(element)
-      cy.get('div.drawer-backdrop')
-        .find('div.drawer')
-        .should('include.text', element);
+    cy.log(element)
+    cy.get('div.drawer-backdrop')
+      .find('div.drawer')
+      .should('include.text', element);
   });
 });
 
@@ -163,10 +187,11 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
       setTimeout(function () { doc.location.reload() }, 700)
     })
 
-  cy.findAllByText(lo.title.trim(), { matchCase: false }).click({force:true})
-  .then(() => {
-    cy.clickStaticBreadCrumb(1);
-  }); 
+    cy.findAllByText(lo.title.trim(), { matchCase: false }).click({ force: true })
+      .then(() => {
+        cy.clickBreadCrumb(0);
+        //cy.clickStaticBreadCrumb(1);
+      });
   })
 });
 
@@ -209,6 +234,16 @@ Cypress.Commands.add("clickStaticCard", (lo: any) => {
   }
 });
 
+Cypress.Commands.add("browseTopicsLearningObjects", (lo: any) => {
+
+  const concatenatedURL = "https://reader.tutors.dev" + lo.route;
+
+  cy.log("INSIDE LOOOOOOOOP")
+  cy.log(concatenatedURL)
+  cy.visit(concatenatedURL)
+
+});
+
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -218,6 +253,7 @@ declare global {
       clickLabStep(lo: any): Chainable<any>;
       clickLabCard(lo: any): Chainable<any>;
       triggerCardAction(lo: any): Chainable<any>;
+      browseTopicsLearningObjects(lo: any): Chainable<any>;
       /**
        * ***HTML Generator Version
        */

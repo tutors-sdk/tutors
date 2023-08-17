@@ -25,8 +25,8 @@ describe("Loading the JSON fixture", function () {
   it('Course Reference page', function () {
     // Test case
     cy.visit(course.route);
-    cy.wait(500);
-    cy.get('.app-bar', { timeout: 5000 }).contains(course.title.trim());
+    cy.wait(3000)
+    cy.get('.app-bar').contains(course.title.trim());
     cy.get('.z-10').contains(course.title.trim());
     course.los.forEach((topic) => {
       if (!topic.hide) {
@@ -47,32 +47,39 @@ describe("Loading the JSON fixture", function () {
     cy.toggleTOCWithVerification(course.los)
   });
 
-  it("Topics", function () {
-    course.los.forEach((topic) => {
-      if (!topic.hide) {
-        console.log(topic);
-        cy.clickCard(topic);
-        cy.wait(500);
-        cy.go("back");
-        cy.wait(500);
-      }
-    });
-  });
+  // it("Topics", function () {
+  //   course.los.forEach((topic) => {
+  //     if (!topic.hide) {
+  //       console.log(topic);
+  //       cy.clickCard(topic);
+  //       cy.wait(500);
+  //       cy.go("back");
+  //       cy.wait(500);
+  //     }
+  //   });
+  // });
 
   it("Deep Topics", function () {
     course.los.forEach((topic) => {
       if (!topic.hide) {
-        cy.wait(500);
+        cy.wait(5000);
         cy.clickCard(topic);
         topic.los.forEach((lo) => {
           cy.clickCard(lo);
-          lo.los.forEach((l) => {
+          lo.los.forEach((l, i) => {
             cy.clickCard(l);
+            if(lo.los.length -1 === i){
+              cy.browseTopicsLearningObjects(l)
+            }
           });
-          cy.clickBreadCrumb(1)
+         // cy.clickBreadCrumb(1)
         });
         cy.clickBreadCrumb(0)
       }
     });
   });
+
+  it('Verify the folder downloaded', () => {
+    cy.verifyDownload('\\archive.zip', { timeout: 2500 });
 });
+ });
