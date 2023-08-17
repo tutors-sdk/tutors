@@ -1,12 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.preOrder = exports.loTypes = exports.Properties = exports.assetTypes = exports.imageTypes = void 0;
-exports.imageTypes = ["png", "jpg", "jpeg", "gif", "PNG", "JPG", "JPEG", "GIF"];
-exports.assetTypes = exports.imageTypes.concat(["pdf", "zip"]);
+exports.preOrder = exports.Properties = exports.loTypes = void 0;
+exports.loTypes = ["note", "book", "archive", "web", "github", "panelnote", "paneltalk", "panelvideo", "talk", "unit", "side", "topic"];
 class Properties {
 }
 exports.Properties = Properties;
-exports.loTypes = ["/note", "/book", "/archive", "/web", "/github", "/panelnote", "/paneltalk", "/panelvideo", "/talk", "/unit", "/side", "/topic"];
 exports.preOrder = new Map([
     ["unit", 1],
     ["side", 2],

@@ -1,0 +1,7 @@
+{% from "components/cards/TopicCard.njk" import topicCard %}
+{% from "components/navigators/MainNavigator.njk" import mainNavigator %}
+{% extends "layouts/main.html" %}
+{% block content %}
+  {{ mainNavigator(lo) }}
+  {{ topicCard(lo) }}
+{% endblock %}

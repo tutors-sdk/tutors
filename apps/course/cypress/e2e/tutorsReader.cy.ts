@@ -26,7 +26,7 @@ describe("Loading the JSON fixture", function () {
     // Test case
     cy.visit(course.route);
     cy.wait(500);
-    cy.get('.app-bar').contains(course.title.trim());
+    cy.get('.app-bar', { timeout: 5000 }).contains(course.title.trim());
     cy.get('.z-10').contains(course.title.trim());
     course.los.forEach((topic) => {
       if (!topic.hide) {

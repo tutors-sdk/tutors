@@ -1,62 +1,51 @@
-export declare const imageTypes: string[];
-export declare const assetTypes: string[];
+import { VideoIdentifiers } from "../lr/lr-types";
+export declare const loTypes: string[];
 export declare class Properties {
     [key: string]: string;
-}
-export interface VideoIdentifier {
-    service: string;
-    id: string;
-}
-export interface VideoIdentifiers {
-    videoid: string;
-    videoIds: VideoIdentifier[];
 }
 export interface IconType {
     type: string;
     color: string;
 }
-export interface LearningResource {
-    courseRoot: string;
-    route: string;
-    id: string;
-    lrs: LearningResource[];
-    files: Array<string>;
-    type: string;
+export interface Panels {
+    panelVideos: Lo[];
+    panelTalks: Lo[];
+    panelNotes: Lo[];
 }
-export interface LabStep {
-    title: string;
-    shortTitle: string;
-    contentMd: string;
-    contentHtml: string;
-    route: string;
-    id: string;
-    type: string;
-    hide: boolean;
+export interface Units {
+    units: Lo[];
+    sides: Lo[];
+    standardLos: Lo[];
 }
-export interface LearningObject {
-    id: string;
-    route: string;
+export interface Lo {
     type: string;
+    id: string;
     title: string;
     summary: string;
     contentMd: string;
+    frontMatter: Properties;
     contentHtml?: string;
-    hide: boolean;
+    shortTitle?: string;
+    los: Lo[];
+    route: string;
     img: string;
     imgFile: string;
+    icon?: IconType;
     pdf: string;
     pdfFile: string;
     archiveFile?: string;
     video: string;
     videoids: VideoIdentifiers;
-    frontMatter: Properties;
-    los: Array<LearningObject | LabStep>;
+    hide: boolean;
+    parentLo?: Lo;
+    parentCourse?: Course;
+    panels?: Panels;
+    units?: Units;
+    breadCrumbs?: Lo[];
+}
+export interface Course extends Lo {
+    walls?: Lo[][];
     properties?: Properties;
     calendar?: Properties;
-    icon?: IconType;
-    parentLo?: LearningObject;
-    panels?: any;
-    units?: any;
 }
-export declare const loTypes: string[];
 export declare const preOrder: Map<string, number>;

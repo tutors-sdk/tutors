@@ -2,18 +2,8 @@
   "version": "0.1.0",
   "configurations": [
     {
-      "name": "tutors-json",
-      "program": "${workspaceFolder}//cli/tutors-json/src/tutors-json.js",
-      "request": "launch",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "type": "node",
-      "cwd": "${workspaceFolder}/test/reference-course"
-    },
-    {
-      "name": "tutors-gen",
-      "program": "${workspaceFolder}//cli/tutors-gen/src/tutors-gen.js",
+      "name": "tutors-publish",
+      "program": "${workspaceFolder}//cli/tutors-publish/src/tutors-publish.js",
       "request": "launch",
       "skipFiles": [
         "<node_internals>/**"
@@ -22,11 +12,10 @@
       //"cwd": "${workspaceFolder}/test/reference-course",
       "cwd": "/Users/edeleastar/repos/tutors/courses/tutors-reference-course",
       "console": "integratedTerminal"
-      // "cwd": "/Users/edeleastar/repos/modules/hdip/2022/course-portfolio-2022"
     },
     {
-      "name": "tutors-gen-html",
-      "program": "${workspaceFolder}//cli/tutors-gen-html/src/tutors-html.js",
+      "name": "tutors-publish-html",
+      "program": "${workspaceFolder}//cli/tutors-publish-html/src/tutors-publish-html.js",
       "request": "launch",
       "skipFiles": [
         "<node_internals>/**"
@@ -35,27 +24,6 @@
       //"cwd": "${workspaceFolder}/test/reference-course",
       "cwd": "/Users/edeleastar/repos/tutors/courses/tutors-reference-course",
       "console": "integratedTerminal"
-      // "cwd": "/Users/edeleastar/repos/modules/hdip/2022/course-portfolio-2022"
-    },
-    {
-      "name": "tutors-html",
-      "program": "${workspaceFolder}//cli/tutors-html/src/tutors-html.js",
-      "request": "launch",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "type": "node",
-      "cwd": "${workspaceFolder}/test/reference-course"
-    },
-    {
-      "name": "tutors-time",
-      "program": "${workspaceFolder}//cli/tutors-time/src/tutors-time.js",
-      "request": "launch",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "type": "node",
-      "cwd": "${workspaceFolder}/cli/tutors-time"
     },
     {
       "type": "chrome",
