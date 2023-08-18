@@ -11,7 +11,7 @@ describe("User page", () => {
 
   beforeEach(function () {
     cy.viewport(1440, 1440);
-    cy.visit("https://next.tutors.dev/#/course/tutors-template.netlify.app");
+    cy.visit("https://tutors.dev/course/tutors-template.netlify.app");
   });
 
   it("Topics", function () {
