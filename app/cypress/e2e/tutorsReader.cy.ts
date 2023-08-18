@@ -28,7 +28,7 @@ describe("Loading the JSON fixture", function () {
     cy.wait(3000)
     cy.get('.app-bar').contains(course.title.trim());
     cy.get('.z-10').contains(course.title.trim());
-    course.los.forEach((topic) => {
+    course.los.forEach((topic: any) => {
       if (!topic.hide) {
         cy.get('.card').contains(topic.title.trim())
         cy.get('.card-footer').contains(topic.summary.trim())
@@ -47,39 +47,39 @@ describe("Loading the JSON fixture", function () {
     cy.toggleTOCWithVerification(course.los)
   });
 
-  // it("Topics", function () {
-  //   course.los.forEach((topic) => {
-  //     if (!topic.hide) {
-  //       console.log(topic);
-  //       cy.clickCard(topic);
-  //       cy.wait(500);
-  //       cy.go("back");
-  //       cy.wait(500);
-  //     }
-  //   });
-  // });
-
-  it("Deep Topics", function () {
+  it("Topics", function () {
     course.los.forEach((topic) => {
       if (!topic.hide) {
-        cy.wait(5000);
+        console.log(topic);
         cy.clickCard(topic);
-        topic.los.forEach((lo) => {
-          cy.clickCard(lo);
-          lo.los.forEach((l, i) => {
-            cy.clickCard(l);
-            if(lo.los.length -1 === i){
-              cy.browseTopicsLearningObjects(l)
-            }
-          });
-         // cy.clickBreadCrumb(1)
-        });
-        cy.clickBreadCrumb(0)
+        cy.wait(500);
+        cy.go("back");
+        cy.wait(500);
       }
     });
   });
 
+  it("Deep Topics", function () {
+    course.los.forEach((topic: any) => {
+      if (!topic.hide) {
+        cy.wait(500);
+        cy.clickCard(topic);
+        topic.los.forEach((lo: any) => {
+          cy.clickCard(lo);
+          lo.los.forEach((l: any, i: number) => {
+            cy.clickCard(l);    
+          });
+          cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+          cy.get('li.crumb').eq(1).click();
+        });
+        cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+        cy.get('li.crumb').eq(0).click();
+      }
+    });
+
+  });
+
   it('Verify the folder downloaded', () => {
-    cy.verifyDownload('\\archive.zip', { timeout: 2500 });
+    cy.verifyDownload('archive.zip', { timeout: 2500 });
 });
- });
+});

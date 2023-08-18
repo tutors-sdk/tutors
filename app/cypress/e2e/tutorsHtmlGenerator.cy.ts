@@ -58,13 +58,13 @@ describe("Loading the JSON fixture", function () {
 
     it("Deep Topics", function () {
 
-        course.los.forEach((topic) => {
+        course.los.forEach((topic: any) => {
             if (!topic.hide) {
                 cy.wait(500);
                 cy.clickStaticCard(topic);
-                topic.los.forEach((lo) => {
+                topic.los.forEach((lo: any) => {
                     cy.clickStaticCard(lo);
-                    lo.los.forEach((l) => {
+                    lo.los.forEach((l: any) => {
                         cy.clickStaticCard(l);
                     });
                     cy.clickStaticBreadCrumb(1)
