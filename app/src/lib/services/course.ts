@@ -9,7 +9,7 @@ export const courseService = {
   courses: new Map<string, Course>(),
   courseUrl: "",
 
-  async getOrLoadCourse(courseId: string): Promise<Course> {
+  async getOrLoadCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course> {
     let course = this.courses.get(courseId);
     let courseUrl = courseId;
 
@@ -21,12 +21,16 @@ export const courseService = {
       }
 
       try {
-        const response = await fetch(`https://${courseUrl}/tutors.json`);
+        const response = await fetchFunction(`https://${courseUrl}/tutors.json`);
+        if (!response.ok) {
+          throw new Error(`Fetch failed with status ${response.status}`);
+        }
         const data = await response.json();
         course = new Course(data, courseId, courseUrl);
         this.courses.set(courseId, course);
       } catch (error) {
-        console.log(error);
+        console.error(`Error fetching from URL: https://${courseUrl}/tutors.json`);
+        console.error(error);
         throw error;
       }
     }
@@ -34,8 +38,8 @@ export const courseService = {
     return course;
   },
 
-  async readCourse(courseId: string): Promise<Course> {
-    const course = await this.getOrLoadCourse(courseId);
+  async readCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course> {
+    const course = await this.getOrLoadCourse(courseId, fetchFunction);
     currentCourse.set(course);
     courseUrl.set(course.url);
     week.set(course?.currentWeek);
@@ -43,15 +47,15 @@ export const courseService = {
     return course;
   },
 
-  async readTopic(courseId: string, topicId: string): Promise<Topic> {
-    const course = await this.readCourse(courseId);
+  async readTopic(courseId: string, topicId: string, fetchFunction: typeof fetch): Promise<Topic> {
+    const course = await this.readCourse(courseId, fetchFunction);
     const topic = course.topicIndex.get(topicId);
     currentLo.set(topic.lo);
     return topic;
   },
 
-  async readLab(courseId: string, labId: string): Promise<Lab> {
-    const course = await this.readCourse(courseId);
+  async readLab(courseId: string, labId: string, fetchFunction: typeof fetch): Promise<Lab> {
+    const course = await this.readCourse(courseId, fetchFunction);
 
     const lastSegment = labId.substring(labId.lastIndexOf("/") + 1);
     if (!lastSegment.startsWith("book")) {
@@ -66,14 +70,14 @@ export const courseService = {
     return lab;
   },
 
-  async readWall(courseId: string, type: string): Promise<Lo[]> {
-    const course = await this.readCourse(courseId);
+  async readWall(courseId: string, type: string, fetchFunction: typeof fetch): Promise<Lo[]> {
+    const course = await this.readCourse(courseId, fetchFunction);
     const wall = course.walls.get(type);
     return wall;
   },
 
-  async readLo(courseId: string, loId: string): Promise<Lo> {
-    const course = await this.readCourse(courseId);
+  async readLo(courseId: string, loId: string, fetchFunction: typeof fetch): Promise<Lo> {
+    const course = await this.readCourse(courseId, fetchFunction);
     const lo = course.loIndex.get(loId);
     currentLo.set(lo);
     return lo;

@@ -5,9 +5,9 @@ import { courseService } from "$lib/services/course";
 import type { Course } from "$lib/models/course";
 import { currentLo } from "$lib/stores";
 
-export const load: PageLoad = async ({ params }) => {
+export const load: PageLoad = async ({ params, fetch }) => {
   initFirebase(getKeys().firebase);
-  const course: Course = await courseService.readCourse(params.courseid);
+  const course: Course = await courseService.readCourse(params.courseid, fetch);
   currentLo.set(course.lo);
   return {
     course: course,
