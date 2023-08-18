@@ -18,10 +18,10 @@
   },
   "dependencies": {
     "@types/node": "^18.14.4",
-    "@types/nunjucks": "^3.2.1",
+    "@types/nunjucks": "^3.2.3",
     "@types/shelljs": "^0.8.11",
     "commander": "^10.0.0",
-    "nunjucks": "^3.2.3",
+    "nunjucks": "^3.2.4",
     "path": "^0.12.7",
     "shelljs": "^0.8.5",
     "tutors-gen-lib": "^3.0.12"
