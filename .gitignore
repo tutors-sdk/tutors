@@ -14,8 +14,8 @@
 **/test/reference-course/json
 **/test/reference-course/public-site
 
-**/app/cypress/screenshots/**
-**/app/cypress/videos/**
+**/app/cypress/screenshots
+**/app/cypress/videos
 
 # exclude ts build info caches
 **/tsconfig.tsbuildinfo
