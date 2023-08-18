@@ -44,17 +44,17 @@ describe("Loading the JSON fixture", function () {
     });
 
 
-    // it("Topics", function () {
-    //     course.los.forEach((topic) => {
-    //         if (!topic.hide) {
-    //             console.log(topic);
-    //             cy.clickStaticCard(topic);
-    //             cy.wait(500);
-    //             cy.go("back");
-    //             cy.wait(500);
-    //         }
-    //     });
-    // });
+    it("Topics", function () {
+        course.los.forEach((topic) => {
+            if (!topic.hide) {
+                console.log(topic);
+                cy.clickStaticCard(topic);
+                cy.wait(500);
+                cy.go("back");
+                cy.wait(500);
+            }
+        });
+    });
 
     it("Deep Topics", function () {
 

@@ -153,7 +153,7 @@ Cypress.Commands.add("verifyWebExists", (lo: any) => {
 Cypress.Commands.add("clickStaticBreadCrumb", (step: number) => {
   // Now you can interact with the <li> elements
   cy.get('span.hidden.text-xs.lg\\:block.lg\\:pl-2')
-    .eq(step).click();
+    .eq(step).click({force:true});
 });
 
 Cypress.Commands.add("clickStaticLabCard", (lo: any) => {
@@ -162,7 +162,7 @@ Cypress.Commands.add("clickStaticLabCard", (lo: any) => {
     cy.clickStaticLabStep(l)
     if (lo.los.length - 1 === i) {
       cy.log(l)
-      cy.get('span.hidden.text-xs.lg\\:block.lg\\:pl-2').eq(2).click();
+      cy.get('span.hidden.text-xs.lg\\:block.lg\\:pl-2').eq(2).click({force:true});
     }
   });
 });
