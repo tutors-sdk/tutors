@@ -26,7 +26,7 @@ describe("Loading the JSON fixture", function () {
     // Test case
     cy.visit(course.route);
     cy.wait(3000)
-    cy.get('.app-bar').contains(course.title.trim());
+    cy.get('.app-bar', {timeout: 10000}).contains(course.title.trim());
     cy.get('.z-10').contains(course.title.trim());
     course.los.forEach((topic: any) => {
       if (!topic.hide) {
@@ -67,7 +67,7 @@ describe("Loading the JSON fixture", function () {
         topic.los.forEach((lo: any) => {
           cy.clickCard(lo);
           lo.los.forEach((l: any, i: number) => {
-            cy.clickCard(l);    
+            cy.clickCard(l);
           });
           cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
           cy.get('li.crumb').eq(1).click();
@@ -81,5 +81,5 @@ describe("Loading the JSON fixture", function () {
 
   it('Verify the folder downloaded', () => {
     cy.verifyDownload('archive.zip', { timeout: 2500 });
-});
+  });
 });

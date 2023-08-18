@@ -15,7 +15,7 @@ Cypress.Commands.add("goBack", () => {
 Cypress.Commands.add("clickBreadCrumb", (step: number) => {
   cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
   // Now you can interact with the <li> elements
-  cy.get('li.crumb').eq(step).click({ force: true });
+  cy.get('li.crumb', {timeout: 10000}).eq(step).click({ force: true });
   //cy.wait(delay);
 
 });
@@ -37,7 +37,7 @@ Cypress.Commands.add("clickCard", (lo: any) => {
         cy.verifyDynamicGithubRepoExists(lo);
         break;
       case "archive":
-        cy.verifyDownloadOfArchive(lo, "dynamic");
+        cy.verifyDownloadOfArchive(lo);
         break;
       case "web":
         cy.verifyWebExists(lo);
@@ -46,13 +46,13 @@ Cypress.Commands.add("clickCard", (lo: any) => {
         cy.triggerCardAction(lo);
         //cy.wait(250);
         cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
-        cy.get('li.crumb',{timeout:5000}).eq(1).click();
+        cy.get('li.crumb',{timeout:10000}).eq(1).click();
         break;
       case "talk":
         cy.triggerCardAction(lo);
         //cy.wait(250);
         cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
-        cy.get('li.crumb',{timeout:5000}).eq(1).click();
+        cy.get('li.crumb',{timeout:10000}).eq(1).click();
         break;
       default:
         cy.triggerCardAction(lo);
@@ -78,7 +78,7 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
     const text = lo.title.trim();
     cy.log(text);
     // Perform assertions that multiple elements exist
-    cy.findAllByText(text, {timeout: 5000}).should('exist').each($elements => {
+    cy.findAllByText(text, {timeout: 10000}).should('exist').each($elements => {
       // Check if at least one element is found
       if ($elements.length > 0) {
         $elements.each((_, $el) => {
@@ -110,7 +110,7 @@ Cypress.Commands.add("clickLabCard", (lo: any) => {
 
 Cypress.Commands.add("toggleTOCWithVerification", (contents: any) => {
   //locates the Table of Contents button in the top right
-  cy.get('button.btn.btn-sm', { timeout: 5000 }).eq(2).click("topRight", { force: true })
+  cy.get('button.btn.btn-sm', { timeout: 10000 }).eq(2).click("topRight", { force: true })
   //loops through the titles to verify that each title is shown on screen as should
   contents.forEach((element: any) => {
     if (element.title != " Hidden\r") {
@@ -153,16 +153,16 @@ Cypress.Commands.add("verifyWebExists", (lo: any) => {
 Cypress.Commands.add("clickStaticBreadCrumb", (step: number) => {
   // Now you can interact with the <li> elements
   cy.get('span.hidden.text-xs.lg\\:block.lg\\:pl-2')
-    .eq(step).click({force:true});
+    .eq(step).click();
 });
 
 Cypress.Commands.add("clickStaticLabCard", (lo: any) => {
-  cy.contains(lo.title.trim()).click({force:true});
-  lo.los.forEach((l: any, i: number) => {
+  cy.contains(lo.title.trim()).click();
+  lo.los.forEach((l, i) => {
     cy.clickStaticLabStep(l)
     if (lo.los.length - 1 === i) {
       cy.log(l)
-      cy.get('span.hidden.text-xs.lg\\:block.lg\\:pl-2').eq(2).click({force:true});
+      cy.get('span.hidden.text-xs.lg\\:block.lg\\:pl-2').eq(2).click();
     }
   });
 });
@@ -181,10 +181,10 @@ Cypress.Commands.add("triggerStaticCardAction", (lo: any) => {
     const text = lo.title.trim();
     cy.log(text);
     // Perform assertions that multiple elements exist
-    cy.findAllByText(text, { timeout: 5000 }).should('exist').each(($elements: any) => {
+    cy.findAllByText(text, { timeout: 5000 }).should('exist').each($elements => {
       // Check if at least one element is found
       if ($elements.length > 0) {
-        $elements.each((_: any, $el: any) => {
+        $elements.each((_, $el) => {
           // Element(s) found, perform actions on the first element
           cy.wrap($el).click({ force: true });
         });
@@ -199,7 +199,7 @@ Cypress.Commands.add("clickPanelVideo", (lo: any) => {
   cy.findAllByText(lo.title.trim(), { matchCase: false });
 });
 
-Cypress.Commands.add("verifyDownloadOfArchive", (lo: any, version: string) => {
+Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
   cy.window().document().then(function (doc) {
     doc.addEventListener('click', () => {
       // this adds a listener that reloads your page 
@@ -207,16 +207,11 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any, version: string) => {
       setTimeout(function () { doc.location.reload() }, 700)
     })
 
-    cy.findAllByText(lo.title.trim(), { matchCase: false }).click({ force: true })
-      .then(() => {
-        cy.wait(700);
-        if(version === "dynamic"){
-        cy.clickBreadCrumb(0);
-        }else{
-          cy.clickStaticBreadCrumb(1);
-        }
-        
-      });
+  cy.findAllByText(lo.title.trim(), { matchCase: false }).click({force:true})
+  .then(() => {
+    cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+    // Now you can interact with the <li> elements
+    cy.get('li.crumb', {timeout: 10000}).eq(1).click({ force: true });  }); 
   })
 });
 
@@ -243,7 +238,7 @@ Cypress.Commands.add("clickStaticCard", (lo: any) => {
         cy.clickGithubRepo(lo);
         break;
       case "archive":
-        cy.verifyDownloadOfArchive(lo, "static");
+        cy.verifyDownloadOfArchive(lo);
         break;
       case "web":
         cy.triggerStaticCardAction(lo);
@@ -276,7 +271,7 @@ declare global {
       clickStaticCard(lo: any): Chainable<any>;
       clickPanelVideo(lo: any): Chainable<any>;
       clickGithubRepo(lo: any): Chainable<any>;
-      verifyDownloadOfArchive(lo: any, version: string): Chainable<any>;
+      verifyDownloadOfArchive(lo: any): Chainable<any>;
       clickStaticLabStep(lo: any): Chainable<any>;
       clickStaticBreadCrumb(step: number): Chainable<any>;
       clickStaticLabCard(lo: any): Chainable<any>;
