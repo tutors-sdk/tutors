@@ -11,4 +11,4 @@ updates:
       interval: "weekly"
     target-branch: "development"
     commit-message:
-      prefix: "chore: "
+      prefix: "deps: "
