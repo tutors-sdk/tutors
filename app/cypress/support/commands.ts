@@ -157,7 +157,7 @@ Cypress.Commands.add("clickStaticBreadCrumb", (step: number) => {
 });
 
 Cypress.Commands.add("clickStaticLabCard", (lo: any) => {
-  cy.contains(lo.title.trim()).click();
+  cy.contains(lo.title.trim()).click({force:true});
   lo.los.forEach((l: any, i: number) => {
     cy.clickStaticLabStep(l)
     if (lo.los.length - 1 === i) {

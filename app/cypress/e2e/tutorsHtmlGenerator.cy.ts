@@ -57,25 +57,8 @@ describe("Loading the JSON fixture", function () {
     });
   });
 
-<<<<<<< HEAD
-
-    it("Topics", function () {
-        course.los.forEach((topic) => {
-            if (!topic.hide) {
-                console.log(topic);
-                cy.clickStaticCard(topic);
-                cy.wait(500);
-                cy.go("back");
-                cy.wait(500);
-            }
-        });
-    });
 
     it("Deep Topics", function () {
-=======
-it("Deep Topics", function () {
->>>>>>> 59a54ef08daad685fa5b3ca3c90c69a0b901f7dd
-
         course.los.forEach((topic: any) => {
             if (!topic.hide) {
                 cy.wait(500);
