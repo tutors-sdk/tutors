@@ -3,7 +3,7 @@
 
   const title = "Learner Experience";
   const icon = "ph:student";
-  const link = "https://reader.tutors.dev/course/tutors-reference-manual#tutors-values";
+  const link = "https://tutors.dev/course/tutors-reference-manual#tutors-values";
   const content = `
 The <strong><em>Learner Experience</em></strong> prioritises web interactions that are
 <strong>engaging</strong>, <strong>contextual</strong>, <strong>linkable</strong>,

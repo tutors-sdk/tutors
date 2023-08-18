@@ -1,5 +1,5 @@
 import { defineConfig } from "cypress";
-import pkg from 'cy-verify-downloads'; //The cypress-verify-download plugin
+import pkg from "cy-verify-downloads"; //The cypress-verify-download plugin
 const { verifyDownloadTasks } = pkg;
 
 export default defineConfig({
@@ -12,18 +12,24 @@ export default defineConfig({
       // The below is needed to store the downloaded folder/file in the correction location
       // for the plugin to check if it has downloaded in the correct default location
       // A known issue with cypress
-      on('before:browser:launch', (browser = {}, options) => {
-        if (browser.family === 'chromium') {
-          options.preferences.default['download'] = { default_directory: config['downloadsFolder'].replace(/\\/g, "\\\\") }
-          return options
+      on("before:browser:launch", (browser = {}, options) => {
+        if (browser.family === "chromium") {
+          options.args.push(`--disable-features=CrossSiteDocumentBlockingIfIsolating`);
+          options.preferences = {
+            download: {
+              default_directory: config["downloadsFolder"]
+            }
+          };
+        } else if (browser.family === "firefox") {
+          options.preferences = {
+            "browser.download.folderList": 2,
+            "browser.download.dir": config["downloadsFolder"]
+          };
         }
-        if (browser.family === 'firefox') {
-          options.preferences['browser.download.folderList'] = 2;
-          options.preferences['browser.download.dir'] = config['downloadsFolder'].replace(/\\/g, "\\\\");
-          return options;
-        }
+        return options;
       });
-      on('task', verifyDownloadTasks); //This is for the cy-verify-download plugin
+
+      on("task", verifyDownloadTasks); //This is for the cy-verify-download plugin
       const cypressFailFastPlugin = await import("cypress-fail-fast/plugin");
       cypressFailFastPlugin.default(on, config);
       return config;

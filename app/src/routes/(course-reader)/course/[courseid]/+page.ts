@@ -4,8 +4,8 @@ import { currentLo } from "$lib/stores";
 
 export const ssr = false;
 
-export const load = async ({ params, parent }) => {
-  const course: Course = await courseService.readCourse(params.courseid);
+export const load = async ({ params, parent, fetch }) => {
+  const course: Course = await courseService.readCourse(params.courseid, fetch);
 
   const data = await parent();
 

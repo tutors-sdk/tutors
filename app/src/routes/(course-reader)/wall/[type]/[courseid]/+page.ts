@@ -4,9 +4,9 @@ import { currentLo } from "$lib/stores";
 
 export const ssr = false;
 
-export const load: PageLoad = async ({ params }) => {
-  const course = await courseService.readCourse(params.courseid);
-  const los = await courseService.readWall(params.courseid, params.type);
+export const load: PageLoad = async ({ params, fetch }) => {
+  const course = await courseService.readCourse(params.courseid, fetch);
+  const los = await courseService.readWall(params.courseid, params.type, fetch);
   const type = params.type;
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
