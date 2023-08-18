@@ -12,12 +12,12 @@ const isStringArray = (test: any[]): boolean => {
   return Array.isArray(test) && !test.some((value) => typeof value !== "string");
 };
 
-export const load: PageLoad = async ({ parent, params }) => {
+export const load: PageLoad = async ({ parent, params, fetch }) => {
   const data = await parent();
 
   if (data.session) {
     initFirebase(getKeys().firebase);
-    const course: Course = await courseService.readCourse(params.courseid);
+    const course: Course = await courseService.readCourse(params.courseid, fetch);
     const allLabs = course.walls.get("lab");
     const user: UserMetric = await fetchUserById(params.courseid, data.session, allLabs);
     const users: Map<string, UserMetric> = await fetchAllUsers(params.courseid, allLabs);
