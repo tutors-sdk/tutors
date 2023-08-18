@@ -8,6 +8,7 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "types": ["cypress", "cypress-real-events", "./support"],
-    "strict": true
+    "strict": true,
+    "ignoreDeprecations": "5.0"
   }
 }
