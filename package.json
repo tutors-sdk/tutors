@@ -11,6 +11,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "test": "turbo run test",
     "dev": "turbo run dev --parallel",
     "app": "turbo run dev --filter tutors-app",
     "lint": "turbo run lint",

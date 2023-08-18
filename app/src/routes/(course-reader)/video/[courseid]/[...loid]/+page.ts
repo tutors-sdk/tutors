@@ -3,7 +3,7 @@ import { courseService } from "$lib/services/course";
 
 export const ssr = false;
 
-export const load: PageLoad = async ({ url, params }) => {
+export const load: PageLoad = async ({ url, params, fetch }) => {
   let videoId = url.pathname;
   let videoStartEnd = url.searchParams.toString();
   if (videoStartEnd.endsWith("=")) {
@@ -14,7 +14,7 @@ export const load: PageLoad = async ({ url, params }) => {
   } else {
     videoId = `${url.pathname}`;
   }
-  const lo = await courseService.readLo(params.courseid, videoId);
+  const lo = await courseService.readLo(params.courseid, videoId, fetch);
   return {
     lo: lo
   };

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { page } from "$app/stores";
   import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
 
@@ -14,7 +15,10 @@
 
   async function handleSignInWithGitHub() {
     const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "github"
+      provider: "github",
+      options: {
+        redirectTo: `${$page.url.origin}`
+      }
     });
   }
 </script>
