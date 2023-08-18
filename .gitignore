@@ -16,6 +16,7 @@
 
 **/app/cypress/screenshots
 **/app/cypress/videos
+**/app/cypress/downloads
 
 # exclude ts build info caches
 **/tsconfig.tsbuildinfo
