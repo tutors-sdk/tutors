@@ -5,6 +5,9 @@ on:
     branches: ["development", "main"]
   pull_request:
     types: [opened, synchronize]
+    branches:
+      - development
+      - main
 
 jobs:
   build:
