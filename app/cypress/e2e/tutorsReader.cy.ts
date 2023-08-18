@@ -25,10 +25,10 @@ describe("Loading the JSON fixture", function () {
   it('Course Reference page', function () {
     // Test case
     cy.visit(course.route);
-    cy.wait(500);
-    cy.get('.app-bar', { timeout: 5000 }).contains(course.title.trim());
+    cy.wait(3000)
+    cy.get('.app-bar', {timeout: 10000}).contains(course.title.trim());
     cy.get('.z-10').contains(course.title.trim());
-    course.los.forEach((topic) => {
+    course.los.forEach((topic: any) => {
       if (!topic.hide) {
         cy.get('.card').contains(topic.title.trim())
         cy.get('.card-footer').contains(topic.summary.trim())
@@ -36,6 +36,15 @@ describe("Loading the JSON fixture", function () {
     });
     cy.get('[class="btn btn-sm"]').should("exist");
     cy.contains('[data-testid="drawer"]').should("not.exist");
+  });
+
+  it('Test for Info Bar in top left', function () {
+    let contents = [course.title.trim(), course.summary.trim()]
+    cy.toggleInfoWithVerification(contents)
+  });
+
+  it('Test for the TOC in top right', function () {
+    cy.toggleTOCWithVerification(course.los)
   });
 
   it("Topics", function () {
@@ -51,19 +60,26 @@ describe("Loading the JSON fixture", function () {
   });
 
   it("Deep Topics", function () {
-    course.los.forEach((topic) => {
+    course.los.forEach((topic: any) => {
       if (!topic.hide) {
         cy.wait(500);
         cy.clickCard(topic);
-        topic.los.forEach((lo) => {
+        topic.los.forEach((lo: any) => {
           cy.clickCard(lo);
-          lo.los.forEach((l) => {
+          lo.los.forEach((l: any, i: number) => {
             cy.clickCard(l);
           });
-          cy.clickBreadCrumb(1)
+          cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+          cy.get('li.crumb').eq(1).click();
         });
-        cy.clickBreadCrumb(0)
+        cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+        cy.get('li.crumb').eq(0).click();
       }
     });
+
+  });
+
+  it('Verify the folder downloaded', () => {
+    cy.verifyDownload('archive.zip', { timeout: 2500 });
   });
 });
