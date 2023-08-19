@@ -15,7 +15,7 @@ describe("Loading the JSON fixture", function () {
     cy.viewport(1440, 1440);
     //this is a dyamic way of passing through the url which is defined in the
     //cypress.config.ts file.
-    cy.visit(course.route);
+    cy.visit(Cypress.config().staticBaseUrl);
   });
 
   /**
@@ -24,7 +24,7 @@ describe("Loading the JSON fixture", function () {
    */
   it('Course Reference page', function () {
     // Test case
-    cy.visit(course.route);
+    cy.visit(Cypress.config().staticBaseUrl);
     cy.wait(3000)
     cy.get('.app-bar', {timeout: 10000}).contains(course.title.trim());
     cy.get('.z-10').contains(course.title.trim());
