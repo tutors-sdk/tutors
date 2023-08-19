@@ -1,12 +1,12 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { ResultType } from "$lib/utils/search";
-  import { isValid, searchHits } from "$lib/utils/search";
-  import type { Lo } from "$lib/types/lo";
-  import type { Course } from "$lib/models/course";
+  import type { ResultType } from "$lib/services/utils/search";
+  import { isValid, searchHits } from "$lib/services/utils/search";
+  import type { Lo } from "$lib/services/types/lo";
+  import type { Course } from "$lib/services/models/course";
   import { currentLo } from "$lib/stores";
-  import { allLos } from "$lib/utils/lo";
-  import { convertMdToHtml } from "$lib/utils/markdown";
+  import { allLos } from "$lib/services/utils/lo";
+  import { convertMdToHtml } from "$lib/services/utils/markdown";
 
   export let data: PageData;
 

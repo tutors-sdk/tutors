@@ -1,7 +1,7 @@
 <script lang="ts">
   import { currentCourse, currentLo } from "$lib/stores";
   import { Icon } from "$lib/ui/legacy";
-  import type { Lo } from "$lib/types/lo";
+  import type { Lo } from "$lib/services/types/lo";
 
   function crumbs(lo: Lo, los: Lo[]) {
     if (lo) {

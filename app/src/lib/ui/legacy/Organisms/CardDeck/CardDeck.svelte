@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Card } from "$lib/ui/legacy";
-  import type { Lo } from "$lib/types/lo";
+  import type { Lo } from "$lib/services/types/lo";
 
   export let los: Lo[] = [];
   export let border: boolean = false;

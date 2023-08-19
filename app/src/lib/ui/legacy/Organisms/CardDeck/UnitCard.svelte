@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CardDeck, Image, NoteCard, TalkCard, VideoCard } from "$lib/ui/legacy";
-  import type { Lo } from "$lib/types/lo";
+  import type { Lo } from "$lib/services/types/lo";
   import { layout, currentCourse } from "$lib/stores";
   import { onDestroy } from "svelte";
   export let unit: Lo;

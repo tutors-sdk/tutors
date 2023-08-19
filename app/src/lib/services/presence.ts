@@ -1,6 +1,6 @@
 import type { RealtimeChannel, SupabaseClient } from "@supabase/supabase-js";
 import { studentsOnline, studentsOnlineList } from "$lib/stores";
-import type { Presence } from "$lib/types/presence";
+import type { Presence } from "$lib/services/types/presence";
 
 let presenceChannel: RealtimeChannel;
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Lo } from "$lib/types/lo";
+  import type { Lo } from "$lib/services/types/lo";
   import { layout } from "$lib/stores";
   import { onDestroy } from "svelte";
   import Iconify from "@iconify/svelte";

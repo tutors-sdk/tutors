@@ -1,9 +1,9 @@
 <script lang="ts">
   import { modeCurrent } from "@skeletonlabs/skeleton";
   import "iconify-icon";
-  import DeveloperExperience from "$lib/home/DeveloperExperience.svelte";
-  import EducatorExperience from "$lib/home/EducatorExperience.svelte";
-  import LearnerExperience from "$lib/home/LearnerExperience.svelte";
+  import DeveloperExperience from "$lib/ui/home/DeveloperExperience.svelte";
+  import EducatorExperience from "$lib/ui/home/EducatorExperience.svelte";
+  import LearnerExperience from "$lib/ui/home/LearnerExperience.svelte";
   import { onMount } from "svelte";
 
   onMount(() => {

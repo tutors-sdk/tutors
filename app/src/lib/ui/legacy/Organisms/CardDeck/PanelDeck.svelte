@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Lo } from "$lib/types/lo";
+  import type { Lo } from "$lib/services/types/lo";
   import { TalkCard, NoteCard, VideoCard } from "$lib/ui/legacy";
   export let lo: Lo;
 

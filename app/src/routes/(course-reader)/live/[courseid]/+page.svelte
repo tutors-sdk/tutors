@@ -3,7 +3,7 @@
   import type { PageData } from "./$types";
   import { toastStore, type ToastSettings } from "@skeletonlabs/skeleton";
   import { onMount } from "svelte";
-  import type { StudentLoEvent } from "$lib/types/metrics";
+  import type { StudentLoEvent } from "$lib/services/types/metrics";
 
   export let data: PageData;
 

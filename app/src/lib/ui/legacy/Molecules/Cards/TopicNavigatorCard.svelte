@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { Topic } from "$lib/models/topic";
-  import type { Lo } from "$lib/types/lo";
+  import type { Topic } from "$lib/services/models/topic";
+  import type { Lo } from "$lib/services/types/lo";
   import { Image, TopicNavigator } from "$lib/ui/legacy";
   import { currentLo, layout } from "$lib/stores";
   import { onDestroy } from "svelte";

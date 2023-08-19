@@ -1,7 +1,7 @@
 <script lang="ts">
   import { currentCourse } from "$lib/stores";
   import { drawerStore } from "@skeletonlabs/skeleton";
-  import { convertMdToHtml } from "$lib/utils/markdown";
+  import { convertMdToHtml } from "$lib/services/utils/markdown";
   const courseInfo = convertMdToHtml($currentCourse.lo.contentMd, "");
 
   const drawerClose: any = () => {
