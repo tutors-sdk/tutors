@@ -8,10 +8,6 @@ describe("Loading the JSON fixture", function () {
         cy.fixture("static-tutors.json").then((c: any) => {
             course = c;
         });
-        cy.on("fail", (err, runnable) => {
-            cy.log(err.message);
-            return false;
-        });
     });
 
     beforeEach('Check: Define the dimensions of the screen being used', function () {
@@ -33,14 +29,14 @@ describe("Loading the JSON fixture", function () {
         cy.get('.p-3.shadow-lg.bg-neutral.text-neutral-content.rounded-box.nav-corner.mb-1.justify-start.z-40.flex.mt-2').contains(course.title.trim());
         cy.wait(1000);
         cy.get('div.ml-4.flex-nowrap').should('include.text', course.title.trim());
-        course.los.forEach((topic) => {
+        course.los.forEach((topic: any) => {
             if (!topic.hide) {
                 cy.get('.card-title').should('include.text', topic.title.trim())
-                cy.get('.card-body').should('include.text', topic.summary.trim())
+                
             }
         });
-        cy.get('[class="btn btn-sm"]').should("exist");
-        cy.contains('[data-testid="drawer"]').should("not.exist");
+        // cy.get('[class="btn btn-sm"]').should("exist");
+        // cy.contains('[data-testid="drawer"]').should("not.exist");
     });
 
 

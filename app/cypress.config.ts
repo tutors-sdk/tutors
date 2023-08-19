@@ -3,6 +3,7 @@ import pkg from "cy-verify-downloads"; //The cypress-verify-download plugin
 const { verifyDownloadTasks } = pkg;
 
 export default defineConfig({
+  experimentalMemoryManagement:true,
   env: {
     FAIL_FAST_STRATEGY: "run",
     FAIL_FAST_ENABLED: true
@@ -34,6 +35,7 @@ export default defineConfig({
       cypressFailFastPlugin.default(on, config);
       return config;
     },
+    trashAssetsBeforeRuns:true,
     //this url is what I was using for cypress testing.
     baseUrl: "https://reader.tutors.dev/course/tutors-cypress-testing",
     //this url is the url for the static heml generator
