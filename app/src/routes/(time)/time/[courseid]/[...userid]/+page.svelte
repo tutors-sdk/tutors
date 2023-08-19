@@ -1,18 +1,19 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { PageData } from "../../$types";
+
   import { fade } from "svelte/transition";
   import { writable, type Writable } from "svelte/store";
   import { Tab, TabGroup } from "@skeletonlabs/skeleton";
 
-  import { currentUser, currentCourse } from "$lib/stores";
-  import LabTime from "$lib/time/LabTime.svelte";
-  import InstructorLabTime from "$lib/time/InstructorLabTime.svelte";
-  import InstructorCalendarTime from "$lib/time/InstructorCalendarTime.svelte";
-  import NavBar from "$lib/navigators/NavBar.svelte";
-  import CalendarTime from "$lib/time/CalendarTime.svelte";
+  import {  currentCourse } from "$lib/stores";
+  import LabTime from "$lib/ui/time/LabTime.svelte";
+  import InstructorLabTime from "$lib/ui/time/InstructorLabTime.svelte";
+  import InstructorCalendarTime from "$lib/ui/time/InstructorCalendarTime.svelte";
+
+  import CalendarTime from "$lib/ui/time/CalendarTime.svelte";
   import { authService } from "$lib/services/auth";
-  import { page } from "$app/stores";
+
+  import type { PageData } from "./$types";
 
   export let data: PageData;
   const storeTab: Writable<string> = writable("Labs");

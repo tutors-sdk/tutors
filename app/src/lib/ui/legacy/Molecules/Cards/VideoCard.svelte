@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { Lo } from "$lib/types/lo";
+  import type { Lo } from "$lib/services/types/lo";
   import { currentCourse } from "$lib/stores";
   import { getIcon } from "../../Atoms/Icon/themes";
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Course } from "$lib/models/course";
+  import type { Course } from "$lib/services/models/course";
   import { TopicNavigator } from "$lib/ui/legacy";
   import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
 

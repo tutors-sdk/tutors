@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { StudentMetric } from "$lib/types/metrics";
+  import type { StudentMetric } from "$lib/services/types/metrics";
   import Iconify from "@iconify/svelte";
   import { Avatar } from "@skeletonlabs/skeleton";
 

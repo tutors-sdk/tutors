@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CourseCard } from "$lib/ui/legacy";
-  import type { CourseSummary } from "$lib/utils/course";
+  import type { CourseSummary } from "$lib/services/utils/course";
   export let los: CourseSummary[] = [];
 </script>
 

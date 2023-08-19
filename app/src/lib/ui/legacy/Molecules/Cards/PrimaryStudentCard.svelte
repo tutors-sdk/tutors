@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Avatar } from "@skeletonlabs/skeleton";
   import Iconify from "@iconify/svelte";
-  import type { StudentLoEvent } from "$lib/types/metrics";
+  import type { StudentLoEvent } from "$lib/services/types/metrics";
   import { layout } from "$lib/stores";
   import { cardTransition } from "$lib/ui/animations";
 

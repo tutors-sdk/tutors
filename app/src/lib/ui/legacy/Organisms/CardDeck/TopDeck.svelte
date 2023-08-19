@@ -4,7 +4,7 @@
   import { CardDeck } from "$lib/ui/legacy";
   import PanelDeck from "./PanelDeck.svelte";
   import UnitDeck from "./UnitDeck.svelte";
-  import type { Lo } from "$lib/types/lo";
+  import type { Lo } from "$lib/services/types/lo";
 
   export let lo: Lo;
 

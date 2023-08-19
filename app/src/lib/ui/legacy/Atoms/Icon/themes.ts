@@ -1,5 +1,5 @@
 import { FluentIconLib } from "./support/fluent-icons";
-import type { IconType } from "$lib/types/icon";
+import type { IconType } from "$lib/services/types/icon";
 
 let StandardIconLib = FluentIconLib;
 
