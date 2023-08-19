@@ -1,6 +1,6 @@
 import type { ICellRendererParams } from "ag-grid-community";
-import type { Lo } from "$lib/types/lo";
-import type { UserMetric } from "$lib/types/metrics";
+import type { Lo } from "$lib/services/types/lo";
+import type { UserMetric } from "$lib/services/types/metrics";
 
 interface LabSheetColumn {
   headerName: string;

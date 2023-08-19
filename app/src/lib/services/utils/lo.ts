@@ -1,4 +1,4 @@
-import type { Lo } from "$lib/types/lo";
+import type { Lo } from "$lib/services/types/lo";
 
 export function injectCourseUrl(lo: Lo, id: string, url: string) {
   if (lo.type === "archive" || lo.type === "otherType") {

@@ -1,4 +1,4 @@
-import type { IconType } from "$lib/types/icon";
+import type { IconType } from "$lib/services/types/icon";
 
 export interface Presence {
   studentName: string;

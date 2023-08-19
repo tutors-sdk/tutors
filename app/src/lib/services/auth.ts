@@ -1,15 +1,15 @@
 import { analyticsService } from "$lib/services/analytics";
 import { currentUser } from "$lib/stores";
 import { WebAuth } from "auth0-js";
-import type { Course } from "$lib/models/course";
+import type { Course } from "$lib/services/models/course";
 import {
   encrypt,
   fromLocalStorage,
   isAuthenticated,
   setSession,
   toLocalStorage
-} from "$lib/utils/auth";
-import type { SuccessFunction } from "$lib/types/auth";
+} from "$lib/services/utils/auth";
+import type { SuccessFunction } from "$lib/services/types/auth";
 
 export const authService = {
   auth0: {},

@@ -1,8 +1,8 @@
 import { courseUrl, currentCourse, currentLo, week } from "$lib/stores";
-import { Course } from "$lib/models/course";
-import { Lab } from "$lib/models/lab";
-import type { Lo } from "$lib/types/lo";
-import type { Topic } from "$lib/models/topic";
+import { Course } from "$lib/services/models/course";
+import { Lab } from "$lib/services/models/lab";
+import type { Lo } from "$lib/services/types/lo";
+import type { Topic } from "$lib/services/models/topic";
 
 export const courseService = {
   course: Course,

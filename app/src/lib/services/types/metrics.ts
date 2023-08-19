@@ -1,4 +1,4 @@
-import type { Topic } from "../models/topic";
+import type { Topic } from "$lib/services/models/topic";
 import type { Token } from "./auth";
 import type { IconType } from "./icon";
 import type { Lo } from "./lo";

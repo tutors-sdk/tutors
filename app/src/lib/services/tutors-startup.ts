@@ -2,10 +2,10 @@ import { page } from "$app/stores";
 import { analyticsService } from "$lib/services/analytics";
 import { get } from "svelte/store";
 import { transitionKey, currentCourse } from "$lib/stores";
-import { initFirebase } from "$lib/utils/firebase";
+import { initFirebase } from "$lib/services/utils/firebase";
 import { getKeys } from "$lib/environment";
 import { goto } from "$app/navigation";
-import type { Token } from "$lib/types/auth";
+import type { Token } from "$lib/services/types/auth";
 
 export async function initServices(session: Token) {
   if (getKeys().firebase.apiKey !== "XXX") {

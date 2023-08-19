@@ -1,4 +1,4 @@
-import type { Topic } from "../models/topic";
+import type { Topic } from "$lib/services/models/topic";
 
 export interface WeekType {
   title: string;

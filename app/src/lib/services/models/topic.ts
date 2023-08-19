@@ -1,6 +1,6 @@
-import type { Lo } from "$lib/types/lo";
-import { getSortedUnits } from "$lib/utils/lo";
-import type { Course } from "$lib/models/course";
+import type { Lo } from "$lib/services/types/lo";
+import { getSortedUnits } from "$lib/services/utils/lo";
+import type { Course } from "$lib/services/models/course";
 
 function fixRoutePaths(lo: Lo) {
   if (lo.route && lo.route[0] === "#") {

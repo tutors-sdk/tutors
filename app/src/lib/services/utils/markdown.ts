@@ -1,16 +1,22 @@
 import hljs from "highlight.js";
-import type { Lo } from "$lib/types/lo";
+import type { Lo } from "$lib/services/types/lo";
 import { currentCourse } from "$lib/stores";
 import { get } from "svelte/store";
 import MarkdownIt from "markdown-it";
+// @ts-ignore
 import latex from "@iktakahiro/markdown-it-katex";
 import anchor from "markdown-it-anchor";
+// @ts-ignore
 import toc from "markdown-it-table-of-contents";
 import emoji from "markdown-it-emoji";
+// @ts-ignore
 import sub from "markdown-it-sub";
+// @ts-ignore
 import sup from "markdown-it-sup";
+// @ts-ignore
 import mark from "markdown-it-mark";
 import footnote from "markdown-it-footnote";
+// @ts-ignore
 import deflist from "markdown-it-deflist";
 
 const markdownIt: any = new MarkdownIt({

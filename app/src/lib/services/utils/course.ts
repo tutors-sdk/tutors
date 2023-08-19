@@ -1,7 +1,7 @@
-import type { Course } from "$lib/models/course";
-import type { IconType } from "$lib/types/icon";
-import type { Lo } from "$lib/types/lo";
-import { writeObj } from "$lib/utils/firebase";
+import type { Course } from "$lib/services/models/course";
+import type { IconType } from "$lib/services/types/icon";
+import type { Lo } from "$lib/services/types/lo";
+import { writeObj } from "$lib/services/utils/firebase";
 
 export interface CourseSummary {
   title: string;

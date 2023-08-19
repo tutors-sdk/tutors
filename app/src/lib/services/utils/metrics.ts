@@ -1,7 +1,7 @@
 import { child, get, getDatabase, ref } from "firebase/database";
-import type { DayMeasure, Metric, UserMetric } from "$lib/types/metrics";
-import type { Lo } from "$lib/types/lo";
-import type { Token } from "$lib/types/auth";
+import type { DayMeasure, Metric, UserMetric } from "$lib/services/types/metrics";
+import type { Lo } from "$lib/services/types/lo";
+import type { Token } from "$lib/services/types/auth";
 
 function populateCalendar(user: UserMetric) {
   user.calendarActivity = [];

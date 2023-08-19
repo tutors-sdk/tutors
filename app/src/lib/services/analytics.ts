@@ -1,7 +1,7 @@
-import { updateLo } from "$lib/utils/course";
-import type { Lo } from "$lib/types/lo";
-import type { Course } from "$lib/models/course";
-import type { TokenResponse } from "$lib/types/auth";
+import { updateLo } from "$lib/services/utils/course";
+import type { Lo } from "$lib/services/types/lo";
+import type { Course } from "$lib/services/models/course";
+import type { TokenResponse } from "$lib/services/types/auth";
 import { currentCourse, currentLo, currentUser } from "$lib/stores";
 
 import {
@@ -13,7 +13,7 @@ import {
   updateLastAccess,
   updateStr,
   updateVisits
-} from "$lib/utils/firebase";
+} from "$lib/services/utils/firebase";
 
 let course: Course;
 let user: TokenResponse;

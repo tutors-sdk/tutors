@@ -1,4 +1,4 @@
-import type { Calendar, Lo, WeekType } from "$lib/types/lo";
+import type { Calendar, Lo, WeekType } from "$lib/services/types/lo";
 import {
   allLos,
   allVideoLos,
@@ -6,9 +6,9 @@ import {
   getSortedUnits,
   injectCourseUrl,
   threadLos
-} from "$lib/utils/lo";
-import { Topic } from "$lib/models/topic";
-import type { IconNav, IconNavBar } from "$lib/types/icon";
+} from "$lib/services/utils/lo";
+import { Topic } from "$lib/services/models/topic";
+import type { IconNav, IconNavBar } from "$lib/services/types/icon";
 import { addIcon } from "$lib/ui/legacy/Atoms/Icon/themes";
 
 export class Course {

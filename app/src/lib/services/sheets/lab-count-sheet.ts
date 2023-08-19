@@ -1,7 +1,7 @@
-import type { Lo } from "$lib/types/lo";
+import type { Lo } from "$lib/services/types/lo";
 import { LabSheet } from "./lab-sheet";
 import { deepScheme } from "./heat-map-colours";
-import type { UserMetric } from "$lib/types/metrics";
+import type { UserMetric } from "$lib/services/types/metrics";
 
 export class LabCountSheet extends LabSheet {
   title = "Tutors Time";

@@ -1,7 +1,7 @@
-import { convertMdToHtml } from "$lib/utils/markdown";
-import type { Lo } from "$lib/types/lo";
-import type { Course } from "$lib/models/course";
-import { removeLeadingHashes } from "$lib/utils/lo";
+import { convertMdToHtml } from "$lib/services/utils/markdown";
+import type { Lo } from "$lib/services/types/lo";
+import type { Course } from "$lib/services/models/course";
+import { removeLeadingHashes } from "$lib/services/utils/lo";
 
 function truncate(input: string) {
   if (input?.length > 16) {

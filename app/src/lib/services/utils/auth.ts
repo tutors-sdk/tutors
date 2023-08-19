@@ -1,5 +1,5 @@
 import Crypto from "crypto-es";
-import type { User } from "$lib/types/auth";
+import type { User } from "$lib/services/types/auth";
 
 export function isAuthenticated() {
   if (!hasId()) {

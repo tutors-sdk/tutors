@@ -57,7 +57,7 @@ interface UserMetadata {
   user_name: string;
 }
 
-interface User {
+export interface User {
   id: string;
   factors: any;
   aud: string;
