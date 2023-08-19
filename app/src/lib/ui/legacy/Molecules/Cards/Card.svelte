@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from "../../Atoms/Icon/Icon.svelte";
   import { getIcon } from "../../Atoms/Icon/themes";
-  import type { Lo } from "$lib/types/lo";
+  import type { Lo } from "$lib/services/types/lo";
   import { currentCourse, layout } from "$lib/stores";
   import { onDestroy } from "svelte";
   import { Image } from "$lib/ui/legacy";

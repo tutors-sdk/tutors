@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { CourseSummary, getCourseSummary } from "$lib/utils/course";
+  import type { CourseSummary, getCourseSummary } from "$lib/services/utils/course";
   import { layout, studentsOnline } from "$lib/stores";
   import { onDestroy } from "svelte";
   import { cardTransition } from "$lib/ui/animations";
