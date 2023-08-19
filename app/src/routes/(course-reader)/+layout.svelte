@@ -15,7 +15,7 @@
   import PageTransition from "$lib/ui/PageTransition.svelte";
   import { getKeys } from "$lib/environment";
   import { analyticsService } from "$lib/services/analytics";
-  import { initServices } from "$lib/tutors-startup";
+  import { initServices } from "$lib/services/tutors-startup";
   import type { RealtimeChannel } from "@supabase/supabase-js";
   import {
     setupPresence,

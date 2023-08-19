@@ -1,10 +1,10 @@
 import type { PageLoad } from "./$types";
 import { courseService } from "$lib/services/course";
-import { fetchAllUsers, fetchUserById } from "$lib/utils/metrics";
-import type { Course } from "$lib/models/course";
-import type { UserMetric } from "$lib/types/metrics";
+import { fetchAllUsers, fetchUserById } from "$lib/services/utils/metrics";
+import type { Course } from "$lib/services/models/course";
+import type { UserMetric } from "$lib/services/types/metrics";
 import { getKeys } from "$lib/environment";
-import { initFirebase } from "$lib/utils/firebase";
+import { initFirebase } from "$lib/services/utils/firebase";
 
 export const ssr = false;
 

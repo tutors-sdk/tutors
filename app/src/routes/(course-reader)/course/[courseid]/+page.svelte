@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import { analyticsService } from "$lib/services/analytics";
-  import { initFirebase } from "$lib/utils/firebase";
+  import { initFirebase } from "$lib/services/utils/firebase";
   import { getKeys } from "$lib/environment";
   import TopDeck from "$lib/ui/legacy/Organisms/CardDeck/TopDeck.svelte";
 
