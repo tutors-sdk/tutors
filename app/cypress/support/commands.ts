@@ -34,13 +34,13 @@ Cypress.Commands.add("clickCard", (lo: any) => {
         cy.clickPanelVideo(lo);
         break;
       case "github":
-        cy.verifyDynamicGithubRepoExists(lo);
+        cy.verifyContentsExists(lo);
         break;
       case "archive":
         cy.verifyDownloadOfArchive(lo, "dynamic");
         break;
       case "web":
-        cy.verifyWebExists(lo);
+        cy.verifyContentsExists(lo);
         break;
       case "note":
         cy.triggerCardAction(lo);
@@ -134,15 +134,9 @@ Cypress.Commands.add("toggleInfoWithVerification", (contents: any) => {
   });
 });
 
-Cypress.Commands.add("verifyDynamicGithubRepoExists", (lo: any) => {
+Cypress.Commands.add("verifyContentsExists", (lo: any) => {
   cy.log(lo.title)
-  cy.get('.card-header').should('include.text', lo.title.trim())
-    .should('exist');
-});
-
-Cypress.Commands.add("verifyWebExists", (lo: any) => {
-  cy.log(lo.title)
-  cy.get('.card-header').should('include.text', lo.title.trim())
+  cy.get('.card').should('include.text', lo.title.trim())
     .should('exist');
 });
 
@@ -241,14 +235,16 @@ Cypress.Commands.add("clickStaticCard", (lo: any) => {
         cy.clickPanelVideo(lo);
         break;
       case "github":
-        cy.clickGithubRepo(lo);
+        cy.verifyContentsExists(lo);
         break;
       case "archive":
         cy.verifyDownloadOfArchive(lo, "static");
         break;
       case "web":
-        cy.triggerStaticCardAction(lo);
-        cy.clickStaticBreadCrumb(1);
+        cy.verifyContentsExists(lo);
+        break;
+        case "talk":
+        cy.verifyContentsExists(lo);
         break;
       case "note":
         cy.triggerStaticCardAction(lo);
@@ -269,7 +265,7 @@ declare global {
       clickLabStep(lo: any): Chainable<any>;
       clickLabCard(lo: any): Chainable<any>;
       triggerCardAction(lo: any): Chainable<any>;
-      verifyDynamicGithubRepoExists(lo: any): Chainable<any>;
+      verifyContentsExists(lo: any): Chainable<any>;
       verifyWebExists(lo: any): Chainable<any>;
       /**
        * ***HTML Generator Version
