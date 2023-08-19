@@ -37,7 +37,7 @@ Cypress.Commands.add("clickCard", (lo: any) => {
         cy.verifyDynamicGithubRepoExists(lo);
         break;
       case "archive":
-        cy.verifyDownloadOfArchive(lo);
+        cy.verifyDownloadOfArchive(lo, "dynamic");
         break;
       case "web":
         cy.verifyWebExists(lo);
@@ -199,7 +199,7 @@ Cypress.Commands.add("clickPanelVideo", (lo: any) => {
   cy.findAllByText(lo.title.trim(), { matchCase: false });
 });
 
-Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
+Cypress.Commands.add("verifyDownloadOfArchive", (lo: any, version: string) => {
   cy.window().document().then(function (doc) {
     doc.addEventListener('click', () => {
       // this adds a listener that reloads your page 
@@ -209,9 +209,15 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
 
   cy.findAllByText(lo.title.trim(), { matchCase: false }).click({force:true})
   .then(() => {
+    if(version == "dynamic"){
     cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
     // Now you can interact with the <li> elements
-    cy.get('li.crumb', {timeout: 10000}).eq(1).click({ force: true });  }); 
+    cy.get('li.crumb', {timeout: 10000}).eq(1).click({ force: true });  
+    }else{
+      cy.clickStaticBreadCrumb(1)
+    }
+  }); 
+  
   })
 });
 
@@ -238,7 +244,7 @@ Cypress.Commands.add("clickStaticCard", (lo: any) => {
         cy.clickGithubRepo(lo);
         break;
       case "archive":
-        cy.verifyDownloadOfArchive(lo);
+        cy.verifyDownloadOfArchive(lo, "static");
         break;
       case "web":
         cy.triggerStaticCardAction(lo);
@@ -271,7 +277,7 @@ declare global {
       clickStaticCard(lo: any): Chainable<any>;
       clickPanelVideo(lo: any): Chainable<any>;
       clickGithubRepo(lo: any): Chainable<any>;
-      verifyDownloadOfArchive(lo: any): Chainable<any>;
+      verifyDownloadOfArchive(lo: any, version: string): Chainable<any>;
       clickStaticLabStep(lo: any): Chainable<any>;
       clickStaticBreadCrumb(step: number): Chainable<any>;
       clickStaticLabCard(lo: any): Chainable<any>;

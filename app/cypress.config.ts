@@ -37,7 +37,7 @@ export default defineConfig({
     //this url is what I was using for cypress testing.
     baseUrl: "https://reader.tutors.dev/course/tutors-cypress-testing",
     //this url is the url for the static heml generator
-    //baseUrl: "https://tutors-reference-course-html.netlify.app/",
+    staticBaseUrl: "https://tutors-reference-course-html.netlify.app/",
     specPattern: "cypress/e2e/**/**.cy.ts"
   }
 });
