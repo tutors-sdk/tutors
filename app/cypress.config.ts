@@ -13,27 +13,19 @@ export default defineConfig({
       // The below is needed to store the downloaded folder/file in the correction location
       // for the plugin to check if it has downloaded in the correct default location
       // A known issue with cypress
-      on("before:browser:launch", (browser = {}, options) => {
-        if (browser.family === "chromium") {
-          options.args.push(`--disable-features=CrossSiteDocumentBlockingIfIsolating`);
-          options.preferences = {
-            download: {
-              default_directory: config["downloadsFolder"]
-            }
-          };
-        } else if (browser.family === "firefox") {
-          options.preferences = {
-            "browser.download.folderList": 2,
-            "browser.download.dir": config["downloadsFolder"]
-          };
-        }
-        return options;
-      });
+      
+   
+  
+
 
       on("task", verifyDownloadTasks); //This is for the cy-verify-download plugin
       const cypressFailFastPlugin = await import("cypress-fail-fast/plugin");
       cypressFailFastPlugin.default(on, config);
-      return config;
+      return {
+        browsers: config.browsers.filter(
+          (b) => b.family === 'chromium' && b.name !== 'electron'
+        ),
+      }      
     },
     trashAssetsBeforeRuns: true,
     //this url is what I was using for cypress testing.
