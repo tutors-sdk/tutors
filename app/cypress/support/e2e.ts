@@ -15,10 +15,6 @@
 
 // Import commands.js using ES2015 syntax:
 require("./commands");
-Cypress.on('uncaught:exception', (err, runnable) => {
-    // returning false here prevents Cypress from failing the test
-    return false
-})
 require('cy-verify-downloads').addCustomCommand();
 
 // Alternatively you can use CommonJS syntax:

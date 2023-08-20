@@ -3,12 +3,12 @@ import pkg from "cy-verify-downloads"; //The cypress-verify-download plugin
 const { verifyDownloadTasks } = pkg;
 
 export default defineConfig({
-  experimentalMemoryManagement:true,
   env: {
     FAIL_FAST_STRATEGY: "run",
     FAIL_FAST_ENABLED: true
   },
   e2e: {
+    experimentalMemoryManagement: true,
     async setupNodeEvents(on, config) {
       // The below is needed to store the downloaded folder/file in the correction location
       // for the plugin to check if it has downloaded in the correct default location
@@ -35,11 +35,11 @@ export default defineConfig({
       cypressFailFastPlugin.default(on, config);
       return config;
     },
-    trashAssetsBeforeRuns:true,
+    trashAssetsBeforeRuns: true,
     //this url is what I was using for cypress testing.
     baseUrl: "https://reader.tutors.dev/course/tutors-cypress-testing",
     //this url is the url for the static heml generator
-    staticBaseUrl: "https://tutors-reference-course-html.netlify.app/",
+    //baseUrl: "https://tutors-reference-course-html.netlify.app/",
     specPattern: "cypress/e2e/**/**.cy.ts"
   }
 });
