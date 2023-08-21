@@ -12,7 +12,7 @@
     "lint": "prettier --check --ignore-path=../../.prettierignore . && TIMING=1 eslint \"src\"",
     "format": "prettier --write --ignore-path=../../.prettierignore .",
     "e2e": "cypress open",
-    "test": "cypress run"
+    "test": "cypress run --browser chrome"
   },
   "devDependencies": {
     "@bobthered/tailwindcss-palette-generator": "^3.1.1",

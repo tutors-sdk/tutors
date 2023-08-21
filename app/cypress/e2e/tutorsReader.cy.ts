@@ -48,7 +48,7 @@ describe("Loading the JSON fixture", function () {
   });
 
   it("Topics", function () {
-    course.los.forEach((topic) => {
+    course.los.forEach((topic: any) => {
       if (!topic.hide) {
         console.log(topic);
         cy.clickCard(topic);

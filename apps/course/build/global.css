@@ -1,0 +1,169 @@
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("OpenDyslexic-Bold.woff2") format("woff2"), url("OpenDyslexic-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("OpenDyslexic-Italic.woff2") format("woff2"), url("OpenDyslexic-Italic.woff") format("woff");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("OpenDyslexic-BoldItalic.woff2") format("woff2"), url("OpenDyslexic-BoldItalic.woff") format("woff");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("OpenDyslexic-Regular.woff2") format("woff2"), url("OpenDyslexic-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+html,
+body {
+  @apply h-full overflow-hidden;
+}
+
+pre:not(.unstyled):not(.code-block pre) {
+  background: rgb(var(--color-surface-500)) !important;
+  padding: 0.25rem !important;
+}
+
+code:not(.unstyled):not(.code-block code) {
+  background-color: rgb(var(--color-surface-500)) !important;
+  color: white !important;
+  padding: 5px !important;
+}
+
+pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+}
+
+code.hljs {
+  padding: 3px 5px;
+}
+
+/*!
+  Theme: a11y-dark
+  Author: @ericwbailey
+  Maintainer: @ericwbailey
+
+  Based on the Tomorrow Night Eighties theme: https://github.com/isagalaev/highlight.js/blob/master/src/styles/tomorrow-night-eighties.css
+*/
+.hljs {
+  background: #2b2b2b;
+  color: #f8f8f2;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #d4d0ab;
+}
+
+.hljs-deletion,
+.hljs-name,
+.hljs-regexp,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-tag,
+.hljs-template-variable,
+.hljs-variable {
+  color: #ffa07a;
+}
+
+.hljs-built_in,
+.hljs-link,
+.hljs-literal,
+.hljs-meta,
+.hljs-number,
+.hljs-params,
+.hljs-type {
+  color: #f5ab35;
+}
+
+.hljs-attribute {
+  color: gold;
+}
+
+.hljs-addition,
+.hljs-bullet,
+.hljs-string,
+.hljs-symbol {
+  color: #abe338;
+}
+
+.hljs-section,
+.hljs-title {
+  color: #00e0e0;
+}
+
+.hljs-keyword,
+.hljs-selector-tag {
+  color: #dcc6e0;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 700;
+}
+
+@media screen and (-ms-high-contrast: active) {
+
+  .hljs-addition,
+  .hljs-attribute,
+  .hljs-built_in,
+  .hljs-bullet,
+  .hljs-comment,
+  .hljs-link,
+  .hljs-literal,
+  .hljs-meta,
+  .hljs-number,
+  .hljs-params,
+  .hljs-quote,
+  .hljs-string,
+  .hljs-symbol,
+  .hljs-type {
+    color: highlight;
+  }
+
+  .hljs-keyword,
+  .hljs-selector-tag {
+    font-weight: 700;
+  }
+}
+
+.copy-code {
+  padding: 3px 5px 3px 5px;
+  color: #ffffff;
+  margin-top: 4px;
+  background: #37919b;
+  border-radius: 5px;
+  float: right;
+  position: relative;
+  z-index: 25;
+}
+
+.copy-code:hover {
+  background: #73b2b9;
+}
+
+.prose :where(pre):not(:where([class~="not-prose"] *)) {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}

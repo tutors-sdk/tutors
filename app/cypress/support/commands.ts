@@ -34,13 +34,13 @@ Cypress.Commands.add("clickCard", (lo: any) => {
         cy.clickPanelVideo(lo);
         break;
       case "github":
-        cy.verifyDynamicGithubRepoExists(lo);
+        cy.verifyContentsExists(lo);
         break;
       case "archive":
-        cy.verifyDownloadOfArchive(lo);
+        cy.verifyDownloadOfArchive(lo, "dynamic");
         break;
       case "web":
-        cy.verifyWebExists(lo);
+        cy.verifyContentsExists(lo);
         break;
       case "note":
         cy.triggerCardAction(lo);
@@ -71,8 +71,6 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
   cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
 
   if (lo.title.includes('#')) {
-    cy.log("INSIDE  # CARD: " + lo.title.slice(1).trim())
-
     cy.contains(lo.title.slice(1).trim()).click({ force: true });
   } else {
     const text = lo.title.trim();
@@ -134,15 +132,9 @@ Cypress.Commands.add("toggleInfoWithVerification", (contents: any) => {
   });
 });
 
-Cypress.Commands.add("verifyDynamicGithubRepoExists", (lo: any) => {
+Cypress.Commands.add("verifyContentsExists", (lo: any) => {
   cy.log(lo.title)
-  cy.get('.card-header').should('include.text', lo.title.trim())
-    .should('exist');
-});
-
-Cypress.Commands.add("verifyWebExists", (lo: any) => {
-  cy.log(lo.title)
-  cy.get('.card-header').should('include.text', lo.title.trim())
+  cy.get('.card').should('include.text', lo.title.trim())
     .should('exist');
 });
 
@@ -199,7 +191,7 @@ Cypress.Commands.add("clickPanelVideo", (lo: any) => {
   cy.findAllByText(lo.title.trim(), { matchCase: false });
 });
 
-Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
+Cypress.Commands.add("verifyDownloadOfArchive", (lo: any, version: string) => {
   cy.window().document().then(function (doc) {
     doc.addEventListener('click', () => {
       // this adds a listener that reloads your page 
@@ -209,9 +201,15 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
 
   cy.findAllByText(lo.title.trim(), { matchCase: false }).click({force:true})
   .then(() => {
+    if(version == "dynamic"){
     cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
     // Now you can interact with the <li> elements
-    cy.get('li.crumb', {timeout: 10000}).eq(1).click({ force: true });  }); 
+    cy.get('li.crumb', {timeout: 10000}).eq(1).click({ force: true });  
+    }else{
+      cy.clickStaticBreadCrumb(1)
+    }
+  }); 
+  
   })
 });
 
@@ -235,14 +233,16 @@ Cypress.Commands.add("clickStaticCard", (lo: any) => {
         cy.clickPanelVideo(lo);
         break;
       case "github":
-        cy.clickGithubRepo(lo);
+        cy.verifyContentsExists(lo);
         break;
       case "archive":
-        cy.verifyDownloadOfArchive(lo);
+        cy.verifyDownloadOfArchive(lo, "static");
         break;
       case "web":
-        cy.triggerStaticCardAction(lo);
-        cy.clickStaticBreadCrumb(1);
+        cy.verifyContentsExists(lo);
+        break;
+        case "talk":
+        cy.verifyContentsExists(lo);
         break;
       case "note":
         cy.triggerStaticCardAction(lo);
@@ -263,7 +263,7 @@ declare global {
       clickLabStep(lo: any): Chainable<any>;
       clickLabCard(lo: any): Chainable<any>;
       triggerCardAction(lo: any): Chainable<any>;
-      verifyDynamicGithubRepoExists(lo: any): Chainable<any>;
+      verifyContentsExists(lo: any): Chainable<any>;
       verifyWebExists(lo: any): Chainable<any>;
       /**
        * ***HTML Generator Version
@@ -271,7 +271,7 @@ declare global {
       clickStaticCard(lo: any): Chainable<any>;
       clickPanelVideo(lo: any): Chainable<any>;
       clickGithubRepo(lo: any): Chainable<any>;
-      verifyDownloadOfArchive(lo: any): Chainable<any>;
+      verifyDownloadOfArchive(lo: any, version: string): Chainable<any>;
       clickStaticLabStep(lo: any): Chainable<any>;
       clickStaticBreadCrumb(step: number): Chainable<any>;
       clickStaticLabCard(lo: any): Chainable<any>;

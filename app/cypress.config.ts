@@ -8,6 +8,7 @@ export default defineConfig({
     FAIL_FAST_ENABLED: true
   },
   e2e: {
+    experimentalMemoryManagement: true,
     async setupNodeEvents(on, config) {
       // The below is needed to store the downloaded folder/file in the correction location
       // for the plugin to check if it has downloaded in the correct default location
@@ -33,7 +34,9 @@ export default defineConfig({
       const cypressFailFastPlugin = await import("cypress-fail-fast/plugin");
       cypressFailFastPlugin.default(on, config);
       return config;
+      
     },
+    trashAssetsBeforeRuns: true,
     //this url is what I was using for cypress testing.
     baseUrl: "https://reader.tutors.dev/course/tutors-cypress-testing",
     //this url is the url for the static heml generator
