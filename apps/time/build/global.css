@@ -1,0 +1,248 @@
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("OpenDyslexic-Bold.woff2") format("woff2"), url("OpenDyslexic-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("OpenDyslexic-Italic.woff2") format("woff2"), url("OpenDyslexic-Italic.woff") format("woff");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("OpenDyslexic-BoldItalic.woff2") format("woff2"), url("OpenDyslexic-BoldItalic.woff") format("woff");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "OpenDyslexic";
+  src: url("OpenDyslexic-Regular.woff2") format("woff2"), url("OpenDyslexic-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+html,
+body {
+  @apply h-full overflow-hidden;
+}
+pre:not(.unstyled):not(.code-block pre) {
+  background: none !important;
+}
+
+code:not(.unstyled):not(.code-block code) {
+  background-color: rgb(var(--color-surface-500)) !important;
+  color: rgb(var(--color-primary-500)) !important;
+  padding: 5px !important;
+}
+
+.ag-header-cell-label .ag-header-cell-text {
+  writing-mode: vertical-lr;
+}
+
+.ag-row .ag-cell {
+  display: flex;
+  justify-content: center; /* align horizontal */
+  align-items: center;
+}
+
+div.ag-theme-balham div.ag-row {
+  font-size: 10px !important;
+}
+
+.yellow {
+  background-color: yellow;
+  color: grey;
+}
+
+.green-1 {
+  background-color: #00d000;
+  color: white;
+}
+.green-2 {
+  background-color: #00c000;
+  color: white;
+}
+.green-3 {
+  background-color: #00b000;
+  color: white;
+}
+.green-4 {
+  background-color: #00a000;
+  color: white;
+}
+.green-5 {
+  background-color: #009000;
+  color: white;
+}
+.green-6 {
+  background-color: #008000;
+  color: white;
+}
+.green-7 {
+  background-color: #007000;
+  color: white;
+}
+.green-8 {
+  background-color: #006000;
+  color: white;
+}
+.green-9 {
+  background-color: #005800;
+  color: white;
+}
+.green-10 {
+  background-color: #005000;
+}
+.green-11 {
+  background-color: #004800;
+  color: white;
+}
+
+/* https://www.cssportal.com/html-colors/shades-of-green.php */
+
+.d-green-1 {
+  background-color: #00ff00;
+  color: white;
+}
+.d-green-2 {
+  background-color: #00f800;
+  color: white;
+}
+.d-green-3 {
+  background-color: #00f000;
+  color: white;
+}
+.d-green-4 {
+  background-color: #00e800;
+  color: white;
+}
+.d-green-5 {
+  background-color: #00e000;
+  color: white;
+}
+.d-green-6 {
+  background-color: #00d800;
+  color: white;
+}
+.d-green-7 {
+  background-color: #00d000;
+  color: white;
+}
+.d-green-8 {
+  background-color: #00c800;
+  color: white;
+}
+.d-green-9 {
+  background-color: #00c000;
+  color: white;
+}
+.d-green-10 {
+  background-color: #00b800;
+}
+.d-green-11 {
+  background-color: #00b000;
+  color: white;
+}
+.d-green-12 {
+  background-color: #00a800;
+  color: white;
+}
+.d-green-13 {
+  background-color: #00a000;
+  color: white;
+}
+.d-green-14 {
+  background-color: #009800;
+  color: white;
+}
+.d-green-15 {
+  background-color: #009000;
+}
+.d-green-16 {
+  background-color: #008800;
+  color: white;
+}
+.d-green-17 {
+  background-color: #008000;
+  color: white;
+}
+.d-green-18 {
+  background-color: #007800;
+  color: white;
+}
+.d-green-19 {
+  background-color: #007000;
+  color: white;
+}
+.d-green-20 {
+  background-color: #006800;
+  color: white;
+}
+.d-green-21 {
+  background-color: #006000;
+  color: white;
+}
+.d-green-22 {
+  background-color: #005800;
+  color: white;
+}
+.d-green-23 {
+  background-color: #006000;
+  color: white;
+}
+.d-green-24 {
+  background-color: #005800;
+  color: white;
+}
+.d-green-25 {
+  background-color: #005000;
+  color: white;
+}
+.d-green-26 {
+  background-color: #004800;
+  color: white;
+}
+.d-green-27 {
+  background-color: #004000;
+  color: white;
+}
+.d-green-28 {
+  background-color: #003800;
+  color: white;
+}
+.d-green-29 {
+  background-color: #003000;
+  color: white;
+}
+.d-green-30 {
+  background-color: #002800;
+  color: white;
+}
+.d-green-31 {
+  background-color: #002020;
+  color: white;
+}
+.d-green-32 {
+  background-color: #001800;
+  color: white;
+}
+.d-green-33 {
+  background-color: #001000;
+  color: white;
+}
+.d-green-34 {
+  background-color: #000800;
+  color: white;
+}
+.d-green-35 {
+  background-color: #000000;
+  color: white;
+}

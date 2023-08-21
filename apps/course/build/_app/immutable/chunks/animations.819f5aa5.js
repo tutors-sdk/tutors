@@ -1,0 +1,1 @@
+function r(n){return n<.5?4*n*n*n:.5*Math.pow(2*n-2,3)+1}function c(n){const a=n-1;return a*a*a+1}const s=()=>({css:n=>`transform: scale(${n}); `,easing:r,baseScale:.5,duration:250,delay:250});export{r as a,s as b,c};
