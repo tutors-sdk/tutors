@@ -71,8 +71,6 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
   cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
 
   if (lo.title.includes('#')) {
-    cy.log("INSIDE  # CARD: " + lo.title.slice(1).trim())
-
     cy.contains(lo.title.slice(1).trim()).click({ force: true });
   } else {
     const text = lo.title.trim();

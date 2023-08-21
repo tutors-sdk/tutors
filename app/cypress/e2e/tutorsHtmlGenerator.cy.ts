@@ -51,7 +51,7 @@ describe("Loading the JSON fixture", function () {
 
         it("Deep Topics", function () {
 
-            course.los.forEach((topic) => {
+            course.los.forEach((topic: any) => {
                 if (!topic.hide) {
                     cy.wait(500);
                     cy.clickStaticCard(topic);
@@ -68,6 +68,6 @@ describe("Loading the JSON fixture", function () {
         });
 
         it('Verify the folder downloaded', () => {
-            cy.verifyDownload('\\archive.zip', { timeout: 2500 });
+            cy.verifyDownload('archive.zip', { timeout: 2500 });
         });
     });
