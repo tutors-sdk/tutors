@@ -9,10 +9,12 @@
   <NavigationPrimaryButton {...args} />
 </Template>
 
-<Story
-  name="Default"
-  args={{
-    href: "#",
-    label: "Your Label"
-  }}
-/>
+<Story name="Default" args={{ href: "#", label: "default" }} />
+
+<Story name="Link">
+  <NavigationPrimaryButton href="#" label="Link" />
+</Story>
+
+<Story name="Button">
+  <NavigationPrimaryButton label="Button" on:click={() => alert("Clicked")} />
+</Story>
