@@ -3,7 +3,8 @@
   import {
     NavigationPrimary,
     NavigationPrimaryTitle,
-    NavigationPrimaryButton
+    NavigationPrimaryButton,
+    NavigationPrimaryUser
   } from "$lib/components";
 </script>
 
@@ -15,7 +16,13 @@
       <NavigationPrimaryTitle title="Tutors" image="https://tutors.dev/logo.svg" />
     </svelte:fragment>
     <svelte:fragment slot="trail">
-      <NavigationPrimaryButton href="#" label="Sign in" />
+      <NavigationPrimaryUser
+        onlineStatus
+        usersOnline="3"
+        avatar="https://avatars.githubusercontent.com/u/76656637?v=4"
+        name="Jordan Harrison"
+      />
+      <NavigationPrimaryButton href="#" label="Go Somewhere" />
     </svelte:fragment>
   </NavigationPrimary>
 </Story>
