@@ -11,7 +11,9 @@
     NavigationPrimary,
     NavigationPrimaryButton,
     NavigationPrimaryTitle,
-    NavigationPrimaryUser
+    NavigationPrimaryUser,
+    NavigationPrimaryUserMenu,
+    NavigationPrimaryLayoutMenu
   } from "$lib/components";
 
   import {
@@ -23,7 +25,6 @@
     drawerStore,
     toastStore
   } from "@skeletonlabs/skeleton";
-  import LayoutMenu from "$lib/ui/navigators/LayoutMenu.svelte";
   import { computePosition, autoUpdate, flip, shift, offset, arrow } from "@floating-ui/dom";
 
   import tutors from "$lib/ui/legacy/themes/tutors.css?inline";
@@ -181,116 +182,25 @@
                 usersOnline={isNotCourseRoute ? undefined : $studentsOnline.toString()}
               />
             </button>
-            <nav class="list-nav card card-body w-56 p-4 space-y-4 shadow-lg" data-popup="avatar">
-              <span class="mt-2 ml-4 text-xs">Logged in as:</span><br />
-              <span class="ml-4 text-sm">{data.session.user.user_metadata.name}</span>
-              <ul>
-                <li>
-                  <a href="/dashboard">
-                    <Icon
-                      icon="fluent:home-24-filled"
-                      color="rgba(var(--color-primary-500))"
-                      height="20"
-                    />
-                    <div class="ml-2">Dashboard</div>
-                  </a>
-                </li>
-                {#if !isNotCourseRoute}
-                  <hr />
-                  <li class="flex">
-                    <!-- svelte-ignore a11y-missing-attribute -->
-                    <!-- svelte-ignore a11y-click-events-have-key-events -->
-                    <a on:click={handleClick}>
-                      {#if status}
-                        <Icon
-                          icon="fluent:presence-available-24-filled"
-                          color="rgba(var(--color-success-500))"
-                          height="20"
-                        />
-                      {/if}
-                      {#if !status}
-                        <Icon
-                          icon="fluent:presence-available-24-regular"
-                          color="rgba(var(--color-error-500))"
-                          height="20"
-                        />
-                      {/if}
-                      <div class="ml-2">Share Presence</div>
-                    </a>
-                  </li>
-                  {#if status}
-                    <li>
-                      <!-- svelte-ignore a11y-missing-attribute -->
-                      <!-- svelte-ignore a11y-click-events-have-key-events -->
-                      <a on:click={onlineDrawerOpen}>
-                        <Icon
-                          icon="fluent:people-list-24-filled"
-                          color="rgba(var(--color-primary-500))"
-                          height="20"
-                        />
-                        <div class="ml-2">
-                          View <span class="badge bg-error-500 text-white">{$studentsOnline}</span> Online
-                        </div>
-                      </a>
-                    </li>
-                  {/if}
-                  <hr />
-                  {#if status}
-                    <li>
-                      <a href="/live/{$currentCourse?.id}" target="_blank" rel="noreferrer">
-                        <Icon
-                          icon="fluent:people-list-24-filled"
-                          color="rgba(var(--color-primary-500))"
-                          height="20"
-                        />
-                        <div class="ml-2">Tutors Live</div>
-                      </a>
-                    </li>
-                  {/if}
-                  <li>
-                    <a
-                      href="/time/{$currentCourse?.url}/{session.user.id}"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <Icon
-                        icon="fluent:clock-alarm-24-filled"
-                        color="rgba(var(--color-primary-500))"
-                        height="20"
-                      />
-                      <div class="ml-2">Tutors Time</div>
-                    </a>
-                  </li>
-                  <hr />
-                {/if}
-                <li>
-                  <a
-                    href="https://github.com/{data.session.user.user_metadata.preferred_username}"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <Icon icon="mdi:github" height="20" />
-                    <div class="ml-2">Github Profile</div>
-                  </a>
-                </li>
-                <li>
-                  <button on:click={handleSignOut} class="w-full">
-                    <Icon
-                      icon="fluent:sign-out-24-filled"
-                      color="rgba(var(--color-error-500))"
-                      height="20"
-                    />
-                    <div class="ml-2">Logout</div>
-                  </button>
-                </li>
-              </ul>
-            </nav>
+            <NavigationPrimaryUserMenu
+              {isNotCourseRoute}
+              name={data.session.user.user_metadata.name}
+              username={data.session.user.user_metadata.preferred_username}
+              userId={data.session.user.id}
+              onlineStatus={isNotCourseRoute ? undefined : status}
+              usersOnline={isNotCourseRoute ? undefined : $studentsOnline.toString()}
+              currentCourseId={$currentCourse?.id}
+              currentCourseUrl={$currentCourse?.url}
+              {handleClick}
+              {handleSignOut}
+              {onlineDrawerOpen}
+            />
           </div>
         {:else}
           <NavigationPrimaryButton href="/auth" label="Login / Register" />
         {/if}
         <span class="divider-vertical h-10 hidden lg:block" />
-        <LayoutMenu />
+        <NavigationPrimaryLayoutMenu />
         {#if !isNotCourseRoute}
           <span class="divider-vertical h-10 hidden lg:block" />
           <button class="btn btn-sm" on:click={tocDrawerOpen}>
