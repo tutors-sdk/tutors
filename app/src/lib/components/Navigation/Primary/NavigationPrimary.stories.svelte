@@ -1,8 +1,10 @@
 <script>
   import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
-  import NavigationPrimary from "./NavigationPrimary.svelte";
-  import NavigationPrimaryTitle from "./Title/NavigationPrimaryTitle.svelte";
-  import NavigationPrimaryButton from "./Button/NavigationPrimaryButton.svelte";
+  import {
+    NavigationPrimary,
+    NavigationPrimaryTitle,
+    NavigationPrimaryButton
+  } from "$lib/components";
 </script>
 
 <Meta title="Tutors/Navigation/Primary" component={NavigationPrimary} />
