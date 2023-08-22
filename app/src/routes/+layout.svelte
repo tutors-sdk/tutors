@@ -5,14 +5,7 @@
   import { goto, invalidate } from "$app/navigation";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
-  import {
-    courseUrl,
-    currentCourse,
-    currentUser,
-    onlineStatus,
-    storeTheme,
-    studentsOnline
-  } from "$lib/stores";
+  import { courseUrl, currentCourse, onlineStatus, storeTheme, studentsOnline } from "$lib/stores";
 
   import {
     NavigationPrimary,
@@ -22,9 +15,7 @@
   } from "$lib/components";
 
   import {
-    AppBar,
     AppShell,
-    Avatar,
     popup,
     Toast,
     storePopup,
@@ -45,7 +36,6 @@
   import { analyticsService } from "$lib/services/analytics";
   import Icon from "@iconify/svelte";
   import { get } from "svelte/store";
-  import { redirect } from "@sveltejs/kit";
 
   const themes: any = { tutors, dyslexia, halloween, valentines };
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
