@@ -1,12 +1,12 @@
 <script>
   import { Meta, Story, Template } from "@storybook/addon-svelte-csf";
-  import NavigationPrimaryLink from "./NavigationPrimaryLink.svelte";
+  import NavigationPrimaryButton from "./NavigationPrimaryButton.svelte";
 </script>
 
-<Meta title="Tutors/Navigation/Primary/Link" component={NavigationPrimaryLink} />
+<Meta title="Tutors/Navigation/Primary/Button" component={NavigationPrimaryButton} />
 
 <Template let:args>
-  <NavigationPrimaryLink {...args} />
+  <NavigationPrimaryButton {...args} />
 </Template>
 
 <Story
