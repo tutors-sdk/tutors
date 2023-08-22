@@ -12,7 +12,8 @@
     NavigationPrimaryButton,
     NavigationPrimaryTitle,
     NavigationPrimaryUser,
-    NavigationPrimaryUserMenu
+    NavigationPrimaryUserMenu,
+    NavigationPrimaryLayoutMenu
   } from "$lib/components";
 
   import {
@@ -24,7 +25,6 @@
     drawerStore,
     toastStore
   } from "@skeletonlabs/skeleton";
-  import LayoutMenu from "$lib/ui/navigators/LayoutMenu.svelte";
   import { computePosition, autoUpdate, flip, shift, offset, arrow } from "@floating-ui/dom";
 
   import tutors from "$lib/ui/legacy/themes/tutors.css?inline";
@@ -200,7 +200,7 @@
           <NavigationPrimaryButton href="/auth" label="Login / Register" />
         {/if}
         <span class="divider-vertical h-10 hidden lg:block" />
-        <LayoutMenu />
+        <NavigationPrimaryLayoutMenu />
         {#if !isNotCourseRoute}
           <span class="divider-vertical h-10 hidden lg:block" />
           <button class="btn btn-sm" on:click={tocDrawerOpen}>
