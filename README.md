@@ -18,6 +18,9 @@ Tutors: An Open Learning Web Toolkit
   <a href="#">Coming Soon</a>
 </p>
 
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/86f6c9e2-a780-410d-a735-241e08e2b949/deploy-status)](https://app.netlify.com/sites/tutors-dev/deploys) [![CI](https://github.com/tutors-sdk/tutors/actions/workflows/ci.yml/badge.svg)](https://github.com/tutors-sdk/tutors/actions/workflows/ci.yml) 
+
 # What is Tutors?
 
 A collection of open source components & services supporting the creation of transformative learning experiences using open web standards. Some representative examples:
