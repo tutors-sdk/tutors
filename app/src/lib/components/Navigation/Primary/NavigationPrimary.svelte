@@ -1,8 +1,5 @@
 <script lang="ts">
   import { AppBar } from "@skeletonlabs/skeleton";
-  import { NavigationPrimaryTitle } from "$lib/components";
-
-  export let test: string = "";
 </script>
 
 <AppBar
