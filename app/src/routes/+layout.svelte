@@ -15,6 +15,13 @@
   } from "$lib/stores";
 
   import {
+    NavigationPrimary,
+    NavigationPrimaryButton,
+    NavigationPrimaryTitle,
+    NavigationPrimaryUser
+  } from "$lib/components";
+
+  import {
     AppBar,
     AppShell,
     Avatar,
@@ -114,30 +121,20 @@
   <Sidebars />
   <svelte:fragment slot="header">
     {#if !$currentCourse || $page.url.pathname === "/dashboard" || $page.url.pathname === "/time" || $page.url.pathname === "/auth" || $page.url.pathname.length <= 1}
-      <AppBar
-        background="bg-surface-100-800-token"
-        shadow="none"
-        class="h-20 justify-center border-b-[1px] border-surface-200 dark:border-surface-700"
-      >
+      <NavigationPrimary>
         <svelte:fragment slot="lead">
           <a href="/">
-            <div class="flex space-x-4">
-              <img src="/logo.svg" alt="tutors logo" />
-              <span class="text-2xl font-bold hidden lg:block">Tutors</span>
-            </div>
+            <NavigationPrimaryTitle title="Tutors" image="/logo.svg" />
           </a>
         </svelte:fragment>
         <svelte:fragment slot="trail">
           {#if data.session}
             <div class="relative">
-              <button class="btn btn-sm space-x-1" use:popup={{ event: "click", target: "avatar" }}>
-                <div class="relative inline-block">
-                  <Avatar
-                    width="w-10"
-                    src={data.session.user.user_metadata.avatar_url}
-                    alt={data.session.user.user_metadata.name}
-                  />
-                </div>
+              <button use:popup={{ event: "click", target: "avatar" }}>
+                <NavigationPrimaryUser
+                  avatar={data.session.user.user_metadata.avatar_url}
+                  name={data.session.user.user_metadata.name}
+                />
               </button>
               <nav class="list-nav card card-body w-56 p-4 space-y-4 shadow-lg" data-popup="avatar">
                 <span class="mt-2 ml-4 text-xs">Logged in as:</span><br />
@@ -177,14 +174,12 @@
               </nav>
             </div>
           {:else}
-            <a class="btn btn-sm" href="/auth">
-              <span class="text-sm font-bold block">Login / Register</span>
-            </a>
+            <NavigationPrimaryButton href="/auth" label="Login / Register" />
           {/if}
           <span class="divider-vertical h-10 hidden lg:block" />
           <LayoutMenu />
         </svelte:fragment>
-      </AppBar>
+      </NavigationPrimary>
     {:else if $currentCourse}
       <AppBar
         background="bg-surface-100-800-token"
@@ -238,36 +233,13 @@
           <span class="divider-vertical h-10 hidden lg:block" />
           {#if data.session}
             <div class="relative">
-              <button class="btn btn-sm space-x-1" use:popup={{ event: "click", target: "avatar" }}>
-                <div class="relative inline-block">
-                  {#if status && studentsOnline}
-                    <span
-                      class="badge-icon variant-filled-error absolute -top-2 -right-2 z-10 text-white"
-                      >{$studentsOnline}</span
-                    >
-                  {/if}
-                  <span class="badge-icon absolute -bottom-2 -right-2 z-10 text-white">
-                    {#if status}
-                      <Icon
-                        icon="fluent:presence-available-24-filled"
-                        color="rgba(var(--color-success-500))"
-                        height="20"
-                      />
-                    {/if}
-                    {#if !status}
-                      <Icon
-                        icon="fluent:presence-available-24-regular"
-                        color="rgba(var(--color-error-500))"
-                        height="20"
-                      />
-                    {/if}</span
-                  >
-                  <Avatar
-                    width="w-10"
-                    src={data.session.user.user_metadata.avatar_url}
-                    alt={data.session.user.user_metadata.name}
-                  />
-                </div>
+              <button use:popup={{ event: "click", target: "avatar" }}>
+                <NavigationPrimaryUser
+                  onlineStatus={status}
+                  usersOnline={$studentsOnline.toString()}
+                  avatar={data.session.user.user_metadata.avatar_url}
+                  name={data.session.user.user_metadata.name}
+                />
               </button>
               <nav class="list-nav card card-body w-56 p-4 space-y-4 shadow-lg" data-popup="avatar">
                 <span class="mt-2 ml-4 text-xs">Logged in as:</span><br />
@@ -376,9 +348,7 @@
               </nav>
             </div>
           {:else}
-            <a class="btn btn-sm" href="/auth">
-              <span class="text-sm font-bold block">Login / Register</span>
-            </a>
+            <NavigationPrimaryButton href="/auth" label="Login / Register" />
           {/if}
           <span class="divider-vertical h-10 hidden lg:block" />
           <LayoutMenu />
