@@ -38,6 +38,11 @@
               >
             </li>
             <li>
+              <a href="https://discord.tutors.dev" target="_blank" rel="noreferrer"
+                >Join Discord Community</a
+              >
+            </li>
+            <li>
               <a rel="noreferrer" href="https://fosstodon.org/@tutors" target="_blank"
                 >Follow on Mastodon</a
               >
