@@ -1,5 +1,5 @@
 <script>
-  import { AppShell, AppBar, LightSwitch } from "@skeletonlabs/skeleton";
+  import { AppShell } from "@skeletonlabs/skeleton";
   import "iconify-icon";
 </script>
 

@@ -162,14 +162,12 @@
       {/if}
       <svelte:fragment slot="trail">
         {#if !isNotCourseRoute}
-          <a class="btn btn-sm" href="/search/{$courseUrl}">
-            <Icon
-              icon="fluent:search-24-filled"
-              color="rgba(var(--color-primary-500))"
-              height="20"
-            />
-            <span class="hidden text-sm font-bold lg:block">Search</span>
-          </a>
+          <NavigationPrimaryButton
+            href="/search/{$courseUrl}"
+            icon="fluent:search-24-filled"
+            iconColour="rgba(var(--color-primary-500))"
+            label="Search"
+          />
           <span class="divider-vertical h-10 hidden lg:block" />
         {/if}
         {#if data.session}
@@ -204,10 +202,9 @@
         {#if !isNotCourseRoute}
           <span class="divider-vertical h-10 hidden lg:block" />
           <button class="btn btn-sm" on:click={tocDrawerOpen}>
-            <Icon
+            <NavigationPrimaryButton
               icon="fluent:line-horizontal-3-20-filled"
-              color="rgba(var(--color-primary-500))"
-              height="20"
+              iconColour="rgba(var(--color-primary-500))"
             />
           </button>
         {/if}
