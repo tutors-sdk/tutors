@@ -15,8 +15,10 @@ Tutors: An Open Learning Web Toolkit
 <p align="center">
   <a href="https://tutors.dev">Website</a> |
   <a href="https://docs.tutors.dev">Documentation</a> |
-  <a href="#">Coming Soon</a>
+  <a href="https://discord.tutors.dev">Discord</a>
 </p>
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/86f6c9e2-a780-410d-a735-241e08e2b949/deploy-status)](https://app.netlify.com/sites/tutors-dev/deploys) [![CI](https://github.com/tutors-sdk/tutors/actions/workflows/ci.yml/badge.svg)](https://github.com/tutors-sdk/tutors/actions/workflows/ci.yml)
 
 # What is Tutors?
 

@@ -66,7 +66,7 @@ describe("Loading the JSON fixture", function () {
         cy.clickCard(topic);
         topic.los.forEach((lo: any) => {
           cy.clickCard(lo);
-          lo.los.forEach((l: any, i: number) => {
+          lo.los.forEach((l: any) => {
             cy.clickCard(l);
           });
           cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');

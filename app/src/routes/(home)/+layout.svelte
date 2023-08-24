@@ -1,5 +1,5 @@
 <script>
-  import { AppShell, AppBar, LightSwitch } from "@skeletonlabs/skeleton";
+  import { AppShell } from "@skeletonlabs/skeleton";
   import "iconify-icon";
 </script>
 
@@ -35,6 +35,11 @@
             <li>
               <a href="https://github.com/tutors-sdk/tutors" target="_blank" rel="noreferrer"
                 >View GitHub</a
+              >
+            </li>
+            <li>
+              <a href="https://discord.tutors.dev" target="_blank" rel="noreferrer"
+                >Join Discord Community</a
               >
             </li>
             <li>

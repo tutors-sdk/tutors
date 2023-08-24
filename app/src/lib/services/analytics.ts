@@ -74,7 +74,7 @@ export const analyticsService = {
     }
   },
 
-  updatePageCount(course: Course, session: TokenResponse) {
+  updatePageCount(session: TokenResponse) {
     updateLastAccess(`${course.id}/usage/${this.loRoute}`, course.lo.title);
     updateCount(course.id);
     if (user) {
