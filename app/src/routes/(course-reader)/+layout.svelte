@@ -35,7 +35,7 @@
       !currentRoute.startsWith("/live") &&
       !currentRoute.startsWith("/dashboard")
     ) {
-      analyticsService.updatePageCount(data.course, session);
+      analyticsService.updatePageCount(session);
     }
   }
 
