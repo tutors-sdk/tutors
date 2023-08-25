@@ -46,6 +46,10 @@ jobs:
         run: npm install
         working-directory: ./app
 
+      - name: Create env
+        run: cp .env.example > .env
+        working-directory: ./app
+
       - name: Start SvelteKit Server & run tests
         run: npm run dev & npm run test
         working-directory: ./app
