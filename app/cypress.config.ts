@@ -37,7 +37,9 @@ export default defineConfig({
       return config;
     },
     trashAssetsBeforeRuns: true,
-    baseUrl: process.env.DEPLOY_URL || "http://localhost:3000",
+    baseUrl: process.env.DEPLOY_URL
+      ? `${process.env.DEPLOY_URL}/course/tutors-cypress-testing`
+      : "http://localhost:3000/course/tutors-cypress-testing",
     specPattern: "cypress/e2e/**/**.cy.ts"
   }
 });
