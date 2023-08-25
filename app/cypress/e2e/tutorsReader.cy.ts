@@ -13,9 +13,6 @@ describe("Loading the JSON fixture", function () {
   beforeEach("Check: Define the dimensions of the screen being used", function () {
     //This defines the dimensions of the screen
     cy.viewport(1440, 1440);
-    //this is a dyamic way of passing through the url which is defined in the
-    //cypress.config.ts file.
-    cy.visit(`${course.route}course/tutors-cypress-testing`);
   });
 
   /**

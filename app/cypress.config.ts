@@ -39,6 +39,5 @@ export default defineConfig({
     trashAssetsBeforeRuns: true,
     baseUrl: process.env.DEPLOY_URL || "http://localhost:3000",
     specPattern: "cypress/e2e/**/**.cy.ts"
-  },
-  testIsolation: false
+  }
 });
