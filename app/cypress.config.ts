@@ -36,7 +36,7 @@ export default defineConfig({
       return config;
     },
     trashAssetsBeforeRuns: true,
-    baseUrl: "http://localhost:3000",
+    baseUrl: process.env.DEPLOY_URL || "http://localhost:3000",
     specPattern: "cypress/e2e/**/**.cy.ts"
   }
 });

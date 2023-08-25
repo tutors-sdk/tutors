@@ -16,3 +16,4 @@ TERM = "xterm"
 package = "netlify-plugin-cypress"
   [plugins.inputs]
   record = true
+  spa = true
