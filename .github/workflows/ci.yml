@@ -46,15 +46,8 @@ jobs:
         run: npm install
         working-directory: ./app
 
-      - name: Start SvelteKit Server
-        run: npm run dev &
-        working-directory: ./app
-
-      - name: Wait for Server to Start
-        run: sleep 10
-
-      - name: Run Cypress Tests
-        run: npm run test
+      - name: Start SvelteKit Server & run tests
+        run: npm run dev & npm run test
         working-directory: ./app
 
       - name: Stop SvelteKit Server
