@@ -34,11 +34,10 @@ export default defineConfig({
       const cypressFailFastPlugin = await import("cypress-fail-fast/plugin");
       cypressFailFastPlugin.default(on, config);
       return config;
-      
     },
     trashAssetsBeforeRuns: true,
     //this url is what I was using for cypress testing.
-    baseUrl: "https://reader.tutors.dev/course/tutors-cypress-testing",
+    baseUrl: "https://tutors.dev/course/tutors-cypress-testing",
     //this url is the url for the static heml generator
     //baseUrl: "https://tutors-reference-course-html.netlify.app/",
     specPattern: "cypress/e2e/**/**.cy.ts"
