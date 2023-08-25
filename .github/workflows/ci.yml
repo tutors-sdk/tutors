@@ -33,13 +33,6 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Save build artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: build
-          if-no-files-found: error
-          path: app/build
-
   test:
     name: Test
     timeout-minutes: 15
@@ -49,18 +42,20 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v3
 
-      - name: Download build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: build
-          path: dist
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./app
 
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          start: npm run app
-          wait-on: "http://localhost:3000"
-          wait-on-timeout: 120
-          browser: chrome
-          record: true
-          parallel: true
+      - name: Start SvelteKit Server
+        run: npm run dev &
+        working-directory: ./app
+
+      - name: Wait for Server to Start
+        run: sleep 10
+
+      - name: Run Cypress Tests
+        run: npm run test
+        working-directory: ./app
+
+      - name: Stop SvelteKit Server
+        run: pkill -f "sirv" || true
