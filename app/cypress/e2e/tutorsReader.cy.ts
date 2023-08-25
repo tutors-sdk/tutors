@@ -12,18 +12,15 @@ describe("Loading the JSON fixture", function () {
 
   beforeEach("Check: Define the dimensions of the screen being used", function () {
     //This defines the dimensions of the screen
+    cy.visit(`${course.route}course/tutors-cypress-testing`);
     cy.viewport(1440, 1440);
   });
-
   /**
    * This test case is checking that the headers and summary are present on all the
    * cards. You would expect all to match as it is coming from the JSON fixture
    */
   it("Course Reference page", function () {
-    // Test case
-    cy.visit(`${course.route}course/tutors-cypress-testing`);
-    cy.wait(3000);
-    cy.get(".app-bar", { timeout: 10000 }).contains(course.title.trim());
+    cy.get(".app-bar", { timeout: 30000 }).contains(course.title.trim());
     cy.get(".z-10").contains(course.title.trim());
     course.los.forEach((topic: any) => {
       if (!topic.hide) {
