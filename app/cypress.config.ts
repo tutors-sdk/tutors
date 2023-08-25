@@ -7,7 +7,6 @@ export default defineConfig({
     FAIL_FAST_STRATEGY: "run",
     FAIL_FAST_ENABLED: true
   },
-  testIsolation: false,
   projectId: "op4k6f",
   e2e: {
     experimentalMemoryManagement: true,
@@ -40,5 +39,6 @@ export default defineConfig({
     trashAssetsBeforeRuns: true,
     baseUrl: process.env.DEPLOY_URL || "http://localhost:3000",
     specPattern: "cypress/e2e/**/**.cy.ts"
-  }
+  },
+  testIsolation: false
 });
