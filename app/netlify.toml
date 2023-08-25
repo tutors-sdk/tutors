@@ -12,8 +12,8 @@ CYPRESS_CACHE_FOLDER = "./node_modules/CypressBinary"
 TERM = "xterm"
 
 [[plugins]]
-# runs Cypress tests against the deployed URL
-package = "netlify-plugin-cypress"
+  package = "netlify-plugin-cypress"
   [plugins.inputs]
-  browser = "chromium"
-  record = true
+    # run E2E tests against the deployed URL
+    record = true
+    group = 'deployed'
