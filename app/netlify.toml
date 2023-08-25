@@ -17,3 +17,4 @@ TERM = "xterm"
     # run E2E tests against the deployed URL
     record = true
     group = 'deployed'
+    browser = 'electron'
