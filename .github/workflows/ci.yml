@@ -47,7 +47,7 @@ jobs:
         working-directory: ./app
 
       - name: Create env
-        run: cp .env.example > .env
+        run: cp .env.example .env
         working-directory: ./app
 
       - name: Start SvelteKit Server & run tests
