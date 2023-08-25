@@ -1,5 +1,5 @@
 {
-  "route": "/",
+  "route": "/course/tutors-cypress-testing",
   "type": "course",
   "title": " Reference Course\r",
   "summary": "A short description of the course. This description will be available when the information icon in the top left selected.\r",
