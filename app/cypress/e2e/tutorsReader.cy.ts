@@ -23,7 +23,7 @@ describe("Loading the JSON fixture", function () {
     // Test case
     cy.visit(`${course.route}course/tutors-cypress-testing`);
     cy.wait(3000);
-    cy.get(".app-bar", { timeout: 30000 }).contains(course.title.trim());
+    cy.get(".app-bar", { timeout: 10000 }).contains(course.title.trim());
     cy.get(".z-10").contains(course.title.trim());
     course.los.forEach((topic: any) => {
       if (!topic.hide) {
