@@ -14,6 +14,5 @@ TERM = "xterm"
 [[plugins]]
 # runs Cypress tests against the deployed URL
 package = "netlify-plugin-cypress"
-  [plugins.inputs.onSuccess]
-    # run tests after the deploy
-    enable = true
+  [plugins.inputs]
+  record = true
