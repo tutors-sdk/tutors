@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+# Cypress plugin
+[[plugins]]
+  package = "netlify-plugin-cypress"
+  # let's run tests against development server
+  # before building it (and testing the built site)
+  [plugins.inputs.preBuild]
+    enable = true
+    start = 'npm start'
+    wait-on = 'http://localhost:3000'
+    wait-on-timeout = '30' # seconds
