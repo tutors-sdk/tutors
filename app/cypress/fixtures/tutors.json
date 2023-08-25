@@ -6,7 +6,7 @@
   "contentMd": "# Reference Course\r\n\r\nA short description of the course. This description will be available when the information icon in the top left selected.\r\n\r\nThis can be any markdown document:\r\n\r\n- with the usual\r\n- markdown facilities\r\n\r\n## Can include Headings\r\n\r\nAnd even tables ...\r\n\r\n| Head 1 | Head 2 |\r\n| ------ | ------ |\r\n| cell 1 | cell 2 |\r\n| cell 3 | cell 4 |\r\n",
   "frontMatter": {},
   "id": "tutors-reference-course",
-  "img": "https://tutors-cypress-testing/course.png",
+  "img": "https://tutors-cypress-testing.netlify.app/course.png",
   "pdf": "",
   "video": "",
   "videoids": { "videoid": "", "videoIds": [] },
@@ -19,7 +19,7 @@
       "contentMd": "# Simple\r\n\r\nUnits with presentations, labs + resources\r\n",
       "frontMatter": {},
       "id": "topic-01-typical",
-      "img": "https://tutors-cypress-testing/topic-01-typical/typical.png",
+      "img": "https://tutors-cypress-testing.netlify.app/topic-01-typical/typical.png",
       "pdf": "",
       "video": "",
       "videoids": { "videoid": "", "videoIds": [] },
@@ -45,8 +45,8 @@
               "contentMd": "Lecture 1\r\n\r\nA short summary of the talk, no more than two sentences.",
               "frontMatter": {},
               "id": "talk-1-intro",
-              "img": "https://tutors-cypress-testing/topic-01-typical/unit-1/talk-1-intro/introduction.png",
-              "pdf": "https://tutors-cypress-testing/topic-01-typical/unit-1/talk-1-intro/introduction.pdf",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-01-typical/unit-1/talk-1-intro/introduction.png",
+              "pdf": "https://tutors-cypress-testing.netlify.app/topic-01-typical/unit-1/talk-1-intro/introduction.pdf",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
               "los": [],
@@ -60,8 +60,8 @@
               "contentMd": "Lecture 2\r\n\r\nProvide a short summary, perhaps supported by a representative image.",
               "frontMatter": {},
               "id": "talk-2-explore",
-              "img": "https://tutors-cypress-testing/topic-01-typical/unit-1/talk-2-explore/explore.png",
-              "pdf": "https://tutors-cypress-testing/topic-01-typical/unit-1/talk-2-explore/explore.pdf",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-01-typical/unit-1/talk-2-explore/explore.png",
+              "pdf": "https://tutors-cypress-testing.netlify.app/topic-01-typical/unit-1/talk-2-explore/explore.pdf",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
               "los": [],
@@ -75,7 +75,7 @@
               "contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
               "frontMatter": {},
               "id": "book-a",
-              "img": "https://tutors-cypress-testing/topic-01-typical/unit-1/book-a/img/main.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-01-typical/unit-1/book-a/img/main.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -163,7 +163,7 @@
               "contentMd": "# Note 1\r\n\r\nThis is an example of a note. \r\n\r\nIt can have images:\r\n\r\n![](img/01.png)\r\n\r\nA code block with syntax highlighting:\r\n\r\n### user-api-test.js\r\n\r\n~~~javascript\r\nimport { playtimeService } from \"./playtime-service.js\";\r\n\r\nsuite(\"User API tests\", () => {\r\n  setup(async () => {\r\n  });\r\n  teardown(async () => {\r\n  });\r\n\r\n  test(\"create a user\", async () => {\r\n  });\r\n});\r\n~~~\r\n\r\n### Mathematical notation:\r\n\r\n$\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n$\r\n\r\nThis is an inline exampe: $c = \\pm\\sqrt{a^2 + b^2}$ with text before and after\r\n\r\n\r\n### Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n### Links to Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)",
               "frontMatter": {},
               "id": "note-1",
-              "img": "https://tutors-cypress-testing/topic-01-typical/unit-2/note-1/note.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-01-typical/unit-2/note-1/note.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -178,7 +178,7 @@
               "contentMd": "Web Site 1\r\n\r\nA web site of interest",
               "frontMatter": {},
               "id": "web-1",
-              "img": "https://tutors-cypress-testing/topic-01-typical/unit-2/web-1/tutors-web-site.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-01-typical/unit-2/web-1/tutors-web-site.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -186,14 +186,14 @@
               "hide": false
             },
             {
-              "route": "https://tutors-cypress-testing/topic-01-typical/unit-2/archive/archive.zip",
+              "route": "https://tutors-cypress-testing.netlify.app/topic-01-typical/unit-2/archive/archive.zip",
               "type": "archive",
               "title": "Resource 1\r",
               "summary": "A link to a zipped archive",
               "contentMd": "Resource 1\r\n\r\nA link to a zipped archive ",
               "frontMatter": {},
               "id": "archive",
-              "img": "https://tutors-cypress-testing/topic-01-typical/unit-2/archive/archive.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-01-typical/unit-2/archive/archive.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -214,7 +214,7 @@
       "contentMd": "# Sidebar\r\n\r\nPresentations, links + labs in side bar\r\n",
       "frontMatter": {},
       "id": "topic-02-side",
-      "img": "https://tutors-cypress-testing/topic-02-side/topic.png",
+      "img": "https://tutors-cypress-testing.netlify.app/topic-02-side/topic.png",
       "pdf": "",
       "video": "",
       "videoids": { "videoid": "", "videoIds": [] },
@@ -240,8 +240,8 @@
               "contentMd": "Lecture 3\r\n\r\nA short summary of the talk, no more than two sentences. Avoid bullet points or links for formatting reasons.",
               "frontMatter": {},
               "id": "talk-1",
-              "img": "https://tutors-cypress-testing/topic-02-side/unit-1/talk-1/talk.png",
-              "pdf": "https://tutors-cypress-testing/topic-02-side/unit-1/talk-1/talk.pdf",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-02-side/unit-1/talk-1/talk.png",
+              "pdf": "https://tutors-cypress-testing.netlify.app/topic-02-side/unit-1/talk-1/talk.pdf",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
               "los": [],
@@ -255,8 +255,8 @@
               "contentMd": "Lecture 4\r\n\r\nProvide a short summary, perhaps supported by a representative image.",
               "frontMatter": {},
               "id": "talk-2",
-              "img": "https://tutors-cypress-testing/topic-02-side/unit-1/talk-2/talk.png",
-              "pdf": "https://tutors-cypress-testing/topic-02-side/unit-1/talk-2/talk.pdf",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-02-side/unit-1/talk-2/talk.png",
+              "pdf": "https://tutors-cypress-testing.netlify.app/topic-02-side/unit-1/talk-2/talk.pdf",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
               "los": [],
@@ -270,7 +270,7 @@
               "contentMd": "Web Site 2\r\n\r\nA web site of interest",
               "frontMatter": { "order": 3 },
               "id": "web-1",
-              "img": "https://tutors-cypress-testing/topic-02-side/unit-1/web-1/web.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-02-side/unit-1/web-1/web.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -301,7 +301,7 @@
               "contentMd": "# Note 1\r\n\r\nThis is an example of a note. \r\n\r\nIt can have images:\r\n\r\n![](img/01.png)\r\n\r\nA code block with syntax highlighting:\r\n\r\n### user-api-test.js\r\n\r\n~~~javascript\r\nimport { playtimeService } from \"./playtime-service.js\";\r\n\r\nsuite(\"User API tests\", () => {\r\n  setup(async () => {\r\n  });\r\n  teardown(async () => {\r\n  });\r\n\r\n  test(\"create a user\", async () => {\r\n  });\r\n});\r\n~~~\r\n\r\n### Mathematical notation:\r\n\r\n$\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n$\r\n\r\nThis is an inline exampe: $c = \\pm\\sqrt{a^2 + b^2}$ with text before and after\r\n\r\n\r\n### Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n### Links to Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)",
               "frontMatter": {},
               "id": "note-1",
-              "img": "https://tutors-cypress-testing/topic-02-side/unit-2/note-1/note.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-02-side/unit-2/note-1/note.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -316,7 +316,7 @@
               "contentMd": "Web Site 1\r\n\r\nA web site of interest",
               "frontMatter": {},
               "id": "web-1",
-              "img": "https://tutors-cypress-testing/topic-02-side/unit-2/web-1/tutors-web-site.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-02-side/unit-2/web-1/tutors-web-site.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -324,14 +324,14 @@
               "hide": false
             },
             {
-              "route": "https://tutors-cypress-testing/topic-02-side/unit-2/archive/archive.zip",
+              "route": "https://tutors-cypress-testing.netlify.app/topic-02-side/unit-2/archive/archive.zip",
               "type": "archive",
               "title": "Resource 1\r",
               "summary": "A link to a zipped archive",
               "contentMd": "Resource 1\r\n\r\nA link to a zipped archive ",
               "frontMatter": {},
               "id": "archive",
-              "img": "https://tutors-cypress-testing/topic-02-side/unit-2/archive/archive.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-02-side/unit-2/archive/archive.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -362,7 +362,7 @@
               "contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
               "frontMatter": {},
               "id": "book-a",
-              "img": "https://tutors-cypress-testing/topic-02-side/side-unit/book-a/img/main.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-02-side/side-unit/book-a/img/main.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -434,7 +434,7 @@
               "contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
               "frontMatter": {},
               "id": "book-b",
-              "img": "https://tutors-cypress-testing/topic-02-side/side-unit/book-b/img/main.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-02-side/side-unit/book-b/img/main.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -512,7 +512,7 @@
       "contentMd": "# Videos\r\n\r\nVideo + Presentataions and labs with videos\r\n",
       "frontMatter": {},
       "id": "topic-03-media",
-      "img": "https://tutors-cypress-testing/topic-03-media/topic.png",
+      "img": "https://tutors-cypress-testing.netlify.app/topic-03-media/topic.png",
       "pdf": "",
       "video": "",
       "videoids": { "videoid": "", "videoIds": [] },
@@ -538,10 +538,13 @@
               "contentMd": "Lecture 5\r\n\r\nA short summary of the talk, no more than two sentences.",
               "frontMatter": {},
               "id": "talk-1",
-              "img": "https://tutors-cypress-testing/topic-03-media/unit-1/talk-1/talk.png",
-              "pdf": "https://tutors-cypress-testing/topic-03-media/unit-1/talk-1/talk.pdf",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-03-media/unit-1/talk-1/talk.png",
+              "pdf": "https://tutors-cypress-testing.netlify.app/topic-03-media/unit-1/talk-1/talk.pdf",
               "video": "/video/tutors-cypress-testing/topic-03-media/unit-1/talk-1/x09E7b2ESE8?start=106&286",
-              "videoids": { "videoid": "x09E7b2ESE8?start=106&286", "videoIds": [{ "service": "youtube", "id": "x09E7b2ESE8?start=106&286" }] },
+              "videoids": {
+                "videoid": "x09E7b2ESE8?start=106&286",
+                "videoIds": [{ "service": "youtube", "id": "x09E7b2ESE8?start=106&286" }]
+              },
               "los": [],
               "hide": false
             },
@@ -553,10 +556,13 @@
               "contentMd": "Lecture 6\r\n\r\nProvide a short summary, perhaps supported by a representative image.",
               "frontMatter": {},
               "id": "talk-2",
-              "img": "https://tutors-cypress-testing/topic-03-media/unit-1/talk-2/talk.png",
-              "pdf": "https://tutors-cypress-testing/topic-03-media/unit-1/talk-2/talk.pdf",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-03-media/unit-1/talk-2/talk.png",
+              "pdf": "https://tutors-cypress-testing.netlify.app/topic-03-media/unit-1/talk-2/talk.pdf",
               "video": "/video/tutors-cypress-testing/topic-03-media/unit-1/talk-2/x09E7b2ESE8?start=106&286",
-              "videoids": { "videoid": "x09E7b2ESE8?start=106&286", "videoIds": [{ "service": "youtube", "id": "x09E7b2ESE8?start=106&286" }] },
+              "videoids": {
+                "videoid": "x09E7b2ESE8?start=106&286",
+                "videoIds": [{ "service": "youtube", "id": "x09E7b2ESE8?start=106&286" }]
+              },
               "los": [],
               "hide": false
             },
@@ -568,10 +574,13 @@
               "contentMd": "Lecture 7\r\n\r\nThis is just a video link, no slides",
               "frontMatter": {},
               "id": "talk-3",
-              "img": "https://tutors-cypress-testing/topic-03-media/unit-1/talk-3/debug.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-03-media/unit-1/talk-3/debug.png",
               "pdf": "",
               "video": "/video/tutors-cypress-testing/topic-03-media/unit-1/talk-3/x09E7b2ESE8?start=1068&1370",
-              "videoids": { "videoid": "x09E7b2ESE8?start=1068&1370", "videoIds": [{ "service": "youtube", "id": "x09E7b2ESE8?start=1068&1370" }] },
+              "videoids": {
+                "videoid": "x09E7b2ESE8?start=1068&1370",
+                "videoIds": [{ "service": "youtube", "id": "x09E7b2ESE8?start=1068&1370" }]
+              },
               "los": [],
               "hide": false
             },
@@ -583,10 +592,13 @@
               "contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
               "frontMatter": {},
               "id": "book-a",
-              "img": "https://tutors-cypress-testing/topic-03-media/unit-1/book-a/img/main.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-03-media/unit-1/book-a/img/main.png",
               "pdf": "",
               "video": "/video/tutors-cypress-testing/topic-03-media/unit-1/book-a/x09E7b2ESE8?start=1370&1802",
-              "videoids": { "videoid": "x09E7b2ESE8?start=1370&1802", "videoIds": [{ "service": "youtube", "id": "x09E7b2ESE8?start=1370&1802" }] },
+              "videoids": {
+                "videoid": "x09E7b2ESE8?start=1370&1802",
+                "videoIds": [{ "service": "youtube", "id": "x09E7b2ESE8?start=1370&1802" }]
+              },
               "los": [
                 {
                   "title": "# Objectives",
@@ -674,7 +686,10 @@
               "img": "",
               "pdf": "",
               "video": "/video/tutors-cypress-testing/topic-03-media/unit-2-heanet/panelvideo/7e4f1e9afedb40d5996d0703702eaaa4",
-              "videoids": { "videoid": "7e4f1e9afedb40d5996d0703702eaaa4", "videoIds": [{ "service": "heanet", "id": "7e4f1e9afedb40d5996d0703702eaaa4" }] },
+              "videoids": {
+                "videoid": "7e4f1e9afedb40d5996d0703702eaaa4",
+                "videoIds": [{ "service": "heanet", "id": "7e4f1e9afedb40d5996d0703702eaaa4" }]
+              },
               "los": [],
               "hide": false
             }
@@ -692,7 +707,10 @@
           "img": "",
           "pdf": "",
           "video": "/video/tutors-cypress-testing/topic-03-media/panelvideo-1/x09E7b2ESE8",
-          "videoids": { "videoid": "x09E7b2ESE8", "videoIds": [{ "service": "youtube", "id": "x09E7b2ESE8" }] },
+          "videoids": {
+            "videoid": "x09E7b2ESE8",
+            "videoIds": [{ "service": "youtube", "id": "x09E7b2ESE8" }]
+          },
           "los": [],
           "hide": false
         }
@@ -707,7 +725,7 @@
       "contentMd": "# Panel Note\r\n\r\nA Note can be a topic's content\r\n",
       "frontMatter": {},
       "id": "topic-04-panel-note",
-      "img": "https://tutors-cypress-testing/topic-04-panel-note/topic.png",
+      "img": "https://tutors-cypress-testing.netlify.app/topic-04-panel-note/topic.png",
       "pdf": "",
       "video": "",
       "videoids": { "videoid": "", "videoIds": [] },
@@ -720,7 +738,7 @@
           "contentMd": "# Note 1\r\n\r\nThis is an example of a note. \r\n\r\nIt can have images:\r\n\r\n![](img/01.png)\r\n\r\nA code block with syntax highlighting:\r\n\r\n### user-api-test.js\r\n\r\n~~~javascript\r\nimport { playtimeService } from \"./playtime-service.js\";\r\n\r\nsuite(\"User API tests\", () => {\r\n  setup(async () => {\r\n  });\r\n  teardown(async () => {\r\n  });\r\n\r\n  test(\"create a user\", async () => {\r\n  });\r\n});\r\n~~~\r\n\r\n### Mathematical notation:\r\n\r\n$\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n$\r\n\r\nThis is an inline exampe: $c = \\pm\\sqrt{a^2 + b^2}$ with text before and after\r\n\r\n\r\n### Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n### Links to Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)",
           "frontMatter": {},
           "id": "panelnote",
-          "img": "https://tutors-cypress-testing/topic-04-panel-note/panelnote/note.png",
+          "img": "https://tutors-cypress-testing.netlify.app/topic-04-panel-note/panelnote/note.png",
           "pdf": "",
           "video": "",
           "videoids": { "videoid": "", "videoIds": [] },
@@ -738,7 +756,7 @@
       "contentMd": "# Panel Talk\r\n\r\nA Talk can be a topic's content\r\n",
       "frontMatter": {},
       "id": "topic-05-panel-talk",
-      "img": "https://tutors-cypress-testing/topic-05-panel-talk/topic.png",
+      "img": "https://tutors-cypress-testing.netlify.app/topic-05-panel-talk/topic.png",
       "pdf": "",
       "video": "",
       "videoids": { "videoid": "", "videoIds": [] },
@@ -751,8 +769,8 @@
           "contentMd": "Lecture 1\r\n\r\nA short summary of the talk, no more than two sentences.",
           "frontMatter": {},
           "id": "paneltalk",
-          "img": "https://tutors-cypress-testing/topic-05-panel-talk/paneltalk/talk.png",
-          "pdf": "https://tutors-cypress-testing/topic-05-panel-talk/paneltalk/talk.pdf",
+          "img": "https://tutors-cypress-testing.netlify.app/topic-05-panel-talk/paneltalk/talk.png",
+          "pdf": "https://tutors-cypress-testing.netlify.app/topic-05-panel-talk/paneltalk/talk.pdf",
           "video": "",
           "videoids": { "videoid": "", "videoIds": [] },
           "los": [],
@@ -769,7 +787,7 @@
       "contentMd": "# Reference\r\n\r\nExample of all learning resource types\r\n",
       "frontMatter": {},
       "id": "topic-07-reference",
-      "img": "https://tutors-cypress-testing/topic-07-reference/topic.png",
+      "img": "https://tutors-cypress-testing.netlify.app/topic-07-reference/topic.png",
       "pdf": "",
       "video": "",
       "videoids": { "videoid": "", "videoIds": [] },
@@ -782,8 +800,8 @@
           "contentMd": "Lecture 8\r\n\r\nA short summary of the talk, no more than two sentences.",
           "frontMatter": {},
           "id": "talk-1",
-          "img": "https://tutors-cypress-testing/topic-07-reference/talk-1/talk.png",
-          "pdf": "https://tutors-cypress-testing/topic-07-reference/talk-1/talk.pdf",
+          "img": "https://tutors-cypress-testing.netlify.app/topic-07-reference/talk-1/talk.png",
+          "pdf": "https://tutors-cypress-testing.netlify.app/topic-07-reference/talk-1/talk.pdf",
           "video": "",
           "videoids": { "videoid": "", "videoIds": [] },
           "los": [],
@@ -797,7 +815,7 @@
           "contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
           "frontMatter": {},
           "id": "book-a",
-          "img": "https://tutors-cypress-testing/topic-07-reference/book-a/img/main.png",
+          "img": "https://tutors-cypress-testing.netlify.app/topic-07-reference/book-a/img/main.png",
           "pdf": "",
           "video": "",
           "videoids": { "videoid": "", "videoIds": [] },
@@ -869,7 +887,7 @@
           "contentMd": "Markdown Options\r\n\r\nFull range of markdown syntax examples\r\n\r\n# h1 Heading 8-)\r\n## h2 Heading\r\n### h3 Heading\r\n#### h4 Heading\r\n##### h5 Heading\r\n###### h6 Heading\r\n\r\n\r\n## Horizontal Rules\r\n\r\n___\r\n\r\n---\r\n\r\n***\r\n\r\n\r\n## Typographic replacements\r\n\r\nEnable typographer option to see result.\r\n\r\n(c) (C) (r) (R) (tm) (TM) (p) (P) +-\r\n\r\ntest.. test... test..... test?..... test!....\r\n\r\n!!!!!! ???? ,,  -- ---\r\n\r\n\"Smartypants, double quotes\" and 'single quotes'\r\n\r\n\r\n## Emphasis\r\n\r\n**This is bold text**\r\n\r\n__This is bold text__\r\n\r\n*This is italic text*\r\n\r\n_This is italic text_\r\n\r\n~~Strikethrough~~\r\n\r\n\r\n## Blockquotes\r\n\r\n\r\n> Blockquotes can also be nested...\r\n>> ...by using additional greater-than signs right next to each other...\r\n> > > ...or with spaces between arrows.\r\n\r\n\r\n## Lists\r\n\r\nUnordered\r\n\r\n+ Create a list by starting a line with `+`, `-`, or `*`\r\n+ Sub-lists are made by indenting 2 spaces:\r\n  - Marker character change forces new list start:\r\n    * Ac tristique libero volutpat at\r\n    + Facilisis in pretium nisl aliquet\r\n    - Nulla volutpat aliquam velit\r\n+ Very easy!\r\n\r\nOrdered\r\n\r\n1. Lorem ipsum dolor sit amet\r\n2. Consectetur adipiscing elit\r\n3. Integer molestie lorem at massa\r\n\r\n\r\n1. You can use sequential numbers...\r\n1. ...or keep all the numbers as `1.`\r\n\r\nStart numbering with offset:\r\n\r\n57. foo\r\n1. bar\r\n\r\n\r\n## Code\r\n\r\nInline `code`\r\n\r\nIndented code\r\n\r\n    // Some comments\r\n    line 1 of code\r\n    line 2 of code\r\n    line 3 of code\r\n\r\n\r\nBlock code \"fences\"\r\n\r\n```\r\nSample text here...\r\n```\r\n\r\nSyntax highlighting\r\n\r\n``` js\r\nvar foo = function (bar) {\r\n  return bar++;\r\n};\r\n\r\nconsole.log(foo(5));\r\n```\r\n\r\n## Tables\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\nRight aligned columns\r\n\r\n| Option | Description |\r\n| ------:| -----------:|\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n## Links\r\n\r\n[link text](http://dev.nodeca.com)\r\n\r\n[link with title](http://nodeca.github.io/pica/demo/ \"title text!\")\r\n\r\nAutoconverted link https://github.com/nodeca/pica (enable linkify to see)\r\n\r\n\r\n## Images\r\n\r\n![Minion](https://octodex.github.com/images/minion.png)\r\n![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg \"The Stormtroopocat\")\r\n\r\nLike links, Images also have a footnote style syntax\r\n\r\n![Alt text][id]\r\n\r\nWith a reference later in the document defining the URL location:\r\n\r\n[id]: https://octodex.github.com/images/dojocat.jpg  \"The Dojocat\"\r\n\r\n\r\n## Plugins\r\n\r\nThe killer feature of `markdown-it` is very effective support of\r\n[syntax plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).\r\n\r\n\r\n### [Emojies](https://github.com/markdown-it/markdown-it-emoji)\r\n\r\n> Classic markup: :wink: :crush: :cry: :tear: :laughing: :yum:\r\n>\r\n> Shortcuts (emoticons): :-) :-( 8-) ;)\r\n\r\nsee [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.\r\n\r\n\r\n### [Subscript](https://github.com/markdown-it/markdown-it-sub) / [Superscript](https://github.com/markdown-it/markdown-it-sup)\r\n\r\n- 19^th^\r\n- H~2~O\r\n\r\n\r\n### [\\<ins>](https://github.com/markdown-it/markdown-it-ins)\r\n\r\n++Inserted text++\r\n\r\n\r\n### [\\<mark>](https://github.com/markdown-it/markdown-it-mark)\r\n\r\n==Marked text==\r\n\r\n\r\n### [Footnotes](https://github.com/markdown-it/markdown-it-footnote)\r\n\r\nFootnote 1 link[^first].\r\n\r\nFootnote 2 link[^second].\r\n\r\nInline footnote^[Text of inline footnote] definition.\r\n\r\nDuplicated footnote reference[^second].\r\n\r\n[^first]: Footnote **can have markup**\r\n\r\n    and multiple paragraphs.\r\n\r\n[^second]: Footnote text.\r\n\r\n\r\n### [Definition lists](https://github.com/markdown-it/markdown-it-deflist)\r\n\r\nTerm 1\r\n\r\n:   Definition 1\r\nwith lazy continuation.\r\n\r\nTerm 2 with *inline markup*\r\n\r\n:   Definition 2\r\n\r\n        { some code, part of Definition 2 }\r\n\r\n    Third paragraph of definition 2.\r\n\r\n_Compact style:_\r\n\r\nTerm 1\r\n  ~ Definition 1\r\n\r\nTerm 2\r\n  ~ Definition 2a\r\n  ~ Definition 2b\r\n\r\n\r\n### [Abbreviations](https://github.com/markdown-it/markdown-it-abbr)\r\n\r\nThis is HTML abbreviation example.\r\n\r\nIt converts \"HTML\", but keep intact partial entries like \"xxxHTMLyyy\" and so on.\r\n\r\n*[HTML]: Hyper Text Markup Language\r\n\r\n### [Custom containers](https://github.com/markdown-it/markdown-it-container)\r\n\r\n::: warning\r\n*here be dragons*\r\n:::",
           "frontMatter": {},
           "id": "note-1",
-          "img": "https://tutors-cypress-testing/topic-07-reference/note-1/note.png",
+          "img": "https://tutors-cypress-testing.netlify.app/topic-07-reference/note-1/note.png",
           "pdf": "",
           "video": "",
           "videoids": { "videoid": "", "videoIds": [] },
@@ -884,7 +902,7 @@
           "contentMd": "# Note 4\r\n\r\nThis note has a linkable table of contents, generated automatically\r\n\r\n[[toc]]\r\n\r\n## Part 1\r\n\r\norem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum\r\n\r\n## Part 2\r\n\r\n\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"\r\n\r\n### Part 2a\r\n\r\n\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?\"\r\n\r\n## Part 3\r\n\r\n\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\n\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\n\r\n\r\n## Part 4\r\n\r\n\"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.\"\r\n\r\n\r\n### Part 4A\r\n\r\n\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"\r\nyou're welcome to! :)\r\n\r\n### Part 4B\r\n\r\n\"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.\"\r\n\r\nThe End.",
           "frontMatter": {},
           "id": "note-2",
-          "img": "https://tutors-cypress-testing/topic-07-reference/note-2/my-note.png",
+          "img": "https://tutors-cypress-testing.netlify.app/topic-07-reference/note-2/my-note.png",
           "pdf": "",
           "video": "",
           "videoids": { "videoid": "", "videoIds": [] },
@@ -899,7 +917,7 @@
           "contentMd": "Web Site 4\r\n\r\nA web site of interest",
           "frontMatter": {},
           "id": "web-1",
-          "img": "https://tutors-cypress-testing/topic-07-reference/web-1/link.png",
+          "img": "https://tutors-cypress-testing.netlify.app/topic-07-reference/web-1/link.png",
           "pdf": "",
           "video": "",
           "videoids": { "videoid": "", "videoIds": [] },
@@ -914,7 +932,7 @@
           "contentMd": "Github Repo  1\r\n\r\nA repo in github that captures important lessons from this topic",
           "frontMatter": {},
           "id": "github-1-template-1",
-          "img": "https://tutors-cypress-testing/topic-07-reference/github-1-template-1/github.png",
+          "img": "https://tutors-cypress-testing.netlify.app/topic-07-reference/github-1-template-1/github.png",
           "pdf": "",
           "video": "",
           "videoids": { "videoid": "", "videoIds": [] },
@@ -922,14 +940,14 @@
           "hide": false
         },
         {
-          "route": "https://tutors-cypress-testing/topic-07-reference/archive/archive.zip",
+          "route": "https://tutors-cypress-testing.netlify.app/topic-07-reference/archive/archive.zip",
           "type": "archive",
           "title": "Resource 2\r",
           "summary": "A link to a zipped archive",
           "contentMd": "Resource 2\r\n\r\nA link to a zipped archive ",
           "frontMatter": {},
           "id": "archive",
-          "img": "https://tutors-cypress-testing/topic-07-reference/archive/archive.png",
+          "img": "https://tutors-cypress-testing.netlify.app/topic-07-reference/archive/archive.png",
           "pdf": "",
           "video": "",
           "videoids": { "videoid": "", "videoIds": [] },
@@ -947,7 +965,7 @@
       "contentMd": "# Ordering\r\n\r\nExplicit sorting of learning objects\r\n",
       "frontMatter": {},
       "id": "topic-08-ordering",
-      "img": "https://tutors-cypress-testing/topic-08-ordering/topic.png",
+      "img": "https://tutors-cypress-testing.netlify.app/topic-08-ordering/topic.png",
       "pdf": "",
       "video": "",
       "videoids": { "videoid": "", "videoIds": [] },
@@ -973,8 +991,8 @@
               "contentMd": "Lecture 9\r\n\r\nA short summary of the talk, no more than two sentences.",
               "frontMatter": { "order": 3 },
               "id": "talk-1",
-              "img": "https://tutors-cypress-testing/topic-08-ordering/unit-0/talk-1/talk.png",
-              "pdf": "https://tutors-cypress-testing/topic-08-ordering/unit-0/talk-1/talk.pdf",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-08-ordering/unit-0/talk-1/talk.png",
+              "pdf": "https://tutors-cypress-testing.netlify.app/topic-08-ordering/unit-0/talk-1/talk.pdf",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
               "los": [],
@@ -988,7 +1006,7 @@
               "contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
               "frontMatter": { "order": 2 },
               "id": "book-a",
-              "img": "https://tutors-cypress-testing/topic-08-ordering/unit-0/book-a/img/main.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-08-ordering/unit-0/book-a/img/main.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -1060,7 +1078,7 @@
               "contentMd": "# Note 5\r\n\r\nThis is an example of a note. It can have images:\r\n\r\n![](img/01.png)\r\n\r\nMathematical notation:\r\n\r\n~~~latex\r\nf(x) = \\int_{-\\infty}^\\infty\\hat f(\\xi)\\,e^{2 \\pi i \\xi x}\\,d\\xi\r\n~~~\r\n\r\nA code blocks:\r\n\r\n#### user-api-test.js\r\n\r\n~~~javascript\r\nimport { playtimeService } from \"./playtime-service.js\";\r\n\r\nsuite(\"User API tests\", () => {\r\n  setup(async () => {\r\n  });\r\n  teardown(async () => {\r\n  });\r\n\r\n  test(\"create a user\", async () => {\r\n  });\r\n});\r\n~~~\r\n\r\nA table if you like:\r\n\r\n| Option | Description |\r\n| ------ | ----------- |\r\n| data   | path to data files to supply the data that will be passed into templates. |\r\n| engine | engine to be used for processing templates. Handlebars is the default. |\r\n| ext    | extension to be used for dest files. |\r\n\r\n\r\n#### Exercises & Archives\r\n\r\nYou can link to zipped archives:\r\n\r\n- [Solutions](./archives/archive.zip)",
               "frontMatter": { "order": 1 },
               "id": "note-1",
-              "img": "https://tutors-cypress-testing/topic-08-ordering/unit-0/note-1/note.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-08-ordering/unit-0/note-1/note.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -1091,7 +1109,7 @@
               "contentMd": "# Note 6\r\n\r\nThis note has a linkable table of contents, generated automatically\r\n\r\n[toc]\r\n\r\n## Part 1\r\n\r\norem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum\r\n\r\n## Part 2\r\n\r\n\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"\r\n\r\n### Part 2a\r\n\r\n\"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?\"\r\n\r\n## Part 3\r\n\r\n\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\n\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\n\r\n\r\n## Part 4\r\n\r\n\"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.\"\r\n\r\n\r\n### Part 4A\r\n\r\n\"But I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful. Nor again is there anyone who loves or pursues or desires to obtain pain of itself, because it is pain, but because occasionally circumstances occur in which toil and pain can procure him some great pleasure. To take a trivial example, which of us ever undertakes laborious physical exercise, except to obtain some advantage from it? But who has any right to find fault with a man who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces no resultant pleasure?\"\r\nyou're welcome to! :)\r\n\r\n### Part 4B\r\n\r\n\"At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.\"\r\n\r\nThe End.",
               "frontMatter": { "order": 4 },
               "id": "note-2",
-              "img": "https://tutors-cypress-testing/topic-08-ordering/unit-1/note-2/my-note.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-08-ordering/unit-1/note-2/my-note.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -1106,7 +1124,7 @@
               "contentMd": "Web Site 2\r\n\r\nA web site of interest",
               "frontMatter": { "order": 1 },
               "id": "web-1",
-              "img": "https://tutors-cypress-testing/topic-08-ordering/unit-1/web-1/link.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-08-ordering/unit-1/web-1/link.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -1121,7 +1139,7 @@
               "contentMd": "Github Repo  2\r\n\r\nA repo in github that captures important lessons from this topic",
               "frontMatter": { "order": 2 },
               "id": "github-1-template-1",
-              "img": "https://tutors-cypress-testing/topic-08-ordering/unit-1/github-1-template-1/github.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-08-ordering/unit-1/github-1-template-1/github.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -1129,14 +1147,14 @@
               "hide": false
             },
             {
-              "route": "https://tutors-cypress-testing/topic-08-ordering/unit-1/archive/archive.zip",
+              "route": "https://tutors-cypress-testing.netlify.app/topic-08-ordering/unit-1/archive/archive.zip",
               "type": "archive",
               "title": "Resource 3\r",
               "summary": "A link to a zipped archive",
               "contentMd": "Resource 3\r\n\r\nA link to a zipped archive ",
               "frontMatter": { "order": 3 },
               "id": "archive",
-              "img": "https://tutors-cypress-testing/topic-08-ordering/unit-1/archive/archive.png",
+              "img": "https://tutors-cypress-testing.netlify.app/topic-08-ordering/unit-1/archive/archive.png",
               "pdf": "",
               "video": "",
               "videoids": { "videoid": "", "videoIds": [] },
@@ -1170,8 +1188,8 @@
           "contentMd": "Lecture 10\r\n\r\nA short summary of the talk, no more than two sentences.",
           "frontMatter": { "icon": { "type": "vscode-icons:file-type-pdf2" } },
           "id": "talk-1",
-          "img": "https://tutors-cypress-testing/topic-09-svg/talk-1/talk.png",
-          "pdf": "https://tutors-cypress-testing/topic-09-svg/talk-1/talk.pdf",
+          "img": "https://tutors-cypress-testing.netlify.app/topic-09-svg/talk-1/talk.png",
+          "pdf": "https://tutors-cypress-testing.netlify.app/topic-09-svg/talk-1/talk.pdf",
           "video": "",
           "videoids": { "videoid": "", "videoIds": [] },
           "los": [],
@@ -1185,8 +1203,8 @@
           "contentMd": "Lecture 11\r\n\r\nProvide a short summary, perhaps supported by a representative image.",
           "frontMatter": { "icon": { "type": "bi:filetype-pptx", "color": "green" } },
           "id": "talk-2",
-          "img": "https://tutors-cypress-testing/topic-09-svg/talk-2/talk.png",
-          "pdf": "https://tutors-cypress-testing/topic-09-svg/talk-2/talk.pdf",
+          "img": "https://tutors-cypress-testing.netlify.app/topic-09-svg/talk-2/talk.png",
+          "pdf": "https://tutors-cypress-testing.netlify.app/topic-09-svg/talk-2/talk.pdf",
           "video": "",
           "videoids": { "videoid": "", "videoIds": [] },
           "los": [],
@@ -1200,7 +1218,7 @@
           "contentMd": "# Objectives\r\n\r\nA set of practical instructions or a walk-though\r\n",
           "frontMatter": { "icon": { "type": "jam:flask", "color": "blue" } },
           "id": "book-a",
-          "img": "https://tutors-cypress-testing/topic-09-svg/book-a/img/main.png",
+          "img": "https://tutors-cypress-testing.netlify.app/topic-09-svg/book-a/img/main.png",
           "pdf": "",
           "video": "",
           "videoids": { "videoid": "", "videoIds": [] },
@@ -1275,7 +1293,7 @@
       "contentMd": "# Hidden\r\n\r\nPIN code must be entered to reveal",
       "frontMatter": {},
       "id": "topic-10-hidden",
-      "img": "https://tutors-cypress-testing/topic-10-hidden/topic.png",
+      "img": "https://tutors-cypress-testing.netlify.app/topic-10-hidden/topic.png",
       "pdf": "",
       "video": "",
       "videoids": { "videoid": "", "videoIds": [] },
@@ -1292,32 +1310,111 @@
     "labStepsAutoNumber": false,
     "ignorepin": 4321,
     "ignore": ["topic-10-hidden"],
-    "companions": { "piazza": { "link": "https://piazza.com/", "title": "Piazza Q & A for this course", "icon": { "icon": "academicons:piazza", "colour": "info" } } },
+    "companions": {
+      "piazza": {
+        "link": "https://piazza.com/",
+        "title": "Piazza Q & A for this course",
+        "icon": { "icon": "academicons:piazza", "colour": "info" }
+      }
+    },
     "iconset": { "moodle": { "icon": "fa-solid:graduation-cap", "colour": "warning" } }
   },
   "calendar": {
     "title": "Semester 1 2023",
     "weeks": [
-      { "Mon Jan 02 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": "Registration", "type": "reading" } },
-      { "Mon Jan 09 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": "Reading 0", "type": "reading" } },
-      { "Mon Jan 16 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 1, "type": "tuition" } },
-      { "Mon Jan 23 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 2, "type": "tuition" } },
-      { "Mon Jan 30 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 3, "type": "tuition" } },
-      { "Mon Feb 06 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": "Reading 1", "type": "reading" } },
-      { "Mon Feb 13 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 4, "type": "tuition" } },
-      { "Mon Feb 20 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 5, "type": "tuition" } },
-      { "Mon Feb 27 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 6, "type": "tuition" } },
-      { "Mon Mar 06 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": "Reading 2", "type": "reading" } },
-      { "Mon Mar 13 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 7, "type": "tuition" } },
-      { "Mon Mar 20 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 8, "type": "tuition" } },
-      { "Mon Mar 27 2023 01:00:00 GMT+0100 (British Summer Time)": { "title": 9, "type": "tuition" } },
-      { "Mon Apr 03 2023 01:00:00 GMT+0100 (British Summer Time)": { "title": "Reading 3", "type": "reading" } },
-      { "Mon Apr 10 2023 01:00:00 GMT+0100 (British Summer Time)": { "title": "Reading 4", "type": "reading" } },
-      { "Mon Apr 17 2023 01:00:00 GMT+0100 (British Summer Time)": { "title": 10, "type": "tuition" } },
-      { "Mon Apr 24 2023 01:00:00 GMT+0100 (British Summer Time)": { "title": 11, "type": "tuition" } },
-      { "Mon May 01 2023 01:00:00 GMT+0100 (British Summer Time)": { "title": 12, "type": "tuition" } },
-      { "Mon May 08 2023 01:00:00 GMT+0100 (British Summer Time)": { "title": "Reading 5", "type": "reading" } },
-      { "Mon May 15 2023 01:00:00 GMT+0100 (British Summer Time)": { "title": "Reading 6", "type": "reading" } }
+      {
+        "Mon Jan 02 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+          "title": "Registration",
+          "type": "reading"
+        }
+      },
+      {
+        "Mon Jan 09 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+          "title": "Reading 0",
+          "type": "reading"
+        }
+      },
+      {
+        "Mon Jan 16 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 1, "type": "tuition" }
+      },
+      {
+        "Mon Jan 23 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 2, "type": "tuition" }
+      },
+      {
+        "Mon Jan 30 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 3, "type": "tuition" }
+      },
+      {
+        "Mon Feb 06 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+          "title": "Reading 1",
+          "type": "reading"
+        }
+      },
+      {
+        "Mon Feb 13 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 4, "type": "tuition" }
+      },
+      {
+        "Mon Feb 20 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 5, "type": "tuition" }
+      },
+      {
+        "Mon Feb 27 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 6, "type": "tuition" }
+      },
+      {
+        "Mon Mar 06 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": {
+          "title": "Reading 2",
+          "type": "reading"
+        }
+      },
+      {
+        "Mon Mar 13 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 7, "type": "tuition" }
+      },
+      {
+        "Mon Mar 20 2023 00:00:00 GMT+0000 (Greenwich Mean Time)": { "title": 8, "type": "tuition" }
+      },
+      {
+        "Mon Mar 27 2023 01:00:00 GMT+0100 (British Summer Time)": { "title": 9, "type": "tuition" }
+      },
+      {
+        "Mon Apr 03 2023 01:00:00 GMT+0100 (British Summer Time)": {
+          "title": "Reading 3",
+          "type": "reading"
+        }
+      },
+      {
+        "Mon Apr 10 2023 01:00:00 GMT+0100 (British Summer Time)": {
+          "title": "Reading 4",
+          "type": "reading"
+        }
+      },
+      {
+        "Mon Apr 17 2023 01:00:00 GMT+0100 (British Summer Time)": {
+          "title": 10,
+          "type": "tuition"
+        }
+      },
+      {
+        "Mon Apr 24 2023 01:00:00 GMT+0100 (British Summer Time)": {
+          "title": 11,
+          "type": "tuition"
+        }
+      },
+      {
+        "Mon May 01 2023 01:00:00 GMT+0100 (British Summer Time)": {
+          "title": 12,
+          "type": "tuition"
+        }
+      },
+      {
+        "Mon May 08 2023 01:00:00 GMT+0100 (British Summer Time)": {
+          "title": "Reading 5",
+          "type": "reading"
+        }
+      },
+      {
+        "Mon May 15 2023 01:00:00 GMT+0100 (British Summer Time)": {
+          "title": "Reading 6",
+          "type": "reading"
+        }
+      }
     ]
   }
 }
