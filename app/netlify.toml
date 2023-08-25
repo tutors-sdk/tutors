@@ -14,5 +14,6 @@ TERM = "xterm"
 [[plugins]]
 # runs Cypress tests against the deployed URL
 package = "netlify-plugin-cypress"
-  [plugins.inputs]
-  record = true
+  [plugins.inputs.preBuild]
+    record = true
+    start = "npm run dev"
