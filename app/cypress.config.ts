@@ -7,6 +7,7 @@ export default defineConfig({
     FAIL_FAST_STRATEGY: "run",
     FAIL_FAST_ENABLED: true
   },
+  testIsolation: false,
   projectId: "op4k6f",
   e2e: {
     experimentalMemoryManagement: true,
