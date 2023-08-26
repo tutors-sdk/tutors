@@ -32,7 +32,7 @@
         resultStrs.push("~~~");
       }
       result.html = convertMdToHtml(resultStrs.join("\n"), course.url);
-      result.link = `https://reader.tutors.dev/${result.link}`;
+      result.link = `https://tutors.dev/${result.link}`;
     });
   }
 

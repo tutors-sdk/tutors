@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: Build and Test
+    name: Build
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
@@ -33,5 +33,52 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Test
-        run: npm run test
+  testApp:
+    name: Test App
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./app
+
+      - name: Create env
+        run: cp .env.example .env
+        working-directory: ./app
+
+      - name: Start SvelteKit Server
+        run: npm run dev &
+        working-directory: ./app
+
+      - name: Run cypress tests
+        uses: cypress-io/github-action@v5
+        with:
+          browser: chrome
+          record: true
+          project: ./app
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+
+      - name: Stop SvelteKit Server
+        run: pkill -f "sirv" || true
+
+  testHTMLGenerator:
+    name: Test HTML Generator
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: npm install
+      - name: Run cypress tests
+        uses: cypress-io/github-action@v5
+        with:
+          browser: chrome
+          record: true
+          project: ./doc/reference-course
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.HTML_CYPRESS_RECORD_KEY }}

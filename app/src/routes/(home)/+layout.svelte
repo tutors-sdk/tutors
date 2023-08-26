@@ -58,10 +58,8 @@
           <h6 class="font-bold !text-lg">Links</h6>
           <ul class="space-y-2">
             <li>
-              <a
-                href="https://reader.tutors.dev/course/tutors-docs"
-                target="_blank"
-                rel="noreferrer">Documentation</a
+              <a href="https://tutors.dev/course/tutors-docs" target="_blank" rel="noreferrer"
+                >Documentation</a
               >
             </li>
             <li>

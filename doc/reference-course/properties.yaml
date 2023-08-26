@@ -1,0 +1,24 @@
+credits: A reference course containing all supported learning objects
+moodle: https://moodle.wit.ie
+youtube: https://www.youtube.com/playlist?list=PLMW4bgOfD3Dwi6FWirJ3AQtXZ-N_hV3Eo
+
+
+auth: 0
+labStepsAutoNumber: false
+
+ignorepin: 4321
+ignore:
+  - topic-10-hidden
+
+companions:
+  piazza:
+    link: https://piazza.com/
+    title: Piazza Q & A for this course
+    icon:
+      icon: academicons:piazza
+      colour: info
+
+iconset:
+  moodle:
+    icon: fa-solid:graduation-cap
+    colour: warning

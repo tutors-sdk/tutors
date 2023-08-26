@@ -22,7 +22,7 @@
     "eslint-config-custom": "*",
     "prettier": "^2.8.4",
     "prettier-plugin-svelte": "^2.9.0",
-    "turbo": "1.10.12"
+    "turbo": "1.10.13"
   },
   "packageManager": "npm@8.19.2"
 }
