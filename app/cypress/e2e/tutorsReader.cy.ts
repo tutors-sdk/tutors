@@ -13,23 +13,14 @@ describe("Loading the JSON fixture", function () {
   beforeEach("Check: Define the dimensions of the screen being used", function () {
     //This defines the dimensions of the screen
     cy.viewport(1440, 1440);
-    cy.intercept(
-      {
-        method: "GET", // Route all GET requests
-        url: "https://tutors-cypress-testing.netlify.app/tutors.json" // that have a URL that matches 'https://tutors-cypress-testing.netlify.app/tutors.json'
-      },
-      {
-        fixture: "tutors.json" // and force the response to be the tutors.json fixture
-      }
-    ).as("getCourseData");
     cy.visit(`${Cypress.config().baseUrl}/course/tutors-cypress-testing`);
-    cy.wait("@getCourseData", { timeout: 30000 });
   });
   /**
    * This test case is checking that the headers and summary are present on all the
    * cards. You would expect all to match as it is coming from the JSON fixture
    */
   it("Course Reference page", function () {
+    cy.wait(30000);
     cy.get(".app-bar", { timeout: 30000 }).contains(course.title.trim());
     cy.get(".z-10").contains(course.title.trim());
     course.los.forEach((topic: any) => {
