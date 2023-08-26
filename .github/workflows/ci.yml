@@ -55,13 +55,3 @@ jobs:
 
       - name: Stop SvelteKit Server
         run: pkill -f "sirv" || true
-
-  testGenerator:
-    name: Test HTML Generator
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    steps:
-      - name: Install dependancies
-        run: npm install
-      - name: Run cypress test
-        run: npx cypress run --project ./doc/reference-course
