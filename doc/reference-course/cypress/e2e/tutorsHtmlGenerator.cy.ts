@@ -1,13 +1,12 @@
 /// <reference types="cypress" />
-import { homedir } from 'os'
-
 
 let course: any = null;
 
 describe("Loading the JSON fixture", function () {
     before(function () {
+        cy.exec(`npx tutors-publish-html`)
         //passing through the tutors json to be ingested and iterate over each objetc and assign out to c
-        cy.fixture("static-tutors.json").then((c: any) => {
+        cy.fixture("../../html/tutors.json").then((c: any) => {
             course = c;
         });
     });
@@ -16,13 +15,7 @@ describe("Loading the JSON fixture", function () {
         cy.viewport(1440, 1440);
         cy.visit("../../html/index.html");
 
-        });
-      
-        // it("should load a static HTML file", () => {
-        //   cy.visit("../../html/index.html");
-        //   // Add your assertions or interactions here
-        // });
-      
+    });
 
 
     /**
@@ -58,7 +51,7 @@ describe("Loading the JSON fixture", function () {
     it("Deep Topics", function () {
         course.los.forEach((topic: any) => {
             if (!topic.hide) {
-                cy.visit("../../html/index.html"); 
+                cy.visit("../../html/index.html");
                 cy.wait(500);
                 cy.clickStaticCard(topic, topic.id.trim());
                 topic.los.forEach((lo: any) => {
@@ -66,8 +59,8 @@ describe("Loading the JSON fixture", function () {
                     lo.los.forEach((l: any) => {
                         cy.clickStaticCard(l, topic.id.trim());
                     });
-                    cy.clickStaticBreadCrumb(1)               
-                });      
+                    cy.clickStaticBreadCrumb(1)
+                });
             }
         });
     });
