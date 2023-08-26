@@ -33,11 +33,10 @@ jobs:
       - name: Build
         run: npm run build
 
-  test:
-    name: Test
+  testApp:
+    name: Test App
     timeout-minutes: 15
     runs-on: ubuntu-latest
-    needs: build
     steps:
       - name: Check out code
         uses: actions/checkout@v3
@@ -56,3 +55,15 @@ jobs:
 
       - name: Stop SvelteKit Server
         run: pkill -f "sirv" || true
+
+  testGenerator:
+    name: Test HTML Generator
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./doc/reference-course
+      - name: Run cypress test
+        run: npx cypress run
+        working-directory: ./doc/reference-course
