@@ -5,8 +5,9 @@ const { verifyDownloadTasks } = pkg;
 export default defineConfig({
   env: {
     FAIL_FAST_STRATEGY: "run",
-    FAIL_FAST_ENABLED: true,
+    FAIL_FAST_ENABLED: true
   },
+  projectId: "k9hnmy",
   e2e: {
     experimentalMemoryManagement: true,
     async setupNodeEvents(on, config) {

@@ -80,3 +80,5 @@ jobs:
           browser: chrome
           record: true
           project: ./doc/reference-course
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.HTML_CYPRESS_RECORD_KEY }}
