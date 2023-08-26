@@ -28,7 +28,7 @@
     "tutors-gen-lib": "^3.0.12"
   },
   "devDependencies": {
-    "prettier": "2.8.4",
+    "prettier": "3.0.2",
     "typescript": "^4.8.4"
   },
   "prettier": {
