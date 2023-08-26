@@ -12,7 +12,7 @@ describe("Loading the JSON fixture", function () {
 
   beforeEach("Check: Define the dimensions of the screen being used", function () {
     //This defines the dimensions of the screen
-    cy.visit(Cypress.config().baseUrl);
+    cy.visit(`${Cypress.config().baseUrl}/course/tutors-cypress-testing`);
     cy.viewport(1440, 1440);
   });
   /**
@@ -42,8 +42,8 @@ describe("Loading the JSON fixture", function () {
   });
 
   it("Companions", function () {
-    cy.verifyCompanionHrefs();        
-});
+    cy.verifyCompanionHrefs();
+  });
 
   it("Topics", function () {
     course.los.forEach((topic: any) => {
