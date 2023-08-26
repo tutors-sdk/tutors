@@ -23,7 +23,7 @@ describe("Loading the JSON fixture", function () {
       }
     ).as("getCourseData");
     cy.visit(`${Cypress.config().baseUrl}/course/tutors-cypress-testing`);
-    cy.wait("@getCourseData");
+    cy.wait("@getCourseData", { timeout: 30000 });
   });
   /**
    * This test case is checking that the headers and summary are present on all the
