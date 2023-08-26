@@ -157,6 +157,20 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
   })
 });
 
+Cypress.Commands.add("verifyCompanionHrefs", () => {
+  cy.get('.my-2 a').each((link) => {
+    // Now you can interact with each <a> element
+    // you can get its href attribute using the .attr() method
+    const href = link.attr('href');
+    cy.log('Href:', href);
+    //if the link is a link to another website it should have target _blank
+    if(href.includes("http")){
+      expect(link).to.have.attr('target', '_blank')
+    }
+    cy.wrap(link).should('have.attr', 'href').and('include', href)
+  })
+});
+
 declare global {
   namespace Cypress {
     interface Chainable {
@@ -167,15 +181,12 @@ declare global {
       clickLabCard(lo: any): Chainable<any>;
       triggerCardAction(lo: any): Chainable<any>;
       verifyContentsExists(lo: any): Chainable<any>;
-      verifyWebExists(lo: any): Chainable<any>;
-      /**
-       * ***HTML Generator Version
-       */
       clickPanelVideo(lo: any): Chainable<any>;
       verifyDownloadOfArchive(lo: any): Chainable<any>;
       clickLinkWithExactText(text: string): Chainable<any>;
       toggleTOCWithVerification(contents: any): Chainable<any>;
       toggleInfoWithVerification(contents: any): Chainable<any>;
+      verifyCompanionHrefs(): Chainable<any>;
     }
   }
 }

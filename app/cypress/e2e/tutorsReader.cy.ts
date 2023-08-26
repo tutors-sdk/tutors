@@ -41,6 +41,10 @@ describe("Loading the JSON fixture", function () {
     cy.toggleTOCWithVerification(course.los);
   });
 
+  it("Companions", function () {
+    cy.verifyCompanionHrefs();        
+});
+
   it("Topics", function () {
     course.los.forEach((topic: any) => {
       if (!topic.hide) {
