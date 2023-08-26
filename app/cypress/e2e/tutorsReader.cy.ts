@@ -11,8 +11,16 @@ describe("Loading the JSON fixture", function () {
   });
 
   beforeEach("Check: Define the dimensions of the screen being used", function () {
+    cy.intercept(
+      {
+        method: "GET", // Route all GET requests
+        url: "https://tutors-cypress-testing.netlify.app/tutors.json" // that have a URL that matches 'https://tutors-cypress-testing.netlify.app/tutors.json'
+      },
+      {
+        fixture: "tutors.json" // and force the response to be the tutors.json fixture
+      }
+    );
     //This defines the dimensions of the screen
-    cy.visit(`${Cypress.config().baseUrl}/course/tutors-cypress-testing`);
     cy.viewport(1440, 1440);
   });
   /**
@@ -20,6 +28,7 @@ describe("Loading the JSON fixture", function () {
    * cards. You would expect all to match as it is coming from the JSON fixture
    */
   it("Course Reference page", function () {
+    cy.visit(`${Cypress.config().baseUrl}/course/tutors-cypress-testing`);
     cy.get(".app-bar", { timeout: 30000 }).contains(course.title.trim());
     cy.get(".z-10").contains(course.title.trim());
     course.los.forEach((topic: any) => {
