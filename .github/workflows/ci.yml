@@ -49,15 +49,11 @@ jobs:
         run: cp .env.example .env
         working-directory: ./app
 
-      - name: Add cypress data to env
-        run: echo "CYPRESS_RECORD_KEY=${{ secrets.CYPRESS_RECORD_KEY }}" >> .env
-        working-directory: ./app
-
-      - name: Start SvelteKit Server & run tests
+      - name: Start SvelteKit Server
         run: npm run dev &
         working-directory: ./app
 
-      - name: Cypress run
+      - name: Run cypress tests
         uses: cypress-io/github-action@v5
         with:
           browser: chrome
@@ -68,3 +64,15 @@ jobs:
 
       - name: Stop SvelteKit Server
         run: pkill -f "sirv" || true
+
+  testHTMLGenerator:
+    name: Test HTML Generator
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run cypress tests
+        uses: cypress-io/github-action@v5
+        with:
+          browser: chrome
+          record: true
+          project: ./doc/reference-course
