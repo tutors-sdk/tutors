@@ -21,9 +21,9 @@ describe("Loading the JSON fixture", function () {
       {
         fixture: "tutors.json" // and force the response to be the tutors.json fixture
       }
-    );
+    ).as("getCourseData");
     cy.visit(`${Cypress.config().baseUrl}/course/tutors-cypress-testing`);
-    cy.wait(3000);
+    cy.wait("@getCourseData");
   });
   /**
    * This test case is checking that the headers and summary are present on all the
