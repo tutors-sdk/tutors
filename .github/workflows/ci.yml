@@ -54,8 +54,17 @@ jobs:
         working-directory: ./app
 
       - name: Start SvelteKit Server & run tests
-        run: npm run dev & npm run test
+        run: npm run dev &
         working-directory: ./app
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v5
+        with:
+          browser: chrome
+          record: true
+          project: ./app
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
       - name: Stop SvelteKit Server
         run: pkill -f "sirv" || true
