@@ -61,6 +61,7 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
+      - name: Install dependancies
+        run: npm install
       - name: Run cypress test
-        run: npx cypress run
-        working-directory: ./doc/reference-course
+        run: npx cypress run --project ./doc/reference-course
