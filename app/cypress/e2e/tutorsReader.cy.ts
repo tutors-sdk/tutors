@@ -12,7 +12,7 @@ describe("Loading the JSON fixture", function () {
 
   beforeEach("Check: Define the dimensions of the screen being used", function () {
     //This defines the dimensions of the screen
-    cy.visit(`${course.route}`);
+    cy.visit(Cypress.config().baseUrl);
     cy.viewport(1440, 1440);
   });
   /**
