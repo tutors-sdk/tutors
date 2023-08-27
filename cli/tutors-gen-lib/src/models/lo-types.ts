@@ -1,6 +1,37 @@
-import { VideoIdentifiers } from "../lr/lr-types";
-
 export const loTypes = ["note", "book", "archive", "web", "github", "panelnote", "paneltalk", "panelvideo", "talk", "unit", "side", "topic"];
+export const imageTypes = ["png", "jpg", "jpeg", "gif", "PNG", "JPG", "JPEG", "GIF"];
+export const assetTypes = imageTypes.concat(["pdf", "zip"]);
+
+export interface WeekType {
+  title: string;
+  type: string;
+  date: string;
+  dateObj: Date;
+}
+
+export interface Calendar {
+  title: string;
+  weeks: WeekType[];
+}
+
+export interface VideoIdentifier {
+  service: string;
+  id: string;
+}
+
+export interface VideoIdentifiers {
+  videoid: string;
+  videoIds: VideoIdentifier[];
+}
+
+export interface LearningResource {
+  courseRoot: string;
+  route: string;
+  id: string;
+  lrs: LearningResource[];
+  files: Array<string>;
+  type: string;
+}
 
 export class Properties {
   [key: string]: string;
@@ -9,6 +40,18 @@ export class Properties {
 export interface IconType {
   type: string;
   color: string;
+}
+
+export interface IconNav {
+  link: string;
+  icon: string;
+  tip: string;
+  target: string;
+}
+
+export interface IconNavBar {
+  show: boolean;
+  bar: IconNav[];
 }
 
 export interface Panels {
@@ -59,8 +102,12 @@ export interface Lo {
 }
 
 export interface Course extends Lo {
+  courseId: string;
+  courseUrl: string;
+  topicIndex: Map<string, Lo>;
+  loIndex: Map<string, Lo>;
   walls?: Lo[][];
-  properties?: Properties; // contents of properties.yaml
+  properties: Properties; // contents of properties.yaml
   calendar?: Properties; // contents of calendar.yaml
 }
 

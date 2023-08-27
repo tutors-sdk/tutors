@@ -1,11 +1,10 @@
-import { imageTypes } from "./lr-types";
 import path from "path";
 import * as sh from "shelljs";
 import fm from "front-matter";
 import * as fs from "fs";
 import * as yaml from "js-yaml";
-import { LearningResource, VideoIdentifier, VideoIdentifiers } from "./lr-types";
-import { getFileType, getHeaderFromBody, readFirstLineFromFile, readWholeFile, withoutHeaderFromBody } from "../utils/file-utils";
+import { imageTypes, LearningResource, VideoIdentifier, VideoIdentifiers } from "../models/lo-types";
+import { getFileType, getHeaderFromBody, readFirstLineFromFile, readWholeFile, withoutHeaderFromBody } from "./file-utils";
 
 export function getFileWithName(lr: LearningResource, file: string) {
   let foundFilePath = "";

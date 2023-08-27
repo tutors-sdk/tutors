@@ -27,17 +27,21 @@ const markdownIt: any = new MarkdownIt({
   highlight: function (str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
-        return '<pre class="hljs"><code>' + hljs.highlight(str, { language: lang, ignoreIllegals: true }).value + "</code></pre>";
+        return (
+          '<pre class="hljs"><code>' +
+          hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+          "</code></pre>"
+        );
       } catch (__) {}
     }
     return '<pre class="hljs"><code>' + markdownIt.utils.escapeHtml(str) + "</code></pre>";
-  },
+  }
 });
 
 const tocOptions = { includeLevel: [1, 2, 3] };
 markdownIt.use(latex);
 markdownIt.use(anchor, {
-  permalink: anchor.permalink.headerLink(),
+  permalink: anchor.permalink.headerLink()
 });
 
 markdownIt.use(toc, tocOptions);

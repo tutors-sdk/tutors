@@ -9,8 +9,7 @@
         "<node_internals>/**"
       ],
       "type": "node",
-      //"cwd": "${workspaceFolder}/test/reference-course",
-      "cwd": "/Users/edeleastar/repos/tutors/courses/tutors-reference-course",
+      "cwd": "${workspaceFolder}/doc/reference-course",
       "console": "integratedTerminal"
     },
     {
@@ -21,8 +20,7 @@
         "<node_internals>/**"
       ],
       "type": "node",
-      //"cwd": "${workspaceFolder}/test/reference-course",
-      "cwd": "/Users/edeleastar/repos/tutors/courses/tutors-reference-course",
+      "cwd": "${workspaceFolder}/doc/reference-course",
       "console": "integratedTerminal"
     },
     {

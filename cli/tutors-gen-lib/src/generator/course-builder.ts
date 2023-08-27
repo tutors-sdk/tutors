@@ -17,12 +17,10 @@ import {
   getWebLink,
   readVideoIds,
   removeLeadingHashes,
-} from "../lr/lr-utils";
-import { Course, Lo, preOrder } from "./lo-types";
-import { readWholeFile, readYamlFile } from "../utils/file-utils";
+} from "./lr-utils";
+import { Course, Lo, preOrder, LearningResource } from "../models/lo-types";
+import { readWholeFile, readYamlFile } from "./file-utils";
 import fm from "front-matter";
-import { LearningResource } from "../lr/lr-types";
-import { allLos } from "./lo-utils";
 
 function buildCompositeLo(lo: Lo, lr: LearningResource, level: number): Lo {
   switch (lo.type) {
