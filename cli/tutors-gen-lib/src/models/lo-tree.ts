@@ -1,4 +1,4 @@
-import type { Course, IconType, Lo, Panels } from "./lo-types";
+import { isCompositeLo, type Course, type IconType, type Lo, type Panels, Composite, Topic } from "./lo-types";
 import { convertMdToHtml } from "./markdown-utils";
 import { allLos, flattenLos, injectCourseUrl } from "./lo-utils";
 
@@ -24,13 +24,16 @@ export function decorateLoTree(lo: Lo) {
   lo.parentCourse = rootCourse;
   lo.breadCrumbs = [];
   crumbs(lo, lo.breadCrumbs);
-  if (lo.los) {
-    lo.panels = getPanels(lo.los);
-    lo.units = getUnits(lo.los);
-    for (const childLo of lo.los) {
-      childLo.parentLo = lo;
-      if (lo.los) {
-        decorateLoTree(childLo as Lo);
+  if (isCompositeLo(lo)) {
+    const compositeLo = lo as Composite;
+    if (compositeLo.los) {
+      compositeLo.panels = getPanels(compositeLo.los);
+      compositeLo.units = getUnits(compositeLo.los);
+      for (const childLo of compositeLo.los) {
+        childLo.parentLo = lo;
+        if (compositeLo.los) {
+          decorateLoTree(childLo);
+        }
       }
     }
   }
@@ -44,24 +47,17 @@ function getPanels(los: Lo[]): Panels {
   return {
     panelVideos: los?.filter((lo: Lo) => lo.type === "panelvideo"),
     panelTalks: los?.filter((lo: Lo) => lo.type === "paneltalk"),
-    panelNotes: los?.filter((lo: Lo) => lo.type === "panelnote")
+    panelNotes: los?.filter((lo: Lo) => lo.type === "panelnote"),
   };
 }
 
 function getUnits(los: Lo[]) {
-  let standardLos = los?.filter(
-    (lo: any) =>
-      lo.type !== "unit" &&
-      lo.type !== "panelvideo" &&
-      lo.type !== "paneltalk" &&
-      lo.type !== "panelnote" &&
-      lo.type !== "side"
-  );
+  let standardLos = los?.filter((lo: any) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "panelnote" && lo.type !== "side");
   standardLos = sortLos(standardLos);
   return {
     units: los?.filter((lo: any) => lo.type === "unit"),
     sides: los?.filter((lo: any) => lo.type === "side"),
-    standardLos: standardLos
+    standardLos: standardLos,
   };
 }
 
@@ -78,7 +74,7 @@ function getIcon(lo: Lo): IconType | undefined {
       // @ts-ignore
       type: lo.frontMatter.icon["type"],
       // @ts-ignore
-      color: lo.frontMatter.icon["color"]
+      color: lo.frontMatter.icon["color"],
     };
   }
   return undefined;
