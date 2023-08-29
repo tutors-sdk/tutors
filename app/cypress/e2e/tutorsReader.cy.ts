@@ -21,7 +21,7 @@ describe("Loading the JSON fixture", function () {
    * cards. You would expect all to match as it is coming from the JSON fixture
    */
   it("Course Reference page", function () {
-    //cy.wait(30000);
+    cy.wait(30000);
     cy.get(".app-bar", { timeout: 30000 }).contains(course.title.trim());
     cy.get(".z-10").contains(course.title.trim());
     course.los.forEach((topic: any) => {
