@@ -13,6 +13,7 @@ Cypress.Commands.add("goBack", () => {
 });
 
 Cypress.Commands.add("clickBreadCrumb", (step: number) => {
+  cy.wait(1000);
   cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
   // Now you can interact with the <li> elements
   cy.get('li.crumb', { timeout: 100000 }).eq(step).click({ force: true });
