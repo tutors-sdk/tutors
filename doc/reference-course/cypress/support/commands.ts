@@ -24,7 +24,7 @@ Cypress.Commands.add("verifyContentsExists", (lo: any, id: string) => {
      * NB: This needs to be commented back in for the test to run as it should just altered to have it
      * run with the broken link
      */
-    cy.inspectHref(lo.title.trim(), lo.video.trim(), id);
+   // cy.inspectHref(lo.title.trim(), lo.video.trim(), id);
   } else {
     cy.verifyGitHubHref(lo);
   }

@@ -15,12 +15,13 @@ describe("Loading the JSON fixture", function () {
     cy.viewport(1440, 1440);
     cy.visit(`${Cypress.config().baseUrl}/course/tutors-cypress-testing`);
   });
+
   /**
    * This test case is checking that the headers and summary are present on all the
    * cards. You would expect all to match as it is coming from the JSON fixture
    */
   it("Course Reference page", function () {
-    cy.wait(30000);
+    //cy.wait(30000);
     cy.get(".app-bar", { timeout: 30000 }).contains(course.title.trim());
     cy.get(".z-10").contains(course.title.trim());
     course.los.forEach((topic: any) => {
@@ -42,8 +43,8 @@ describe("Loading the JSON fixture", function () {
     cy.toggleTOCWithVerification(course.los);
   });
 
-  it("Companions", function () {
-    cy.verifyCompanionHrefs();
+  it("Verification of Companions & Walls hrefs and Counts", function () {
+    cy.processCompanionsAndWallsLinks(course);
   });
 
   it("Topics", function () {

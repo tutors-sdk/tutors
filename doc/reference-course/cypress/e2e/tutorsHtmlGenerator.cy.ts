@@ -4,7 +4,7 @@ let course: any = null;
 
 describe("Loading the JSON fixture", function () {
     before(function () {
-        //cy.exec(`npx tutors-publish-html`)
+        cy.exec(`npx tutors-publish-html`)
         cy.log("Downloading html folder...")
         //passing through the tutors json to be ingested and iterate over each objetc and assign out to c
         cy.fixture("../../html/tutors.json").then((c: any) => {
@@ -35,7 +35,7 @@ describe("Loading the JSON fixture", function () {
         });
     });
 
-    it("Companions", function () {
+    it("Verification of Companions & Walls", function () {
         cy.processCompanionsAndWallsLinks(course);        
     });
 
