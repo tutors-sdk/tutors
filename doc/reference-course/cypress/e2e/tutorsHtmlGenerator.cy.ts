@@ -4,7 +4,8 @@ let course: any = null;
 
 describe("Loading the JSON fixture", function () {
     before(function () {
-        cy.exec(`npx tutors-publish-html`)
+        //cy.exec(`npx tutors-publish-html`)
+        cy.log("Downloading html folder...")
         //passing through the tutors json to be ingested and iterate over each objetc and assign out to c
         cy.fixture("../../html/tutors.json").then((c: any) => {
             course = c;
@@ -14,9 +15,7 @@ describe("Loading the JSON fixture", function () {
     beforeEach('Check: Define the dimensions of the screen being used', function () {
         cy.viewport(1440, 1440);
         cy.visit("../../html/index.html");
-
     });
-
 
     /**
     * This test case is checking that the headers and summary are present on all the
@@ -34,6 +33,10 @@ describe("Loading the JSON fixture", function () {
 
             }
         });
+    });
+
+    it("Companions", function () {
+        cy.processCompanionsAndWallsLinks(course);        
     });
 
     it("Topics", function () {
