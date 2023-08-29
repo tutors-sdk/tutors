@@ -1,6 +1,3 @@
-export const simpleTypes = ["note", "archive", "web", "github", "panelnote", "paneltalk", "panelvideo", "talk"];
-export const loCompositeTypes = ["book", "lab", "unit", "side", "topic", "course"];
-export const loTypes = simpleTypes.concat(loCompositeTypes);
 export const imageTypes = ["png", "jpg", "jpeg", "gif", "PNG", "JPG", "JPEG", "GIF"];
 export const assetTypes = imageTypes.concat(["pdf", "zip"]);
 
@@ -169,6 +166,11 @@ export type Course = Composite & {
   properties: Properties; // contents of properties.yaml
   calendar?: Properties; // contents of calendar.yaml
 };
+
+export type LoType = "note" | "archive" | "web" | "github" | "panelnote" | "paneltalk" | "panelvideo" | "talk" | "lab" | "unit" | "side" | "topic" | "course";
+export const simpleTypes = ["note", "archive", "web", "github", "panelnote", "paneltalk", "panelvideo", "talk"];
+export const loCompositeTypes = ["book", "lab", "unit", "side", "topic", "course"];
+export const loTypes = simpleTypes.concat(loCompositeTypes);
 
 export function isCompositeLo(lo: Lo) {
   return loCompositeTypes.includes(lo.type);

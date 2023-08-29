@@ -1,6 +1,6 @@
-import { isCompositeLo, type Course, type IconType, type Lo, type Panels, Composite, Topic } from "./lo-types";
+import { isCompositeLo, type Course, type IconType, type Lo, type Panels, Composite, Topic, LoType } from "./lo-types";
 import { convertMdToHtml } from "./markdown-utils";
-import { allLos, flattenLos, injectCourseUrl } from "./lo-utils";
+import { filterByType, flattenLos, injectCourseUrl } from "./lo-utils";
 
 let rootCourse: Course;
 
@@ -9,7 +9,7 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   course.courseId = courseId;
   course.courseUrl = courseUrl;
   course.walls = [];
-  ["talk", "note", "lab", "web", "archive", "github"].forEach((type) => addWall(rootCourse, type));
+  ["talk", "note", "lab", "web", "archive", "github"].forEach((type) => addWall(rootCourse, type as LoType));
   decorateLoTree(course);
   injectCourseUrl(course, courseId, courseUrl);
   const los = flattenLos(course.los);
@@ -45,18 +45,18 @@ export function isPortfolio(course: Course) {
 
 function getPanels(los: Lo[]): Panels {
   return {
-    panelVideos: los?.filter((lo: Lo) => lo.type === "panelvideo"),
-    panelTalks: los?.filter((lo: Lo) => lo.type === "paneltalk"),
-    panelNotes: los?.filter((lo: Lo) => lo.type === "panelnote"),
+    panelVideos: los?.filter((lo) => lo.type === "panelvideo"),
+    panelTalks: los?.filter((lo) => lo.type === "paneltalk"),
+    panelNotes: los?.filter((lo) => lo.type === "panelnote"),
   };
 }
 
 function getUnits(los: Lo[]) {
-  let standardLos = los?.filter((lo: any) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "panelnote" && lo.type !== "side");
+  let standardLos = los?.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "panelnote" && lo.type !== "side");
   standardLos = sortLos(standardLos);
   return {
-    units: los?.filter((lo: any) => lo.type === "unit"),
-    sides: los?.filter((lo: any) => lo.type === "side"),
+    units: los?.filter((lo) => lo.type === "unit"),
+    sides: los?.filter((lo) => lo.type === "side"),
     standardLos: standardLos,
   };
 }
@@ -87,9 +87,9 @@ function crumbs(lo: Lo | undefined, los: Lo[]) {
   }
 }
 
-function addWall(course: Course, type: string) {
-  const los = allLos(type, course.los);
+function addWall(course: Course, type: LoType) {
+  const los = filterByType(course.los, type);
   if (los.length > 0) {
-    course.walls?.push(los);
+    course.walls?.push(filterByType(course.los, type));
   }
 }

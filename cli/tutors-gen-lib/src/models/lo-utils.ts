@@ -1,28 +1,8 @@
-import { isCompositeLo, type Course, type Lo, Composite, Talk } from "./lo-types";
+import { isCompositeLo, type Course, type Lo, Composite, Talk, LoType } from "./lo-types";
 
-export function findLos(los: Lo[], lotype: string): Lo[] {
-  const result: Lo[] = [];
-  for (const lo of los) {
-    if (lo.type === lotype) {
-      result.push(lo);
-    }
-    if (isCompositeLo(lo)) {
-      const compositeLo = lo as Composite;
-      result.push(...findLos(compositeLo.los, lotype));
-    }
-  }
-  return result;
-}
-
-export function allLos(lotype: string, los: Lo[]): Lo[] {
-  const allLos: Lo[] = [];
-  for (const lo of los) {
-    if (isCompositeLo(lo)) {
-      const compositeLo = lo as Composite;
-      if (compositeLo.los) allLos.push(...findLos(compositeLo.los, lotype));
-    }
-  }
-  return allLos;
+export function filterByType(list: Lo[], type: LoType): Lo[] {
+  const los = flattenLos(list);
+  return los.filter((lo) => lo.type === type);
 }
 
 export function injectCourseUrl(lo: Lo, id: string, url: string) {
