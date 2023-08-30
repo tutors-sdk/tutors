@@ -1,10 +1,11 @@
 <script lang="ts">
   import { StudentCardDeck } from "$lib/ui/legacy";
   import type { PageData } from "./$types";
-  import { toastStore, type ToastSettings } from "@skeletonlabs/skeleton";
+  import { getToastStore, type ToastSettings } from "@skeletonlabs/skeleton";
   import { onMount } from "svelte";
   import type { StudentLoEvent } from "$lib/services/types/metrics";
 
+  const toastStore = getToastStore();
   export let data: PageData;
 
   function update(kind: string, event: StudentLoEvent) {
