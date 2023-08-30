@@ -87,15 +87,15 @@ export const tutors: CustomThemeConfig = {
     "--color-error-800": "133 8 29", // #85081d
     "--color-error-900": "109 6 24", // #6d0618
     // surface | #2a2e37
-    "--color-surface-50": "223 224 225", // #dfe0e1
-    "--color-surface-100": "212 213 215", // #d4d5d7
-    "--color-surface-200": "202 203 205", // #cacbcd
-    "--color-surface-300": "170 171 175", // #aaabaf
-    "--color-surface-400": "106 109 115", // #6a6d73
-    "--color-surface-500": "42 46 55", // #2a2e37
-    "--color-surface-600": "38 41 50", // #262932
-    "--color-surface-700": "32 35 41", // #202329
-    "--color-surface-800": "25 28 33", // #191c21
-    "--color-surface-900": "21 23 27" // #15171b
+    "--color-surface-50": "255 255 255",
+    "--color-surface-100": "245 245 245",
+    "--color-surface-200": "232 234 237",
+    "--color-surface-300": "162 169 184",
+    "--color-surface-400": "77 84 101",
+    "--color-surface-500": "42 46 55",
+    "--color-surface-600": "33 36 43",
+    "--color-surface-700": "24 27 32",
+    "--color-surface-800": "18 19 23",
+    "--color-surface-900": "9 10 12"
   }
 };
