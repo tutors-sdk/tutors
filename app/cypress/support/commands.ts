@@ -13,8 +13,8 @@ Cypress.Commands.add("goBack", () => {
 });
 
 Cypress.Commands.add("clickBreadCrumb", (step: number) => {
-  cy.wait(1000);
-  cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+  cy.wait(500);
+  cy.get('div.h-full.overflow-hidden.contents',{timeout:10000}).invoke('css', 'overflow', 'visible');
   // Now you can interact with the <li> elements
   cy.get('li.crumb', { timeout: 100000 }).eq(step).click({ force: true });
 });
@@ -92,7 +92,7 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
 
 Cypress.Commands.add("clickLabCard", (lo: any) => {
   // Temporarily modify CSS to make the parent container visible
-  cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+  cy.get('div.h-full.overflow-hidden.contents',{timeout:10000}).invoke('css', 'overflow', 'visible');
 
   cy.contains(lo.title.trim()).click();
   lo.los.forEach((l: any, i: number) => {
