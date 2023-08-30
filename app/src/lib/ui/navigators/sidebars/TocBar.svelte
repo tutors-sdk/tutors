@@ -1,8 +1,8 @@
 <script lang="ts">
   import CourseNavigator from "../CourseNavigator.svelte";
   import { currentCourse } from "$lib/stores";
-  import { drawerStore } from "@skeletonlabs/skeleton";
-
+  import { getDrawerStore } from "@skeletonlabs/skeleton";
+  const drawerStore = getDrawerStore();
   const drawerClose: any = () => {
     drawerStore.close();
   };

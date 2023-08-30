@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { drawerStore } from "@skeletonlabs/skeleton";
   import { currentCourse } from "$lib/stores";
+  import { getDrawerStore } from "@skeletonlabs/skeleton";
+  const drawerStore = getDrawerStore();
 
   const monthNames = [
     "Jan",

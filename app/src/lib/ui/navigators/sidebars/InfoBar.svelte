@@ -1,9 +1,10 @@
 <script lang="ts">
   import { currentCourse } from "$lib/stores";
-  import { drawerStore } from "@skeletonlabs/skeleton";
+  import { getDrawerStore } from "@skeletonlabs/skeleton";
   import { convertMdToHtml } from "$lib/services/utils/markdown";
   const courseInfo = convertMdToHtml($currentCourse.lo.contentMd, "");
 
+  const drawerStore = getDrawerStore();
   const drawerClose: any = () => {
     drawerStore.close();
   };
