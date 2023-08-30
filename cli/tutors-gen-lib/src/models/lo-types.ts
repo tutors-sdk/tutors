@@ -166,6 +166,12 @@ export type Course = Composite & {
   walls?: Lo[][];
   properties: Properties; // contents of properties.yaml
   calendar?: Properties; // contents of calendar.yaml
+  isPortflio: boolean;
+  areVideosHidden: boolean;
+  areLabStepsAutoNumbered: boolean;
+  hasEnrollment: boolean;
+  hasWhiteList: boolean;
+  companions: IconNavBar;
 };
 
 export const simpleTypes = ["note", "archive", "web", "github", "panelnote", "paneltalk", "panelvideo", "talk", "book", "lab"];

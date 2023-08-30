@@ -1,6 +1,6 @@
 import { isCompositeLo, type Course, type IconType, type Lo, type Panels, Composite, LoType, Lab } from "./lo-types";
 import { convertMdToHtml } from "./markdown-utils";
-import { filterByType, flattenLos, injectCourseUrl } from "./lo-utils";
+import { createCompanions, filterByType, flattenLos, injectCourseUrl } from "./lo-utils";
 
 let rootCourse: Course;
 
@@ -15,6 +15,12 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   const los = flattenLos(course.los);
   course.loIndex = new Map<string, Lo>();
   los.forEach((lo) => course.loIndex.set(lo.route, lo));
+  createCompanions(course);
+  course.isPortflio = course.properties.portfolio === "true";
+  course.areVideosHidden = course.properties.hideVideos !== "false";
+  course.areLabStepsAutoNumbered = course.properties.labStepsAutoNumber !== "false";
+  course.hasEnrollment = false;
+  course.hasWhiteList = false;
 }
 
 export function decorateLoTree(lo: Lo) {
