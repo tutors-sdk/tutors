@@ -2,7 +2,7 @@
   "name": "tutors-publish-html",
   "version": "3.0.12",
   "description": "Static course web site generator - html emitter",
-  "main": "./src/tutors-html.js",
+  "main": "./src/tutors-publish-html.js",
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean & rm -f tsconfig.tsbuildinfo"

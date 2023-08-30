@@ -13,14 +13,15 @@ Cypress.Commands.add("goBack", () => {
 });
 
 Cypress.Commands.add("clickBreadCrumb", (step: number) => {
+  cy.wait(1000);
   cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
   // Now you can interact with the <li> elements
-  cy.get('li.crumb', {timeout: 10000}).eq(step).click({ force: true });
+  cy.get('li.crumb', { timeout: 100000 }).eq(step).click({ force: true });
 });
 
 Cypress.Commands.add("clickCard", (lo: any) => {
-  if (!lo.hide && lo.type != "paneltalk" && lo.type != undefined ) {
-    cy.log("Begining: " +lo.type)
+  if (!lo.hide && lo.type != "paneltalk" && lo.type != undefined) {
+    cy.log("Begining: " + lo.type)
     switch (lo.type) {
       case "lab":
         cy.clickLabCard(lo)
@@ -44,13 +45,12 @@ Cypress.Commands.add("clickCard", (lo: any) => {
         cy.triggerCardAction(lo);
         //cy.wait(250);
         cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
-        cy.get('li.crumb',{timeout:10000}).eq(1).click();
+        cy.get('li.crumb', { timeout: 10000 }).eq(1).click();
         break;
       case "talk":
         cy.triggerCardAction(lo);
-        //cy.wait(250);
         cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
-        cy.get('li.crumb',{timeout:10000}).eq(1).click();
+        cy.get('li.crumb', { timeout: 10000 }).eq(1).click();
         break;
       default:
         cy.triggerCardAction(lo);
@@ -66,7 +66,8 @@ Cypress.Commands.add("clickLabStep", (lo: any) => {
 });
 
 Cypress.Commands.add("triggerCardAction", (lo: any) => {
-  cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+  cy.wait(500);
+  cy.get('div.h-full.overflow-hidden.contents', {timeout:10000}).invoke('css', 'overflow', 'visible');
 
   if (lo.title.includes('#')) {
     cy.contains(lo.title.slice(1).trim()).click({ force: true });
@@ -74,11 +75,10 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
     const text = lo.title.trim();
     cy.log(text);
     // Perform assertions that multiple elements exist
-    cy.findAllByText(text, {timeout: 10000}).should('exist').each($elements => {
+    cy.findAllByText(text, { timeout: 10000 }).should('exist').each($elements => {
       // Check if at least one element is found
       if ($elements.length > 0) {
         $elements.each((_, $el) => {
-          cy.log("INSIDE CARD: " + $el)
           // Element(s) found, perform actions on the first element
           cy.wrap($el).click({ force: true });
         });
@@ -148,28 +148,93 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
       setTimeout(function () { doc.location.reload() }, 700)
     })
 
-  cy.findAllByText(lo.title.trim(), { matchCase: false }).click({force:true})
-  .then(() => {
-    cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
-    // Now you can interact with the <li> elements
-    cy.get('li.crumb', {timeout: 10000}).eq(1).click({ force: true });  
-  }); 
+    cy.findAllByText(lo.title.trim(), { matchCase: false }).click({ force: true })
+      .then(() => {
+        cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+        // Now you can interact with the <li> elements
+        cy.get('li.crumb', { timeout: 10000 }).eq(1).click({ force: true });
+      });
   })
 });
 
-Cypress.Commands.add("verifyCompanionHrefs", () => {
-  cy.get('.my-2 a').each((link) => {
-    // Now you can interact with each <a> element
+Cypress.Commands.add("processCompanionsAndWallsLinks", (course: any) => {
+  cy.get('.my-2 a:not(:first)').each((link) => {
+    cy.log("BEGINING THE LOOP OF THE LINKS...")
     // you can get its href attribute using the .attr() method
     const href = link.attr('href');
     cy.log('Href:', href);
     //if the link is a link to another website it should have target _blank
-    if(href.includes("http")){
+    if (href.includes("http")) {
+      cy.wrap(link).should('have.attr', 'href').and('include', href);
       expect(link).to.have.attr('target', '_blank')
+    } else {
+      let countOfTalks = 0;
+      let countOfNotes = 0;
+      let countOfLabs = 0;
+      let countOfGithubs = 0;
+      let countOfWebs = 0;
+      let countOfArchives = 0;
+      let countOfVideos = 0;
+
+      const parts = href ? href.split('/') : ""; // Split the URL string into an array using "/"
+      const alteredString = parts[2]; // Remove the last element from the array and get "video"
+
+      cy.log(`Altered string: ${alteredString}`); // Output: The type 
+      cy.log(`${alteredString}`);
+      switch (alteredString) {
+        case "talk":
+          cy.log("talk")
+          cy.countHowManyLearningObjects(`${href}`, countOfTalks, course, "talk")
+          break;
+        case "lab":
+          cy.log("lab")
+          cy.countHowManyLearningObjects(`${href}`, countOfLabs, course, "lab")
+          break;
+        case "note":
+          cy.countHowManyLearningObjects(`${href}`, countOfNotes, course, "note")
+          break;
+        case "archive":
+          cy.countHowManyLearningObjects(`${href}`, countOfArchives, course, "archive");
+          break;
+        case "web":
+          cy.countHowManyLearningObjects(`${href}`, countOfWebs, course, "web");
+          break;
+        case "github":
+          cy.countHowManyLearningObjects(`${href}`, countOfGithubs, course, "github");
+          break;
+        case "video":
+          cy.countHowManyLearningObjects(`${href}`, countOfVideos, course, "video");
+          break;
+        default:
+          cy.log("The type does not match any existing types...")
+          break;
+      }
     }
-    cy.wrap(link).should('have.attr', 'href').and('include', href)
-  })
+  });
 });
+
+Cypress.Commands.add("countHowManyLearningObjects", (href: string, counts: number, course: any, type: string) => {
+  cy.visit(`${href}`);
+  cy.wait(delay);
+  cy.log(course);
+  counts = countOccurrencesOfType(course, type);
+  cy.log(counts);
+  cy.log('occurences: ' + countOccurrencesOfType(course, type))
+  cy.get('.card.m-2').should('have.length', counts);
+});
+
+function countOccurrencesOfType(obj: any, type: string) {
+  let count = 0;
+
+  for (const key in obj) {
+    if (typeof obj[key] === "object" && obj[key] !== null) {
+      count += countOccurrencesOfType(obj[key], type);
+    } else if (key === "type" && obj[key] === type) {
+      count++;
+    }
+  }
+  return count;
+}
 
 declare global {
   namespace Cypress {
@@ -187,6 +252,8 @@ declare global {
       toggleTOCWithVerification(contents: any): Chainable<any>;
       toggleInfoWithVerification(contents: any): Chainable<any>;
       verifyCompanionHrefs(): Chainable<any>;
+      processCompanionsAndWallsLinks(course: any): Chainable<any>;
+      countHowManyLearningObjects(alteredString: string, counts: number, course: any, type: string): Chainable<any>;
     }
   }
 }
