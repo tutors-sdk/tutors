@@ -2,6 +2,7 @@ import { join } from "path";
 import type { Config } from "tailwindcss";
 import { skeleton } from "@skeletonlabs/tw-plugin";
 import { tutors } from "./src/lib/themes/tutors";
+import { dyslexia } from "./src/lib/themes/dyslexia";
 
 const config = {
   mode: "jit",
@@ -23,7 +24,7 @@ const config = {
     require("@tailwindcss/typography"),
     skeleton({
       themes: {
-        custom: [tutors]
+        custom: [tutors, dyslexia]
       }
     })
   ],

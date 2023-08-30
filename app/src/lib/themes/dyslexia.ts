@@ -1,11 +1,11 @@
 import type { CustomThemeConfig } from "@skeletonlabs/tw-plugin";
 
-export const tutors: CustomThemeConfig = {
-  name: "tutors",
+export const dyslexia: CustomThemeConfig = {
+  name: "dyslexia",
   properties: {
     // =~= Theme Properties =~=
-    "--theme-font-family-base": "Inter, ui-sans-serif, system-ui",
-    "--theme-font-family-heading": "Inter, ui-sans-serif, system-ui",
+    "--theme-font-family-base": "OpenDyslexic, sans-serif",
+    "--theme-font-family-heading": "OpenDyslexic, sans-serif",
     "--theme-font-color-base": "0 0 0",
     "--theme-font-color-dark": "255 255 255",
     "--theme-rounded-base": "8px",
@@ -20,17 +20,17 @@ export const tutors: CustomThemeConfig = {
     "--on-error": "255 255 255",
     "--on-surface": "255 255 255",
     // =~= Theme Colors  =~=
-    // primary | #37919b
-    "--color-primary-50": "225 239 240", // #e1eff0
-    "--color-primary-100": "215 233 235", // #d7e9eb
-    "--color-primary-200": "205 228 230", // #cde4e6
-    "--color-primary-300": "175 211 215", // #afd3d7
-    "--color-primary-400": "115 178 185", // #73b2b9
-    "--color-primary-500": "55 145 155", // #37919b
-    "--color-primary-600": "50 131 140", // #32838c
-    "--color-primary-700": "41 109 116", // #296d74
-    "--color-primary-800": "33 87 93", // #21575d
-    "--color-primary-900": "27 71 76", // #1b474c
+    // primary | #a19d30
+    "--color-primary-50": "241 240 224", // #f1f0e0
+    "--color-primary-100": "236 235 214", // #ecebd6
+    "--color-primary-200": "232 231 203", // #e8e7cb
+    "--color-primary-300": "217 216 172", // #d9d8ac
+    "--color-primary-400": "189 186 110", // #bdba6e
+    "--color-primary-500": "161 157 48", // #a19d30
+    "--color-primary-600": "145 141 43", // #918d2b
+    "--color-primary-700": "121 118 36", // #797624
+    "--color-primary-800": "97 94 29", // #615e1d
+    "--color-primary-900": "79 77 24", // #4f4d18
     // secondary | #3dae81
     "--color-secondary-50": "226 243 236", // #e2f3ec
     "--color-secondary-100": "216 239 230", // #d8efe6
@@ -86,16 +86,16 @@ export const tutors: CustomThemeConfig = {
     "--color-error-700": "167 10 36", // #a70a24
     "--color-error-800": "133 8 29", // #85081d
     "--color-error-900": "109 6 24", // #6d0618
-    // surface | #2a2e37
-    "--color-surface-50": "255 255 255",
-    "--color-surface-100": "245 245 245",
-    "--color-surface-200": "232 234 237",
-    "--color-surface-300": "162 169 184",
-    "--color-surface-400": "77 84 101",
-    "--color-surface-500": "42 46 55",
-    "--color-surface-600": "33 36 43",
-    "--color-surface-700": "24 27 32",
-    "--color-surface-800": "18 19 23",
-    "--color-surface-900": "9 10 12"
+    // surface | #585013
+    "--color-surface-50": "230 229 220", // #e6e5dc
+    "--color-surface-100": "222 220 208", // #dedcd0
+    "--color-surface-200": "213 211 196", // #d5d3c4
+    "--color-surface-300": "188 185 161", // #bcb9a1
+    "--color-surface-400": "138 133 90", // #8a855a
+    "--color-surface-500": "88 80 19", // #585013
+    "--color-surface-600": "79 72 17", // #4f4811
+    "--color-surface-700": "66 60 14", // #423c0e
+    "--color-surface-800": "53 48 11", // #35300b
+    "--color-surface-900": "43 39 9" // #2b2709
   }
 };
