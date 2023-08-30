@@ -8,9 +8,12 @@ describe("Loading the JSON fixture", function () {
         //cy.wait(1000);
         cy.log("Downloading html folder...")
         //passing through the tutors json to be ingested and iterate over each objetc and assign out to c
-        cy.fixture("../../html/tutors.json").then((c: any) => {
+        // cy.fixture("../../html/tutors.json").then((c: any) => {
+        //     course = c;
+        // });
+        cy.fixture("tutors.json").then((c: any) => {
             course = c;
-        });
+          });
     });
 
     beforeEach('Check: Define the dimensions of the screen being used', function () {
