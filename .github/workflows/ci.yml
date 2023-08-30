@@ -75,7 +75,7 @@ jobs:
       - name: Install Dependencies
         run: npm install
       - name: publish-html
-        run: cd doc/reference-course; npx -y tutors-publish-html
+        run: cd doc/reference-course; npm i -g tutors-gen-lib; npx -y ts-node ../../cli/tutors-publish-html/src/tutors-publish-html.ts
       - name: Run cypress tests
         uses: cypress-io/github-action@v5
         with:
