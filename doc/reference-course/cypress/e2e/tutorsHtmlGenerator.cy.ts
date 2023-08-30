@@ -8,9 +8,6 @@ describe("Loading the JSON fixture", function () {
     cy.fixture("../../html/tutors.json").then((c: any) => {
       course = c;
     });
-    // cy.fixture("tutors.json").then((c: any) => {
-    //     course = c;
-    //   });
   });
 
   beforeEach("Check: Define the dimensions of the screen being used", function () {

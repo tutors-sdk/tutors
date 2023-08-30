@@ -92,6 +92,7 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
 
 Cypress.Commands.add("clickLabCard", (lo: any) => {
   // Temporarily modify CSS to make the parent container visible
+  cy.wait(500);
   cy.get('div.h-full.overflow-hidden.contents',{timeout:10000}).invoke('css', 'overflow', 'visible');
 
   cy.contains(lo.title.trim()).click();
@@ -159,7 +160,6 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
 
 Cypress.Commands.add("processCompanionsAndWallsLinks", (course: any) => {
   cy.get('.my-2 a:not(:first)').each((link) => {
-    cy.log("BEGINING THE LOOP OF THE LINKS...")
     // you can get its href attribute using the .attr() method
     const href = link.attr('href');
     cy.log('Href:', href);
