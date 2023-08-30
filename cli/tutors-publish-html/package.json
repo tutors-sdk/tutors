@@ -20,7 +20,7 @@
     "@types/node": "^18.14.4",
     "@types/nunjucks": "^3.2.1",
     "@types/shelljs": "^0.8.11",
-    "commander": "^10.0.0",
+    "commander": "^11.0.0",
     "nunjucks": "^3.2.3",
     "path": "^0.12.7",
     "shelljs": "^0.8.5",
