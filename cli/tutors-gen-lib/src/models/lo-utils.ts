@@ -1,4 +1,4 @@
-import { isCompositeLo, type Course, type Lo, Composite, Talk, LoType } from "./lo-types";
+import { isCompositeLo, type Lo, Composite, Talk, LoType } from "./lo-types";
 
 export function filterByType(list: Lo[], type: LoType): Lo[] {
   const los = flattenLos(list);

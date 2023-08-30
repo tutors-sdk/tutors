@@ -94,6 +94,7 @@ export type LabStep = {
   title: string;
   shortTitle: string;
   contentMd: string;
+  contentHtml?: string;
   route: string;
   id: string;
 };
@@ -168,8 +169,8 @@ export type Course = Composite & {
 };
 
 export type LoType = "note" | "archive" | "web" | "github" | "panelnote" | "paneltalk" | "panelvideo" | "talk" | "lab" | "unit" | "side" | "topic" | "course";
-export const simpleTypes = ["note", "archive", "web", "github", "panelnote", "paneltalk", "panelvideo", "talk"];
-export const loCompositeTypes = ["book", "lab", "unit", "side", "topic", "course"];
+export const simpleTypes = ["note", "archive", "web", "github", "panelnote", "paneltalk", "panelvideo", "talk", "book", "lab"];
+export const loCompositeTypes = ["unit", "side", "topic", "course"];
 export const loTypes = simpleTypes.concat(loCompositeTypes);
 
 export function isCompositeLo(lo: Lo) {

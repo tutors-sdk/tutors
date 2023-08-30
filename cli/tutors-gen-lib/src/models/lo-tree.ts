@@ -1,4 +1,4 @@
-import { isCompositeLo, type Course, type IconType, type Lo, type Panels, Composite, Topic, LoType } from "./lo-types";
+import { isCompositeLo, type Course, type IconType, type Lo, type Panels, Composite, LoType, Lab } from "./lo-types";
 import { convertMdToHtml } from "./markdown-utils";
 import { filterByType, flattenLos, injectCourseUrl } from "./lo-utils";
 
@@ -24,6 +24,12 @@ export function decorateLoTree(lo: Lo) {
   lo.parentCourse = rootCourse;
   lo.breadCrumbs = [];
   crumbs(lo, lo.breadCrumbs);
+  if (lo.type == "lab") {
+    const lab = lo as Lab;
+    lab.los.forEach((step) => {
+      step.contentHtml = convertMdToHtml(step?.contentMd);
+    });
+  }
   if (isCompositeLo(lo)) {
     const compositeLo = lo as Composite;
     if (compositeLo.los) {

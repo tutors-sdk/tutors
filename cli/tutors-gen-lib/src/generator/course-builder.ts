@@ -1,5 +1,4 @@
 import {
-  getArchive,
   getArchiveFile,
   getFilesWithType,
   getFileWithName,
@@ -111,25 +110,23 @@ function buildSide(lo: Lo) {
 }
 
 function buildCompositeLo(lo: Lo, lr: LearningResource, level: number): Lo {
-  switch (lo.type) {
+  const compositeLo = lo as Composite;
+  compositeLo.los = [];
+  switch (compositeLo.type) {
     case "unit":
-      buildUnit(lo);
+      buildUnit(compositeLo);
       break;
     case "side":
-      buildSide(lo);
+      buildSide(compositeLo);
       break;
     default:
   }
   lr.lrs.forEach((lr) => {
-    if (isCompositeLo(lo)) {
-      const compositeLo = lo as Composite;
-      if (!compositeLo.los) compositeLo.los = [];
-      compositeLo.los.push(buildLo(lr, level + 1));
-      compositeLo.los.sort((a: any, b: any) => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        return preOrder.get(a.type)! - preOrder.get(b.type)!;
-      });
-    }
+    compositeLo.los.push(buildLo(lr, level + 1));
+    compositeLo.los.sort((a: any, b: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      return preOrder.get(a.type)! - preOrder.get(b.type)!;
+    });
   });
   return lo;
 }
@@ -149,9 +146,7 @@ function buildDefaultLo(lr: LearningResource, keyFileName: string = ""): Lo {
     imgFile: getImageFile(lr),
     video: getVideo(lr, videoids.videoid),
     videoids: videoids,
-    //los: [],
     hide: false,
-    parentLo: undefined,
   };
   return lo;
 }
@@ -159,7 +154,7 @@ function buildDefaultLo(lr: LearningResource, keyFileName: string = ""): Lo {
 function buildLo(lr: LearningResource, level: number, keyFileName: string = ""): Lo {
   let lo = buildDefaultLo(lr, keyFileName);
   console.log(`${"-".repeat(level * 2)}: ${lo.id} : ${lo.title}`);
-  if (lo.type === "unit" || lo.type == "side" || lo.type == "topic" || lo.type == "course") {
+  if (isCompositeLo(lo)) {
     lo = buildCompositeLo(lo, lr, level);
   } else {
     lo = buildSimpleLo(lo, lr);
