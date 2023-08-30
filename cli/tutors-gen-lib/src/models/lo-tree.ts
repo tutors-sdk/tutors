@@ -18,7 +18,11 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
 }
 
 export function decorateLoTree(lo: Lo) {
-  lo.contentHtml = convertMdToHtml(lo?.contentMd);
+  let imgPrefix = "";
+  if (lo.type === "panelnote") {
+    imgPrefix = lo.id;
+  }
+  lo.contentHtml = convertMdToHtml(lo?.contentMd, imgPrefix);
   lo.summary = convertMdToHtml(lo?.summary);
   lo.icon = getIcon(lo);
   lo.parentCourse = rootCourse;

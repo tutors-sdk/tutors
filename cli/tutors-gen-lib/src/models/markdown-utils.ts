@@ -27,21 +27,17 @@ const markdownIt: any = new MarkdownIt({
   highlight: function (str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
-        return (
-          '<pre class="hljs"><code>' +
-          hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
-          "</code></pre>"
-        );
+        return '<pre class="hljs"><code>' + hljs.highlight(str, { language: lang, ignoreIllegals: true }).value + "</code></pre>";
       } catch (__) {}
     }
     return '<pre class="hljs"><code>' + markdownIt.utils.escapeHtml(str) + "</code></pre>";
-  }
+  },
 });
 
 const tocOptions = { includeLevel: [1, 2, 3] };
 markdownIt.use(latex);
 markdownIt.use(anchor, {
-  permalink: anchor.permalink.headerLink()
+  permalink: anchor.permalink.headerLink(),
 });
 
 markdownIt.use(toc, tocOptions);
@@ -52,8 +48,15 @@ markdownIt.use(mark);
 markdownIt.use(footnote);
 markdownIt.use(deflist);
 
-export function convertMdToHtml(md: string): string {
+function replaceAll(str: string, find: string, replace: string) {
+  return str.replace(new RegExp(find, "g"), replace);
+}
+
+export function convertMdToHtml(md: string, imgPrefix: string = ""): string {
   if (md) {
+    if (imgPrefix) {
+      md = replaceAll(md, "img\\/", `${imgPrefix}/img/`);
+    }
     return markdownIt.render(md);
   } else {
     return "";

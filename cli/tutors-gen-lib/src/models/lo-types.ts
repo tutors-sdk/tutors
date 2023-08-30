@@ -132,7 +132,7 @@ export type PanelNote = Lo & {
 };
 
 export type PanelTalk = Talk & {
-  type: "panelnote";
+  type: "paneltalk";
 };
 
 export type PanelVideo = Lo & {
@@ -168,11 +168,10 @@ export type Course = Composite & {
   calendar?: Properties; // contents of calendar.yaml
 };
 
-export type LoType = "note" | "archive" | "web" | "github" | "panelnote" | "paneltalk" | "panelvideo" | "talk" | "lab" | "unit" | "side" | "topic" | "course";
 export const simpleTypes = ["note", "archive", "web", "github", "panelnote", "paneltalk", "panelvideo", "talk", "book", "lab"];
 export const loCompositeTypes = ["unit", "side", "topic", "course"];
 export const loTypes = simpleTypes.concat(loCompositeTypes);
-
+export type LoType = (typeof loTypes)[number];
 export function isCompositeLo(lo: Lo) {
   return loCompositeTypes.includes(lo.type);
 }

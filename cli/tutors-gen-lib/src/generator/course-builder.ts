@@ -17,7 +17,7 @@ import {
   readVideoIds,
   removeLeadingHashes,
 } from "./lr-utils";
-import { Course, Lo, preOrder, LearningResource, Talk, Archive, Web, Lab, isCompositeLo, Composite } from "../models/lo-types";
+import { Course, Lo, preOrder, LearningResource, Talk, Archive, Lab, isCompositeLo, Composite } from "../models/lo-types";
 import { readWholeFile, readYamlFile } from "./file-utils";
 import fm from "front-matter";
 
@@ -80,6 +80,9 @@ function buildSimpleLo(lo: Lo, lr: LearningResource): Lo {
       buildLab(lo, lr);
       break;
     case "talk":
+      buildTalk(lo, lr);
+      break;
+    case "paneltalk":
       buildTalk(lo, lr);
       break;
     case "panelvideo":
