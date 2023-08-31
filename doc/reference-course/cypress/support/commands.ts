@@ -17,6 +17,8 @@ Cypress.Commands.add("goBack", () => {
 });
 
 Cypress.Commands.add("verifyContentsExists", (lo: any, id: string) => {
+  cy.log("pdf, title:" + lo.pdf + lo.title)
+  cy.wait(500)
   if (lo.pdf != "") {
     cy.inspectHref(lo.title.trim(), lo.pdf.trim(), id)
   } else if (lo.video != "") {
@@ -24,7 +26,7 @@ Cypress.Commands.add("verifyContentsExists", (lo: any, id: string) => {
      * NB: This needs to be commented back in for the test to run as it should just altered to have it
      * run with the broken link
      */
-   // cy.inspectHref(lo.title.trim(), lo.video.trim(), id);
+    // cy.inspectHref(lo.title.trim(), lo.video.trim(), id);
   } else {
     cy.verifyGitHubHref(lo);
   }
@@ -206,6 +208,19 @@ function countOccurrencesOfType(obj: any, type: string) {
   return count;
 }
 
+Cypress.Commands.add("loopingObject", (lo: any) =>{
+  for (const key in lo) {
+    if (typeof lo[key] === "object" && lo[key] !== null) {
+      lo.los.forEach((l: any, i: number) => {
+        cy.clickStaticCard(l)
+      });
+      const value = lo[key];
+      cy.log(`${key}: ${value}`);
+    }
+  }
+});
+
+
 Cypress.Commands.add("clickStaticCard", (lo: any, id: string) => {
   if (!lo.hide && lo.type != "paneltalk" && lo.type != "panelvideo") {
     cy.log("TYPE: " + lo.type)
@@ -265,6 +280,7 @@ declare global {
       verifyGitHubHref(lo: any): Chainable<any>;
       processCompanionsAndWallsLinks(course: any): Chainable<any>;
       countHowManyLearningObjects(alteredString: string, counts: number, course: any, type: string): Chainable<any>;
+      loopingObject(lo: any): Chainable<any>;
     }
   }
 }
