@@ -1,7 +1,89 @@
 <script lang="ts">
-  import Icon from "@iconify/svelte";
+  import { courseService } from "$lib/services/course";
+  import type { Course } from "$lib/services/models/course";
+  import { getToastStore, ProgressRadial, type ToastSettings } from "@skeletonlabs/skeleton";
+
+  const toastStore = getToastStore();
 
   export let data;
+  export let form;
+  let newCourseInput = "";
+  let addCourseForm: HTMLFormElement;
+  let loading = false;
+
+  const handleAddCourse = async () => {
+    let course: Course | undefined;
+    loading = true;
+    try {
+      course = await courseService.readCourse(newCourseInput, fetch);
+    } catch (e) {
+      const t: ToastSettings = {
+        message: "This course does not exist",
+        background: "variant-filled-error"
+      };
+      toastStore.trigger(t);
+      loading = false;
+    }
+
+    const { data: userCourseList, error } = await data.supabase
+      .from("accessed_courses")
+      .select(`course_list`)
+      .eq("id", data.session.user.id);
+
+    const existingCourse = userCourseList[0].course_list.courses.find(
+      (course) => course.id === newCourseInput
+    );
+
+    if (existingCourse) {
+      const t: ToastSettings = {
+        message: "This course already exists in your list!",
+        background: "variant-filled-error"
+      };
+      toastStore.trigger(t);
+      loading = false;
+    } else {
+      const courseList = userCourseList[0].course_list;
+
+      courseList.courses.push({
+        id: course.id,
+        name: course.lo.title,
+        last_accessed: new Date().toISOString(),
+        visits: 1
+      });
+
+      const { error } = await data.supabase
+        .from("accessed_courses")
+        .update({ course_list: courseList })
+        .eq("id", data.session.user.id);
+
+      if (error) {
+        const t: ToastSettings = {
+          message: "Error adding course",
+          background: "variant-filled-error"
+        };
+        toastStore.trigger(t);
+        loading = false;
+      } else {
+        const t: ToastSettings = {
+          message: "Course added successfully",
+          background: "variant-filled-success"
+        };
+        toastStore.trigger(t);
+        loading = false;
+      }
+    }
+
+    if (error) {
+      const t: ToastSettings = {
+        message: "Error adding course",
+        background: "variant-filled-error"
+      };
+      toastStore.trigger(t);
+      loading = false;
+    } else {
+      location.reload();
+    }
+  };
 </script>
 
 <div class="bg-gradient-to-l from-primary-50 dark:from-primary-900 to-accent-50 dark:to-accent-900">
@@ -10,12 +92,35 @@
   </div>
 </div>
 
-<div class="container mx-auto p-8">
-  <p class="text-2xl font-bold py-4">Your previously accessed courses</p>
+<div class="container card mx-auto p-8 my-4">
+  <p class="text-2xl font-bold pb-4">Add a course</p>
+  <form on:submit|preventDefault={handleAddCourse} bind:this={addCourseForm}>
+    <div class="grid grid-cols-4">
+      <input
+        class="input col-span-3"
+        title="Input (text)"
+        type="text"
+        placeholder="Insert course ID here"
+        bind:value={newCourseInput}
+      />
+      {#if loading}
+      <button class="btn variant-filled-primary ml-4"><ProgressRadial width="w-6" /></button>
+      {:else}
+      <input class="btn variant-filled-primary ml-4" type="submit" value='Add' />
+      {/if}
+    </div>
+  </form>
+</div>
+
+<div class="container card mx-auto p-8">
+  <p class="text-2xl font-bold pb-4">Your previously accessed courses</p>
   <div class="flex flex-wrap">
     {#if data.courses && data.courses[0]}
       {#each data.courses[0].course_list.courses as course}
-        <a class="card w-full lg:w-96 m-2 p-4" href={"/course/" + course.id}>
+        <a
+          class="card !bg-surface-50 dark:!bg-surface-700 card-hover w-full lg:w-96 m-2 p-4"
+          href={"/course/" + course.id}
+        >
           <div>
             <p class="font-bold">{course.name}</p>
             <p>
