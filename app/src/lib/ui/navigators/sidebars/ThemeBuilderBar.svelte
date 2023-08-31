@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { drawerStore } from "@skeletonlabs/skeleton";
+  import { getDrawerStore } from "@skeletonlabs/skeleton";
+  const drawerStore = getDrawerStore();
   import ThemeBuilder from "../../themebuilder/ThemeBuilder.svelte";
 
   const drawerClose: any = () => {

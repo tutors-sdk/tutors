@@ -4,7 +4,7 @@
   import { afterNavigate } from "$app/navigation";
   import { get } from "svelte/store";
 
-  import { setInitialClassState, toastStore, type ToastSettings } from "@skeletonlabs/skeleton";
+  import { setInitialClassState, getToastStore, type ToastSettings } from "@skeletonlabs/skeleton";
   import {
     transitionKey,
     currentLo,
@@ -25,6 +25,7 @@
   } from "$lib/services/presence";
 
   let currentRoute = "";
+  const toastStore = getToastStore();
 
   export let data: any;
   let { supabase, session } = data;

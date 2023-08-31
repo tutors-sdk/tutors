@@ -1,7 +1,5 @@
 <script lang="ts">
-  import "$lib/ui/legacy/themes/tutors.css";
-  import "@skeletonlabs/skeleton/styles/skeleton.css";
-  import "./app.postcss";
+  import "../app.postcss";
   import { goto, invalidate } from "$app/navigation";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
@@ -22,15 +20,12 @@
     Toast,
     storePopup,
     type DrawerSettings,
-    drawerStore,
-    toastStore
+    initializeStores,
+    getDrawerStore,
+    getToastStore
   } from "@skeletonlabs/skeleton";
   import { computePosition, autoUpdate, flip, shift, offset, arrow } from "@floating-ui/dom";
 
-  import tutors from "$lib/ui/legacy/themes/tutors.css?inline";
-  import dyslexia from "$lib/ui/legacy/themes/dyslexia.css?inline";
-  import halloween from "$lib/ui/legacy/themes/halloween.css?inline";
-  import valentines from "$lib/ui/legacy/themes/valentines.css?inline";
   import Sidebars from "$lib/ui/navigators/sidebars/Sidebars.svelte";
   import PageHeader from "$lib/ui/navigators/PageHeader.svelte";
   import { Footer, NavTitle } from "$lib/ui/legacy";
@@ -38,7 +33,7 @@
   import Icon from "@iconify/svelte";
   import { get } from "svelte/store";
 
-  const themes: any = { tutors, dyslexia, halloween, valentines };
+  const themes: any = ["tutors", "dyslexia", "halloween", "valentines"];
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
   export let data: any;
@@ -57,6 +52,10 @@
   function setBodyThemeAttribute(): void {
     document.body.setAttribute("data-theme", $storeTheme);
   }
+
+  initializeStores();
+  const drawerStore = getDrawerStore();
+  const toastStore = getToastStore();
 
   const infoDrawerOpen: any = () => {
     const settings: DrawerSettings = { id: "info", position: "left" };
@@ -114,7 +113,6 @@
 </script>
 
 <svelte:head>
-  {@html `\<style\>${themes[$storeTheme]}}\</style\>`}
   <title>Tutors</title>
 </svelte:head>
 

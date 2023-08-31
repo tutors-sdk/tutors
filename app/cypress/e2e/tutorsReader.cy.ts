@@ -15,6 +15,7 @@ describe("Loading the JSON fixture", function () {
     cy.viewport(1440, 1440);
     cy.visit(`${Cypress.config().baseUrl}/course/tutors-cypress-testing`);
   });
+
   /**
    * This test case is checking that the headers and summary are present on all the
    * cards. You would expect all to match as it is coming from the JSON fixture
@@ -42,8 +43,8 @@ describe("Loading the JSON fixture", function () {
     cy.toggleTOCWithVerification(course.los);
   });
 
-  it("Companions", function () {
-    cy.verifyCompanionHrefs();
+  it("Verification of Companions & Walls hrefs and Counts", function () {
+    cy.processCompanionsAndWallsLinks(course);
   });
 
   it("Topics", function () {

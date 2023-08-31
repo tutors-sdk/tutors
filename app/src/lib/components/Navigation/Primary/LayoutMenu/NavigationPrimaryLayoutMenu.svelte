@@ -1,7 +1,7 @@
 <script lang="ts">
   import {
     type DrawerSettings,
-    drawerStore,
+    getDrawerStore,
     popup,
     modeCurrent,
     setModeCurrent,
@@ -38,6 +38,8 @@
     setModeUserPrefers($modeCurrent);
     setModeCurrent($modeCurrent);
   }
+
+  const drawerStore = getDrawerStore();
 
   const themeBuilderDrawerOpen: any = () => {
     const settings: DrawerSettings = { id: "theme", position: "right", width: "w-full md:w-3/4" };

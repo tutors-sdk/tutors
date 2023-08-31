@@ -24,9 +24,9 @@ Cypress.Commands.add("verifyContentsExists", (lo: any, id: string) => {
      * NB: This needs to be commented back in for the test to run as it should just altered to have it
      * run with the broken link
      */
-    //cy.inspectHref(lo.title.trim(), lo.video.trim(), id);
+   // cy.inspectHref(lo.title.trim(), lo.video.trim(), id);
   } else {
-    cy.verifyGitHubHref(lo, id);
+    cy.verifyGitHubHref(lo);
   }
 });
 
@@ -117,7 +117,7 @@ Cypress.Commands.add("inspectHref", (title: string, ahref: string, id: string) =
     .and('contain', originalUrl);
 });
 
-Cypress.Commands.add("verifyGitHubHref", (lo: any, id: string) => {
+Cypress.Commands.add("verifyGitHubHref", (lo: any) => {
   //I think this will be ok for dynamic purposes also as when you are providing links to GitHub
   //The name will be involved some way
   if (lo.title.trim().includes("Github")) {
@@ -138,6 +138,73 @@ Cypress.Commands.add("verifyGitHubHref", (lo: any, id: string) => {
       .and('contain', lo.route.trim());
   }
 });
+
+Cypress.Commands.add("processCompanionsAndWallsLinks", (course: any) => {
+  cy.get('.p-3 a').each((link) => {
+    cy.log("BEGINING THE LOOP OF THE LINKS...")
+
+    // you can get its href attribute using the .attr() method
+    const href = link.attr('href');
+    cy.log('Href:', href);
+
+    //if the link is a link to another website it should have target _blank
+    if (href?.includes("http")) {
+      cy.wrap(link).should('have.attr', 'href').and('include', href);
+      expect(link).to.have.attr('target', '_blank')
+    } else {
+      let countOfTalks = 0;
+      let countOfNotes = 0;
+      let countOfLabs = 0;
+      let countOfGithubs = 0;
+      let countOfWebs = 0;
+      let countOfArchives = 0;
+      //This is to alter the sting so we can navigate to the correct directory by removing the . 
+      const alteredString = href ? href.replace("./", "../../html/") : "";
+
+      cy.log(`${alteredString}`);
+      switch (href) {
+        case "./talk.html":
+          cy.countHowManyLearningObjects(alteredString, countOfTalks, course, "talk")
+          break;
+        case "./lab.html":
+          cy.countHowManyLearningObjects(alteredString, countOfLabs, course, "lab")
+          break;
+        case "./note.html":
+          cy.countHowManyLearningObjects(alteredString, countOfNotes, course, "note")
+          break;
+        case "./archive.html":
+          cy.countHowManyLearningObjects(alteredString, countOfArchives, course, "archive");
+          break;
+        case "./web.html":
+          cy.countHowManyLearningObjects(alteredString, countOfWebs, course, "web");
+          break;
+        default:
+          cy.countHowManyLearningObjects(alteredString, countOfGithubs, course, "github");
+          break;
+      }
+    }
+  });
+});
+
+Cypress.Commands.add("countHowManyLearningObjects", (alteredString: string, counts: number, course: any, type: string) => {
+  cy.visit(`${alteredString}`);
+  counts = countOccurrencesOfType(course, type);
+  cy.log('occurences: ' + countOccurrencesOfType(course, type))
+  cy.get(".card > a").should('have.length', counts);
+});
+
+function countOccurrencesOfType(obj: any, type: string) {
+  let count = 0;
+
+  for (const key in obj) {
+    if (typeof obj[key] === "object" && obj[key] !== null) {
+      count += countOccurrencesOfType(obj[key], type);
+    } else if (key === "type" && obj[key] === type) {
+      count++;
+    }
+  }
+  return count;
+}
 
 Cypress.Commands.add("clickStaticCard", (lo: any, id: string) => {
   if (!lo.hide && lo.type != "paneltalk" && lo.type != "panelvideo") {
@@ -195,7 +262,9 @@ declare global {
       toggleInfoWithVerification(contents: any): Chainable<any>
       inspectHref(title: string, href: string, id: string): Chainable<any>
       verifyContentsExists(lo: any, id: string): Chainable<any>;
-      verifyGitHubHref(lo: any, id: string): Chainable<any>;
+      verifyGitHubHref(lo: any): Chainable<any>;
+      processCompanionsAndWallsLinks(course: any): Chainable<any>;
+      countHowManyLearningObjects(alteredString: string, counts: number, course: any, type: string): Chainable<any>;
     }
   }
 }

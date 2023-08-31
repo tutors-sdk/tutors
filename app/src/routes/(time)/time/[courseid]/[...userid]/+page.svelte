@@ -5,13 +5,12 @@
   import { writable, type Writable } from "svelte/store";
   import { Tab, TabGroup } from "@skeletonlabs/skeleton";
 
-  import {  currentCourse } from "$lib/stores";
+  import { currentCourse } from "$lib/stores";
   import LabTime from "$lib/ui/time/LabTime.svelte";
   import InstructorLabTime from "$lib/ui/time/InstructorLabTime.svelte";
   import InstructorCalendarTime from "$lib/ui/time/InstructorCalendarTime.svelte";
 
   import CalendarTime from "$lib/ui/time/CalendarTime.svelte";
-  import { authService } from "$lib/services/auth";
 
   import type { PageData } from "./$types";
 
@@ -23,7 +22,6 @@
 
   onMount(async () => {
     window.addEventListener("keydown", keypressInput);
-    authService.checkAuth($currentCourse);
   });
 
   function keypressInput(e: KeyboardEvent) {
