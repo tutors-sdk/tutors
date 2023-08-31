@@ -43,12 +43,13 @@ Cypress.Commands.add("clickCard", (lo: any) => {
         break;
       case "note":
         cy.triggerCardAction(lo);
-        //cy.wait(250);
+        cy.wait(550);
         cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
         cy.get('li.crumb', { timeout: 10000 }).eq(1).click();
         break;
       case "talk":
         cy.triggerCardAction(lo);
+        cy.wait(500);
         cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
         cy.get('li.crumb', { timeout: 10000 }).eq(1).click();
         break;
@@ -66,7 +67,7 @@ Cypress.Commands.add("clickLabStep", (lo: any) => {
 });
 
 Cypress.Commands.add("triggerCardAction", (lo: any) => {
-  cy.wait(500);
+  cy.wait(1500);
   cy.get('div.h-full.overflow-hidden.contents', {timeout:10000}).invoke('css', 'overflow', 'visible');
 
   if (lo.title.includes('#')) {
@@ -92,7 +93,7 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
 
 Cypress.Commands.add("clickLabCard", (lo: any) => {
   // Temporarily modify CSS to make the parent container visible
-  cy.wait(500);
+  cy.wait(1500);
   cy.get('div.h-full.overflow-hidden.contents',{timeout:10000}).invoke('css', 'overflow', 'visible');
 
   cy.contains(lo.title.trim()).click();
@@ -151,6 +152,7 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
 
     cy.findAllByText(lo.title.trim(), { matchCase: false }).click({ force: true })
       .then(() => {
+        cy.wait(1500);
         cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
         // Now you can interact with the <li> elements
         cy.get('li.crumb', { timeout: 10000 }).eq(1).click({ force: true });
