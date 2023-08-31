@@ -1,5 +1,4 @@
 import {
-  getArchive,
   getArchiveFile,
   getFilesWithType,
   getFileWithName,
@@ -18,64 +17,120 @@ import {
   readVideoIds,
   removeLeadingHashes,
 } from "./lr-utils";
-import { Course, Lo, preOrder, LearningResource } from "../models/lo-types";
+import { Course, Lo, preOrder, LearningResource, Talk, Archive, Lab, isCompositeLo, Composite } from "../models/lo-types";
 import { readWholeFile, readYamlFile } from "./file-utils";
 import fm from "front-matter";
 
-function buildCompositeLo(lo: Lo, lr: LearningResource, level: number): Lo {
-  switch (lo.type) {
-    case "unit":
-      buildUnit(lo);
-      break;
-    case "side":
-      buildSide(lo);
-      break;
-    default:
+function buildTalk(lo: Lo, lr: LearningResource) {
+  const talk = lo as Talk;
+  talk.pdf = getPdf(lr);
+  talk.pdfFile = getPdfFile(lr);
+  if (!talk.pdf) {
+    talk.route = lo.video;
   }
-  lr.lrs.forEach((lr) => {
-    lo.los.push(buildLo(lr, level + 1));
-    lo.los.sort((a: any, b: any) => {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      return preOrder.get(a.type)! - preOrder.get(b.type)!;
-    });
+}
+
+function buildArchive(lo: Lo, lr: LearningResource) {
+  const archive = lo as Archive;
+  archive.archiveFile = getArchiveFile(lr);
+}
+
+function buildPanelvideo(lo: Lo) {
+  lo.route = lo.video;
+}
+
+function buildWeb(lo: Lo, lr: LearningResource) {
+  lo.route = getWebLink(lr);
+}
+
+function buildGithub(lo: Lo, lr: LearningResource) {
+  lo.route = getGitLink(lr);
+}
+
+function buildLab(lo: Lo, lr: LearningResource): Lo {
+  const lab = lo as Lab;
+  lab.los = [];
+  const mdFiles = getFilesWithType(lr, "md");
+  lo.title = "";
+  mdFiles.forEach((chapterName) => {
+    const wholeFile = readWholeFile(chapterName);
+    const contents = fm(wholeFile);
+    let theTitle = contents.body.substring(0, contents.body.indexOf("\n"));
+    theTitle = theTitle.replace("\r", "");
+    theTitle = removeLeadingHashes(theTitle);
+    const shortTitle = chapterName.substring(chapterName.indexOf(".") + 1, chapterName.lastIndexOf("."));
+    if (lab.title == "") lab.title = shortTitle;
+    const labStep = {
+      title: theTitle,
+      shortTitle: shortTitle,
+      contentMd: contents.body,
+      route: `${getRoute(lr)}/${shortTitle}`,
+      id: shortTitle,
+    };
+    lab.los.push(labStep);
   });
+  lab.img = getLabImage(lr);
+  lab.imgFile = `img/${getLabImageFile(lr)}`;
   return lo;
 }
 
 function buildSimpleLo(lo: Lo, lr: LearningResource): Lo {
   switch (lo.type) {
     case "lab":
-      lo = buildLab(lo, lr);
+      buildLab(lo, lr);
       break;
     case "talk":
-      buildTalk(lo);
+      buildTalk(lo, lr);
+      break;
+    case "paneltalk":
+      buildTalk(lo, lr);
       break;
     case "panelvideo":
       buildPanelvideo(lo);
       break;
     case "web":
-      lo.route = getWebLink(lr);
+      buildWeb(lo, lr);
       break;
     case "github":
-      lo.route = getGitLink(lr);
+      buildGithub(lo, lr);
       break;
     case "archive":
-      lo.route = getArchive(lr);
-      lo.archiveFile = getArchiveFile(lr);
+      buildArchive(lo, lr);
       break;
     default:
   }
   return lo;
 }
 
-function buildLo(lr: LearningResource, level: number, keyFileName: string = ""): Lo {
-  let lo = buildDefaultLo(lr, keyFileName);
-  console.log(`${"-".repeat(level * 2)}: ${lo.id} : ${lo.title}`);
-  if (lo.type === "unit" || lo.type == "side" || lo.type == "topic" || lo.type == "course") {
-    lo = buildCompositeLo(lo, lr, level);
-  } else {
-    lo = buildSimpleLo(lo, lr);
+function buildUnit(lo: Lo) {
+  lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
+  lo.route = lo.route.replace("/unit", "/topic");
+}
+
+function buildSide(lo: Lo) {
+  lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
+  lo.route = lo.route.replace("/side", "/topic");
+}
+
+function buildCompositeLo(lo: Lo, lr: LearningResource, level: number): Lo {
+  const compositeLo = lo as Composite;
+  compositeLo.los = [];
+  switch (compositeLo.type) {
+    case "unit":
+      buildUnit(compositeLo);
+      break;
+    case "side":
+      buildSide(compositeLo);
+      break;
+    default:
   }
+  lr.lrs.forEach((lr) => {
+    compositeLo.los.push(buildLo(lr, level + 1));
+    compositeLo.los.sort((a: any, b: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      return preOrder.get(a.type)! - preOrder.get(b.type)!;
+    });
+  });
   return lo;
 }
 
@@ -92,61 +147,21 @@ function buildDefaultLo(lr: LearningResource, keyFileName: string = ""): Lo {
     id: getId(lr),
     img: getImage(lr),
     imgFile: getImageFile(lr),
-    pdf: getPdf(lr),
-    pdfFile: getPdfFile(lr),
     video: getVideo(lr, videoids.videoid),
     videoids: videoids,
-    los: [],
     hide: false,
-    parentLo: undefined,
   };
   return lo;
 }
 
-function buildUnit(lo: Lo) {
-  lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
-  lo.route = lo.route.replace("/unit", "/topic");
-}
-
-function buildTalk(lo: Lo) {
-  if (!lo.pdf) {
-    lo.route = lo.video;
+function buildLo(lr: LearningResource, level: number, keyFileName: string = ""): Lo {
+  let lo = buildDefaultLo(lr, keyFileName);
+  console.log(`${"-".repeat(level * 2)}: ${lo.id} : ${lo.title}`);
+  if (isCompositeLo(lo)) {
+    lo = buildCompositeLo(lo, lr, level);
+  } else {
+    lo = buildSimpleLo(lo, lr);
   }
-}
-
-function buildSide(lo: Lo) {
-  lo.route = lo.route.substring(0, lo.route.lastIndexOf("/")) + "/";
-  lo.route = lo.route.replace("/side", "/topic");
-}
-
-function buildPanelvideo(lo: Lo) {
-  lo.route = lo.video;
-}
-
-function buildLab(lo: Lo, lr: LearningResource): Lo {
-  const mdFiles = getFilesWithType(lr, "md");
-  lo.title = "";
-  mdFiles.forEach((chapterName) => {
-    const wholeFile = readWholeFile(chapterName);
-    const contents = fm(wholeFile);
-    let theTitle = contents.body.substring(0, contents.body.indexOf("\n"));
-    theTitle = theTitle.replace("\r", "");
-    theTitle = removeLeadingHashes(theTitle);
-    const shortTitle = chapterName.substring(chapterName.indexOf(".") + 1, chapterName.lastIndexOf("."));
-    if (lo.title == "") lo.title = shortTitle;
-    const labStep = {
-      title: theTitle,
-      shortTitle: shortTitle,
-      contentMd: contents.body,
-      route: `${getRoute(lr)}/${shortTitle}`,
-      id: shortTitle,
-      type: "step",
-    };
-    // @ts-ignore
-    lo.los.push(labStep);
-  });
-  lo.img = getLabImage(lr);
-  lo.imgFile = `img/${getLabImageFile(lr)}`;
   return lo;
 }
 
