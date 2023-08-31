@@ -104,9 +104,9 @@
         bind:value={newCourseInput}
       />
       {#if loading}
-      <button class="btn variant-filled-primary ml-4"><ProgressRadial width="w-6" /></button>
+        <button class="btn variant-filled-primary ml-4"><ProgressRadial width="w-6" /></button>
       {:else}
-      <input class="btn variant-filled-primary ml-4" type="submit" value='Add' />
+        <input class="btn variant-filled-primary ml-4" type="submit" value="Add" />
       {/if}
     </div>
   </form>
