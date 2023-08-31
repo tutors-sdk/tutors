@@ -24,10 +24,10 @@ Cypress.Commands.add("clickCard", (lo: any) => {
     cy.log("Begining: " + lo.type)
     switch (lo.type) {
       case "lab":
-        cy.clickLabCard(lo)
+        cy.clickLabCard(lo);
         break;
       case "step":
-        cy.clickLabStep(lo)
+        cy.clickLabStep(lo);
         break;
       case "unit":
         cy.clickPanelVideo(lo);
@@ -43,7 +43,7 @@ Cypress.Commands.add("clickCard", (lo: any) => {
         break;
       case "note":
         cy.triggerCardAction(lo);
-        cy.wait(550);
+        cy.wait(500);
         cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
         cy.get('li.crumb', { timeout: 10000 }).eq(1).click();
         break;
@@ -67,7 +67,7 @@ Cypress.Commands.add("clickLabStep", (lo: any) => {
 });
 
 Cypress.Commands.add("triggerCardAction", (lo: any) => {
-  cy.wait(1500);
+  cy.wait(500);
   cy.get('div.h-full.overflow-hidden.contents', {timeout:10000}).invoke('css', 'overflow', 'visible');
 
   if (lo.title.includes('#')) {
@@ -76,12 +76,14 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
     const text = lo.title.trim();
     cy.log(text);
     // Perform assertions that multiple elements exist
-    cy.findAllByText(text, { timeout: 10000 }).should('exist').each($elements => {
+    cy.findAllByText(text, { timeout: 10000 }).should('exist').each(elements => {
       // Check if at least one element is found
-      if ($elements.length > 0) {
-        $elements.each((_, $el) => {
+      if (elements.length > 0) {
+        elements.each((_, el) => {
+          cy.wait(100);
           // Element(s) found, perform actions on the first element
-          cy.wrap($el).click({ force: true });
+          cy.get(el).as('btn').click({ force: true })
+
         });
       } else {
         cy.log(`Element with text "${text}" not found.`);
@@ -93,7 +95,7 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
 
 Cypress.Commands.add("clickLabCard", (lo: any) => {
   // Temporarily modify CSS to make the parent container visible
-  cy.wait(1500);
+  cy.wait(500);
   cy.get('div.h-full.overflow-hidden.contents',{timeout:10000}).invoke('css', 'overflow', 'visible');
 
   cy.contains(lo.title.trim()).click();
@@ -152,7 +154,7 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
 
     cy.findAllByText(lo.title.trim(), { matchCase: false }).click({ force: true })
       .then(() => {
-        cy.wait(1500);
+        cy.wait(500);
         cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
         // Now you can interact with the <li> elements
         cy.get('li.crumb', { timeout: 10000 }).eq(1).click({ force: true });
