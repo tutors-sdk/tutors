@@ -24,17 +24,6 @@
       "console": "integratedTerminal"
     },
     {
-      "name": "jtd",
-      "program": "${workspaceFolder}//cli/tutors-publish-jtd/src/tutors-publish.js",
-      "request": "launch",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
-      "type": "node",
-      "cwd": "${workspaceFolder}//cli/tutors-publish-jtd",
-      "console": "integratedTerminal"
-    },
-    {
       "type": "chrome",
       "request": "attach",
       "name": "reader",
