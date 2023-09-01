@@ -6,84 +6,79 @@
   const toastStore = getToastStore();
 
   export let data;
-  export let form;
   let newCourseInput = "";
   let addCourseForm: HTMLFormElement;
   let loading = false;
 
+  $: displayedCourseList = data.courses[0].course_list.courses;
+
   const handleAddCourse = async () => {
-    let course: Course | undefined;
-    loading = true;
     try {
-      course = await courseService.readCourse(newCourseInput, fetch);
-    } catch (e) {
-      const t: ToastSettings = {
-        message: "This course does not exist",
-        background: "variant-filled-error"
-      };
-      toastStore.trigger(t);
-      loading = false;
-    }
+      loading = true;
 
-    const { data: userCourseList, error } = await data.supabase
-      .from("accessed_courses")
-      .select(`course_list`)
-      .eq("id", data.session.user.id);
+      const course: Course | undefined = await courseService.readCourse(newCourseInput, fetch);
 
-    const existingCourse = userCourseList[0].course_list.courses.find(
-      (course) => course.id === newCourseInput
-    );
-
-    if (existingCourse) {
-      const t: ToastSettings = {
-        message: "This course already exists in your list!",
-        background: "variant-filled-error"
-      };
-      toastStore.trigger(t);
-      loading = false;
-    } else {
-      const courseList = userCourseList[0].course_list;
-
-      courseList.courses.push({
-        id: course.id,
-        name: course.lo.title,
-        last_accessed: new Date().toISOString(),
-        visits: 1
-      });
-
-      const { error } = await data.supabase
+      const { data: userCourseList, error } = await data.supabase
         .from("accessed_courses")
-        .update({ course_list: courseList })
+        .select(`course_list`)
         .eq("id", data.session.user.id);
 
-      if (error) {
-        const t: ToastSettings = {
-          message: "Error adding course",
-          background: "variant-filled-error"
-        };
-        toastStore.trigger(t);
-        loading = false;
-      } else {
-        const t: ToastSettings = {
-          message: "Course added successfully",
-          background: "variant-filled-success"
-        };
-        toastStore.trigger(t);
-        loading = false;
-      }
-    }
+      const existingCourse = userCourseList[0].course_list.courses.find(
+        (course) => course.id === newCourseInput
+      );
 
-    if (error) {
-      const t: ToastSettings = {
-        message: "Error adding course",
-        background: "variant-filled-error"
-      };
-      toastStore.trigger(t);
+      if (existingCourse) {
+        showErrorMessage("This course already exists in your list!");
+      } else {
+        const courseList = userCourseList[0].course_list;
+
+        courseList.courses.push({
+          id: course.id,
+          name: course.lo.title,
+          last_accessed: new Date().toISOString(),
+          visits: 1
+        });
+
+        displayedCourseList = [...courseList.courses];
+
+        const { error } = await data.supabase
+          .from("accessed_courses")
+          .update({ course_list: courseList })
+          .eq("id", data.session.user.id);
+
+        if (error) {
+          showErrorMessage("Error adding course");
+        } else {
+          showSuccessMessage("Course added successfully");
+          addCourseForm.reset();
+        }
+      }
+
+      if (error) {
+        showErrorMessage("Error adding course");
+      }
+    } catch (e) {
+      showErrorMessage("This course does not exist");
+    } finally {
       loading = false;
-    } else {
-      location.reload();
     }
   };
+
+  function showErrorMessage(message: string) {
+    const t: ToastSettings = {
+      message: message,
+      background: "variant-filled-error"
+    };
+    toastStore.trigger(t);
+  }
+
+  function showSuccessMessage(message: string) {
+    const t: ToastSettings = {
+      message: message,
+      background: "variant-filled-success"
+    };
+    toastStore.trigger(t);
+  }
 </script>
 
 <div class="bg-gradient-to-l from-primary-50 dark:from-primary-900 to-accent-50 dark:to-accent-900">
@@ -116,7 +111,7 @@
   <p class="text-2xl font-bold pb-4">Your previously accessed courses</p>
   <div class="flex flex-wrap">
     {#if data.courses && data.courses[0]}
-      {#each data.courses[0].course_list.courses as course}
+      {#each displayedCourseList as course}
         <a
           class="card !bg-surface-50 dark:!bg-surface-700 card-hover w-full lg:w-96 m-2 p-4"
           href={"/course/" + course.id}
