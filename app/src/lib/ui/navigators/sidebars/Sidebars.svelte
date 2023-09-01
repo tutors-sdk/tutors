@@ -3,7 +3,6 @@
   import InfoBar from "./InfoBar.svelte";
   import TocBar from "./TocBar.svelte";
   import OnlineBar from "./OnlineBar.svelte";
-  import ThemeBuilderBar from "./ThemeBuilderBar.svelte";
   import CalendarBar from "./CalendarBar.svelte";
   const drawerStore = getDrawerStore();
 </script>
@@ -17,7 +16,5 @@
     <TocBar />
   {:else if $drawerStore.id === "online"}
     <OnlineBar />
-  {:else if $drawerStore.id === "theme"}
-    <ThemeBuilderBar />
   {/if}
 </Drawer>

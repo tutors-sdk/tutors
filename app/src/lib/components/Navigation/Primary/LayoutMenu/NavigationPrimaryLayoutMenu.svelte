@@ -41,10 +41,6 @@
 
   const drawerStore = getDrawerStore();
 
-  const themeBuilderDrawerOpen: any = () => {
-    const settings: DrawerSettings = { id: "theme", position: "right", width: "w-full md:w-3/4" };
-    drawerStore.open(settings);
-  };
 
   var isHalloween: boolean = false;
   var isValentines: boolean = false;
@@ -160,14 +156,6 @@
           </button>
         </li>
       {/if}
-
-      <hr />
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <li class="option !p-0" on:click={themeBuilderDrawerOpen}>
-        <button class="btn w-full flex justify-between">
-          <span class="flex-none">Theme Builder</span>
-        </button>
-      </li>
     </ul>
   </nav>
 </div>
