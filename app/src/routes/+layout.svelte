@@ -22,7 +22,8 @@
     type DrawerSettings,
     initializeStores,
     getDrawerStore,
-    getToastStore
+    getToastStore,
+    Modal
   } from "@skeletonlabs/skeleton";
   import { computePosition, autoUpdate, flip, shift, offset, arrow } from "@floating-ui/dom";
 
@@ -118,6 +119,7 @@
 
 <AppShell class="h-screen">
   <Toast />
+  <Modal />
   <Sidebars />
   <svelte:fragment slot="header">
     <NavigationPrimary>

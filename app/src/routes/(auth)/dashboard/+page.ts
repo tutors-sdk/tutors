@@ -13,5 +13,7 @@ export const load = async ({ parent }) => {
     .select(`course_list`)
     .eq("id", session.user.id);
 
-  return { session, courses };
+  const supabase = data.supabase;
+
+  return { session, courses, supabase };
 };

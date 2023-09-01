@@ -1,4 +1,5 @@
 import { join } from "path";
+import forms from "@tailwindcss/forms";
 import type { Config } from "tailwindcss";
 import { skeleton } from "@skeletonlabs/tw-plugin";
 import { tutors } from "./src/lib/themes/tutors";
@@ -22,6 +23,7 @@ const config = {
   },
   plugins: [
     require("@tailwindcss/typography"),
+    forms,
     skeleton({
       themes: {
         custom: [tutors, dyslexia]
