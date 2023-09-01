@@ -2,6 +2,7 @@
   import { courseService } from "$lib/services/course";
   import type { Course } from "$lib/services/models/course";
   import { getToastStore, ProgressRadial, type ToastSettings } from "@skeletonlabs/skeleton";
+  import { onMount } from "svelte";
 
   const toastStore = getToastStore();
 
@@ -10,55 +11,82 @@
   let addCourseForm: HTMLFormElement;
   let loading = false;
 
-  $: displayedCourseList = data.courses[0].course_list.courses;
+  $: displayedCourseList = data.courses[0] ? data.courses[0].course_list.courses : [];
 
   const handleAddCourse = async () => {
     try {
       loading = true;
 
-      const course: Course | undefined = await courseService.readCourse(newCourseInput, fetch);
+      const course = await courseService.readCourse(newCourseInput, fetch);
 
-      const { data: userCourseList, error } = await data.supabase
+      const { data: userCourseList, error: selectError } = await data.supabase
         .from("accessed_courses")
         .select(`course_list`)
         .eq("id", data.session.user.id);
 
-      const existingCourse = userCourseList[0].course_list.courses.find(
-        (course) => course.id === newCourseInput
-      );
+      if (!userCourseList || userCourseList.length === 0) {
+        const { error: insertError } = await data.supabase.from("accessed_courses").insert([
+          {
+            id: data.session.user.id,
+            course_list: {
+              courses: [
+                {
+                  id: course.id,
+                  name: course.lo.title,
+                  last_accessed: new Date().toISOString(),
+                  visits: 1
+                }
+              ]
+            }
+          }
+        ]);
 
-      if (existingCourse) {
-        showErrorMessage("This course already exists in your list!");
-      } else {
-        const courseList = userCourseList[0].course_list;
-
-        courseList.courses.push({
-          id: course.id,
-          name: course.lo.title,
-          last_accessed: new Date().toISOString(),
-          visits: 1
-        });
-
-        displayedCourseList = [...courseList.courses];
-
-        const { error } = await data.supabase
-          .from("accessed_courses")
-          .update({ course_list: courseList })
-          .eq("id", data.session.user.id);
-
-        if (error) {
+        if (insertError) {
           showErrorMessage("Error adding course");
         } else {
+          const newCourse = {
+            id: course.id,
+            name: course.lo.title,
+            last_accessed: new Date().toISOString(),
+            visits: 1
+          };
+
+          displayedCourseList = displayedCourseList.concat(newCourse);
           showSuccessMessage("Course added successfully");
           addCourseForm.reset();
         }
-      }
+      } else {
+        const existingCourse = userCourseList[0].course_list.courses.find(
+          (userCourse) => userCourse.id === course.id
+        );
 
-      if (error) {
-        showErrorMessage("Error adding course");
+        if (existingCourse) {
+          showErrorMessage("This course already exists in your list!");
+        } else {
+          const courseList = userCourseList[0].course_list;
+          courseList.courses.push({
+            id: course.id,
+            name: course.lo.title,
+            last_accessed: new Date().toISOString(),
+            visits: 1
+          });
+
+          const { error: updateError } = await data.supabase
+            .from("accessed_courses")
+            .update({ course_list: courseList })
+            .eq("id", data.session.user.id);
+
+          if (updateError) {
+            showErrorMessage("Error adding course");
+          } else {
+            displayedCourseList = courseList.courses;
+            showSuccessMessage("Course added successfully");
+            addCourseForm.reset();
+          }
+        }
       }
     } catch (e) {
-      showErrorMessage("This course does not exist");
+      showErrorMessage("Error adding course");
     } finally {
       loading = false;
     }
@@ -148,7 +176,7 @@
 <div class="container card mx-auto p-8">
   <p class="text-2xl font-bold pb-4">Your previously accessed courses</p>
   <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-    {#if data.courses && data.courses[0]}
+    {#if displayedCourseList}
       {#each displayedCourseList as course}
         <div class="card !bg-surface-50 dark:!bg-surface-700 card-hover m-2">
           <a href={"/course/" + course.id}>
