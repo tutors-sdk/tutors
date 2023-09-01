@@ -64,6 +64,44 @@
     }
   };
 
+  const handleDeleteCourse = async (courseId) => {
+    try {
+      loading = true;
+
+      const { data: userCourseList, error } = await data.supabase
+        .from("accessed_courses")
+        .select(`course_list`)
+        .eq("id", data.session.user.id);
+
+      const courseList = userCourseList[0].course_list;
+
+      const courseIndex = courseList.courses.findIndex((course) => course.id === courseId);
+
+      if (courseIndex !== -1) {
+        courseList.courses.splice(courseIndex, 1);
+        displayedCourseList = [...courseList.courses];
+
+        const { error } = await data.supabase
+          .from("accessed_courses")
+          .update({ course_list: courseList })
+          .eq("id", data.session.user.id);
+
+        if (error) {
+          showErrorMessage("Error deleting course");
+        } else {
+          displayedCourseList.splice(courseIndex, 1);
+          showSuccessMessage("Course deleted successfully");
+        }
+      } else {
+        showErrorMessage("Course not found in your list");
+      }
+    } catch (e) {
+      showErrorMessage("An error occurred while deleting the course");
+    } finally {
+      loading = false;
+    }
+  };
+
   function showErrorMessage(message: string) {
     const t: ToastSettings = {
       message: message,
@@ -109,23 +147,36 @@
 
 <div class="container card mx-auto p-8">
   <p class="text-2xl font-bold pb-4">Your previously accessed courses</p>
-  <div class="flex flex-wrap">
+  <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
     {#if data.courses && data.courses[0]}
       {#each displayedCourseList as course}
-        <a
-          class="card !bg-surface-50 dark:!bg-surface-700 card-hover w-full lg:w-96 m-2 p-4"
-          href={"/course/" + course.id}
-        >
-          <div>
-            <p class="font-bold">{course.name}</p>
-            <p>
-              Last Accessed: {course.last_accessed.slice(0, 10)}
-              {course.last_accessed.slice(11, 19)}
-            </p>
-            <p>Visits: {course.visits}</p>
-          </div>
-        </a>
+        <div class="card !bg-surface-50 dark:!bg-surface-700 card-hover m-2">
+          <a href={"/course/" + course.id}>
+            <section class="p-4">
+              <p class="font-bold">{course.name}</p>
+              <p>
+                Last Accessed: {course.last_accessed.slice(0, 10)}
+                {course.last_accessed.slice(11, 19)}
+              </p>
+              <p>Visits: {course.visits}</p>
+            </section>
+          </a>
+          <footer class="card-footer p-0">
+            <div class="w-full flex">
+              <a
+                class="btn rounded-t-none rounded-br-none m-0 variant-filled-primary w-2/3"
+                href={"/course/" + course.id}>Visit Course</a
+              >
+              <button
+                class="btn rounded-t-none rounded-bl-none m-0 variant-filled-error w-1/3"
+                on:click={() => handleDeleteCourse(course.id)}>Delete</button
+              >
+            </div>
+          </footer>
+        </div>
       {/each}
+    {:else}
+      <p class="text-lg">No courses found</p>
     {/if}
   </div>
 </div>
