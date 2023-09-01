@@ -1,10 +1,16 @@
 <script lang="ts">
   import { courseService } from "$lib/services/course";
   import type { Course } from "$lib/services/models/course";
-  import { getToastStore, ProgressRadial, type ToastSettings } from "@skeletonlabs/skeleton";
-  import { onMount } from "svelte";
+  import {
+    getToastStore,
+    getModalStore,
+    ProgressRadial,
+    type ToastSettings,
+    type ModalSettings
+  } from "@skeletonlabs/skeleton";
 
   const toastStore = getToastStore();
+  const modalStore = getModalStore();
 
   export let data;
   let newCourseInput = "";
@@ -93,42 +99,58 @@
   };
 
   const handleDeleteCourse = async (courseId) => {
-    try {
-      loading = true;
+  let loading = true;
 
-      const { data: userCourseList, error } = await data.supabase
-        .from("accessed_courses")
-        .select(`course_list`)
-        .eq("id", data.session.user.id);
+  const modal: ModalSettings = {
+    type: "confirm",
+    // Data
+    title: "Please Confirm",
+    body: "Are you sure you want to delete the course?",
+    response: async (r: boolean) => {
+      if (r === true) {
+        try {
+          const { data: userCourseList, error } = await data.supabase
+            .from("accessed_courses")
+            .select(`course_list`)
+            .eq("id", data.session.user.id);
 
-      const courseList = userCourseList[0].course_list;
+          if (error) {
+            showErrorMessage("Error fetching user course list");
+            return;
+          }
 
-      const courseIndex = courseList.courses.findIndex((course) => course.id === courseId);
+          const courseList = userCourseList[0].course_list;
 
-      if (courseIndex !== -1) {
-        courseList.courses.splice(courseIndex, 1);
-        displayedCourseList = [...courseList.courses];
+          const courseIndex = courseList.courses.findIndex((course) => course.id === courseId);
 
-        const { error } = await data.supabase
-          .from("accessed_courses")
-          .update({ course_list: courseList })
-          .eq("id", data.session.user.id);
+          if (courseIndex !== -1) {
+            courseList.courses.splice(courseIndex, 1);
+            const { error } = await data.supabase
+              .from("accessed_courses")
+              .update({ course_list: courseList })
+              .eq("id", data.session.user.id);
 
-        if (error) {
-          showErrorMessage("Error deleting course");
-        } else {
-          displayedCourseList.splice(courseIndex, 1);
-          showSuccessMessage("Course deleted successfully");
+            if (error) {
+              showErrorMessage("Error deleting course");
+            } else {
+              showSuccessMessage("Course deleted successfully");
+              displayedCourseList = courseList.courses;
+            }
+          } else {
+            showErrorMessage("Course not found in your list");
+          }
+        } catch (e) {
+          showErrorMessage("An error occurred while deleting the course");
+        } finally {
+          loading = false;
         }
-      } else {
-        showErrorMessage("Course not found in your list");
       }
-    } catch (e) {
-      showErrorMessage("An error occurred while deleting the course");
-    } finally {
-      loading = false;
     }
   };
+
+  modalStore.trigger(modal);
+};
+
 
   function showErrorMessage(message: string) {
     const t: ToastSettings = {
