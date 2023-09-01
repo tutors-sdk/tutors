@@ -177,36 +177,6 @@
 </div>
 
 <div class="container card mx-auto p-8 my-4">
-  <Accordion>
-    <AccordionItem>
-      <svelte:fragment slot="summary">
-        <p class="text-2xl font-bold">Add a course</p>
-      </svelte:fragment>
-      <svelte:fragment slot="content">
-        <form on:submit|preventDefault={handleAddCourse} bind:this={addCourseForm}>
-          <div class="grid grid-cols-4">
-            <input
-              class="input col-span-3"
-              title="Input (text)"
-              type="text"
-              placeholder="Insert course ID here"
-              bind:value={newCourseInput}
-            />
-            {#if loading}
-              <button class="btn variant-filled-primary ml-4">
-                <ProgressRadial width="w-6" />
-              </button>
-            {:else}
-              <input class="btn variant-filled-primary ml-4" type="submit" value="Add" />
-            {/if}
-          </div>
-        </form>
-      </svelte:fragment>
-    </AccordionItem>
-  </Accordion>
-</div>
-
-<div class="container card mx-auto p-8">
   <p class="text-2xl font-bold pb-4">Your previously accessed courses</p>
   <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
     {#if displayedCourseList}
@@ -240,4 +210,34 @@
       <p class="text-lg">No courses found</p>
     {/if}
   </div>
+</div>
+
+<div class="container card mx-auto p-4">
+  <Accordion>
+    <AccordionItem>
+      <svelte:fragment slot="summary">
+        <p class="text-2xl font-bold">Add a course</p>
+      </svelte:fragment>
+      <svelte:fragment slot="content">
+        <form on:submit|preventDefault={handleAddCourse} bind:this={addCourseForm}>
+          <div class="grid grid-cols-4">
+            <input
+              class="input col-span-3"
+              title="Input (text)"
+              type="text"
+              placeholder="Insert course ID here"
+              bind:value={newCourseInput}
+            />
+            {#if loading}
+              <button class="btn variant-filled-primary ml-4">
+                <ProgressRadial width="w-6" />
+              </button>
+            {:else}
+              <input class="btn variant-filled-primary ml-4" type="submit" value="Add" />
+            {/if}
+          </div>
+        </form>
+      </svelte:fragment>
+    </AccordionItem>
+  </Accordion>
 </div>
