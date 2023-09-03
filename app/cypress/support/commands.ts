@@ -13,8 +13,7 @@ Cypress.Commands.add("goBack", () => {
 });
 
 Cypress.Commands.add("clickBreadCrumb", (step: number) => {
-  cy.wait(1000);
-  cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+  cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
   // Now you can interact with the <li> elements
   cy.get('li.crumb', { timeout: 100000 }).eq(step).click({ force: true });
 });
@@ -24,10 +23,10 @@ Cypress.Commands.add("clickCard", (lo: any) => {
     cy.log("Begining: " + lo.type)
     switch (lo.type) {
       case "lab":
-        cy.clickLabCard(lo)
+        cy.clickLabCard(lo);
         break;
       case "step":
-        cy.clickLabStep(lo)
+        cy.clickLabStep(lo);
         break;
       case "unit":
         cy.clickPanelVideo(lo);
@@ -43,14 +42,13 @@ Cypress.Commands.add("clickCard", (lo: any) => {
         break;
       case "note":
         cy.triggerCardAction(lo);
-        //cy.wait(250);
-        cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
-        cy.get('li.crumb', { timeout: 10000 }).eq(1).click();
+        cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
+        cy.get('li.crumb').eq(1).click({force: true});
         break;
       case "talk":
         cy.triggerCardAction(lo);
-        cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
-        cy.get('li.crumb', { timeout: 10000 }).eq(1).click();
+        cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
+        cy.get('li.crumb').eq(1).click({force:true});
         break;
       default:
         cy.triggerCardAction(lo);
@@ -66,7 +64,7 @@ Cypress.Commands.add("clickLabStep", (lo: any) => {
 });
 
 Cypress.Commands.add("triggerCardAction", (lo: any) => {
-  cy.wait(500);
+  cy.wait(250);
   cy.get('div.h-full.overflow-hidden.contents', {timeout:10000}).invoke('css', 'overflow', 'visible');
 
   if (lo.title.includes('#')) {
@@ -75,12 +73,14 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
     const text = lo.title.trim();
     cy.log(text);
     // Perform assertions that multiple elements exist
-    cy.findAllByText(text, { timeout: 10000 }).should('exist').each($elements => {
+    cy.findAllByText(text, { timeout: 10000 }).should('exist').each(elements => {
       // Check if at least one element is found
-      if ($elements.length > 0) {
-        $elements.each((_, $el) => {
+      if (elements.length > 0) {
+        elements.each((_,el) => {
+          cy.log("element: ",el)
           // Element(s) found, perform actions on the first element
-          cy.wrap($el).click({ force: true });
+          cy.get(el, { timeout: 10000 }).should('exist').click({ force: true })
+
         });
       } else {
         cy.log(`Element with text "${text}" not found.`);
@@ -92,14 +92,14 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
 
 Cypress.Commands.add("clickLabCard", (lo: any) => {
   // Temporarily modify CSS to make the parent container visible
-  cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+  cy.get('div.h-full.overflow-hidden.contents',{timeout:10000}).invoke('css', 'overflow', 'visible');
 
-  cy.contains(lo.title.trim()).click();
+  cy.contains(lo.title.trim()).click({force:true});
   lo.los.forEach((l: any, i: number) => {
     cy.clickLabStep(l)
     if (lo.los.length - 1 === i) {
       // Now you can interact with the <li> elements
-      cy.get('li.crumb').eq(2).click();
+      cy.get('li.crumb', { timeout: 10000 }).eq(2).click();
     }
   });
 });
@@ -111,7 +111,7 @@ Cypress.Commands.add("toggleTOCWithVerification", (contents: any) => {
   contents.forEach((element: any) => {
     if (element.title != " Hidden\r") {
       cy.log(element.title)
-      cy.get('div.drawer-backdrop')
+      cy.get('div.drawer-backdrop', { timeout: 10000 })
         .find('div.drawer')
         .should('include.text', element.title);
     }
@@ -120,11 +120,11 @@ Cypress.Commands.add("toggleTOCWithVerification", (contents: any) => {
 
 Cypress.Commands.add("toggleInfoWithVerification", (contents: any) => {
   //locates the info button button in the top left
-  cy.get('button.btn.btn-sm', { timeout: 5000 }).eq(0).click("topLeft", { force: true })
+  cy.get('button.btn.btn-sm', { timeout: 10000 }).eq(0).click("topLeft", { force: true })
   //loops through the array of title and summary to verify that each title is shown on screen as should
   contents.forEach((element: any) => {
     cy.log(element)
-    cy.get('div.drawer-backdrop')
+    cy.get('div.drawer-backdrop', { timeout: 10000 })
       .find('div.drawer')
       .should('include.text', element);
   });
@@ -132,7 +132,7 @@ Cypress.Commands.add("toggleInfoWithVerification", (contents: any) => {
 
 Cypress.Commands.add("verifyContentsExists", (lo: any) => {
   cy.log(lo.title)
-  cy.get('.card').should('include.text', lo.title.trim())
+  cy.get('.card', { timeout: 10000 }).should('include.text', lo.title.trim())
     .should('exist');
 });
 
@@ -150,7 +150,8 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
 
     cy.findAllByText(lo.title.trim(), { matchCase: false }).click({ force: true })
       .then(() => {
-        cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+        cy.log("after clicking archive card")
+        cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
         // Now you can interact with the <li> elements
         cy.get('li.crumb', { timeout: 10000 }).eq(1).click({ force: true });
       });
@@ -158,8 +159,7 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
 });
 
 Cypress.Commands.add("processCompanionsAndWallsLinks", (course: any) => {
-  cy.get('.my-2 a:not(:first)').each((link) => {
-    cy.log("BEGINING THE LOOP OF THE LINKS...")
+  cy.get('.my-2 a:not(:first)', {timeout: 10000}).each((link) => {
     // you can get its href attribute using the .attr() method
     const href = link.attr('href');
     cy.log('Href:', href);
@@ -218,9 +218,8 @@ Cypress.Commands.add("countHowManyLearningObjects", (href: string, counts: numbe
   cy.wait(delay);
   cy.log(course);
   counts = countOccurrencesOfType(course, type);
-  cy.log(counts);
   cy.log('occurences: ' + countOccurrencesOfType(course, type))
-  cy.get('.card.m-2').should('have.length', counts);
+  cy.get('.card.m-2', {timeout: 10000}).should('have.length', counts);
 });
 
 function countOccurrencesOfType(obj: any, type: string) {

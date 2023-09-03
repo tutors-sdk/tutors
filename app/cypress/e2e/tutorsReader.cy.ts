@@ -2,7 +2,7 @@
 
 let course: any = null;
 
-describe("Loading the JSON fixture", function () {
+describe("Tutors Reader: Loading the JSON fixture", function () {
   before(function () {
     //passing through the tutors json to be ingested and iterate over each objetc and assign out to c
     cy.fixture("tutors.json").then((c: any) => {
@@ -52,10 +52,9 @@ describe("Loading the JSON fixture", function () {
       if (!topic.hide) {
         console.log(topic);
         cy.clickCard(topic);
-        cy.wait(500);
-        cy.go("back");
-        cy.wait(500);
       }
+      cy.get("div.h-full.overflow-hidden.contents").invoke("css", "overflow", "visible");
+      cy.get("li.crumb").eq(0).click();
     });
   });
 
