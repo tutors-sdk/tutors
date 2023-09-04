@@ -2,7 +2,7 @@
 
 let course: any = null;
 
-describe("Loading the JSON fixture", function () {
+describe("Tutors HTML Generator: Loading the JSON fixture", function () {
   before(function () {
     //passing through the tutors json to be ingested and iterate over each objetc and assign out to c
     cy.fixture("../../html/tutors.json").then((c: any) => {
@@ -19,47 +19,49 @@ describe("Loading the JSON fixture", function () {
    * This test case is checking that the headers and summary are present on all the
    * cards. You would expect all to match as it is coming from the JSON fixture
    */
-  // it("Course Reference page", function () {
-  //   // Test case
-  //   cy.wait(500);
-  //   cy.get(".p-3.shadow-lg.bg-neutral.text-neutral-content.rounded-box.nav-corner.mb-1.justify-start.z-40.flex.mt-2").contains(course.title.trim());
-  //   cy.wait(1000);
-  //   cy.get("div.ml-4.flex-nowrap").should("include.text", course.title.trim());
-  //   course.los.forEach((topic: any) => {
-  //     if (!topic.hide) {
-  //       cy.get(".card-title").should("include.text", topic.title.trim());
-  //     }
-  //   });
-  // });
+  it("Course Reference page", function () {
+    // Test case
+    cy.wait(500);
+    cy.get(".p-3.shadow-lg.bg-neutral.text-neutral-content.rounded-box.nav-corner.mb-1.justify-start.z-40.flex.mt-2").contains(course.title.trim());
+    cy.wait(1000);
+    cy.get("div.ml-4.flex-nowrap").should("include.text", course.title.trim());
+    course.los.forEach((topic: any) => {
+      if (!topic.hide) {
+        cy.get(".card-title").should("include.text", topic.title.trim());
+      }
+    });
+  });
 
-  // it("Verification of Companions & Walls", function () {
-  //   cy.processCompanionsAndWallsLinks(course);
-  // });
+  it("Verification of Companions & Walls", function () {
+    cy.processCompanionsAndWallsLinks(course);
+  });
 
-  // it("Topics", function () {
-  //   course.los.forEach((topic: any) => {
-  //     if (!topic.hide) {
-  //       console.log(topic);
-  //       cy.clickStaticCard(topic, topic.id.trim());
-  //       cy.wait(500);
-  //       cy.go("back");
-  //       cy.wait(500);
-  //     }
-  //   });
-  // });
+  it("Topics", function () {
+    course.los.forEach((topic: any) => {
+      if (!topic.hide) {
+        console.log(topic);
+        cy.clickStaticCard(topic, topic.id.trim());
+        cy.wait(500);
+        cy.go("back");
+        cy.wait(500);
+      }
+    });
+  });
 
   it("Deep Topics", function () {
     course.los.forEach((topic: any) => {
       if (!topic.hide) {
         cy.visit("../../html/index.html");
-        cy.wait(500);
         cy.clickStaticCard(topic, topic.id.trim());
         topic.los.forEach((lo: any) => {
-          cy.log(lo);
           cy.clickStaticCard(lo, topic.id.trim());
+          cy.log(lo);
+          cy.wait(500);
+        if(lo.los !== undefined || lo.los !== ""){
           lo.los.forEach((l: any) => {
             cy.clickStaticCard(l, topic.id.trim());
           });
+        }
           cy.clickStaticBreadCrumb(1);
         });
       }
