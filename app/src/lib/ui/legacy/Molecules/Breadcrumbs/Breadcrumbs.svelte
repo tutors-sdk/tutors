@@ -1,17 +1,7 @@
 <script lang="ts">
   import { currentCourse, currentLo } from "$lib/stores";
   import { Icon } from "$lib/ui/legacy";
-  import type { Lo } from "$lib/services/types/lo";
-
-  function crumbs(lo: Lo, los: Lo[]) {
-    if (lo) {
-      crumbs(lo.parentLo, los);
-      if (!((lo.type === "unit" || lo.type === "side") && lo.parentLo.type === "course")) {
-        los.push(lo);
-      }
-    }
-    return los;
-  }
+  import type { Lo } from "$lib/services/models-ng/lo-types";
 
   let truncated = [true, true, true, true, true, true, true];
 
@@ -52,7 +42,7 @@
 
       <li class="crumb-separator" aria-hidden>&rsaquo;</li>
     {/if}
-    {#each crumbs($currentLo, []) as lo, i}
+    {#each $currentLo.breadCrumbs as lo, i}
       {#if i >= 1}
         <li class="crumb-separator" aria-hidden>&rsaquo;</li>
       {/if}

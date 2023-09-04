@@ -86,6 +86,7 @@ export type Lo = {
 
   // dynamic properties, created by decorator
   parentLo?: Lo; // immediate parent lo
+  parentTopic?: Topic;
   parentCourse?: Course; // parent course
   breadCrumbs?: Lo[]; // all los from course to this lo
 };
@@ -141,11 +142,12 @@ export type PanelVideo = Lo & {
 
 export type Composite = Lo & {
   los: Lo[]; // child los
-  panels?: Panels; // child panel los - paneltalks, panelvideos, panelnotes.
-  units?: Units; // child units, including side units
+  panels: Panels; // child panel los - paneltalks, panelvideos, panelnotes.
+  units: Units; // child units, including side units
 };
 
 export type Topic = Composite & {
+  toc:Lo[];
   type: "topic";
 };
 

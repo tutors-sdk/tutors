@@ -1,4 +1,4 @@
-import { isCompositeLo, type Lo, type Composite, type Talk, type LoType, type Course } from "./lo-types";
+import { isCompositeLo, type Lo, type Composite, type Talk, type LoType, type Course, type Topic } from "./lo-types";
 
 export function filterByType(list: Lo[], type: LoType): Lo[] {
   const los = flattenLos(list);
@@ -28,16 +28,33 @@ export function injectCourseUrl(lo: Lo, id: string, url: string) {
   }
 }
 
-export function flattenLos(los: Lo[]): Lo[] {
-  let result: Lo[] = [];
-  los.forEach((lo) => {
-    result.push(lo);
-    if (isCompositeLo(lo)) {
-      const compositeLo = lo as Composite;
-      if (compositeLo.los) result = result.concat(flattenLos(compositeLo.los));
-    }
+
+export function createToc(course: Course) {
+  course.los.forEach (lo=>{
+    const topic = lo as Topic;
+    topic.toc = [];
+    topic.toc.push(
+      ...topic.panels.panelVideos,
+      ...topic.panels.panelTalks,
+      ...topic.panels.panelNotes,
+      ...topic.units.units,
+      ...topic.units.standardLos,
+      ...topic.units.sides,
+      ...topic.los
+    );
+
+    //fixRoutePaths(lo);
+    topic.toc.forEach((lo) => {
+      lo.parentLo = course;
+      lo.parentTopic = topic;
+      if (lo.type === "unit" || lo.type === "side") {
+        const composite = lo as Composite
+        composite.los.forEach((subLo) => {
+          subLo.parentTopic = topic;
+        });
+      }
+    });
   });
-  return result;
 }
 
 export function createCompanions(course: Course) {
@@ -70,4 +87,26 @@ export function createCompanions(course: Course) {
     }
   }
   course.companions.show = course.companions.bar.length > 0;
+}
+
+export function flattenLos(los: Lo[]): Lo[] {
+  let result: Lo[] = [];
+  los.forEach((lo) => {
+    result.push(lo);
+    if (isCompositeLo(lo)) {
+      const compositeLo = lo as Composite;
+      if (compositeLo.los) result = result.concat(flattenLos(compositeLo.los));
+    }
+  });
+  return result;
+}
+
+export function allVideoLos(los: Lo[]): Lo[] {
+  const allVideoLos: Lo[] = [];
+  for (const lo of los) {
+    if (lo.video) {
+      allVideoLos.push(lo);
+    }
+  }
+  return allVideoLos;
 }

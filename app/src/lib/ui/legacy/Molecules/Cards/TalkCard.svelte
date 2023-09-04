@@ -160,7 +160,7 @@
     <canvas class="mx-auto w-full 2xl:w-4/5" bind:this={canvas} />
   </div>
 {:else}
-  <div class="mt-28 flex flex-col items-center justify-center">
+  <!-- <div class="mt-28 flex flex-col items-center justify-center">
     Loading
     <br />
     <ProgressRadial
@@ -169,5 +169,5 @@
       track="stroke-primary-500/30"
       width="w-20"
     />
-  </div>
+  </div> -->
 {/if}

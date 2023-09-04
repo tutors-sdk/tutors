@@ -1,6 +1,7 @@
 import { courseUrl, currentCourse, currentLo, week } from "$lib/stores";
 import type { Lo, Course, Lab } from "$lib/services/models-ng/lo-types";
 import { decorateCourseTree } from "./models-ng/lo-tree";
+import { LiveLab } from "./models-ng/live-lab";
 
 export const courseService = {
   //course: Course,
@@ -26,7 +27,6 @@ export const courseService = {
         const data = await response.json();
         course = data as Course;
         decorateCourseTree(course, courseId, courseUrl);
-        //course = new Course(data, courseId, courseUrl);
         this.courses.set(courseId, course);
       } catch (error) {
         console.error(`Error fetching from URL: https://${courseUrl}/tutors.json`);
@@ -49,13 +49,12 @@ export const courseService = {
 
   async readTopic(courseId: string, topicId: string, fetchFunction: typeof fetch): Promise<Lo> {
     const course = await this.readCourse(courseId, fetchFunction);
-    const id = `${courseId}/{topicId}`;
-    const topic = course.loIndex.get(id);
+    const topic = course.loIndex.get(topicId);
     if (topic) currentLo.set(topic);
     return topic!;
   },
 
-  async readLab(courseId: string, labId: string, fetchFunction: typeof fetch): Promise<Lab> {
+  async readLab(courseId: string, labId: string, fetchFunction: typeof fetch): Promise<LiveLab> {
     const course = await this.readCourse(courseId, fetchFunction);
 
     const lastSegment = labId.substring(labId.lastIndexOf("/") + 1);
@@ -64,11 +63,11 @@ export const courseService = {
     }
 
     const lab = course.loIndex.get(labId) as Lab;
-    // const lab = course.hydratedLabs.get(labId) || new Lab(course, lo, labId);
-    // course.hydratedLabs.set(labId, lab);
+    const liveLab = new LiveLab(course, lab, labId);
+
 
     currentLo.set(lab);
-    return lab;
+    return liveLab;
   },
 
   async readWall(courseId: string, type: string, fetchFunction: typeof fetch): Promise<Lo[]> {

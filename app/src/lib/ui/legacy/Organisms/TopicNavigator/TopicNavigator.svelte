@@ -1,14 +1,8 @@
 <script lang="ts">
-  import type { Topic } from "$lib/services/models/topic";
+  import type { Topic } from "$lib/services/models-ng/lo-types";
   import Icon from "../../Atoms/Icon/Icon.svelte";
 
   export let topic: Topic;
-
-  let orderedLos = topic.toc.filter((lo) => lo?.frontMatter?.order);
-  let unOrderedLos = topic.toc.filter((lo) => !lo?.frontMatter?.order);
-  orderedLos.sort((a, b) => Number(a.frontMatter.order) - Number(b.frontMatter.order));
-  orderedLos.push(...unOrderedLos);
-  topic.toc = orderedLos;
 </script>
 
 {#each topic.toc as lo}
