@@ -1,4 +1,4 @@
-import { isCompositeLo, type Lo, type Composite, type Talk, type LoType, type Course, type Topic } from "./lo-types";
+import { isCompositeLo, type Lo, type Composite, type Talk, type LoType, type Course, type Topic, type IconNav } from "./lo-types";
 
 export function filterByType(list: Lo[], type: LoType): Lo[] {
   const los = flattenLos(list);
@@ -14,7 +14,7 @@ export function injectCourseUrl(lo: Lo, id: string, url: string) {
 
   lo.img = lo.img?.replace("{{COURSEURL}}", url);
   lo.video = lo.video?.replace("{{COURSEURL}}", id);
-  if (lo.type == "talk") {
+  if (lo.type == "talk"|| lo.type == "paneltalk" ) {
     const talk = lo as Talk;
     talk.pdf = talk.pdf?.replace("{{COURSEURL}}", url);
   }
@@ -88,6 +88,26 @@ export function createCompanions(course: Course) {
   }
   course.companions.show = course.companions.bar.length > 0;
 }
+
+export function createWallBar(course:Course) {
+  course.wallBar = {
+    show: true,
+    bar: [],
+  };
+  course.walls?.forEach(wall => {
+    course.wallBar.bar.push(createWallLink(wall[0].type, course));
+  });
+}
+
+function createWallLink(type: string, course:Course): IconNav {
+return {
+  link: `/wall/${type}/${course.courseUrl}`,
+  icon: type,
+  tip: `${type}s`,
+  target: ""
+};
+}
+
 
 export function flattenLos(los: Lo[]): Lo[] {
   let result: Lo[] = [];

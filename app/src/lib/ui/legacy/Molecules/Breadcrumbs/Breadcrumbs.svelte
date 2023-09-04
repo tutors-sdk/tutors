@@ -47,10 +47,7 @@
         <li class="crumb-separator" aria-hidden>&rsaquo;</li>
       {/if}
       <li class="crumb">
-        <a
-          href="{lo.route}{getUnitId(lo.type, lo.id)}"
-          class="!space-x-[-1rem] lg:!space-x-0 inline-flex !text-black dark:!text-white"
-        >
+        <a href="{lo.route}{getUnitId(lo.type, lo.id)}" class="!space-x-[-1rem] lg:!space-x-0 inline-flex !text-black dark:!text-white">
           <span><Icon type={lo.type} /></span>
           <span
             class="hidden lg:inline-flex pl-2 items-center"
@@ -59,8 +56,9 @@
             }}
             on:mouseleave={() => {
               truncated[i] = true;
-            }}>{title(lo.title, truncated[i], i)}</span
-          >
+            }}
+            >{title(lo.title, truncated[i], i)}
+          </span>
         </a>
       </li>
     {/each}

@@ -72,10 +72,8 @@ export const courseService = {
 
   async readWall(courseId: string, type: string, fetchFunction: typeof fetch): Promise<Lo[]> {
     const course = await this.readCourse(courseId, fetchFunction);
-    return course.walls![0]
-    //const wall = course.walls.get(type);
-    //return wall;
-    //return course
+    const wall = course.wallMap?.get(type);
+    return wall!;
   },
 
   async readLo(courseId: string, loId: string, fetchFunction: typeof fetch): Promise<Lo> {
