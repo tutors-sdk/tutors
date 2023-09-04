@@ -4,4 +4,4 @@
   export let data: PageData;
 </script>
 
-<TopDeck lo={data.topic.lo} />
+<TopDeck composite={data.topic} />

@@ -1,19 +1,19 @@
-import { courseService } from "$lib/services/course";
-import type { Course } from "$lib/services/models/course";
+import { courseService } from "$lib/services/course-ng";
+import type { Course } from "$lib/services/models-ng/lo-types";
 import { currentLo } from "$lib/stores";
 
 export const ssr = false;
 
 export const load = async ({ params, parent, fetch }) => {
-  const course: Course = await courseService.readCourse(params.courseid, fetch);
+  const course = await courseService.readCourse(params.courseid, fetch);
 
   const data = await parent();
 
   if (!data.session) {
-    currentLo.set(course.lo);
+    currentLo.set(course);
     return {
       course,
-      lo: course.lo
+      lo: course
     };
   }
 
@@ -31,7 +31,7 @@ export const load = async ({ params, parent, fetch }) => {
             courses: [
               {
                 id: course.id,
-                name: course.lo.title,
+                name: course.title,
                 last_accessed: new Date().toISOString(),
                 visits: 1
               }
@@ -47,7 +47,7 @@ export const load = async ({ params, parent, fetch }) => {
       if (courseIndex === -1) {
         courseList.courses.push({
           id: course.id,
-          name: course.lo.title,
+          name: course.title,
           last_accessed: new Date().toISOString(),
           visits: 1
         });
@@ -67,6 +67,6 @@ export const load = async ({ params, parent, fetch }) => {
 
   return {
     course,
-    lo: course.lo
+    lo: course
   };
 };
