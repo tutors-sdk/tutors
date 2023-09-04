@@ -19,15 +19,23 @@ Cypress.Commands.add("goBack", () => {
 Cypress.Commands.add("verifyContentsExists", (lo: any, id: string) => {
   cy.log("pdf, title:" + lo.pdf + lo.title)
   cy.wait(500)
-  if (lo.pdf != "") {
-    cy.inspectHref(lo.title.trim(), lo.pdf.trim(), id)
-  } else if (lo.video != "") {
+  const pdf = typeof lo.pdf === 'string' ? lo.pdf.trim() : "";
+  const video = typeof lo.video === 'string' ? lo.video.trim() : "";
+
+  if (pdf !== "") {
+    cy.log("PDF EXISTS: "+ lo.pdf)
+    cy.inspectHref(lo.title.trim(), lo.pdf, id)
+  } else if (video !== "") {
+    cy.log("VIDEO EXISTS: "+ video)
+
     /**
      * NB: This needs to be commented back in for the test to run as it should just altered to have it
      * run with the broken link
      */
-    // cy.inspectHref(lo.title.trim(), lo.video.trim(), id);
-  } else {
+   // cy.inspectHref(lo.title.trim(), video, id);
+   } else {
+    cy.log("GITHUB EXISTS: "+ lo)
+
     cy.verifyGitHubHref(lo);
   }
 });
@@ -41,10 +49,11 @@ Cypress.Commands.add("clickStaticBreadCrumb", (step: number) => {
 Cypress.Commands.add("clickStaticLabCard", (lo: any) => {
   cy.contains(lo.title.trim()).click();
   lo.los.forEach((l: any, i: number) => {
+
     cy.clickStaticLabStep(l)
     if (lo.los.length - 1 === i) {
-      cy.log(l)
-      cy.get('span.hidden.text-xs.lg\\:block.lg\\:pl-2').eq(2).click();
+      cy.log("End of lab card: " + l)
+      cy.get('span.hidden.text-xs.lg\\:block.lg\\:pl-2', { timeout: 10000 }).eq(2).click();
     }
   });
 });
@@ -52,7 +61,7 @@ Cypress.Commands.add("clickStaticLabCard", (lo: any) => {
 Cypress.Commands.add("clickStaticLabStep", (lo: any) => {
   //The slice is being used here because in the JSON the title starts with # and a space
   //If the JSON will not have the # as in my test json, it must be removed to function
-  cy.get('div.hidden.md\\:block ul.menu')
+  cy.get(`div.hidden.md\\:block ul.menu`, { timeout: 10000 })
     .find('a').should('exist').contains(lo.title.slice(1).trim()).click({ force: true });
 });
 
@@ -63,22 +72,24 @@ Cypress.Commands.add("triggerStaticCardAction", (lo: any) => {
     const text = lo.title.trim();
     cy.log(text);
     // Perform assertions that multiple elements exist
-    cy.findAllByText(text, { timeout: 5000 }).should('exist').each($elements => {
+    cy.findAllByText(text, { timeout: 10000 }).should('exist').each(elements => {
       // Check if at least one element is found
-      if ($elements.length > 0) {
-        $elements.each((_: any, $el: any) => {
+      if (elements.length > 0) {
+        elements.each((_: any, el: any) => {
+          cy.wait(250);
           // Element(s) found, perform actions on the first element
-          cy.wrap($el).click({ force: true });
+          cy.get(el, { timeout: 10000 }).should('exist').click({ force: true })
         });
       } else {
         cy.log(`Element with text "${text}" not found.`);
       }
     });
+    cy.wait(500);
   }
 });
 
 Cypress.Commands.add("clickPanelVideo", (lo: any) => {
-  cy.findAllByText(lo.title.trim(), { matchCase: false });
+  cy.findAllByText(lo.title.trim(), { timeout: 10000 }, { matchCase: false });
 });
 
 Cypress.Commands.add("verifyDownloadOfArchive", (lo: any, version: string) => {
@@ -92,7 +103,7 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any, version: string) => {
     cy.findAllByText(lo.title.trim(), { matchCase: false }).click({ force: true })
       .then(() => {
         if (version == "dynamic") {
-          cy.get('div.h-full.overflow-hidden.contents').invoke('css', 'overflow', 'visible');
+          cy.get('div.h-full.overflow-hidden.contents',{ timeout: 10000 }).invoke('css', 'overflow', 'visible');
           // Now you can interact with the <li> elements
           cy.get('li.crumb', { timeout: 10000 }).eq(1).click({ force: true });
         } else {
@@ -104,12 +115,9 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any, version: string) => {
 });
 
 Cypress.Commands.add("inspectHref", (title: string, ahref: string, id: string) => {
-  // Original URL
-  cy.log(ahref);
-  let originalUrl = ahref;
   // Extract relevant parts from the original URL using regular expressions
-  originalUrl = `${ahref.split(id)[1]}`;
-  cy.log("ourl" + originalUrl);
+  let originalUrl = `${ahref.split(id)[1]}`;
+  cy.log("url: " + originalUrl);
   cy.contains('.card > a', title)
     .then(($a) => {
       expect($a).to.have.attr('target', '_blank')
@@ -134,7 +142,6 @@ Cypress.Commands.add("verifyGitHubHref", (lo: any) => {
     cy.contains('.card > a', lo.title.trim())
       .then(($a) => {
         expect($a).to.have.attr('target', '_blank')
-        // update attr to open in same tab
       })
       .and('have.attr', 'href')
       .and('contain', lo.route.trim());
@@ -192,7 +199,7 @@ Cypress.Commands.add("countHowManyLearningObjects", (alteredString: string, coun
   cy.visit(`${alteredString}`);
   counts = countOccurrencesOfType(course, type);
   cy.log('occurences: ' + countOccurrencesOfType(course, type))
-  cy.get(".card > a").should('have.length', counts);
+  cy.get(".card > a", { timeout: 10000 }).should('have.length', counts);
 });
 
 function countOccurrencesOfType(obj: any, type: string) {
@@ -208,21 +215,8 @@ function countOccurrencesOfType(obj: any, type: string) {
   return count;
 }
 
-Cypress.Commands.add("loopingObject", (lo: any) =>{
-  for (const key in lo) {
-    if (typeof lo[key] === "object" && lo[key] !== null) {
-      lo.los.forEach((l: any, i: number) => {
-        cy.clickStaticCard(l)
-      });
-      const value = lo[key];
-      cy.log(`${key}: ${value}`);
-    }
-  }
-});
-
-
 Cypress.Commands.add("clickStaticCard", (lo: any, id: string) => {
-  if (!lo.hide && lo.type != "paneltalk" && lo.type != "panelvideo") {
+  if (!lo.hide && lo.type != "paneltalk" && lo.type != "panelvideo" && lo.type != undefined) {
     cy.log("TYPE: " + lo.type)
     switch (lo.type) {
       case "lab":

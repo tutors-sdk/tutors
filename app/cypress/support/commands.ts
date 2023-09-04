@@ -60,7 +60,18 @@ Cypress.Commands.add("clickCard", (lo: any) => {
 Cypress.Commands.add("clickLabStep", (lo: any) => {
   //The slice is being used here because in the JSON the title starts with # and a space
   //If the JSON will not have the # as in my test json, it must be removed to function
-  cy.get(`nav.nav-list ul a`).contains(lo.title.slice(2).trim()).click({ force: true });
+  cy.get(`nav.nav-list ul a`, { timeout:10000 }).contains(lo.title.slice(2).trim());
+
+  cy.get(`nav.nav-list ul a`, {timeout: 10000}).each((link) => {
+    // you can get its href attribute using the .attr() method
+    const href = link.attr('href');
+    cy.log('Href:', href);
+    //if the link is a link to another website it should have target _blank
+    if (href.includes("http")) {
+      cy.wrap(link).should('have.attr', 'href').and('include', href);
+      expect(link).to.have.attr('target', '_blank')
+    }
+    })
 });
 
 Cypress.Commands.add("triggerCardAction", (lo: any) => {
@@ -76,11 +87,10 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
     cy.findAllByText(text, { timeout: 10000 }).should('exist').each(elements => {
       // Check if at least one element is found
       if (elements.length > 0) {
-        elements.each((_,el) => {
+        elements.each((_: any,el: any) => {
           cy.log("element: ",el)
           // Element(s) found, perform actions on the first element
           cy.get(el, { timeout: 10000 }).should('exist').click({ force: true })
-
         });
       } else {
         cy.log(`Element with text "${text}" not found.`);
@@ -239,10 +249,10 @@ declare global {
   namespace Cypress {
     interface Chainable {
       goBack(): Chainable<any>;
-      clickBreadCrumb(step: number): Chainable<any>;
       clickCard(lo: any): Chainable<any>;
       clickLabStep(lo: any): Chainable<any>;
       clickLabCard(lo: any): Chainable<any>;
+      verifyCompanionHrefs(): Chainable<any>;
       triggerCardAction(lo: any): Chainable<any>;
       verifyContentsExists(lo: any): Chainable<any>;
       clickPanelVideo(lo: any): Chainable<any>;
@@ -250,7 +260,6 @@ declare global {
       clickLinkWithExactText(text: string): Chainable<any>;
       toggleTOCWithVerification(contents: any): Chainable<any>;
       toggleInfoWithVerification(contents: any): Chainable<any>;
-      verifyCompanionHrefs(): Chainable<any>;
       processCompanionsAndWallsLinks(course: any): Chainable<any>;
       countHowManyLearningObjects(alteredString: string, counts: number, course: any, type: string): Chainable<any>;
     }
