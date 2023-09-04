@@ -55,6 +55,7 @@ export const analyticsService = {
   },
 
   reportPageLoad(session: TokenResponse) {
+    if (!lo) return;
     updateLastAccess(`${course.id}/usage/${this.loRoute}`, course.title);
     updateVisits(course.courseUrl.substring(0, course.courseUrl.indexOf(".")));
 
@@ -74,6 +75,7 @@ export const analyticsService = {
   },
 
   updatePageCount(session: TokenResponse) {
+    if (!lo) return;
     updateLastAccess(`${course.id}/usage/${this.loRoute}`, course.title);
     updateCount(course.id);
     if (user) {

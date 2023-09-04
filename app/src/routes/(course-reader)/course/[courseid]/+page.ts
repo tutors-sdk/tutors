@@ -63,7 +63,7 @@ export const load = async ({ params, parent, fetch }) => {
     }
   }
 
-  currentLo.set(course.lo);
+  currentLo.set(course);
 
   return {
     course,
