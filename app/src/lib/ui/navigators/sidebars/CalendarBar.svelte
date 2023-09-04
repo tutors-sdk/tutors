@@ -18,7 +18,7 @@
     "Dec"
   ];
 
-  const title = $currentCourse.lo.title;
+  const title = $currentCourse.title;
   const calendar = $currentCourse.calendar;
   const currentWeek = $currentCourse.currentWeek;
 

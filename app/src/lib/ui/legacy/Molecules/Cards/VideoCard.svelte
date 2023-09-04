@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { Lo } from "$lib/services/types/lo";
+  import type { Lo } from "$lib/services/models-ng/lo-types";
   import { currentCourse } from "$lib/stores";
   import { getIcon } from "../../Atoms/Icon/themes";
 
@@ -43,7 +43,7 @@
   }, 500);
 </script>
 
-{#if $currentCourse && !$currentCourse.areVideosHidden()}
+{#if $currentCourse && !$currentCourse.areVideosHidden}
   <div class="mr-2 w-full p-8">
     {#if heanet}
       {#if showVime}

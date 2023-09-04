@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from "../../Atoms/Icon/Icon.svelte";
   import { getIcon } from "../../Atoms/Icon/themes";
-  import type { Lo } from "$lib/services/types/lo";
+  import type { Lo } from "$lib/services/models-ng/lo-types";
   import { currentCourse, layout } from "$lib/stores";
   import { onDestroy } from "svelte";
   import { Image } from "$lib/ui/legacy";
@@ -48,7 +48,7 @@
         <div class="line-clamp-2 flex-auto {headingText} !text-black dark:!text-white">
           {lo.title}
         </div>
-        {#if $currentCourse && !$currentCourse.areVideosHidden()}
+        {#if $currentCourse && !$currentCourse.areVideosHidden}
           {#if lo.video && lo.type !== "video"}
             <a href={lo.video}>
               <Icon type="video" />

@@ -2,7 +2,7 @@
   import { currentCourse } from "$lib/stores";
   import { getDrawerStore } from "@skeletonlabs/skeleton";
   import { convertMdToHtml } from "$lib/services/utils/markdown";
-  const courseInfo = convertMdToHtml($currentCourse.lo.contentMd, "");
+  const courseInfo = convertMdToHtml($currentCourse.contentMd, "");
 
   const drawerStore = getDrawerStore();
   const drawerClose: any = () => {
