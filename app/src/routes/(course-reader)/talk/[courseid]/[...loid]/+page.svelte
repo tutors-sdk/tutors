@@ -15,7 +15,7 @@
       {/key}
     </div>
     <div class="hidden md:block">
-      <TopicNavigatorCard topic={data.lo.parent} />
+      <TopicNavigatorCard topic={data.lo.parentTopic} />
     </div>
   </div>
 {/if}

@@ -1,5 +1,5 @@
 import type { PageLoad } from "./$types";
-import { courseService } from "$lib/services/course";
+import { courseService } from "$lib/services/course-ng";
 
 export const ssr = false;
 
