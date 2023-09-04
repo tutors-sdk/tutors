@@ -57,11 +57,12 @@ describe("Tutors HTML Generator: Loading the JSON fixture", function () {
           cy.clickStaticCard(lo, topic.id.trim());
           cy.log(lo);
           cy.wait(500);
-        if(lo.los !== undefined || lo.los !== ""){
-          lo.los.forEach((l: any) => {
-            cy.clickStaticCard(l, topic.id.trim());
-          });
-        }
+          const los = typeof lo.los === 'object' ? lo.los : "";
+          if (los !== "") {
+            lo.los.forEach((l: any) => {
+              cy.clickStaticCard(l, topic.id.trim());
+            });
+          }
           cy.clickStaticBreadCrumb(1);
         });
       }
