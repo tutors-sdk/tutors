@@ -1,6 +1,6 @@
 import type { PageLoad } from "./$types";
-import { courseService } from "$lib/services/course";
-import type { Course } from "$lib/services/models/course";
+import { courseService } from "$lib/services/course-ng";
+import type { Course } from "$lib/services/models-ng/lo-types";
 import { currentLo } from "$lib/stores";
 
 export const ssr = false;

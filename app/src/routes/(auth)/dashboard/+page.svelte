@@ -1,15 +1,7 @@
 <script lang="ts">
-  import { courseService } from "$lib/services/course";
-  import type { Course } from "$lib/services/models/course";
-  import {
-    Accordion,
-    AccordionItem,
-    getToastStore,
-    getModalStore,
-    ProgressRadial,
-    type ToastSettings,
-    type ModalSettings
-  } from "@skeletonlabs/skeleton";
+  import { courseService } from "$lib/services/course-ng";
+  import type { Course } from "$lib/services/models-ng/lo-types";
+  import { Accordion, AccordionItem, getToastStore, getModalStore, ProgressRadial, type ToastSettings, type ModalSettings } from "@skeletonlabs/skeleton";
 
   const toastStore = getToastStore();
   const modalStore = getModalStore();
@@ -27,10 +19,7 @@
 
       const course = await courseService.readCourse(newCourseInput, fetch);
 
-      const { data: userCourseList, error: selectError } = await data.supabase
-        .from("accessed_courses")
-        .select(`course_list`)
-        .eq("id", data.session.user.id);
+      const { data: userCourseList, error: selectError } = await data.supabase.from("accessed_courses").select(`course_list`).eq("id", data.session.user.id);
 
       if (!userCourseList || userCourseList.length === 0) {
         const { error: insertError } = await data.supabase.from("accessed_courses").insert([
@@ -54,7 +43,7 @@
         } else {
           const newCourse = {
             id: course.id,
-            name: course.lo.title,
+            name: course.title,
             last_accessed: new Date().toISOString(),
             visits: 1
           };
@@ -64,9 +53,7 @@
           addCourseForm.reset();
         }
       } else {
-        const existingCourse = userCourseList[0].course_list.courses.find(
-          (userCourse) => userCourse.id === course.id
-        );
+        const existingCourse = userCourseList[0].course_list.courses.find((userCourse) => userCourse.id === course.id);
 
         if (existingCourse) {
           showErrorMessage("This course already exists in your list!");
@@ -79,10 +66,7 @@
             visits: 1
           });
 
-          const { error: updateError } = await data.supabase
-            .from("accessed_courses")
-            .update({ course_list: courseList })
-            .eq("id", data.session.user.id);
+          const { error: updateError } = await data.supabase.from("accessed_courses").update({ course_list: courseList }).eq("id", data.session.user.id);
 
           if (updateError) {
             showErrorMessage("Error adding course");
@@ -111,10 +95,7 @@
       response: async (r: boolean) => {
         if (r === true) {
           try {
-            const { data: userCourseList, error } = await data.supabase
-              .from("accessed_courses")
-              .select(`course_list`)
-              .eq("id", data.session.user.id);
+            const { data: userCourseList, error } = await data.supabase.from("accessed_courses").select(`course_list`).eq("id", data.session.user.id);
 
             if (error) {
               showErrorMessage("Error fetching user course list");
@@ -127,10 +108,7 @@
 
             if (courseIndex !== -1) {
               courseList.courses.splice(courseIndex, 1);
-              const { error } = await data.supabase
-                .from("accessed_courses")
-                .update({ course_list: courseList })
-                .eq("id", data.session.user.id);
+              const { error } = await data.supabase.from("accessed_courses").update({ course_list: courseList }).eq("id", data.session.user.id);
 
               if (error) {
                 showErrorMessage("Error deleting course");
@@ -194,14 +172,8 @@
           </a>
           <footer class="card-footer p-0">
             <div class="w-full flex">
-              <a
-                class="btn rounded-t-none rounded-br-none m-0 variant-filled-primary w-2/3"
-                href={"/course/" + course.id}>Visit Course</a
-              >
-              <button
-                class="btn rounded-t-none rounded-bl-none m-0 variant-filled-error w-1/3"
-                on:click={() => handleDeleteCourse(course.id)}>Delete</button
-              >
+              <a class="btn rounded-t-none rounded-br-none m-0 variant-filled-primary w-2/3" href={"/course/" + course.id}>Visit Course</a>
+              <button class="btn rounded-t-none rounded-bl-none m-0 variant-filled-error w-1/3" on:click={() => handleDeleteCourse(course.id)}>Delete</button>
             </div>
           </footer>
         </div>
@@ -221,13 +193,7 @@
       <svelte:fragment slot="content">
         <form on:submit|preventDefault={handleAddCourse} bind:this={addCourseForm}>
           <div class="grid grid-cols-4">
-            <input
-              class="input col-span-3"
-              title="Input (text)"
-              type="text"
-              placeholder="Insert course ID here"
-              bind:value={newCourseInput}
-            />
+            <input class="input col-span-3" title="Input (text)" type="text" placeholder="Insert course ID here" bind:value={newCourseInput} />
             {#if loading}
               <button class="btn variant-filled-primary ml-4">
                 <ProgressRadial width="w-6" />

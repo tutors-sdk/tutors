@@ -3,7 +3,7 @@
   import type { ResultType } from "$lib/services/utils/search";
   import { isValid, searchHits } from "$lib/services/utils/search";
   import type { Lo } from "$lib/services/types/lo";
-  import type { Course } from "$lib/services/models/course";
+  import type { Course } from "$lib/services/models-ng/lo-types";
   import { currentLo } from "$lib/stores";
   import { allLos } from "$lib/services/utils/lo";
   import { convertMdToHtml } from "$lib/services/utils/markdown";
@@ -47,14 +47,7 @@
 <div class="card container mx-auto p-4">
   <label for="search" class="label"
     ><span>Enter search term:</span>
-    <input
-      bind:value={searchTerm}
-      type="text"
-      name="search"
-      id="search"
-      class="m-2 p-2 input"
-      placeholder="..."
-    /></label
+    <input bind:value={searchTerm} type="text" name="search" id="search" class="m-2 p-2 input" placeholder="..." /></label
   >
   <div class="flex flex-wrap justify-center">
     {#each searchResults as result}
