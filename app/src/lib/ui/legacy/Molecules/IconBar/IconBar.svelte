@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Icon } from "$lib/ui/legacy";
-  import type { IconNavBar } from "$lib/services/types/icon";
+  import type { IconNavBar } from "$lib/services/models/lo-types";
 
   export let nav: IconNavBar;
 </script>

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { courseService } from "$lib/services/course";
-  import type { Course } from "$lib/services/models/course";
+  import type { Course } from "$lib/services/models/lo-types";
   import {
     Accordion,
     AccordionItem,
@@ -55,7 +55,7 @@
         } else {
           const newCourse = {
             id: course.id,
-            name: course.lo.title,
+            name: course.title,
             last_accessed: new Date().toISOString(),
             visits: 1
           };

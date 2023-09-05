@@ -1,6 +1,5 @@
 import { updateLo } from "$lib/services/utils/course";
-import type { Lo } from "$lib/services/types/lo";
-import type { Course } from "$lib/services/models/course";
+import type { Course, Lo } from "$lib/services/models/lo-types";
 import type { TokenResponse } from "$lib/services/types/auth";
 import { currentCourse, currentLo, currentUser } from "$lib/stores";
 
@@ -56,17 +55,18 @@ export const analyticsService = {
   },
 
   reportPageLoad(session: TokenResponse) {
-    updateLastAccess(`${course.id}/usage/${this.loRoute}`, course.lo.title);
-    updateVisits(course.url.substring(0, course.url.indexOf(".")));
+    if (!lo) return;
+    updateLastAccess(`${course.id}/usage/${this.loRoute}`, course.title);
+    updateVisits(course.courseUrl.substring(0, course.courseUrl.indexOf(".")));
 
     if (!session || (session && session.onlineStatus === "online")) {
-      updateLastAccess(`all-course-access/${course.id}`, course.lo.title);
+      updateLastAccess(`all-course-access/${course.id}`, course.title);
       updateVisits(`all-course-access/${course.id}`);
       updateLo(`all-course-access/${course.id}`, course, lo);
     }
 
     if (session) {
-      const key = `${course.url.substring(0, course.url.indexOf("."))}/users/${sanitise(
+      const key = `${course.courseUrl.substring(0, course.courseUrl.indexOf("."))}/users/${sanitise(
         session.user.email
       )}/${this.loRoute}`;
       updateLastAccess(key, lo.title);
@@ -75,7 +75,8 @@ export const analyticsService = {
   },
 
   updatePageCount(session: TokenResponse) {
-    updateLastAccess(`${course.id}/usage/${this.loRoute}`, course.lo.title);
+    if (!lo) return;
+    updateLastAccess(`${course.id}/usage/${this.loRoute}`, course.title);
     updateCount(course.id);
     if (user) {
       updateCount(`all-course-access/${course.id}`);

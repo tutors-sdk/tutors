@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from "../../Atoms/Icon/Icon.svelte";
   import { getIcon } from "../../Atoms/Icon/themes";
-  import type { Lo } from "$lib/services/types/lo";
+  import type { Lo } from "$lib/services/models/lo-types";
   import { currentCourse, layout } from "$lib/stores";
   import { onDestroy } from "svelte";
   import { Image } from "$lib/ui/legacy";
@@ -38,17 +38,13 @@
 </script>
 
 <a href={lo.route} {target}>
-  <div
-    transition:cardTransition
-    class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 border-{getIcon(lo.type)
-      .colour}-500 m-2 {cardWidths} transition-all hover:scale-105"
-  >
+  <div transition:cardTransition class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 border-{getIcon(lo.type).colour}-500 m-2 {cardWidths} transition-all hover:scale-105">
     <header class="card-header flex flex-row items-center justify-between p-3">
       <div class="inline-flex w-full">
         <div class="line-clamp-2 flex-auto {headingText} !text-black dark:!text-white">
           {lo.title}
         </div>
-        {#if $currentCourse && !$currentCourse.areVideosHidden()}
+        {#if $currentCourse && !$currentCourse.areVideosHidden}
           {#if lo.video && lo.type !== "video"}
             <a href={lo.video}>
               <Icon type="video" />

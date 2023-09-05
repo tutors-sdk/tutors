@@ -1,11 +1,9 @@
 import { courseUrl, currentCourse, currentLo, week } from "$lib/stores";
-import { Course } from "$lib/services/models/course";
-import { Lab } from "$lib/services/models/lab";
-import type { Lo } from "$lib/services/types/lo";
-import type { Topic } from "$lib/services/models/topic";
+import type { Lo, Course, Lab } from "$lib/services/models/lo-types";
+import { decorateCourseTree } from "./models/lo-tree";
+import { LiveLab } from "./models/live-lab";
 
 export const courseService = {
-  course: Course,
   courses: new Map<string, Course>(),
   courseUrl: "",
 
@@ -26,7 +24,8 @@ export const courseService = {
           throw new Error(`Fetch failed with status ${response.status}`);
         }
         const data = await response.json();
-        course = new Course(data, courseId, courseUrl);
+        course = data as Course;
+        decorateCourseTree(course, courseId, courseUrl);
         this.courses.set(courseId, course);
       } catch (error) {
         console.error(`Error fetching from URL: https://${courseUrl}/tutors.json`);
@@ -41,20 +40,21 @@ export const courseService = {
   async readCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course> {
     const course = await this.getOrLoadCourse(courseId, fetchFunction);
     currentCourse.set(course);
-    courseUrl.set(course.url);
-    week.set(course?.currentWeek);
-    this.course = course;
+    currentLo.set(course);
+    courseUrl.set(course.courseUrl);
+    //week.set(course?.currentWeek);
+    //this.course = course;
     return course;
   },
 
-  async readTopic(courseId: string, topicId: string, fetchFunction: typeof fetch): Promise<Topic> {
+  async readTopic(courseId: string, topicId: string, fetchFunction: typeof fetch): Promise<Lo> {
     const course = await this.readCourse(courseId, fetchFunction);
-    const topic = course.topicIndex.get(topicId);
-    currentLo.set(topic.lo);
-    return topic;
+    const topic = course.loIndex.get(topicId);
+    if (topic) currentLo.set(topic);
+    return topic!;
   },
 
-  async readLab(courseId: string, labId: string, fetchFunction: typeof fetch): Promise<Lab> {
+  async readLab(courseId: string, labId: string, fetchFunction: typeof fetch): Promise<LiveLab> {
     const course = await this.readCourse(courseId, fetchFunction);
 
     const lastSegment = labId.substring(labId.lastIndexOf("/") + 1);
@@ -62,24 +62,24 @@ export const courseService = {
       labId = labId.slice(0, labId.lastIndexOf("/"));
     }
 
-    const lo = course.loIndex.get(labId);
-    const lab = course.hydratedLabs.get(labId) || new Lab(course, lo, labId);
-    course.hydratedLabs.set(labId, lab);
+    const lab = course.loIndex.get(labId) as Lab;
+    const liveLab = new LiveLab(course, lab, labId);
 
-    currentLo.set(lab.lo);
-    return lab;
+
+    currentLo.set(lab);
+    return liveLab;
   },
 
   async readWall(courseId: string, type: string, fetchFunction: typeof fetch): Promise<Lo[]> {
     const course = await this.readCourse(courseId, fetchFunction);
-    const wall = course.walls.get(type);
-    return wall;
+    const wall = course.wallMap?.get(type);
+    return wall!;
   },
 
   async readLo(courseId: string, loId: string, fetchFunction: typeof fetch): Promise<Lo> {
     const course = await this.readCourse(courseId, fetchFunction);
     const lo = course.loIndex.get(loId);
-    currentLo.set(lo);
-    return lo;
+    if (lo) currentLo.set(lo);
+    return lo!;
   }
 };

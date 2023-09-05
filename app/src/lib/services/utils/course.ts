@@ -1,4 +1,4 @@
-import type { Course } from "$lib/services/models/course";
+import type { Course } from "$lib/services/models/lo-types";
 import type { IconType } from "$lib/services/types/icon";
 import type { Lo } from "$lib/services/types/lo";
 import { writeObj } from "$lib/services/utils/firebase";
@@ -48,9 +48,9 @@ export function updateLo(root: string, course: Course, currentLo: Lo) {
         : {},
     img: currentLo.img,
     title: currentLo.title,
-    courseTitle: course.lo.title,
+    courseTitle: course.title,
     subRoute: currentLo.route,
-    isPrivate: course.lo.properties?.private ? course.lo.properties.private : 0,
+    isPrivate: course.properties?.private ? course.properties.private : 0,
     tutorsTimeId: getTutorsTimeId(course)
   };
 
@@ -66,7 +66,7 @@ function generateTutorsTimeId() {
 }
 
 function getTutorsTimeId(course: Course) {
-  if (course.authLevel > 0) {
+  if (course.properties?.authLevel) {
     return window.localStorage.id;
   }
 

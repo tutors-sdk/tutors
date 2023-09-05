@@ -1,5 +1,5 @@
-import type { Lo } from "$lib/services/types/lo";
-import { removeLeadingHashes } from "$lib/services/utils/lo";
+import type { Lo } from "$lib/services/models/lo-types";
+import { removeLeadingHashes } from "$lib/services/models/lo-utils";
 
 const maxNumberHits = 100;
 const fenceTick = "```";
@@ -40,20 +40,20 @@ export type ResultType = {
  * @return string array of search term hits truncated to maxNumberHits length.
  */
 export function searchHits(los: Lo[], searchTerm: string): ResultType[] {
-  const flatLos = flattenNestedLosArrays(los);
+  //const flatLos = flattenNestedLosArrays(los);
   //let result : string[] = [];
   const results: ResultType[] = [];
-  flatLos.forEach((obj) => {
-    const text = obj.lab.contentMd;
+  los.forEach((lo) => {
+    const text = lo.contentMd;
     const contents: ContentType[] = arrayLinesSearchTermHits(text, searchTerm);
     for (const content of contents) {
       const result = {
         fenced: content.style !== "unfenced",
         language: content.language,
         contentMd: content.content,
-        lab: obj.lab,
-        title: `${obj.lab.parentLo.title}/${removeLeadingHashes(obj.lab.title)}`,
-        link: obj.lab?.route,
+        lab: lo,
+        title: `${lo.parentLo.title}/${removeLeadingHashes(lo.title)}`,
+        link: lo?.route,
         html: ""
       };
       result.link = result.link.substring(1);
@@ -140,39 +140,6 @@ export function extractPath(astring: string) {
   const start = astring.indexOf("#");
   const end = astring.indexOf(">") - 1; // exclude preceeding double quote.
   return astring.substring(start, end);
-}
-/**
- * Given the route, discover and return a reference to the parent Lo object.
- * @param route
- */
-export function findLo(route: string, los: Lo[]): Lo {
-  const flatLos = flattenNestedLosArrays(los);
-  let lo: Lo;
-  flatLos.forEach((obj) => {
-    if (obj.lab.route === route) {
-      lo = obj.lab;
-    }
-  });
-  return lo;
-}
-/**
- * Convert the tree of los into an array.
- * @param los
- * @returns
- */
-function flattenNestedLosArrays(los: Lo[]) {
-  return flatten(los, "");
-}
-function flatten(arr: Lo[], topicTitle: string, result = []) {
-  for (let i = 0, length = arr.length; i < length; i++) {
-    const value = arr[i];
-    if (Array.isArray(value.los)) {
-      flatten(value.los, arr[i].parent.lo.title, result);
-    } else {
-      result.push({ lab: value, topicTitle: topicTitle });
-    }
-  }
-  return result;
 }
 
 /**

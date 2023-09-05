@@ -14,17 +14,7 @@
     NavigationPrimaryLayoutMenu
   } from "$lib/components";
 
-  import {
-    AppShell,
-    popup,
-    Toast,
-    storePopup,
-    type DrawerSettings,
-    initializeStores,
-    getDrawerStore,
-    getToastStore,
-    Modal
-  } from "@skeletonlabs/skeleton";
+  import { AppShell, popup, Toast, storePopup, type DrawerSettings, initializeStores, getDrawerStore, getToastStore, Modal } from "@skeletonlabs/skeleton";
   import { computePosition, autoUpdate, flip, shift, offset, arrow } from "@floating-ui/dom";
 
   import Sidebars from "$lib/ui/navigators/sidebars/Sidebars.svelte";
@@ -104,12 +94,7 @@
   let isNotCourseRoute: boolean;
 
   $: {
-    isNotCourseRoute =
-      !$currentCourse ||
-      $page.url.pathname === "/dashboard" ||
-      $page.url.pathname === "/time" ||
-      $page.url.pathname === "/auth" ||
-      $page.url.pathname.length <= 1;
+    isNotCourseRoute = !$currentCourse || $page.url.pathname === "/dashboard" || $page.url.pathname === "/time" || $page.url.pathname === "/auth" || $page.url.pathname.length <= 1;
   }
 </script>
 
@@ -130,27 +115,16 @@
           </a>
         {:else}
           <button class="btn btn-sm" on:click={infoDrawerOpen}>
-            <Icon
-              icon="fluent:info-28-regular"
-              color="rgba(var(--color-primary-500))"
-              height="20"
-            />
+            <Icon icon="fluent:info-28-regular" color="rgba(var(--color-primary-500))" height="20" />
           </button>
           <NavTitle />
         {/if}
       </svelte:fragment>
-      {#if $currentCourse?.currentWeek}
+      <!-- {#if $currentCourse?.currentWeek}
         <div class="hidden w-full lg:flex">
-          <button
-            class="mx-auto inline-flex rounded-lg variant-soft-primary p-2"
-            on:click={calendarDrawerOpen}
-          >
+          <button class="mx-auto inline-flex rounded-lg variant-soft-primary p-2" on:click={calendarDrawerOpen}>
             <span class="my-auto pl-2 pr-4">
-              <Icon
-                icon="fluent:calendar-ltr-12-regular"
-                color="rgba(var(--color-primary-500))"
-                height="20"
-              />
+              <Icon icon="fluent:calendar-ltr-12-regular" color="rgba(var(--color-primary-500))" height="20" />
             </span>
             <span class="divider-vertical h-12 hidden lg:flex my-auto" />
             <span class="px-2">
@@ -159,15 +133,10 @@
             </span>
           </button>
         </div>
-      {/if}
+      {/if} -->
       <svelte:fragment slot="trail">
         {#if !isNotCourseRoute}
-          <NavigationPrimaryButton
-            href="/search/{$courseUrl}"
-            icon="fluent:search-24-filled"
-            iconColour="rgba(var(--color-primary-500))"
-            label="Search"
-          />
+          <NavigationPrimaryButton href="/search/{$courseUrl}" icon="fluent:search-24-filled" iconColour="rgba(var(--color-primary-500))" label="Search" />
           <span class="divider-vertical h-10 hidden lg:block" />
         {/if}
         {#if data.session}
@@ -202,10 +171,7 @@
         {#if !isNotCourseRoute}
           <span class="divider-vertical h-10 hidden lg:block" />
           <button class="btn btn-sm" on:click={tocDrawerOpen}>
-            <NavigationPrimaryButton
-              icon="fluent:line-horizontal-3-20-filled"
-              iconColour="rgba(var(--color-primary-500))"
-            />
+            <NavigationPrimaryButton icon="fluent:line-horizontal-3-20-filled" iconColour="rgba(var(--color-primary-500))" />
           </button>
         {/if}
       </svelte:fragment>
@@ -215,7 +181,7 @@
     {/if}
   </svelte:fragment>
   <slot />
-  <svelte:fragment slot="pageFooter">
+  <svelte:fragment slot="pageFooter">\
     {#if $page.url.pathname !== "/"}
       <div
         class="bg-surface-100-800-token border-t-[1px] border-surface-200-700-token bottom-0 mt-2"

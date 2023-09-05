@@ -5,24 +5,13 @@
   import { get } from "svelte/store";
 
   import { setInitialClassState, getToastStore, type ToastSettings } from "@skeletonlabs/skeleton";
-  import {
-    transitionKey,
-    currentLo,
-    onlineStatus,
-    studentsOnlineList,
-    studentsOnline
-  } from "$lib/stores";
+  import { transitionKey, currentLo, onlineStatus, studentsOnlineList, studentsOnline } from "$lib/stores";
   import PageTransition from "$lib/ui/PageTransition.svelte";
   import { getKeys } from "$lib/environment";
   import { analyticsService } from "$lib/services/analytics";
   import { initServices } from "$lib/services/tutors-startup";
   import type { RealtimeChannel } from "@supabase/supabase-js";
-  import {
-    setupPresence,
-    subscribePresence,
-    unsubscribePresence,
-    updatePresence
-  } from "$lib/services/presence";
+  import { setupPresence, subscribePresence, unsubscribePresence, updatePresence } from "$lib/services/presence";
 
   let currentRoute = "";
   const toastStore = getToastStore();
@@ -31,11 +20,7 @@
   let { supabase, session } = data;
 
   function updatePageCount() {
-    if (
-      !document.hidden &&
-      !currentRoute.startsWith("/live") &&
-      !currentRoute.startsWith("/dashboard")
-    ) {
+    if (!document.hidden && !currentRoute.startsWith("/live") && !currentRoute.startsWith("/dashboard")) {
       analyticsService.updatePageCount(session);
     }
   }
@@ -69,12 +54,7 @@
   }
 
   $: {
-    if (
-      $currentLo &&
-      data.session &&
-      presenceSetup &&
-      ($onlineStatus || $onlineStatus === undefined)
-    ) {
+    if ($currentLo && data.session && presenceSetup && ($onlineStatus || $onlineStatus === undefined)) {
       updatePresence({
         studentName: session.user.user_metadata.full_name,
         studentEmail: session.user.user_metadata.email,
@@ -89,20 +69,13 @@
   }
 
   $: {
-    if (
-      $onlineStatus &&
-      data.session &&
-      presenceSetup &&
-      ($onlineStatus || $onlineStatus === undefined)
-    ) {
+    if ($onlineStatus && data.session && presenceSetup && ($onlineStatus || $onlineStatus === undefined)) {
       subscribePresence(
         {
           studentName: session.user.user_metadata.full_name,
           studentEmail: session.user.user_metadata.email,
           studentImg: session.user.user_metadata.avatar_url,
-          courseTitle: get(currentLo).parentLo
-            ? get(currentLo).parentLo.title
-            : get(currentLo).title,
+          courseTitle: get(currentLo).parentLo ? get(currentLo).parentLo.title : get(currentLo).title,
           loTitle: get(currentLo).title,
           loImage: get(currentLo).img,
           loRoute: get(currentLo).route,
@@ -140,7 +113,7 @@
 </script>
 
 <svelte:head>
-  {#if currentLo}
+  {#if $currentLo}
     <title>{$currentLo.title}</title>
   {:else}
     <title>Tutors Course Reader</title>

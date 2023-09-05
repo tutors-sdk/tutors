@@ -1,19 +1,15 @@
 <script lang="ts">
-  import type { Lo } from "$lib/services/types/lo";
+  import type { Panels } from "$lib/services/models/lo-types";
   import { TalkCard, NoteCard, VideoCard } from "$lib/ui/legacy";
-  export let lo: Lo;
-
-  const panelVideos = lo.los.filter((lo) => lo.type == "panelvideo");
-  const panelTalks = lo.los.filter((lo) => lo.type == "paneltalk");
-  const panelNotes = lo.los.filter((lo) => lo.type == "panelnote");
+  export let panels: Panels;
 </script>
 
-{#each panelVideos as lo}
+{#each panels?.panelVideos as lo}
   <VideoCard {lo} />
 {/each}
-{#each panelTalks as lo}
+{#each panels.panelTalks as lo}
   <TalkCard {lo} />
 {/each}
-{#each panelNotes as lo}
+{#each panels.panelNotes as lo}
   <NoteCard {lo} />
 {/each}

@@ -1,7 +1,7 @@
-import { convertMdToHtml } from "$lib/services/utils/markdown";
-import type { Lo } from "$lib/services/types/lo";
-import type { Course } from "$lib/services/models/course";
-import { removeLeadingHashes } from "$lib/services/utils/lo";
+import { convertMdToHtml } from "$lib/services/models/markdown-utils";
+import type { Lab, Lo } from "$lib/services/models/lo-types";
+import type { Course } from "$lib/services/models/lo-types";
+import { removeLeadingHashes } from "$lib/services/models/lo-utils";
 
 function truncate(input: string) {
   if (input?.length > 16) {
@@ -10,9 +10,9 @@ function truncate(input: string) {
   return input;
 }
 
-export class Lab {
+export class LiveLab {
   course: Course;
-  lo: Lo = null;
+  lab: Lab;
   url = "";
   objectivesHtml = "";
   currentChapterShortTitle = "";
@@ -27,34 +27,35 @@ export class Lab {
 
   vertical = true;
 
-  constructor(course: Course, lo: Lo, labId: string) {
+  constructor(course: Course, lo: Lab, labId: string) {
     this.course = course;
-    this.autoNumber = course.areLabStepsAutoNumbered();
+    this.autoNumber = course.areLabStepsAutoNumbered;
     this.url = labId;
-    this.lo = lo;
+    this.lab = lo;
     this.convertMdToHtml();
   }
 
   convertMdToHtml() {
-    const assetUrl = this.url.replace(`/lab/${this.course.id}`, this.course.url);
-    this.objectivesHtml = convertMdToHtml(this.lo.los[0].contentMd, assetUrl);
+    const assetUrl = this.url.replace(`/lab/${this.course.courseId}`, this.course.courseUrl);
+    this.objectivesHtml = convertMdToHtml(this.lab.los[0].contentMd, assetUrl);
     this.chaptersHtml = new Map(
-      this.lo.los.map((chapter) => [
+      this.lab.los.map((chapter) => [
         encodeURI(chapter.shortTitle),
         convertMdToHtml(chapter.contentMd, assetUrl)
       ])
     );
     this.chaptersTitles = new Map(
-      this.lo.los.map((chapter) => [chapter.shortTitle, removeLeadingHashes(chapter.title)])
+      this.lab.los.map((chapter) => [chapter.shortTitle, removeLeadingHashes(chapter.title)])
     );
     this.steps = Array.from(this.chaptersHtml.keys());
   }
 
   refreshNav() {
-    const number = this.autoNumber ? this.lo.shortTitle + ": " : "";
+    //const number = this.autoNumber ? this.lab.shortTitle + ": " : "";
 
-    this.navbarHtml = this.lo.los
+    this.navbarHtml = this.lab.los
       .map((chapter) => {
+        const number = this.autoNumber ? chapter.shortTitle + ": " : "";
         const active =
           encodeURI(chapter.shortTitle) === this.currentChapterShortTitle
             ? "font-bold bg-surface-200 dark:bg-surface-600 pl-4"
@@ -66,21 +67,25 @@ export class Lab {
       })
       .join("");
 
-    const currentChapterIndex = this.lo.los.findIndex(
+    const currentChapterIndex = this.lab.los.findIndex(
       (chapter) => encodeURI(chapter.shortTitle) === this.currentChapterShortTitle
     );
     if (currentChapterIndex !== -1) {
-      const prevChapter = this.lo.los[currentChapterIndex - 1];
+      let number = "";
+      const prevChapter = this.lab.los[currentChapterIndex - 1];
       const prevTitle = prevChapter
         ? truncate(this.chaptersTitles.get(prevChapter.shortTitle))
         : "";
+      if (prevTitle) number = this.autoNumber ? prevChapter.shortTitle + ": " : "";
       this.horizontalNavbarHtml = prevChapter
         ? `<a class="btn btn-sm capitalize" href="${this.url}/${encodeURI(
             prevChapter.shortTitle
           )}"> <span aria-hidden="true">&larr;</span>&nbsp; ${number}${prevTitle} </a>`
         : "";
 
-      const nextChapter = this.lo.los[currentChapterIndex + 1];
+      number = "";
+      const nextChapter = this.lab.los[currentChapterIndex + 1];
+      if (nextChapter) number = this.autoNumber ? nextChapter.shortTitle + ": " : "";
       const nextTitle = nextChapter
         ? truncate(this.chaptersTitles.get(nextChapter.shortTitle))
         : "";
@@ -105,7 +110,7 @@ export class Lab {
   }
 
   setFirstPageActive() {
-    const startStep = encodeURI(this.lo.los[0].shortTitle);
+    const startStep = encodeURI(this.lab.los[0].shortTitle);
     this.setCurrentChapter(startStep);
   }
 

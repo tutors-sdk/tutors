@@ -39,10 +39,10 @@
     <h2 class="mr-4 hidden !text-sm font-bold sm:!text-lg md:inline-block">{$currentLo.title}</h2>
     <!-- Badge -->
     <div class="hidden md:block" target="_blank">
-      {#if $currentLo.title != $currentCourse?.lo.title}
-        <p class="text-sm font-bold">{$currentCourse?.lo.title}</p>
+      {#if $currentLo.title != $currentCourse?.title}
+        <p class="text-sm font-bold">{$currentCourse?.title}</p>
       {:else}
-        <p class="text-sm font-bold">{$currentCourse?.lo.properties?.credits}</p>
+        <p class="text-sm font-bold">{$currentCourse?.properties?.credits}</p>
       {/if}
     </div>
   </div>
