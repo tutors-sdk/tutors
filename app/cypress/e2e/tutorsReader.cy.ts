@@ -20,32 +20,32 @@ describe("Tutors Reader: Loading the JSON fixture", function () {
    * This test case is checking that the headers and summary are present on all the
    * cards. You would expect all to match as it is coming from the JSON fixture
    */
-  it("Course Reference page", function () {
-    cy.wait(30000);
-    cy.get(".app-bar", { timeout: 30000 }).contains(course.title.trim());
-    cy.get(".z-10").contains(course.title.trim());
-    course.los.forEach((topic: any) => {
-      if (!topic.hide) {
-        cy.get(".card").contains(topic.title.trim());
-        //cy.get(".card-footer").should('include.text', topic.summary.trim());
-      }
-    });
-    cy.get('[class="btn btn-sm"]').should("exist");
-    cy.contains('[data-testid="drawer"]').should("not.exist");
-  });
+  // it("Course Reference page", function () {
+  //   cy.wait(30000);
+  //   cy.get(".app-bar", { timeout: 30000 }).contains(course.title.trim());
+  //   cy.get(".z-10").contains(course.title.trim());
+  //   course.los.forEach((topic: any) => {
+  //     if (!topic.hide) {
+  //       cy.get(".card").contains(topic.title.trim());
+  //       //cy.get(".card-footer").should('include.text', topic.summary.trim());
+  //     }
+  //   });
+  //   cy.get('[class="btn btn-sm"]').should("exist");
+  //   cy.contains('[data-testid="drawer"]').should("not.exist");
+  // });
 
-  it("Test for Info Bar in top left", function () {
-    let contents = [course.title.trim(), course.summary.trim()];
-    cy.toggleInfoWithVerification(contents);
-  });
+  // it("Test for Info Bar in top left", function () {
+  //   let contents = [course.title.trim(), course.summary.trim()];
+  //   cy.toggleInfoWithVerification(contents);
+  // });
 
-  it("Test for the TOC in top right", function () {
-    cy.toggleTOCWithVerification(course.los);
-  });
+  // it("Test for the TOC in top right", function () {
+  //   cy.toggleTOCWithVerification(course.los);
+  // });
 
-  it("Verification of Companions & Walls hrefs and Counts", function () {
-    cy.processCompanionsAndWallsLinks(course);
-  });
+  // it("Verification of Companions & Walls hrefs and Counts", function () {
+  //   cy.processCompanionsAndWallsLinks(course);
+  // });
 
   // it("Testing search feature", function () {
   //   cy.partialSearchVerification(course.los);

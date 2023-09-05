@@ -90,10 +90,10 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
 
       // Check if at least one element is found
       if (elements.length > 0) {
-        elements.each((_: any, el: any) => {
+        elements.each((i: any, el: any) => {
           cy.log("element: ", el)
           // Element(s) found, perform actions on the first element
-          cy.get(el, {timeout:5000}).should('exist').click( {force : true} )
+          cy.get(elements[i]).should('exist').click( {force : true} )
       });
       } else {
         cy.log(`Element with text "${text}" not found.`);
