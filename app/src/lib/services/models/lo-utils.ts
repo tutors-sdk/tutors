@@ -37,8 +37,7 @@ export function createToc(course: Course) {
       ...topic.panels.panelNotes,
       ...topic.units.units,
       ...topic.units.standardLos,
-      ...topic.units.sides,
-      ...topic.los
+      ...topic.units.sides
     );
 
     topic.toc.forEach((lo) => {
