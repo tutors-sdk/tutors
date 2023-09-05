@@ -1,7 +1,6 @@
 import { isCompositeLo, type Course, type IconType, type Lo, type Panels, type Composite, type LoType, type Lab } from "./lo-types";
 import { convertMdToHtml } from "./markdown-utils";;
-import { allVideoLos, createCompanions, createToc, createWallBar, filterByType, fixRoutePaths, flattenLos, injectCourseUrl } from "./lo-utils";
-import { courseUrl } from "$lib/stores";
+import { allVideoLos, createCompanions, createToc, createWallBar, filterByType, fixRoutePaths, flattenLos, injectCourseUrl, loadPropertyFlags } from "./lo-utils";
 
 let rootCourse: Course;
 
@@ -12,7 +11,6 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   course.walls = [];
   course.wallMap = new Map<string, Lo[]>();
   ["talk", "note", "lab", "web", "archive", "github"].forEach((type) => addWall(rootCourse, type as LoType));
-
   decorateLoTree(course);
   course.route = `/course/${courseId}`
   injectCourseUrl(course, courseId, courseUrl);
@@ -25,11 +23,7 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   createCompanions(course);
   createWallBar(course);
   createToc (course);
-  course.isPortfolio = false;
-  course.areVideosHidden = false;
-  course.areLabStepsAutoNumbered = false;
-  course.hasEnrollment = false;
-  course.hasWhiteList = false;
+  loadPropertyFlags(course);
 }
 
 export function decorateLoTree(lo: Lo) {

@@ -171,6 +171,7 @@ export type Course = Composite & {
   wallMap?:  Map<string, Lo[]>;
   properties: Properties; // contents of properties.yaml
   calendar?: Properties; // contents of calendar.yaml
+  authLevel: number;
   isPortfolio: boolean;
   areVideosHidden: boolean;
   areLabStepsAutoNumbered: boolean;

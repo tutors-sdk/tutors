@@ -41,7 +41,6 @@ export function createToc(course: Course) {
       ...topic.los
     );
 
-    //fixRoutePaths(lo);
     topic.toc.forEach((lo) => {
       lo.parentLo = course;
       lo.parentTopic = topic;
@@ -144,4 +143,13 @@ export function fixRoutePaths(lo: Lo) {
   if (lo.route.endsWith("md") && lo.video) {
     lo.route = lo.video;
   }
+}
+
+export function loadPropertyFlags(course:Course) {
+  course.isPortfolio = false;
+  course.areVideosHidden = course.properties?.hideVideos as unknown as boolean === true;
+  course.areLabStepsAutoNumbered = course.properties?.labStepsAutoNumber as unknown as boolean === true;
+  course.authLevel = course.properties.auth as unknown as number;
+  course.hasEnrollment = false;
+  course.hasWhiteList = false;
 }
