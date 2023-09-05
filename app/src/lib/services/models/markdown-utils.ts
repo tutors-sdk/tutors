@@ -1,5 +1,5 @@
 import hljs from "highlight.js";
-import type { Lo } from "$lib/services/types/lo";
+import type { Lo } from "$lib/services/models/lo-types";
 import { currentCourse } from "$lib/stores";
 import { get } from "svelte/store";
 import MarkdownIt from "markdown-it";
@@ -18,6 +18,7 @@ import mark from "markdown-it-mark";
 import footnote from "markdown-it-footnote";
 // @ts-ignore
 import deflist from "markdown-it-deflist";
+import type { Course } from "./lo-types";
 
 const markdownIt: any = new MarkdownIt({
   html: false, // Enable HTML tags in source
@@ -98,8 +99,8 @@ export function convertNoteMdToHtml(lo: Lo) {
   if (!lo.contentHtml) {
     let loPath = lo.route.replace("/panelnote/", "");
     loPath = loPath.replace("/note/", "");
-    const course = get(currentCourse);
-    loPath = loPath.replace(course.id, course.url);
+    const course = get(currentCourse) as Course;
+    loPath = loPath.replace(course.courseId, course.courseUrl);
     lo.contentHtml = convertMdToHtml(lo.contentMd, loPath);
   }
 }

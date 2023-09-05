@@ -1,7 +1,7 @@
-import type { Topic } from "$lib/services/models/topic";
-import type { Token } from "./auth";
-import type { IconType } from "./icon";
-import type { Lo } from "./lo";
+import type { Topic } from "$lib/services/models/lo-types";
+import type { Token, User } from "./auth";
+import type { IconType } from "$lib/services/models/lo-types";
+import type { Lo } from "$lib/services/models/lo-types";
 
 export interface Metric {
   id: string;

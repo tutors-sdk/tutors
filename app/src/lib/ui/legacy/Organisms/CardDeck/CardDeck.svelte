@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Card } from "$lib/ui/legacy";
-  import type { Lo } from "$lib/services/types/lo";
+  import type { Lo } from "$lib/services/models/lo-types";
 
   export let los: Lo[] = [];
   export let border: boolean = false;
@@ -17,11 +17,7 @@
 </script>
 
 {#if los.length > 0}
-  <div
-    class="bg-surface-100-800-token mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4 {border
-      ? bordered
-      : unbordered}"
-  >
+  <div class="bg-surface-100-800-token mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4 {border ? bordered : unbordered}">
     <div class="flex flex-wrap justify-center">
       {#each orderedLos as lo}
         <Card {lo} />

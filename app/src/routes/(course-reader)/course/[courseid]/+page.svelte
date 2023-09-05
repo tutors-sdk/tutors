@@ -28,4 +28,4 @@
   });
 </script>
 
-<TopDeck lo={data.course.lo} />
+<TopDeck composite={data.course} />

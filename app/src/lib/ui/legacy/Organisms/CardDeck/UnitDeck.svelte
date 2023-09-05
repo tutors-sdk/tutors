@@ -1,6 +1,7 @@
 <script lang="ts">
   import { UnitCard } from "$lib/ui/legacy";
-  export let units: lo[];
+  import type { Unit } from "$lib/services/models/lo-types";
+  export let units: Unit[];
 </script>
 
 {#each units as unit}
