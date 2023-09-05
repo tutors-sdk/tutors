@@ -2,6 +2,7 @@ import "@testing-library/cypress/add-commands";
 import "cypress-real-events/support";
 import "cypress-axe";
 import "cypress-fail-fast";
+import { error } from "console";
 
 /// <reference types="cypress" />
 
@@ -43,12 +44,12 @@ Cypress.Commands.add("clickCard", (lo: any) => {
       case "note":
         cy.triggerCardAction(lo);
         cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
-        cy.get('li.crumb').eq(1).click({force: true});
+        cy.get('li.crumb').eq(1).click({ force: true });
         break;
       case "talk":
         cy.triggerCardAction(lo);
         cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
-        cy.get('li.crumb').eq(1).click({force:true});
+        cy.get('li.crumb').eq(1).click({ force: true });
         break;
       default:
         cy.triggerCardAction(lo);
@@ -60,9 +61,9 @@ Cypress.Commands.add("clickCard", (lo: any) => {
 Cypress.Commands.add("clickLabStep", (lo: any) => {
   //The slice is being used here because in the JSON the title starts with # and a space
   //If the JSON will not have the # as in my test json, it must be removed to function
-  cy.get(`nav.nav-list ul a`, { timeout:10000 }).contains(lo.title.slice(2).trim());
+  cy.get(`nav.nav-list ul a`, { timeout: 10000 }).contains(lo.title.slice(2).trim());
 
-  cy.get(`nav.nav-list ul a`, {timeout: 10000}).each((link) => {
+  cy.get(`nav.nav-list ul a`, { timeout: 10000 }).each((link) => {
     // you can get its href attribute using the .attr() method
     const href = link.attr('href');
     cy.log('Href:', href);
@@ -71,12 +72,12 @@ Cypress.Commands.add("clickLabStep", (lo: any) => {
       cy.wrap(link).should('have.attr', 'href').and('include', href);
       expect(link).to.have.attr('target', '_blank')
     }
-    })
+  })
 });
 
 Cypress.Commands.add("triggerCardAction", (lo: any) => {
   cy.wait(250);
-  cy.get('div.h-full.overflow-hidden.contents', {timeout:10000}).invoke('css', 'overflow', 'visible');
+  cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
 
   if (lo.title.includes('#')) {
     cy.contains(lo.title.slice(1).trim()).click({ force: true });
@@ -87,8 +88,8 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
     cy.findAllByText(text, { timeout: 10000 }).should('exist').each(elements => {
       // Check if at least one element is found
       if (elements.length > 0) {
-        elements.each((_: any,el: any) => {
-          cy.log("element: ",el)
+        elements.each((_: any, el: any) => {
+          cy.log("element: ", el)
           // Element(s) found, perform actions on the first element
           cy.get(el, { timeout: 10000 }).should('exist').click({ force: true })
         });
@@ -102,9 +103,9 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
 
 Cypress.Commands.add("clickLabCard", (lo: any) => {
   // Temporarily modify CSS to make the parent container visible
-  cy.get('div.h-full.overflow-hidden.contents',{timeout:10000}).invoke('css', 'overflow', 'visible');
+  cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
 
-  cy.contains(lo.title.trim()).click({force:true});
+  cy.contains(lo.title.trim()).click({ force: true });
   lo.los.forEach((l: any, i: number) => {
     cy.clickLabStep(l)
     if (lo.los.length - 1 === i) {
@@ -116,7 +117,7 @@ Cypress.Commands.add("clickLabCard", (lo: any) => {
 
 Cypress.Commands.add("toggleTOCWithVerification", (contents: any) => {
   //locates the Table of Contents button in the top right
-  cy.get('button.btn.btn-sm', { timeout: 10000 }).eq(2).click("topRight", { force: true })
+  cy.get('button.btn.btn-sm', { timeout: 10000 }).eq(2).click("topRight", { force: true });
   //loops through the titles to verify that each title is shown on screen as should
   contents.forEach((element: any) => {
     if (element.title != " Hidden\r") {
@@ -130,7 +131,7 @@ Cypress.Commands.add("toggleTOCWithVerification", (contents: any) => {
 
 Cypress.Commands.add("toggleInfoWithVerification", (contents: any) => {
   //locates the info button button in the top left
-  cy.get('button.btn.btn-sm', { timeout: 10000 }).eq(0).click("topLeft", { force: true })
+  cy.get('button.btn.btn-sm', { timeout: 10000 }).eq(0).click("topLeft", { force: true });
   //loops through the array of title and summary to verify that each title is shown on screen as should
   contents.forEach((element: any) => {
     cy.log(element)
@@ -138,6 +139,42 @@ Cypress.Commands.add("toggleInfoWithVerification", (contents: any) => {
       .find('div.drawer')
       .should('include.text', element);
   });
+});
+
+Cypress.Commands.add("partialSearchVerification", (searchWord: string) => {
+  const pattern = /lab/i; // Regular expression pattern with 'i' flag for case-insensitive matching
+  let countOfMatches = 0;
+
+  cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
+  cy.get('a.btn.btn-sm', { timeout: 10000 }).eq(0).click({ force: true });
+  cy.get('input#search', { timeout: 10000 }).eq(0).type("lab");
+  cy.get('.s-1juWPqSteKNM', { timeout: 10000 }).find('a')
+    .each((link) => {
+      //const links = els.toArray();
+        let href = link.attr('href');
+        cy.log('Href:', href);
+        //if the link is a link to another website it should have target _blank
+        cy.wrap(link).should('have.attr', 'href').and('include', href);
+        expect(link).to.have.attr('target', '_blank')
+        cy.wait(100);
+    }).then((els) => {
+      const links = els.toArray();
+
+      links.forEach((el) =>{
+        const found = el.innerText.match(pattern)
+        if (found !== null) {
+          cy.log(`${el} has been found`)
+          countOfMatches++
+        }
+
+      });// extract texts
+      cy.log(`${countOfMatches}`);
+      if (countOfMatches === 0) {
+        throw error
+      }
+
+    })
+
 });
 
 Cypress.Commands.add("verifyContentsExists", (lo: any) => {
@@ -169,7 +206,7 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
 });
 
 Cypress.Commands.add("processCompanionsAndWallsLinks", (course: any) => {
-  cy.get('.my-2 a:not(:first)', {timeout: 10000}).each((link) => {
+  cy.get('.my-2 a:not(:first)', { timeout: 10000 }).each((link) => {
     // you can get its href attribute using the .attr() method
     const href = link.attr('href');
     cy.log('Href:', href);
@@ -229,7 +266,7 @@ Cypress.Commands.add("countHowManyLearningObjects", (href: string, counts: numbe
   cy.log(course);
   counts = countOccurrencesOfType(course, type);
   cy.log('occurences: ' + countOccurrencesOfType(course, type))
-  cy.get('.card.m-2', {timeout: 10000}).should('have.length', counts);
+  cy.get('.card.m-2', { timeout: 10000 }).should('have.length', counts);
 });
 
 function countOccurrencesOfType(obj: any, type: string) {
@@ -253,9 +290,10 @@ declare global {
       clickLabStep(lo: any): Chainable<any>;
       clickLabCard(lo: any): Chainable<any>;
       verifyCompanionHrefs(): Chainable<any>;
+      clickPanelVideo(lo: any): Chainable<any>;
       triggerCardAction(lo: any): Chainable<any>;
       verifyContentsExists(lo: any): Chainable<any>;
-      clickPanelVideo(lo: any): Chainable<any>;
+      partialSearchVerification(lo: any): Chainable<any>;
       verifyDownloadOfArchive(lo: any): Chainable<any>;
       clickLinkWithExactText(text: string): Chainable<any>;
       toggleTOCWithVerification(contents: any): Chainable<any>;
