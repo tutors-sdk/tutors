@@ -1,5 +1,4 @@
 import { courseService } from "$lib/services/course";
-import type { Course } from "$lib/services/models/lo-types";
 import { currentLo } from "$lib/stores";
 
 export const ssr = false;
