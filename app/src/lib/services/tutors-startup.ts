@@ -26,9 +26,9 @@ export async function initServices(session: Token) {
   }
 
   page.subscribe((path) => {
-    if (path.url.hash.startsWith("#/course")) {
+    if (path.url.hash) {
       const relPath = path.url.hash.slice(1);
-      goto(relPath);
+      goto(`/${relPath}`);
     }
     transitionKey.set(path.url.pathname);
     if (

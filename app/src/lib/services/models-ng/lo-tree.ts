@@ -1,6 +1,7 @@
 import { isCompositeLo, type Course, type IconType, type Lo, type Panels, type Composite, type LoType, type Lab } from "./lo-types";
-import { convertMdToHtml } from "./markdown-utils";
-import { allVideoLos, createCompanions, createToc, createWallBar, filterByType, flattenLos, injectCourseUrl } from "./lo-utils";
+import { convertMdToHtml } from "./markdown-utils";;
+import { allVideoLos, createCompanions, createToc, createWallBar, filterByType, fixRoutePaths, flattenLos, injectCourseUrl } from "./lo-utils";
+import { courseUrl } from "$lib/stores";
 
 let rootCourse: Course;
 
@@ -16,6 +17,7 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   course.route = `/course/${courseId}`
   injectCourseUrl(course, courseId, courseUrl);
   const los = flattenLos(course.los);
+  los.forEach(lo=> fixRoutePaths(lo));
   course.loIndex = new Map<string, Lo>();
   los.forEach((lo) => course.loIndex.set(lo.route, lo));
   const videoLos = allVideoLos(los);
@@ -35,8 +37,8 @@ export function decorateLoTree(lo: Lo) {
   if (lo.type === "panelnote") {
     imgPrefix = lo.id;
   }
-  lo.contentHtml = convertMdToHtml(lo?.contentMd, imgPrefix);
-  lo.summary = convertMdToHtml(lo?.summary);
+  //lo.contentHtml = convertMdToHtml(lo?.contentMd, rootCourse.courseUrl);
+  if (lo.summary) lo.summary = convertMdToHtml(lo?.summary, rootCourse.courseUrl);
   lo.icon = getIcon(lo);
   lo.parentCourse = rootCourse;
   lo.breadCrumbs = [];
@@ -44,7 +46,8 @@ export function decorateLoTree(lo: Lo) {
   if (lo.type == "lab") {
     const lab = lo as Lab;
     lab.los.forEach((step) => {
-      step.contentHtml = convertMdToHtml(step?.contentMd);
+      //step.contentHtml = convertMdToHtml(step?.contentMd, rootCourse.courseUrl);
+      step.parentLo = lab;
     });
   }
   if (isCompositeLo(lo)) {

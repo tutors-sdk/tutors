@@ -99,6 +99,7 @@ export type LabStep = {
   contentHtml?: string;
   route: string;
   id: string;
+  parentLo: Lab;
 };
 
 export type Lab = Lo & {

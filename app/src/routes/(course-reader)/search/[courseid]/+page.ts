@@ -7,9 +7,8 @@ export const ssr = false;
 
 export const load: PageLoad = async ({ params, fetch }) => {
   const course: Course = await courseService.readCourse(params.courseid, fetch);
-  currentLo.set(course.lo);
+  currentLo.set(course);
   return {
     course: course,
-    lo: course.lo
   };
 };

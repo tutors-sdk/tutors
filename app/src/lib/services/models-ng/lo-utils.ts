@@ -1,4 +1,4 @@
-import { isCompositeLo, type Lo, type Composite, type Talk, type LoType, type Course, type Topic, type IconNav } from "./lo-types";
+import type { Lo, Composite, Talk, LoType, Course, Topic, IconNav } from "./lo-types";
 
 export function filterByType(list: Lo[], type: LoType): Lo[] {
   const los = flattenLos(list);
@@ -18,13 +18,11 @@ export function injectCourseUrl(lo: Lo, id: string, url: string) {
     const talk = lo as Talk;
     talk.pdf = talk.pdf?.replace("{{COURSEURL}}", url);
   }
-  if (isCompositeLo(lo)) {
-    const compositeLo = lo as Composite;
-    if (compositeLo.los) {
-      compositeLo.los.forEach((childLo) => {
-        injectCourseUrl(childLo, id, url);
-      });
-    }
+  if ("los" in lo) {
+    // @ts-ignore
+    lo.los.forEach((childLo) => {
+      injectCourseUrl(childLo, id, url);
+    });
   }
 }
 
@@ -113,9 +111,9 @@ export function flattenLos(los: Lo[]): Lo[] {
   let result: Lo[] = [];
   los.forEach((lo) => {
     result.push(lo);
-    if (isCompositeLo(lo)) {
-      const compositeLo = lo as Composite;
-      if (compositeLo.los) result = result.concat(flattenLos(compositeLo.los));
+    if ("los" in lo) {
+      // @ts-ignore
+      result = result.concat(flattenLos(lo.los));
     }
   });
   return result;
@@ -129,4 +127,21 @@ export function allVideoLos(los: Lo[]): Lo[] {
     }
   }
   return allVideoLos;
+}
+
+export function removeLeadingHashes(str: string): string {
+  const hashIndex = str.lastIndexOf("#");
+  return hashIndex >= 0 ? str.substring(hashIndex + 1) : str;
+}
+
+export function fixRoutePaths(lo: Lo) {
+  if (lo.route && lo.route[0] === "#") {
+    lo.route = "/" + lo.route.slice(1);
+  }
+  if (lo.video && lo.video[0] === "#") {
+    lo.video = "/" + lo.video.slice(1);
+  }
+  if (lo.route.endsWith("md") && lo.video) {
+    lo.route = lo.video;
+  }
 }

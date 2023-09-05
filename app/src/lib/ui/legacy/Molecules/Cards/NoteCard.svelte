@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models-ng/lo-types";
-  import { convertNoteMdToHtml } from "$lib/services/utils/markdown";
+  import { convertNoteMdToHtml } from "$lib/services/models-ng/markdown-utils";
   export let lo: Lo;
-  //convertNoteMdToHtml(lo);
+  convertNoteMdToHtml(lo);
 </script>
 
 <article class="notecontent prose dark:prose-invert max-w-none w-[80%]">

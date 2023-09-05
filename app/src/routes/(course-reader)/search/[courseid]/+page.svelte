@@ -2,11 +2,11 @@
   import { onMount } from "svelte";
   import type { ResultType } from "$lib/services/utils/search";
   import { isValid, searchHits } from "$lib/services/utils/search";
-  import type { Lo } from "$lib/services/types/lo";
+  import type { Lo } from "$lib/services/models-ng/lo-types";
   import type { Course } from "$lib/services/models-ng/lo-types";
   import { currentLo } from "$lib/stores";
-  import { allLos } from "$lib/services/utils/lo";
-  import { convertMdToHtml } from "$lib/services/utils/markdown";
+  import { filterByType } from "$lib/services/models-ng/lo-utils";
+  import { convertMdToHtml } from "$lib/services/models-ng/markdown-utils";
 
   export let data: PageData;
 
@@ -17,8 +17,11 @@
 
   onMount(async () => {
     course = data.course;
-    currentLo.set(data.course.lo);
-    labs = allLos("lab", data.course.lo.los);
+    currentLo.set(data.course);
+    //labs = allLos("lab", data.course.lo.los);
+    const allLabs = filterByType(data.course.los, "lab");
+    const allSteps = filterByType(data.course.los, "step");
+    labs = allLabs.concat(allSteps);
   });
 
   function transformResults(results: ResultType[]) {
@@ -31,7 +34,7 @@
       if (result.fenced) {
         resultStrs.push("~~~");
       }
-      result.html = convertMdToHtml(resultStrs.join("\n"), course.url);
+      result.html = convertMdToHtml(resultStrs.join("\n"), course.courseUrl);
       result.link = `https://tutors.dev/${result.link}`;
     });
   }

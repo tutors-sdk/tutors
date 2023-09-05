@@ -1,7 +1,7 @@
-import { convertMdToHtml } from "$lib/services/utils/markdown";
+import { convertMdToHtml } from "$lib/services/models-ng/markdown-utils";
 import type { Lab, Lo } from "$lib/services/models-ng/lo-types";
 import type { Course } from "$lib/services/models-ng/lo-types";
-import { removeLeadingHashes } from "$lib/services/utils/lo";
+import { removeLeadingHashes } from "$lib/services/models-ng/lo-utils";
 
 function truncate(input: string) {
   if (input?.length > 16) {
@@ -36,7 +36,7 @@ export class LiveLab {
   }
 
   convertMdToHtml() {
-    const assetUrl = this.url.replace(`/lab/${this.course.id}`, this.course.url);
+    const assetUrl = this.url.replace(`/lab/${this.course.courseId}`, this.course.courseUrl);
     this.objectivesHtml = convertMdToHtml(this.lab.los[0].contentMd, assetUrl);
     this.chaptersHtml = new Map(
       this.lab.los.map((chapter) => [
