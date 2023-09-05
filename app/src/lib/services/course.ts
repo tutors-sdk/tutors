@@ -4,7 +4,6 @@ import { decorateCourseTree } from "./models/lo-tree";
 import { LiveLab } from "./models/live-lab";
 
 export const courseService = {
-  //course: Course,
   courses: new Map<string, Course>(),
   courseUrl: "",
 
