@@ -4,7 +4,7 @@
   import { CardDeck } from "$lib/ui/legacy";
   import PanelDeck from "./PanelDeck.svelte";
   import UnitDeck from "./UnitDeck.svelte";
-  import type { Composite } from "$lib/services/models-ng/lo-types";
+  import type { Composite } from "$lib/services/models/lo-types";
   import UnitCard from "./UnitCard.svelte";
 
   export let composite: Composite;

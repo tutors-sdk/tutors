@@ -2,11 +2,11 @@
   import { onMount } from "svelte";
   import type { ResultType } from "$lib/services/utils/search";
   import { isValid, searchHits } from "$lib/services/utils/search";
-  import type { Lo } from "$lib/services/models-ng/lo-types";
-  import type { Course } from "$lib/services/models-ng/lo-types";
+  import type { Lo } from "$lib/services/models/lo-types";
+  import type { Course } from "$lib/services/models/lo-types";
   import { currentLo } from "$lib/stores";
-  import { filterByType } from "$lib/services/models-ng/lo-utils";
-  import { convertMdToHtml } from "$lib/services/models-ng/markdown-utils";
+  import { filterByType } from "$lib/services/models/lo-utils";
+  import { convertMdToHtml } from "$lib/services/models/markdown-utils";
 
   export let data: PageData;
 

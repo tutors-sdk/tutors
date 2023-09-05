@@ -1,7 +1,7 @@
 import { courseUrl, currentCourse, currentLo, week } from "$lib/stores";
-import type { Lo, Course, Lab } from "$lib/services/models-ng/lo-types";
-import { decorateCourseTree } from "./models-ng/lo-tree";
-import { LiveLab } from "./models-ng/live-lab";
+import type { Lo, Course, Lab } from "$lib/services/models/lo-types";
+import { decorateCourseTree } from "./models/lo-tree";
+import { LiveLab } from "./models/live-lab";
 
 export const courseService = {
   //course: Course,

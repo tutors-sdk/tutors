@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { Lo } from "$lib/services/models-ng/lo-types";
-  import { convertNoteMdToHtml } from "$lib/services/models-ng/markdown-utils";
+  import type { Lo } from "$lib/services/models/lo-types";
+  import { convertNoteMdToHtml } from "$lib/services/models/markdown-utils";
   export let lo: Lo;
   convertNoteMdToHtml(lo);
 </script>

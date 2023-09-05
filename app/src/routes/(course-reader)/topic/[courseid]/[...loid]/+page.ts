@@ -1,7 +1,7 @@
 import type { PageLoad } from "./$types";
-import { courseService } from "$lib/services/course-ng";
+import { courseService } from "$lib/services/course";
 import { currentLo } from "$lib/stores";
-import type { Composite, Topic } from "$lib/services/models-ng/lo-types";
+import type { Composite, Topic } from "$lib/services/models/lo-types";
 
 export const ssr = false;
 

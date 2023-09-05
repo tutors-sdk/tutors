@@ -1,7 +1,7 @@
 import type { PageLoad } from "./$types";
-import { courseService } from "$lib/services/course-ng";
+import { courseService } from "$lib/services/course";
 import { fetchAllUsers, fetchUserById } from "$lib/services/utils/metrics";
-import type { Course } from "$lib/services/models-ng/lo-types";
+import type { Course } from "$lib/services/models/lo-types";
 import type { UserMetric } from "$lib/services/types/metrics";
 import { getKeys } from "$lib/environment";
 import { initFirebase } from "$lib/services/utils/firebase";

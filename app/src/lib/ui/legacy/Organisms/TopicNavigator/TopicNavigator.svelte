@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Topic } from "$lib/services/models-ng/lo-types";
+  import type { Topic } from "$lib/services/models/lo-types";
   import Icon from "../../Atoms/Icon/Icon.svelte";
 
   export let topic: Topic;

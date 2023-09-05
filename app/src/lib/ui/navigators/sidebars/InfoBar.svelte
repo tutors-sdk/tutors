@@ -1,7 +1,7 @@
 <script lang="ts">
   import { currentCourse } from "$lib/stores";
   import { getDrawerStore } from "@skeletonlabs/skeleton";
-  import { convertMdToHtml } from "$lib/services/models-ng/markdown-utils";
+  import { convertMdToHtml } from "$lib/services/models/markdown-utils";
   const courseInfo = convertMdToHtml($currentCourse.contentMd, "");
 
   const drawerStore = getDrawerStore();

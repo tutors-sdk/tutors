@@ -1,5 +1,5 @@
 import hljs from "highlight.js";
-import type { Lo } from "$lib/services/models-ng/lo-types";
+import type { Lo } from "$lib/services/models/lo-types";
 import { currentCourse } from "$lib/stores";
 import { get } from "svelte/store";
 import MarkdownIt from "markdown-it";

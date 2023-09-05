@@ -1,5 +1,5 @@
 import { updateLo } from "$lib/services/utils/course";
-import type { Course, Lo } from "$lib/services/models-ng/lo-types";
+import type { Course, Lo } from "$lib/services/models/lo-types";
 import type { TokenResponse } from "$lib/services/types/auth";
 import { currentCourse, currentLo, currentUser } from "$lib/stores";
 

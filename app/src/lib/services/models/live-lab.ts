@@ -1,7 +1,7 @@
-import { convertMdToHtml } from "$lib/services/models-ng/markdown-utils";
-import type { Lab, Lo } from "$lib/services/models-ng/lo-types";
-import type { Course } from "$lib/services/models-ng/lo-types";
-import { removeLeadingHashes } from "$lib/services/models-ng/lo-utils";
+import { convertMdToHtml } from "$lib/services/models/markdown-utils";
+import type { Lab, Lo } from "$lib/services/models/lo-types";
+import type { Course } from "$lib/services/models/lo-types";
+import { removeLeadingHashes } from "$lib/services/models/lo-utils";
 
 function truncate(input: string) {
   if (input?.length > 16) {

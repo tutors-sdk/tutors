@@ -1,4 +1,4 @@
-import type { Course } from "$lib/services/models-ng/lo-types";
+import type { Course } from "$lib/services/models/lo-types";
 import type { IconType } from "$lib/services/types/icon";
 import type { Lo } from "$lib/services/types/lo";
 import { writeObj } from "$lib/services/utils/firebase";

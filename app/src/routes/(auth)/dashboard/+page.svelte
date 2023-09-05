@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { courseService } from "$lib/services/course-ng";
-  import type { Course } from "$lib/services/models-ng/lo-types";
+  import { courseService } from "$lib/services/course";
+  import type { Course } from "$lib/services/models/lo-types";
   import { Accordion, AccordionItem, getToastStore, getModalStore, ProgressRadial, type ToastSettings, type ModalSettings } from "@skeletonlabs/skeleton";
 
   const toastStore = getToastStore();

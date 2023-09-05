@@ -1,6 +1,6 @@
 <script lang="ts">
   import { CardDeck, Image, NoteCard, TalkCard, VideoCard } from "$lib/ui/legacy";
-  import type { Unit } from "$lib/services/models-ng/lo-types";
+  import type { Unit } from "$lib/services/models/lo-types";
   import { layout, currentCourse } from "$lib/stores";
   import { onDestroy } from "svelte";
   import PanelDeck from "./PanelDeck.svelte";

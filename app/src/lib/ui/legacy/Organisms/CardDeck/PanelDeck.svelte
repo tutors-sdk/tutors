@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Panels } from "$lib/services/models-ng/lo-types";
+  import type { Panels } from "$lib/services/models/lo-types";
   import { TalkCard, NoteCard, VideoCard } from "$lib/ui/legacy";
   export let panels: Panels;
 </script>
