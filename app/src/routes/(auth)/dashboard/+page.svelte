@@ -1,7 +1,17 @@
 <script lang="ts">
-  import { courseService } from "$lib/services/course";
-  import type { Course } from "$lib/services/models/lo-types";
-  import { Accordion, AccordionItem, getToastStore, getModalStore, ProgressRadial, type ToastSettings, type ModalSettings } from "@skeletonlabs/skeleton";
+  import { courseService } from "$lib/services/course";\
+  import type { Course } from "$lib/services/models/lo-types";\
+  import type { Course } from "$lib/services/models/course";
+  import {
+    Accordion,
+    AccordionItem,
+    getToastStore,
+    getModalStore,
+    ProgressRadial,
+    type ToastSettings,
+    type ModalSettings
+  } from "@skeletonlabs/skeleton";
+  import { onMount } from "svelte";\
 
   const toastStore = getToastStore();
   const modalStore = getModalStore();
@@ -146,6 +156,13 @@
     };
     toastStore.trigger(t);
   }
+
+  onMount(async () => {
+    if (localStorage.isAuthenticating && localStorage.course_url) {
+      localStorage.removeItem("isAuthenticating");
+      window.location.href = "/course/" + localStorage.course_url;
+    }
+  });
 </script>
 
 <div class="bg-gradient-to-l from-primary-50 dark:from-primary-900 to-accent-50 dark:to-accent-900">

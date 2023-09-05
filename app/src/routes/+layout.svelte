@@ -181,9 +181,11 @@
     {/if}
   </svelte:fragment>
   <slot />
-  <svelte:fragment slot="pageFooter">
-    {#if $page.url.pathname !== "/" && $page.url.pathname !== "/auth" && $page.url.pathname !== "/dashboard"}
-      <div class="bg-surface-100-800-token border-t-[1px] border-surface-200-700-token bottom-0 mt-2">
+  <svelte:fragment slot="pageFooter">\
+    {#if $page.url.pathname !== "/"}
+      <div
+        class="bg-surface-100-800-token border-t-[1px] border-surface-200-700-token bottom-0 mt-2"
+      >
         <Footer />
       </div>
     {/if}
