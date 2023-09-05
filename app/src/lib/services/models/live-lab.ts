@@ -51,10 +51,11 @@ export class LiveLab {
   }
 
   refreshNav() {
-    const number = this.autoNumber ? this.lo.shortTitle + ": " : "";
+    //const number = this.autoNumber ? this.lab.shortTitle + ": " : "";
 
     this.navbarHtml = this.lab.los
       .map((chapter) => {
+        const number = this.autoNumber ? chapter.shortTitle + ": " : "";
         const active =
           encodeURI(chapter.shortTitle) === this.currentChapterShortTitle
             ? "font-bold bg-surface-200 dark:bg-surface-600 pl-4"
@@ -70,17 +71,21 @@ export class LiveLab {
       (chapter) => encodeURI(chapter.shortTitle) === this.currentChapterShortTitle
     );
     if (currentChapterIndex !== -1) {
+      let number = "";
       const prevChapter = this.lab.los[currentChapterIndex - 1];
       const prevTitle = prevChapter
         ? truncate(this.chaptersTitles.get(prevChapter.shortTitle))
         : "";
+      if (prevTitle) number = this.autoNumber ? prevChapter.shortTitle + ": " : "";
       this.horizontalNavbarHtml = prevChapter
         ? `<a class="btn btn-sm capitalize" href="${this.url}/${encodeURI(
             prevChapter.shortTitle
           )}"> <span aria-hidden="true">&larr;</span>&nbsp; ${number}${prevTitle} </a>`
         : "";
 
+      number = "";
       const nextChapter = this.lab.los[currentChapterIndex + 1];
+      if (nextChapter) number = this.autoNumber ? nextChapter.shortTitle + ": " : "";
       const nextTitle = nextChapter
         ? truncate(this.chaptersTitles.get(nextChapter.shortTitle))
         : "";
