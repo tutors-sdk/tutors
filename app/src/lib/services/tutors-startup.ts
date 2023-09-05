@@ -26,10 +26,6 @@ export async function initServices(session: Token) {
   }
 
   page.subscribe((path) => {
-    if (path.url.hash) {
-      const relPath = path.url.hash.slice(1);
-      goto(`/${relPath}`);
-    }
     transitionKey.set(path.url.pathname);
     if (
       path.url.pathname.includes("book") ||
