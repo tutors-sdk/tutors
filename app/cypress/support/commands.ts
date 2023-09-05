@@ -52,6 +52,7 @@ Cypress.Commands.add("clickCard", (lo: any) => {
         cy.get('li.crumb').eq(1).click({ force: true });
         break;
       default:
+        cy.log("other");
         cy.triggerCardAction(lo);
     }
     cy.wait(250);
@@ -86,13 +87,14 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
     cy.log(text);
     // Perform assertions that multiple elements exist
     cy.findAllByText(text, { timeout: 10000 }).should('exist').each(elements => {
+
       // Check if at least one element is found
       if (elements.length > 0) {
         elements.each((_: any, el: any) => {
           cy.log("element: ", el)
           // Element(s) found, perform actions on the first element
-          cy.get(el, { timeout: 10000 }).should('exist').click({ force: true })
-        });
+          cy.get(el).should('exist').click( {force : true} )
+      });
       } else {
         cy.log(`Element with text "${text}" not found.`);
       }
