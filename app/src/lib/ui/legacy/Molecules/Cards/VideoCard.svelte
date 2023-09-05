@@ -43,7 +43,6 @@
   }, 500);
 </script>
 
-<h1>Video</h1>
 {#if $currentCourse && !$currentCourse.areVideosHidden}
   <div class="mr-2 w-full p-8">
     {#if heanet}
