@@ -11,12 +11,9 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "build:app": "turbo run build --filter tutors-app",
-    "preview:app": "turbo run preview --filter tutors-app",
     "test": "turbo run test",
-    "test:app": "turbo run test --filter tutors-app",
     "dev": "turbo run dev --parallel",
-    "dev:app": "turbo run dev --filter tutors-app",
+    "app": "turbo run dev --filter tutors-app",
     "lint": "turbo run lint",
     "format": "prettier --write ."
   },
