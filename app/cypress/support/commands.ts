@@ -90,7 +90,7 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
 
       // Check if at least one element is found
       if ($elements.length > 0) {
-        $elements.each((i: any, el: any) => {
+        $elements.each((i: any, $el: any) => {
           cy.log("element: "+ $el)
           // Element(s) found, perform actions on the first element
           cy.get($el,{timeout:10000}).should('exist').click( {force : true} )
