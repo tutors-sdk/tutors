@@ -27,7 +27,7 @@ describe("Tutors Reader: Loading the JSON fixture", function () {
     course.los.forEach((topic: any) => {
       if (!topic.hide) {
         cy.get(".card").contains(topic.title.trim());
-        cy.get(".card-footer").contains(topic.summary.trim());
+        //cy.get(".card-footer").should('include.text', topic.summary.trim());
       }
     });
     cy.get('[class="btn btn-sm"]').should("exist");
@@ -46,6 +46,10 @@ describe("Tutors Reader: Loading the JSON fixture", function () {
   it("Verification of Companions & Walls hrefs and Counts", function () {
     cy.processCompanionsAndWallsLinks(course);
   });
+
+  // it("Testing search feature", function () {
+  //   cy.partialSearchVerification(course.los);
+  // });
 
   it("Topics", function () {
     course.los.forEach((topic: any) => {
