@@ -1,6 +1,6 @@
 import { isCompositeLo, type Course, type IconType, type Lo, type Panels, type Composite, type LoType, type Lab } from "./lo-types";
 import { convertMdToHtml } from "./markdown-utils";;
-import { allVideoLos, createCompanions, createToc, createWallBar, filterByType, fixRoutePaths, flattenLos, injectCourseUrl, loadPropertyFlags } from "./lo-utils";
+import { allVideoLos, createCompanions, createToc, createWallBar, filterByType, fixRoutePaths, flattenLos, initCalendar, injectCourseUrl, loadPropertyFlags } from "./lo-utils";
 
 let rootCourse: Course;
 
@@ -24,6 +24,7 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   createWallBar(course);
   createToc (course);
   loadPropertyFlags(course);
+  initCalendar(course);
 }
 
 export function decorateLoTree(lo: Lo) {

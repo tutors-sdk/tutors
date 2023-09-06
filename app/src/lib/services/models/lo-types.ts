@@ -89,7 +89,8 @@ export type Lo = {
   parentTopic?: Topic;
   parentCourse?: Course; // parent course
   breadCrumbs?: Lo[]; // all los from course to this lo
-  currentWeek?: WeekType
+  currentWeek?: WeekType;
+  calendar?: Calendar;
 };
 
 export type LabStep = {

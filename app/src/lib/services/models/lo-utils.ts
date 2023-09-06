@@ -1,4 +1,4 @@
-import type { Lo, Composite, Talk, LoType, Course, Topic, IconNav } from "./lo-types";
+import type { Lo, Composite, Talk, LoType, Course, Topic, IconNav, Calendar } from "./lo-types";
 
 export function filterByType(list: Lo[], type: LoType): Lo[] {
   const los = flattenLos(list);
@@ -152,4 +152,32 @@ export function loadPropertyFlags(course:Course) {
   course.hasEnrollment = false;
   course.hasWhiteList = false;
   course.ignorePin = course.properties?.ignorepin?.toString();
+}
+
+export function initCalendar(course:Course) {
+  const calendar: Calendar = {
+    title: "unknown",
+    weeks: []
+  };
+  try {
+    if (course.calendar) {
+      const calendarObj = course.calendar;
+      calendar.title = calendarObj.title;
+      calendar.weeks = calendarObj.weeks.map((weekObj) => ({
+        date: Object.keys(weekObj)[0],
+        title: weekObj[Object.keys(weekObj)[0]].title,
+        type: weekObj[Object.keys(weekObj)[0]].type,
+        dateObj: new Date(Object.keys(weekObj)[0])
+      }));
+
+      const today = Date.now();
+      course.currentWeek = calendar.weeks.find(
+        (week, i) =>
+          today > Date.parse(week.date) && today <= Date.parse(calendar.weeks[i + 1]?.date)
+      );
+      course.calendar.weeks = calendar.weeks;
+    }
+  } catch (e) {
+    console.log("Error loading calendar");
+  }
 }
