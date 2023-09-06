@@ -57,6 +57,10 @@ jobs:
           cache: "npm"
       - name: Install Dependencies
         run: npm install
+        working-directory: ./cli/tutors-publish-html
+      - name: Build tutors-gen-lib
+        run: npm run build
+        working-directory: ./cli/tutors-gen-lib
       - name: Build tutors-publish-html
         run: npm run build
         working-directory: ./cli/tutors-publish-html
