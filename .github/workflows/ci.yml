@@ -38,6 +38,7 @@ jobs:
       - name: Start SvelteKit Server
         run: npm run preview &
         working-directory: ./app
+        background: true
 
       - name: Run cypress tests
         uses: cypress-io/github-action@v6
