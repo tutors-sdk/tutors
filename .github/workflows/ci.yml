@@ -68,8 +68,13 @@ jobs:
         run: node ../../cli/tutors-publish-html/src/tutors-publish-html.js
         working-directory: ./doc/reference-course
       - name: Run cypress tests
-        run: npm install -g cypress cy-verify-downloads; npx cypress run --record --key ${{ secrets.HTML_CYPRESS_RECORD_KEY }} --browser chrome
-        working-directory: ./doc/reference-course
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          record: true
+          project: ./doc/reference-course
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.HTML_CYPRESS_RECORD_KEY }}
 
   publish:
     name: Build tutors-publish
