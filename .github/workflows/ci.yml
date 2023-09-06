@@ -36,10 +36,10 @@ jobs:
         with:
           browser: chrome
           record: true
-          start: npm run dev:app
+          start: npm run dev
           wait-on: http://localhost:3000
-          command: npm run test:app
-          project: ./app
+          command: npm run test
+          working-directory: app
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
