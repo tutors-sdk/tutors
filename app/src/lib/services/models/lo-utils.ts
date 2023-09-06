@@ -151,4 +151,5 @@ export function loadPropertyFlags(course:Course) {
   course.authLevel = course.properties.auth as unknown as number;
   course.hasEnrollment = false;
   course.hasWhiteList = false;
+  course.ignorePin = course.properties?.ignorepin?.toString();
 }

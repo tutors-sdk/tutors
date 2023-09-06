@@ -60,8 +60,8 @@ export type Panels = {
 };
 
 export type Units = {
-  units: Lo[];
-  sides: Lo[];
+  units: Unit[];
+  sides: Unit[];
   standardLos: Lo[];
 };
 
@@ -177,6 +177,7 @@ export type Course = Composite & {
   areLabStepsAutoNumbered: boolean;
   hasEnrollment: boolean;
   hasWhiteList: boolean;
+  ignorePin: string;
   companions: IconNavBar;
   wallBar: IconNavBar;
 };
