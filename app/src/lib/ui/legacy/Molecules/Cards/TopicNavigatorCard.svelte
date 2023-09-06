@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { Topic } from "$lib/services/models/topic";
-  import type { Lo } from "$lib/services/types/lo";
+  import type { Topic } from "$lib/services/models/lo-types";
+  import type { Lo } from "$lib/services/models/lo-types";
   import { Image, TopicNavigator } from "$lib/ui/legacy";
   import { currentLo, layout } from "$lib/stores";
   import { onDestroy } from "svelte";
@@ -29,7 +29,7 @@
 </script>
 
 <div class="card {cardWidths} px-4 py-2">
-  <h3 class="px-4 py-2 text-center {headingText}">{topic?.lo?.title}</h3>
+  <h3 class="px-4 py-2 text-center {headingText}">{topic?.title}</h3>
   <div class="card-body">
     <figure class="flex justify-center p-2">
       <Image {lo} />
