@@ -15,7 +15,7 @@ const config = {
   ],
 
   kit: {
-    adapter: process.env.ADAPTER === "node" ? adapterNode() : adapterNetlify()
+    adapter: PROCESS.ENV.ADAPTER === "node" ? adapterNode() : adapterNetlify()
   }
 };
 
