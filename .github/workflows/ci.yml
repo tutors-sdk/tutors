@@ -44,7 +44,7 @@ jobs:
         working-directory: ./app
 
   publish-html:
-    name: Build & test tutors-publish-html
+    name: Build & Test tutors-publish-html
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
