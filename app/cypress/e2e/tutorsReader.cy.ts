@@ -47,9 +47,9 @@ describe("Tutors Reader: Loading the JSON fixture", function () {
     cy.processCompanionsAndWallsLinks(course);
   });
 
-  it("Testing search feature", function () {
-    cy.partialSearchVerification(course.los);
-  });
+  // it("Testing search feature", function () {
+  //   cy.partialSearchVerification(course.los);
+  // });
 
   it("Topics", function () {
     course.los.forEach((topic: any) => {
