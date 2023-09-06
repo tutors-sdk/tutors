@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: Test App
+    name: Build & Test App
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
@@ -31,19 +31,13 @@ jobs:
         run: npm install
         working-directory: ./app
 
-      - name: Run dev server
-        run: npm run dev &
+      - name: Build app
+        run: npm run build
         working-directory: ./app
 
-      - name: Build, Serve & run cypress tests
-        uses: cypress-io/github-action@v6
-        with:
-          browser: chrome
-          record: true
-          wait-on: http://localhost:3000
-          command: npm run test:app
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      - name: Run preview & cypress tests
+        run: npm run preview & npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome --auto-cancel-after-failures false
+        working-directory: ./app
 
   testHTMLGenerator:
     name: Test HTML Generator
