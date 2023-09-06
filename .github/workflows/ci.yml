@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    name: Build & Test App
+    name: Test App
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
@@ -36,8 +36,8 @@ jobs:
         with:
           browser: chrome
           record: true
-          build: npm run build:app
-          start: npm run preview:app
+          start: npm run dev:app
+          wait-on: http://localhost:3000
           command: npm run test:app
           project: ./app
         env:

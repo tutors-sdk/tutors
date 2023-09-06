@@ -16,7 +16,7 @@
     "test": "turbo run test",
     "test:app": "turbo run test --filter tutors-app",
     "dev": "turbo run dev --parallel",
-    "app": "turbo run dev --filter tutors-app",
+    "dev:app": "turbo run dev --filter tutors-app",
     "lint": "turbo run lint",
     "format": "prettier --write ."
   },
