@@ -25,7 +25,7 @@
     };
   }
 
-  if (lo.icon) {
+  if (lo?.icon) {
     if (!isColour(lo.icon.color)) {
       colourPrefix = "#";
     }
@@ -49,8 +49,8 @@
   onDestroy(unsubscribe);
 </script>
 
-{#if lo.icon}
-  <Iconify icon={lo.icon.type} color="{colourPrefix}{lo.icon.color}" height={iconHeight} />
+{#if lo?.icon}
+  <Iconify icon={lo?.icon.type} color="{colourPrefix}{lo.icon.color}" height={iconHeight} />
 {:else}
-  <Avatar src={lo.img} alt={lo.title} width={imageHeight} rounded="rounded-xl" background="none" />
+  <Avatar src={lo?.img} alt={lo?.title} width={imageHeight} rounded="rounded-xl" background="none" />
 {/if}

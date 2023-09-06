@@ -1,32 +1,10 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { currentCourse } from "$lib/stores";
   import { CardDeck } from "$lib/ui/legacy";
   import PanelDeck from "./PanelDeck.svelte";
   import UnitDeck from "./UnitDeck.svelte";
   import type { Composite } from "$lib/services/models/lo-types";
-  import UnitCard from "./UnitCard.svelte";
 
   export let composite: Composite;
-
-  let pinBuffer = "";
-  let ignorePin = "";
-
-  function keypressInput(e: { key: string }) {
-    pinBuffer = pinBuffer.concat(e.key);
-    if (pinBuffer === ignorePin) {
-      //$currentCourse.showAllLos();
-      //$currentCourse.standardLos = $currentCourse.allLos;
-      //standardDeck = !standardDeck;
-    }
-  }
-
-  onMount(async () => {
-    // if ($currentCourse.properties.ignorepin) {
-    //   ignorePin = $currentCourse.properties.ignorepin.toString();
-    //   window.addEventListener("keydown", keypressInput);
-    // }
-  });
 </script>
 
 {#if composite.units?.sides?.length > 0}

@@ -1,10 +1,8 @@
 <script lang="ts">
   import { currentCourse, currentLo } from "$lib/stores";
   import { Icon } from "$lib/ui/legacy";
-  import type { Lo } from "$lib/services/models/lo-types";
 
   let truncated = [true, true, true, true, true, true, true];
-
   let unitId = "";
 
   function getUnitId(type: string, id: string) {

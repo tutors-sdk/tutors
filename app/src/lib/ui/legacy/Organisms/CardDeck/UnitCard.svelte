@@ -22,7 +22,7 @@
     <h2 id={unit.id} class="p-2 {text}">
       {unit.title}
     </h2>
-    <Image lo={$currentCourse} miniImage={true} />
+    <Image lo={unit.parentTopic} miniImage={true} />
   </div>
   <PanelDeck panels={unit.panels} />
   <div class="flex flex-wrap justify-center">
