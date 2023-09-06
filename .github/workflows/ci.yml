@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  build:
+  app:
     name: Build & Test App
     timeout-minutes: 15
     runs-on: ubuntu-latest
@@ -43,8 +43,8 @@ jobs:
         run: npm run preview & npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome
         working-directory: ./app
 
-  testHTMLGenerator:
-    name: Test HTML Generator
+  publish-html:
+    name: Build & test tutors-publish-html
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
@@ -57,8 +57,15 @@ jobs:
           cache: "npm"
       - name: Install Dependencies
         run: npm install
-      - name: publish-html
-        run: cd doc/reference-course; npm i -g tutors-gen-lib; npx -y ts-node ../../cli/tutors-publish-html/src/tutors-publish-html.ts
+        working-directory: ./cli/tutors-publish-html
+      - name: Build tutors-publish-html
+        run: npm run build
+        working-directory: ./cli/tutors-publish-html
+      - name: Run tutors-publish-html on example course
+        run: cd ./doc/reference-course; node ../../cli/tutors-publish-html/src/tutors-publish-html.js
+      - name: Run cypress tests
+        run: npx cypress run --record --key ${{ secrets.HTML_CYPRESS_RECORD_KEY }} --browser chrome
+        working-directory: ./doc/reference-course
       - name: Run cypress tests
         uses: cypress-io/github-action@v5
         with:
@@ -67,3 +74,22 @@ jobs:
           project: ./doc/reference-course
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.HTML_CYPRESS_RECORD_KEY }}
+
+  publish:
+    name: Build tutors-publish
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./cli/tutors-publish
+      - name: Build tutors-publish
+        run: npm run build
+        working-directory: ./cli/tutors-publish
