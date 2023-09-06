@@ -156,8 +156,8 @@
               userId={data.session.user.id}
               onlineStatus={isNotCourseRoute ? undefined : status}
               usersOnline={isNotCourseRoute ? undefined : $studentsOnline.toString()}
-              currentCourseId={$currentCourse?.id}
-              currentCourseUrl={$currentCourse?.url}
+              currentCourseId={$currentCourse?.courseId}
+              currentCourseUrl={$currentCourse?.courseUrl}
               {handleClick}
               {handleSignOut}
               {onlineDrawerOpen}
@@ -181,11 +181,9 @@
     {/if}
   </svelte:fragment>
   <slot />
-  <svelte:fragment slot="pageFooter">\
+  <svelte:fragment slot="pageFooter">
     {#if $page.url.pathname !== "/"}
-      <div
-        class="bg-surface-100-800-token border-t-[1px] border-surface-200-700-token bottom-0 mt-2"
-      >
+      <div class="bg-surface-100-800-token border-t-[1px] border-surface-200-700-token bottom-0 mt-2">
         <Footer />
       </div>
     {/if}
