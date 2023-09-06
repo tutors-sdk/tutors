@@ -36,8 +36,8 @@ jobs:
         with:
           browser: chrome
           record: true
-          build: npm run build
-          start: npm run preview
+          build: npm run build:app
+          start: npm run preview:app
           wait-on: "http://localhost:3000"
           command: npm run test
           project: ./app

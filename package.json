@@ -12,6 +12,7 @@
   "scripts": {
     "build": "turbo run build",
     "build:app": "turbo run build --filter tutors-app",
+    "preview:app": "turbo run preview --filter tutors-app",
     "test": "turbo run test",
     "dev": "turbo run dev --parallel",
     "app": "turbo run dev --filter tutors-app",
