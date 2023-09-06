@@ -36,7 +36,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css" />
 </svelte:head>
 
-<div in:fade={{ duration: 500 }} class="bg-base-200 mt-3 ">
+<div in:fade={{ duration: 500 }} class="bg-base-200 mt-3">
   <TabGroup selected={storeTab}>
     <Tab bind:group={tabSet} name="Labs" value={0}>Labs</Tab>
     <Tab bind:group={tabSet} name="LabsChart" value={1}>LabsChart</Tab>
@@ -44,7 +44,7 @@
 
     {#if instructorMode}
       <Tab bind:group={tabSet} name="LabsAllStudent" value={3}>Labs All Student</Tab>
-      {#if data.course.hasEnrollment()}
+      {#if data.course?.hasEnrollment}
         <Tab bind:group={tabSet} name="LabsAllStudent" value={4}>Labs All Enrolled Student</Tab>
       {/if}
       <Tab bind:group={tabSet} name="allLabsChart" value={5}>Labs All Students - Chart</Tab>

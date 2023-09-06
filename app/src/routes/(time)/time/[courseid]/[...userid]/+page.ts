@@ -23,24 +23,24 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
     const users: Map<string, UserMetric> = await fetchAllUsers(params.courseid, allLabs);
     const enrolledUsers: Map<string, UserMetric> = new Map<string, UserMetric>();
     if (course.hasEnrollment) {
-      const students = course.getEnrolledStudentIds();
-      if (isStringArray(students)) {
-        for (const githubId of users.keys()) {
-          if (students.includes(githubId)) {
-            const enrolledUser = users.get(githubId);
-            if (enrolledUser) {
-              enrolledUsers.set(githubId, enrolledUser);
-            }
-          }
-        }
-      }
+      // const students = course.getEnrolledStudentIds();
+      // if (isStringArray(students)) {
+      //   for (const githubId of users.keys()) {
+      //     if (students.includes(githubId)) {
+      //       const enrolledUser = users.get(githubId);
+      //       if (enrolledUser) {
+      //         enrolledUsers.set(githubId, enrolledUser);
+      //       }
+      //     }
+      //   }
+      // }
     }
     return {
       user: user,
       course: course,
       allLabs: course.wallMap?.get("lab"),
       calendar: course.calendar,
-      ignorePin: course.lo.properties?.ignorepin?.toString(),
+      ignorePin: course.ignorePin,
       users: users,
       enrolledUsers
     };
