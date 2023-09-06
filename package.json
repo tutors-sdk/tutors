@@ -10,7 +10,7 @@
     "cli/*"
   ],
   "scripts": {
-    "build": "turbo run build --filter tutors-app --filter tutors-publish-html --filter tutors-publish --parallel",
+    "build": "turbo run build",
     "test": "turbo run test",
     "dev": "turbo run dev --parallel",
     "app": "turbo run dev --filter tutors-app",
