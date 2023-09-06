@@ -62,7 +62,7 @@ jobs:
         run: npm run build
         working-directory: ./cli/tutors-publish-html
       - name: Run tutors-publish-html on example course
-        run: node ../cli/tutors-publish-html/src/tutors-publish-html.js
+        run: node ../../cli/tutors-publish-html/src/tutors-publish-html.js
         working-directory: ./doc/reference-course
       - name: Run cypress tests
         run: npx cypress run --record --key ${{ secrets.HTML_CYPRESS_RECORD_KEY }} --browser chrome
