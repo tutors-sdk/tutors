@@ -33,24 +33,27 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Upload the app build output
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-output
+          path: |
+            app/build
+          retention-days: 1
+
   testApp:
     name: Test App
+    needs: [build]
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Install Dependencies
-        run: npm install
-        working-directory: ./app
-
-      - name: Create env
-        run: cp .env.example .env
-        working-directory: ./app
+      - name: Download the build output
+        uses: actions/download-artifact@v2
+        with:
+          name: build-output
 
       - name: Start SvelteKit Server
-        run: npm run dev &
+        run: npm run preview &
         working-directory: ./app
 
       - name: Run cypress tests
@@ -67,6 +70,7 @@ jobs:
 
   testHTMLGenerator:
     name: Test HTML Generator
+    needs: [build, testApp]
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
