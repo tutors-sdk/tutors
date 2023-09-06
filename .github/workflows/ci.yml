@@ -10,8 +10,8 @@ on:
       - main
 
 jobs:
-  build:
-    name: Build
+  app:
+    name: Build & Test App
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
@@ -29,58 +29,59 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-
-      - name: Build
-        run: npm run build
-
-  testApp:
-    name: Test App
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Install Dependencies
-        run: npm install
         working-directory: ./app
 
-      - name: Create env
+      - name: Create app env
         run: cp .env.example .env
         working-directory: ./app
 
-      - name: Start SvelteKit Server
-        run: npm run dev &
+      - name: Build app
+        run: npm run build
         working-directory: ./app
 
-      - name: Run cypress tests
-        uses: cypress-io/github-action@v5
-        with:
-          browser: chrome
-          record: true
-          project: ./app
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      - name: Run preview & cypress tests
+        run: npm run preview & npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome
+        working-directory: ./app
 
-      - name: Stop SvelteKit Server
-        run: pkill -f "sirv" || true
-
-  testHTMLGenerator:
-    name: Test HTML Generator
+  publish-html:
+    name: Build & test tutors-publish-html
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@v3
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
       - name: Install Dependencies
         run: npm install
-      - name: publish-html
-        run: cd doc/reference-course; npm i -g tutors-gen-lib; npx -y ts-node ../../cli/tutors-publish-html/src/tutors-publish-html.ts
+      - name: Build tutors-publish-html
+        run: npm run build
+        working-directory: ./cli/tutors-publish-html
+      - name: Run tutors-publish-html on example course
+        run: node ../../cli/tutors-publish-html/src/tutors-publish-html.js
+        working-directory: ./doc/reference-course
       - name: Run cypress tests
-        uses: cypress-io/github-action@v5
+        run: npx cypress run --record --key ${{ secrets.HTML_CYPRESS_RECORD_KEY }} --browser chrome
+        working-directory: ./doc/reference-course
+
+  publish:
+    name: Build tutors-publish
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
         with:
-          browser: chrome
-          record: true
-          project: ./doc/reference-course
-        env:
-          CYPRESS_RECORD_KEY: ${{ secrets.HTML_CYPRESS_RECORD_KEY }}
+          node-version: 18
+          cache: "npm"
+      - name: Install Dependencies
+        run: npm install
+        working-directory: ./cli/tutors-publish
+      - name: Build tutors-publish
+        run: npm run build
+        working-directory: ./cli/tutors-publish

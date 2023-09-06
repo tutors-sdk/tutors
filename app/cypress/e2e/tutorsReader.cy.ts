@@ -11,8 +11,6 @@ describe("Tutors Reader: Loading the JSON fixture", function () {
   });
 
   beforeEach("Check: Define the dimensions of the screen being used", function () {
-    //This defines the dimensions of the screen
-    cy.viewport(1440, 1440);
     cy.visit(`${Cypress.config().baseUrl}/course/tutors-cypress-testing`);
   });
 
@@ -21,7 +19,6 @@ describe("Tutors Reader: Loading the JSON fixture", function () {
    * cards. You would expect all to match as it is coming from the JSON fixture
    */
   it("Course Reference page", function () {
-    cy.wait(30000);
     cy.get(".app-bar", { timeout: 30000 }).contains(course.title.trim());
     cy.get(".z-10").contains(course.title.trim());
     course.los.forEach((topic: any) => {

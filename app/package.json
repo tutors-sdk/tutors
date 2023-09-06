@@ -5,7 +5,7 @@
     "dev": "vite dev --port 3000 --open",
     "build": "vite build",
     "package": "vite package",
-    "preview": "vite preview",
+    "preview": "vite preview --port 3000 --open",
     "prepare": "svelte-kit sync",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
