@@ -31,15 +31,18 @@ jobs:
         run: npm install
         working-directory: ./app
 
+      - name: Run dev server
+        run: npm run dev &
+        working-directory: ./app
+
       - name: Build, Serve & run cypress tests
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
           record: true
-          start: npm run dev
           wait-on: http://localhost:3000
           command: npm run test
-          working-directory: app
+          working-directory: ./app
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
