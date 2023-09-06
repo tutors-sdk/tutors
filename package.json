@@ -24,5 +24,10 @@
     "prettier-plugin-svelte": "3.0.3",
     "turbo": "1.10.13"
   },
-  "packageManager": "npm@8.19.2"
+  "packageManager": "npm@8.19.2",
+  "dependencies": {
+    "cy-verify-downloads": "0.1.16",
+    "cypress": "13.1.0",
+    "cypress-fail-fast": "7.0.3"
+  }
 }
