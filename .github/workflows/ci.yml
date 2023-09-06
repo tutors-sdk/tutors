@@ -48,9 +48,6 @@ jobs:
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
-      - name: Stop SvelteKit Server
-        run: pkill -f "sirv" || true
-
   testHTMLGenerator:
     name: Test HTML Generator
     timeout-minutes: 15
