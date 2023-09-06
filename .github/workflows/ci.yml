@@ -11,15 +11,13 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Build Packages
     timeout-minutes: 15
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out code
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
@@ -30,31 +28,42 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build
-        run: npm run build
-
-  testApp:
-    name: Test App
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-
-      - name: Install Dependencies
-        run: npm install
-        working-directory: ./app
-
-      - name: Create env
+      - name: Create app env
         run: cp .env.example .env
         working-directory: ./app
 
+      - name: Set app adapter to node
+        run: echo 'ADAPTER = node' >> .env
+        working-directory: ./app
+
+      - name: Build all packages
+        run: npm run build
+
+      - name: Upload the app build output
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-output
+          path: |
+            app/build
+          retention-days: 1
+
+  testApp:
+    name: Test App
+    needs: [build]
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download the build output
+        uses: actions/download-artifact@v2
+        with:
+          name: build-output
+
       - name: Start SvelteKit Server
-        run: npm run dev &
+        run: node build &
         working-directory: ./app
 
       - name: Run cypress tests
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           browser: chrome
           record: true

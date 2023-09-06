@@ -1,5 +1,8 @@
-import adapter from "@sveltejs/adapter-netlify";
+import adapterNetlify from "@sveltejs/adapter-netlify";
+import adapterNode from "@sveltejs/adapter-node";
 import preprocess from "svelte-preprocess";
+import dotenv from "dotenv";
+dotenv.config();
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -12,7 +15,7 @@ const config = {
   ],
 
   kit: {
-    adapter: adapter()
+    adapter: PROCESS.ENV.ADAPTER === "node" ? adapterNode() : adapterNetlify()
   }
 };
 
