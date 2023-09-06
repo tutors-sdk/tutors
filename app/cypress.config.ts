@@ -46,5 +46,7 @@ export default defineConfig({
       framework: "svelte",
       bundler: "vite"
     }
-  }
+  },
+  viewportHeight: 1080,
+  viewportWidth: 1920
 });
