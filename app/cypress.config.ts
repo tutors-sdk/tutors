@@ -40,5 +40,11 @@ export default defineConfig({
     baseUrl: "http://localhost:3000",
     // baseUrl:"https://tutors.dev/course/tutors-cypress-testing",
     specPattern: "cypress/e2e/**/**.cy.ts"
+  },
+  component: {
+    devServer: {
+      framework: "svelte",
+      bundler: "vite"
+    }
   }
 });
