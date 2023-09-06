@@ -44,7 +44,7 @@ jobs:
         working-directory: ./app
 
   publish-html:
-    name: Build & test tutors-publish-html
+    name: Build & Test tutors-publish-html
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
@@ -57,6 +57,10 @@ jobs:
           cache: "npm"
       - name: Install Dependencies
         run: npm install
+        working-directory: ./cli/tutors-publish-html
+      - name: Build tutors-gen-lib
+        run: npm run build
+        working-directory: ./cli/tutors-gen-lib
       - name: Build tutors-publish-html
         run: npm run build
         working-directory: ./cli/tutors-publish-html
@@ -64,8 +68,13 @@ jobs:
         run: node ../../cli/tutors-publish-html/src/tutors-publish-html.js
         working-directory: ./doc/reference-course
       - name: Run cypress tests
-        run: npx cypress run --record --key ${{ secrets.HTML_CYPRESS_RECORD_KEY }} --browser chrome
-        working-directory: ./doc/reference-course
+        uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+          record: true
+          project: ./doc/reference-course
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.HTML_CYPRESS_RECORD_KEY }}
 
   publish:
     name: Build tutors-publish
