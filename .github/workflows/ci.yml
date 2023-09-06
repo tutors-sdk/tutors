@@ -31,20 +31,15 @@ jobs:
         run: npm install
         working-directory: ./app
 
-      - name: Build
-        run: npm run build
-        working-directory: ./app
-
-      - name: Start SvelteKit Server
-        run: npm run preview &
-        working-directory: ./app
-        background: true
-
-      - name: Run cypress tests
+      - name: Buils, Serve & run cypress tests
         uses: cypress-io/github-action@v6
         with:
           browser: chrome
           record: true
+          build: npm run build
+          start: npm run preview
+          wait-on: "http://localhost:3000"
+          command: npm run test
           project: ./app
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
