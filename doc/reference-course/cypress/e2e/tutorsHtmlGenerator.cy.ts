@@ -11,7 +11,6 @@ describe("Tutors HTML Generator: Loading the JSON fixture", function () {
   });
 
   beforeEach("Check: Define the dimensions of the screen being used", function () {
-    cy.viewport(1440, 1440);
     cy.visit("../../html/index.html");
   });
 
@@ -57,7 +56,7 @@ describe("Tutors HTML Generator: Loading the JSON fixture", function () {
           cy.clickStaticCard(lo, topic.id.trim());
           cy.log(lo);
           cy.wait(500);
-          const los = typeof lo.los === 'object' ? lo.los : "";
+          const los = typeof lo.los === "object" ? lo.los : "";
           if (los !== "") {
             lo.los.forEach((l: any) => {
               cy.clickStaticCard(l, topic.id.trim());
@@ -72,5 +71,4 @@ describe("Tutors HTML Generator: Loading the JSON fixture", function () {
   it("Verify the folder downloaded", () => {
     cy.verifyDownload("archive.zip", { timeout: 2500 });
   });
-
 });

@@ -39,6 +39,9 @@ export default defineConfig({
     trashAssetsBeforeRuns: true,
     //this url is the url for the static html generator
     //baseUrl: null,
-    specPattern: "cypress/e2e/**/**.cy.ts"
+    specPattern: "cypress/e2e/**/**.cy.ts",
+    viewportHeight: 1080,
+    viewportWidth: 1920,
+    video: true
   }
 });

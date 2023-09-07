@@ -11,17 +11,18 @@
   export let data: PageData;
 
   let course: Course;
-  let labs: Lo[] = [];
+  let searchLos: Lo[] = [];
   let searchTerm = "";
   let searchResults: ResultType[] = [];
 
   onMount(async () => {
     course = data.course;
     currentLo.set(data.course);
-    //labs = allLos("lab", data.course.lo.los);
-    const allLabs = filterByType(data.course.los, "lab");
-    const allSteps = filterByType(data.course.los, "step");
-    labs = allLabs.concat(allSteps);
+    const labs = filterByType(data.course.los, "lab");
+    const steps = filterByType(data.course.los, "step");
+    const notes = filterByType(data.course.los, "note");
+    const panelNotes = filterByType(data.course.los, "panelnote");
+    searchLos.push(...labs, ...steps, ...notes, ...panelNotes);
   });
 
   function transformResults(results: ResultType[]) {
@@ -41,7 +42,7 @@
 
   $: {
     if (isValid(searchTerm)) {
-      searchResults = searchHits(labs, searchTerm);
+      searchResults = searchHits(searchLos, searchTerm);
       transformResults(searchResults);
     }
   }
