@@ -85,19 +85,10 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
   } else {
     const text = lo.title.trim();
     cy.log(text);
-    // Perform assertions that multiple elements exist
-    cy.findAllByText(text, { timeout: 10000 }).should('exist').each(elements => {
-
-      // Check if at least one element is found
-      if (elements.length > 0) {
-        elements.each((i: any, el: any) => {
-          cy.log("element: ", el)
-          // Element(s) found, perform actions on the first element
-          cy.get(elements[i]).should('exist').click( {force : true} )
-      });
-      } else {
-        cy.log(`Element with text "${text}" not found.`);
-      }
+    cy.findByText(text).then(($element) => {
+      // Perform actions on the found element if needed
+      cy.wrap($element).should('exist');
+      cy.wrap($element).click( {force : true} )
     });
     cy.wait(500);
   }
