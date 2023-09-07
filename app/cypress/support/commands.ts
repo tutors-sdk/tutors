@@ -141,7 +141,7 @@ Cypress.Commands.add("partialSearchVerification", (searchWord: string) => {
   cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
   cy.get('a.btn.btn-sm', { timeout: 10000 }).eq(0).click({ force: true });
   cy.get('input#search', { timeout: 10000 }).eq(0).type("lab");
-  cy.get('.s-1juWPqSteKNM a', { timeout: 10000 })
+  cy.get('div.s-1juWPqSteKNM a', { timeout: 10000 })
     .each((link) => {
       //const links = els.toArray();
         let href = link.attr('href');
