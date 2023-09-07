@@ -1,5 +1,5 @@
-import { isCompositeLo, type Course, type IconType, type Lo, type Panels, type Composite, type LoType, type Lab } from "./lo-types";
-import { convertMdToHtml } from "./markdown-utils";;
+import { isCompositeLo, type Course, type IconType, type Lo, type Panels, type Composite, type LoType, type Lab, type Units, type Unit, type Side } from "./lo-types";
+import { convertMdToHtml } from "./markdown-utils";
 import { allVideoLos, createCompanions, createToc, createWallBar, filterByType, fixRoutePaths, flattenLos, initCalendar, injectCourseUrl, loadPropertyFlags } from "./lo-utils";
 
 let rootCourse: Course;
@@ -12,17 +12,17 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   course.wallMap = new Map<string, Lo[]>();
   ["talk", "note", "lab", "web", "archive", "github"].forEach((type) => addWall(rootCourse, type as LoType));
   decorateLoTree(course);
-  course.route = `/course/${courseId}`
+  course.route = `/course/${courseId}`;
   injectCourseUrl(course, courseId, courseUrl);
   const los = flattenLos(course.los);
-  los.forEach(lo=> fixRoutePaths(lo));
+  los.forEach((lo) => fixRoutePaths(lo));
   course.loIndex = new Map<string, Lo>();
   los.forEach((lo) => course.loIndex.set(lo.route, lo));
   const videoLos = allVideoLos(los);
   videoLos.forEach((lo) => course.loIndex.set(lo.video, lo));
   createCompanions(course);
   createWallBar(course);
-  createToc (course);
+  createToc(course);
   loadPropertyFlags(course);
   initCalendar(course);
 }
@@ -60,25 +60,21 @@ export function decorateLoTree(lo: Lo) {
   }
 }
 
-export function isPortfolio(course: Course) {
-  return course.properties?.portfolio;
-}
-
 function getPanels(los: Lo[]): Panels {
   return {
     panelVideos: los?.filter((lo) => lo.type === "panelvideo"),
     panelTalks: los?.filter((lo) => lo.type === "paneltalk"),
-    panelNotes: los?.filter((lo) => lo.type === "panelnote"),
+    panelNotes: los?.filter((lo) => lo.type === "panelnote")
   };
 }
 
-function getUnits(los: Lo[]) {
+function getUnits(los: Lo[]): Units {
   let standardLos = los?.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "panelnote" && lo.type !== "side");
   standardLos = sortLos(standardLos);
   return {
-    units: los?.filter((lo) => lo.type === "unit"),
-    sides: los?.filter((lo) => lo.type === "side"),
-    standardLos: standardLos,
+    units: los?.filter((lo) => lo.type === "unit") as Unit[],
+    sides: los?.filter((lo) => lo.type === "side") as Side[],
+    standardLos: standardLos
   };
 }
 
@@ -95,7 +91,7 @@ function getIcon(lo: Lo): IconType | undefined {
       // @ts-ignore
       type: lo.frontMatter.icon["type"],
       // @ts-ignore
-      color: lo.frontMatter.icon["color"],
+      color: lo.frontMatter.icon["color"]
     };
   }
   return undefined;

@@ -1,4 +1,4 @@
-import type { Lo } from "$lib/services/types/lo";
+import type { Lo } from "$lib/services/models/lo-types";
 import { LabSheet } from "./lab-sheet";
 import { deepScheme } from "./heat-map-colours";
 import type { UserMetric } from "$lib/services/types/metrics";

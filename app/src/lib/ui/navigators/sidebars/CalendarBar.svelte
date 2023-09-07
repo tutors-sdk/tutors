@@ -5,10 +5,6 @@
 
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  const title = $currentCourse?.title;
-  const calendar = $currentCourse?.calendar;
-  const currentWeek = $currentCourse?.currentWeek;
-
   const drawerClose: any = () => {
     drawerStore.close();
   };
@@ -18,7 +14,7 @@
   <button class="btn btn-icon bg-primary-500 text-white" on:click={drawerClose}><span class="font-bold">X</span></button>
 </div>
 <div class="px-12 py-4">
-  <h4 class="mb-4 text-center font-semibold">{calendar.title} : {title}</h4>
+  <h4 class="mb-4 text-center font-semibold">{$currentCourse?.title} : {$currentCourse?.courseCalendar?.title}</h4>
   <table class="w-full table-auto">
     <thead>
       <tr>
@@ -28,18 +24,18 @@
       </tr>
     </thead>
     <tbody class="text-center">
-      {#each calendar.weeks as week}
-        {#if currentWeek.title == week.title}
+      {#each $currentCourse?.courseCalendar?.weeks as week}
+        {#if $currentCourse?.courseCalendar?.currentWeek.title == week.title}
           <tr class="my-2 bg-success-300 dark:bg-success-700">
             <td>{week.title}</td>
             <td>{week.type}</td>
-            <!-- <td>{monthNames[week.dateObj.getMonth()]} {week.dateObj.getDate()}</td> -->
+            <td>{monthNames[week.dateObj.getMonth()]} {week.dateObj.getDate()}</td>
           </tr>
         {:else}
           <tr class="hover my-2">
             <td>{week.title}</td>
             <td>{week.type}</td>
-            <!-- <td>{monthNames[week.dateObj.getMonth()]} {week.dateObj.getDate()}</td> -->
+            <td>{monthNames[week.dateObj.getMonth()]} {week.dateObj.getDate()}</td>
           </tr>
         {/if}
       {/each}

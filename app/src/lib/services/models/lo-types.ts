@@ -11,6 +11,7 @@ export type WeekType = {
 export type Calendar = {
   title: string;
   weeks: WeekType[];
+  currentWeek: WeekType;
 };
 
 export type VideoIdentifier = {
@@ -53,18 +54,6 @@ export type IconNavBar = {
   bar: IconNav[];
 };
 
-export type Panels = {
-  panelVideos: Lo[];
-  panelTalks: Lo[];
-  panelNotes: Lo[];
-};
-
-export type Units = {
-  units: Unit[];
-  sides: Unit[];
-  standardLos: Lo[];
-};
-
 export type Lo = {
   type: string;
   id: string; // folder name containing the lo
@@ -89,8 +78,6 @@ export type Lo = {
   parentTopic?: Topic;
   parentCourse?: Course; // parent course
   breadCrumbs?: Lo[]; // all los from course to this lo
-  currentWeek?: WeekType;
-  calendar?: Calendar;
 };
 
 export type LabStep = {
@@ -143,6 +130,18 @@ export type PanelVideo = Lo & {
   type: "panelvideo";
 };
 
+export type Panels = {
+  panelVideos: Lo[];
+  panelTalks: Lo[];
+  panelNotes: Lo[];
+};
+
+export type Units = {
+  units: Unit[];
+  sides: Side[];
+  standardLos: Lo[];
+};
+
 export type Composite = Lo & {
   los: Lo[]; // child los
   panels: Panels; // child panel los - paneltalks, panelvideos, panelnotes.
@@ -150,7 +149,7 @@ export type Composite = Lo & {
 };
 
 export type Topic = Composite & {
-  toc:Lo[];
+  toc: Lo[];
   type: "topic";
 };
 
@@ -169,9 +168,10 @@ export type Course = Composite & {
   topicIndex: Map<string, Lo>;
   loIndex: Map<string, Lo>;
   walls?: Lo[][];
-  wallMap?:  Map<string, Lo[]>;
+  wallMap?: Map<string, Lo[]>;
   properties: Properties; // contents of properties.yaml
   calendar?: Properties; // contents of calendar.yaml
+  courseCalendar?: Calendar;
   authLevel: number;
   isPortfolio: boolean;
   areVideosHidden: boolean;
@@ -205,5 +205,5 @@ export const preOrder = new Map([
   ["panelvideo", 11],
   ["topic", 12],
   ["unknown", 13],
-  ["", 0],
+  ["", 0]
 ]);
