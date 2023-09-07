@@ -88,6 +88,7 @@ export type LabStep = {
   route: string;
   id: string;
   parentLo: Lab;
+  type: "step";
 };
 
 export type Lab = Lo & {

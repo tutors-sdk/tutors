@@ -43,6 +43,7 @@ export function decorateLoTree(lo: Lo) {
     lab.los.forEach((step) => {
       //step.contentHtml = convertMdToHtml(step?.contentMd, rootCourse.courseUrl);
       step.parentLo = lab;
+      step.type = "step";
     });
   }
   if (isCompositeLo(lo)) {
