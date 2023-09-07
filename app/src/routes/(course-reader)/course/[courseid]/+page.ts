@@ -16,11 +16,8 @@ export const load = async ({ params, parent, fetch }) => {
     };
   }
 
-  if (data.session && !course.lo?.properties?.parent) {
-    const { data: userCourseList } = await data.supabase
-      .from("accessed_courses")
-      .select(`course_list`)
-      .eq("id", data.session.user.id);
+  if (data.session && !course.properties?.parent) {
+    const { data: userCourseList } = await data.supabase.from("accessed_courses").select(`course_list`).eq("id", data.session.user.id);
 
     if (!userCourseList || userCourseList.length === 0) {
       await data.supabase.from("accessed_courses").insert([
@@ -29,7 +26,7 @@ export const load = async ({ params, parent, fetch }) => {
           course_list: {
             courses: [
               {
-                id: course.id,
+                id: course.courseId,
                 name: course.title,
                 last_accessed: new Date().toISOString(),
                 visits: 1
@@ -45,7 +42,7 @@ export const load = async ({ params, parent, fetch }) => {
 
       if (courseIndex === -1) {
         courseList.courses.push({
-          id: course.id,
+          id: course.courseId,
           name: course.title,
           last_accessed: new Date().toISOString(),
           visits: 1
@@ -55,10 +52,7 @@ export const load = async ({ params, parent, fetch }) => {
         courseList.courses[courseIndex].visits++;
       }
 
-      await data.supabase
-        .from("accessed_courses")
-        .update({ course_list: courseList })
-        .eq("id", data.session.user.id);
+      await data.supabase.from("accessed_courses").update({ course_list: courseList }).eq("id", data.session.user.id);
     }
   }
 
