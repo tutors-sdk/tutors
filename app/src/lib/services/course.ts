@@ -1,4 +1,4 @@
-import { courseUrl, currentCourse, currentLo, week } from "$lib/stores";
+import { courseUrl, currentCourse, currentLo } from "$lib/stores";
 import type { Lo, Course, Lab } from "$lib/services/models/lo-types";
 import { decorateCourseTree } from "./models/lo-tree";
 import { LiveLab } from "./models/live-lab";
@@ -42,8 +42,6 @@ export const courseService = {
     currentCourse.set(course);
     currentLo.set(course);
     courseUrl.set(course.courseUrl);
-    //week.set(course?.currentWeek);
-    //this.course = course;
     return course;
   },
 
@@ -64,7 +62,6 @@ export const courseService = {
 
     const lab = course.loIndex.get(labId) as Lab;
     const liveLab = new LiveLab(course, lab, labId);
-
 
     currentLo.set(lab);
     return liveLab;
