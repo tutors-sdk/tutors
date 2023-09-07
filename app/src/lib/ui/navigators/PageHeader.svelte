@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { currentCourse, portfolio } from "$lib/stores";
+  import { currentCourse } from "$lib/stores";
   import { Breadcrumbs, IconBar } from "$lib/ui/legacy";
 </script>
 
-{#if !$currentCourse?.isPortfolio && !$portfolio}
+{#if !$currentCourse?.isPortfolio}
   <div class="z-10 flex h-12 bg-primary-50 dark:bg-primary-900 border-b-[1px] border-primary-100 dark:border-primary-800">
     <Breadcrumbs />
     {#if $currentCourse}
