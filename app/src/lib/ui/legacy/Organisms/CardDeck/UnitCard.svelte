@@ -1,10 +1,10 @@
 <script lang="ts">
   import { CardDeck, Image, NoteCard, TalkCard, VideoCard } from "$lib/ui/legacy";
-  import type { Unit } from "$lib/services/models/lo-types";
+  import type { Composite, Unit } from "$lib/services/models/lo-types";
   import { layout, currentCourse } from "$lib/stores";
   import { onDestroy } from "svelte";
   import PanelDeck from "./PanelDeck.svelte";
-  export let unit: Unit;
+  export let unit: Composite;
 
   let text = "!text-xl font-semibold";
   const unsubscribe = layout.subscribe((layout) => {
