@@ -105,7 +105,7 @@
 
             const courseList = userCourseList[0].course_list;
 
-            const courseIndex = courseList.courses.findIndex((course) => course.courseId === courseId);
+            const courseIndex = courseList.courses.findIndex((course) => course.id === courseId);
 
             if (courseIndex !== -1) {
               courseList.courses.splice(courseIndex, 1);
