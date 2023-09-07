@@ -1,13 +1,6 @@
 <script lang="ts">
-  import { currentCourse, portfolio } from "$lib/stores";
+  import { currentCourse } from "$lib/stores";
   import { onDestroy, onMount } from "svelte";
-
-  onMount(() => {
-    portfolio.set(true);
-  });
-  onDestroy(() => {
-    portfolio.set(false);
-  });
 </script>
 
 <div class="container mx-auto mt-8">

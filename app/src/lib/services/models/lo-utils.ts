@@ -136,7 +136,7 @@ export function fixRoutePaths(lo: Lo) {
 }
 
 export function loadPropertyFlags(course: Course) {
-  course.isPortfolio = false;
+  course.isPortfolio = (course.properties?.portfolio as unknown as boolean) === true;
   course.areVideosHidden = (course.properties?.hideVideos as unknown as boolean) === true;
   course.areLabStepsAutoNumbered = (course.properties?.labStepsAutoNumber as unknown as boolean) === true;
   course.authLevel = course.properties.auth as unknown as number;

@@ -60,10 +60,6 @@ export function decorateLoTree(lo: Lo) {
   }
 }
 
-export function isPortfolio(course: Course) {
-  return course.properties?.portfolio;
-}
-
 function getPanels(los: Lo[]): Panels {
   return {
     panelVideos: los?.filter((lo) => lo.type === "panelvideo"),
