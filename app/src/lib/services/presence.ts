@@ -70,10 +70,7 @@ export function subscribePresence(presence: Presence, courseid: string) {
     const courseIDWithoutNetlify = courseid.replace(".netlify.app", "");
     const courseIDWithNetlify = `${courseIDWithoutNetlify}.netlify.app`;
 
-    const filteredNewPresences = newPresences.filter(
-      (presence) =>
-        presence.channel === courseIDWithoutNetlify || presence.channel === courseIDWithNetlify
-    );
+    const filteredNewPresences = newPresences.filter((presence) => presence.channel === courseIDWithoutNetlify || presence.channel === courseIDWithNetlify);
 
     studentsOnline.update((count) => count + filteredNewPresences.length);
     studentsOnlineList.update((list) => [...list, ...filteredNewPresences]);
@@ -83,17 +80,10 @@ export function subscribePresence(presence: Presence, courseid: string) {
     const courseIDWithoutNetlify = courseid.replace(".netlify.app", "");
     const courseIDWithNetlify = `${courseIDWithoutNetlify}.netlify.app`;
 
-    const filteredLeftPresences = leftPresences.filter(
-      (presence) =>
-        presence.channel === courseIDWithoutNetlify || presence.channel === courseIDWithNetlify
-    );
+    const filteredLeftPresences = leftPresences.filter((presence) => presence.channel === courseIDWithoutNetlify || presence.channel === courseIDWithNetlify);
 
     studentsOnline.update((count) => count - filteredLeftPresences.length);
-    studentsOnlineList.update((list) =>
-      list.filter(
-        (item) => !filteredLeftPresences.some((presence) => presence.user_id === item.studentEmail)
-      )
-    );
+    studentsOnlineList.update((list) => list.filter((item) => !filteredLeftPresences.some((presence) => presence.user_id === item.studentEmail)));
   });
 }
 
