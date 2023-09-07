@@ -1,5 +1,5 @@
 import type { ICellRendererParams } from "ag-grid-community";
-import type { Calendar } from "$lib/services/types/lo";
+import type { Calendar } from "$lib/services/models/lo-types";
 import type { UserMetric } from "$lib/services/types/metrics";
 import { deepScheme } from "./heat-map-colours";
 import { formatDate } from "$lib/services/utils/firebase";
@@ -101,20 +101,7 @@ export class CalendarSheet {
   }
 
   populateCols(calendar: Calendar) {
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec"
-    ];
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
     if (calendar) {
       calendar.weeks.forEach((week) => {
         const date = Date.parse(week.date);
@@ -137,10 +124,7 @@ export class CalendarSheet {
       const row = this.creatRow(user, day);
       user.calendarActivity.forEach((measure) => {
         for (let i = 0; i < calendar.weeks.length - 1; i++) {
-          if (
-            measure.dateObj >= Date.parse(calendar.weeks[i].date) &&
-            measure.dateObj < Date.parse(calendar.weeks[i + 1].date)
-          ) {
+          if (measure.dateObj >= Date.parse(calendar.weeks[i].date) && measure.dateObj < Date.parse(calendar.weeks[i + 1].date)) {
             const col = formatDate(calendar.weeks[i].date);
             const date2 = measure.dateObj;
             const date1 = Date.parse(calendar.weeks[i].date);

@@ -1,5 +1,5 @@
 import type { ICellRendererParams } from "ag-grid-community";
-import type { Lo } from "$lib/services/types/lo";
+import type { Lo } from "$lib/services/models/lo-types";
 import type { UserMetric } from "$lib/services/types/metrics";
 
 interface LabSheetColumn {
@@ -86,9 +86,7 @@ export class LabSheet {
     if (grid) {
       const api = grid.gridOptions.api;
       api.setColumnDefs(this.columnDefs);
-      const sortedRowData = this.rowData.sort((c1, c2) =>
-        c1.summary < c2.summary ? 1 : c1.summary > c2.summary ? -1 : 0
-      );
+      const sortedRowData = this.rowData.sort((c1, c2) => (c1.summary < c2.summary ? 1 : c1.summary > c2.summary ? -1 : 0));
       api.setRowData(sortedRowData);
     }
   }
