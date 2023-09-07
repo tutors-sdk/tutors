@@ -38,7 +38,7 @@ export const load = async ({ params, parent, fetch }) => {
     } else {
       const courseList = userCourseList[0].course_list;
 
-      const courseIndex = courseList.courses.findIndex((c) => c.id === course.id);
+      const courseIndex = courseList.courses.findIndex((c) => c.id === course.courseId);
 
       if (courseIndex === -1) {
         courseList.courses.push({

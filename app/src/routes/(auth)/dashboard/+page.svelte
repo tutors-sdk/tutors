@@ -54,7 +54,7 @@
           addCourseForm.reset();
         }
       } else {
-        const existingCourse = userCourseList[0].course_list.courses.find((userCourse) => userCourse.id === course.id);
+        const existingCourse = userCourseList[0].course_list.courses.find((userCourse) => userCourse.id === course.courseId);
 
         if (existingCourse) {
           showErrorMessage("This course already exists in your list!");
@@ -105,7 +105,7 @@
 
             const courseList = userCourseList[0].course_list;
 
-            const courseIndex = courseList.courses.findIndex((course) => course.id === courseId);
+            const courseIndex = courseList.courses.findIndex((course) => course.courseId === courseId);
 
             if (courseIndex !== -1) {
               courseList.courses.splice(courseIndex, 1);
