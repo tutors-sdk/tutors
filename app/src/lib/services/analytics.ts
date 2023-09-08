@@ -1,18 +1,9 @@
 import { updateLo } from "$lib/services/utils/course";
 import type { Course, Lo } from "$lib/services/models/lo-types";
 import type { TokenResponse } from "$lib/services/types/auth";
-import { currentCourse, currentLo, currentUser } from "$lib/stores";
+import { currentCourse, currentLo, currentUser, onlineStatus } from "$lib/stores";
 
-import {
-  readValue,
-  sanitise,
-  updateCalendar,
-  updateCount,
-  updateCountValue,
-  updateLastAccess,
-  updateStr,
-  updateVisits
-} from "$lib/services/utils/firebase";
+import { readValue, sanitise, updateCalendar, updateCount, updateCountValue, updateLastAccess, updateStr, updateVisits } from "$lib/services/utils/firebase";
 
 let course: Course;
 let user: TokenResponse;
@@ -40,7 +31,7 @@ export const analyticsService = {
 
   setOnlineStatus(status: boolean, session: TokenResponse) {
     const onlineStatus = status ? "online" : "offline";
-    const key = `${course.id}/users/${sanitise(session.user.email)}/onlineStatus`;
+    const key = `${course.courseId}/users/${sanitise(session.user.email)}/onlineStatus`;
     updateStr(key, onlineStatus);
   },
 
@@ -48,7 +39,7 @@ export const analyticsService = {
     if (!course || !user) {
       return "online";
     }
-    const courseId = course.url.substring(0, course.url.indexOf("."));
+    const courseId = course.courseUrl.substring(0, course.courseUrl.indexOf("."));
     const key = `${courseId}/users/${sanitise(session.user.email)}/onlineStatus`;
     const status = await readValue(key);
     return status || "online";
@@ -56,19 +47,17 @@ export const analyticsService = {
 
   reportPageLoad(session: TokenResponse) {
     if (!lo) return;
-    updateLastAccess(`${course.id}/usage/${this.loRoute}`, course.title);
+    updateLastAccess(`${course.courseId}/usage/${this.loRoute}`, course.title);
     updateVisits(course.courseUrl.substring(0, course.courseUrl.indexOf(".")));
 
     if (!session || (session && session.onlineStatus === "online")) {
-      updateLastAccess(`all-course-access/${course.id}`, course.title);
-      updateVisits(`all-course-access/${course.id}`);
-      updateLo(`all-course-access/${course.id}`, course, lo);
+      updateLastAccess(`all-course-access/${course.courseId}`, course.title);
+      updateVisits(`all-course-access/${course.courseId}`);
+      updateLo(`all-course-access/${course.courseId}`, course, lo);
     }
 
     if (session) {
-      const key = `${course.courseUrl.substring(0, course.courseUrl.indexOf("."))}/users/${sanitise(
-        session.user.email
-      )}/${this.loRoute}`;
+      const key = `${course.courseUrl.substring(0, course.courseUrl.indexOf("."))}/users/${sanitise(session.user.email)}/${this.loRoute}`;
       updateLastAccess(key, lo.title);
       updateVisits(key);
     }
@@ -76,17 +65,17 @@ export const analyticsService = {
 
   updatePageCount(session: TokenResponse) {
     if (!lo) return;
-    updateLastAccess(`${course.id}/usage/${this.loRoute}`, course.title);
-    updateCount(course.id);
-    if (user) {
-      updateCount(`all-course-access/${course.id}`);
-      if (user.onlineStatus === "online") {
-        updateLo(`all-course-access/${course.id}`, course, lo);
+    updateLastAccess(`${course.courseId}/usage/${this.loRoute}`, course.title);
+    updateCount(course.courseId);
+    if (session.user) {
+      updateCount(`all-course-access/${course.courseId}`);
+      if (onlineStatus) {
+        updateLo(`all-course-access/${course.courseId}`, course, lo);
       }
-      const key = `${course.id}/users/${sanitise(session.user.email)}/${this.loRoute}`;
+      const key = `${course.courseId}/users/${sanitise(session.user.email)}/${this.loRoute}`;
       updateLastAccess(key, lo.title);
       updateCount(key);
-      updateCalendar(`${course.id}/users/${sanitise(session.user.email)}`);
+      updateCalendar(`${course.courseId}/users/${sanitise(session.user.email)}`);
     }
   },
 

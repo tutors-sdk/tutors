@@ -13,12 +13,12 @@
   onMount(async () => {
     if (data.course.authLevel > 0) {
       if (!session) {
-        localStorage.setItem("course_url", data.course.url);
+        localStorage.setItem("course_url", data.course.courseUrl);
         localStorage.setItem("isAuthenticating", "true");
         goto("/auth");
       } else {
         session.onlineStatus = await analyticsService.getOnlineStatus(data.course, session);
-        // analyticsService.updateLogin(data.course.id, data.session);
+        // analyticsService.updateLogin(data.course.courseId, data.session);
       }
     }
 

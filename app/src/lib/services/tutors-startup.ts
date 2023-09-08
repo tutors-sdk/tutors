@@ -19,7 +19,7 @@ export async function initServices(session: Token) {
       if (get(currentCourse)) {
         const course = get(currentCourse);
         if (session && course) {
-          analyticsService.updateLogin(course.id, session);
+          analyticsService.updateLogin(course.courseId, session);
         }
       }
     }
@@ -27,12 +27,7 @@ export async function initServices(session: Token) {
 
   page.subscribe((path) => {
     transitionKey.set(path.url.pathname);
-    if (
-      path.url.pathname.includes("book") ||
-      path.url.pathname.includes("pdf") ||
-      path.url.pathname.includes("video") ||
-      path.url.pathname.includes("note")
-    ) {
+    if (path.url.pathname.includes("book") || path.url.pathname.includes("pdf") || path.url.pathname.includes("video") || path.url.pathname.includes("note")) {
       transitionKey.set("none");
     }
   });
