@@ -3,7 +3,7 @@
   import { Grid } from "ag-grid-community";
   import { CalendarSheet, options } from "../../services/sheets/calendar-sheet";
   import type { UserMetric } from "$lib/services/types/metrics";
-  import type { Calendar } from "$lib/services/types/lo";
+  import type { Calendar } from "$lib/services/models/lo-types";
 
   export let user: UserMetric;
   export let calendarData: Calendar;

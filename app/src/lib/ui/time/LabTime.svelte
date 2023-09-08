@@ -3,7 +3,7 @@
   import { Grid } from "ag-grid-community";
   import "ag-grid-enterprise";
   import type { UserMetric } from "$lib/services/types/metrics";
-  import type { Lo } from "$lib/services/types/lo";
+  import type { Lo } from "$lib/services/models/lo-types";
   import { LabCountSheet } from "../../services/sheets/lab-count-sheet";
   import { options } from "../../services/sheets/lab-sheet";
 

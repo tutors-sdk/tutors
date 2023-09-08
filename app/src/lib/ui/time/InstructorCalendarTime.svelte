@@ -4,7 +4,7 @@
   import "ag-grid-enterprise";
   import { CalendarSheet, options } from "$lib/services/sheets/calendar-sheet";
   import { Icon } from "$lib/ui/legacy";
-  import type { Calendar } from "$lib/services/types/lo";
+  import type { Calendar } from "$lib/services/models/lo-types";
   import type { UserMetric } from "$lib/services/types/metrics";
 
   export let calendarData: Calendar;
@@ -28,7 +28,7 @@
   };
 </script>
 
-<div class="flex  justify-around p-1">
+<div class="flex justify-around p-1">
   <div class="w-1/2">
     <div class="text-base font-light text-gray-900">Time online this semester</div>
   </div>

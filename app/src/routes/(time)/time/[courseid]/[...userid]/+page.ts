@@ -39,7 +39,7 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
       user: user,
       course: course,
       allLabs: course.wallMap?.get("lab"),
-      calendar: course.calendar,
+      calendar: course.courseCalendar,
       ignorePin: course.ignorePin,
       users: users,
       enrolledUsers

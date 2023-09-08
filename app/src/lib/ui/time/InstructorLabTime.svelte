@@ -4,7 +4,7 @@
   import "ag-grid-enterprise";
   import { Icon } from "$lib/ui/legacy";
   import type { UserMetric } from "$lib/services/types/metrics";
-  import type { Lo } from "$lib/services/types/lo";
+  import type { Lo } from "$lib/services/models/lo-types";
   import { LabCountSheet } from "$lib/services/sheets/lab-count-sheet";
   import { options } from "$lib/services/sheets/lab-sheet";
 

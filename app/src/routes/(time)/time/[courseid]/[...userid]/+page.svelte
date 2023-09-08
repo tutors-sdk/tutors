@@ -1,15 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
-
   import { fade } from "svelte/transition";
   import { writable, type Writable } from "svelte/store";
   import { Tab, TabGroup } from "@skeletonlabs/skeleton";
-
-  import { currentCourse } from "$lib/stores";
   import LabTime from "$lib/ui/time/LabTime.svelte";
   import InstructorLabTime from "$lib/ui/time/InstructorLabTime.svelte";
   import InstructorCalendarTime from "$lib/ui/time/InstructorCalendarTime.svelte";
-
   import CalendarTime from "$lib/ui/time/CalendarTime.svelte";
 
   import type { PageData } from "./$types";
