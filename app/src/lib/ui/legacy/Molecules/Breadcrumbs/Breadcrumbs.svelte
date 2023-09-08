@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Lo } from "$lib/services/models/lo-types";
   import { currentCourse, currentLo } from "$lib/stores";
   import { Icon } from "$lib/ui/legacy";
 
@@ -27,6 +28,17 @@
     }
     return input;
   }
+
+  let breadCrumbs: Lo[];
+  currentLo.subscribe((lo) => {
+    breadCrumbs = lo.breadCrumbs;
+    if (breadCrumbs.length > 1) {
+      if (breadCrumbs[1].type === "unit" || breadCrumbs[1].type === "side") {
+        breadCrumbs.splice(1, 1);
+        console.log(breadCrumbs);
+      }
+    }
+  });
 </script>
 
 <div class="my-2 mx-8 overflow-hidden p-1">
@@ -40,8 +52,8 @@
 
       <li class="crumb-separator" aria-hidden>&rsaquo;</li>
     {/if}
-    {#if $currentLo}
-      {#each $currentLo.breadCrumbs as lo, i}
+    {#if breadCrumbs}
+      {#each breadCrumbs as lo, i}
         {#if i >= 1}
           <li class="crumb-separator" aria-hidden>&rsaquo;</li>
         {/if}
