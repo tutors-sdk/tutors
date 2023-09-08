@@ -5,7 +5,7 @@
   import { onDestroy } from "svelte";
   import PanelDeck from "./PanelDeck.svelte";
   export let unit: Composite;
-
+  const parentLo = unit.parentTopic ? unit.parentTopic : unit.parentLo;
   let text = "!text-xl font-semibold";
   const unsubscribe = layout.subscribe((layout) => {
     if (layout === "compacted") {
@@ -22,7 +22,7 @@
     <h2 id={unit.id} class="p-2 {text}">
       {unit.title}
     </h2>
-    <Image lo={unit.parentTopic} miniImage={true} />
+    <Image lo={parentLo} miniImage={true} />
   </div>
   <PanelDeck panels={unit.panels} />
   <div class="flex flex-wrap justify-center">
