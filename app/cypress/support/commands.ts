@@ -88,7 +88,7 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
     cy.findByText(text).then(($element) => {
       // Perform actions on the found element if needed
       cy.wrap($element).should('exist');
-      cy.wrap($element).click( {force : true} )
+      cy.wrap($element).click({ force: true })
     });
     cy.wait(500);
   }
@@ -141,7 +141,7 @@ Cypress.Commands.add("partialSearchVerification", (searchWord: string) => {
   cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
   cy.get('a.btn.btn-sm', { timeout: 10000 }).eq(0).click({ force: true });
   cy.get('input#search', { timeout: 10000 }).eq(0).type("lab");
-  cy.get('.s-1juWPqSteKNM', { timeout: 10000 }).find('a')
+  cy.get('div.pt-4.text-right.text-sm a', { timeout: 10000 })
     .each((link) => {
       //const links = els.toArray();
         let href = link.attr('href');
@@ -165,9 +165,7 @@ Cypress.Commands.add("partialSearchVerification", (searchWord: string) => {
       if (countOfMatches === 0) {
         throw error
       }
-
     })
-
 });
 
 Cypress.Commands.add("verifyContentsExists", (lo: any) => {
