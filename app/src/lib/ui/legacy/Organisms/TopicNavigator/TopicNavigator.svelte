@@ -6,15 +6,15 @@
 </script>
 
 {#each topic.toc as lo}
-    <a href={lo?.parentTopic?.route} class="flex py-1">
-      <Icon type={lo.type} />
-      <span class="ml-2 mb-1"> {@html lo.title} </span>
-      {#if lo.video && lo.type != "panelvideo"}
-        <a class="flex pl-1" href={lo.video}>
-          <Icon type="video" />
-        </a>
-      {/if}
-    </a>
+  <a href={lo.type === "unit" ? lo?.parentTopic?.route : lo.type === "side" ? lo?.parentTopic?.route : lo?.route} class="flex py-1">
+    <Icon type={lo.type} />
+    <span class="ml-2 mb-1"> {@html lo.title} </span>
+    {#if lo.video && lo.type != "panelvideo"}
+      <a class="flex pl-1" href={lo.video}>
+        <Icon type="video" />
+      </a>
+    {/if}
+  </a>
   {#if lo.type != "lab"}
     {#if lo.los}
       {#each lo.los as lo}
