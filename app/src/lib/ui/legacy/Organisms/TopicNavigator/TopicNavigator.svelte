@@ -6,7 +6,7 @@
 </script>
 
 {#each topic.toc as lo}
-  <a href={lo.route} class="flex py-1">
+  <a href={lo.type === "unit" ? lo?.parentTopic?.route : lo.type === "side" ? lo?.parentTopic?.route : lo?.route} class="flex py-1">
     <Icon type={lo.type} />
     <span class="ml-2 mb-1"> {@html lo.title} </span>
     {#if lo.video && lo.type != "panelvideo"}
