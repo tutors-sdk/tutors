@@ -1,7 +1,5 @@
 import hljs from "highlight.js";
-import type { Lo } from "$lib/services/models/lo-types";
-import { currentCourse } from "$lib/stores";
-import { get } from "svelte/store";
+import type { Lab, Lo } from "./lo-types";
 import MarkdownIt from "markdown-it";
 // @ts-ignore
 import latex from "@iktakahiro/markdown-it-katex";
@@ -19,6 +17,7 @@ import footnote from "markdown-it-footnote";
 // @ts-ignore
 import deflist from "markdown-it-deflist";
 import type { Course } from "./lo-types";
+import { browserLocalPersistence } from "firebase/auth";
 
 const markdownIt: any = new MarkdownIt({
   html: false, // Enable HTML tags in source
@@ -31,11 +30,7 @@ const markdownIt: any = new MarkdownIt({
   highlight: function (str, lang) {
     if (lang && hljs.getLanguage(lang)) {
       try {
-        return (
-          '<pre class="hljs"><code>' +
-          hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
-          "</code></pre>"
-        );
+        return '<pre class="hljs"><code>' + hljs.highlight(str, { language: lang, ignoreIllegals: true }).value + "</code></pre>";
       } catch (__) {}
     }
     return '<pre class="hljs"><code>' + markdownIt.utils.escapeHtml(str) + "</code></pre>";
@@ -58,10 +53,10 @@ markdownIt.use(deflist);
 
 var defaultRender =
   markdownIt.renderer.rules.link_open ||
-  function (tokens, idx, options, env, self) {
+  function (tokens: any, idx: any, options: any, env: any, self: any) {
     return self.renderToken(tokens, idx, options);
   };
-markdownIt.renderer.rules.link_open = function (tokens, idx, options, env, self) {
+markdownIt.renderer.rules.link_open = function (tokens: any, idx: any, options: any, env: any, self: any) {
   // If you are sure other plugins can't add `target` - drop check below
   var aIndex = tokens[idx].attrIndex("target");
   if (aIndex < 0) {
@@ -90,17 +85,33 @@ function filter(src: string, url: string): string {
   return filtered;
 }
 
-export function convertMdToHtml(md: string, url: string): string {
-  const mdFiltered = filter(md, url);
-  return markdownIt.render(mdFiltered);
+export function convertLabToHtml(course: Course, lab: Lab) {
+  lab.summary = markdownIt.render(lab.summary);
+  const url = lab.route.replace(`/lab/${course.courseId}`, course.courseUrl);
+  lab.los.forEach((step) => {
+    if (course.courseUrl) {
+      step.contentMd = filter(step.contentMd, url);
+    }
+    step.contentHtml = markdownIt.render(step.contentMd);
+    step.parentLo = lab;
+    step.type = "step";
+  });
 }
 
-export function convertNoteMdToHtml(lo: Lo) {
-  if (!lo.contentHtml) {
-    let loPath = lo.route.replace("/panelnote/", "");
-    loPath = loPath.replace("/note/", "");
-    const course = get(currentCourse) as Course;
-    loPath = loPath.replace(course.courseId, course.courseUrl);
-    lo.contentHtml = convertMdToHtml(lo.contentMd, loPath);
+export function convertLoToHtml(course: Course, lo: Lo) {
+  if (lo.type === "lab") {
+    convertLabToHtml(course, lo as Lab);
+  } else {
+    let md = lo.contentMd;
+    if (course.courseUrl) {
+      const url = lo.route.replace(`/${lo.type}/${course.courseId}`, course.courseUrl);
+      md = filter(md, url);
+    }
+    lo.contentHtml = markdownIt.render(md);
+    lo.summary = markdownIt.render(lo.summary);
   }
+}
+
+export function convertMdToHtml(md: string): string {
+  return markdownIt.render(md);
 }

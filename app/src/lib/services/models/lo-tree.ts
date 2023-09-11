@@ -1,19 +1,18 @@
 import { isCompositeLo, type Course, type IconType, type Lo, type Panels, type Composite, type LoType, type Lab, type Units, type Unit, type Side } from "./lo-types";
-import { convertMdToHtml } from "./markdown-utils";
+import { convertLoToHtml } from "./markdown-utils";
 import { allVideoLos, createCompanions, createToc, createWallBar, filterByType, fixRoutePaths, flattenLos, initCalendar, injectCourseUrl, loadPropertyFlags } from "./lo-utils";
 
-let rootCourse: Course;
-
 export function decorateCourseTree(course: Course, courseId: string = "", courseUrl = "") {
-  rootCourse = course;
   course.courseId = courseId;
   course.courseUrl = courseUrl;
-  course.walls = [];
-  course.wallMap = new Map<string, Lo[]>();
-  ["talk", "note", "lab", "web", "archive", "github"].forEach((type) => addWall(rootCourse, type as LoType));
-  decorateLoTree(course);
   course.route = `/course/${courseId}`;
   injectCourseUrl(course, courseId, courseUrl);
+  decorateLoTree(course, course);
+
+  course.walls = [];
+  course.wallMap = new Map<string, Lo[]>();
+  ["talk", "note", "lab", "web", "archive", "github"].forEach((type) => addWall(course, type as LoType));
+
   const los = flattenLos(course.los);
   los.forEach((lo) => fixRoutePaths(lo));
   course.loIndex = new Map<string, Lo>();
@@ -27,35 +26,20 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   initCalendar(course);
 }
 
-export function decorateLoTree(lo: Lo) {
-  let imgPrefix = "";
-  if (lo.type === "panelnote") {
-    imgPrefix = lo.id;
-  }
-  //lo.contentHtml = convertMdToHtml(lo?.contentMd, rootCourse.courseUrl);
-  if (lo.summary) lo.summary = convertMdToHtml(lo?.summary, rootCourse.courseUrl);
+export function decorateLoTree(course: Course, lo: Lo) {
   lo.icon = getIcon(lo);
-  lo.parentCourse = rootCourse;
+  lo.parentCourse = course;
   lo.breadCrumbs = [];
   crumbs(lo, lo.breadCrumbs);
-  if (lo.type == "lab") {
-    const lab = lo as Lab;
-    lab.los.forEach((step) => {
-      //step.contentHtml = convertMdToHtml(step?.contentMd, rootCourse.courseUrl);
-      step.parentLo = lab;
-      step.type = "step";
-    });
-  }
+  convertLoToHtml(course, lo);
   if (isCompositeLo(lo)) {
     const compositeLo = lo as Composite;
-    if (compositeLo.los) {
-      compositeLo.panels = getPanels(compositeLo.los);
-      compositeLo.units = getUnits(compositeLo.los);
-      for (const childLo of compositeLo.los) {
-        childLo.parentLo = lo;
-        if (compositeLo.los) {
-          decorateLoTree(childLo);
-        }
+    compositeLo.panels = getPanels(compositeLo.los);
+    compositeLo.units = getUnits(compositeLo.los);
+    for (const childLo of compositeLo.los) {
+      childLo.parentLo = lo;
+      if (compositeLo.los) {
+        decorateLoTree(course, childLo);
       }
     }
   }

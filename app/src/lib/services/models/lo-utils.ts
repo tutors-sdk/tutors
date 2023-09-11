@@ -144,7 +144,6 @@ export function loadPropertyFlags(course: Course) {
   course.hasWhiteList = false;
   course.ignorePin = course.properties?.ignorepin?.toString();
 }
-
 export function initCalendar(course: Course) {
   const calendar = {
     title: "unknown",
@@ -154,6 +153,7 @@ export function initCalendar(course: Course) {
     if (course.calendar) {
       const calendarObj = course.calendar;
       calendar.title = calendarObj.title;
+      // @ts-ignore
       calendar.weeks = calendarObj.weeks.map((weekObj: any) => ({
         date: Object.keys(weekObj)[0],
         title: weekObj[Object.keys(weekObj)[0]].title,
@@ -162,11 +162,13 @@ export function initCalendar(course: Course) {
       }));
 
       const today = Date.now();
+      // @ts-ignore
       const currentWeek = calendar.weeks.find((week, i) => today > Date.parse(week.date) && today <= Date.parse(calendar.weeks[i + 1]?.date));
-      //course.calendar.weeks = calendar.weeks;
+      // @ts-ignore
       course.courseCalendar = {
         title: calendarObj.title,
         weeks: calendar.weeks,
+        // @ts-ignore
         currentWeek: currentWeek
       };
     }

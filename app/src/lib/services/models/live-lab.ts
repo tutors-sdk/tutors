@@ -1,7 +1,6 @@
-import { convertMdToHtml } from "$lib/services/models/markdown-utils";
-import type { Lab, Lo } from "$lib/services/models/lo-types";
-import type { Course } from "$lib/services/models/lo-types";
-import { removeLeadingHashes } from "$lib/services/models/lo-utils";
+import type { Lab } from "./lo-types";
+import type { Course } from "./lo-types";
+import { removeLeadingHashes } from "./lo-utils";
 
 function truncate(input: string) {
   if (input?.length > 16) {
@@ -36,17 +35,9 @@ export class LiveLab {
   }
 
   convertMdToHtml() {
-    const assetUrl = this.url.replace(`/lab/${this.course.courseId}`, this.course.courseUrl);
-    this.objectivesHtml = convertMdToHtml(this.lab.los[0].contentMd, assetUrl);
-    this.chaptersHtml = new Map(
-      this.lab.los.map((chapter) => [
-        encodeURI(chapter.shortTitle),
-        convertMdToHtml(chapter.contentMd, assetUrl)
-      ])
-    );
-    this.chaptersTitles = new Map(
-      this.lab.los.map((chapter) => [chapter.shortTitle, removeLeadingHashes(chapter.title)])
-    );
+    // @ts-ignore
+    this.chaptersHtml = new Map(this.lab.los.map((chapter) => [encodeURI(chapter.shortTitle), chapter.contentHtml]));
+    this.chaptersTitles = new Map(this.lab.los.map((chapter) => [chapter.shortTitle, removeLeadingHashes(chapter.title)]));
     this.steps = Array.from(this.chaptersHtml.keys());
   }
 
@@ -56,43 +47,30 @@ export class LiveLab {
     this.navbarHtml = this.lab.los
       .map((chapter) => {
         const number = this.autoNumber ? chapter.shortTitle + ": " : "";
-        const active =
-          encodeURI(chapter.shortTitle) === this.currentChapterShortTitle
-            ? "font-bold bg-surface-200 dark:bg-surface-600 pl-4"
-            : "";
+        const active = encodeURI(chapter.shortTitle) === this.currentChapterShortTitle ? "font-bold bg-surface-200 dark:bg-surface-600 pl-4" : "";
         const title = this.chaptersTitles.get(chapter.shortTitle);
-        return `<a href="${this.url}/${encodeURI(
-          chapter.shortTitle
-        )}"><li class="py-2 px-4 ${active} !text-black dark:!text-white">${number}${title}</li></a>`;
+        return `<a href="${this.url}/${encodeURI(chapter.shortTitle)}"><li class="py-2 px-4 ${active} !text-black dark:!text-white">${number}${title}</li></a>`;
       })
       .join("");
 
-    const currentChapterIndex = this.lab.los.findIndex(
-      (chapter) => encodeURI(chapter.shortTitle) === this.currentChapterShortTitle
-    );
+    const currentChapterIndex = this.lab.los.findIndex((chapter) => encodeURI(chapter.shortTitle) === this.currentChapterShortTitle);
     if (currentChapterIndex !== -1) {
       let number = "";
       const prevChapter = this.lab.los[currentChapterIndex - 1];
-      const prevTitle = prevChapter
-        ? truncate(this.chaptersTitles.get(prevChapter.shortTitle))
-        : "";
+      // @ts-ignore
+      const prevTitle = prevChapter ? truncate(this.chaptersTitles.get(prevChapter.shortTitle)) : "";
       if (prevTitle) number = this.autoNumber ? prevChapter.shortTitle + ": " : "";
       this.horizontalNavbarHtml = prevChapter
-        ? `<a class="btn btn-sm capitalize" href="${this.url}/${encodeURI(
-            prevChapter.shortTitle
-          )}"> <span aria-hidden="true">&larr;</span>&nbsp; ${number}${prevTitle} </a>`
+        ? `<a class="btn btn-sm capitalize" href="${this.url}/${encodeURI(prevChapter.shortTitle)}"> <span aria-hidden="true">&larr;</span>&nbsp; ${number}${prevTitle} </a>`
         : "";
 
       number = "";
       const nextChapter = this.lab.los[currentChapterIndex + 1];
       if (nextChapter) number = this.autoNumber ? nextChapter.shortTitle + ": " : "";
-      const nextTitle = nextChapter
-        ? truncate(this.chaptersTitles.get(nextChapter.shortTitle))
-        : "";
+      // @ts-ignore
+      const nextTitle = nextChapter ? truncate(this.chaptersTitles.get(nextChapter.shortTitle)) : "";
       this.horizontalNavbarHtml += nextChapter
-        ? `<a class="ml-auto btn btn-sm capitalize" style="margin-left: auto" href="${
-            this.url
-          }/${encodeURI(
+        ? `<a class="ml-auto btn btn-sm capitalize" style="margin-left: auto" href="${this.url}/${encodeURI(
             nextChapter.shortTitle
           )}"> ${number}${nextTitle} &nbsp;<span aria-hidden="true">&rarr;</span></a>`
         : "";
@@ -104,8 +82,8 @@ export class LiveLab {
   setCurrentChapter(step: string) {
     if (!this.steps.includes(step)) return;
     this.currentChapterShortTitle = step;
-    this.currentChapterTitle = this.chaptersTitles.get(step);
-    this.content = this.chaptersHtml.get(step);
+    this.currentChapterTitle = this.chaptersTitles.get(step)!;
+    this.content = this.chaptersHtml.get(step)!;
     this.refreshNav();
   }
 
