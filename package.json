@@ -21,7 +21,7 @@
     "cy-verify-downloads": "0.1.16",
     "cypress": "^13.1.0",
     "cypress-fail-fast": "7.0.3",
-    "eslint": "^8.30.0",
+    "eslint": "^8.49.0",
     "eslint-config-custom": "*",
     "prettier": "3.0.3",
     "prettier-plugin-svelte": "3.0.3",
