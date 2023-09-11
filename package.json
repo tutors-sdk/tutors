@@ -18,7 +18,7 @@
     "format": "prettier --write ."
   },
   "devDependencies": {
-    "cy-verify-downloads": "0.1.16",
+    "cy-verify-downloads": "0.1.17",
     "cypress": "^13.1.0",
     "cypress-fail-fast": "7.0.3",
     "eslint": "^8.30.0",
