@@ -11,6 +11,7 @@ export type WeekType = {
 export type Calendar = {
   title: string;
   weeks: WeekType[];
+  currentWeek: WeekType;
 };
 
 export type VideoIdentifier = {
@@ -53,18 +54,6 @@ export type IconNavBar = {
   bar: IconNav[];
 };
 
-export type Panels = {
-  panelVideos: Lo[];
-  panelTalks: Lo[];
-  panelNotes: Lo[];
-};
-
-export type Units = {
-  units: Lo[];
-  sides: Lo[];
-  standardLos: Lo[];
-};
-
 export type Lo = {
   type: string;
   id: string; // folder name containing the lo
@@ -86,6 +75,7 @@ export type Lo = {
 
   // dynamic properties, created by decorator
   parentLo?: Lo; // immediate parent lo
+  parentTopic?: Topic;
   parentCourse?: Course; // parent course
   breadCrumbs?: Lo[]; // all los from course to this lo
 };
@@ -97,6 +87,8 @@ export type LabStep = {
   contentHtml?: string;
   route: string;
   id: string;
+  parentLo?: Lab;
+  type: string;
 };
 
 export type Lab = Lo & {
@@ -139,13 +131,26 @@ export type PanelVideo = Lo & {
   type: "panelvideo";
 };
 
+export type Panels = {
+  panelVideos: Lo[];
+  panelTalks: Lo[];
+  panelNotes: Lo[];
+};
+
+export type Units = {
+  units: Unit[];
+  sides: Side[];
+  standardLos: Lo[];
+};
+
 export type Composite = Lo & {
   los: Lo[]; // child los
-  panels?: Panels; // child panel los - paneltalks, panelvideos, panelnotes.
-  units?: Units; // child units, including side units
+  panels: Panels; // child panel los - paneltalks, panelvideos, panelnotes.
+  units: Units; // child units, including side units
 };
 
 export type Topic = Composite & {
+  toc: Lo[];
   type: "topic";
 };
 
@@ -164,14 +169,19 @@ export type Course = Composite & {
   topicIndex: Map<string, Lo>;
   loIndex: Map<string, Lo>;
   walls?: Lo[][];
+  wallMap?: Map<string, Lo[]>;
   properties: Properties; // contents of properties.yaml
   calendar?: Properties; // contents of calendar.yaml
-  isPortflio: boolean;
+  courseCalendar?: Calendar;
+  authLevel: number;
+  isPortfolio: boolean;
   areVideosHidden: boolean;
   areLabStepsAutoNumbered: boolean;
   hasEnrollment: boolean;
   hasWhiteList: boolean;
+  ignorePin: string;
   companions: IconNavBar;
+  wallBar: IconNavBar;
 };
 
 export const simpleTypes = ["note", "archive", "web", "github", "panelnote", "paneltalk", "panelvideo", "talk", "book", "lab"];
@@ -196,5 +206,5 @@ export const preOrder = new Map([
   ["panelvideo", 11],
   ["topic", 12],
   ["unknown", 13],
-  ["", 0],
+  ["", 0]
 ]);

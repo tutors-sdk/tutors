@@ -66,6 +66,7 @@ function buildLab(lo: Lo, lr: LearningResource): Lo {
       contentMd: contents.body,
       route: `${getRoute(lr)}/${shortTitle}`,
       id: shortTitle,
+      type: "step",
     };
     lab.los.push(labStep);
   });
