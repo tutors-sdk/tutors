@@ -35,7 +35,7 @@
       if (result.fenced) {
         resultStrs.push("~~~");
       }
-      result.html = convertMdToHtml(resultStrs.join("\n"), course.courseUrl);
+      result.html = convertMdToHtml(resultStrs.join("\n"));
       result.link = `https://tutors.dev/${result.link}`;
     });
   }
