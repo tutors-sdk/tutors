@@ -1,8 +1,6 @@
 <script lang="ts">
   import { currentCourse } from "$lib/stores";
   import { getDrawerStore } from "@skeletonlabs/skeleton";
-  import { convertMdToHtml } from "$lib/services/models/markdown-utils";
-  const courseInfo = convertMdToHtml($currentCourse.contentMd, "");
 
   const drawerStore = getDrawerStore();
   const drawerClose: any = () => {
@@ -15,6 +13,6 @@
 </div>
 <div class="px-12 py-4">
   <prose class="prose dark:prose-invert">
-    {@html courseInfo}
+    {@html $currentCourse?.contentHtml}
   </prose>
 </div>
