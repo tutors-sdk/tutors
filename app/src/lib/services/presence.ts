@@ -63,9 +63,10 @@ export function subscribePresence(presence: Presence, courseid: string) {
     }
 
     const uniqueUsers = new Set();
+    const selfEmail = presence.studentEmail;
 
     const filteredUniquePresences: PresenceObject[] = onlineUsersObj.filter((presence) => {
-      if (!uniqueUsers.has(presence.studentEmail)) {
+      if (!uniqueUsers.has(presence.studentEmail) && presence.studentEmail !== selfEmail) {
         uniqueUsers.add(presence.studentEmail);
         return true;
       }
@@ -83,9 +84,10 @@ export function subscribePresence(presence: Presence, courseid: string) {
     const filteredNewPresences = newPresences.filter((presence) => presence.channel === courseIDWithoutNetlify || presence.channel === courseIDWithNetlify);
 
     const uniqueUsers = new Set();
+    const selfEmail = presence.studentEmail;
 
     const filteredUniquePresences = filteredNewPresences.filter((presence) => {
-      if (!uniqueUsers.has(presence.studentEmail)) {
+      if (!uniqueUsers.has(presence.studentEmail) && presence.studentEmail !== selfEmail) {
         uniqueUsers.add(presence.studentEmail);
         return true;
       }
@@ -103,7 +105,7 @@ export function subscribePresence(presence: Presence, courseid: string) {
     const filteredLeftPresences = leftPresences.filter((presence) => presence.channel === courseIDWithoutNetlify || presence.channel === courseIDWithNetlify);
 
     studentsOnline.update((count) => count - filteredLeftPresences.length);
-    studentsOnlineList.update((list) => list.filter((item) => !filteredLeftPresences.some((presence) => presence.user_id === item.studentEmail)));
+    studentsOnlineList.update((list) => list.filter((item) => !filteredLeftPresences.some((presence) => presence.user_id === item.studentEmail && presence.user_id !== selfEmail)));
   });
 }
 
