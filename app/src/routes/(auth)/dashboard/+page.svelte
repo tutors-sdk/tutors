@@ -166,7 +166,7 @@
   <p class="text-2xl font-bold pb-4">Your previously accessed courses</p>
   <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
     {#if displayedCourseList}
-      {#each displayedCourseList as course}
+      {#each displayedCourseList.sort((a, b) => new Date(b.last_accessed) - new Date(a.last_accessed)) as course}
         <div class="card !bg-surface-50 dark:!bg-surface-700 card-hover m-2">
           <a href={"/course/" + course.id}>
             <section class="p-4">
