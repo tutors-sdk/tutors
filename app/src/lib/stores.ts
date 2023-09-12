@@ -3,6 +3,7 @@ import type { StudentLoEvent } from "$lib/services/types/metrics";
 import type { User } from "$lib/services/types/auth";
 import { localStorageStore } from "@skeletonlabs/skeleton";
 import type { Lo, Course } from "$lib/services/models/lo-types";
+import type { PresenceObject } from "./services/types/presence";
 
 export const revealSidebar = writable(false);
 export const revealOnline = writable(false);
@@ -19,4 +20,4 @@ export const authenticating: Writable<boolean> = writable(false);
 
 const students: StudentLoEvent[] = [];
 export const studentsOnline = writable(0);
-export const studentsOnlineList = writable(students);
+export const studentsOnlineList = writable<PresenceObject>(students);
