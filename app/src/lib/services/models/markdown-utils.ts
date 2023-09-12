@@ -99,6 +99,7 @@ export function convertLabToHtml(course: Course, lab: Lab) {
 }
 
 export function convertLoToHtml(course: Course, lo: Lo) {
+  if (!lo.contentMd) return;
   if (lo.type === "lab") {
     convertLabToHtml(course, lo as Lab);
   } else {
