@@ -10,6 +10,7 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
 
   // retrieve all Los in course
   const allLos = flattenLos(course.los);
+  allLos.push(course);
 
   // inject course path into all routes
   injectCourseUrl(allLos, courseId, courseUrl);

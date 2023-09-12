@@ -143,6 +143,10 @@ export function loadPropertyFlags(course: Course) {
   course.hasEnrollment = false;
   course.hasWhiteList = false;
   course.ignorePin = course.properties?.ignorepin?.toString();
+  if (course.properties?.icon) {
+    // @ts-ignore
+    course.icon = course.properties.icon;
+  }
 }
 export function initCalendar(course: Course) {
   const calendar = {
