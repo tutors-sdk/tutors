@@ -1,6 +1,6 @@
 import type { RealtimeChannel, SupabaseClient } from "@supabase/supabase-js";
 import { studentsOnline, studentsOnlineList } from "$lib/stores";
-import type { Presence } from "$lib/services/types/presence";
+import type { Presence, PresenceObject } from "$lib/services/types/presence";
 
 let presenceChannel: RealtimeChannel;
 
@@ -55,15 +55,25 @@ export function subscribePresence(presence: Presence, courseid: string) {
     const courseIDWithoutNetlify = courseid.replace(".netlify.app", "");
     const courseIDWithNetlify = `${courseIDWithoutNetlify}.netlify.app`;
 
-    const onlineUsersObj = [];
+    const onlineUsersObj: PresenceObject[] = [];
     for (const [key, value] of Object.entries(presenceState)) {
       if (key === courseIDWithoutNetlify || key === courseIDWithNetlify) {
         onlineUsersObj.push(...value);
       }
     }
 
-    studentsOnline.set(onlineUsersObj.length);
-    studentsOnlineList.set(onlineUsersObj);
+    const uniqueUsers = new Set();
+
+    const filteredUniquePresences: PresenceObject[] = onlineUsersObj.filter((presence) => {
+      if (!uniqueUsers.has(presence.studentEmail)) {
+        uniqueUsers.add(presence.studentEmail);
+        return true;
+      }
+      return false;
+    });
+
+    studentsOnline.set(filteredUniquePresences.length);
+    studentsOnlineList.set(filteredUniquePresences);
   });
 
   presenceChannel.on("presence", { event: "join" }, ({ newPresences }) => {
@@ -72,8 +82,18 @@ export function subscribePresence(presence: Presence, courseid: string) {
 
     const filteredNewPresences = newPresences.filter((presence) => presence.channel === courseIDWithoutNetlify || presence.channel === courseIDWithNetlify);
 
-    studentsOnline.update((count) => count + filteredNewPresences.length);
-    studentsOnlineList.update((list) => [...list, ...filteredNewPresences]);
+    const uniqueUsers = new Set();
+
+    const filteredUniquePresences = filteredNewPresences.filter((presence) => {
+      if (!uniqueUsers.has(presence.studentEmail)) {
+        uniqueUsers.add(presence.studentEmail);
+        return true;
+      }
+      return false;
+    });
+
+    studentsOnline.update((count) => count + filteredUniquePresences.length);
+    studentsOnlineList.update((list) => [...list, ...filteredUniquePresences]);
   });
 
   presenceChannel.on("presence", { event: "leave" }, ({ leftPresences }) => {

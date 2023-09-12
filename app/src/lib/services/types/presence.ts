@@ -10,3 +10,7 @@ export interface Presence {
   loRoute: string;
   loIcon?: IconType;
 }
+
+export type PresenceObject = {
+  [key: string]: any;
+};
