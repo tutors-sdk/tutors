@@ -5,6 +5,7 @@ import { LiveLab } from "./models/live-lab";
 
 export const courseService = {
   courses: new Map<string, Course>(),
+  labs: new Map<string, LiveLab>(),
   courseUrl: "",
 
   async getOrLoadCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course> {
@@ -70,10 +71,14 @@ export const courseService = {
       labId = labId.slice(0, labId.lastIndexOf("/"));
     }
 
-    const lab = course.loIndex.get(labId) as Lab;
-    const liveLab = new LiveLab(course, lab, labId);
+    let liveLab = this.labs.get(labId);
+    if (!liveLab) {
+      const lab = course.loIndex.get(labId) as Lab;
+      liveLab = new LiveLab(course, lab, labId);
+      this.labs.set(labId, liveLab);
+    }
 
-    currentLo.set(lab);
+    currentLo.set(liveLab.lab);
     return liveLab;
   },
 
