@@ -17,7 +17,6 @@ import footnote from "markdown-it-footnote";
 // @ts-ignore
 import deflist from "markdown-it-deflist";
 import type { Course } from "./lo-types";
-import { browserLocalPersistence } from "firebase/auth";
 
 const markdownIt: any = new MarkdownIt({
   html: false, // Enable HTML tags in source
@@ -34,13 +33,13 @@ const markdownIt: any = new MarkdownIt({
       } catch (__) {}
     }
     return '<pre class="hljs"><code>' + markdownIt.utils.escapeHtml(str) + "</code></pre>";
-  }
+  },
 });
 
 const tocOptions = { includeLevel: [1, 2, 3] };
 markdownIt.use(latex);
 markdownIt.use(anchor, {
-  permalink: anchor.permalink.headerLink()
+  permalink: anchor.permalink.headerLink(),
 });
 
 markdownIt.use(toc, tocOptions);
@@ -99,6 +98,7 @@ export function convertLabToHtml(course: Course, lab: Lab) {
 }
 
 export function convertLoToHtml(course: Course, lo: Lo) {
+  if (!lo.contentMd) return;
   if (lo.type === "lab") {
     convertLabToHtml(course, lo as Lab);
   } else {
