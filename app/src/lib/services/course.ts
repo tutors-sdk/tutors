@@ -11,11 +11,21 @@ export const courseService = {
     let course = this.courses.get(courseId);
     let courseUrl = courseId;
 
+    function isValidURL(url: string) {
+      const urlPattern = /^(https?:\/\/)?([A-Za-z0-9.-]+\.[A-Za-z]{2,})(:[0-9]+)?(\/[A-Za-z0-9_.-]+)*(\/[A-Za-z0-9_.-]+\?[A-Za-z0-9_=-]+)?(#.*)?$/;
+      return urlPattern.test(url);
+    }
+
     if (!course) {
-      if (!courseId.includes(".netlify.app") && !courseId.includes(".tutors.dev")) {
-        courseUrl = `${courseId}.netlify.app`;
+      if (isValidURL(courseId)) {
+        if (courseId.includes(".netlify.app")) {
+          courseUrl = courseId;
+          courseId = courseId.replace(".netlify.app", "");
+        } else {
+          courseUrl = courseId;
+        }
       } else {
-        courseId = courseId.split(".")[0];
+        courseUrl = `${courseId}.netlify.app`;
       }
 
       try {
