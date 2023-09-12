@@ -99,17 +99,18 @@ export function convertLabToHtml(course: Course, lab: Lab) {
 }
 
 export function convertLoToHtml(course: Course, lo: Lo) {
-  if (!lo.contentMd) return;
   if (lo.type === "lab") {
     convertLabToHtml(course, lo as Lab);
   } else {
+    if (lo.summary) lo.summary = markdownIt.render(lo.summary);
     let md = lo.contentMd;
-    if (course.courseUrl) {
-      const url = lo.route.replace(`/${lo.type}/${course.courseId}`, course.courseUrl);
-      md = filter(md, url);
+    if (md) {
+      if (course.courseUrl) {
+        const url = lo.route.replace(`/${lo.type}/${course.courseId}`, course.courseUrl);
+        md = filter(md, url);
+      }
+      lo.contentHtml = markdownIt.render(md);
     }
-    lo.contentHtml = markdownIt.render(md);
-    lo.summary = markdownIt.render(lo.summary);
   }
 }
 
