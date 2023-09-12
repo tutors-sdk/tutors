@@ -1,29 +1,53 @@
 import type { Lo, Composite, Talk, LoType, Course, Topic, IconNav, Calendar, WeekType } from "./lo-types";
 
+export function flattenLos(los: Lo[]): Lo[] {
+  let result: Lo[] = [];
+  los.forEach((lo) => {
+    result.push(lo);
+    if ("los" in lo) {
+      // @ts-ignore
+      result = result.concat(flattenLos(lo.los));
+    }
+  });
+  return result;
+}
+
 export function filterByType(list: Lo[], type: LoType): Lo[] {
   const los = flattenLos(list);
   return los.filter((lo) => lo.type === type);
 }
 
-export function injectCourseUrl(lo: Lo, id: string, url: string) {
-  if (lo.type === "archive" || lo.type === "otherType") {
-    lo.route = lo.route?.replace("{{COURSEURL}}", url);
-  } else {
-    lo.route = lo.route?.replace("{{COURSEURL}}", id);
+export function fixRoutePaths(lo: Lo) {
+  if (lo.route && lo.route[0] === "#") {
+    lo.route = "/" + lo.route.slice(1);
   }
+  if (lo.video && lo.video[0] === "#") {
+    lo.video = "/" + lo.video.slice(1);
+  }
+  if (lo.route.endsWith("md") && lo.video) {
+    lo.route = lo.video;
+  }
+}
 
-  lo.img = lo.img?.replace("{{COURSEURL}}", url);
-  lo.video = lo.video?.replace("{{COURSEURL}}", id);
-  if (lo.type == "talk" || lo.type == "paneltalk") {
-    const talk = lo as Talk;
-    talk.pdf = talk.pdf?.replace("{{COURSEURL}}", url);
-  }
-  if ("los" in lo) {
-    // @ts-ignore
-    lo.los.forEach((childLo) => {
-      injectCourseUrl(childLo, id, url);
-    });
-  }
+export function injectCourseUrl(los: Lo[], id: string, url: string) {
+  los.forEach((lo) => {
+    if (lo.type === "archive" || lo.type === "otherType") {
+      lo.route = lo.route?.replace("{{COURSEURL}}", url);
+    } else {
+      lo.route = lo.route?.replace("{{COURSEURL}}", id);
+    }
+
+    lo.img = lo.img?.replace("{{COURSEURL}}", url);
+    lo.video = lo.video?.replace("{{COURSEURL}}", id);
+    if (lo.type == "talk" || lo.type == "paneltalk") {
+      const talk = lo as Talk;
+      talk.pdf = talk.pdf?.replace("{{COURSEURL}}", url);
+    }
+
+    // legacy version of generator included hash based routes;
+    // remove these now:
+    fixRoutePaths(lo);
+  });
 }
 
 export function createToc(course: Course) {
@@ -96,18 +120,6 @@ function createWallLink(type: string, course: Course): IconNav {
   };
 }
 
-export function flattenLos(los: Lo[]): Lo[] {
-  let result: Lo[] = [];
-  los.forEach((lo) => {
-    result.push(lo);
-    if ("los" in lo) {
-      // @ts-ignore
-      result = result.concat(flattenLos(lo.los));
-    }
-  });
-  return result;
-}
-
 export function allVideoLos(los: Lo[]): Lo[] {
   const allVideoLos: Lo[] = [];
   for (const lo of los) {
@@ -121,18 +133,6 @@ export function allVideoLos(los: Lo[]): Lo[] {
 export function removeLeadingHashes(str: string): string {
   const hashIndex = str.lastIndexOf("#");
   return hashIndex >= 0 ? str.substring(hashIndex + 1) : str;
-}
-
-export function fixRoutePaths(lo: Lo) {
-  if (lo.route && lo.route[0] === "#") {
-    lo.route = "/" + lo.route.slice(1);
-  }
-  if (lo.video && lo.video[0] === "#") {
-    lo.video = "/" + lo.video.slice(1);
-  }
-  if (lo.route.endsWith("md") && lo.video) {
-    lo.route = lo.video;
-  }
 }
 
 export function loadPropertyFlags(course: Course) {

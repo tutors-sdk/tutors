@@ -1,24 +1,32 @@
 import { isCompositeLo, type Course, type IconType, type Lo, type Panels, type Composite, type LoType, type Lab, type Units, type Unit, type Side } from "./lo-types";
 import { convertLoToHtml } from "./markdown-utils";
-import { allVideoLos, createCompanions, createToc, createWallBar, filterByType, fixRoutePaths, flattenLos, initCalendar, injectCourseUrl, loadPropertyFlags } from "./lo-utils";
+import { allVideoLos, createCompanions, createToc, createWallBar, filterByType, flattenLos, initCalendar, injectCourseUrl, loadPropertyFlags } from "./lo-utils";
 
 export function decorateCourseTree(course: Course, courseId: string = "", courseUrl = "") {
+  // define course properties
   course.courseId = courseId;
   course.courseUrl = courseUrl;
   course.route = `/course/${courseId}`;
-  injectCourseUrl(course, courseId, courseUrl);
+
+  // retrieve all Los in course
+  const allLos = flattenLos(course.los);
+
+  // inject course path into all routes
+  injectCourseUrl(allLos, courseId, courseUrl);
+
+  // Construct course tree
   decorateLoTree(course, course);
 
+  // index all Los in course
+  course.loIndex = new Map<string, Lo>();
+  allLos.forEach((lo) => course.loIndex.set(lo.route, lo));
+  const videoLos = allVideoLos(allLos);
+  videoLos.forEach((lo) => course.loIndex.set(lo.video, lo));
+
+  // compute course properties
   course.walls = [];
   course.wallMap = new Map<string, Lo[]>();
   ["talk", "note", "lab", "web", "archive", "github"].forEach((type) => addWall(course, type as LoType));
-
-  const los = flattenLos(course.los);
-  los.forEach((lo) => fixRoutePaths(lo));
-  course.loIndex = new Map<string, Lo>();
-  los.forEach((lo) => course.loIndex.set(lo.route, lo));
-  const videoLos = allVideoLos(los);
-  videoLos.forEach((lo) => course.loIndex.set(lo.video, lo));
   createCompanions(course);
   createWallBar(course);
   createToc(course);
@@ -27,12 +35,18 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
 }
 
 export function decorateLoTree(course: Course, lo: Lo) {
-  lo.icon = getIcon(lo);
+  // every Lo knows its parent
   lo.parentCourse = course;
+  // recover icon from frontmatter if present
+  lo.icon = getIcon(lo);
+  // define breadcrump - path to all parent Los
   lo.breadCrumbs = [];
   crumbs(lo, lo.breadCrumbs);
+  // Convert summary and contentMd to html
   convertLoToHtml(course, lo);
+
   if (isCompositeLo(lo)) {
+    // if Lo is composite, recursively decorate all child los
     const compositeLo = lo as Composite;
     compositeLo.panels = getPanels(compositeLo.los);
     compositeLo.units = getUnits(compositeLo.los);
