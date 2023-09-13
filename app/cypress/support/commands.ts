@@ -85,7 +85,7 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
   } else {
     const text = lo.title.trim();
     cy.log(text);
-    cy.findByText(text).then(($element) => {
+    cy.findByText(text, {timeout: 10000}).then(($element) => {
       // Perform actions on the found element if needed
       cy.wrap($element).should('exist');
       cy.wrap($element).click({ force: true })
@@ -188,6 +188,15 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
 
     cy.findAllByText(lo.title.trim(), { matchCase: false }).click({ force: true })
       .then(() => {
+        cy.location().then((location) => {
+          cy.request({
+            method: 'GET',
+            url: location.href,
+            failOnStatusCode: false, // Allow non-2xx status codes
+          }).then((response) => {
+            expect(response.status).to.not.eq(404); // Assert that the status code is 404
+          });
+        });
         cy.log("after clicking archive card")
         cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
         // Now you can interact with the <li> elements

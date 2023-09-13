@@ -5,7 +5,7 @@ let course: any = null;
 describe("Tutors Reader: Loading the JSON fixture", function () {
   before(function () {
     //passing through the tutors json to be ingested and iterate over each objetc and assign out to c
-    cy.fixture("tutors.json").then((c: any) => {
+    cy.fixture("tutors3.2.3.json").then((c: any) => {
       course = c;
     });
   });
@@ -66,9 +66,12 @@ describe("Tutors Reader: Loading the JSON fixture", function () {
         cy.clickCard(topic);
         topic.los.forEach((lo: any) => {
           cy.clickCard(lo);
-          lo.los.forEach((l: any) => {
-            cy.clickCard(l);
-          });
+          const los = typeof lo.los === "object" ? lo.los : "";
+          if (los !== "") {
+            lo.los.forEach((l: any) => {
+              cy.clickCard(l);
+            });
+          }
           cy.get("div.h-full.overflow-hidden.contents").invoke("css", "overflow", "visible");
           cy.get("li.crumb").eq(1).click();
         });
