@@ -1,4 +1,4 @@
-import type { Lo, Composite, Talk, LoType, Course, Topic, IconNav, Calendar, WeekType } from "./lo-types";
+import { type Lo, type Composite, type Talk, type LoType, type Course, type Topic, type IconNav, type Calendar, type WeekType, isCompositeLo } from "./lo-types";
 
 export function flattenLos(los: Lo[]): Lo[] {
   let result: Lo[] = [];
@@ -50,22 +50,32 @@ export function injectCourseUrl(los: Lo[], id: string, url: string) {
   });
 }
 
+export function removeUnknownLos(los: Lo[]) {
+  los.forEach((lo, index) => {
+    if (lo.type === "unknown") {
+      los.splice(index, 1);
+    }
+  });
+}
+
 export function createToc(course: Course) {
   course.los.forEach((lo) => {
-    const topic = lo as Topic;
-    topic.toc = [];
-    topic.toc.push(...topic.panels.panelVideos, ...topic.panels.panelTalks, ...topic.panels.panelNotes, ...topic.units.units, ...topic.units.standardLos, ...topic.units.sides);
+    if (lo.type == "topic") {
+      const topic = lo as Topic;
+      topic.toc = [];
+      topic.toc.push(...topic.panels.panelVideos, ...topic.panels.panelTalks, ...topic.panels.panelNotes, ...topic.units.units, ...topic.units.standardLos, ...topic.units.sides);
 
-    topic.toc.forEach((lo) => {
-      lo.parentLo = course;
-      lo.parentTopic = topic;
-      if (lo.type === "unit" || lo.type === "side") {
-        const composite = lo as Composite;
-        composite.los.forEach((subLo) => {
-          subLo.parentTopic = topic;
-        });
-      }
-    });
+      topic.toc.forEach((lo) => {
+        lo.parentLo = course;
+        lo.parentTopic = topic;
+        if (lo.type === "unit" || lo.type === "side") {
+          const composite = lo as Composite;
+          composite.los.forEach((subLo) => {
+            subLo.parentTopic = topic;
+          });
+        }
+      });
+    }
   });
 }
 
