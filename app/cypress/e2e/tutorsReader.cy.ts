@@ -5,7 +5,7 @@ let course: any = null;
 describe("Tutors Reader: Loading the JSON fixture", function () {
   before(function () {
     //passing through the tutors json to be ingested and iterate over each objetc and assign out to c
-    cy.fixture("tutors3.2.3.json").then((c: any) => {
+    cy.fixture("tutors.json").then((c: any) => {
       course = c;
     });
   });
