@@ -29,7 +29,7 @@
       "name": "reader",
       "port": 9222,
       "urlFilter": "http://localhost:3000/*",
-      "webRoot": "${workspaceFolder}/apps/course"
+      "webRoot": "${workspaceFolder}/app"
     },
     {
       "type": "chrome",
