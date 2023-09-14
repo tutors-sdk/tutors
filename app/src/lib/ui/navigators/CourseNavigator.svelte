@@ -7,11 +7,13 @@
 </script>
 
 <Accordion regionPanel="space-y-0.5">
-  {#each course.los as topic}
+  {#each course.los as lo}
     <AccordionItem>
-      <svelte:fragment slot="summary">{topic.title}</svelte:fragment>
+      <svelte:fragment slot="summary">{lo.title}</svelte:fragment>
       <svelte:fragment slot="content">
-        <TopicNavigator {topic} />
+        {#if lo.type === "topic"}
+          <TopicNavigator topic={lo} />
+        {/if}
       </svelte:fragment>
     </AccordionItem>
   {/each}
