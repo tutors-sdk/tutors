@@ -26,10 +26,10 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   const videoLos = allVideoLos(allLos);
   videoLos.forEach((lo) => course.loIndex.set(lo.video, lo));
 
+  loadPropertyFlags(course);
   createCompanions(course);
   createWalls(course);
   createToc(course);
-  loadPropertyFlags(course);
   initCalendar(course);
 }
 

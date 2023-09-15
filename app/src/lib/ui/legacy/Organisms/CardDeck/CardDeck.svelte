@@ -3,6 +3,7 @@
   import { currentCourse } from "$lib/stores";
   import { Card } from "$lib/ui/legacy";
   import type { Lo } from "$lib/services/models/lo-types";
+  import { setShowHide } from "$lib/services/models/lo-utils";
 
   export let los: Lo[] = [];
   export let border: boolean = false;
@@ -18,6 +19,7 @@
     if (pinBuffer === ignorePin) {
       los.forEach((lo) => {
         lo.hide = false;
+        setShowHide(lo, false);
       });
       refresh = !refresh;
     }

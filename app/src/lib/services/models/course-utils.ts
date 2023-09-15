@@ -1,5 +1,5 @@
 import type { Composite, Course, IconNav, Lo, LoType, Topic } from "./lo-types";
-import { filterByType } from "./lo-utils";
+import { filterByType, setShowHide } from "./lo-utils";
 
 export function createToc(course: Course) {
   course.los.forEach((lo) => {
@@ -77,17 +77,8 @@ function createWallLink(type: string, course: Course): IconNav {
 }
 
 function addWall(course: Course, type: LoType) {
-  const los = filterByType(course.los, type);
-  los.forEach((lo, index) => {
-    if (lo.breadCrumbs) {
-      const topics = lo.breadCrumbs.filter((lo) => lo.type === "topic");
-      if (topics.length > 0) {
-        if (topics[0].hide) {
-          los.splice(index, 1);
-        }
-      }
-    }
-  });
+  let los = filterByType(course.los, type);
+  los = los.filter((lo) => lo.hide === false);
   if (los.length > 0) {
     course.walls?.push(filterByType(course.los, type));
   }
@@ -108,6 +99,11 @@ export function loadPropertyFlags(course: Course) {
     // @ts-ignore
     course.icon = course.properties.icon;
   }
+  course.los.forEach((lo) => {
+    if (lo.hide) {
+      setShowHide(lo, true);
+    }
+  });
 }
 
 export function initCalendar(course: Course) {

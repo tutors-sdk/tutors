@@ -1,4 +1,4 @@
-import type { Lo, Talk, LoType, IconType, Units, Panels, Unit, Side } from "./lo-types";
+import { type Lo, type Talk, type LoType, type IconType, type Units, type Panels, type Unit, type Side, isCompositeLo, type Composite } from "./lo-types";
 
 export function flattenLos(los: Lo[]): Lo[] {
   let result: Lo[] = [];
@@ -114,5 +114,17 @@ export function crumbs(lo: Lo | undefined, los: Lo[]) {
   if (lo) {
     crumbs(lo.parentLo, los);
     los.push(lo);
+  }
+}
+
+export function setShowHide(lo: Lo, status: boolean) {
+  lo.hide = status;
+  if (isCompositeLo(lo)) {
+    const compositeLo = lo as Composite;
+    for (const childLo of compositeLo.los) {
+      //if (compositeLo.los) {
+      setShowHide(childLo, status);
+      // }
+    }
   }
 }
