@@ -17,6 +17,7 @@ Cypress.Commands.add("clickBreadCrumb", (step: number) => {
   cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
   // Now you can interact with the <li> elements
   cy.get('li.crumb', { timeout: 100000 }).eq(step).click({ force: true });
+  cy.checkStatusCode();
 });
 
 Cypress.Commands.add("clickCard", (lo: any) => {
@@ -56,6 +57,7 @@ Cypress.Commands.add("clickCard", (lo: any) => {
         cy.triggerCardAction(lo);
     }
     cy.wait(250);
+    cy.checkStatusCode();
   }
 });
 
@@ -72,6 +74,7 @@ Cypress.Commands.add("clickLabStep", (lo: any) => {
     if (href.includes("http")) {
       cy.wrap(link).should('have.attr', 'href').and('include', href);
       expect(link).to.have.attr('target', '_blank')
+      cy.checkStatusCode();
     }
   })
 });
@@ -85,7 +88,8 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
   } else {
     const text = lo.title.trim();
     cy.log(text);
-    cy.findByText(text).then(($element) => {
+    cy.findByText(text, { timeout: 10000 }).then(($element) => {
+      cy.checkStatusCode()
       // Perform actions on the found element if needed
       cy.wrap($element).should('exist');
       cy.wrap($element).click({ force: true })
@@ -98,12 +102,15 @@ Cypress.Commands.add("clickLabCard", (lo: any) => {
   // Temporarily modify CSS to make the parent container visible
   cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
 
-  cy.contains(lo.title.trim()).click({ force: true });
+  cy.contains(lo.title.trim()).click({ force: true }).then(() => {
+    cy.checkStatusCode();
+  });
   lo.los.forEach((l: any, i: number) => {
     cy.clickLabStep(l)
     if (lo.los.length - 1 === i) {
       // Now you can interact with the <li> elements
       cy.get('li.crumb', { timeout: 10000 }).eq(2).click();
+      cy.checkStatusCode();
     }
   });
 });
@@ -111,6 +118,7 @@ Cypress.Commands.add("clickLabCard", (lo: any) => {
 Cypress.Commands.add("toggleTOCWithVerification", (contents: any) => {
   //locates the Table of Contents button in the top right
   cy.get('button.btn.btn-sm', { timeout: 10000 }).eq(2).click("topRight", { force: true });
+  cy.checkStatusCode()
   //loops through the titles to verify that each title is shown on screen as should
   contents.forEach((element: any) => {
     if (element.title != " Hidden\r") {
@@ -125,6 +133,7 @@ Cypress.Commands.add("toggleTOCWithVerification", (contents: any) => {
 Cypress.Commands.add("toggleInfoWithVerification", (contents: any) => {
   //locates the info button button in the top left
   cy.get('button.btn.btn-sm', { timeout: 10000 }).eq(0).click("topLeft", { force: true });
+  cy.checkStatusCode()
   //loops through the array of title and summary to verify that each title is shown on screen as should
   contents.forEach((element: any) => {
     cy.log(element)
@@ -144,16 +153,17 @@ Cypress.Commands.add("partialSearchVerification", (searchWord: string) => {
   cy.get('div.pt-4.text-right.text-sm a', { timeout: 10000 })
     .each((link) => {
       //const links = els.toArray();
-        let href = link.attr('href');
-        cy.log('Href:', href);
-        //if the link is a link to another website it should have target _blank
-        cy.wrap(link).should('have.attr', 'href').and('include', href);
-        expect(link).to.have.attr('target', '_blank')
-        cy.wait(100);
+      cy.checkStatusCode()
+      let href = link.attr('href');
+      cy.log('Href:', href);
+      //if the link is a link to another website it should have target _blank
+      cy.wrap(link).should('have.attr', 'href').and('include', href);
+      expect(link).to.have.attr('target', '_blank')
+      cy.wait(100);
     }).then((els) => {
       const links = els.toArray();
 
-      links.forEach((el) =>{
+      links.forEach((el) => {
         const found = el.innerText.match(pattern)
         if (found !== null) {
           cy.log(`${el} has been found`)
@@ -188,7 +198,8 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
 
     cy.findAllByText(lo.title.trim(), { matchCase: false }).click({ force: true })
       .then(() => {
-        cy.log("after clicking archive card")
+        cy.checkStatusCode();
+        cy.log("after clicking archive card");
         cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
         // Now you can interact with the <li> elements
         cy.get('li.crumb', { timeout: 10000 }).eq(1).click({ force: true });
@@ -273,10 +284,23 @@ function countOccurrencesOfType(obj: any, type: string) {
   return count;
 }
 
+Cypress.Commands.add("checkStatusCode", () => {
+  cy.location().then((location) => {
+    cy.request({
+      method: 'GET',
+      url: location.href,
+      failOnStatusCode: false, // Allow non-2xx status codes
+    }).then((response) => {
+      expect(response.status).to.not.eq(404); // Assert that the status code is not 404
+    });
+  });
+});
+
 declare global {
   namespace Cypress {
     interface Chainable {
       goBack(): Chainable<any>;
+      checkStatusCode(): Chainable<any>;
       clickCard(lo: any): Chainable<any>;
       clickLabStep(lo: any): Chainable<any>;
       clickLabCard(lo: any): Chainable<any>;

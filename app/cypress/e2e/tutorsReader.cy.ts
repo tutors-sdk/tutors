@@ -66,9 +66,12 @@ describe("Tutors Reader: Loading the JSON fixture", function () {
         cy.clickCard(topic);
         topic.los.forEach((lo: any) => {
           cy.clickCard(lo);
-          lo.los.forEach((l: any) => {
-            cy.clickCard(l);
-          });
+          const los = typeof lo.los === "object" ? lo.los : "";
+          if (los !== "") {
+            lo.los.forEach((l: any) => {
+              cy.clickCard(l);
+            });
+          }
           cy.get("div.h-full.overflow-hidden.contents").invoke("css", "overflow", "visible");
           cy.get("li.crumb").eq(1).click();
         });
