@@ -1,0 +1,68 @@
+<script lang="ts">
+  import type { Lo } from "$lib/services/models/lo-types";
+  import { currentCourse, layout } from "$lib/stores";
+  import { onDestroy } from "svelte";
+  import Image from "../legacy/Atoms/Image/Image.svelte";
+  import { getIcon } from "../legacy/Atoms/Icon/themes";
+  import { cardTransition } from "$lib/ui/animations";
+  import { Icon } from "../legacy";
+
+  export let lo: Lo;
+  let target = "";
+  if (lo.type === "web") {
+    if (lo.route.startsWith("http")) {
+      target = "_blank";
+    }
+  }
+
+  if (lo) {
+    if (lo.type == "video") {
+      lo.route = lo.video;
+    }
+  }
+
+  let headingText = "";
+  let cardWidths = "";
+
+  const unsubscribe = layout.subscribe((layout) => {
+    if (layout === "compacted") {
+      headingText = "!text-md font-medium";
+      cardWidths = "w-36 h-[18rem]";
+    } else {
+      headingText = "!text-lg font-semibold";
+      cardWidths = "w-60 h-[24rem]";
+    }
+  });
+
+  onDestroy(unsubscribe);
+</script>
+
+<a href={lo.route} {target}>
+  <div transition:cardTransition class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 border-{getIcon(lo.type).colour}-500 m-2 {cardWidths} transition-all hover:scale-105">
+    <header class="card-header flex flex-row items-center justify-between p-3">
+      <div class="inline-flex w-full">
+        <div class="line-clamp-2 flex-auto {headingText} !text-black dark:!text-white">
+          {lo.title}
+        </div>
+        {#if $currentCourse && !$currentCourse.areVideosHidden}
+          {#if lo.video && lo.type !== "video"}
+            <a href={lo.video}>
+              <Icon type="video" />
+            </a>
+          {/if}
+        {/if}
+        <div class="flex-none"><Icon type={lo.type} /></div>
+      </div>
+    </header>
+    <div class="card-body">
+      <figure class="flex justify-center object-scale-down p-1">
+        <Image {lo} />
+      </figure>
+    </div>
+    <footer class="card-footer">
+      <div class="prose dark:prose-invert line-clamp-3 text-center leading-6">
+        {@html lo.summary}
+      </div>
+    </footer>
+  </div>
+</a>
