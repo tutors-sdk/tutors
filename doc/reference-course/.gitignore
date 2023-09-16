@@ -1,3 +1,5 @@
 json
 publis-site
 html
+/cypress/videos
+/cypress/screenshots

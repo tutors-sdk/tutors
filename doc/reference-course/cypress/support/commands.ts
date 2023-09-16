@@ -23,18 +23,18 @@ Cypress.Commands.add("verifyContentsExists", (lo: any, id: string) => {
   const video = typeof lo.video === 'string' ? lo.video.trim() : "";
 
   if (pdf !== "") {
-    cy.log("PDF EXISTS: "+ lo.pdf)
+    cy.log("PDF EXISTS: " + lo.pdf)
     cy.inspectHref(lo.title.trim(), lo.pdf, id)
   } else if (video !== "") {
-    cy.log("VIDEO EXISTS: "+ video)
+    cy.log("VIDEO EXISTS: " + video)
 
     /**
      * NB: This needs to be commented back in for the test to run as it should just altered to have it
      * run with the broken link
      */
-   // cy.inspectHref(lo.title.trim(), video, id);
-   } else {
-    cy.log("GITHUB EXISTS: "+ lo)
+    // cy.inspectHref(lo.title.trim(), video, id);
+  } else {
+    cy.log("GITHUB EXISTS: " + lo)
 
     cy.verifyGitHubHref(lo);
   }
@@ -44,16 +44,18 @@ Cypress.Commands.add("clickStaticBreadCrumb", (step: number) => {
   // Now you can interact with the <li> elements
   cy.get('span.hidden.text-xs.lg\\:block.lg\\:pl-2', { timeout: 10000 })
     .eq(step).click();
+  cy.checkStatusCode();
 });
 
 Cypress.Commands.add("clickStaticLabCard", (lo: any) => {
   cy.contains(lo.title.trim()).click();
+  cy.checkStatusCode();
   lo.los.forEach((l: any, i: number) => {
-
     cy.clickStaticLabStep(l)
     if (lo.los.length - 1 === i) {
-      cy.log("End of lab card: " + l)
+      cy.log("end of checking lab hrefs...")
       cy.get('span.hidden.text-xs.lg\\:block.lg\\:pl-2', { timeout: 10000 }).eq(2).click();
+      cy.checkStatusCode();
     }
   });
 });
@@ -63,11 +65,13 @@ Cypress.Commands.add("clickStaticLabStep", (lo: any) => {
   //If the JSON will not have the # as in my test json, it must be removed to function
   cy.get(`div.hidden.md\\:block ul.menu`, { timeout: 10000 })
     .find('a').should('exist').contains(lo.title.slice(1).trim()).click({ force: true });
+  cy.checkStatusCode();
 });
 
 Cypress.Commands.add("triggerStaticCardAction", (lo: any) => {
   if (lo.title.includes('#')) {
     cy.contains(lo.title.slice(1).trim()).click({ force: true });
+    cy.checkStatusCode();
   } else {
     const text = lo.title.trim();
     cy.log(text);
@@ -79,6 +83,7 @@ Cypress.Commands.add("triggerStaticCardAction", (lo: any) => {
           cy.wait(250);
           // Element(s) found, perform actions on the first element
           cy.get(el, { timeout: 10000 }).should('exist').click({ force: true })
+          cy.checkStatusCode();
         });
       } else {
         cy.log(`Element with text "${text}" not found.`);
@@ -92,7 +97,7 @@ Cypress.Commands.add("clickPanelVideo", (lo: any) => {
   cy.findAllByText(lo.title.trim(), { timeout: 10000 }, { matchCase: false });
 });
 
-Cypress.Commands.add("verifyDownloadOfArchive", (lo: any, version: string) => {
+Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
   cy.window().document().then(function (doc) {
     doc.addEventListener('click', () => {
       // this adds a listener that reloads your page 
@@ -102,14 +107,10 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any, version: string) => {
 
     cy.findAllByText(lo.title.trim(), { matchCase: false }).click({ force: true })
       .then(() => {
-        if (version == "dynamic") {
-          cy.get('div.h-full.overflow-hidden.contents',{ timeout: 10000 }).invoke('css', 'overflow', 'visible');
-          // Now you can interact with the <li> elements
-          cy.get('li.crumb', { timeout: 10000 }).eq(1).click({ force: true });
-        } else {
-          cy.get('span.hidden.text-xs.lg\\:block.lg\\:pl-2', { timeout: 10000 })
-            .eq(1).should('be.visible').click();
-        }
+        cy.checkStatusCode();
+        cy.get('span.hidden.text-xs.lg\\:block.lg\\:pl-2', { timeout: 10000 })
+          .eq(1).should('be.visible').click();
+          cy.checkStatusCode();
       });
   })
 });
@@ -198,7 +199,7 @@ Cypress.Commands.add("processCompanionsAndWallsLinks", (course: any) => {
 Cypress.Commands.add("countHowManyLearningObjects", (alteredString: string, counts: number, course: any, type: string) => {
   cy.visit(`${alteredString}`);
   counts = countOccurrencesOfType(course, type);
-  cy.log('occurences: ' + countOccurrencesOfType(course, type))
+  cy.log("occurences: " + countOccurrencesOfType(course, type))
   cy.get(".card > a", { timeout: 10000 }).should('have.length', counts);
 });
 
@@ -232,7 +233,7 @@ Cypress.Commands.add("clickStaticCard", (lo: any, id: string) => {
         cy.verifyContentsExists(lo, id);
         break;
       case "archive":
-        cy.verifyDownloadOfArchive(lo, "static");
+        cy.verifyDownloadOfArchive(lo);
         break;
       case "web":
         cy.verifyContentsExists(lo, id);
@@ -248,20 +249,31 @@ Cypress.Commands.add("clickStaticCard", (lo: any, id: string) => {
         cy.triggerStaticCardAction(lo);
     }
     cy.wait(250);
+    cy.checkStatusCode();
   }
+});
+
+Cypress.Commands.add("checkStatusCode", () => {
+  cy.location().then((location) => {
+    cy.request({
+      method: 'GET',
+      url: location.href,
+      failOnStatusCode: false, // Allow non-2xx status codes
+    }).then((response) => {
+      expect(response.status).to.not.eq(404); // Assert that the status code is not 404
+    });
+  });
 });
 
 declare global {
   namespace Cypress {
     interface Chainable {
       goBack(): Chainable<any>;
-      /**
-       * ***HTML Generator Version
-       */
+      checkStatusCode(): Chainable<any>;
       clickStaticCard(lo: any, id: string): Chainable<any>;
       clickPanelVideo(lo: any): Chainable<any>;
       clickGithubRepo(lo: any): Chainable<any>;
-      verifyDownloadOfArchive(lo: any, version: string): Chainable<any>;
+      verifyDownloadOfArchive(lo: any): Chainable<any>;
       clickStaticLabStep(lo: any): Chainable<any>;
       clickStaticBreadCrumb(step: number): Chainable<any>;
       clickStaticLabCard(lo: any): Chainable<any>;
