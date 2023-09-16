@@ -1,18 +1,10 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import { VideoCard, TopicNavigatorCard } from "$lib/ui/legacy";
+  import Context from "$lib/ui/learninng-objects/Context.svelte";
+  import Video from "$lib/ui/learninng-objects/Video.svelte";
   export let data: PageData;
 </script>
 
-{#if data.lo}
-  <div class="min-h-screen flex w-11/12 mx-auto">
-    <div class="w-full">
-      {#key data.lo}
-        <VideoCard lo={data.lo} autoplay={true} />
-      {/key}
-    </div>
-    <div class="hidden md:block">
-      <TopicNavigatorCard topic={data.lo.parentTopic} />
-    </div>
-  </div>
-{/if}
+<Context lo={data.lo}>
+  <Video lo={data.lo} />
+</Context>

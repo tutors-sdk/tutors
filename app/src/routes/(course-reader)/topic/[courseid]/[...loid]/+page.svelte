@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import TopDeck from "$lib/ui/legacy/Organisms/CardDeck/TopDeck.svelte";
+  import Composite from "$lib/ui/learninng-objects/Composite.svelte";
   export let data: PageData;
 </script>
 
-<TopDeck composite={data.topic} />
+<Composite composite={data.topic} />
