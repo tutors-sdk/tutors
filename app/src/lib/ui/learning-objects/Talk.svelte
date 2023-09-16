@@ -1,36 +1,39 @@
-<script lang="js">
+<script lang="ts">
   import Icon from "../icons/Icon.svelte";
+  // @ts-ignore
   import FileSaver from "file-saver";
   import { onDestroy, tick } from "svelte";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
 
+  // @ts-ignore
   import * as pdfjs from "pdfjs-dist/build/pdf.js";
   /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
   import "pdfjs-dist/build/pdf.worker.entry";
+  import type { Talk } from "$lib/services/models/lo-types";
 
   export let url = "";
   export let scale = 1.8;
   export let pageNum = 1; //must be number
-  export let lo = null;
+  export let lo: Talk;
 
   url = lo.pdf;
 
-  let canvas;
+  let canvas: any;
   let pageCount = 0;
-  let pdfDoc = null;
+  let pdfDoc: any = null;
   let pageRendering = false;
-  let pageNumPending = null;
+  let pageNumPending: any = null;
   let rotation = 0;
   let totalPage = 0;
-  let interval;
-  let secondInterval;
+  let interval: any;
+  let secondInterval: any;
 
-  let pages = [];
+  let pages: any = [];
 
-  const renderPage = (num) => {
+  const renderPage = (num: any) => {
     pageRendering = true;
 
-    pdfDoc.getPage(num).then(function (page) {
+    pdfDoc.getPage(num).then(function (page: any) {
       let viewport = page.getViewport({ scale: scale, rotation: rotation });
       const canvasContext = canvas?.getContext("2d");
       if (canvas) {
@@ -65,7 +68,7 @@
     });
   };
 
-  const queueRenderPage = (num) => {
+  const queueRenderPage = (num: any) => {
     if (pageRendering) {
       pageNumPending = num;
     } else {

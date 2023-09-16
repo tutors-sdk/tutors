@@ -132,9 +132,9 @@ export type PanelVideo = Lo & {
 };
 
 export type Panels = {
-  panelVideos: Lo[];
-  panelTalks: Lo[];
-  panelNotes: Lo[];
+  panelVideos: PanelVideo[];
+  panelTalks: PanelTalk[];
+  panelNotes: PanelNote[];
 };
 
 export type Units = {
