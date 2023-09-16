@@ -1,4 +1,4 @@
-import { type Lo, type Talk, type LoType, type IconType, type Units, type Panels, type Unit, type Side, isCompositeLo, type Composite } from "./lo-types";
+import { type Lo, type Talk, type Archive, type LoType, type IconType, type Units, type Panels, type Unit, type Side, isCompositeLo, type Composite } from "./lo-types";
 
 export function flattenLos(los: Lo[]): Lo[] {
   let result: Lo[] = [];
@@ -31,8 +31,9 @@ export function fixRoutePaths(lo: Lo) {
 
 export function injectCourseUrl(los: Lo[], id: string, url: string) {
   los.forEach((lo) => {
-    if (lo.type === "archive" || lo.type === "otherType") {
-      lo.route = lo.route?.replace("{{COURSEURL}}", url);
+    if (lo.type === "archive") {
+      const archive: Archive = lo as Archive;
+      archive.route = `https://${lo.route?.replace("/archive/{{COURSEURL}}", url)}/${archive.archiveFile}`;
     } else {
       lo.route = lo.route?.replace("{{COURSEURL}}", id);
     }
