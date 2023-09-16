@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import Context from "$lib/ui/learninng-objects/Context.svelte";
-  import Note from "$lib/ui/learninng-objects/Note.svelte";
+  import Context from "$lib/ui/learning-objects/Context.svelte";
+  import Note from "$lib/ui/learning-objects/Note.svelte";
   export let data: PageData;
 </script>
 

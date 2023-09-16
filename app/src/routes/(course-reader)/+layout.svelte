@@ -4,13 +4,13 @@
   import { afterNavigate } from "$app/navigation";
   import { get } from "svelte/store";
 
-  import { setInitialClassState, getToastStore, type ToastSettings } from "@skeletonlabs/skeleton";
-  import { transitionKey, currentLo, onlineStatus, studentsOnlineList, studentsOnline } from "$lib/stores";
+  import { setInitialClassState, getToastStore } from "@skeletonlabs/skeleton";
+  import { transitionKey, currentLo, onlineStatus } from "$lib/stores";
   import PageTransition from "$lib/ui/PageTransition.svelte";
   import { getKeys } from "$lib/environment";
   import { analyticsService } from "$lib/services/analytics";
   import { initServices } from "$lib/services/tutors-startup";
-  import type { RealtimeChannel } from "@supabase/supabase-js";
+
   import { setupPresence, subscribePresence, unsubscribePresence, updatePresence } from "$lib/services/presence";
 
   let currentRoute = "";

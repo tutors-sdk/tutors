@@ -4,8 +4,7 @@
   import { analyticsService } from "$lib/services/analytics";
   import { initFirebase } from "$lib/services/utils/firebase";
   import { getKeys } from "$lib/environment";
-  import TopDeck from "$lib/ui/legacy/Organisms/CardDeck/TopDeck.svelte";
-  import Composite from "$lib/ui/learninng-objects/Composite.svelte";
+  import Composite from "$lib/ui/learning-objects/Composite.svelte";
 
   export let data: any;
 

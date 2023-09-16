@@ -19,7 +19,8 @@
 
   import Sidebars from "$lib/ui/navigators/sidebars/Sidebars.svelte";
   import PageHeader from "$lib/ui/navigators/PageHeader.svelte";
-  import { Footer, NavTitle } from "$lib/ui/legacy";
+  import Footer from "$lib/ui/navigators/Footer.svelte";
+  import NavTitle from "$lib/ui/navigators/NavTitle.svelte";
   import { analyticsService } from "$lib/services/analytics";
   import Icon from "@iconify/svelte";
   import { get } from "svelte/store";

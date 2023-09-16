@@ -1,6 +1,7 @@
 <script lang="ts">
   import { currentCourse } from "$lib/stores";
-  import { Breadcrumbs, IconBar } from "$lib/ui/legacy";
+  import Breadcrumbs from "../icons/Breadcrumbs.svelte";
+  import IconBar from "../icons/IconBar.svelte";
 </script>
 
 {#if !$currentCourse?.isPortfolio}

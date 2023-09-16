@@ -1,8 +1,8 @@
 <script lang="ts">
   import { currentCourse, currentLo } from "$lib/stores";
-  import { Image } from "$lib/ui/legacy";
+  import Image from "../icons/Image.svelte";
   import type { Lo } from "$lib/services/models/lo-types";
-  import { getIcon } from "../../Atoms/Icon/themes";
+  import { getIcon } from "../icons/themes/themes";
   import Icon from "@iconify/svelte";
   import { onDestroy } from "svelte";
 

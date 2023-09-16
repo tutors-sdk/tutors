@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Icon } from "$lib/ui/legacy";
+  import Icon from "./Icon.svelte";
   import type { IconNavBar } from "$lib/services/models/lo-types";
 
   export let nav: IconNavBar;

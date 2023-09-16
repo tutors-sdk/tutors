@@ -1,17 +1,8 @@
 <script lang="ts">
-  import {
-    type DrawerSettings,
-    getDrawerStore,
-    popup,
-    modeCurrent,
-    setModeCurrent,
-    setModeUserPrefers,
-    getModeOsPrefers,
-    setInitialClassState
-  } from "@skeletonlabs/skeleton";
+  import { type DrawerSettings, getDrawerStore, popup, modeCurrent, setModeCurrent, setModeUserPrefers, getModeOsPrefers, setInitialClassState } from "@skeletonlabs/skeleton";
   import { layout, storeTheme } from "$lib/stores";
   import moment from "moment";
-  import { Icon } from "$lib/ui/legacy";
+  import Icon from "$lib/ui/icons/Icon.svelte";
   import { onMount } from "svelte";
 
   function applyInitialLayout() {
@@ -41,7 +32,6 @@
 
   const drawerStore = getDrawerStore();
 
-
   var isHalloween: boolean = false;
   var isValentines: boolean = false;
 
@@ -68,9 +58,7 @@
 <div class="relative">
   <button class="btn btn-sm" use:popup={{ event: "click", target: "design" }}>
     <Icon type="dark" />
-    <span class="hidden text-sm font-bold lg:block"
-      >Layout <span class="pl-2 opacity-50">▾</span></span
-    >
+    <span class="hidden text-sm font-bold lg:block">Layout <span class="pl-2 opacity-50">▾</span></span>
   </button>
   <nav class="list-nav card card-body p-4 w-56 space-y-4 shadow-lg" data-popup="design">
     <h6>Toggles</h6>
@@ -103,10 +91,7 @@
           storeTheme.set("tutors");
         }}
       >
-        <button
-          class="btn w-full flex justify-between"
-          class:!variant-soft-primary={$storeTheme === "tutors"}
-        >
+        <button class="btn w-full flex justify-between" class:!variant-soft-primary={$storeTheme === "tutors"}>
           <span class="flex-none">Tutors</span>
         </button>
       </li>
@@ -117,10 +102,7 @@
           storeTheme.set("dyslexia");
         }}
       >
-        <button
-          class="btn w-full flex justify-between"
-          class:!variant-soft-primary={$storeTheme === "dyslexia"}
-        >
+        <button class="btn w-full flex justify-between" class:!variant-soft-primary={$storeTheme === "dyslexia"}>
           <span class="flex-none">Dyslexia</span>
         </button>
       </li>
@@ -132,10 +114,7 @@
             storeTheme.set("halloween");
           }}
         >
-          <button
-            class="btn w-full flex justify-between"
-            class:!variant-soft-primary={$storeTheme === "halloween"}
-          >
+          <button class="btn w-full flex justify-between" class:!variant-soft-primary={$storeTheme === "halloween"}>
             <span class="flex-none">Halloween</span>
           </button>
         </li>
@@ -148,10 +127,7 @@
             storeTheme.set("valentines");
           }}
         >
-          <button
-            class="btn w-full flex justify-between"
-            class:!variant-soft-primary={$storeTheme === "valentines"}
-          >
+          <button class="btn w-full flex justify-between" class:!variant-soft-primary={$storeTheme === "valentines"}>
             <span class="flex-none">Valentines</span>
           </button>
         </li>

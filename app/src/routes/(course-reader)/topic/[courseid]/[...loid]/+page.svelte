@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PageData } from "./$types";
-  import Composite from "$lib/ui/learninng-objects/Composite.svelte";
+  import Composite from "$lib/ui/learning-objects/Composite.svelte";
   export let data: PageData;
 </script>
 

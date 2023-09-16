@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { StudentCardDeck } from "$lib/ui/legacy";
+  import StudentCardDeck from "$lib/ui/time/StudentCardDeck.svelte";
   import type { PageData } from "./$types";
   import { getToastStore, type ToastSettings } from "@skeletonlabs/skeleton";
   import { onMount } from "svelte";
@@ -36,6 +36,6 @@
 </script>
 
 <svelte:head>
-  <title>{data.course.lo.title} Students online now :</title>
+  <title>{data.course.title} Students online now :</title>
 </svelte:head>
 <StudentCardDeck />

@@ -1,5 +1,5 @@
-import { FluentIconLib } from "./support/fluent-icons";
-import type { IconType } from "$lib/services/types/icon";
+import { FluentIconLib } from "./fluent-icons";
+import type { IconType } from "$lib/services/models/lo-types";
 
 let StandardIconLib = FluentIconLib;
 
@@ -7,13 +7,7 @@ export function setIconLib(iconLib: any) {
   StandardIconLib = iconLib;
 }
 
-export const themes = [
-  "tutors",
-  "tutors-dark",
-  "tutors-black",
-  "tutors-dyslexia",
-  "tutors-wireframe"
-];
+export const themes = ["tutors", "tutors-dark", "tutors-black", "tutors-dyslexia", "tutors-wireframe"];
 
 export const themeIcons = {
   tutors: FluentIconLib,

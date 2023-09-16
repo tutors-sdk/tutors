@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getIcon } from "./themes";
+  import { getIcon } from "./themes/themes";
   import Icon from "@iconify/svelte";
 
   export let type: string = "";
@@ -28,20 +28,10 @@
 {#if type}
   {#if link}
     <a {target} href={link}>
-      <Icon
-        icon={getIcon(type).icon}
-        color={legacyIconColour(getIcon(type).colour)}
-        {width}
-        {height}
-      />
+      <Icon icon={getIcon(type).icon} color={legacyIconColour(getIcon(type).colour)} {width} {height} />
     </a>
   {:else}
-    <Icon
-      icon={getIcon(type).icon}
-      color={legacyIconColour(getIcon(type).colour)}
-      {width}
-      {height}
-    />
+    <Icon icon={getIcon(type).icon} color={legacyIconColour(getIcon(type).colour)} {width} {height} />
   {/if}
 {:else if link}
   <a {target} href={link}>

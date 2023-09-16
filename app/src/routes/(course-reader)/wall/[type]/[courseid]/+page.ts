@@ -12,18 +12,16 @@ export const load: PageLoad = async ({ params, fetch }) => {
   // @eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore:next-line
   currentLo.set({
-    breadCrumbs : [course],
+    breadCrumbs: [course],
     title: `All ${params.type}s in Module`,
     type: type,
     parentLo: course,
-    parentCourse:course,
+    parentCourse: course,
     route: "wall"
   });
   return {
     type: params.type,
     lo: course,
-    los: los,
-    panelVideos: los.filter((lo) => lo.type === "panelvideo"),
-    talkVideos: los.filter((lo) => lo.type !== "panelvideo")
+    los: los
   };
 };

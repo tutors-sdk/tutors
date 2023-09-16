@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import type { Lo } from "$lib/services/models/lo-types";
   import { currentCourse } from "$lib/stores";
-  import { getIcon } from "../legacy/Atoms/Icon/themes";
+  import { getIcon } from "../icons/themes/themes";
 
   let firefox = false;
 

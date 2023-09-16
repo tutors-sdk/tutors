@@ -1,5 +1,5 @@
 <script lang="js">
-  import Icon from "../../Atoms/Icon/Icon.svelte";
+  import Icon from "../icons/Icon.svelte";
   import FileSaver from "file-saver";
   import { onDestroy, tick } from "svelte";
   import { ProgressRadial } from "@skeletonlabs/skeleton";

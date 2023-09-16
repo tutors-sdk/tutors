@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Course } from "$lib/services/models/lo-types";
-  import { TopicNavigator } from "$lib/ui/legacy";
+  import TopicNavigator from "./TopicNavigator.svelte";
   import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
 
   export let course: Course;

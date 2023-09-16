@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models/lo-types";
-  import { TopicNavigatorCard } from "$lib/ui/legacy";
+  import TopicNavigatorCard from "../navigators/TopicNavigator.svelte";
   export let lo: Lo;
 </script>
 

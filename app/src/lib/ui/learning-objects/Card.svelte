@@ -1,11 +1,11 @@
 <script lang="ts">
-  import Icon from "../../Atoms/Icon/Icon.svelte";
-  import { getIcon } from "../../Atoms/Icon/themes";
   import type { Lo } from "$lib/services/models/lo-types";
   import { currentCourse, layout } from "$lib/stores";
   import { onDestroy } from "svelte";
-  import { Image } from "$lib/ui/legacy";
+  import Image from "../icons/Image.svelte";
+  import { getIcon } from "../icons/themes/themes";
   import { cardTransition } from "$lib/ui/animations";
+  import Icon from "../icons/Icon.svelte";
 
   export let lo: Lo;
   let target = "";
