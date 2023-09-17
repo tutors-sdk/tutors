@@ -122,7 +122,7 @@ export function sortLos(los: Array<Lo>): Lo[] {
   return orderedLos.concat(unOrderedLos);
 }
 
-export function getIcon(lo: Lo): IconType | undefined {
+export function loadIcon(lo: Lo): IconType | undefined {
   if (lo.frontMatter && lo.frontMatter.icon) {
     return {
       // @ts-ignore
