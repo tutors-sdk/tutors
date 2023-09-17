@@ -4,6 +4,7 @@
   import { onDestroy } from "svelte";
   import Panels from "./Panels.svelte";
   import Cards from "./Cards.svelte";
+  import Image from "../icons/Image.svelte";
   export let units: Composite[];
 
   let text = "!text-xl font-semibold";
@@ -23,8 +24,7 @@
       <h2 id={unit.id} class="p-2 {text}">
         {unit.title}
       </h2>
-      <!-- const parentLo = unit.parentTopic ? unit.parentTopic : unit.parentLo -->
-      <!-- <Image lo={parentLo} miniImage={true} /> -->
+      <Image lo={unit.parentTopic ? unit.parentTopic : unit.parentLo} miniImage={true} />
     </div>
     <Panels panels={unit.panels} />
     <div class="flex flex-wrap justify-center">
