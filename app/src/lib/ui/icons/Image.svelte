@@ -9,27 +9,6 @@
   export let miniImage = false;
   let imageHeight = "";
   let iconHeight = "";
-  let colourPrefix = "";
-
-  function isColour(string: string) {
-    return true;
-    // var s = new Option().style;
-    // s.color = string;
-    // return s.color.length > 0;
-  }
-
-  if (lo && !lo.icon && lo.frontMatter && lo.frontMatter.icon) {
-    lo.icon = {
-      type: lo.frontMatter.icon["type"],
-      color: lo.frontMatter.icon["color"]
-    };
-  }
-
-  if (lo?.icon) {
-    if (!isColour(lo.icon.color)) {
-      colourPrefix = "#";
-    }
-  }
 
   if (miniImage) {
     imageHeight = "h-10";
@@ -50,7 +29,7 @@
 </script>
 
 {#if lo?.icon}
-  <Iconify icon={lo?.icon.type} color="{colourPrefix}{lo.icon.color}" height={iconHeight} />
+  <Iconify icon={lo?.icon.type} color={lo.icon.color} height={iconHeight} />
 {:else}
   <Avatar src={lo?.img} alt={lo?.title} width={imageHeight} rounded="rounded-xl" background="none" />
 {/if}

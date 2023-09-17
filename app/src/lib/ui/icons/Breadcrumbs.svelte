@@ -35,7 +35,6 @@
     if (breadCrumbs.length > 1) {
       if (breadCrumbs[1].type === "unit" || breadCrumbs[1].type === "side") {
         breadCrumbs.splice(1, 1);
-        console.log(breadCrumbs);
       }
     }
   });
@@ -60,6 +59,7 @@
         <li class="crumb">
           <a href="{lo.route}{getUnitId(lo.type, lo.id)}" class="!space-x-[-1rem] lg:!space-x-0 inline-flex !text-black dark:!text-white">
             <span><Icon type={lo.type} /></span>
+            <!-- svelte-ignore a11y-no-static-element-interactions -->
             <span
               class="hidden lg:inline-flex pl-2 items-center"
               on:mouseenter={() => {

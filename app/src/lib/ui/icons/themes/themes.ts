@@ -1,6 +1,11 @@
 import { FluentIconLib } from "./fluent-icons";
-import type { IconType } from "$lib/services/models/lo-types";
 
+type ThemeIcon = {
+  icon: string;
+  colour: string;
+};
+
+type Theme = {};
 let StandardIconLib = FluentIconLib;
 
 export function setIconLib(iconLib: any) {
@@ -17,8 +22,8 @@ export const themeIcons = {
   "tutors-wireframe": FluentIconLib
 };
 
-export function getIcon(type: string): IconType {
-  let icon: IconType = StandardIconLib.default;
+export function getIcon(type: string): ThemeIcon {
+  let icon = StandardIconLib.default;
   if (currentIconLib[type]) {
     icon = currentIconLib[type];
   } else {
@@ -31,6 +36,6 @@ export function getIcon(type: string): IconType {
 
 export const currentIconLib: any = StandardIconLib;
 
-export function addIcon(type: string, icon: IconType) {
+export function addIcon(type: string, icon: ThemeIcon) {
   StandardIconLib[type] = icon;
 }
