@@ -74,6 +74,7 @@
         </button>
       </li>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
       <li class="option !p-0" on:click={() => toggleLayout()}>
         <button class="btn w-full flex justify-between">
           <span class="flex-none">Compact</span>
@@ -85,6 +86,7 @@
     <h6>Themes</h6>
     <ul class="list">
       <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
       <li
         class="option !p-0"
         on:click={() => {
@@ -96,6 +98,7 @@
         </button>
       </li>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
       <li
         class="option !p-0"
         on:click={() => {
@@ -108,6 +111,7 @@
       </li>
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       {#if isHalloween}
+        <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
         <li
           class="option !p-0"
           on:click={() => {
@@ -121,6 +125,7 @@
       {/if}
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       {#if isValentines}
+        <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
         <li
           class="option !p-0"
           on:click={() => {
