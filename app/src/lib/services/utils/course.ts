@@ -1,6 +1,6 @@
 import type { Course } from "$lib/services/models/lo-types";
-import type { IconType } from "$lib/services/types/icon";
-import type { Lo } from "$lib/services/types/lo";
+import type { IconType } from "$lib/services/models/lo-types";
+import type { Lo } from "$lib/services/models/lo-types";
 import { writeObj } from "$lib/services/utils/firebase";
 
 export interface CourseSummary {
@@ -41,11 +41,7 @@ export async function getCourseSummary(courseId: string): Promise<CourseSummary>
 export function updateLo(root: string, course: Course, currentLo: Lo) {
   const lo = {
     icon:
-      currentLo.type === "course"
-        ? currentLo.icon
-        : currentLo.frontMatter?.icon
-        ? { type: currentLo.frontMatter.icon["type"], color: currentLo.frontMatter.icon["color"] }
-        : {},
+      currentLo.type === "course" ? currentLo.icon : currentLo.frontMatter?.icon ? { type: currentLo.frontMatter.icon["type"], color: currentLo.frontMatter.icon["color"] } : {},
     img: currentLo.img,
     title: currentLo.title,
     courseTitle: course.title,
