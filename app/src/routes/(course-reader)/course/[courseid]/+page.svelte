@@ -4,7 +4,7 @@
   import { analyticsService } from "$lib/services/analytics";
   import { initFirebase } from "$lib/services/utils/firebase";
   import { getKeys } from "$lib/environment";
-  import Composite from "$lib/ui/learning-objects/Composite.svelte";
+  import Composite from "$lib/ui/learning-objects/structure/Composite.svelte";
 
   export let data: any;
 
