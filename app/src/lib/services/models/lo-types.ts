@@ -166,7 +166,7 @@ export type Course = Composite & {
   type: "course";
   courseId: string;
   courseUrl: string;
-  topicIndex: Map<string, Lo>;
+  topicIndex: Map<string, Topic>;
   loIndex: Map<string, Lo>;
   walls?: Lo[][];
   wallMap?: Map<string, Lo[]>;
