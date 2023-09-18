@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Topic } from "$lib/services/models/lo-types";
-  import Icon from "../icons/Icon.svelte";
+  import Icon from "../../icons/Icon.svelte";
 
   export let topic: Topic;
 </script>

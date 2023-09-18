@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { Panels } from "$lib/services/models/lo-types";
-  import Note from "./Note.svelte";
-  import Talk from "./Talk.svelte";
-  import Video from "./Video.svelte";
+  import Note from "../content/Note.svelte";
+  import Talk from "../content/Talk.svelte";
+  import Video from "../content/Video.svelte";
   export let panels: Panels;
 </script>
 

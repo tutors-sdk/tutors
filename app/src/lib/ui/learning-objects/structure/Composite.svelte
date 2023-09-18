@@ -1,8 +1,8 @@
 <script lang="ts">
   import type { Composite } from "$lib/services/models/lo-types";
-  import Panels from "./Panels.svelte";
-  import Units from "./Units.svelte";
-  import Cards from "./Cards.svelte";
+  import Panels from "../layout/Panels.svelte";
+  import Units from "../layout/Units.svelte";
+  import Cards from "../layout/Cards.svelte";
 
   export let composite: Composite;
 </script>

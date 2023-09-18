@@ -1,7 +1,7 @@
 <script lang="ts">
   import { currentCourse } from "$lib/stores";
   import { getDrawerStore } from "@skeletonlabs/skeleton";
-  import CourseContext from "../../learning-objects/CourseContext.svelte";
+  import CourseContext from "../../learning-objects//structure/CourseContext.svelte";
   const drawerStore = getDrawerStore();
   const drawerClose: any = () => {
     drawerStore.close();

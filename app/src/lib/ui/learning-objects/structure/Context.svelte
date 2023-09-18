@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models/lo-types";
-  import TopicContextPanel from "./TopicContextPanel.svelte";
+  import TopicContextPanel from "../layout/TopicContextPanel.svelte";
   export let lo: Lo;
 </script>
 

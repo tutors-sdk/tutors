@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Icon from "../icons/Icon.svelte";
+  import Icon from "../../icons/Icon.svelte";
   // @ts-ignore
   import FileSaver from "file-saver";
   import { onDestroy, tick } from "svelte";

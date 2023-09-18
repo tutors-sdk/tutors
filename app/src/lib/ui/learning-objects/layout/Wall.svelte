@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models/lo-types";
-  import Cards from "./Cards.svelte";
-  import Video from "./Video.svelte";
+  import Cards from "../layout/Cards.svelte";
+  import Video from "../content/Video.svelte";
   export let los: Lo[];
   export let type: string;
   let panelVideos = los.filter((lo) => lo.type === "panelvideo");

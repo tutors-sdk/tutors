@@ -11,8 +11,8 @@
   const unsubscribe = currentLo.subscribe((current) => {
     lo = current;
     if (lo && lo.type === "unit") {
-      lo.img = lo.parentLo.img;
-      lo.icon = lo.parentLo.icon;
+      lo.img = lo.parentLo?.img;
+      lo.icon = lo.parentLo?.icon;
     } else if (lo && lo.route.includes("wall")) {
       wall = true;
     }
