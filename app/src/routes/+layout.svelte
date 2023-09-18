@@ -17,7 +17,7 @@
   import { AppShell, popup, Toast, storePopup, type DrawerSettings, initializeStores, getDrawerStore, getToastStore, Modal } from "@skeletonlabs/skeleton";
   import { computePosition, autoUpdate, flip, shift, offset, arrow } from "@floating-ui/dom";
 
-  import Sidebars from "$lib/ui/navigators/sidebars/Sidebars.svelte";
+  import Sidebars from "$lib/ui/navigators/Sidebars.svelte";
   import PageHeader from "$lib/ui/navigators/PageHeader.svelte";
   import Footer from "$lib/ui/navigators/Footer.svelte";
   import NavTitle from "$lib/ui/navigators/NavTitle.svelte";
