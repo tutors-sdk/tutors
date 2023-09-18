@@ -1,9 +1,9 @@
 <script lang="ts">
-  import "../app.postcss";
+  import "../../app.postcss";
   import { goto, invalidate } from "$app/navigation";
   import { onMount } from "svelte";
   import { page } from "$app/stores";
-  import { courseUrl, currentCourse, onlineStatus, storeTheme, studentsOnline } from "$lib/stores";
+  import { onlineStatus, storeTheme } from "$lib/stores";
 
   import {
     NavigationPrimary,
@@ -17,14 +17,9 @@
   import { AppShell, popup, Toast, storePopup, type DrawerSettings, initializeStores, getDrawerStore, getToastStore, Modal } from "@skeletonlabs/skeleton";
   import { computePosition, autoUpdate, flip, shift, offset, arrow } from "@floating-ui/dom";
 
-  import Sidebars from "$lib/ui/navigators/Sidebars.svelte";
-  import PageHeader from "$lib/ui/navigators/PageHeader.svelte";
   import Footer from "$lib/ui/navigators/Footer.svelte";
-  import NavTitle from "$lib/ui/navigators/NavTitle.svelte";
   import { analyticsService } from "$lib/services/analytics";
-  import Icon from "@iconify/svelte";
   import { get } from "svelte/store";
-
   const themes: any = ["tutors", "dyslexia", "halloween", "valentines"];
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
@@ -49,18 +44,6 @@
   const drawerStore = getDrawerStore();
   const toastStore = getToastStore();
 
-  const infoDrawerOpen: any = () => {
-    const settings: DrawerSettings = { id: "info", position: "left" };
-    drawerStore.open(settings);
-  };
-  const calendarDrawerOpen: any = () => {
-    const settings: DrawerSettings = { id: "calendar", position: "left" };
-    drawerStore.open(settings);
-  };
-  const tocDrawerOpen: any = () => {
-    const settings: DrawerSettings = { id: "toc", position: "right" };
-    drawerStore.open(settings);
-  };
   const onlineDrawerOpen: any = () => {
     const settings: DrawerSettings = { id: "online", position: "right" };
     drawerStore.open(settings);
@@ -92,11 +75,7 @@
     return () => subscription.unsubscribe();
   });
 
-  let isNotCourseRoute: boolean;
-
-  $: {
-    isNotCourseRoute = !$currentCourse || $page.url.pathname === "/dashboard" || $page.url.pathname === "/time" || $page.url.pathname === "/auth" || $page.url.pathname.length <= 1;
-  }
+  let isNotCourseRoute = true;
 </script>
 
 <svelte:head>
@@ -106,48 +85,22 @@
 <AppShell class="h-screen">
   <Toast />
   <Modal />
-  <Sidebars />
   <svelte:fragment slot="header">
     <NavigationPrimary>
       <svelte:fragment slot="lead">
-        {#if isNotCourseRoute}
-          <a href="/">
-            <NavigationPrimaryTitle title="Tutors" image="/logo.svg" />
-          </a>
-        {:else}
-          <button class="btn btn-sm" on:click={infoDrawerOpen}>
-            <Icon icon="fluent:info-28-regular" color="rgba(var(--color-primary-500))" height="20" />
-          </button>
-          <NavTitle />
-        {/if}
+        <a href="/">
+          <NavigationPrimaryTitle title="Tutors" image="/logo.svg" />
+        </a>
       </svelte:fragment>
-      {#if $currentCourse?.courseCalendar?.currentWeek}
-        <div class="hidden w-full lg:flex">
-          <button class="mx-auto inline-flex rounded-lg variant-soft-primary p-2" on:click={calendarDrawerOpen}>
-            <span class="my-auto pl-2 pr-4">
-              <Icon icon="fluent:calendar-ltr-12-regular" color="rgba(var(--color-primary-500))" height="20" />
-            </span>
-            <span class="divider-vertical h-12 hidden lg:flex my-auto" />
-            <span class="px-2">
-              <span class="pt-1 text-sm">Current Week</span><br />
-              <span class="text-lg pb-1 font-bold">{$currentCourse.courseCalendar.currentWeek.title}</span>
-            </span>
-          </button>
-        </div>
-      {/if}
       <svelte:fragment slot="trail">
-        {#if !isNotCourseRoute}
-          <NavigationPrimaryButton href="/search/{$courseUrl}" icon="fluent:search-24-filled" iconColour="rgba(var(--color-primary-500))" label="Search" />
-          <span class="divider-vertical h-10 hidden lg:block" />
-        {/if}
         {#if data.session}
           <div class="relative">
             <button use:popup={{ event: "click", target: "avatar" }}>
               <NavigationPrimaryUser
                 avatar={data.session.user.user_metadata.avatar_url}
                 name={data.session.user.user_metadata.name}
-                onlineStatus={isNotCourseRoute ? undefined : status}
-                usersOnline={isNotCourseRoute ? undefined : $studentsOnline.toString()}
+                onlineStatus={undefined}
+                usersOnline={undefined}
               />
             </button>
             <NavigationPrimaryUserMenu
@@ -155,10 +108,10 @@
               name={data.session.user.user_metadata.name}
               username={data.session.user.user_metadata.preferred_username}
               userId={data.session.user.id}
-              onlineStatus={isNotCourseRoute ? undefined : status}
-              usersOnline={isNotCourseRoute ? undefined : $studentsOnline.toString()}
-              currentCourseId={$currentCourse?.courseId}
-              currentCourseUrl={$currentCourse?.courseUrl}
+              onlineStatus={undefined}
+              usersOnline={undefined}
+              currentCourseId={undefined}
+              currentCourseUrl={undefined}
               {handleClick}
               {handleSignOut}
               {onlineDrawerOpen}
@@ -169,17 +122,8 @@
         {/if}
         <span class="divider-vertical h-10 hidden lg:block" />
         <NavigationPrimaryLayoutMenu />
-        {#if !isNotCourseRoute}
-          <span class="divider-vertical h-10 hidden lg:block" />
-          <button class="btn btn-sm" on:click={tocDrawerOpen}>
-            <NavigationPrimaryButton icon="fluent:line-horizontal-3-20-filled" iconColour="rgba(var(--color-primary-500))" />
-          </button>
-        {/if}
       </svelte:fragment>
     </NavigationPrimary>
-    {#if !isNotCourseRoute}
-      <PageHeader />
-    {/if}
   </svelte:fragment>
   <slot />
   <svelte:fragment slot="pageFooter">
