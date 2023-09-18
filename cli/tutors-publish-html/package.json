@@ -17,7 +17,7 @@
     "tutors-html": "./src/tutors-publish-html.js"
   },
   "dependencies": {
-    "@types/node": "^18.14.4",
+    "@types/node": "^20.6.2",
     "@types/nunjucks": "^3.2.1",
     "@types/shelljs": "^0.8.11",
     "commander": "^10.0.0",
