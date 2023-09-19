@@ -18,12 +18,12 @@
   import { setupPresence, subscribePresence, unsubscribePresence, updatePresence } from "$lib/services/presence";
   import Sidebars from "$lib/ui/navigators/Sidebars.svelte";
   import { NavigationPrimary, NavigationPrimaryButton, NavigationPrimaryLayoutMenu, NavigationPrimaryUser, NavigationPrimaryUserMenu } from "$lib/components";
-  import InfoButton from "$lib/ui/navigators/InfoButton.svelte";
+  import InfoButton from "$lib/ui/navigators/buttons/InfoButton.svelte";
   import NavTitle from "$lib/ui/navigators/NavTitle.svelte";
-  import TocButton from "$lib/ui/navigators/TocButton.svelte";
+  import TocButton from "$lib/ui/navigators/buttons/TocButton.svelte";
   import Footer from "$lib/ui/navigators/Footer.svelte";
-  import CalendarButton from "$lib/ui/navigators/CalendarButton.svelte";
-  import SearchButton from "$lib/ui/navigators/SearchButton.svelte";
+  import CalendarButton from "$lib/ui/navigators/buttons/CalendarButton.svelte";
+  import SearchButton from "$lib/ui/navigators/buttons/SearchButton.svelte";
   import PageHeader from "$lib/ui/navigators/PageHeader.svelte";
 
   const themes: any = ["tutors", "dyslexia", "halloween", "valentines"];
