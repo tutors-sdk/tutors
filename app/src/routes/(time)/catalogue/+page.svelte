@@ -7,7 +7,6 @@
   export let data: PageData;
 
   let los: CourseSummary[] = [];
-  let tickerTape = "";
   let modules = 0;
   let totalVisits = 0;
 
@@ -21,7 +20,6 @@
             const courseSummary = await getCourseSummary(courseId);
             if (!courseSummary.isPrivate) {
               modules++;
-              tickerTape = `${courseSummary.title}`;
               los.push(courseSummary);
               los = [...los];
               los.sort((lo1: CourseSummary, lo2: CourseSummary) => lo1.title.localeCompare(lo2.title));

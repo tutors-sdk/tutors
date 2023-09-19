@@ -15,7 +15,6 @@
         <TutorsTitle title="Tutors Course Catalogue" subtitle="Tutors Open Source Project" />
       </svelte:fragment>
       <svelte:fragment slot="trail">
-        <LoginButton />
         <span class="divider-vertical h-10 hidden lg:block" />
         <LayoutMenu />
       </svelte:fragment>
