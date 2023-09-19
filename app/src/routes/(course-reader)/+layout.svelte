@@ -2,12 +2,10 @@
   import "../../app.postcss";
   import { goto, invalidate } from "$app/navigation";
   import { currentCourse, onlineStatus, storeTheme, studentsOnline } from "$lib/stores";
-
   import { page } from "$app/stores";
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import { get } from "svelte/store";
-
   import { setInitialClassState, popup, getToastStore, AppShell, Toast, Modal, initializeStores, getDrawerStore, storePopup, type DrawerSettings } from "@skeletonlabs/skeleton";
   import { transitionKey, currentLo } from "$lib/stores";
   import PageTransition from "$lib/ui/PageTransition.svelte";
@@ -16,15 +14,19 @@
   import { initServices } from "$lib/services/tutors-startup";
   import { computePosition, autoUpdate, flip, shift, offset, arrow } from "@floating-ui/dom";
   import { setupPresence, subscribePresence, unsubscribePresence, updatePresence } from "$lib/services/presence";
-  import Sidebars from "$lib/ui/navigators/Sidebars.svelte";
-  import { NavigationPrimary, NavigationPrimaryButton, NavigationPrimaryLayoutMenu, NavigationPrimaryUser, NavigationPrimaryUserMenu } from "$lib/components";
+  import Sidebars from "$lib/ui/navigators/sidebars/Sidebars.svelte";
   import InfoButton from "$lib/ui/navigators/buttons/InfoButton.svelte";
-  import NavTitle from "$lib/ui/navigators/NavTitle.svelte";
   import TocButton from "$lib/ui/navigators/buttons/TocButton.svelte";
-  import Footer from "$lib/ui/navigators/Footer.svelte";
+  import Footer from "$lib/ui/navigators/footers/Footer.svelte";
   import CalendarButton from "$lib/ui/navigators/buttons/CalendarButton.svelte";
   import SearchButton from "$lib/ui/navigators/buttons/SearchButton.svelte";
-  import PageHeader from "$lib/ui/navigators/PageHeader.svelte";
+  import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
+  import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
+  import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
+  import LoginButton from "$lib/ui/navigators/buttons/LoginButton.svelte";
+  import CourseProfileButton from "$lib/ui/navigators/buttons/CourseProfileButton.svelte";
+  import CourseProfileMenu from "$lib/ui/navigators/menus/CourseProfileMenu.svelte";
+  import CourseTitle from "$lib/ui/navigators/titles/CourseTitle.svelte";
 
   const themes: any = ["tutors", "dyslexia", "halloween", "valentines"];
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
@@ -190,30 +192,21 @@
   <Modal />
   <Sidebars />
   <svelte:fragment slot="header">
-    <NavigationPrimary>
+    <MainNavigator>
       <svelte:fragment slot="lead">
         <InfoButton />
-        <NavTitle />
+        <CourseTitle />
       </svelte:fragment>
       <CalendarButton />
       <svelte:fragment slot="trail">
         <SearchButton />
-
         {#if data.session}
           <div class="relative">
             <button use:popup={{ event: "click", target: "avatar" }}>
-              <NavigationPrimaryUser
-                avatar={data.session.user.user_metadata.avatar_url}
-                name={data.session.user.user_metadata.name}
-                onlineStatus={isNotCourseRoute ? undefined : status}
-                usersOnline={isNotCourseRoute ? undefined : $studentsOnline.toString()}
-              />
+              <CourseProfileButton {session} onlineStatus={status} usersOnline={$studentsOnline.toString()} />
             </button>
-            <NavigationPrimaryUserMenu
-              {isNotCourseRoute}
-              name={data.session.user.user_metadata.name}
-              username={data.session.user.user_metadata.preferred_username}
-              userId={data.session.user.id}
+            <CourseProfileMenu
+              {session}
               onlineStatus={isNotCourseRoute ? undefined : status}
               usersOnline={isNotCourseRoute ? undefined : $studentsOnline.toString()}
               currentCourseId={$currentCourse?.courseId}
@@ -224,15 +217,14 @@
             />
           </div>
         {:else}
-          <NavigationPrimaryButton href="/auth" label="Login / Register" />
+          <LoginButton />
         {/if}
         <span class="divider-vertical h-10 hidden lg:block" />
-        <NavigationPrimaryLayoutMenu />
-
+        <LayoutMenu />
         <TocButton />
       </svelte:fragment>
-    </NavigationPrimary>
-    <PageHeader />
+    </MainNavigator>
+    <SecondaryNavigator />
   </svelte:fragment>
 
   <div id="app" class="h-full overflow-hidden">
@@ -245,10 +237,6 @@
   </div>
 
   <svelte:fragment slot="pageFooter">
-    {#if $page.url.pathname !== "/"}
-      <div class="bg-surface-100-800-token border-t-[1px] border-surface-200-700-token bottom-0 mt-2">
-        <Footer />
-      </div>
-    {/if}
+    <Footer />
   </svelte:fragment>
 </AppShell>

@@ -2,9 +2,9 @@
   import { Drawer, getDrawerStore } from "@skeletonlabs/skeleton";
   import Sidebar from "./Sidebar.svelte";
   import { currentCourse, studentsOnline } from "$lib/stores";
-  import Calendar from "../learning-objects/content/Calendar.svelte";
-  import CourseContext from "../learning-objects/structure/CourseContext.svelte";
-  import StudentCardDeck from "../time/StudentCardDeck.svelte";
+  import Calendar from "../../learning-objects/content/Calendar.svelte";
+  import CourseContext from "../../learning-objects/structure/CourseContext.svelte";
+  import StudentCardDeck from "../../time/StudentCardDeck.svelte";
   const drawerStore = getDrawerStore();
 </script>
 
