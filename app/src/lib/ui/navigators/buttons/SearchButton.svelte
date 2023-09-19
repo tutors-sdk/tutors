@@ -4,4 +4,3 @@
 </script>
 
 <NavigationPrimaryButton href="/search/{$currentCourse?.courseUrl}" icon="fluent:search-24-filled" iconColour="rgba(var(--color-primary-500))" label="Search" />
-<span class="divider-vertical h-10 hidden lg:block" />

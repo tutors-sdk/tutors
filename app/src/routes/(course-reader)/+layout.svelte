@@ -142,12 +142,8 @@
     return () => subscription.unsubscribe();
   });
 
-  let isNotCourseRoute: boolean;
   let currentRoute = "";
 
-  $: {
-    isNotCourseRoute = !$currentCourse || $page.url.pathname === "/dashboard" || $page.url.pathname === "/time" || $page.url.pathname === "/auth" || $page.url.pathname.length <= 1;
-  }
   page.subscribe((path) => {
     if (path.route.id) {
       currentRoute = path.route.id;
@@ -195,6 +191,9 @@
       <CalendarButton />
       <svelte:fragment slot="trail">
         <SearchButton />
+        <span class="divider-vertical h-10 hidden lg:block" />
+        <LayoutMenu />
+        <span class="divider-vertical h-10 hidden lg:block" />
         {#if data.session}
           <div class="relative">
             <button use:popup={{ event: "click", target: "avatar" }}>
@@ -202,8 +201,8 @@
             </button>
             <CourseProfileMenu
               {session}
-              onlineStatus={isNotCourseRoute ? undefined : status}
-              usersOnline={isNotCourseRoute ? undefined : $studentsOnline.toString()}
+              onlineStatus={status}
+              usersOnline={$studentsOnline.toString()}
               currentCourseId={$currentCourse?.courseId}
               currentCourseUrl={$currentCourse?.courseUrl}
               {handleClick}
@@ -214,8 +213,6 @@
         {:else}
           <LoginButton />
         {/if}
-        <span class="divider-vertical h-10 hidden lg:block" />
-        <LayoutMenu />
         <TocButton />
       </svelte:fragment>
     </MainNavigator>

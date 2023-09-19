@@ -58,6 +58,8 @@
         </a>
       </svelte:fragment>
       <svelte:fragment slot="trail">
+        <span class="divider-vertical h-10 hidden lg:block" />
+        <LayoutMenu />
         {#if data.session}
           <div class="relative">
             <button use:popup={{ event: "click", target: "avatar" }}>
@@ -68,8 +70,6 @@
         {:else}
           <LoginButton />
         {/if}
-        <span class="divider-vertical h-10 hidden lg:block" />
-        <LayoutMenu />
       </svelte:fragment>
     </MainNavigator>
   </svelte:fragment>
