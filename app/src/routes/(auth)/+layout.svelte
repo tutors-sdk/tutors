@@ -3,8 +3,7 @@
   import { goto, invalidate } from "$app/navigation";
   import { onMount } from "svelte";
   import { onlineStatus, storeTheme } from "$lib/stores";
-  import { AppShell, popup, storePopup, initializeStores } from "@skeletonlabs/skeleton";
-  import { computePosition, autoUpdate, flip, shift, offset, arrow } from "@floating-ui/dom";
+  import { AppShell, popup } from "@skeletonlabs/skeleton";
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
   import { get } from "svelte/store";
   import DashboardProfileButton from "$lib/ui/navigators/buttons/DashboardProfileButton.svelte";
