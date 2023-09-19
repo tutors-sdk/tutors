@@ -6,8 +6,7 @@
   import { AppShell, popup } from "@skeletonlabs/skeleton";
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
   import { get } from "svelte/store";
-  import DashboardProfileButton from "$lib/ui/navigators/buttons/DashboardProfileButton.svelte";
-  import DashboardProfileMenu from "$lib/ui/navigators/menus/DashboardProfileMenu.svelte";
+  import DashboardProfile from "$lib/ui/navigators/profiles/DashboardProfile.svelte";
   import LoginButton from "$lib/ui/navigators/buttons/LoginButton.svelte";
   import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
@@ -62,10 +61,7 @@
         <LayoutMenu />
         {#if data.session}
           <div class="relative">
-            <button use:popup={{ event: "click", target: "avatar" }}>
-              <DashboardProfileButton {session} />
-            </button>
-            <DashboardProfileMenu {session} {handleSignOut} />
+            <DashboardProfile {session} {handleSignOut} />
           </div>
         {:else}
           <LoginButton />
