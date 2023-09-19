@@ -50,11 +50,11 @@ export const analyticsService = {
     updateLastAccess(`${course.courseId}/usage/${this.loRoute}`, course.title);
     updateVisits(course.courseUrl.substring(0, course.courseUrl.indexOf(".")));
 
-    if (!session || (session && session.onlineStatus === "online")) {
-      updateLastAccess(`all-course-access/${course.courseId}`, course.title);
-      updateVisits(`all-course-access/${course.courseId}`);
-      updateLo(`all-course-access/${course.courseId}`, course, lo);
-    }
+    //if (!session || (session && session.onlineStatus === "online")) {
+    updateLastAccess(`all-course-access/${course.courseId}`, course.title);
+    updateVisits(`all-course-access/${course.courseId}`);
+    updateLo(`all-course-access/${course.courseId}`, course, lo);
+    //}
 
     if (session) {
       const key = `${course.courseUrl.substring(0, course.courseUrl.indexOf("."))}/users/${sanitise(session.user.email)}/${this.loRoute}`;
