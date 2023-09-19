@@ -61,6 +61,11 @@
     const usage = await (await get(child(ref(db), `all-course-access/${courseId}`))).val();
     if (usage.lo) {
       courseSummary.currentLo = usage.lo;
+      if (!usage.lo.icon) {
+        // @ts-ignore
+        courseSummary.icon = "";
+      }
+      courseSummary.img = courseSummary.img;
       courseSummary.visits = usage.visits;
       updateCourseSummary(courseSummary);
       updateNmrUsers(courseSummary);

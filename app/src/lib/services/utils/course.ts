@@ -40,8 +40,7 @@ export async function getCourseSummary(courseId: string): Promise<CourseSummary>
 
 export function updateLo(root: string, course: Course, currentLo: Lo) {
   const lo = {
-    icon:
-      currentLo.type === "course" ? currentLo.icon : currentLo.frontMatter?.icon ? { type: currentLo.frontMatter.icon["type"], color: currentLo.frontMatter.icon["color"] } : {},
+    // currentLo.type === "course" ? currentLo.icon : currentLo.frontMatter?.icon ? { type: currentLo.frontMatter.icon["type"], color: currentLo.frontMatter.icon["color"] } : {},
     img: currentLo.img,
     title: currentLo.title,
     courseTitle: course.title,
@@ -49,7 +48,9 @@ export function updateLo(root: string, course: Course, currentLo: Lo) {
     isPrivate: course.properties?.private ? course.properties.private : 0,
     tutorsTimeId: getTutorsTimeId(course)
   };
-
+  if (currentLo.icon) {
+    lo.icon = currentLo.icon;
+  }
   writeObj(`${root}/lo`, lo);
 }
 
