@@ -6,13 +6,12 @@
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import { get } from "svelte/store";
-  import { setInitialClassState, popup, getToastStore, AppShell, Toast, Modal, initializeStores, getDrawerStore, storePopup, type DrawerSettings } from "@skeletonlabs/skeleton";
+  import { setInitialClassState, popup, getToastStore, AppShell, Toast, Modal, getDrawerStore, storePopup, type DrawerSettings } from "@skeletonlabs/skeleton";
   import { transitionKey, currentLo } from "$lib/stores";
   import PageTransition from "$lib/ui/PageTransition.svelte";
   import { getKeys } from "$lib/environment";
   import { analyticsService } from "$lib/services/analytics";
   import { initServices } from "$lib/services/tutors-startup";
-  import { computePosition, autoUpdate, flip, shift, offset, arrow } from "@floating-ui/dom";
   import { setupPresence, subscribePresence, unsubscribePresence, updatePresence } from "$lib/services/presence";
   import Sidebars from "$lib/ui/navigators/sidebars/Sidebars.svelte";
   import InfoButton from "$lib/ui/navigators/buttons/InfoButton.svelte";
@@ -27,9 +26,6 @@
   import CourseProfileButton from "$lib/ui/navigators/buttons/CourseProfileButton.svelte";
   import CourseProfileMenu from "$lib/ui/navigators/menus/CourseProfileMenu.svelte";
   import CourseTitle from "$lib/ui/navigators/titles/CourseTitle.svelte";
-
-  const themes: any = ["tutors", "dyslexia", "halloween", "valentines"];
-  storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
   export let data: any;
 
@@ -48,7 +44,6 @@
     document.body.setAttribute("data-theme", $storeTheme);
   }
 
-  initializeStores();
   const drawerStore = getDrawerStore();
   const toastStore = getToastStore();
 

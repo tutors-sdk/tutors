@@ -10,14 +10,9 @@
   import DashboardProfileButton from "$lib/ui/navigators/buttons/DashboardProfileButton.svelte";
   import DashboardProfileMenu from "$lib/ui/navigators/menus/DashboardProfileMenu.svelte";
   import LoginButton from "$lib/ui/navigators/buttons/LoginButton.svelte";
-  import DashboardTitle from "$lib/ui/navigators/titles/TutorsTitle.svelte";
   import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
   import TutorsTitle from "$lib/ui/navigators/titles/TutorsTitle.svelte";
-
-  const themes: any = ["tutors", "dyslexia", "halloween", "valentines"];
-  storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
-  initializeStores();
 
   export let data: any;
   let { supabase, session } = data;
