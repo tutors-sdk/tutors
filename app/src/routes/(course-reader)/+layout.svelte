@@ -1,12 +1,12 @@
 <script lang="ts">
   import "../../app.postcss";
   import { goto, invalidate } from "$app/navigation";
-  import { currentCourse, onlineStatus, storeTheme, studentsOnline } from "$lib/stores";
+  import { currentCourse, onlineStatus, storeTheme } from "$lib/stores";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import { get } from "svelte/store";
-  import { setInitialClassState, popup, getToastStore, AppShell, Toast, Modal, getDrawerStore, storePopup, type DrawerSettings } from "@skeletonlabs/skeleton";
+  import { setInitialClassState, getToastStore, AppShell, Toast, Modal, getDrawerStore, storePopup, type DrawerSettings } from "@skeletonlabs/skeleton";
   import { transitionKey, currentLo } from "$lib/stores";
   import PageTransition from "$lib/ui/PageTransition.svelte";
   import { getKeys } from "$lib/environment";
@@ -14,18 +14,17 @@
   import { initServices } from "$lib/services/tutors-startup";
   import { setupPresence, subscribePresence, unsubscribePresence, updatePresence } from "$lib/services/presence";
   import Sidebars from "$lib/ui/navigators/sidebars/Sidebars.svelte";
-  import InfoButton from "$lib/ui/navigators/buttons/InfoButton.svelte";
-  import TocButton from "$lib/ui/navigators/buttons/TocButton.svelte";
+  import InfoButton from "$lib/ui/navigators/sidebars/InfoButton.svelte";
+  import TocButton from "$lib/ui/navigators/sidebars/TocButton.svelte";
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
-  import CalendarButton from "$lib/ui/navigators/buttons/CalendarButton.svelte";
-  import SearchButton from "$lib/ui/navigators/buttons/SearchButton.svelte";
+  import CalendarButton from "$lib/ui/navigators/sidebars/CalendarButton.svelte";
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
   import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
-  import LoginButton from "$lib/ui/navigators/buttons/LoginButton.svelte";
-  import CourseProfileButton from "$lib/ui/navigators/buttons/CourseProfileButton.svelte";
-  import CourseProfileMenu from "$lib/ui/navigators/menus/CourseProfileMenu.svelte";
+  import LoginButton from "$lib/ui/navigators/sidebars/LoginButton.svelte";
   import CourseTitle from "$lib/ui/navigators/titles/CourseTitle.svelte";
+  import CourseProfile from "$lib/ui/navigators/profiles/CourseProfile.svelte";
+  import Icon from "@iconify/svelte";
 
   export let data: any;
 
@@ -81,7 +80,7 @@
         studentName: session.user.user_metadata.full_name,
         studentEmail: session.user.user_metadata.email,
         studentImg: session.user.user_metadata.avatar_url,
-        courseTitle: get(currentLo).parentLo ? get(currentLo).parentLo.title : get(currentLo).title,
+        courseTitle: get(currentLo).parentLo ? $currentLo?.parentLo?.title : get(currentLo).title,
         loTitle: get(currentLo).title,
         loImage: get(currentLo).img,
         loRoute: get(currentLo).route,
@@ -190,25 +189,18 @@
       </svelte:fragment>
       <CalendarButton />
       <svelte:fragment slot="trail">
-        <SearchButton />
+        <a class="btn btn-sm" href="/search/{$currentCourse?.courseUrl}">
+          <span class="text-sm font-bold inline-flex gap-2">
+            <Icon icon="fluent:search-24-filled" color="rgba(var(--color-primary-500))" height="20" />
+            Search
+          </span>
+        </a>
         <span class="divider-vertical h-10 hidden lg:block" />
         <LayoutMenu />
         <span class="divider-vertical h-10 hidden lg:block" />
         {#if data.session}
           <div class="relative">
-            <button use:popup={{ event: "click", target: "avatar" }}>
-              <CourseProfileButton {session} onlineStatus={status} usersOnline={$studentsOnline.toString()} />
-            </button>
-            <CourseProfileMenu
-              {session}
-              onlineStatus={status}
-              usersOnline={$studentsOnline.toString()}
-              currentCourseId={$currentCourse?.courseId}
-              currentCourseUrl={$currentCourse?.courseUrl}
-              {handleClick}
-              {handleSignOut}
-              {onlineDrawerOpen}
-            />
+            <CourseProfile {session} {status} {handleClick} {handleSignOut} {onlineDrawerOpen} />
           </div>
         {:else}
           <LoginButton />
@@ -218,7 +210,6 @@
     </MainNavigator>
     <SecondaryNavigator />
   </svelte:fragment>
-
   <div id="app" class="h-full overflow-hidden">
     <div id="top" />
     <div class="mx-auto my-4">
@@ -227,7 +218,6 @@
       </PageTransition>
     </div>
   </div>
-
   <svelte:fragment slot="pageFooter">
     <Footer />
   </svelte:fragment>

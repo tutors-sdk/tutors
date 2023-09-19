@@ -1,7 +1,7 @@
 <script lang="ts">
   import { popup } from "@skeletonlabs/skeleton";
-  import DashboardProfileButton from "../buttons/DashboardProfileButton.svelte";
-  import DashboardProfileMenu from "../menus/DashboardProfileMenu.svelte";
+  import DashboardProfileButton from "./DashboardProfileButton.svelte";
+  import DashboardProfileMenu from "./DashboardProfileMenu.svelte";
   import type { Session } from "@supabase/supabase-js";
   export let session: Session;
   export let handleSignOut: () => void;

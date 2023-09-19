@@ -3,7 +3,7 @@
   import { goto } from "$app/navigation";
   import { AppShell } from "@skeletonlabs/skeleton";
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
-  import LoginButton from "$lib/ui/navigators/buttons/LoginButton.svelte";
+  import LoginButton from "$lib/ui/navigators/sidebars/LoginButton.svelte";
   import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
   import TutorsTitle from "$lib/ui/navigators/titles/TutorsTitle.svelte";
