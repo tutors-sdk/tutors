@@ -30,6 +30,12 @@ Cypress.Commands.add("clickCard", (lo: any) => {
         cy.clickLabStep(lo);
         break;
       case "unit":
+        cy.checkTextExists(lo);
+        break;
+      case "side":
+        cy.checkTextExists(lo);
+        break;
+      case "panelvideo":
         cy.clickPanelVideo(lo);
         break;
       case "github":
@@ -45,6 +51,10 @@ Cypress.Commands.add("clickCard", (lo: any) => {
         cy.triggerCardAction(lo);
         cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
         cy.get('li.crumb').eq(1).click({ force: true });
+        break;
+      case "panelnote":
+        cy.checkTextExists(lo);
+        cy.clickBreadCrumb(0);
         break;
       case "talk":
         cy.triggerCardAction(lo);
@@ -85,11 +95,7 @@ Cypress.Commands.add("triggerCardAction", (lo: any) => {
   } else {
     const text = lo.title.trim();
     cy.log(text);
-    cy.findByText(text).then(($element) => {
-      // Perform actions on the found element if needed
-      cy.wrap($element).should('exist');
-      cy.wrap($element).click({ force: true })
-    });
+    cy.contains('.card', text, {timeout:10000}).click({force:true});
     cy.wait(500);
   }
 });
@@ -175,6 +181,10 @@ Cypress.Commands.add("verifyContentsExists", (lo: any) => {
 });
 
 Cypress.Commands.add("clickPanelVideo", (lo: any) => {
+  cy.findByText(lo.title.trim(), { matchCase: false });
+});
+
+Cypress.Commands.add("checkTextExists", (lo: any) => {
   cy.findAllByText(lo.title.trim(), { matchCase: false });
 });
 
@@ -186,10 +196,11 @@ Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
       setTimeout(function () { doc.location.reload() }, 700)
     })
 
-    cy.findAllByText(lo.title.trim(), { matchCase: false }).click({ force: true })
+    cy.findByText(lo.title.trim(), {timeout:10000}).click({ force: true })
       .then(() => {
         cy.log("after clicking archive card")
         cy.get('div.h-full.overflow-hidden.contents', { timeout: 10000 }).invoke('css', 'overflow', 'visible');
+        cy.wait(500);
         // Now you can interact with the <li> elements
         cy.get('li.crumb', { timeout: 10000 }).eq(1).click({ force: true });
       });
@@ -277,11 +288,13 @@ declare global {
   namespace Cypress {
     interface Chainable {
       goBack(): Chainable<any>;
+      clickBreadCrumb(step: number): Chainable<any>;
       clickCard(lo: any): Chainable<any>;
       clickLabStep(lo: any): Chainable<any>;
       clickLabCard(lo: any): Chainable<any>;
       verifyCompanionHrefs(): Chainable<any>;
       clickPanelVideo(lo: any): Chainable<any>;
+      checkTextExists(lo: any): Chainable<any>;
       triggerCardAction(lo: any): Chainable<any>;
       verifyContentsExists(lo: any): Chainable<any>;
       partialSearchVerification(lo: any): Chainable<any>;
