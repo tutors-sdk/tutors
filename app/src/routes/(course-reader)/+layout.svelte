@@ -1,13 +1,12 @@
 <script lang="ts">
   import "../../app.postcss";
   import { goto, invalidate } from "$app/navigation";
-  import { currentCourse, onlineStatus, storeTheme } from "$lib/stores";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import { get } from "svelte/store";
   import { setInitialClassState, getToastStore, AppShell, Toast, Modal, getDrawerStore, storePopup, type DrawerSettings } from "@skeletonlabs/skeleton";
-  import { transitionKey, currentLo } from "$lib/stores";
+  import { currentCourse, onlineStatus, storeTheme, transitionKey, currentLo } from "$lib/stores";
   import PageTransition from "$lib/ui/PageTransition.svelte";
   import { getKeys } from "$lib/environment";
   import { analyticsService } from "$lib/services/analytics";
@@ -132,7 +131,7 @@
     status = get(onlineStatus);
     const {
       data: { subscription }
-    } = supabase.auth.onAuthStateChange((event: any, _session: any) => {
+    } = supabase.auth.onAuthStateChange(async (event: any, _session: any) => {
       if (_session?.expires_at !== session?.expires_at) {
         invalidate("supabase:auth");
       }
@@ -200,7 +199,7 @@
         <span class="divider-vertical h-10 hidden lg:block" />
         {#if data.session}
           <div class="relative">
-            <CourseProfile {session} {status} {handleClick} {handleSignOut} {onlineDrawerOpen} />
+            <CourseProfile {session} {handleClick} {handleSignOut} {onlineDrawerOpen} />
           </div>
         {:else}
           <LoginButton />

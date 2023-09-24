@@ -1,10 +1,9 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
-
+  import { onlineStatus } from "$lib/stores";
   import type { Session } from "@supabase/supabase-js";
-  export let session: Session;
 
-  export let onlineStatus: boolean | undefined = undefined;
+  export let session: Session;
   export let usersOnline: string = "";
   export let currentCourseId: string = "";
   export let currentCourseUrl: string = "";
@@ -39,7 +38,7 @@
         <div class="ml-2">Share Presence</div>
       </a>
     </li>
-    {#if onlineStatus}
+    {#if $onlineStatus}
       <li>
         <!-- svelte-ignore a11y-missing-attribute -->
         <!-- svelte-ignore a11y-click-events-have-key-events -->
@@ -52,7 +51,7 @@
         </a>
       </li>
       <hr />
-      {#if onlineStatus}
+      {#if $onlineStatus}
         <li>
           <a href="/live/{currentCourseId}" target="_blank" rel="noreferrer">
             <Icon icon="fluent:people-list-24-filled" color="rgba(var(--color-primary-500))" height="20" />
