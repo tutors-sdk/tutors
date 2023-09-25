@@ -10,7 +10,6 @@ export const load: PageLoad = async ({ params, fetch }) => {
   const course: Course = await courseService.readCourse(params.courseid, fetch);
   presenceService.initService(course);
   return {
-    course: course,
-    lo: course
+    course: course
   };
 };

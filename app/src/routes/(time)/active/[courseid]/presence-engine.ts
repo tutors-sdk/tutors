@@ -2,9 +2,7 @@ import { child, get, getDatabase, onValue, ref, off } from "firebase/database";
 import { studentsOnline, studentsOnlineList } from "./stores";
 import type { Course } from "$lib/services/models/lo-types";
 import type { User, UserSummary } from "$lib/services/types/auth";
-import type { StudentLoEvent, StudentLoUpdate } from "$lib/services/types/metrics";
-import { decrypt } from "$lib/services/utils/auth";
-import { readUser } from "$lib/services/utils/firebase";
+import type { StudentLoEvent } from "$lib/services/types/metrics";
 
 let canUpdate = false;
 
@@ -12,27 +10,10 @@ export const presenceService = {
   db: {},
   user: <User>{},
   userSummaryCache: new Map<string, UserSummary>(),
-  // @ts-ignore
-  course: null,
-  // @ts-ignore
-  lastCourse: null,
+  course: <Course>{},
+  lastCourse: <Course>{},
   students: new Map<string, StudentLoEvent>(),
   los: new Array<StudentLoEvent>(),
-  listeners: new Map<string, StudentLoUpdate>(),
-
-  startListening(key: string, listener: StudentLoUpdate) {
-    this.listeners.set(key, listener);
-  },
-
-  stopListening(key: string) {
-    this.listeners.delete(key);
-  },
-
-  updateListeners(kind: string, event: StudentLoEvent) {
-    for (const listener of this.listeners.values()) {
-      listener(kind, event);
-    }
-  },
 
   sweepAndPurge(): void {
     const losToDelete: StudentLoEvent[] = [];
@@ -42,14 +23,11 @@ export const presenceService = {
         losToDelete.push(lo);
       }
     });
-
     losToDelete.forEach((lo) => {
       const index = this.los.indexOf(lo);
       if (index !== -1) {
         this.los.splice(index, 1);
       }
-
-      this.updateListeners("leave", lo);
       this.students.delete(lo.studentId);
     });
 
@@ -58,44 +36,32 @@ export const presenceService = {
   },
 
   async visitUpdate(courseId: string) {
-    const lo = await (await get(child(ref(this.db), `all-course-access/${courseId}/lo`))).val();
-    if (lo) {
-      const userId = decrypt(lo.tutorsTimeId);
-      if (userId && this.user.email !== userId) {
-        let user = await readUser(courseId, userId);
-        if (!user) {
-          // const user = await readObj(`${courseId}/users/${sanitise(userId)}`);
-          user = await readUser(courseId, userId);
-        }
-        if (user) {
-          const event: StudentLoEvent = {
-            studentName: user.name,
-            studentId: userId,
-            studentImg: user.picture,
-            courseTitle: lo.courseTitle,
-            loTitle: lo.title,
-            loImage: lo.img,
-            loRoute: lo.subRoute,
-            loIcon: lo.icon,
-            timeout: 7
-          };
-          const studentUpdate = this.students.get(userId);
-          if (!studentUpdate) {
-            this.students.set(userId, event);
-            this.los.push(event);
-            this.updateListeners("enter", event);
-          } else {
-            studentUpdate.loTitle = event.loTitle;
-            studentUpdate.loImage = event.loImage;
-            studentUpdate.loRoute = event.loRoute;
-            studentUpdate.loIcon = event.loIcon;
-            studentUpdate.timeout = 7;
-            this.updateListeners("update", event);
-          }
-          studentsOnlineList.set([...this.los]);
-          studentsOnline.set(this.los.length);
-        }
+    const lo = await (await get(child(ref(this.db), `all-course-access/${courseId}/learning-event`))).val();
+    if (lo && lo.user && lo.user.fullName != "anonymous") {
+      const event: StudentLoEvent = {
+        studentName: lo.user.fullName,
+        studentId: lo.user.id,
+        studentImg: lo.user.avatar,
+        courseTitle: lo.courseTitle,
+        loTitle: lo.title,
+        loImage: lo.img,
+        loRoute: lo.subRoute,
+        loIcon: lo.icon,
+        timeout: 7
+      };
+      const studentUpdate = this.students.get(event.studentId);
+      if (!studentUpdate) {
+        this.students.set(event.studentId, event);
+        this.los.push(event);
+      } else {
+        studentUpdate.loTitle = event.loTitle;
+        studentUpdate.loImage = event.loImage;
+        studentUpdate.loRoute = event.loRoute;
+        studentUpdate.loIcon = event.loIcon;
+        studentUpdate.timeout = 7;
       }
+      studentsOnlineList.set([...this.los]);
+      studentsOnline.set(this.los.length);
     }
   },
 
