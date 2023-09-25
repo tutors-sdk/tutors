@@ -1,3 +1,4 @@
+import { get } from "svelte/store";
 import { updateLo } from "$lib/services/utils/course";
 import type { Course, Lo } from "$lib/services/models/lo-types";
 import type { TokenResponse } from "$lib/services/types/auth";
@@ -50,11 +51,9 @@ export const analyticsService = {
     updateLastAccess(`${course.courseId}/usage/${this.loRoute}`, course.title);
     updateVisits(course.courseUrl.substring(0, course.courseUrl.indexOf(".")));
 
-    //if (!session || (session && session.onlineStatus === "online")) {
     updateLastAccess(`all-course-access/${course.courseId}`, course.title);
     updateVisits(`all-course-access/${course.courseId}`);
-    updateLo(`all-course-access/${course.courseId}`, course, lo);
-    //}
+    updateLo(`all-course-access/${course.courseId}`, course, lo, get(onlineStatus), session?.user);
 
     if (session) {
       const key = `${course.courseUrl.substring(0, course.courseUrl.indexOf("."))}/users/${sanitise(session.user.email)}/${this.loRoute}`;
@@ -67,11 +66,9 @@ export const analyticsService = {
     if (!lo) return;
     updateLastAccess(`${course.courseId}/usage/${this.loRoute}`, course.title);
     updateCount(course.courseId);
-    if (session.user) {
+    if (session?.user) {
       updateCount(`all-course-access/${course.courseId}`);
-      if (onlineStatus) {
-        updateLo(`all-course-access/${course.courseId}`, course, lo);
-      }
+      updateLo(`all-course-access/${course.courseId}`, course, lo, get(onlineStatus), session?.user);
       const key = `${course.courseId}/users/${sanitise(session.user.email)}/${this.loRoute}`;
       updateLastAccess(key, lo.title);
       updateCount(key);
