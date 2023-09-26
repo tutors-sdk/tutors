@@ -123,7 +123,8 @@ Cypress.Commands.add("toggleTOCWithVerification", (contents: any) => {
       cy.log(element.title)
       cy.get('div.drawer-backdrop', { timeout: 10000 })
         .find('div.drawer')
-        .should('include.text', element.title);
+        .should('include.text', element.title.trim())
+        .and('not.contain', 'undefined');
     }
   });
 });
@@ -136,7 +137,8 @@ Cypress.Commands.add("toggleInfoWithVerification", (contents: any) => {
     cy.log(element)
     cy.get('div.drawer-backdrop', { timeout: 10000 })
       .find('div.drawer')
-      .should('include.text', element);
+      .should('contain', element)
+      .and('not.contain', 'undefined');
   });
 });
 
@@ -177,15 +179,17 @@ Cypress.Commands.add("partialSearchVerification", (searchWord: string) => {
 Cypress.Commands.add("verifyContentsExists", (lo: any) => {
   cy.log(lo.title)
   cy.get('.card', { timeout: 10000 }).should('include.text', lo.title.trim())
-    .should('exist');
+    .and('exist');
 });
 
 Cypress.Commands.add("clickPanelVideo", (lo: any) => {
-  cy.findByText(lo.title.trim(), { matchCase: false });
+  cy.findByText(lo.title.trim(), { matchCase: false })
+  .should('not.contain', 'undefined');
 });
 
 Cypress.Commands.add("checkTextExists", (lo: any) => {
-  cy.findAllByText(lo.title.trim(), { matchCase: false });
+  cy.findAllByText(lo.title.trim(), { matchCase: false })
+  .should('not.contain', 'undefined');
 });
 
 Cypress.Commands.add("verifyDownloadOfArchive", (lo: any) => {
