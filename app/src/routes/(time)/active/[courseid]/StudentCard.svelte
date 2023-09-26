@@ -33,13 +33,13 @@
       </header>
     </div>
     <div class="card-body">
-      <div class="my-2 justify-center">
+      <figure class="flex justify-center object-scale-down p-1">
         {#if lo.loIcon}
-          <Iconify icon={lo.loIcon.type} color={lo.loIcon.color} height={iconHeight} />
+          <Iconify icon={lo.loIcon.icon} color={lo.loIcon.color} height={iconHeight} />
         {:else}
           <img loading="lazy" class="mx-auto {imageHeight}" src={lo.loImage} alt={lo.loTitle} />
         {/if}
-      </div>
+      </figure>
     </div>
     <footer class="card-footer text-center">
       <p class="mt-2 mb-2 font-semibold">
