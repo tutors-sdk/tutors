@@ -63,7 +63,11 @@ export function updateLo(root: string, course: Course, currentLo: Lo, onlineStat
     lo.user = user;
   }
   if (currentLo.icon) {
-    lo.icon = currentLo.icon;
+    const icon = {
+      icon: currentLo.icon.type
+    };
+    if (currentLo.icon.color !== undefined) icon.color = currentLo.icon.color;
+    lo.icon = icon;
   }
   writeObj(`${root}/learning-event`, lo);
 }
