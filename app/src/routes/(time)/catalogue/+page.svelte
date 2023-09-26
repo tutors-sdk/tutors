@@ -3,7 +3,7 @@
   import type { PageData } from "./$types";
   import { getCourseSummary, type CourseSummary } from "$lib/services/utils/course";
   import { readVisits } from "$lib/services/utils/firebase";
-  import CourseCard from "$lib/ui/learning-objects/layout/CourseCard.svelte";
+  import CatalogueCourseCard from "./CatalogueCourseCard.svelte";
   export let data: PageData;
 
   let los: CourseSummary[] = [];
@@ -36,7 +36,7 @@
 <div class="bg-surface-100-800-token mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4">
   <div class="flex flex-wrap justify-center">
     {#each los as lo}
-      <CourseCard {lo} />
+      <CatalogueCourseCard {lo} />
     {/each}
   </div>
 </div>

@@ -5,12 +5,8 @@
   import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
   import TutorsTitle from "$lib/ui/navigators/titles/TutorsTitle.svelte";
-  import type { PageData } from "./$types";
-  import { onMount } from "svelte";
   import { studentsOnlineList } from "./stores";
   import StudentCard from "./StudentCard.svelte";
-
-  export let data: PageData;
 </script>
 
 <AppShell class="h-screen">

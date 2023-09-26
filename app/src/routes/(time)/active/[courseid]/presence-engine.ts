@@ -36,7 +36,7 @@ export const presenceService = {
   },
 
   async visitUpdate(courseId: string) {
-    const lo = await (await get(child(ref(this.db), `all-course-access/${courseId}/learning-event`))).val();
+    const lo = await (await get(child(ref(this.db), `all-course-access/${courseId}/learningEvent`))).val();
     if (lo && lo.user && lo.user.fullName != "anonymous") {
       const event: StudentLoEvent = {
         studentName: lo.user.fullName,

@@ -9,8 +9,8 @@
   import type { PageData } from "./$types";
   import { child, get, getDatabase, onValue, ref } from "firebase/database";
   import { getCourseSummary, type CourseSummary } from "$lib/services/utils/course";
-  import CourseCard from "$lib/ui/learning-objects/layout/CourseCard.svelte";
   import Metric from "$lib/ui/icons/Metric.svelte";
+  import LiveCourseCard from "./LiveCourseCard.svelte";
   const db = getDatabase();
 
   export let data: PageData;
@@ -40,9 +40,9 @@
   }, 1000);
 
   function updateNmrUsers(courseSummary: CourseSummary) {
-    if (courseSummary.currentLo.tutorsTimeId) {
-      tutorsTimeIds.add(courseSummary.currentLo.tutorsTimeId);
-      courseSummary.studentIds.add(courseSummary.currentLo.tutorsTimeId);
+    if (courseSummary.currentLo.user.id) {
+      tutorsTimeIds.add(courseSummary.currentLo.user.id);
+      courseSummary.studentIds.add(courseSummary.currentLo.user.id);
       users = tutorsTimeIds.size;
     }
   }
@@ -53,7 +53,7 @@
     if (courseSummary.currentLo.icon) {
       courseSummary.icon = courseSummary.currentLo.icon;
     } else {
-      //courseSummary.icon = null;
+      courseSummary.icon = null;
     }
   }
 
@@ -66,13 +66,8 @@
       los.push(courseSummary);
     }
     const usage = await (await get(child(ref(db), `all-course-access/${courseId}`))).val();
-    if (usage.lo) {
-      courseSummary.currentLo = usage.lo;
-      if (!usage.lo.icon) {
-        // @ts-ignore
-        courseSummary.icon = "";
-      }
-      courseSummary.img = courseSummary.img;
+    if (usage.learningEvent) {
+      courseSummary.currentLo = usage.learningEvent;
       courseSummary.visits = usage.visits;
       updateCourseSummary(courseSummary);
       updateNmrUsers(courseSummary);
@@ -121,7 +116,7 @@
   <div class="bg-surface-100-800-token mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4">
     <div class="flex flex-wrap justify-center">
       {#each los as lo}
-        <CourseCard {lo} />
+        <LiveCourseCard {lo} />
       {/each}
     </div>
   </div>
