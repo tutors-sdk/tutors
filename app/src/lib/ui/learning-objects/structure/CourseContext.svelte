@@ -4,17 +4,18 @@
   import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
 
   export let course: Course;
+  console.log(course);
 </script>
 
 <Accordion regionPanel="space-y-0.5">
   {#each course.los as lo}
-    <AccordionItem>
-      <svelte:fragment slot="summary">{lo.title}</svelte:fragment>
-      <svelte:fragment slot="content">
-        {#if lo.type === "topic"}
+    {#if lo.type === "topic" && !lo.hide}
+      <AccordionItem>
+        <svelte:fragment slot="summary">{lo.title}</svelte:fragment>
+        <svelte:fragment slot="content">
           <TopicContext topic={lo} />
-        {/if}
-      </svelte:fragment>
-    </AccordionItem>
+        </svelte:fragment>
+      </AccordionItem>
+    {/if}
   {/each}
 </Accordion>
