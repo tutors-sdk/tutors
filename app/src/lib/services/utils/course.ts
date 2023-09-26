@@ -1,7 +1,8 @@
 import type { Course } from "$lib/services/models/lo-types";
-import type { IconType } from "$lib/services/types/icon";
-import type { Lo } from "$lib/services/types/lo";
+import type { IconType } from "$lib/services/models/lo-types";
+import type { Lo } from "$lib/services/models/lo-types";
 import { writeObj } from "$lib/services/utils/firebase";
+import type { User, UserMetadata } from "../types/auth";
 
 export interface CourseSummary {
   title: string;
@@ -38,23 +39,37 @@ export async function getCourseSummary(courseId: string): Promise<CourseSummary>
   };
 }
 
-export function updateLo(root: string, course: Course, currentLo: Lo) {
-  const lo = {
-    icon:
-      currentLo.type === "course"
-        ? currentLo.icon
-        : currentLo.frontMatter?.icon
-        ? { type: currentLo.frontMatter.icon["type"], color: currentLo.frontMatter.icon["color"] }
-        : {},
+export function updateLo(root: string, course: Course, currentLo: Lo, onlineStatus: boolean, userDetails: User) {
+  const lo: any = {
     img: currentLo.img,
     title: currentLo.title,
     courseTitle: course.title,
     subRoute: currentLo.route,
-    isPrivate: course.properties?.private ? course.properties.private : 0,
-    tutorsTimeId: getTutorsTimeId(course)
+    isPrivate: course.properties?.private ? course.properties.private : 0
   };
-
-  writeObj(`${root}/lo`, lo);
+  if (userDetails && onlineStatus) {
+    const user = {
+      fullName: userDetails.user_metadata.full_name,
+      avatar: userDetails.user_metadata.avatar_url,
+      id: userDetails.user_metadata.user_name
+    };
+    lo.user = user;
+  } else {
+    const user = {
+      fullName: "anonymous",
+      avatar: "none",
+      id: getTutorsTimeId()
+    };
+    lo.user = user;
+  }
+  if (currentLo.icon) {
+    const icon = {
+      icon: currentLo.icon.type
+    };
+    if (currentLo.icon.color !== undefined) icon.color = currentLo.icon.color;
+    lo.icon = icon;
+  }
+  writeObj(`${root}/learningEvent`, lo);
 }
 
 function generateTutorsTimeId() {
@@ -65,14 +80,9 @@ function generateTutorsTimeId() {
   });
 }
 
-function getTutorsTimeId(course: Course) {
-  if (course.properties?.authLevel) {
-    return window.localStorage.id;
-  }
-
+function getTutorsTimeId() {
   if (!window.localStorage.tutorsTimeId) {
     window.localStorage.tutorsTimeId = generateTutorsTimeId();
   }
-
   return window.localStorage.tutorsTimeId;
 }

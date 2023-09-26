@@ -1,6 +1,6 @@
-import { isCompositeLo, type Course, type Lo, type Composite, type LoType } from "./lo-types";
+import { isCompositeLo, type Course, type Lo, type Composite, type LoType, type Topic } from "./lo-types";
 import { convertLoToHtml } from "./markdown-utils";
-import { allVideoLos, crumbs, flattenLos, getIcon, getPanels, getUnits, injectCourseUrl, removeUnknownLos } from "./lo-utils";
+import { allVideoLos, crumbs, flattenLos, loadIcon, getPanels, getUnits, injectCourseUrl, removeUnknownLos } from "./lo-utils";
 import { createCompanions, createToc, createWalls, initCalendar, loadPropertyFlags } from "./course-utils";
 
 export function decorateCourseTree(course: Course, courseId: string = "", courseUrl = "") {
@@ -25,6 +25,8 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   allLos.forEach((lo) => course.loIndex.set(lo.route, lo));
   const videoLos = allVideoLos(allLos);
   videoLos.forEach((lo) => course.loIndex.set(lo.video, lo));
+  course.topicIndex = new Map<string, Topic>();
+  course.los.forEach((lo) => course.topicIndex.set(lo.route, lo as Topic));
 
   loadPropertyFlags(course);
   createCompanions(course);
@@ -37,7 +39,7 @@ export function decorateLoTree(course: Course, lo: Lo) {
   // every Lo knows its parent
   lo.parentCourse = course;
   // recover icon from frontmatter if present
-  lo.icon = getIcon(lo);
+  lo.icon = loadIcon(lo);
   // define breadcrump - path to all parent Los
   lo.breadCrumbs = [];
   crumbs(lo, lo.breadCrumbs);

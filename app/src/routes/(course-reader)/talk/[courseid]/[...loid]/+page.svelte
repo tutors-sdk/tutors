@@ -1,21 +1,10 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
   import type { PageData } from "./$types";
-  import { TopicNavigatorCard, TalkCard } from "$lib/ui/legacy";
+  import Context from "$lib/ui/learning-objects/structure/Context.svelte";
+  import Talk from "$lib/ui/learning-objects/content/Talk.svelte";
   export let data: PageData;
 </script>
 
-{#if data.lo}
-  <div class="flex w-11/12 mx-auto">
-    <div class="w-full">
-      {#key data.lo}
-        {#if browser}
-          <TalkCard lo={data.lo} />
-        {/if}
-      {/key}
-    </div>
-    <div class="hidden md:block">
-      <TopicNavigatorCard topic={data.lo.parentTopic} />
-    </div>
-  </div>
-{/if}
+<Context lo={data.lo}>
+  <Talk lo={data.lo} />
+</Context>

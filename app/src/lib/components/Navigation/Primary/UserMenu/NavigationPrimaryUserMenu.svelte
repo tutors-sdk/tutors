@@ -29,20 +29,13 @@
       <li class="flex">
         <!-- svelte-ignore a11y-missing-attribute -->
         <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
         <a on:click={handleClick}>
           {#if onlineStatus}
-            <Icon
-              icon="fluent:presence-available-24-filled"
-              color="rgba(var(--color-success-500))"
-              height="20"
-            />
+            <Icon icon="fluent:presence-available-24-filled" color="rgba(var(--color-success-500))" height="20" />
           {/if}
           {#if !onlineStatus}
-            <Icon
-              icon="fluent:presence-available-24-regular"
-              color="rgba(var(--color-error-500))"
-              height="20"
-            />
+            <Icon icon="fluent:presence-available-24-regular" color="rgba(var(--color-error-500))" height="20" />
           {/if}
           <div class="ml-2">Share Presence</div>
         </a>
@@ -51,12 +44,9 @@
         <li>
           <!-- svelte-ignore a11y-missing-attribute -->
           <!-- svelte-ignore a11y-click-events-have-key-events -->
+          <!-- svelte-ignore a11y-no-static-element-interactions -->
           <a on:click={onlineDrawerOpen}>
-            <Icon
-              icon="fluent:people-list-24-filled"
-              color="rgba(var(--color-primary-500))"
-              height="20"
-            />
+            <Icon icon="fluent:people-list-24-filled" color="rgba(var(--color-primary-500))" height="20" />
             <div class="ml-2">
               View <span class="badge bg-error-500 text-white">{usersOnline}</span> Online
             </div>
@@ -67,22 +57,14 @@
       {#if onlineStatus}
         <li>
           <a href="/live/{currentCourseId}" target="_blank" rel="noreferrer">
-            <Icon
-              icon="fluent:people-list-24-filled"
-              color="rgba(var(--color-primary-500))"
-              height="20"
-            />
+            <Icon icon="fluent:people-list-24-filled" color="rgba(var(--color-primary-500))" height="20" />
             <div class="ml-2">Tutors Live</div>
           </a>
         </li>
       {/if}
       <li>
         <a href="/time/{currentCourseUrl}/{userId}" target="_blank" rel="noreferrer">
-          <Icon
-            icon="fluent:clock-alarm-24-filled"
-            color="rgba(var(--color-primary-500))"
-            height="20"
-          />
+          <Icon icon="fluent:clock-alarm-24-filled" color="rgba(var(--color-primary-500))" height="20" />
           <div class="ml-2">Tutors Time</div>
         </a>
       </li>

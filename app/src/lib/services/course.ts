@@ -58,7 +58,7 @@ export const courseService = {
 
   async readTopic(courseId: string, topicId: string, fetchFunction: typeof fetch): Promise<Lo> {
     const course = await this.readCourse(courseId, fetchFunction);
-    const topic = course.loIndex.get(topicId);
+    const topic = course.topicIndex.get(topicId);
     if (topic) currentLo.set(topic);
     return topic!;
   },

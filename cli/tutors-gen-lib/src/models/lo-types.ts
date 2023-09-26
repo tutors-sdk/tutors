@@ -1,5 +1,5 @@
 export const imageTypes = ["png", "jpg", "jpeg", "gif", "PNG", "JPG", "JPEG", "GIF"];
-export const assetTypes = imageTypes.concat(["pdf", "zip"]);
+export const assetTypes = imageTypes.concat(["pdf", "zip", "html", "htm"]);
 
 export type WeekType = {
   title: string;
@@ -206,5 +206,5 @@ export const preOrder = new Map([
   ["panelvideo", 11],
   ["topic", 12],
   ["unknown", 13],
-  ["", 0]
+  ["", 0],
 ]);

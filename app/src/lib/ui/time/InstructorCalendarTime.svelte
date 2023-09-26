@@ -3,7 +3,7 @@
   import { Grid } from "ag-grid-community";
   import "ag-grid-enterprise";
   import { CalendarSheet, options } from "$lib/services/sheets/calendar-sheet";
-  import { Icon } from "$lib/ui/legacy";
+  import Icon from "../icons/Icon.svelte";
   import type { Calendar } from "$lib/services/models/lo-types";
   import type { UserMetric } from "$lib/services/types/metrics";
 

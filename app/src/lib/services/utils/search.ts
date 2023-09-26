@@ -44,20 +44,22 @@ export function searchHits(los: Lo[], searchTerm: string): ResultType[] {
   //let result : string[] = [];
   const results: ResultType[] = [];
   los.forEach((lo) => {
-    const text = lo.contentMd;
-    const contents: ContentType[] = arrayLinesSearchTermHits(text, searchTerm);
-    for (const content of contents) {
-      const result = {
-        fenced: content.style !== "unfenced",
-        language: content.language,
-        contentMd: content.content,
-        lab: lo,
-        title: `${lo.parentLo.title}/${removeLeadingHashes(lo.title)}`,
-        link: lo?.route,
-        html: ""
-      };
-      result.link = result.link.substring(1);
-      results.push(result);
+    if (lo.contentMd) {
+      const text = lo.contentMd;
+      const contents: ContentType[] = arrayLinesSearchTermHits(text, searchTerm);
+      for (const content of contents) {
+        const result = {
+          fenced: content.style !== "unfenced",
+          language: content.language,
+          contentMd: content.content,
+          lab: lo,
+          title: `${lo.parentLo?.title}/${removeLeadingHashes(lo.title)}`,
+          link: lo?.route,
+          html: ""
+        };
+        result.link = result.link.substring(1);
+        results.push(result);
+      }
     }
   });
   return results.slice(0, maxNumberHits);
@@ -196,9 +198,7 @@ function indicesOf(str: string, substr: string): number[] {
  * @returns array of indices
  */
 function arStartFenceIndices(content: string): number[] {
-  const ar = arrayStartFenceIndices(content, fenceTick).concat(
-    arrayStartFenceIndices(content, fenceTilde)
-  );
+  const ar = arrayStartFenceIndices(content, fenceTick).concat(arrayStartFenceIndices(content, fenceTilde));
   return numericSort(ar);
 }
 
@@ -265,11 +265,7 @@ function isEven(aninteger: number): boolean {
 function currentline(searchTerm: string, indexSearchTerm: number, content: string): string {
   const arrayIndicesSeparators = indicesOf(content, separator());
   const indexStartLine = findNearestPreviousIndex(arrayIndicesSeparators, indexSearchTerm);
-  const indexEndLine = findNearestNextIndex(
-    arrayIndicesSeparators,
-    indexSearchTerm,
-    content.length
-  );
+  const indexEndLine = findNearestNextIndex(arrayIndicesSeparators, indexSearchTerm, content.length);
   const currentLine = content.substring(indexStartLine[1], indexEndLine[1]);
   return currentLine;
 }
@@ -295,11 +291,7 @@ function findNearestPreviousIndex(indices: number[], currIndex: number): [number
  * @returns An array of tuples, each tuple containing the array index and the index immediately following the current index.
  *
  */
-function findNearestNextIndex(
-  indices: number[],
-  currIndex: number,
-  contentLen: number
-): [number, number] {
+function findNearestNextIndex(indices: number[], currIndex: number, contentLen: number): [number, number] {
   for (let i = 0; i < indices.length; i += 1) {
     if (currIndex > indices[indices.length - 1]) {
       return [i, contentLen]; // Edge condition where no eof character exists.

@@ -17,7 +17,6 @@ import footnote from "markdown-it-footnote";
 // @ts-ignore
 import deflist from "markdown-it-deflist";
 import type { Course } from "./lo-types";
-import { browserLocalPersistence } from "firebase/auth";
 
 const markdownIt: any = new MarkdownIt({
   html: false, // Enable HTML tags in source
