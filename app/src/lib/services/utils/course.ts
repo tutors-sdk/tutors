@@ -69,7 +69,7 @@ export function updateLo(root: string, course: Course, currentLo: Lo, onlineStat
     if (currentLo.icon.color !== undefined) icon.color = currentLo.icon.color;
     lo.icon = icon;
   }
-  writeObj(`${root}/learning-event`, lo);
+  writeObj(`${root}/learningEvent`, lo);
 }
 
 function generateTutorsTimeId() {
