@@ -29,10 +29,9 @@
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
       <a on:click={handleClick}>
-        {#if onlineStatus}
+        {#if $onlineStatus}
           <Icon icon="fluent:presence-available-24-filled" color="rgba(var(--color-success-500))" height="20" />
-        {/if}
-        {#if !onlineStatus}
+        {:else}
           <Icon icon="fluent:presence-available-24-regular" color="rgba(var(--color-error-500))" height="20" />
         {/if}
         <div class="ml-2">Share Presence</div>
