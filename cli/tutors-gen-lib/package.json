@@ -21,7 +21,7 @@
     "@types/shelljs": "^0.8.12",
     "commander": "^10.0.1",
     "front-matter": "^4.0.2",
-    "glob": "^10.2.7",
+    "glob": "^10.3.10",
     "highlight.js": "^11.8.0",
     "js-yaml": "^4.1.0",
     "markdown-it": "^13.0.1",
