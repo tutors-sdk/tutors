@@ -71,7 +71,7 @@ function createWallLink(type: string, course: Course): IconNav {
   return {
     link: `/wall/${type}/${course.courseUrl}`,
     icon: type,
-    tip: `${type}s`,
+    tip: `All ${type}s in the course`,
     target: ""
   };
 }

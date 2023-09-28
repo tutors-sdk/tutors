@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Icon from "@iconify/svelte";
+  import Icon from "$lib/ui/icons/Icon.svelte";
   import { getDrawerStore, type DrawerSettings } from "@skeletonlabs/skeleton";
   const drawerStore = getDrawerStore();
   const infoDrawerOpen: any = () => {
@@ -9,5 +9,5 @@
 </script>
 
 <button class="btn btn-sm" on:click={infoDrawerOpen}>
-  <Icon icon="fluent:info-28-regular" color="rgba(var(--color-primary-500))" height="20" />
+  <Icon tip={"View course info"} icon="fluent:info-28-regular" color="rgba(var(--color-primary-500))" height="20" />
 </button>
