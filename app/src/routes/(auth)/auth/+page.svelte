@@ -26,9 +26,11 @@
   }
 </script>
 
-<div class="grid md:grid-cols-2">
-  <Login {handleSignIn} />
-  <div>
-    <Terms />
+<div class="container mx-auto">
+  <div class="flex flex-col">
+    <Login {handleSignIn} />
+    <div class="order-last lg:order-first">
+      <Terms />
+    </div>
   </div>
 </div>

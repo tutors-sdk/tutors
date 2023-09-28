@@ -1,5 +1,5 @@
 <div class="flex items-center justify-center overflow-auto">
-  <div class="card m-8 flex w-full flex-wrap justify-items-center p-4 shadow-xl lg:w-full">
+  <div class="card mx-8 my-4 flex w-full flex-wrap justify-items-center p-4 shadow-xl lg:w-full">
     <div class="font-sm text-l p-2 text-left font-light">
       <p class="p-2">
         You are about to be authenticated via your Github credentials to Tutors. For some courses, Tutors may record how much time each view is active and send this to the
