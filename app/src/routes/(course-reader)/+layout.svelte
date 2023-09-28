@@ -191,7 +191,7 @@
         <a class="btn btn-sm" href="/search/{$currentCourse?.courseUrl}">
           <span class="text-sm font-bold inline-flex gap-2">
             <Icon icon="fluent:search-24-filled" color="rgba(var(--color-primary-500))" height="20" />
-            Search
+            <span class="hidden lg:block"> Search</span>
           </span>
         </a>
         <span class="divider-vertical h-10 hidden lg:block" />
