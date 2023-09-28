@@ -5,11 +5,16 @@
   import { getIcon } from "../../icons/themes/themes";
   import Icon from "@iconify/svelte";
   import { onDestroy } from "svelte";
+  import { popup, type PopupSettings } from "@skeletonlabs/skeleton";
 
   let lo: Lo;
   let wall = false;
+  let authLevel: boolean = false;
   const unsubscribe = currentLo.subscribe((current) => {
     lo = current;
+    if (lo && lo.authLevel > 0) {
+      authLevel = true;
+    }
     if (lo && lo.type === "unit") {
       lo.img = lo.parentLo?.img;
       lo.icon = lo.parentLo?.icon;
@@ -18,6 +23,12 @@
     }
   });
   onDestroy(unsubscribe);
+
+  const authPopupHover: PopupSettings = {
+    event: "hover",
+    target: "popupHover",
+    placement: "top"
+  };
 </script>
 
 {#if $currentLo}
@@ -31,7 +42,16 @@
     </div>
   </div>
   <div class="ml-4 flex-nowrap">
-    <h2 class="mr-4 hidden !text-sm font-bold sm:!text-lg md:inline-block">{$currentLo.title}</h2>
+    <div class="flex">
+      <h2 class="mr-4 hidden !text-sm font-bold sm:!text-lg md:inline-block">{$currentLo.title}</h2>
+      {#if authLevel}
+        <button class="badge-icon variant-filled-error" use:popup={authPopupHover}> <Icon icon="ph:key-fill" /> </button>
+        <div class="card p-2 variant-filled-surface" data-popup="popupHover">
+          <p>This course has authentication enabled</p>
+          <div class="arrow variant-filled-surface" />
+        </div>
+      {/if}
+    </div>
     <!-- Badge -->
     <div class="hidden md:block" target="_blank">
       {#if $currentLo.title != $currentCourse?.title}
