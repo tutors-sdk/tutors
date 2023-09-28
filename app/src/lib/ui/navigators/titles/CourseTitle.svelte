@@ -41,9 +41,9 @@
     <div class="flex">
       <h2 class="mr-4 hidden !text-sm font-bold sm:!text-lg md:inline-block">{$currentLo.title}</h2>
       {#if $currentCourse.authLevel > 0}
-        <button class="badge-icon variant-filled-error" use:popup={authPopupHover}> <Icon icon="ph:key-fill" /> </button>
-        <div class="card p-2 variant-filled-surface w-64 lg:w-96" data-popup="popupHover">
-          <p>This course has authentication enabled and is collecting tutors time data</p>
+        <button class="badge-icon variant-filled-error [&>*]:pointer-events-none" use:popup={authPopupHover}> <Icon icon="eos-icons:hourglass" /> </button>
+        <div class="card p-2 variant-filled-surface" data-popup="popupHover">
+          <p>This course is Tutors Time enabled</p>
           <div class="arrow variant-filled-surface" />
         </div>
       {/if}
