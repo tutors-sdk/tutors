@@ -11,8 +11,8 @@
   }
 </script>
 
-<div class="flex items-center justify-center overflow-auto h-full">
-  <div class="card mx-8 my-4 flex w-full flex-wrap justify-items-center p-4 shadow-xl lg:w-full">
+<div class="bg-surface-100-800-token mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4">
+  <div class="flex flex-wrap justify-center">
     <button type="button" class="btn variant-filled w-full" on:click={handleSignInWithProgress}>
       {#if showProgress}
         <ProgressRadial width="w-8" stroke={100} meter="stroke-primary-500" track="stroke-primary-500/30" />

@@ -19,7 +19,7 @@ import deflist from "markdown-it-deflist";
 import type { Course } from "./lo-types";
 
 const markdownIt: any = new MarkdownIt({
-  html: false, // Enable HTML tags in source
+  html: true, // Enable HTML tags in source
   xhtmlOut: false, // Use '/' to close single tags (<br />).
   breaks: false, // Convert '\n' in paragraphs into <br>
   langPrefix: "language-", // CSS language prefix for fenced blocks. Can be

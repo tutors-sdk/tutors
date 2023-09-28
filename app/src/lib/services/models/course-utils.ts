@@ -1,3 +1,4 @@
+import { addIcon } from "$lib/ui/icons/themes/themes";
 import type { Composite, Course, IconNav, Lo, LoType, Topic } from "./lo-types";
 import { filterByType, setShowHide } from "./lo-utils";
 
@@ -43,6 +44,7 @@ export function createCompanions(course: Course) {
   if (course.properties.companions) {
     for (const [key, value] of Object.entries(course.properties.companions)) {
       const companion: any = value;
+      addIcon(key, companion.icon);
       course.companions.bar.push({
         link: companion.link,
         icon: key,
