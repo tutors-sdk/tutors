@@ -1,19 +1,22 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import Icon from "@iconify/svelte";
   import { onMount } from "svelte";
+  import Terms from "./terms.svelte";
+  import Login from "./login.svelte";
 
   export let data;
   let { supabase } = data;
   $: ({ supabase } = data);
 
+  let showProgress = false;
   onMount(async () => {
     if (data.session) {
       window.location.href = "/dashboard";
     }
   });
 
-  async function handleSignInWithGitHub() {
+  async function handleSignIn() {
+    showProgress = true;
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "github",
       options: {
@@ -23,12 +26,11 @@
   }
 </script>
 
-<div class="card m-auto mt-16 max-w-lg p-8">
-  <div class="py-4">
-    <button type="button" class="btn variant-filled w-full" on:click={handleSignInWithGitHub}>
-      <span><Icon icon="mdi:github" /></span>
-      <span>Sign in with GitHub</span>
-    </button>
+<div class="container mx-auto">
+  <div class="flex flex-col">
+    <Login {handleSignIn} />
+    <div class="order-last lg:order-first">
+      <Terms />
+    </div>
   </div>
-  <span>By logging in you agree to the <a href="/terms">Terms & Conditions</a></span>
 </div>
