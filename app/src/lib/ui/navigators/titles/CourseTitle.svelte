@@ -3,9 +3,8 @@
   import Image from "../../icons/Image.svelte";
   import type { Lo } from "$lib/services/models/lo-types";
   import { getIcon } from "../../icons/themes/themes";
-  import Icon from "@iconify/svelte";
   import { onDestroy } from "svelte";
-  import { popup, type PopupSettings } from "@skeletonlabs/skeleton";
+  import Icon from "$lib/ui/icons/Icon.svelte";
 
   let lo: Lo;
   let wall = false;
@@ -19,12 +18,6 @@
     }
   });
   onDestroy(unsubscribe);
-
-  const authPopupHover: PopupSettings = {
-    event: "hover",
-    target: "popupHover",
-    placement: "top"
-  };
 </script>
 
 {#if $currentLo}
@@ -41,11 +34,7 @@
     <div class="flex">
       <h2 class="mr-4 hidden !text-sm font-bold sm:!text-lg md:inline-block">{$currentLo.title}</h2>
       {#if $currentCourse.authLevel > 0}
-        <button class="badge-icon variant-filled-error [&>*]:pointer-events-none" use:popup={authPopupHover}> <Icon icon="eos-icons:hourglass" /> </button>
-        <div class="card p-2 variant-filled-surface" data-popup="popupHover">
-          <p>This course is Tutors Time enabled</p>
-          <div class="arrow variant-filled-surface" />
-        </div>
+        <Icon icon="eos-icons:hourglass" tip={"This course is TutorsTime enabled"} color={"red"} />
       {/if}
     </div>
     <!-- Badge -->
