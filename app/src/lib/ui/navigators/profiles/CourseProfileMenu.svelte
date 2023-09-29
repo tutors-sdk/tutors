@@ -52,14 +52,14 @@
       <hr />
       {#if $onlineStatus}
         <li>
-          <a href="/active/{currentCourseId}" target="_blank" rel="noreferrer">
+          <a href="/active/{currentCourseId}" rel="noreferrer">
             <Icon icon="fluent:people-list-24-filled" color="rgba(var(--color-primary-500))" height="20" />
             <div class="ml-2">Tutors Live</div>
           </a>
         </li>
       {/if}
       <li>
-        <a href="/time/{currentCourseUrl}/{session.user.id}" target="_blank" rel="noreferrer">
+        <a href="/time/{currentCourseUrl}" rel="noreferrer">
           <Icon icon="fluent:clock-alarm-24-filled" color="rgba(var(--color-primary-500))" height="20" />
           <div class="ml-2">Tutors Time</div>
         </a>
