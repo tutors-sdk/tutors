@@ -7,7 +7,7 @@
   export let usersOnline: string = "";
   export let currentCourseId: string = "";
   export let currentCourseUrl: string = "";
-  export let handleClick: () => void;
+  export let handleOnlineStatusChange: () => void;
   export let handleSignOut: () => void;
   export let onlineDrawerOpen: () => void;
 </script>
@@ -28,7 +28,7 @@
       <!-- svelte-ignore a11y-missing-attribute -->
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <a on:click={handleClick}>
+      <a on:click={handleOnlineStatusChange}>
         {#if $onlineStatus}
           <Icon icon="fluent:presence-available-24-filled" color="rgba(var(--color-success-500))" height="20" />
         {:else}

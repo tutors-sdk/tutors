@@ -6,7 +6,7 @@
   import CourseProfileMenu from "./CourseProfileMenu.svelte";
   export let session: Session;
   export let handleSignOut: () => void;
-  export let handleClick: () => void;
+  export let handleOnlineStatusChange: () => void;
   export let onlineDrawerOpen: () => void;
 </script>
 
@@ -18,7 +18,7 @@
   usersOnline={$studentsOnline.toString()}
   currentCourseId={$currentCourse?.courseId}
   currentCourseUrl={$currentCourse?.courseUrl}
-  {handleClick}
+  {handleOnlineStatusChange}
   {handleSignOut}
   {onlineDrawerOpen}
 />
