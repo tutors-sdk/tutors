@@ -1,5 +1,4 @@
 <script lang="ts">
-  import "../../../app.postcss";
   import { AppShell } from "@skeletonlabs/skeleton";
   import HomeFooter from "$lib/ui/navigators/footers/HomeFooter.svelte";
   import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
@@ -11,7 +10,7 @@
   <svelte:fragment slot="header">
     <MainNavigator>
       <svelte:fragment slot="lead">
-        <TutorsTitle title="Tutors Course Catalogue" subtitle="Tutors Open Source Project" />
+        <TutorsTitle title="Tutors" subtitle="Tutors Open Source Project" />
       </svelte:fragment>
       <svelte:fragment slot="trail">
         <span class="divider-vertical h-10 hidden lg:block" />

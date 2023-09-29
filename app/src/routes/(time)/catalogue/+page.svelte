@@ -1,9 +1,11 @@
 <script lang="ts">
+  import "../../../app.postcss";
   import { onMount } from "svelte";
   import type { PageData } from "./$types";
   import { getCourseSummary, type CourseSummary } from "$lib/services/utils/all-course-access";
   import { readVisits } from "$lib/services/utils/firebase";
   import CatalogueCourseCard from "./CatalogueCourseCard.svelte";
+  import TutorsNavigator from "$lib/ui/navigators/TutorsNavigator.svelte";
   export let data: PageData;
 
   let los: CourseSummary[] = [];
@@ -33,10 +35,12 @@
   });
 </script>
 
-<div class="bg-surface-100-800-token mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4">
-  <div class="flex flex-wrap justify-center">
-    {#each los as lo}
-      <CatalogueCourseCard {lo} />
-    {/each}
+<TutorsNavigator>
+  <div class="bg-surface-100-800-token mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4">
+    <div class="flex flex-wrap justify-center">
+      {#each los as lo}
+        <CatalogueCourseCard {lo} />
+      {/each}
+    </div>
   </div>
-</div>
+</TutorsNavigator>
