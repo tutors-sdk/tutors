@@ -3,12 +3,12 @@
   import { goto } from "$app/navigation";
   import { AppShell } from "@skeletonlabs/skeleton";
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
-  import LoginButton from "$lib/ui/navigators/sidebars/LoginButton.svelte";
   import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
   import TutorsTitle from "$lib/ui/navigators/titles/TutorsTitle.svelte";
   import DashboardProfile from "$lib/ui/navigators/profiles/DashboardProfile.svelte";
   import { currentCourse } from "$lib/stores";
+  import LoginButton from "$lib/ui/navigators/buttons/LoginButton.svelte";
 
   export let data: any;
   let { supabase, session } = data;

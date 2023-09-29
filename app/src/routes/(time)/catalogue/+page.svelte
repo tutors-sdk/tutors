@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import type { PageData } from "./$types";
-  import { getCourseSummary, type CourseSummary } from "$lib/services/utils/course";
+  import { getCourseSummary, type CourseSummary } from "$lib/services/utils/all-course-access";
   import { readVisits } from "$lib/services/utils/firebase";
   import CatalogueCourseCard from "./CatalogueCourseCard.svelte";
   export let data: PageData;

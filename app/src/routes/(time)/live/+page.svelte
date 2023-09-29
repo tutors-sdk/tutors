@@ -8,7 +8,7 @@
   import { onMount } from "svelte";
   import type { PageData } from "./$types";
   import { child, get, getDatabase, onValue, ref } from "firebase/database";
-  import { getCourseSummary, type CourseSummary } from "$lib/services/utils/course";
+  import { getCourseSummary, type CourseSummary } from "$lib/services/utils/all-course-access";
   import Metric from "$lib/ui/icons/Metric.svelte";
   import LiveCourseCard from "./LiveCourseCard.svelte";
   const db = getDatabase();

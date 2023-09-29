@@ -13,17 +13,19 @@
   import { initServices } from "$lib/services/tutors-startup";
   import { setupPresence, subscribePresence, unsubscribePresence, updatePresence } from "$lib/services/presence";
   import Sidebars from "$lib/ui/navigators/sidebars/Sidebars.svelte";
-  import InfoButton from "$lib/ui/navigators/sidebars/InfoButton.svelte";
-  import TocButton from "$lib/ui/navigators/sidebars/TocButton.svelte";
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
-  import CalendarButton from "$lib/ui/navigators/sidebars/CalendarButton.svelte";
+  import CalendarButton from "$lib/ui/navigators/buttons/CalendarButton.svelte";
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
   import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
-  import LoginButton from "$lib/ui/navigators/sidebars/LoginButton.svelte";
   import CourseTitle from "$lib/ui/navigators/titles/CourseTitle.svelte";
   import CourseProfile from "$lib/ui/navigators/profiles/CourseProfile.svelte";
-  import Icon from "@iconify/svelte";
+  import Icon from "$lib/ui/icons/Icon.svelte";
+  import LoginButton from "$lib/ui/navigators/buttons/LoginButton.svelte";
+  import TocButton from "$lib/ui/navigators/buttons/TocButton.svelte";
+  import InfoButton from "$lib/ui/navigators/buttons/InfoButton.svelte";
+  import SearchButton from "$lib/ui/navigators/buttons/SearchButton.svelte";
+  import TutorsTimeIndicator from "$lib/ui/navigators/buttons/TutorsTimeIndicator.svelte";
 
   export let data: any;
 
@@ -188,12 +190,8 @@
       </svelte:fragment>
       <CalendarButton />
       <svelte:fragment slot="trail">
-        <a class="btn btn-sm" href="/search/{$currentCourse?.courseUrl}">
-          <span class="text-sm font-bold inline-flex gap-2">
-            <Icon icon="fluent:search-24-filled" color="rgba(var(--color-primary-500))" height="20" />
-            <span class="hidden lg:block"> Search</span>
-          </span>
-        </a>
+        <TutorsTimeIndicator />
+        <SearchButton />
         <span class="divider-vertical h-10 hidden lg:block" />
         <LayoutMenu />
         <span class="divider-vertical h-10 hidden lg:block" />

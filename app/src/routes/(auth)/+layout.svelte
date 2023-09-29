@@ -7,10 +7,10 @@
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
   import { get } from "svelte/store";
   import DashboardProfile from "$lib/ui/navigators/profiles/DashboardProfile.svelte";
-  import LoginButton from "$lib/ui/navigators/sidebars/LoginButton.svelte";
   import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
   import TutorsTitle from "$lib/ui/navigators/titles/TutorsTitle.svelte";
+  import LoginButton from "$lib/ui/navigators/buttons/LoginButton.svelte";
 
   export let data: any;
   let { supabase, session } = data;

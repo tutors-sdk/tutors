@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { modeCurrent } from "@skeletonlabs/skeleton";
   import "iconify-icon";
-  import DeveloperExperience from "$lib/ui/home/DeveloperExperience.svelte";
-  import EducatorExperience from "$lib/ui/home/EducatorExperience.svelte";
-  import LearnerExperience from "$lib/ui/home/LearnerExperience.svelte";
+  import DeveloperExperience from "./DeveloperExperience.svelte";
+  import LearnerExperience from "./LearnerExperience.svelte";
+  import { modeCurrent } from "@skeletonlabs/skeleton";
+  import EducatorExperience from "./EducatorExperience.svelte";
 </script>
 
 <div class="bg-gradient-to-l from-primary-50 dark:from-primary-900 to-accent-50 dark:to-accent-900">
@@ -60,10 +60,7 @@
           >Open Source</span
         > project
       </h1>
-      <p class="font-bold !text-lg my-4">
-        Tutors is an open source project available for free under the MIT license on GitHub. It exists due to the hard work and dedication of all individuals who have contributed
-        to project.
-      </p>
+      <p class="font-bold !text-lg my-4">Tutors is an open source project available for free under the MIT license on GitHub.</p>
       <a href="https://github.com/tutors-sdk/tutors/graphs/contributors" target="_blank" rel="noreferrer">
         <img src="https://contrib.rocks/image?repo=tutors-sdk/tutors" alt="github contributors list" />
       </a>
