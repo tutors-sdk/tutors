@@ -8,7 +8,7 @@ the course as for any public web site.**
 If you do sign up/log in, then you will need a github account first. Logging in will then make a simple 
 convenient dashboard available of quick links to all recent Tutors courses you have accessed. 
 
-For some courses, Tutors will always requre an account to access - and you will be landed here. 
+For some courses, Tutors will always requre an account to gain access - and you will be landed here. 
 Once logged in, Tutors may record how much time each view is active and send this to the TutorsTime data store. 
 You can view this information via the Time feature on the profile menu. This data is available to you + 
 the instructor of your course, but not to other students.
