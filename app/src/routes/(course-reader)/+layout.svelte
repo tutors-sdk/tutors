@@ -1,31 +1,18 @@
 <script lang="ts">
   import "../../app.postcss";
-  import { goto, invalidate } from "$app/navigation";
+  import { invalidate } from "$app/navigation";
   import { page } from "$app/stores";
   import { onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import { get } from "svelte/store";
-  import { setInitialClassState, getToastStore, AppShell, Toast, Modal, getDrawerStore, storePopup, type DrawerSettings } from "@skeletonlabs/skeleton";
-  import { currentCourse, onlineStatus, storeTheme, transitionKey, currentLo } from "$lib/stores";
+  import { setInitialClassState } from "@skeletonlabs/skeleton";
+  import { onlineStatus, storeTheme, transitionKey, currentLo } from "$lib/stores";
   import PageTransition from "$lib/ui/PageTransition.svelte";
   import { getKeys } from "$lib/environment";
   import { analyticsService } from "$lib/services/analytics";
   import { initServices } from "$lib/services/tutors-startup";
   import { setupPresence, subscribePresence, unsubscribePresence, updatePresence } from "$lib/services/presence";
-  import Sidebars from "$lib/ui/navigators/sidebars/Sidebars.svelte";
-  import Footer from "$lib/ui/navigators/footers/Footer.svelte";
-  import CalendarButton from "$lib/ui/navigators/buttons/CalendarButton.svelte";
-  import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
-  import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
-  import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
-  import CourseTitle from "$lib/ui/navigators/titles/CourseTitle.svelte";
-  import CourseProfile from "$lib/ui/navigators/profiles/CourseProfile.svelte";
-  import Icon from "$lib/ui/icons/Icon.svelte";
-  import LoginButton from "$lib/ui/navigators/buttons/LoginButton.svelte";
-  import TocButton from "$lib/ui/navigators/buttons/TocButton.svelte";
-  import InfoButton from "$lib/ui/navigators/buttons/InfoButton.svelte";
-  import SearchButton from "$lib/ui/navigators/buttons/SearchButton.svelte";
-  import TutorsTimeIndicator from "$lib/ui/navigators/buttons/TutorsTimeIndicator.svelte";
+  import CourseNavigator from "$lib/ui/navigators/CourseNavigator.svelte";
 
   export let data: any;
 
@@ -34,18 +21,9 @@
 
   let status: boolean;
 
-  function handleClick() {
-    status = !status;
-    onlineStatus.set(status);
-    analyticsService.setOnlineStatus(status, session);
-  }
-
   function setBodyThemeAttribute(): void {
     document.body.setAttribute("data-theme", $storeTheme);
   }
-
-  const drawerStore = getDrawerStore();
-  const toastStore = getToastStore();
 
   function updatePageCount() {
     if (!document.hidden && !currentRoute.startsWith("/live") && !currentRoute.startsWith("/dashboard")) {
@@ -108,24 +86,6 @@
     }
   }
 
-  const onlineDrawerOpen: any = () => {
-    const settings: DrawerSettings = { id: "online", position: "right" };
-    drawerStore.open(settings);
-  };
-
-  const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.log(error);
-    } else {
-      toastStore.trigger({
-        message: "You have successfully logged out!",
-        background: "variant-filled-success"
-      });
-      goto("/");
-    }
-  };
-
   onMount(() => {
     setInitialClassState();
     initServices(data.session);
@@ -178,35 +138,7 @@
   {/if}
 </svelte:head>
 
-<AppShell class="h-screen">
-  <Toast />
-  <Modal />
-  <Sidebars />
-  <svelte:fragment slot="header">
-    <MainNavigator>
-      <svelte:fragment slot="lead">
-        <InfoButton />
-        <CourseTitle />
-      </svelte:fragment>
-      <CalendarButton />
-      <svelte:fragment slot="trail">
-        <TutorsTimeIndicator />
-        <SearchButton />
-        <span class="divider-vertical h-10 hidden lg:block" />
-        <LayoutMenu />
-        <span class="divider-vertical h-10 hidden lg:block" />
-        {#if data.session}
-          <div class="relative">
-            <CourseProfile {session} {handleClick} {handleSignOut} {onlineDrawerOpen} />
-          </div>
-        {:else}
-          <LoginButton />
-        {/if}
-        <TocButton />
-      </svelte:fragment>
-    </MainNavigator>
-    <SecondaryNavigator />
-  </svelte:fragment>
+<CourseNavigator {session} {supabase}>
   <div id="app" class="h-full overflow-hidden">
     <div id="top" />
     <div class="mx-auto my-4">
@@ -215,7 +147,4 @@
       </PageTransition>
     </div>
   </div>
-  <svelte:fragment slot="pageFooter">
-    <Footer />
-  </svelte:fragment>
-</AppShell>
+</CourseNavigator>
