@@ -1,7 +1,6 @@
 <script lang="ts">
   import "../../../app.postcss";
   import { AppShell } from "@skeletonlabs/skeleton";
-  import LoginButton from "$lib/ui/navigators/sidebars/LoginButton.svelte";
   import HomeFooter from "$lib/ui/navigators/footers/HomeFooter.svelte";
   import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
