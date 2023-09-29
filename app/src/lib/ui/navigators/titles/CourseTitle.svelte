@@ -33,9 +33,6 @@
   <div class="ml-4 flex-nowrap">
     <div class="flex">
       <h2 class="mr-4 hidden !text-sm font-bold sm:!text-lg md:inline-block">{$currentLo.title}</h2>
-      {#if $currentCourse.authLevel > 0}
-        <Icon icon="eos-icons:hourglass" tip={"This course is TutorsTime enabled"} color={"red"} />
-      {/if}
     </div>
     <!-- Badge -->
     <div class="hidden md:block" target="_blank">
