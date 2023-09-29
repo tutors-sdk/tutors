@@ -20,6 +20,8 @@
   export let session: any;
   export let supabase: any;
 
+  const drawerStore = getDrawerStore();
+
   let status: boolean;
   function handleOnlineStatusChange() {
     status = !status;
@@ -42,7 +44,7 @@
 
   const onlineDrawerOpen: any = () => {
     const settings: DrawerSettings = { id: "online", position: "right" };
-    getDrawerStore().open(settings);
+    drawerStore.open(settings);
   };
 </script>
 
