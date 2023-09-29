@@ -8,9 +8,8 @@
   import InstructorCalendarTime from "$lib/ui/time/InstructorCalendarTime.svelte";
   import CalendarTime from "$lib/ui/time/CalendarTime.svelte";
 
-  import type { PageData } from "./$types";
+  export let data: any;
 
-  export let data: PageData;
   const storeTab: Writable<string> = writable("Labs");
   let pinBuffer = "";
   let instructorMode = false;
