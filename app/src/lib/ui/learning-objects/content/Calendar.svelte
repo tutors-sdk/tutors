@@ -5,7 +5,7 @@
   export let calendar: Calendar;
 </script>
 
-<h4 class="mb-4 text-center font-semibold">calendar.title}</h4>
+<h4 class="mb-4 text-center font-semibold">{calendar.title}</h4>
 <table class="w-full table-auto">
   <thead>
     <tr>
