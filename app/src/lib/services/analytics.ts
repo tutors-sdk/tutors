@@ -1,5 +1,5 @@
 import { get } from "svelte/store";
-import { updateLo } from "$lib/services/utils/course";
+import { updateLo } from "$lib/services/utils/all-course-access";
 import type { Course, Lo } from "$lib/services/models/lo-types";
 import type { TokenResponse } from "$lib/services/types/auth";
 import { currentCourse, currentLo, currentUser, onlineStatus } from "$lib/stores";
