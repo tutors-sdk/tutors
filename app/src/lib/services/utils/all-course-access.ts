@@ -48,8 +48,9 @@ export function updateLo(root: string, course: Course, currentLo: Lo, onlineStat
     isPrivate: course.properties?.private ? course.properties.private : 0
   };
   if (userDetails && onlineStatus) {
+    const name = userDetails.user_metadata.full_name ? userDetails.user_metadata.full_name : userDetails.user_metadata.user_name;
     const user = {
-      fullName: userDetails.user_metadata.full_name,
+      fullName: name,
       avatar: userDetails.user_metadata.avatar_url,
       id: userDetails.user_metadata.user_name
     };
