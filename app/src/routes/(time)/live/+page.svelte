@@ -1,16 +1,12 @@
 <script lang="ts">
   import "../../../app.postcss";
-  import { AppShell } from "@skeletonlabs/skeleton";
-  import HomeFooter from "$lib/ui/navigators/footers/HomeFooter.svelte";
-  import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
-  import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
-  import TutorsTitle from "$lib/ui/navigators/titles/TutorsTitle.svelte";
   import { onMount } from "svelte";
   import type { PageData } from "./$types";
   import { child, get, getDatabase, onValue, ref } from "firebase/database";
   import { getCourseSummary, type CourseSummary } from "$lib/services/utils/all-course-access";
   import Metric from "$lib/ui/icons/Metric.svelte";
   import LiveCourseCard from "./LiveCourseCard.svelte";
+  import TutorsNavigator from "$lib/ui/navigators/TutorsNavigator.svelte";
   const db = getDatabase();
 
   export let data: PageData;
@@ -18,7 +14,6 @@
   let los: CourseSummary[] = [];
   let courses = new Map<string, CourseSummary>();
   let modules = 0;
-  let title = "Tutors Module Activity";
   let subTitle = "Connecting to Tutors Store...";
   let activeSince = "";
   let visits = 0;
@@ -96,23 +91,12 @@
   });
 </script>
 
-<AppShell class="h-screen">
-  <svelte:fragment slot="header">
-    <MainNavigator>
-      <svelte:fragment slot="lead">
-        <TutorsTitle title="Tutors Live Stream" subtitle={subTitle} />
-      </svelte:fragment>
-      <div class="hidden md:inline-block">
-        <Metric value={modules} title="Active Modules" />
-        <Metric value={visits} title="Page Loads" />
-        <Metric value={users} title="Students Online" />
-      </div>
-      <svelte:fragment slot="trail">
-        <span class="divider-vertical h-10 hidden lg:block" />
-        <LayoutMenu />
-      </svelte:fragment>
-    </MainNavigator>
-  </svelte:fragment>
+<TutorsNavigator title="Tutors Live Stream" {subTitle}>
+  <div slot="header" class="hidden md:inline-block">
+    <Metric value={modules} title="Active Modules" />
+    <Metric value={visits} title="Page Loads" />
+    <Metric value={users} title="Students Online" />
+  </div>
   <div class="bg-surface-100-800-token mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4">
     <div class="flex flex-wrap justify-center">
       {#each los as lo}
@@ -120,7 +104,4 @@
       {/each}
     </div>
   </div>
-  <svelte:fragment slot="pageFooter">
-    <HomeFooter />
-  </svelte:fragment>
-</AppShell>
+</TutorsNavigator>
