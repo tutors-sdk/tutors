@@ -2,11 +2,11 @@
   import { onDestroy } from "svelte";
   import Iconify from "@iconify/svelte";
   import Icon from "$lib/ui/icons/Icon.svelte";
-  import type { CourseSummary } from "$lib/services/utils/course";
   import { layout } from "$lib/stores";
   import { Avatar } from "@skeletonlabs/skeleton";
   import Metric from "./Metric.svelte";
   import { cardTransition } from "$lib/ui/animations";
+  import type { CourseSummary } from "$lib/services/utils/all-course-access";
 
   export let lo: CourseSummary;
   let target = "_blank";
@@ -64,9 +64,6 @@
             <a href={lo.currentLo.route} target="_blank" rel="noreferrer">{lo.currentLo.title}</a>
           </div>
         {/if}
-        <!-- <div class="mt-2">
-            <Metric value="{lo.visits}" title="Page Loads" />
-          </div> -->
       </div>
     </footer>
   </div>

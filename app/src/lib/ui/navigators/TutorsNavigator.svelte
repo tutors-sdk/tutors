@@ -4,14 +4,17 @@
   import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
   import TutorsTitle from "$lib/ui/navigators/titles/TutorsTitle.svelte";
+  export let title = "Tutors Open Source Project";
+  export let subTitle = "";
 </script>
 
 <AppShell class="h-screen">
   <svelte:fragment slot="header">
     <MainNavigator>
       <svelte:fragment slot="lead">
-        <TutorsTitle title="Tutors" subtitle="Tutors Open Source Project" />
+        <TutorsTitle {title} subtitle={subTitle} />
       </svelte:fragment>
+      <slot name="header" />
       <svelte:fragment slot="trail">
         <span class="divider-vertical h-10 hidden lg:block" />
         <LayoutMenu />
