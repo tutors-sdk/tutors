@@ -8,10 +8,17 @@
   import DashboardProfile from "$lib/ui/navigators/profiles/DashboardProfile.svelte";
   import { currentCourse } from "$lib/stores";
   import LoginButton from "$lib/ui/navigators/buttons/LoginButton.svelte";
+  import { beforeUpdate, onMount } from "svelte";
 
   export let session: any;
   export let supabase: any;
   export let subTitle = "";
+
+  beforeUpdate(() => {
+    if (!session?.user) {
+      goto("/auth");
+    }
+  });
 
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();

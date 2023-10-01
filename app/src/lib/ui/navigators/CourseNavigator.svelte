@@ -13,14 +13,24 @@
   import InfoButton from "$lib/ui/navigators/buttons/InfoButton.svelte";
   import SearchButton from "$lib/ui/navigators/buttons/SearchButton.svelte";
   import TutorsTimeIndicator from "$lib/ui/navigators/buttons/TutorsTimeIndicator.svelte";
-  import { onlineStatus } from "$lib/stores";
+  import { currentCourse, onlineStatus } from "$lib/stores";
   import { analyticsService } from "$lib/services/analytics";
   import { goto } from "$app/navigation";
+  import { beforeUpdate } from "svelte";
 
   export let session: any;
   export let supabase: any;
 
   const drawerStore = getDrawerStore();
+  const toastStore = getToastStore();
+
+  beforeUpdate(() => {
+    if ($currentCourse.authLevel > 0) {
+      if (!session?.user) {
+        goto("/auth");
+      }
+    }
+  });
 
   let status: boolean;
   function handleOnlineStatusChange() {
@@ -34,7 +44,7 @@
     if (error) {
       console.log(error);
     } else {
-      getToastStore().trigger({
+      toastStore.trigger({
         message: "You have successfully logged out!",
         background: "variant-filled-success"
       });
