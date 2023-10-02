@@ -7,7 +7,7 @@
 
 <nav class="list-nav card card-body w-56 p-4 space-y-4 shadow-lg" data-popup="avatar">
   <span class="mt-2 ml-4 text-xs">Logged in as:</span><br />
-  <span class="ml-4 text-sm">{session.user.user_metadata.name != undefined ? session.user.user_metadata.name : session.user.user_metadata.user_name}</span>
+  <span class="ml-4 text-sm">{session.user.user_metadata.name !== undefined ? session.user.user_metadata.name : session.user.user_metadata.user_name}</span>
   <ul>
     <li>
       <a href="/dashboard">
