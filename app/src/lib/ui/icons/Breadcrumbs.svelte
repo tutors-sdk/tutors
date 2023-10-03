@@ -45,7 +45,7 @@
     {#if $currentCourse?.properties?.parent != null}
       <li class="crumb">
         <a href="/{$currentCourse.properties?.parent}" class="!space-x-[-1rem] lg:!space-x-0">
-          <Icon type="programHome" />
+          <Icon type="programHome" tip={`Go to Course Home`} />
         </a>
       </li>
 
@@ -58,7 +58,7 @@
         {/if}
         <li class="crumb">
           <a href="{lo.route}{getUnitId(lo.type, lo.id)}" class="!space-x-[-1rem] lg:!space-x-0 inline-flex !text-black dark:!text-white">
-            <span><Icon type={lo.type} /></span>
+            <span><Icon type={lo.type} tip={`Go to ${lo.title}`} /></span>
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             <span
               class="hidden lg:inline-flex pl-2 items-center"

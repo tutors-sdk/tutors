@@ -8,7 +8,7 @@
 <div class="flex-auto">
   {#each nav?.bar as i}
     <a class="btn btn-sm" href={i.link} target={i.target} title={i.tip}>
-      <Icon type={i.icon} tip={i.tip} />
+      <Icon type={i.icon} />
     </a>
   {/each}
 </div>
