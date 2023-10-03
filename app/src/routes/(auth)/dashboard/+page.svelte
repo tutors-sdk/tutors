@@ -158,7 +158,7 @@
 
 <div class="bg-gradient-to-l from-primary-50 dark:from-primary-900 to-accent-50 dark:to-accent-900">
   <div class="container lg:flex mx-auto py-24 px-8">
-    <p class="text-3xl font-bold">Welcome, {data.session.user.user_metadata.name != undefined ? data.session.user.user_metadata.name : data.session.user.user_metadata.user_name}!</p>
+    <p class="text-3xl font-bold">Welcome, {data.session.user.user_metadata.name !== undefined ? data.session.user.user_metadata.name : data.session.user.user_metadata.user_name}!</p>
   </div>
 </div>
 
