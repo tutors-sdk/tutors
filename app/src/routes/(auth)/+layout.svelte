@@ -3,7 +3,7 @@
   import { goto, invalidate } from "$app/navigation";
   import { onMount } from "svelte";
   import { onlineStatus, storeTheme } from "$lib/stores";
-  import { AppShell, popup } from "@skeletonlabs/skeleton";
+  import { AppShell, Modal, popup } from "@skeletonlabs/skeleton";
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
   import { get } from "svelte/store";
   import DashboardProfile from "$lib/ui/navigators/profiles/DashboardProfile.svelte";
@@ -49,6 +49,7 @@
 </svelte:head>
 
 <AppShell class="h-screen">
+  <Modal />
   <svelte:fragment slot="header">
     <MainNavigator>
       <svelte:fragment slot="lead">
