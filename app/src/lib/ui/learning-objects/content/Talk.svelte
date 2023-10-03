@@ -144,19 +144,19 @@
       </div>
       <div>
         <button class="btn btn-sm" on:click={onPrevPage}>
-          <Icon type="left" />
+          <Icon type="left" tip={"Back 1 slide"} />
         </button>
         <button class="btn btn-sm" on:click={onNextPage}>
-          <Icon type="right" />
+          <Icon type="right" tip={"Forward 1 slide"} />
         </button>
         <button class="btn btn-sm" on:click={clockwiseRotate}>
-          <Icon type="rotate" />
+          <Icon type="rotate" tip={"Rotate Slide 90 degrees"} />
         </button>
         <button class="btn btn-sm" on:click={downloadPdf}>
-          <Icon type="download" />
+          <Icon type="download" tip={"Download"} />
         </button>
         <button class="btn btn-sm">
-          <Icon link={lo.pdf} type="fullScreen" target="_blank" />
+          <Icon link={lo.pdf} type="fullScreen" target="_blank" tip={"View Full Screen"} />
         </button>
       </div>
     </div>
