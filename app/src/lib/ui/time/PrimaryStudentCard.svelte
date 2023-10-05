@@ -22,6 +22,14 @@
       iconHeight = "150";
     }
   });
+
+  function truncate(input: string) {
+    if (input.length > 16) {
+      return input.substring(0, 15) + "...";
+    }
+    return input;
+  }
+
 </script>
 
 <a href="https://tutors.dev{lo.loRoute}" target="_blank" rel="noreferrer">
@@ -30,7 +38,7 @@
     <div class="flex">
       <header class="card-header inline-flex items-center">
         <Avatar src={lo.studentImg} alt={lo.studentName} class="mr-2" />
-        <h6>{lo.studentName}</h6>
+        <h6>{ truncate(lo.studentName !== undefined ? lo.studentName : lo.studentEmail) }</h6>
       </header>
     </div>
     <div class="card-body">

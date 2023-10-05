@@ -40,6 +40,7 @@ export interface StudentMetric {
 export interface StudentLoEvent {
   studentName: string;
   studentId: string;
+  studentEmail: string;
   studentImg: string;
   courseTitle: string;
   loTitle: string;
