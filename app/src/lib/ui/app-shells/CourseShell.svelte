@@ -71,7 +71,9 @@
       <CalendarButton />
       <svelte:fragment slot="trail">
         <TutorsTimeIndicator />
-        <SearchButton />
+        {#if !$currentCourse.isPortfolio}
+          <SearchButton />
+        {/if}
         <span class="divider-vertical h-10 hidden lg:block" />
         <LayoutMenu />
         <span class="divider-vertical h-10 hidden lg:block" />
@@ -82,7 +84,9 @@
         {:else}
           <LoginButton />
         {/if}
-        <TocButton />
+        {#if !$currentCourse.isPortfolio}
+          <TocButton />
+        {/if}
       </svelte:fragment>
     </MainNavigator>
     <SecondaryNavigator />
