@@ -11,6 +11,7 @@
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
   import TutorsTitle from "$lib/ui/navigators/titles/TutorsTitle.svelte";
   import LoginButton from "$lib/ui/navigators/buttons/LoginButton.svelte";
+  import TutorsShell from "$lib/ui/app-shells/TutorsShell.svelte";
 
   export let data: any;
   let { supabase, session } = data;
@@ -48,30 +49,6 @@
   <title>Tutors</title>
 </svelte:head>
 
-<AppShell class="h-screen">
-  <Modal />
-  <svelte:fragment slot="header">
-    <MainNavigator>
-      <svelte:fragment slot="lead">
-        <a href="/">
-          <TutorsTitle title="Tutors" subtitle="Course Dashboard" />
-        </a>
-      </svelte:fragment>
-      <svelte:fragment slot="trail">
-        <span class="divider-vertical h-10 hidden lg:block" />
-        <LayoutMenu />
-        {#if data.session}
-          <div class="relative">
-            <DashboardProfile {session} {handleSignOut} />
-          </div>
-        {:else}
-          <LoginButton />
-        {/if}
-      </svelte:fragment>
-    </MainNavigator>
-  </svelte:fragment>
+<TutorsShell {supabase} {session}>
   <slot />
-  <svelte:fragment slot="pageFooter">
-    <Footer />
-  </svelte:fragment>
-</AppShell>
+</TutorsShell>
