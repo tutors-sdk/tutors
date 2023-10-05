@@ -4,7 +4,6 @@
   import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
 
   export let course: Course;
-  console.log(course);
 </script>
 
 <Accordion regionPanel="space-y-0.5">
