@@ -12,7 +12,8 @@
   import { analyticsService } from "$lib/services/analytics";
   import { initServices } from "$lib/services/tutors-startup";
   import { setupPresence, subscribePresence, unsubscribePresence, updatePresence } from "$lib/services/presence";
-  import CourseNavigator from "$lib/ui/navigators/CourseNavigator.svelte";
+  import CourseNavigator from "$lib/ui/app-shells/CourseShell.svelte";
+  import CourseShell from "$lib/ui/app-shells/CourseShell.svelte";
 
   export let data: any;
 
@@ -138,7 +139,7 @@
   {/if}
 </svelte:head>
 
-<CourseNavigator {session} {supabase}>
+<CourseShell {session} {supabase}>
   <div id="app" class="h-full overflow-hidden">
     <div id="top" />
     <div class="mx-auto my-4">
@@ -147,4 +148,4 @@
       </PageTransition>
     </div>
   </div>
-</CourseNavigator>
+</CourseShell>

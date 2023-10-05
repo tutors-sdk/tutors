@@ -1,12 +1,20 @@
 <script lang="ts">
   import "../../../../app.postcss";
-  import TimeNavigator from "$lib/ui/navigators/TimeNavigator.svelte";
+  import TutorsShell from "$lib/ui/app-shells/TutorsShell.svelte";
+  import { beforeUpdate } from "svelte";
+  import { goto } from "$app/navigation";
 
   export let data: any;
   let { supabase, session } = data;
   $: ({ supabase, session } = data);
+
+  beforeUpdate(() => {
+    if (!session?.user) {
+      goto("/auth");
+    }
+  });
 </script>
 
-<TimeNavigator subTitle={"Students Online Now"} {supabase} {session}>
+<TutorsShell subTitle={"Students Online Now"} {supabase} {session}>
   <slot />
-</TimeNavigator>
+</TutorsShell>

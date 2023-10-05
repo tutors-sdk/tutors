@@ -1,17 +1,18 @@
 <script lang="ts">
-  import { AppShell } from "@skeletonlabs/skeleton";
+  import { AppShell, Modal } from "@skeletonlabs/skeleton";
   import HomeFooter from "$lib/ui/navigators/footers/HomeFooter.svelte";
   import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
   import TutorsTitle from "$lib/ui/navigators/titles/TutorsTitle.svelte";
-  import DashboardProfile from "./profiles/DashboardProfile.svelte";
-  import LoginButton from "./buttons/LoginButton.svelte";
   import { goto } from "$app/navigation";
-  const title = "Tutors Open Source Project";
-  const subTitle = "Open Web Learning Toolkit";
+  import LoginButton from "../navigators/buttons/LoginButton.svelte";
+  import DashboardProfile from "../navigators/profiles/DashboardProfile.svelte";
+  import Footer from "../navigators/footers/Footer.svelte";
 
   export let session: any;
   export let supabase: any;
+  export let title = "Tutors Open Source Project";
+  export let subTitle = "Open Web Learning Components";
 
   const handleSignOut = async () => {
     const { error } = await supabase.auth.signOut();
@@ -25,6 +26,7 @@
 </script>
 
 <AppShell class="h-screen">
+  <Modal />
   <svelte:fragment slot="header">
     <MainNavigator>
       <svelte:fragment slot="lead">
@@ -47,6 +49,6 @@
   </svelte:fragment>
   <slot />
   <svelte:fragment slot="pageFooter">
-    <HomeFooter />
+    <Footer />
   </svelte:fragment>
 </AppShell>

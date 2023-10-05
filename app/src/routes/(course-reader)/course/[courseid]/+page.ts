@@ -16,7 +16,7 @@ export const load = async ({ params, parent, fetch }) => {
     };
   }
 
-  if (data.session && !course.properties?.parent) {
+  if (data.session) {
     const { data: userCourseList } = await data.supabase.from("accessed_courses").select(`course_list`).eq("id", data.session.user.id);
 
     if (!userCourseList || userCourseList.length === 0) {

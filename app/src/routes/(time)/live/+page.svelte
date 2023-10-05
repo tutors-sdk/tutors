@@ -1,15 +1,16 @@
 <script lang="ts">
   import "../../../app.postcss";
   import { onMount } from "svelte";
-  import type { PageData } from "./$types";
   import { child, get, getDatabase, onValue, ref } from "firebase/database";
   import { getCourseSummary, type CourseSummary } from "$lib/services/utils/all-course-access";
   import Metric from "$lib/ui/icons/Metric.svelte";
   import LiveCourseCard from "./LiveCourseCard.svelte";
-  import TutorsNavigator from "$lib/ui/navigators/TutorsNavigator.svelte";
+  import TutorsShell from "$lib/ui/app-shells/TutorsShell.svelte";
   const db = getDatabase();
 
-  export let data: PageData;
+  export let data: any;
+  let { supabase, session } = data;
+  $: ({ supabase, session } = data);
 
   let los: CourseSummary[] = [];
   let courses = new Map<string, CourseSummary>();
@@ -91,7 +92,7 @@
   });
 </script>
 
-<TutorsNavigator title="Tutors Live Stream" {subTitle}>
+<TutorsShell {session} {supabase} title="Tutors Live Stream" {subTitle}>
   <div slot="header" class="hidden md:inline-block">
     <Metric value={modules} title="Active Modules" />
     <Metric value={visits} title="Page Loads" />
@@ -104,4 +105,4 @@
       {/each}
     </div>
   </div>
-</TutorsNavigator>
+</TutorsShell>
