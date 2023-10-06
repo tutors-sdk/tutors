@@ -13,10 +13,11 @@
   import InfoButton from "$lib/ui/navigators/buttons/InfoButton.svelte";
   import SearchButton from "$lib/ui/navigators/buttons/SearchButton.svelte";
   import TutorsTimeIndicator from "$lib/ui/navigators/buttons/TutorsTimeIndicator.svelte";
-  import { currentCourse, onlineStatus } from "$lib/stores";
+  import { currentCourse, onlineStatus, transitionKey } from "$lib/stores";
   import { analyticsService } from "$lib/services/analytics";
   import { goto } from "$app/navigation";
   import { beforeUpdate } from "svelte";
+  import { fade } from "svelte/transition";
 
   export let session: any;
   export let supabase: any;
@@ -91,7 +92,16 @@
     </MainNavigator>
     <SecondaryNavigator />
   </svelte:fragment>
-  <slot />
+  {#key $transitionKey}
+    <div id="app" class="h-full overflow-hidden">
+      <div id="top" />
+      <div class="mx-auto my-4">
+        <div in:fade={{ duration: 300, delay: 200 }}>
+          <slot />
+        </div>
+      </div>
+    </div>
+  {/key}
   <svelte:fragment slot="pageFooter">
     <Footer />
   </svelte:fragment>
