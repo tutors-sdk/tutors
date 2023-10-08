@@ -18,7 +18,7 @@ export interface CourseSummary {
 
 export function isValidCourseName(course: string) {
   const invalidPatterns = /^(main--|master--|deploy-preview--)|-{2}/;
-  return !invalidPatterns.test(course) && course.length <= 27;
+  return !invalidPatterns.test(course);
 }
 
 export async function getCourseSummary(courseId: string): Promise<CourseSummary> {
