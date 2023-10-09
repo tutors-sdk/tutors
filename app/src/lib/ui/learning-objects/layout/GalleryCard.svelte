@@ -48,14 +48,5 @@
         {/if}
       </figure>
     </div>
-    <footer class="card-footer">
-      <div class="-m-4 mt-2 text-center">
-        {#if lo.currentLo}
-          <div class="line-clamp-1">
-            <a href={lo.currentLo.route} target="_blank" rel="noreferrer">{lo.currentLo.title}</a>
-          </div>
-        {/if}
-      </div>
-    </footer>
   </div>
 </a>
