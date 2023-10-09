@@ -6,10 +6,9 @@ const validCourses = [
   "classic-design-patterns",
   "bi-vis-2023",
   "careerdevelopment",
-  "wit-hdip-comp-sci-2022-computer-systems",
   "dsa1-jan-2024",
   "wit-hdip-comp-sci-2021-database",
-  "devfor.netlify",
+  "devfor",
   "enterprise-apps",
   "fsf21",
   "funcprog23-reg",
@@ -18,8 +17,7 @@ const validCourses = [
   "setu-mgd",
   "netfor",
   "of-2022s2-8z1",
-  "osforensic",
-  "bsa-hci-webdesign",
+  "osforensics",
   "ictforforestry",
   "placement-project",
   "professionalcomms",
@@ -41,7 +39,7 @@ const validCourses = [
   "website-development-2",
   "adv-full-stack-oth-2023",
   "business-analytics2-2023",
-  "wit-hdip-comp-sci-2022-computer-system",
+  "wit-hdip-comp-sci-2022-computer-systems",
   "wit-hdip-comp-sci-2022-security",
   "wit-hdip-comp-sci-2022-devops",
   "ict-for-scientists",
@@ -53,7 +51,9 @@ const validCourses = [
   "wad2-2022-setu",
   "wit-hdip-comp-sci-2023-workshop-2-4",
   "wit-hdip-comp-sci-2023-workshop-1-3",
-  "mobile-app-dev-tutors-2022"
+  "mobile-app-dev-tutors-2022",
+  "wit-hdip-comp-sci-2022",
+  "life-etc2022"
 ];
 
 export const load: PageLoad = async ({ params }) => {
