@@ -1,11 +1,10 @@
 <script lang="ts">
   import { onDestroy } from "svelte";
   import Iconify from "@iconify/svelte";
-  import Icon from "$lib/ui/icons/Icon.svelte";
-  import type { CourseSummary } from "$lib/services/utils/course";
   import { layout } from "$lib/stores";
   import { Avatar } from "@skeletonlabs/skeleton";
   import { cardTransition } from "$lib/ui/animations";
+  import type { CourseSummary } from "$lib/services/utils/all-course-access";
 
   export let lo: CourseSummary;
   let target = "_blank";
