@@ -27,7 +27,7 @@ export async function getCourseSummary(courseId: string): Promise<CourseSummary>
   const courseUrl = `${courseId}.netlify.app`;
 
   return {
-    title: lo.title,
+    title: lo.title.trim(),
     img: lo.img.replace("{{COURSEURL}}", courseUrl),
     icon: lo.properties?.icon,
     route: `https://tutors.dev/course/${courseUrl}`,
