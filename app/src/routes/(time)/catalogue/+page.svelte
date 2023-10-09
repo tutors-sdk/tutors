@@ -5,7 +5,7 @@
   import { readVisits } from "$lib/services/utils/firebase";
   import { ProgressBar } from "@skeletonlabs/skeleton";
   import TutorsShell from "$lib/ui/app-shells/TutorsShell.svelte";
-  import CatalogueCourseCard from "./CatalogueCourseCard.svelte";
+  import GalleryCard from "$lib/ui/learning-objects/layout/GalleryCard.svelte";
 
   export let data: any;
   let { supabase, session } = data;
@@ -41,11 +41,11 @@
 </script>
 
 <TutorsShell {session} {supabase} title={"Tutors Module Catalogue"} {subTitle}>
-  <ProgressBar label="Progress Bar" value={modules} max={140} />
+  <ProgressBar label="Progress Bar" value={modules} max={230} />
   <div class="bg-surface-100-800-token mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4">
     <div class="flex flex-wrap justify-center">
       {#each los as lo}
-        <CatalogueCourseCard {lo} />
+        <GalleryCard {lo} />
       {/each}
     </div>
   </div>
