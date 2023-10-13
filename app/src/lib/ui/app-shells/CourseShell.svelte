@@ -78,15 +78,17 @@
         <span class="divider-vertical h-10 hidden lg:block" />
         <LayoutMenu />
         <span class="divider-vertical h-10 hidden lg:block" />
-        {#if session}
-          <div class="relative">
-            <CourseProfile {session} {handleOnlineStatusChange} {handleSignOut} {onlineDrawerOpen} />
-          </div>
-        {:else}
-          <LoginButton />
-        {/if}
-        {#if !$currentCourse.isPortfolio}
-          <TocButton />
+        {#if !$currentCourse.isPrivate}
+          {#if session}
+            <div class="relative">
+              <CourseProfile {session} {handleOnlineStatusChange} {handleSignOut} {onlineDrawerOpen} />
+            </div>
+          {:else}
+            <LoginButton />
+          {/if}
+          {#if !$currentCourse.isPortfolio}
+            <TocButton />
+          {/if}
         {/if}
       </svelte:fragment>
     </MainNavigator>

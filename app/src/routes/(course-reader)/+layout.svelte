@@ -6,7 +6,7 @@
   import { afterNavigate } from "$app/navigation";
   import { get } from "svelte/store";
   import { setInitialClassState } from "@skeletonlabs/skeleton";
-  import { onlineStatus, storeTheme, transitionKey, currentLo } from "$lib/stores";
+  import { onlineStatus, storeTheme, transitionKey, currentLo, currentCourse } from "$lib/stores";
   import { getKeys } from "$lib/environment";
   import { analyticsService } from "$lib/services/analytics";
   import { setupPresence, subscribePresence, unsubscribePresence, updatePresence } from "$lib/services/presence";
@@ -106,7 +106,7 @@
     if (path.route.id) {
       currentRoute = path.route.id;
     }
-    if (path.params.courseid && getKeys().firebase.apiKey !== "XXX") {
+    if (path.params.courseid && getKeys().firebase.apiKey !== "XXX" && !$currentCourse.isPrivate) {
       analyticsService.learningEvent(path.params, session);
     }
     if (path.url.hash && !path.url.hash.startsWith("#access_token")) {
