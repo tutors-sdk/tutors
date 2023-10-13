@@ -91,6 +91,7 @@ function addWall(course: Course, type: LoType) {
 
 export function loadPropertyFlags(course: Course) {
   course.isPortfolio = (course.properties?.portfolio as unknown as boolean) === true;
+  course.isPrivate = (course.properties?.private as unknown as number) === 1;
   course.areVideosHidden = (course.properties?.hideVideos as unknown as boolean) === true;
   course.areLabStepsAutoNumbered = (course.properties?.labStepsAutoNumber as unknown as boolean) === true;
   course.authLevel = course.properties.auth as unknown as number;

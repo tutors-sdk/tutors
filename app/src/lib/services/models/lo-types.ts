@@ -1,5 +1,5 @@
 export const imageTypes = ["png", "jpg", "jpeg", "gif", "PNG", "JPG", "JPEG", "GIF"];
-export const assetTypes = imageTypes.concat(["pdf", "zip"]);
+export const assetTypes = imageTypes.concat(["pdf", "zip", "html", "htm", "yaml", "xls", "xlsx", "xlsm", "csv"]);
 
 export type WeekType = {
   title: string;
@@ -176,6 +176,7 @@ export type Course = Composite & {
   courseCalendar?: Calendar;
   authLevel: number;
   isPortfolio: boolean;
+  isPrivate: boolean;
   areVideosHidden: boolean;
   areLabStepsAutoNumbered: boolean;
   hasEnrollment: boolean;
