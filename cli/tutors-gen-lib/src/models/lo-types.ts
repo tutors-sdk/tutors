@@ -175,6 +175,7 @@ export type Course = Composite & {
   courseCalendar?: Calendar;
   authLevel: number;
   isPortfolio: boolean;
+  isPrivate: boolean;
   areVideosHidden: boolean;
   areLabStepsAutoNumbered: boolean;
   hasEnrollment: boolean;
