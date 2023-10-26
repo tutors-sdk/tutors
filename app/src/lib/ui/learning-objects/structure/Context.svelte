@@ -10,7 +10,9 @@
       <slot />
     {/key}
   </div>
-  <div class="hidden md:block">
-    <TopicContextPanel topic={lo.parentTopic} />
-  </div>
+  {#if lo.parentTopic}
+    <div class="hidden md:block">
+      <TopicContextPanel topic={lo.parentTopic} />
+    </div>
+  {/if}
 </div>
