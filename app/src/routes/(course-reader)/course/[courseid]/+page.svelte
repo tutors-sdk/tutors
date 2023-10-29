@@ -18,7 +18,7 @@
         goto("/auth");
       } else {
         session.onlineStatus = await analyticsService.getOnlineStatus(data.course, session);
-        // analyticsService.updateLogin(data.course.courseId, data.session);
+        analyticsService.updateLogin(data.course.courseId, data.session);
       }
     }
 
