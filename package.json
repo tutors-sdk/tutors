@@ -6,25 +6,26 @@
   "version": "0.3.0",
   "private": true,
   "workspaces": [
-    "apps/*",
-    "cli/*",
-    "packages/*"
+    "/*",
+    "cli/*"
   ],
   "scripts": {
     "build": "turbo run build",
+    "test": "turbo run test",
     "dev": "turbo run dev --parallel",
-    "course": "turbo run dev --filter tutors-course",
-    "home": "turbo run dev --filter tutors-home",
-    "time": "turbo run dev --filter tutors-time",
+    "app": "turbo run dev --filter tutors-app",
     "lint": "turbo run lint",
     "format": "prettier --write ."
   },
   "devDependencies": {
+    "cy-verify-downloads": "0.1.16",
+    "cypress": "^13.1.0",
+    "cypress-fail-fast": "7.0.3",
     "eslint": "^8.30.0",
     "eslint-config-custom": "*",
-    "prettier": "^2.8.4",
-    "prettier-plugin-svelte": "^2.9.0",
-    "turbo": "latest"
+    "prettier": "3.0.3",
+    "prettier-plugin-svelte": "3.0.3",
+    "turbo": "1.10.13"
   },
   "packageManager": "npm@8.19.2"
 }

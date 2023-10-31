@@ -1,6 +1,6 @@
 import * as sh from "shelljs";
-import { Course, Lo } from "tutors-gen-lib/src/lo/lo-types";
-import { writeFile } from "tutors-gen-lib/src/utils/file-utils";
+import { Course, Lo, Topic, Unit } from "tutors-gen-lib/src/models/lo-types";
+import { writeFile } from "tutors-gen-lib/src/generator/file-utils";
 import * as nunjucks from "nunjucks";
 
 const root = __dirname;
@@ -30,7 +30,7 @@ function emitLoPage(lo: Lo, path: string) {
   }
 }
 
-function emitUnit(lo: Lo, path: string) {
+function emitUnit(lo: Unit, path: string) {
   lo.los.forEach((lo) => {
     emitLoPage(lo as Lo, path);
   });
@@ -39,13 +39,13 @@ function emitUnit(lo: Lo, path: string) {
 function emitLo(lo: Lo, path: string) {
   if (lo.type == "unit" || lo.type == "side") {
     const unitPath = `${path}/${lo.id}`;
-    emitUnit(lo, unitPath);
+    emitUnit(lo as Unit, unitPath);
   } else {
     emitLoPage(lo, path);
   }
 }
 
-function emitTopic(lo: Lo, path: string) {
+function emitTopic(lo: Topic, path: string) {
   sh.cd(lo.id);
   const topicPath = `${path}/${lo.id}`;
   lo?.los?.forEach((lo) => {
@@ -69,7 +69,7 @@ export function emitWalls(path: string, lo: Course) {
 export function emitCourse(path: string, lo: Course) {
   sh.cd(path);
   lo?.los?.forEach((lo) => {
-    emitTopic(lo as Lo, path);
+    emitTopic(lo as Topic, path);
   });
   publishTemplate(path, "index.html", "Course.njk", lo);
   emitWalls(path, lo);

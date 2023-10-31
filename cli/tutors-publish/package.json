@@ -1,8 +1,8 @@
 {
   "name": "tutors-publish",
-  "version": "3.0.12",
+  "version": "3.2.10",
   "description": "Static course web site generator - json emitter",
-  "main": "./src/tutors-gen.js",
+  "main": "./src/tutors-publish.js",
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean & rm -f tsconfig.tsbuildinfo"
@@ -17,7 +17,7 @@
     "tutors-publish": "./src/tutors-publish.js"
   },
   "dependencies": {
-    "tutors-gen-lib": "^3.0.12"
+    "tutors-gen-lib": "^3.2.10"
   },
   "devDependencies": {
     "prettier": "2.8.8",

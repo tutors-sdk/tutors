@@ -1,5 +1,13 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+**/tutors-publish-html-macos
+**/tutors-publish-html-linux
+**/tutors-publish-html-win.exe
+**/tutors-publish-macos
+**/tutors-publish-linux
+**/tutors-publish-win.exe
+
+
 
 # generated files from ts sources in specific ts only modules
 **/cli/tutors-gen-lib/src/**/*.js
@@ -13,6 +21,12 @@
 **/cli/tutors-publish-html/src/**/*.d.ts
 **/test/reference-course/json
 **/test/reference-course/public-site
+
+**/doc/**/html
+
+**/app/cypress/screenshots
+**/app/cypress/videos
+**/app/cypress/downloads
 
 # exclude ts build info caches
 **/tsconfig.tsbuildinfo

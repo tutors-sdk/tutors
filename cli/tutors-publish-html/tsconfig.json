@@ -14,6 +14,5 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
   },
-  "include": ["**/*"],
-  "references": [{ "path": "../../packages/tutors-lib" }]
+  "include": ["**/*"]
 }

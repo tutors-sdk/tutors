@@ -1,8 +1,8 @@
 {
   "name": "tutors-publish-html",
-  "version": "3.0.12",
+  "version": "3.2.10",
   "description": "Static course web site generator - html emitter",
-  "main": "./src/tutors-html.js",
+  "main": "./src/tutors-publish-html.js",
   "scripts": {
     "build": "tsc --build",
     "clean": "tsc --build --clean & rm -f tsconfig.tsbuildinfo"
@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/tutors-sdk/tutors-html.git"
+    "url": "https://github.com/tutors-sdk/tutors.git"
   },
   "bin": {
     "tutors-html": "./src/tutors-publish-html.js"
@@ -24,7 +24,7 @@
     "nunjucks": "^3.2.3",
     "path": "^0.12.7",
     "shelljs": "^0.8.5",
-    "tutors-gen-lib": "^3.0.12"
+    "tutors-gen-lib": "^3.2.10"
   },
   "devDependencies": {
     "prettier": "2.8.4",
@@ -33,5 +33,8 @@
   "prettier": {
     "singleQuote": false,
     "printWidth": 180
+  },
+  "pkg": {
+    "assets": "src/views/**/*"
   }
 }

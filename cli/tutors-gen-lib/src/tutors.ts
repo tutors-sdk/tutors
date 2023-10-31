@@ -1,13 +1,13 @@
-import { buildCourse } from "./lo/course-builder";
-import { decorateCourseTree } from "./lo/course-tree";
-import { Lo } from "./lo/lo-types";
-import { resourceBuilder } from "./lr/resource-builder";
-import { writeFile } from "./utils/file-utils";
-import { generateNetlifyToml } from "./utils/netlify";
+import { buildCourse } from "./generator/course-builder";
+import { decorateCourseTree } from "./models/lo-tree";
+import { Course, Lo } from "./models/lo-types";
+import { resourceBuilder } from "./generator/resource-builder";
+import { writeFile } from "./generator/file-utils";
+import { generateNetlifyToml } from "./generator/netlify";
 
-export const version = "3.0.12";
+export const version = "3.2.10";
 
-export function parseCourse(folder: string): Lo {
+export function parseCourse(folder: string): Course {
   resourceBuilder.buildTree(folder);
   const course = buildCourse(resourceBuilder.lr);
   return course;
@@ -19,6 +19,6 @@ export function generateCourse(lo: Lo, folder: string) {
   generateNetlifyToml(folder);
 }
 
-export function decorateCourse(lo: Lo) {
-  decorateCourseTree(lo);
+export function decorateCourse(course: Course) {
+  decorateCourseTree(course);
 }
