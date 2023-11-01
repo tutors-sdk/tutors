@@ -67,6 +67,8 @@
     "markdown-it-sup": "^1.0.0",
     "markdown-it-table-of-contents": "^0.6.0",
     "moment": "2.29.4",
+    "partykit": "^0.0.32",
+    "partysocket": "^0.0.12",
     "path-browserify": "^1.0.1",
     "pdfjs-dist": "3.10.111",
     "postcss": "8.4.29",
