@@ -5,6 +5,7 @@ import type { TokenResponse } from "$lib/services/types/auth";
 import { currentCourse, currentLo, currentUser, onlineStatus } from "$lib/stores";
 
 import { readValue, sanitise, updateCalendar, updateCount, updateCountValue, updateLastAccess, updateStr, updateVisits } from "$lib/services/utils/firebase";
+import { sendLoEvent } from "./party-kit";
 
 let course: Course;
 let user: TokenResponse;
@@ -54,6 +55,8 @@ export const analyticsService = {
     updateLastAccess(`all-course-access/${course.courseId}`, course.title);
     updateVisits(`all-course-access/${course.courseId}`);
     updateLo(`all-course-access/${course.courseId}`, course, lo, get(onlineStatus), session?.user);
+
+    sendLoEvent(course, lo, get(onlineStatus), session?.user);
 
     if (session) {
       const key = `${course.courseUrl.substring(0, course.courseUrl.indexOf("."))}/users/${sanitise(session.user.email)}/${this.loRoute}`;
