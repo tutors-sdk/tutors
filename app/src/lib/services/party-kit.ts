@@ -20,9 +20,14 @@ export interface LoEvent {
   user: LoUser;
 }
 
-const partyKit = new PartySocket({
+const partyKitAll = new PartySocket({
   host: "https://tutors-party.edeleastar.partykit.dev",
   room: "tutors-all-course-access"
+});
+
+const partyKitCourse = new PartySocket({
+  host: "https://tutors-party.edeleastar.partykit.dev",
+  room: "courseid"
 });
 
 function getUser(onlineStatus: boolean, userDetails: User): LoUser {
@@ -52,7 +57,9 @@ export function sendLoEvent(course: Course, currentLo: Lo, onlineStatus: boolean
   if (currentLo.icon) {
     lo.icon = currentLo.icon;
   }
-  partyKit.send(JSON.stringify(lo));
+  partyKitAll.send(JSON.stringify(lo));
+  partyKitCourse.room = course.courseId;
+  partyKitCourse.send(JSON.stringify(lo));
 }
 
 function generateTutorsTimeId() {
