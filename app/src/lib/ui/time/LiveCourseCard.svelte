@@ -1,12 +1,13 @@
 <script lang="ts">
-  import { Avatar } from "@skeletonlabs/skeleton";
+  import { onDestroy } from "svelte";
   import Iconify from "@iconify/svelte";
   import { layout } from "$lib/stores";
+  import { Avatar } from "@skeletonlabs/skeleton";
   import { cardTransition } from "$lib/ui/animations";
   import type { LoEvent } from "$lib/services/party-kit";
-  import { onDestroy } from "svelte";
 
   export let lo: LoEvent;
+  let target = "_blank";
 
   let headingText = "";
   let cardWidths = "";
@@ -27,17 +28,17 @@
       imageHeight = "h-48";
     }
   });
+
   onDestroy(unsubscribe);
 </script>
 
-<a href="https://tutors.dev{lo.loRoute}" target="_blank" rel="noreferrer">
-  <div transition:cardTransition class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 border-primary-500 m-2 w-56 {cardWidths} transition-all hover:scale-105">
-    <div class="flex">
-      <header class="card-header inline-flex items-center">
-        <Avatar src={lo.user.avatar} alt={lo.user.fullName} class="mr-2" />
-        <h6>{lo.user.fullName}</h6>
-      </header>
-    </div>
+<a href={lo.loRoute} {target}>
+  <div transition:cardTransition class="card !bg-surface-50 dark:!bg-surface-700 border-accent-500 m-2 border-y-8 {cardWidths} transition-all hover:scale-105">
+    <header class="card-header flex flex-row items-center justify-between p-3">
+      <div class="inline-flex w-full">
+        <div class="line-clamp-2 flex-auto {headingText}">{lo.courseTitle}</div>
+      </div>
+    </header>
     <div class="card-body">
       <figure class="flex justify-center object-scale-down p-1">
         {#if lo.icon}
