@@ -1,75 +1,58 @@
 <script lang="ts">
-  import type { StudentMetric } from "$lib/services/types/metrics";
-  import Iconify from "@iconify/svelte";
   import { Avatar } from "@skeletonlabs/skeleton";
+  import Iconify from "@iconify/svelte";
+  import { layout } from "$lib/stores";
+  import { cardTransition } from "$lib/ui/animations";
+  import type { LoEvent } from "$lib/services/party-kit";
+  import { onDestroy } from "svelte";
 
-  export let student: StudentMetric;
+  export let lo: LoEvent;
 
-  let headingText = "text-xs font-medium";
-  let iconHeight = "80";
-  let imageHeight = "h-24";
+  let headingText = "";
+  let cardWidths = "";
+  let iconHeight = "";
+  let colourPrefix = "";
+  let imageHeight = "";
 
-  if (student.topic && student.topic.lo && !student.topic.lo.icon && student.topic.lo.frontMatter && student.topic.lo.frontMatter.icon) {
-    student.topic.lo.icon = {
-      type: student.topic.lo.frontMatter.icon["type"],
-      color: student.topic.lo.frontMatter.icon["color"]
-    };
-  }
-  if (student.lab && !student.lab.icon && student.lab.frontMatter && student.lab.frontMatter.icon) {
-    student.lab.icon = {
-      type: student.lab.frontMatter.icon["type"],
-      color: student.lab.frontMatter.icon["color"]
-    };
-  }
+  const unsubscribe = layout.subscribe((layout) => {
+    if (layout === "compacted") {
+      headingText = "!text-md font-medium";
+      cardWidths = "w-36 h-[13rem]";
+      iconHeight = "90";
+      imageHeight = "h-20";
+    } else {
+      headingText = "!text-lg font-semibold";
+      cardWidths = "w-60 h-[21rem]";
+      iconHeight = "180";
+      imageHeight = "h-48";
+    }
+  });
+  onDestroy(unsubscribe);
 </script>
 
-<div class="card h-90 border-primary-500 m-2 w-4/5 overflow-x-hidden border-y-8 transition-all hover:scale-105 lg:w-2/5">
-  <div class="flex">
-    <header class="card-header inline-flex items-center">
-      <Avatar src={student.img} alt={student.nickname} class="mr-2" />
-      <h6>{student.name}</h6>
-    </header>
+<a href="https://tutors.dev{lo.loRoute}" target="_blank" rel="noreferrer">
+  <div transition:cardTransition class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 border-primary-500 m-2 w-56 {cardWidths} transition-all hover:scale-105">
+    <div class="flex">
+      <header class="card-header inline-flex items-center">
+        <Avatar src={lo.user.avatar} alt={lo.user.fullName} class="mr-2" />
+        <h6>{lo.user.fullName}</h6>
+      </header>
+    </div>
+    <div class="card-body">
+      <figure class="flex justify-center object-scale-down p-1">
+        {#if lo.icon}
+          <Iconify icon={lo.icon.type} color="{colourPrefix}{lo.icon.color}" height={iconHeight} />
+        {:else}
+          <Avatar src={lo.img} alt={lo.title} width={imageHeight} rounded="rounded-xl" background="none" />
+        {/if}
+      </figure>
+    </div>
+    <footer class="card-footer">
+      <div class="-m-4 mt-2 text-center">
+        <div class="line-clamp-1">
+          {lo.title}
+        </div>
+      </div>
+    </footer>
   </div>
-  <div class="card-body">
-    {#if student.topic && !student.lab}
-      <div class="my-2 justify-center">
-        {#if student.topic.lo.icon}
-          <Iconify icon={student.topic.lo.icon.type} color={student.topic.lo.icon.color} height={iconHeight} />
-        {:else}
-          <img loading="lazy" class="mx-auto {imageHeight}" src={student?.topic?.lo.img} alt={student?.topic?.lo.title} />
-        {/if}
-      </div>
-    {/if}
-    {#if student.lab && !student.topic}
-      <div class="my-2 justify-center">
-        {#if student.lab.icon}
-          <Iconify icon={student.lab.icon.type} color={student.lab.icon.color} height={iconHeight} />
-        {:else}
-          <img loading="lazy" class="mx-auto {imageHeight}" src={student.lab.img} alt={student.lab.title} />
-        {/if}
-      </div>
-    {/if}
-    {#if student.topic && student.lab}
-      <div class="my-1 flex justify-center">
-        {#if student.lab.icon}
-          <Iconify icon={student.lab.icon.type} color={student.lab.icon.color} height={iconHeight} />
-        {:else}
-          <img loading="lazy" class="mx-auto {imageHeight}" src={student.lab.img} alt={student.lab.title} />
-        {/if}
-      </div>
-    {/if}
-  </div>
-  <footer class="card-footer text-center">
-    <p class="mt-2 italic">
-      {new Date(student.time).toLocaleTimeString()}
-    </p>
-    <p class="mt-2 font-semibold">
-      {#if student.topic}
-        <div><span class="italic" />{student.topic.lo.title}</div>
-      {/if}
-      {#if student.lab}
-        <div><span class="italic" />{student.lab.title}</div>
-      {/if}
-    </p>
-  </footer>
-</div>
+</a>

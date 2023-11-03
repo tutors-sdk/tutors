@@ -1,9 +1,9 @@
 <script lang="ts">
   import "../../../app.postcss";
   import PartySocket from "partysocket";
-  import LiveCourseCard from "./LiveCourseCard.svelte";
+  import LiveCourseCard from "$lib/ui/time/LiveCourseCard.svelte";
   import TutorsShell from "$lib/ui/app-shells/TutorsShell.svelte";
-  import type { LoEvent } from "$lib/services/party-kit";
+  import { refreshLoEvent, type LoEvent } from "$lib/services/party-kit";
 
   const partyKit = new PartySocket({
     host: "https://tutors-party.edeleastar.partykit.dev",
@@ -15,25 +15,17 @@
   $: ({ supabase, session } = data);
 
   let los: LoEvent[] = [];
-  let courses = new Map<string, LoEvent>();
+  const loEventMap = new Map<string, LoEvent>();
 
   partyKit.addEventListener("message", (event) => {
     try {
-      const lo = JSON.parse(event.data);
-      let courseEvent = courses.get(lo.courseId);
-      if (!courseEvent) {
-        los.push(lo);
-        courses.set(lo.courseId, lo);
+      const nextLoEvent = JSON.parse(event.data);
+      let loEvent = loEventMap.get(nextLoEvent.courseId);
+      if (!loEvent) {
+        los.push(nextLoEvent);
+        loEventMap.set(nextLoEvent.courseId, nextLoEvent);
       } else {
-        courseEvent.loRoute = `https://tutors.dev${lo.loRoute}`;
-        courseEvent.title = lo.title;
-        if (lo.icon) {
-          courseEvent.icon = lo.icon;
-          courseEvent.img = undefined;
-        } else {
-          courseEvent.img = lo.img;
-          courseEvent.icon = undefined;
-        }
+        refreshLoEvent(loEvent, nextLoEvent);
       }
       los = [...los];
     } catch (e) {
