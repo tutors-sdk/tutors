@@ -1,16 +1,19 @@
 import type { IconType } from "$lib/services/models/lo-types";
 
-export interface Presence {
-  studentName: string;
-  studentEmail: string;
-  studentImg: string;
-  courseTitle: string;
-  loTitle: string;
-  loImage: string;
-  loRoute: string;
-  loIcon?: IconType;
+export interface LoUser {
+  fullName: string;
+  avatar: string;
+  id: string;
 }
 
-export type PresenceObject = {
-  [key: string]: any;
-};
+export interface LoEvent {
+  courseId: string;
+  courseUrl: string;
+  courseTitle: string;
+  loRoute: string;
+  title: string;
+  img?: string;
+  icon?: IconType;
+  isPrivate: boolean;
+  user: LoUser;
+}
