@@ -3,7 +3,7 @@
   import PartySocket from "partysocket";
   import LiveCourseCard from "$lib/ui/time/LiveCourseCard.svelte";
   import TutorsShell from "$lib/ui/app-shells/TutorsShell.svelte";
-  import { refreshLoEvent, type LoEvent } from "$lib/services/party-kit";
+  import { refreshLoEvent, type LoEvent } from "$lib/services/presence";
 
   const partyKit = new PartySocket({
     host: "https://tutors-party.edeleastar.partykit.dev",

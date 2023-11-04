@@ -5,7 +5,7 @@ import type { TokenResponse } from "$lib/services/types/auth";
 import { currentCourse, currentLo, currentUser, onlineStatus } from "$lib/stores";
 
 import { readValue, sanitise, updateCalendar, updateCount, updateCountValue, updateLastAccess, updateStr, updateVisits } from "$lib/services/utils/firebase";
-import { sendLoEvent } from "./party-kit";
+import { sendLoEvent } from "./presence";
 
 let course: Course;
 let user: TokenResponse;

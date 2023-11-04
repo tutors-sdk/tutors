@@ -9,7 +9,6 @@
   import { onlineStatus, storeTheme, transitionKey, currentLo, currentCourse } from "$lib/stores";
   import { getKeys } from "$lib/environment";
   import { analyticsService } from "$lib/services/analytics";
-  import { setupPresence, subscribePresence, unsubscribePresence, updatePresence } from "$lib/services/presence";
   import CourseShell from "$lib/ui/app-shells/CourseShell.svelte";
 
   export let data: any;
@@ -29,64 +28,8 @@
     }
   }
 
-  let presenceSetup: boolean = false;
-
-  function setupPresenceLocally() {
-    setupPresence(supabase, $page.params.courseid);
-    setTimeout(() => {
-      presenceSetup = true;
-    }, 1000);
-  }
-
-  function unsubscribePresenceLocally() {
-    unsubscribePresence();
-    presenceSetup = false;
-  }
-
-  $: {
-    if (!presenceSetup && data.session && $onlineStatus) {
-      setupPresenceLocally();
-    } else if (!$onlineStatus && presenceSetup) {
-      unsubscribePresenceLocally();
-    }
-  }
-
-  $: {
-    if ($currentLo && data.session && presenceSetup && ($onlineStatus || $onlineStatus === undefined)) {
-      updatePresence({
-        studentName: session.user.user_metadata.full_name,
-        studentEmail: session.user.user_metadata.email,
-        studentImg: session.user.user_metadata.avatar_url,
-        courseTitle: get(currentLo).parentLo ? $currentLo?.parentLo?.title : get(currentLo).title,
-        loTitle: get(currentLo).title,
-        loImage: get(currentLo).img,
-        loRoute: get(currentLo).route,
-        loIcon: get(currentLo).icon
-      });
-    }
-  }
-
-  $: {
-    if ($onlineStatus && data.session && presenceSetup && ($onlineStatus || $onlineStatus === undefined)) {
-      subscribePresence(
-        {
-          studentName: session.user.user_metadata.full_name,
-          studentEmail: session.user.user_metadata.email,
-          studentImg: session.user.user_metadata.avatar_url,
-          courseTitle: get(currentLo).parentLo ? get(currentLo).parentLo.title : get(currentLo).title,
-          loTitle: get(currentLo).title,
-          loImage: get(currentLo).img,
-          loRoute: get(currentLo).route,
-          loIcon: get(currentLo).icon
-        },
-        $page.params.courseid
-      );
-    }
-  }
-
   onMount(() => {
     setInitialClassState();
-    //initServices(data.session);
     setInterval(updatePageCount, 30 * 1000);
     status = get(onlineStatus);
     const {

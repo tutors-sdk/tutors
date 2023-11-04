@@ -149,9 +149,13 @@ export async function initFirebase(keys: any) {
       return getApp();
     } catch {
       initializeApp(keys);
-      const auth = getAuth();
-      await signInWithEmailAndPassword(auth, keys.tutorStoreId, keys.tutorStoreSecret);
     }
+  }
+  try {
+    const auth = getAuth();
+    await signInWithEmailAndPassword(auth, keys.tutorStoreId, keys.tutorStoreSecret);
+  } catch (e) {
+    console.log("error initialising firebase");
   }
 }
 

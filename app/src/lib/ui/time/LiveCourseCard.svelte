@@ -4,7 +4,7 @@
   import { layout } from "$lib/stores";
   import { Avatar } from "@skeletonlabs/skeleton";
   import { cardTransition } from "$lib/ui/animations";
-  import type { LoEvent } from "$lib/services/party-kit";
+  import type { LoEvent } from "$lib/services/presence";
 
   export let lo: LoEvent;
   let target = "_blank";

@@ -3,8 +3,8 @@
   import Iconify from "@iconify/svelte";
   import { layout } from "$lib/stores";
   import { cardTransition } from "$lib/ui/animations";
-  import type { LoEvent } from "$lib/services/party-kit";
   import { onDestroy } from "svelte";
+  import type { LoEvent } from "$lib/services/types/presence";
 
   export let lo: LoEvent;
 

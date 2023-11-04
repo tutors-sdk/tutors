@@ -1,10 +1,10 @@
 <script lang="ts">
   import { Drawer, getDrawerStore } from "@skeletonlabs/skeleton";
   import Sidebar from "./Sidebar.svelte";
-  import { currentCourse, studentsOnline } from "$lib/stores";
+  import { currentCourse } from "$lib/stores";
   import Calendar from "../../learning-objects/content/Calendar.svelte";
   import CourseContext from "../../learning-objects/structure/CourseContext.svelte";
-  import StudentCardDeck from "../../time/StudentCardDeck.svelte";
+  import CoursePresence from "$lib/ui/time/CoursePresence.svelte";
   const drawerStore = getDrawerStore();
 </script>
 
@@ -25,14 +25,7 @@
     </Sidebar>
   {:else if $drawerStore.id === "online"}
     <Sidebar>
-      <div class="flex flex-wrap">
-        {#if $studentsOnline == 0}
-          <span class="text-lg">No students currently online...</span>
-        {/if}
-        <div class="flex w-full flex-wrap justify-center">
-          <StudentCardDeck />
-        </div>
-      </div>
+      <CoursePresence />
     </Sidebar>
   {/if}
 </Drawer>
