@@ -2,7 +2,7 @@ import { courseUrl, currentCourse, currentLo } from "$lib/stores";
 import type { Lo, Course, Lab } from "$lib/services/models/lo-types";
 import { decorateCourseTree } from "./models/lo-tree";
 import { LiveLab } from "./models/live-lab";
-import { startPresenceService } from "./presence";
+import { presenceService } from "./presence";
 
 export const courseService = {
   courses: new Map<string, Course>(),
@@ -54,7 +54,7 @@ export const courseService = {
     currentCourse.set(course);
     currentLo.set(course);
     courseUrl.set(course.courseUrl);
-    startPresenceService(course);
+    presenceService.startPresenceService(course);
     return course;
   },
 

@@ -1,10 +1,11 @@
 <script lang="ts">
   import "../../../../app.postcss";
-  import { beforeUpdate, onMount } from "svelte";
-  import { startPresenceService } from "$lib/services/presence";
+  import { beforeUpdate } from "svelte";
   import TutorsShell from "$lib/ui/app-shells/TutorsShell.svelte";
   import { goto } from "$app/navigation";
   import CoursePresence from "$lib/ui/time/CoursePresence.svelte";
+  import Metric from "$lib/ui/time/Metric.svelte";
+  import { studentsOnline } from "$lib/stores";
 
   export let data: any;
   let { supabase, session } = data;
@@ -15,14 +16,11 @@
       goto("/auth");
     }
   });
-
-  onMount(async () => {
-    startPresenceService(data.course);
-  });
 </script>
 
 <TutorsShell subTitle={data.course.title} {supabase} {session}>
-  <slot>
-    <CoursePresence />
-  </slot>
+  <div slot="header" class="hidden md:inline-block">
+    <Metric value={$studentsOnline} title="Active Students" />
+  </div>
+  <CoursePresence />
 </TutorsShell>
