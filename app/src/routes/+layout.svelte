@@ -10,9 +10,6 @@
   const themes: any = ["tutors", "dyslexia", "halloween", "valentines"];
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
-  if (getKeys().firebase.apiKey !== "XXX") {
-    initFirebase(getKeys().firebase);
-  }
   if ($page.url.hash.startsWith("#/course")) {
     goto($page.url.hash.slice(2));
   }

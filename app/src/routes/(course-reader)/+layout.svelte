@@ -10,11 +10,14 @@
   import { getKeys } from "$lib/environment";
   import { analyticsService } from "$lib/services/analytics";
   import CourseShell from "$lib/ui/app-shells/CourseShell.svelte";
+  import { initFirebase } from "$lib/services/utils/firebase";
 
   export let data: any;
 
   let { supabase, session } = data;
   $: ({ supabase, session } = data);
+
+  initFirebase(getKeys().firebase);
 
   let status: boolean;
 
