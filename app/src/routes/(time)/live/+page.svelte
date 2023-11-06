@@ -12,8 +12,8 @@
   let { supabase, session } = data;
   $: ({ supabase, session } = data);
 
-  let listByCourse = true;
-  let listModeStr = "List By Course";
+  let listByCourse = false;
+  let listModeStr = "List By Student";
   function switchMode() {
     listByCourse = !listByCourse;
     if (listByCourse) {
@@ -29,9 +29,9 @@
 <TutorsShell {session} {supabase} title="Tutors Live Stream">
   <div slot="header" class="hidden md:inline-block w-full">
     <div class="flex justify-end">
+      <SlideToggle on:click={switchMode} name="slider-label" background="bg-surface-300 dark:bg-surface-700">{listModeStr}</SlideToggle>
       <Metric value={$coursesOnline} title="Active Modules" />
       <Metric value={$allStudentsOnline} title="Active Students" />
-      <SlideToggle on:click={switchMode} name="slider-label" checked>{listModeStr}</SlideToggle>
     </div>
   </div>
   {#if listByCourse}
