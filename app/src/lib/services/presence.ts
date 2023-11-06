@@ -3,8 +3,9 @@ import type { Course, Lo } from "./models/lo-types";
 import type { User } from "./types/auth";
 import { currentCourse, studentsOnline, studentsOnlineList, coursesOnline, coursesOnlineList, allStudentsOnlineList, allStudentsOnline } from "$lib/stores";
 import type { LoEvent, LoUser } from "./types/presence";
+import { getKeys } from "$lib/environment";
 
-const partyKitServer = "https://tutors-party.edeleastar.partykit.dev";
+const partyKitServer = getKeys().partyKit.mainRoom;
 
 export const presenceService = {
   studentEventMap: new Map<string, LoEvent>(),
