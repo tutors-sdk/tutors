@@ -1,7 +1,7 @@
 import PartySocket from "partysocket";
 import type { Course, Lo } from "./models/lo-types";
 import type { User } from "./types/auth";
-import { currentCourse, studentsOnline, studentsOnlineList, coursesOnline, coursesOnlineList } from "$lib/stores";
+import { currentCourse, studentsOnline, studentsOnlineList, coursesOnline, coursesOnlineList, allStudentsOnlineList, allStudentsOnline } from "$lib/stores";
 import type { LoEvent, LoUser } from "./types/presence";
 
 const partyKitServer = "https://tutors-party.edeleastar.partykit.dev";
@@ -12,6 +12,11 @@ export const presenceService = {
 
   courseEventMap: new Map<string, LoEvent>(),
   courseLos: new Array<LoEvent>(),
+
+  allStudentEventMap: new Map<string, LoEvent>(),
+  allStudentLos: new Array<LoEvent>(),
+
+  currentUserId: "",
 
   partyKitCourse: <PartySocket>{},
   partyKitAll: new PartySocket({
@@ -33,6 +38,7 @@ export const presenceService = {
     if (currentLo.icon) {
       lo.icon = currentLo.icon;
     }
+    this.currentUserId = lo.user.id;
     const loJson = JSON.stringify(lo);
     this.partyKitAll.send(loJson);
     this.partyKitCourse.room = course.courseId;
@@ -49,6 +55,7 @@ export const presenceService = {
     partyKitCourse.addEventListener("message", (event) => {
       try {
         const nextLoEvent = JSON.parse(event.data);
+        if (this.currentUserId === "" || this.currentUserId === nextLoEvent.user.id) return;
         let loEvent = this.studentEventMap.get(nextLoEvent.user.id);
         if (!loEvent) {
           this.studentLos.push(nextLoEvent);
@@ -68,17 +75,31 @@ export const presenceService = {
   startGlobalPresenceService() {
     this.partyKitAll.addEventListener("message", (event) => {
       try {
-        const nextLoEvent = JSON.parse(event.data);
-        let loEvent = this.courseEventMap.get(nextLoEvent.courseId);
-        if (!loEvent) {
-          this.courseLos.push(nextLoEvent);
-          this.courseEventMap.set(nextLoEvent.courseId, nextLoEvent);
+        const nextCourseEvent = JSON.parse(event.data);
+
+        let courseEvent = this.courseEventMap.get(nextCourseEvent.courseId);
+
+        if (!courseEvent) {
+          this.courseLos.push(nextCourseEvent);
+          this.courseEventMap.set(nextCourseEvent.courseId, nextCourseEvent);
         } else {
-          refreshLoEvent(loEvent, nextLoEvent);
+          refreshLoEvent(courseEvent, nextCourseEvent);
         }
         this.courseLos = [...this.courseLos];
         coursesOnlineList.set([...this.courseLos]);
         coursesOnline.set(this.courseLos.length);
+
+        const nextStudentEvent = JSON.parse(event.data);
+        let studentEvent = this.allStudentEventMap.get(nextStudentEvent.user.id);
+        if (!studentEvent) {
+          this.allStudentLos.push(nextStudentEvent);
+          this.allStudentEventMap.set(nextStudentEvent.user.id, nextStudentEvent);
+        } else {
+          refreshLoEvent(studentEvent, nextStudentEvent);
+        }
+        this.allStudentLos = [...this.allStudentLos];
+        allStudentsOnlineList.set([...this.allStudentLos]);
+        allStudentsOnline.set(this.allStudentLos.length);
       } catch (e) {
         console.log(e);
       }
