@@ -4,6 +4,6 @@
 </script>
 
 <span class="ml-12 mr-6">
-  <span class="chip text-primary-100 bg-warning-400">{value}</span>
+  <span class="chip text-primary-100 bg-error-400">{value}</span>
   <div class="text-primary-500 hidden text-xs md:inline-block">{title}</div>
 </span>
