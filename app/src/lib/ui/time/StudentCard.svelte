@@ -24,7 +24,7 @@
       headingText = "!text-lg font-semibold";
       cardWidths = "w-60 h-[21rem]";
       iconHeight = "180";
-      imageHeight = "h-48";
+      imageHeight = "h-40";
     }
   });
   onDestroy(unsubscribe);
@@ -49,6 +49,9 @@
     </div>
     <footer class="card-footer">
       <div class="-m-4 mt-2 text-center">
+        <div class="inline-flex w-full">
+          <div class="line-clamp-2 flex-auto font-semibold">{lo.courseTitle}</div>
+        </div>
         <div class="line-clamp-1">
           {lo.title}
         </div>

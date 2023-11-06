@@ -56,7 +56,7 @@ export const presenceService = {
     partyKitCourse.addEventListener("message", (event) => {
       try {
         const nextLoEvent = JSON.parse(event.data);
-        if (this.currentUserId === "" || this.currentUserId === nextLoEvent.user.id) return;
+        if (this.currentUserId === nextLoEvent.user.id) return;
         let loEvent = this.studentEventMap.get(nextLoEvent.user.id);
         if (!loEvent) {
           this.studentLos.push(nextLoEvent);
