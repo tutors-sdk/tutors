@@ -13,14 +13,19 @@
   let iconHeight = "";
   let colourPrefix = "";
   let imageHeight = "";
+  let textSize = "";
+  let avatarHeight = "";
 
   const unsubscribe = layout.subscribe((layout) => {
     if (layout === "compacted") {
+      textSize = "text-xs";
       headingText = "!text-md font-medium";
       cardWidths = "w-36 h-[13rem]";
       iconHeight = "90";
-      imageHeight = "h-20";
+      imageHeight = "h-16";
+      avatarHeight = "h-10";
     } else {
+      textSize = "text-base";
       headingText = "!text-lg font-semibold";
       cardWidths = "w-60 h-[21rem]";
       iconHeight = "180";
@@ -31,11 +36,11 @@
 </script>
 
 <a href={lo.loRoute} target="_blank" rel="noreferrer">
-  <div transition:cardTransition class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 border-primary-500 m-2 w-56 {cardWidths} transition-all hover:scale-105">
+  <div transition:cardTransition class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 border-primary-500 m-2 {cardWidths} transition-all hover:scale-105">
     <div class="flex">
       <header class="card-header inline-flex items-center">
-        <Avatar src={lo.user.avatar} alt={lo.user.fullName} class="mr-2" />
-        <h6>{lo.user.fullName}</h6>
+        <Avatar src={lo.user.avatar} alt={lo.user.fullName} class="mr-2 {avatarHeight}" />
+        <h6 class={textSize}>{lo.user.fullName}</h6>
       </header>
     </div>
     <div class="card-body">
@@ -50,9 +55,9 @@
     <footer class="card-footer">
       <div class="-m-4 mt-2 text-center">
         <div class="inline-flex w-full">
-          <div class="line-clamp-2 flex-auto font-semibold">{lo.courseTitle}</div>
+          <div class="{textSize} line-clamp-2 flex-auto font-semibold">{lo.courseTitle}</div>
         </div>
-        <div class="line-clamp-1">
+        <div class="line-clamp-1 {textSize}">
           {lo.title}
         </div>
       </div>
