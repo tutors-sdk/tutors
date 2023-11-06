@@ -30,7 +30,7 @@
   onDestroy(unsubscribe);
 </script>
 
-<a href="https://tutors.dev{lo.loRoute}" target="_blank" rel="noreferrer">
+<a href={lo.loRoute} target="_blank" rel="noreferrer">
   <div transition:cardTransition class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 border-primary-500 m-2 w-56 {cardWidths} transition-all hover:scale-105">
     <div class="flex">
       <header class="card-header inline-flex items-center">
