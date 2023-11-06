@@ -22,3 +22,6 @@ export const studentsOnlineList = writable<LoEvent[]>([]);
 
 export const coursesOnline = writable(0);
 export const coursesOnlineList = writable<LoEvent[]>([]);
+
+export const allStudentsOnline = writable(0);
+export const allStudentsOnlineList = writable<LoEvent[]>([]);
