@@ -132,7 +132,7 @@ currentCourse.subscribe((current) => {
 function getUser(onlineStatus: boolean, userDetails: User): LoUser {
   const user: LoUser = {
     fullName: "anonymous",
-    avatar: "none",
+    avatar: "https://tutors.dev/logo.svg",
     id: getTutorsTimeId()
   };
   if (userDetails && onlineStatus) {
