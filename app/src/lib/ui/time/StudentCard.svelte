@@ -24,7 +24,7 @@
       headingText = "!text-lg font-semibold";
       cardWidths = "w-60 h-[21rem]";
       iconHeight = "180";
-      imageHeight = "h-40";
+      imageHeight = "h-32";
     }
   });
   onDestroy(unsubscribe);
