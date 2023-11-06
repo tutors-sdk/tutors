@@ -1,12 +1,26 @@
 <script lang="ts">
-  import { studentsOnlineList } from "./stores";
-  import StudentCard from "./StudentCard.svelte";
+  import "../../../../app.postcss";
+  import { beforeUpdate } from "svelte";
+  import TutorsShell from "$lib/ui/app-shells/TutorsShell.svelte";
+  import { goto } from "$app/navigation";
+  import CoursePresence from "$lib/ui/time/CoursePresence.svelte";
+  import Metric from "$lib/ui/time/Metric.svelte";
+  import { studentsOnline } from "$lib/stores";
+
+  export let data: any;
+  let { supabase, session } = data;
+  $: ({ supabase, session } = data);
+
+  beforeUpdate(() => {
+    if (!session?.user) {
+      goto("/auth");
+    }
+  });
 </script>
 
-<div class="bg-surface-100-800-token mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4">
-  <div class="flex flex-wrap justify-center">
-    {#each $studentsOnlineList as studentLo}
-      <StudentCard lo={studentLo} />
-    {/each}
+<TutorsShell subTitle={data.course.title} {supabase} {session}>
+  <div slot="header" class="hidden md:inline-block">
+    <Metric value={$studentsOnline} title="Active Students" />
   </div>
-</div>
+  <CoursePresence />
+</TutorsShell>

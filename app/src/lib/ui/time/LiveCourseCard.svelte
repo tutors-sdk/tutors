@@ -1,14 +1,12 @@
 <script lang="ts">
   import { onDestroy } from "svelte";
   import Iconify from "@iconify/svelte";
-  import Icon from "$lib/ui/icons/Icon.svelte";
   import { layout } from "$lib/stores";
   import { Avatar } from "@skeletonlabs/skeleton";
-  import Metric from "./Metric.svelte";
   import { cardTransition } from "$lib/ui/animations";
-  import type { CourseSummary } from "$lib/services/utils/all-course-access";
+  import type { LoEvent } from "$lib/services/presence";
 
-  export let lo: CourseSummary;
+  export let lo: LoEvent;
   let target = "_blank";
 
   let headingText = "";
@@ -34,24 +32,17 @@
   onDestroy(unsubscribe);
 </script>
 
-<a href={lo.route} {target}>
+<a href={lo.loRoute} {target}>
   <div transition:cardTransition class="card !bg-surface-50 dark:!bg-surface-700 border-accent-500 m-2 border-y-8 {cardWidths} transition-all hover:scale-105">
     <header class="card-header flex flex-row items-center justify-between p-3">
       <div class="inline-flex w-full">
-        <div class="line-clamp-2 flex-auto {headingText}">{lo.title}</div>
-        <div class="w-1/4 flex-none text-center">
-          {#if lo.studentIds.size}
-            <Metric value={lo.studentIds.size} title="Students" />
-          {:else}
-            <Icon type="web" />
-          {/if}
-        </div>
+        <div class="line-clamp-2 flex-auto {headingText}">{lo.courseTitle}</div>
       </div>
     </header>
     <div class="card-body">
       <figure class="flex justify-center object-scale-down p-1">
         {#if lo.icon}
-          <Iconify icon={lo.icon.icon} color="{colourPrefix}{lo.icon.color}" height={iconHeight} />
+          <Iconify icon={lo.icon.type} color="{colourPrefix}{lo.icon.color}" height={iconHeight} />
         {:else}
           <Avatar src={lo.img} alt={lo.title} width={imageHeight} rounded="rounded-xl" background="none" />
         {/if}
@@ -59,11 +50,9 @@
     </div>
     <footer class="card-footer">
       <div class="-m-4 mt-2 text-center">
-        {#if lo.currentLo}
-          <div class="line-clamp-1">
-            <a href={lo.currentLo.route} target="_blank" rel="noreferrer">{lo.currentLo.title}</a>
-          </div>
-        {/if}
+        <div class="line-clamp-1">
+          {lo.title}
+        </div>
       </div>
     </footer>
   </div>
