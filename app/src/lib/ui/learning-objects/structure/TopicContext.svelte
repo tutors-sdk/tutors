@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Topic } from "$lib/services/models/lo-types";
+  import { currentCourse } from "$lib/stores";
   import Icon from "../../icons/Icon.svelte";
 
   export let topic: Topic;
@@ -23,9 +24,11 @@
             <Icon type={lo.type} /> <span class="pl-2"> {lo.title} </span>
           </a>
           {#if lo.video && lo.type != "panelvideo"}
-            <a class="inline-flex pl-2" href={lo.video}>
-              <Icon type="video" />
-            </a>
+            {#if !$currentCourse.areVideosHidden}
+              <a class="inline-flex pl-2" href={lo.video}>
+                <Icon type="video" />
+              </a>
+            {/if}
           {/if}
         </div>
       {/each}
