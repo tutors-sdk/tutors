@@ -17,7 +17,7 @@
     "@types/js-yaml": "^4.0.5",
     "@types/markdown-it-emoji": "^2.0.2",
     "@types/markdown-it-footnote": "^3.0.0",
-    "@types/node": "^20.2.6",
+    "@types/node": "^20.10.0",
     "@types/shelljs": "^0.8.12",
     "commander": "^10.0.1",
     "front-matter": "^4.0.2",
