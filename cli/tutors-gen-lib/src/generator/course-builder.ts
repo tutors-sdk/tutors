@@ -186,5 +186,10 @@ export function buildCourse(lr: LearningResource): Course {
     course.calendar = readYamlFile(calendarFile);
   }
 
+  const enrollmentFile = getFileWithName(lr, "enrollment.yaml");
+  if (enrollmentFile) {
+    course.enrollment = readYamlFile(enrollmentFile);
+  }
+
   return course;
 }
