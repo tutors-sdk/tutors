@@ -172,6 +172,7 @@ export type Course = Composite & {
   wallMap?: Map<string, Lo[]>;
   properties: Properties; // contents of properties.yaml
   calendar?: Properties; // contents of calendar.yaml
+  enrollment?: string[]; // contents of enrollment.yaml
   courseCalendar?: Calendar;
   authLevel: number;
   isPortfolio: boolean;
