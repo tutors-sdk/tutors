@@ -95,7 +95,9 @@ export function loadPropertyFlags(course: Course) {
   course.areVideosHidden = (course.properties?.hideVideos as unknown as boolean) === true;
   course.areLabStepsAutoNumbered = (course.properties?.labStepsAutoNumber as unknown as boolean) === true;
   course.authLevel = course.properties.auth as unknown as number;
-  course.hasEnrollment = false;
+  if (course.enrollment) {
+    course.hasEnrollment = true;
+  }
   course.hasWhiteList = false;
   course.ignorePin = course.properties?.ignorepin?.toString();
   if (course.properties?.icon) {
