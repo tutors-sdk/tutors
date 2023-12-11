@@ -2,6 +2,7 @@
   import "../../../app.postcss";
   import TutorsShell from "$lib/ui/app-shells/TutorsShell.svelte";
   import { presenceService } from "$lib/services/presence";
+  import { dataGeneratorService } from "$lib/services/data-generator";
   import AllCoursePresence from "$lib/ui/time/AllCoursePresence.svelte";
   import { allStudentsOnline, coursesOnline } from "$lib/stores";
   import Metric from "$lib/ui/time/Metric.svelte";
@@ -23,7 +24,7 @@
     }
   }
 
-  presenceService.startGlobalPresenceService();
+  dataGeneratorService.startDataGeneratorService();
 </script>
 
 <TutorsShell {session} {supabase} title="Tutors Live Stream">
