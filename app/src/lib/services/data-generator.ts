@@ -4,15 +4,13 @@ import { currentCourse, studentsOnline, studentsOnlineList, coursesOnline, cours
 let studentLoEvents = new Array<LoEvent>();
 let courseLoEvents = new Array<LoEvent>();
 
-export const dataGeneratorService = {
-    startDataGeneratorService() {
-        // Mock a single LoEvent to ensure that there is always a card present for demoing purposes
-        mockActiveStudent();
+export function startDataGeneratorService() {
+    // Mock a single LoEvent to ensure that there is always a card present for demoing purposes
+    mockActiveStudent();
 
-        // Replicate behaviour of students randomly opening and closing tutors courses
-        setInterval(mockEvent, 5000);
-    }
-};
+    // Replicate behaviour of students randomly opening and closing tutors courses
+    setInterval(mockEvent, 5000);
+}
 
 function mockEvent() {
     if (Math.random() < 0.6) {
