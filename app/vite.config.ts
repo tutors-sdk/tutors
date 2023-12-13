@@ -1,6 +1,7 @@
 import { sveltekit } from "@sveltejs/kit/vite";
 import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
+import { searchForWorkspaceRoot } from 'vite'
 
 const file = fileURLToPath(new URL("package.json", import.meta.url));
 const json = readFileSync(file, "utf8");
@@ -11,6 +12,13 @@ const config = {
   plugins: [sveltekit()],
   define: {
     PKG: pkg
+  },
+  server: {
+    fs: {
+      allow: [
+        searchForWorkspaceRoot(process.cwd()),
+      ],
+    },
   }
 };
 
