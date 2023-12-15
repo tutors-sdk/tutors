@@ -1,5 +1,7 @@
 import type { LoEvent, LoUser } from "./types/presence";
 import { currentCourse, studentsOnline, studentsOnlineList, coursesOnline, coursesOnlineList, allStudentsOnlineList, allStudentsOnline } from "$lib/stores";
+import { getTestUser } from "./utils/user-generator"
+
 
 let studentLoEvents = new Array<LoEvent>();
 let courseLoEvents = new Array<LoEvent>();
@@ -69,11 +71,7 @@ function generateLoEventData() {
         title: "Lecture 3",
         courseTitle: "Reference Course",
         loRoute: "/talk/reference-course/topic-02-side/unit-1/talk-1",
-        user: {
-            "fullName": "Clodagh",
-            "avatar": "https://tutors.dev/logo.svg",
-            "id": "1ab5b1b5-1be1-439b-98b6-e968a194d351"
-        },
+        user: getTestUser(),
         isPrivate: false
     };
     return lo;
