@@ -13,16 +13,23 @@
   const storeTab: Writable<string> = writable("Labs");
   let pinBuffer = "";
   let instructorMode = false;
-  let tabSet: number = 0;
+  let tabSet = 0;
 
   onMount(async () => {
     window.addEventListener("keydown", keypressInput);
+    if (!data.course?.hasCalendar) {
+      tabSet = 1;
+    }
   });
 
   function keypressInput(e: KeyboardEvent) {
     pinBuffer = pinBuffer.concat(e.key);
     if (pinBuffer === data.ignorePin) {
       instructorMode = true;
+      tabSet = 3;
+      if (!data.course?.hasCalendar) {
+        tabSet = 4;
+      }
     }
   }
 </script>
@@ -33,33 +40,39 @@
 
 <div in:fade={{ duration: 500 }} class="bg-base-200 mt-3">
   <TabGroup selected={storeTab}>
-    <Tab bind:group={tabSet} name="Labs" value={0}>Labs</Tab>
-    <Tab bind:group={tabSet} name="LabsChart" value={1}>LabsChart</Tab>
-    <Tab bind:group={tabSet} name="Calendar" value={2}>Calendar</Tab>
-
-    {#if instructorMode}
-      <Tab bind:group={tabSet} name="LabsAllStudent" value={3}>Labs All Student</Tab>
-      {#if data.course?.hasEnrollment}
-        <Tab bind:group={tabSet} name="LabsAllStudent" value={4}>Labs All Enrolled Student</Tab>
+    {#if !instructorMode}
+      {#if data.course?.hasCalendar}
+        <Tab bind:group={tabSet} name="calendar" value={0}>Calendar</Tab>
       {/if}
-      <Tab bind:group={tabSet} name="allLabsChart" value={5}>Labs All Students - Chart</Tab>
-      <Tab bind:group={tabSet} name="allLabsChart" value={6}>Calendar All Students</Tab>
+      <Tab bind:group={tabSet} name="labs" value={1}>Labs</Tab>
+      <Tab bind:group={tabSet} name="labs-chart" value={2}>Labs (chart)</Tab>
+    {:else}
+      {#if data.course?.hasCalendar}
+        <Tab bind:group={tabSet} name="calendar-all" value={3}>Calendar</Tab>
+      {/if}
+      {#if data.course?.hasEnrollment}
+        <Tab bind:group={tabSet} name="LabsAllStudent" value={4}>Labs (enrolled)</Tab>
+      {/if}
+      <Tab bind:group={tabSet} name="LabsAllStudent" value={5}>Labs(all)</Tab>
+      <Tab bind:group={tabSet} name="allLabsChart" value={6}>Labs(all chart)</Tab>
     {/if}
   </TabGroup>
   {#if tabSet === 0}
-    <LabTime user={data.user} allLabs={data.allLabs} chart={false} />
+    {#if data.course?.hasCalendar}
+      <CalendarTime user={data.user} calendarData={data.calendar} />
+    {/if}
   {:else if tabSet === 1}
-    <LabTime user={data.user} allLabs={data.allLabs} chart={true} />
+    <LabTime user={data.user} allLabs={data.allLabs} chart={false} />
   {:else if tabSet === 2}
-    <CalendarTime user={data.user} calendarData={data.calendar} />
+    <LabTime user={data.user} allLabs={data.allLabs} chart={true} />
   {:else if tabSet === 3}
-    <InstructorLabTime userMap={data.users} allLabs={data.allLabs} chart={false} />
+    <InstructorCalendarTime userMap={data.users} calendarData={data.calendar} />
   {:else if tabSet === 4}
     <InstructorLabTime userMap={data.enrolledUsers} allLabs={data.allLabs} chart={false} />
   {:else if tabSet === 5}
-    <InstructorLabTime userMap={data.users} allLabs={data.allLabs} chart={true} />
+    <InstructorLabTime userMap={data.users} allLabs={data.allLabs} chart={false} />
   {:else if tabSet === 6}
-    <InstructorCalendarTime userMap={data.users} calendarData={data.calendar} />
+    <InstructorLabTime userMap={data.enrolledUsers} allLabs={data.allLabs} chart={true} />
   {/if}
 </div>
 
