@@ -16,10 +16,12 @@
 
   onMount(async () => {
     timeGrid = new Grid(time, { ...options });
-    timeSheet.populateCols(allLabs);
-    timeSheet.populateRow(user, allLabs);
-    timeSheet.render(timeGrid);
-    if (chart) timeSheet.chart(timeGrid, "groupedBar");
+    if (allLabs.length > 0) {
+      timeSheet.populateCols(allLabs);
+      timeSheet.populateRow(user, allLabs);
+      timeSheet.render(timeGrid);
+      if (chart) timeSheet.chart(timeGrid, "groupedBar");
+    }
   });
 </script>
 
