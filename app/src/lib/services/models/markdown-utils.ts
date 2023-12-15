@@ -6,7 +6,8 @@ import latex from "@iktakahiro/markdown-it-katex";
 import anchor from "markdown-it-anchor";
 // @ts-ignore
 import toc from "markdown-it-table-of-contents";
-import { full as emoji } from "markdown-it-emoji";
+
+// import emoji from "markdown-it-emoji";
 // @ts-ignore
 import sub from "markdown-it-sub";
 // @ts-ignore
@@ -43,7 +44,7 @@ markdownIt.use(anchor, {
 });
 
 markdownIt.use(toc, tocOptions);
-markdownIt.use(emoji);
+// markdownIt.use(emoji);
 markdownIt.use(sub);
 markdownIt.use(sup);
 markdownIt.use(mark);
