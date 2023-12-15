@@ -181,6 +181,7 @@ export type Course = Composite & {
   areVideosHidden: boolean;
   areLabStepsAutoNumbered: boolean;
   hasEnrollment: boolean;
+  hasCalendar: boolean;
   hasWhiteList: boolean;
   ignorePin: string;
   companions: IconNavBar;

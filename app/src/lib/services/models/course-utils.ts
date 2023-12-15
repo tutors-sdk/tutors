@@ -98,6 +98,10 @@ export function loadPropertyFlags(course: Course) {
   if (course.enrollment) {
     course.hasEnrollment = true;
   }
+  if (course.calendar) {
+    course.hasCalendar = true;
+  }
+
   course.hasWhiteList = false;
   course.ignorePin = course.properties?.ignorepin?.toString();
   if (course.properties?.icon) {
