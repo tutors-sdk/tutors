@@ -1,15 +1,16 @@
 <script lang="ts">
+  import { BROWSER } from "esm-env";
   import Icon from "../../icons/Icon.svelte";
+  import * as pdfjs from "pdfjs-dist";
   // @ts-ignore
   import FileSaver from "file-saver";
-  import { onDestroy, tick } from "svelte";
+  import { getContext, onDestroy, setContext, tick } from "svelte";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
 
-  // @ts-ignore
-  import * as pdfjs from "pdfjs-dist/build/pdf.js";
-  /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-  import "pdfjs-dist/build/pdf.worker.entry";
+  import { PDFWorker, getDocument } from "pdfjs-dist";
   import type { Talk } from "$lib/services/models/lo-types";
+
+  set_pdfjs_context();
 
   export let url = "";
   export let scale = 1.8;
@@ -102,9 +103,11 @@
     FileSaver.saveAs(url, fileName);
   };
 
+  const worker = getContext<PDFWorker | undefined>("svelte_pdfjs_worker");
+
   const initialLoad = () => {
     window.addEventListener("keydown", keypressInput);
-    let loadingTask = pdfjs.getDocument({ url });
+    let loadingTask = getDocument({ url, worker });
     loadingTask.promise
       .then(async function (pdfDoc_) {
         pdfDoc = pdfDoc_;
@@ -132,6 +135,16 @@
     } else if (e.key === "ArrowLeft") {
       e.preventDefault();
       onPrevPage();
+    }
+  }
+
+  export function set_pdfjs_context() {
+    if (BROWSER) {
+      const worker = new pdfjs.PDFWorker({
+        port: new Worker(new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url)) as unknown as null
+      });
+      setContext("svelte_pdfjs_worker", worker);
+      onDestroy(() => worker.destroy());
     }
   }
 </script>

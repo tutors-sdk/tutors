@@ -6,7 +6,8 @@ import latex from "@iktakahiro/markdown-it-katex";
 import anchor from "markdown-it-anchor";
 // @ts-ignore
 import toc from "markdown-it-table-of-contents";
-import emoji from "markdown-it-emoji";
+
+import { full as emoji } from "markdown-it-emoji";
 // @ts-ignore
 import sub from "markdown-it-sub";
 // @ts-ignore
