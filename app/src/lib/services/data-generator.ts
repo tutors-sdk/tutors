@@ -1,6 +1,7 @@
 import type { LoEvent, LoUser } from "./types/presence";
 import { currentCourse, studentsOnline, studentsOnlineList, coursesOnline, coursesOnlineList, allStudentsOnlineList, allStudentsOnline } from "$lib/stores";
-import { getTestUser } from "./utils/user-generator"
+import { getTestUser } from "./utils/loGenerator"
+// import { courseID, randomCourseName } from "./utils/course-generator";
 
 
 let studentLoEvents = new Array<LoEvent>();
@@ -65,14 +66,15 @@ function deleteCourseLoEvent(courseId: string) {
 // TODO generate the LoEvent dynamically
 function generateLoEventData() {
     const lo: LoEvent = {
-        courseId: "reference-course",
-        courseUrl: "reference-course.netlify.app",
+        courseId: courseID(randomCourseName()),
+        courseUrl: "web-development.netlify.app",
         img: "https://reference-course.netlify.app/topic-02-side/unit-1/talk-1/talk.png",
         title: "Lecture 3",
-        courseTitle: "Reference Course",
+        courseTitle: randomCourseName(),
         loRoute: "/talk/reference-course/topic-02-side/unit-1/talk-1",
         user: getTestUser(),
         isPrivate: false
     };
     return lo;
 }
+

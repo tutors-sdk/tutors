@@ -21,6 +21,7 @@ export function isValidCourseName(course: string) {
   return !invalidPatterns.test(course);
 }
 
+
 export async function getCourseSummary(courseId: string): Promise<CourseSummary> {
   const response = await fetch(`https://${courseId}.netlify.app/tutors.json`);
   const lo = await response.json();
