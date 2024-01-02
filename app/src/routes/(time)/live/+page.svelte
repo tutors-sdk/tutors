@@ -7,6 +7,7 @@
   import Metric from "$lib/ui/time/Metric.svelte";
   import { SlideToggle } from "@skeletonlabs/skeleton";
   import AllStudentPresence from "$lib/ui/time/AllStudentPresence.svelte";
+  import { onMount } from "svelte";
 
   export let data: any;
   let { supabase, session } = data;
@@ -23,7 +24,9 @@
     }
   }
 
-  startDataGeneratorService();
+  onMount(async () => {
+    startDataGeneratorService();
+  });
 </script>
 
 <TutorsShell {session} {supabase} title="Tutors Live Stream">
