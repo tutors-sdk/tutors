@@ -1,8 +1,9 @@
 import type { LoEvent } from "./types/presence";
-import { currentCourse, studentsOnline, studentsOnlineList, coursesOnline, coursesOnlineList, allStudentsOnlineList, allStudentsOnline } from "$lib/stores";
-import { generateUser } from "$lib/services/utils/loGenerator"
+import type { Course } from "./models/lo-types";
+import { studentsOnline, studentsOnlineList, coursesOnline, coursesOnlineList, allStudentsOnlineList, allStudentsOnline } from "$lib/stores";
+import { generateUser } from "$lib/services/utils/loGenerator";
+import { courseService } from "$lib/services/course";
 import validCourses from "../../routes/(time)/gallery/+page";
-import { getCourseSummary } from "$lib/services/utils/all-course-access";
 
 let studentLoEvents = new Array<LoEvent>();
 let courseLoEvents = new Array<LoEvent>();
@@ -67,20 +68,30 @@ function deleteCourseLoEvent(courseId: string) {
     coursesOnline.set(courseLoEvents.length);
 }
 
+function setCurrentCourseLo(lo: LoEvent, course: Course) {
+    let index = Math.floor(Math.random() * course.los.length);
+    const childLo = course.los[index];
+    const route = childLo.route.replace("{{COURSEURL}}", course.courseId);
+    lo.loRoute = `https://tutors.dev${route}`;
+    lo.title = childLo.title;
+    lo.img = childLo.img.replace("{{COURSEURL}}", `${course.courseId}.netlify.app`);
+}
+
 async function generateLoEventData() {
     const courseId = validCourses[Math.floor(Math.random() * validCourses.length)];
-    let courseSummary = await getCourseSummary(courseId);
+    let course = await courseService.getOrLoadCourse(courseId, fetch);
 
     const lo: LoEvent = {
         courseId: courseId,
-        courseUrl: courseSummary.route,
-        img: courseSummary.img,
-        title: courseSummary.title,
-        courseTitle: courseSummary.title,
-        loRoute: courseSummary.route,
+        courseUrl: course.route,
+        img: course.img,
+        title: course.title,
+        courseTitle: course.title,
+        loRoute: course.route,
         user: generateUser(),
-        isPrivate: courseSummary.isPrivate
+        isPrivate: course.isPrivate
     };
+    setCurrentCourseLo(lo, course);
     return lo;
 }
 
@@ -88,14 +99,7 @@ async function mockActiveStudent() {
     if (studentLoEvents.length > 0) {
         let index = Math.floor(Math.random() * studentLoEvents.length)
         const loEvent = studentLoEvents[index];
-        const response = await fetch(`https://${loEvent.courseId}.netlify.app/tutors.json`);
-        const courseDetails = await response.json();
-
-        index = Math.floor(Math.random() * courseDetails.los.length);
-        const newLo = courseDetails.los[index];
-        const newRoute = newLo.route.replace("{{COURSEURL}}", loEvent.courseId);
-        loEvent.loRoute = `https://tutors.dev${newRoute}`;
-        loEvent.title = newLo.title;
-        loEvent.img = newLo.img.replace("{{COURSEURL}}", `${loEvent.courseId}.netlify.app`);
+        let course = await courseService.getOrLoadCourse(loEvent.courseId, fetch);
+        setCurrentCourseLo(loEvent, course);
     }
 }

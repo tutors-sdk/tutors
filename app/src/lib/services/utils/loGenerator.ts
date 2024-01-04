@@ -28,6 +28,9 @@ const lastNames = [
   "Young", "Hernandez", "King"
 ];
 
+const maleProfiles = Object.values(import.meta.glob('@assets/profiles/maleProfiles/*.{png,jpg,jpeg,PNG,JPEG}', { eager: true, as: 'url' }));
+const femaleProfiles = Object.values(import.meta.glob('@assets/profiles/femaleProfiles/*.{png,jpg,jpeg,PNG,JPEG}', { eager: true, as: 'url' }));
+
 export function generateUser() {
   const randomGender = Math.random() < 0.5 ? 'male' : 'female';
   let fullName, avatar;
@@ -69,15 +72,11 @@ function generateFemaleName(): string {
   return `${getRandomFromList(femaleFirstNames)} ${getRandomFromList(lastNames)}`;
 }
 
-// TODO fix this to be more dynamic
 function generateAvatar(gender: string): string {
-  const profileDirectory = gender === 'male' ? 'maleProfiles' : 'femaleProfiles';
-  const profileImages = ['image1.jpg', 'image2.jpg', 'image3.jpg']; // Add actual image filenames
-
-  const randomImage = getRandomFromList(profileImages);
-  const avatarUrl = `static/${profileDirectory}/${randomImage}`;
-
-  return avatarUrl;
-
-  return avatarUrl;
+  if (gender === 'male') {
+    return getRandomFromList(maleProfiles);
+  }
+  else {
+    return getRandomFromList(femaleProfiles);
+  }
 }
