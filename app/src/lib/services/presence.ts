@@ -4,7 +4,6 @@ import type { User } from "./types/auth";
 import { currentCourse, studentsOnline, studentsOnlineList, coursesOnline, coursesOnlineList, allStudentsOnlineList, allStudentsOnline } from "$lib/stores";
 import type { LoEvent, LoUser } from "./types/presence";
 import { getKeys } from "$lib/environment";
-import { generateTutorsTimeId } from "./utils/loGenerator";
 
 const partyKitServer = getKeys().partyKit.mainRoom;
 
@@ -142,6 +141,14 @@ function getUser(onlineStatus: boolean, userDetails: User): LoUser {
     user.id = userDetails.user_metadata.user_name;
   }
   return user;
+}
+
+function generateTutorsTimeId() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }
 
 function getTutorsTimeId() {
