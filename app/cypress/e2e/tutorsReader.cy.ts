@@ -48,6 +48,10 @@ describe("Tutors Reader: Loading the JSON fixture", function () {
     cy.partialSearchVerification(course.los);
   });
 
+  it('clicks the login button and navigates to the auth page', () => {
+    cy.checkLoginHref();
+  });
+
   it("Topics", function () {
     course.los.forEach((topic: any) => {
       if (!topic.hide) {
