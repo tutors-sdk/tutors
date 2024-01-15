@@ -1,9 +1,11 @@
 import { createServerClient } from "@supabase/ssr";
 import type { Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
+import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
+
 
 const createSupabaseClient: Handle = async ({ event, resolve }) => {
-  event.locals.supabase = createServerClient(import.meta.env.VITE_PUBLIC_SUPABASE_URL, import.meta.env.VITE_PUBLIC_SUPABASE_ANON_KEY, {
+  event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
     cookies: {
       get: (key) => event.cookies.get(key),
       // NOTE: defaulting path to '/' here to support Sveltekit v2 which requires it to be

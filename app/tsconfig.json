@@ -11,6 +11,5 @@
     "ignoreDeprecations": "5.0",
     "strict": true,
     "moduleResolution": "bundler"
-	},
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "vite.config.ts"],
+	}
 }
