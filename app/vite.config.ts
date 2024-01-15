@@ -3,14 +3,16 @@ import { readFileSync } from "fs";
 import { fileURLToPath } from "url";
 import { defineConfig } from 'vite';
 import { purgeCss } from 'vite-plugin-tailwind-purgecss';
+import { resolve } from "path";
 
-const file = fileURLToPath(new URL("package.json", import.meta.url));
-const json = readFileSync(file, "utf8");
-const pkg = JSON.parse(json);
+const packageJsonPath = resolve("package.json");
+const json = readFileSync(packageJsonPath, "utf8");
 
 export default defineConfig({
+
   plugins: [sveltekit(), purgeCss()],
   define: {
-    PKG: pkg
-  }
+    PKG: JSON.parse(json),
+  },
 });
+
