@@ -1,8 +1,8 @@
 import adapter from "@sveltejs/adapter-netlify";
 import preprocess from "svelte-preprocess";
+import { defineConfig } from "vite";
 
-/** @type {import('@sveltejs/kit').Config} */
-const config = {
+export default defineConfig({  
   // Consult https://github.com/sveltejs/svelte-preprocess
   // for more information about preprocessors
   preprocess: [
@@ -12,8 +12,10 @@ const config = {
   ],
 
   kit: {
-    adapter: adapter()
+    env: {
+      publicPrefix: 'VITE_PUBLIC'
+    },
+    adapter: adapter(),
   }
-};
+});
 
-export default config;
