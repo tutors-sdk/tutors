@@ -9,7 +9,6 @@
     "skipLibCheck": true,
     "types": ["cypress", "cypress-real-events", "./support"],
     "ignoreDeprecations": "5.0",
-    "strict": true,
-    "moduleResolution": "bundler"
+    "strict": true
 	}
 }
