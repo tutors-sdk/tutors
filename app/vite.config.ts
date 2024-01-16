@@ -1,17 +1,18 @@
 import { sveltekit } from "@sveltejs/kit/vite";
 import { readFileSync } from "fs";
-import { defineConfig } from 'vite';
-import { resolve } from "path";
-import { purgeCss } from 'vite-plugin-tailwind-purgecss';
+import { fileURLToPath } from "url";
 
-const packageJsonPath = resolve("package.json");
-const json = readFileSync(packageJsonPath, "utf8");
+const file = fileURLToPath(new URL("package.json", import.meta.url));
+const json = readFileSync(file, "utf8");
+const pkg = JSON.parse(json);
 
-export default defineConfig({
-
-  plugins: [sveltekit(), purgeCss()],
+/** @type {import('vite').UserConfig} */
+const config = {
+  plugins: [sveltekit()],
   define: {
-    PKG: JSON.parse(json),
-  },
-});
+    PKG: pkg
+  }
+};
+
+export default config;
 
