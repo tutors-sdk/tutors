@@ -4,6 +4,7 @@ import type { Config } from "tailwindcss";
 import { skeleton } from "@skeletonlabs/tw-plugin";
 import { tutors } from "./src/lib/themes/tutors";
 import { dyslexia } from "./src/lib/themes/dyslexia";
+import typography from '@tailwindcss/typography';
 
 const config = {
   mode: "jit",
@@ -35,8 +36,8 @@ const config = {
     }
   },
   plugins: [
-    require("@tailwindcss/typography"),
     forms,
+    typography,
     skeleton({
       themes: {
         custom: [tutors, dyslexia]

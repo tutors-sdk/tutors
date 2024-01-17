@@ -13,7 +13,7 @@ export default defineConfig({
 
   kit: {
     env: {
-      publicPrefix: 'VITE_PUBLIC'
+      publicPrefix: 'PUBLIC_'
     },
     adapter: adapter(),
   }
