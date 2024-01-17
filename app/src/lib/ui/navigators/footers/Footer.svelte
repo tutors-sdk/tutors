@@ -11,7 +11,7 @@
     id = data[0].sha.slice(0, 7);
     sha = data[0].sha;
   });
-  const version = PKG.version;
+  const version = "9.2.0";
 </script>
 
 <div class="bg-surface-100-800-token border-t-[1px] border-surface-200-700-token bottom-0 mt-2">

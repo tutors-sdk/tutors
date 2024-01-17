@@ -1,17 +1,17 @@
-import adapter from "@sveltejs/adapter-netlify";
-import preprocess from "svelte-preprocess";
+import adapter from "@sveltejs/adapter-auto";
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  // Consult https://github.com/sveltejs/svelte-preprocess
+  extensions: [".svelte"],
+  // Consult https://kit.svelte.dev/docs/integrations#preprocessors
   // for more information about preprocessors
-  preprocess: [
-    preprocess({
-      postcss: true
-    })
-  ],
+  preprocess: [vitePreprocess()],
 
   kit: {
+    env: {
+      publicPrefix: "PUBLIC_"
+    },
     adapter: adapter()
   }
 };
