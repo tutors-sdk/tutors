@@ -17,9 +17,16 @@
   onMount(async () => {
     calendarGrid = new Grid(calendar, { ...options });
     calendarSheet.populateCols(calendarData);
-    for (const user of userMap.values()) {
+    const allUsers = Array.from(userMap.values());
+    const sortedUsers = allUsers.sort((a: any, b: any) => {
+      return a?.name?.localeCompare(b.name);
+    });
+    sortedUsers.forEach((user) => {
       calendarSheet.populateRow(user, calendarData);
-    }
+    });
+    // for (const user of userMap.values()) {
+    //   calendarSheet.populateRow(user, calendarData);
+    // }
     calendarSheet.render(calendarGrid);
   });
 
