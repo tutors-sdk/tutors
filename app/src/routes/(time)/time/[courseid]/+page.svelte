@@ -66,7 +66,11 @@
   {:else if tabSet === 2}
     <LabTime user={data.user} allLabs={data.allLabs} chart={true} />
   {:else if tabSet === 3}
-    <InstructorCalendarTime userMap={data.users} calendarData={data.calendar} />
+    {#if data.course?.hasEnrollment}
+      <InstructorCalendarTime userMap={data.enrolledUsers} calendarData={data.calendar} />
+    {:else}
+      <InstructorCalendarTime userMap={data.users} calendarData={data.calendar} />
+    {/if}
   {:else if tabSet === 4}
     <InstructorLabTime userMap={data.enrolledUsers} allLabs={data.allLabs} chart={false} />
   {:else if tabSet === 5}
