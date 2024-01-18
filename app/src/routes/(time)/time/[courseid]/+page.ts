@@ -29,7 +29,11 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
           if (!enrolledUser.name) {
             const response = await fetch(`https://api.github.com/users/${enrolledUser.nickname}`);
             const latestProfile = await response.json();
-            enrolledUser.name = latestProfile.name;
+            if (latestProfile.name) {
+              enrolledUser.name = latestProfile.name;
+            } else {
+              enrolledUser.name = latestProfile.login;
+            }
           }
           enrolledUsers.set(course.enrollment[i], enrolledUser);
         }
