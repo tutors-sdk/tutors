@@ -1,14 +1,24 @@
-import { createSupabaseLoadClient } from "@supabase/auth-helpers-sveltekit";
-import type { Database } from "../DatabaseDefinitions";
+import type { LayoutLoad } from "./$types";
+import { createBrowserClient, isBrowser, parse } from "@supabase/ssr";
+import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from "$env/static/public";
 
-export const load = async ({ fetch, data, depends }) => {
+export const load: LayoutLoad = async ({ fetch, data, depends }) => {
   depends("supabase:auth");
 
-  const supabase = createSupabaseLoadClient<Database>({
-    supabaseUrl: import.meta.env.VITE_PUBLIC_SUPABASE_URL,
-    supabaseKey: import.meta.env.VITE_PUBLIC_SUPABASE_ANON_KEY,
-    event: { fetch },
-    serverSession: data.session
+  const supabase = createBrowserClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
+    global: {
+      fetch
+    },
+    cookies: {
+      get(key) {
+        if (!isBrowser()) {
+          return JSON.stringify(data.session);
+        }
+
+        const cookie = parse(document.cookie);
+        return cookie[key];
+      }
+    }
   });
 
   const {
