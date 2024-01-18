@@ -22,13 +22,22 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
     const user: UserMetric = await fetchUserById(params.courseid, data.session, allLabs);
     const users: Map<string, UserMetric> = await fetchAllUsers(params.courseid, allLabs);
     const enrolledUsers: Map<string, UserMetric> = new Map<string, UserMetric>();
-    if (course.hasEnrollment) {
-      course.enrollment?.forEach((studentId) => {
-        const enrolledUser = users.get(studentId);
+    if (course.hasEnrollment && course.enrollment) {
+      for (let i = 0; i < course.enrollment.length; i++) {
+        const enrolledUser = users.get(course.enrollment[i]);
         if (enrolledUser) {
-          enrolledUsers.set(studentId, enrolledUser);
+          if (!enrolledUser.name) {
+            const response = await fetch(`https://api.github.com/users/${enrolledUser.nickname}`);
+            const latestProfile = await response.json();
+            if (latestProfile.name) {
+              enrolledUser.name = latestProfile.name;
+            } else {
+              enrolledUser.name = latestProfile.login;
+            }
+          }
+          enrolledUsers.set(course.enrollment[i], enrolledUser);
         }
-      });
+      }
     }
     return {
       user: user,
