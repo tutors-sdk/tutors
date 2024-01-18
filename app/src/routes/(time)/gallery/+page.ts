@@ -61,5 +61,3 @@ export const load: PageLoad = async ({ params }) => {
     allCourses: validCourses
   };
 };
-
-export default validCourses;

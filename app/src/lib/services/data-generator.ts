@@ -2,13 +2,20 @@ import type { LoEvent } from "./types/presence";
 import type { Course } from "./models/lo-types";
 import { studentsOnline, studentsOnlineList, coursesOnline, coursesOnlineList, allStudentsOnlineList, allStudentsOnline } from "$lib/stores";
 import { generateUser } from "$lib/services/utils/loGenerator";
+import { initFirebase, readAllCourseIds } from "$lib/services/utils/firebase";
+import { isValidCourseName } from "$lib/services/utils/all-course-access";
+import { getKeys } from "$lib/environment";
 import { courseService } from "$lib/services/course";
-import validCourses from "../../routes/(time)/gallery/+page";
 
 let studentLoEvents = new Array<LoEvent>();
 let courseLoEvents = new Array<LoEvent>();
+let validCourses = new Array<string>();
 
-export function startDataGeneratorService() {
+export async function startDataGeneratorService() {
+    initFirebase(getKeys().firebase);
+    const courses = await readAllCourseIds(getKeys().firebase);
+    validCourses = courses.filter((courseId) => isValidCourseName(courseId));
+
     // Mock a single LoEvent to ensure that there is always a card present for demoing purposes
     mockNewStudent();
 
@@ -30,14 +37,32 @@ function mockEvent() {
 }
 
 async function mockNewStudent() {
-    const loEvent = await generateLoEventData();
-    studentLoEvents.push(loEvent);
-    allStudentsOnlineList.set([...studentLoEvents]);
-    allStudentsOnline.set(studentLoEvents.length);
+    try {
+        const courseId = validCourses[Math.floor(Math.random() * validCourses.length)];
+        let course = await courseService.getOrLoadCourse(courseId, fetch).catch();
+        const loEvent: LoEvent = {
+            courseId: courseId,
+            courseUrl: course.route,
+            img: course.img,
+            title: course.title,
+            courseTitle: course.title,
+            loRoute: course.route,
+            user: generateUser(),
+            isPrivate: course.isPrivate
+        };
+        setCurrentCourseLo(loEvent, course);
 
-    const registeredCourse = courseLoEvents.find((courseLoEvent) => courseLoEvent.courseId === loEvent.courseId);
-    if (!registeredCourse) {
-        addCourseLoEvent(loEvent);
+        studentLoEvents.push(loEvent);
+        allStudentsOnlineList.set([...studentLoEvents]);
+        allStudentsOnline.set(studentLoEvents.length);
+
+        const registeredCourse = courseLoEvents.find((courseLoEvent) => courseLoEvent.courseId === loEvent.courseId);
+        if (!registeredCourse) {
+            addCourseLoEvent(loEvent);
+        }
+    }
+    catch (error) {
+        console.log(error);
     }
 }
 
@@ -75,24 +100,6 @@ function setCurrentCourseLo(lo: LoEvent, course: Course) {
     lo.loRoute = `https://tutors.dev${route}`;
     lo.title = childLo.title;
     lo.img = childLo.img.replace("{{COURSEURL}}", `${course.courseId}.netlify.app`);
-}
-
-async function generateLoEventData() {
-    const courseId = validCourses[Math.floor(Math.random() * validCourses.length)];
-    let course = await courseService.getOrLoadCourse(courseId, fetch);
-
-    const lo: LoEvent = {
-        courseId: courseId,
-        courseUrl: course.route,
-        img: course.img,
-        title: course.title,
-        courseTitle: course.title,
-        loRoute: course.route,
-        user: generateUser(),
-        isPrivate: course.isPrivate
-    };
-    setCurrentCourseLo(lo, course);
-    return lo;
 }
 
 async function mockActiveStudent() {
