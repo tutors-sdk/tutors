@@ -95,7 +95,7 @@
     <SecondaryNavigator />
   </svelte:fragment>
   {#key $transitionKey}
-    <div id="app" class="h-full overflow-hidden">
+    <div id="app" class="h-full">
       <div id="top" />
       <div class="mx-auto my-4">
         <div in:fade={{ duration: 300, delay: 200 }}>
