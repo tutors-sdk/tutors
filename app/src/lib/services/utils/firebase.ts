@@ -150,12 +150,13 @@ export async function initFirebase(keys: any) {
     } catch {
       initializeApp(keys);
     }
-  }
-  try {
-    const auth = getAuth();
-    await signInWithEmailAndPassword(auth, keys.tutorStoreId, keys.tutorStoreSecret);
-  } catch (e) {
-    console.log("error initialising firebase");
+
+    try {
+      const auth = getAuth();
+      await signInWithEmailAndPassword(auth, keys.tutorStoreId, keys.tutorStoreSecret);
+    } catch (e) {
+      console.log("error initialising firebase");
+    }
   }
 }
 

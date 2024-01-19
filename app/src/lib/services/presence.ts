@@ -4,8 +4,18 @@ import type { User } from "./types/auth";
 import { currentCourse, studentsOnline, studentsOnlineList, coursesOnline, coursesOnlineList, allStudentsOnlineList, allStudentsOnline } from "$lib/stores";
 import type { LoEvent, LoUser } from "./types/presence";
 import { getKeys } from "$lib/environment";
+import { PUBLIC_party_kit_main_room } from "$env/static/public";
 
 const partyKitServer = getKeys().partyKit.mainRoom;
+
+let partyKitAll = <PartySocket>{};
+
+if (PUBLIC_party_kit_main_room !== "XXX") {
+  partyKitAll = new PartySocket({
+    host: partyKitServer,
+    room: "tutors-all-course-access"
+  });
+}
 
 export const presenceService = {
   studentEventMap: new Map<string, LoEvent>(),
@@ -20,10 +30,6 @@ export const presenceService = {
   currentUserId: "",
 
   partyKitCourse: <PartySocket>{},
-  partyKitAll: new PartySocket({
-    host: partyKitServer,
-    room: "tutors-all-course-access"
-  }),
 
   sendLoEvent(course: Course, currentLo: Lo, onlineStatus: boolean, userDetails: User) {
     const lo: LoEvent = {
@@ -41,7 +47,7 @@ export const presenceService = {
     }
     this.currentUserId = lo.user.id;
     const loJson = JSON.stringify(lo);
-    this.partyKitAll.send(loJson);
+    partyKitAll.send(loJson);
     this.partyKitCourse.room = course.courseId;
     if (this.partyKitCourse) {
       this.partyKitCourse.send(loJson);

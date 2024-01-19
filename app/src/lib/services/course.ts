@@ -3,6 +3,7 @@ import type { Lo, Course, Lab } from "$lib/services/models/lo-types";
 import { decorateCourseTree } from "./models/lo-tree";
 import { LiveLab } from "./models/live-lab";
 import { presenceService } from "./presence";
+import { PUBLIC_party_kit_main_room } from "$env/static/public";
 
 export const courseService = {
   courses: new Map<string, Course>(),
@@ -54,7 +55,9 @@ export const courseService = {
     currentCourse.set(course);
     currentLo.set(course);
     courseUrl.set(course.courseUrl);
-    presenceService.startPresenceService(course);
+    if (PUBLIC_party_kit_main_room !== "XXX") {
+      presenceService.startPresenceService(course);
+    }
     return course;
   },
 
