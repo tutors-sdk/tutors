@@ -45,6 +45,6 @@
     <div id="chart" class="ag-theme-balham h-5/6" />
     <div bind:this={time} class="ag-theme-balham" />
   {:else}
-    <div bind:this={time} class="ag-theme-balham h-5/6" />
+    <div bind:this={time} class="ag-theme-balham h-full" />
   {/if}
 </div>

@@ -45,9 +45,9 @@ export class CalendarSheet {
   subtitle = "Activity in the Semester";
 
   columnDefs: CalendarSheetColumn[] = [
-    { headerName: "User", field: "user", width: 180, suppressSizeToFit: true, pinned: "left" },
+    { headerName: "Name", field: "user", width: 180, suppressSizeToFit: true, pinned: "left" },
     {
-      headerName: "Github",
+      headerName: "Github ID",
       field: "github",
       width: 80,
       suppressSizeToFit: true,

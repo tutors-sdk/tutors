@@ -1,4 +1,4 @@
-import type { ICellRendererParams } from "ag-grid-community";
+import type { Grid, ICellRendererParams } from "ag-grid-community";
 import type { Lo } from "$lib/services/models/lo-types";
 import type { UserMetric } from "$lib/services/types/metrics";
 
@@ -31,23 +31,22 @@ export class LabSheet {
   subtitle = "";
 
   columnDefs: LabSheetColumn[] = [
-    { headerName: "User", field: "user", width: 180, suppressSizeToFit: true, pinned: "left" },
+    { headerName: "Name", field: "user", width: 180, suppressSizeToFit: true, pinned: "left" },
     {
-      headerName: "Github",
+      headerName: "Github ID",
       field: "github",
       width: 80,
       suppressSizeToFit: true,
       cellRenderer: this.renderGithub
     },
-    { headerName: "Total", field: "summary", width: 60, suppressSizeToFit: true },
-    { headerName: "Date Last Accessed", field: "date", width: 90, suppressSizeToFit: true }
+    { headerName: "Total Minutes", field: "summary", width: 60, suppressSizeToFit: true }
   ];
   sortModel = [{ colId: "summary", sort: "dsc" }];
   rowData = [];
 
-  renderGithub(params: ICellRendererParams) {
+  renderGithub(params: ICellRendererParams<any, any, any>): HTMLSpanElement {
+    const nameElement = document.createElement("span");
     if (params.value) {
-      const nameElement = document.createElement("span");
       const a = document.createElement("a");
       const linkText = document.createTextNode(params.value);
       a.appendChild(linkText);
@@ -55,8 +54,8 @@ export class LabSheet {
       a.href = "http://github.com/" + a.title;
       a.setAttribute("target", "_blank");
       nameElement.appendChild(a);
-      return nameElement;
     }
+    return nameElement;
   }
 
   formatName(userName: string, email: string) {
@@ -82,7 +81,7 @@ export class LabSheet {
     return row;
   }
 
-  render(grid) {
+  render(grid: Grid) {
     if (grid) {
       const api = grid.gridOptions.api;
       api.setColumnDefs(this.columnDefs);
@@ -91,7 +90,7 @@ export class LabSheet {
     }
   }
 
-  chart(grid, chartType: string) {
+  chart(grid: Grid, chartType: string) {
     if (grid) {
       const api = grid.gridOptions.api;
       const columnNames = [];
