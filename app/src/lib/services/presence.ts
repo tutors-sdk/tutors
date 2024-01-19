@@ -80,7 +80,7 @@ export const presenceService = {
   },
 
   startGlobalPresenceService() {
-    this.partyKitAll.addEventListener("message", (event) => {
+    partyKitAll.addEventListener("message", (event) => {
       try {
         const nextCourseEvent = JSON.parse(event.data);
 
