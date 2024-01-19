@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Links from "$lib/ui/navigators/Links.svelte";
   export let session: any;
 </script>
 
@@ -10,22 +11,7 @@
       </p>
     </div>
     <div>
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <a class="btn btn-xl bg-primary-500 text-white font-bold hover:scale-105 transition-all w-60" href="/course/reference-course" target="_blank" rel="noreferrer"> Demo </a>
-        </div>
-        <div>
-          <a class="btn btn-xl bg-surface-100-800-token font-bold hover:scale-105 transition-all w-60" href="/course/tutors-reference-manual" target="_blank" rel="noreferrer"
-            >Documentation</a
-          >
-        </div>
-        <div>
-          <a class="btn btn-xl bg-surface-100-800-token font-bold hover:scale-105 transition-all w-60" href="/live" target="_blank" rel="noreferrer"> Live </a>
-        </div>
-        <div>
-          <a class="btn btn-xl bg-primary-500 text-white font-bold hover:scale-105 transition-all w-60" href="/gallery" target="_blank" rel="noreferrer">Gallery</a>
-        </div>
-      </div>
+      <Links/>
     </div>
   </div>
 </div>
