@@ -38,4 +38,8 @@ const createSupabaseClient: Handle = async ({ event, resolve }) => {
   });
 };
 
-export const handle = sequence(createSupabaseClient);
+export let handle: Handle;
+
+if (PUBLIC_SUPABASE_URL !== "XXX") {
+  handle = sequence(createSupabaseClient);
+}

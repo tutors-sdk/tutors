@@ -11,6 +11,7 @@
   import { analyticsService } from "$lib/services/analytics";
   import CourseShell from "$lib/ui/app-shells/CourseShell.svelte";
   import { initFirebase } from "$lib/services/utils/firebase";
+  import { PUBLIC_SUPABASE_URL } from "$env/static/public";
 
   export let data: any;
 
@@ -27,7 +28,9 @@
 
   function updatePageCount() {
     if (!document.hidden && !currentRoute.startsWith("/live") && !currentRoute.startsWith("/dashboard")) {
-      analyticsService.updatePageCount(session);
+      if (PUBLIC_SUPABASE_URL !== "XXX") {
+        analyticsService.updatePageCount(session);
+      }
     }
   }
 
@@ -35,15 +38,18 @@
     setInitialClassState();
     setInterval(updatePageCount, 30 * 1000);
     status = get(onlineStatus);
-    const {
-      data: { subscription }
-    } = supabase.auth.onAuthStateChange(async (event: any, _session: any) => {
-      if (_session?.expires_at !== session?.expires_at) {
-        invalidate("supabase:auth");
-      }
-    });
-    storeTheme.subscribe(setBodyThemeAttribute);
-    return () => subscription.unsubscribe();
+    if (PUBLIC_SUPABASE_URL !== "XXX") {
+      const {
+        data: { subscription }
+      } = supabase.auth.onAuthStateChange(async (event: any, _session: any) => {
+        if (_session?.expires_at !== session?.expires_at) {
+          invalidate("supabase:auth");
+        }
+      });
+
+      storeTheme.subscribe(setBodyThemeAttribute);
+      return () => subscription.unsubscribe();
+    }
   });
 
   let currentRoute = "";
