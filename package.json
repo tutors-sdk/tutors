@@ -19,13 +19,13 @@
   },
   "devDependencies": {
     "cy-verify-downloads": "0.2.3",
-    "cypress": "^13.6.1",
+    "cypress": "^13.6.3",
     "cypress-fail-fast": "7.1.0",
     "eslint": "^8.56.0",
     "eslint-config-custom": "*",
-    "prettier": "3.1.1",
+    "prettier": "3.2.4",
     "prettier-plugin-svelte": "3.1.2",
-    "turbo": "1.11.2"
+    "turbo": "1.11.3"
   },
   "packageManager": "npm@8.19.2"
 }
