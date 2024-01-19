@@ -6,6 +6,7 @@ import { currentCourse, currentLo, currentUser, onlineStatus } from "$lib/stores
 
 import { readValue, sanitise, updateCalendar, updateCount, updateCountValue, updateLastAccess, updateStr, updateVisits } from "$lib/services/utils/firebase";
 import { presenceService } from "./presence";
+import { PUBLIC_SUPABASE_URL } from "$env/static/public";
 
 let course: Course;
 let user: TokenResponse;
@@ -48,7 +49,7 @@ export const analyticsService = {
   },
 
   reportPageLoad(session: TokenResponse) {
-    if (!lo) return;
+    if (!lo || PUBLIC_SUPABASE_URL === "XXX") return;
     updateLastAccess(`${course.courseId}/usage/${this.loRoute}`, course.title);
     updateVisits(course.courseUrl.substring(0, course.courseUrl.indexOf(".")));
 
