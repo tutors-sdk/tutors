@@ -1,5 +1,5 @@
 {
-  "name": "tutors",
+  "name": "tutors-apps",
   "repository": "https://github.com/tutors-sdk/tutors.git",
   "author": "Eamonn De Leastar <eamonn.deleastar@setu.ie>",
   "license": "MIT",
@@ -7,24 +7,12 @@
   "private": true,
   "workspaces": [
     "/*",
-    "cli/*"
+    "cli/*",
+    "svelte/*",
+    "party/*"
   ],
-  "scripts": {
-    "build": "turbo run build",
-    "test": "turbo run test",
-    "dev": "turbo run dev --parallel",
-    "app": "turbo run dev --filter tutors-app",
-    "lint": "turbo run lint",
-    "format": "prettier --write ."
-  },
+  "scripts": {},
   "devDependencies": {
-    "cy-verify-downloads": "0.2.3",
-    "cypress": "^13.6.3",
-    "cypress-fail-fast": "7.1.0",
-    "eslint": "^8.56.0",
-    "eslint-config-custom": "*",
-    "prettier": "3.2.4",
-    "prettier-plugin-svelte": "3.1.2",
     "turbo": "1.11.3"
   },
   "packageManager": "npm@8.19.2"
