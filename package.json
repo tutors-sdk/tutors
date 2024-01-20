@@ -12,8 +12,5 @@
     "party/*"
   ],
   "scripts": {},
-  "devDependencies": {
-    "turbo": "1.11.3"
-  },
-  "packageManager": "npm@8.19.2"
+  "devDependencies": {}
 }
