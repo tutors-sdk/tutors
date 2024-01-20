@@ -5,40 +5,22 @@
       "name": "tutors-publish",
       "program": "${workspaceFolder}//cli/tutors-publish/src/tutors-publish.js",
       "request": "launch",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "skipFiles": ["<node_internals>/**"],
       "type": "node",
-      "cwd": "${workspaceFolder}/doc/reference-course",
+      "cwd": "${workspaceFolder}/../tutors-reference-course",
       "console": "integratedTerminal"
     },
     {
       "name": "tutors-publish-html",
       "program": "${workspaceFolder}//cli/tutors-publish-html/src/tutors-publish-html.js",
       "request": "launch",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "skipFiles": ["<node_internals>/**"],
       "type": "node",
-      "cwd": "${workspaceFolder}/doc/reference-course",
+      "cwd": "${workspaceFolder}/../tutors-reference-course",
       "console": "integratedTerminal"
-    },
-    {
-      "type": "chrome",
-      "request": "attach",
-      "name": "reader",
-      "port": 9222,
-      "urlFilter": "http://localhost:3000/*",
-      "webRoot": "${workspaceFolder}/app"
-    },
-    {
-      "type": "chrome",
-      "request": "attach",
-      "name": "time",
-      "port": 9222,
-      "urlFilter": "http://localhost:3001/*",
-      "webRoot": "${workspaceFolder}/apps/timer"
     }
   ]
 }
+
+
 /* /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9222 */
