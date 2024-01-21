@@ -1,7 +1,15 @@
 {
-  "singleQuote": false,
+  "useSpaces": true,
+  "doubleQuote": true,
   "trailingComma": "none",
   "printWidth": 180,
-  "svelteStrictMode": true,
-  "bracketSameLine": true
+  "plugins": ["prettier-plugin-svelte"],
+  "overrides": [
+    {
+      "files": "*.svelte",
+      "options": {
+        "parser": "svelte"
+      }
+    }
+  ]
 }
