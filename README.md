@@ -17,9 +17,9 @@ Tutors: An Open Learning Web Toolkit
 
 Tutors is a collection of open source components and services supporting the creation of transformative learning experiences using open web standards. It consists of two key components:
 
-- *Generator:*  transforms a [folder of learning content](https://github.com/tutors-sdk/tutors-reference-course)  into a Tutors course
+- _Generator:_ transforms a [folder of learning content](https://github.com/tutors-sdk/tutors-reference-course) into a Tutors course
 
-- *Reader*: presents a Tutors course as an intuitive, discoverable and attractive [Web experience](https://tutors.dev/course/reference-course)
+- _Reader_: presents a Tutors course as an intuitive, discoverable and attractive [Web experience](https://tutors.dev/course/reference-course)
 
 This repo is the Tutors Reader. A companion repo:
 
@@ -31,11 +31,14 @@ Some representative examples:
 
 - [Higher Diploma in Computer Science Portal](https://tutors.dev/course/wit-hdip-comp-sci-showcase)
 - [Full Stack Development](https://tutors.dev/course/full-stack-web-dev-oth-2022)
+- [Data Analytics](https://tutors.dev/course/data-analytics-essentials)
 - [Reference Course](https://tutors.dev/course/reference-course)
 - [Higher Diploma in Computer Science at SETU: 2020-2022](https://tutors.dev/course/wit-hdip-comp-sci-2020)
 - [Classic Design Patterns](https://tutors.dev/course/classic-design-patterns)
-- [Agile Software Development](https://tutors.dev/course/agile-dev-2021)
+- [Agile Software Development](https://tutors.dev/course/agile-2023)
 - [Technologische Fähigkeiten](https://tutors.dev/course/zusatzstudium-digital-skills-semester1)
+
+Note: Some courses will request you authenticate via github for access.
 
 # Getting Started
 
@@ -81,11 +84,9 @@ The Tutors reader relies on a segment of the url to locate the course to display
 
 - <https://tutors.dev/course/reference-course>
 
-
 ... can be loaded locally by:
 
 - <http://localhost:3000/course/reference-course>
-
 
 (Note the port number may vary)
 
@@ -100,7 +101,6 @@ You could try any of the other sample courses above. For example this course:
 can be opened by this local reader like this:
 
 - https://localhost:3000/course/full-stack-web-dev-oth-2022
-
 
 # Contributing
 
