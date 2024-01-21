@@ -11,7 +11,7 @@
     id = data[0].sha.slice(0, 7);
     sha = data[0].sha;
   });
-  const version = "9.2.0";
+  const version = "10.0.0";
 </script>
 
 <div class="bg-surface-100-800-token border-t-[1px] border-surface-200-700-token bottom-0 mt-2">
