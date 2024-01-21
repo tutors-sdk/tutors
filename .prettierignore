@@ -1,9 +1,7 @@
 .DS_Store
-.svelte-kit
 node_modules
-.netlify
-apps/course/build
-/test/reference-course
+/build
+/.svelte-kit
 /package
 .env
 .env.*
