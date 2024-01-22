@@ -40,10 +40,6 @@ jobs:
           repository: tutors-sdk/tutors-apps
           path: ./dynamic-app-tests
           ref: test/add-cypress-tests
-      - name: Run preview
-        run: npm run preview
+      - name: Run preview & cypress tests
+        run: npm run preview & npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome --config-file ./dynamic-app-tests/cypress/cypress.config.ts
         working-directory: ./
-
-      - name: Run cypress tests
-        run: npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome
-        working-directory: ./dynamic-app-tests/cypress
