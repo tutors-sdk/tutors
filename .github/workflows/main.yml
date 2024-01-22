@@ -43,8 +43,8 @@ jobs:
       - name: Install dependencies
         run: npm install
         working-directory: ./
-      - name: Install dependencies
-        run: npm install
+      - name: Build app
+        run: npm run build
         working-directory: ./
       - name: Create app env
         run: cp .env.example .env
