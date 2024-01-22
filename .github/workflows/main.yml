@@ -26,6 +26,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 2
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
@@ -41,7 +43,5 @@ jobs:
         run: npm run build
         working-directory: ./
       - name: Run preview & cypress tests
-        run: |
-             cd cypress-tests  # Change to the cypress-tests directory
-             npm run preview & npx cypress run --record --key *** --browser chrome --config-file cypress/tsconfig.json
+        run: npm run preview & npx cypress run 
         working-directory: ./
