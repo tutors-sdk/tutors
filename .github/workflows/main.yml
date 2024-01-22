@@ -40,6 +40,9 @@ jobs:
           repository: tutors-sdk/tutors-apps
           path: ./
           ref: test/add-cypress-tests
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./    
       - name: Run preview & cypress tests
         run: npm run preview & npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome
         working-directory: ./
