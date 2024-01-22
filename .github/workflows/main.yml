@@ -67,5 +67,5 @@ jobs:
           ref: test/add-cypress-tests
 
       - name: Run Cypress tests
-        run: npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --config-file ./dynamic-app-tests/cypress/tsconfig.json
+        run: npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --config-file ./dynamic-app-tests/cypress/cypress.config.ts
         working-directory: ./
