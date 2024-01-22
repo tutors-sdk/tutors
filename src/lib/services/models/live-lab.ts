@@ -2,6 +2,12 @@ import type { Lab } from "./lo-types";
 import type { Course } from "./lo-types";
 import { removeLeadingHashes } from "./lo-utils";
 
+function getKeyIndex(map: Map<string, string>, targetKey: string) {
+  const keysArray = [...map.keys()];
+  const index = keysArray.indexOf(targetKey);
+  return index;
+}
+
 function truncate(input: string) {
   if (input?.length > 16) {
     return input.substring(0, 15) + "...";
@@ -22,6 +28,7 @@ export class LiveLab {
   chaptersHtml = new Map<string, string>();
   chaptersTitles = new Map<string, string>();
   steps: string[] = [];
+  index = 0;
   autoNumber = false;
 
   vertical = true;
@@ -84,6 +91,7 @@ export class LiveLab {
     this.currentChapterShortTitle = step;
     this.currentChapterTitle = this.chaptersTitles.get(step)!;
     this.content = this.chaptersHtml.get(step)!;
+    this.index = getKeyIndex(this.chaptersHtml, step);
     this.refreshNav();
   }
 
