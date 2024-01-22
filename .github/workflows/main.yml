@@ -1,0 +1,44 @@
+name: CI for new Tutors
+
+on:
+  push:
+    branches: ["development", "main"]
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - development
+      - main
+
+jobs:
+  app:
+    name: Build & Test App
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+      - name: Install dependencies
+        run: npm install
+        working-directory: ./
+      - name: Create app env
+        run: cp .env.example .env
+        working-directory: ./
+      - name: Build app
+        run: npm run build
+        working-directory: ./
+      - name: Check out my e2e tests
+        uses: actions/checkout@v3
+        with:
+          repository: orgname/reponame
+          path: ./dynamic-app-tests
+      - name: Run preview & cypress tests
+        run: npm run preview & npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome
+        working-directory: ./
