@@ -41,4 +41,4 @@ jobs:
           path: ./dynamic-app-tests
           ref: test/add-cypress-tests
       - name: Run preview & cypress tests
-        run: npm run preview & npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --config-file ./dynamic-app-tests/tsconfig.json
+        run: npm run preview & npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --config-file ./dynamic-app-tests/cypress/tsconfig.json
