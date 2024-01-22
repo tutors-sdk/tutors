@@ -9,6 +9,7 @@ export const revealOnline = writable(false);
 export const courseUrl = writable("");
 export const currentCourse: Writable<Course> = writable();
 export const currentLo: Writable<Lo> = writable();
+export const currentLabStepIndex = writable(0);
 export const currentUser: Writable<User> = writable();
 export const layout = writable("");
 export const transitionKey = writable("");

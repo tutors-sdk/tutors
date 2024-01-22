@@ -44,6 +44,7 @@ export const HalloweenIconLib = {
   toc: { icon: "fluent:line-horizontal-3-20-filled", colour: "warning" },
   compacted: { icon: "mdi:coffin", colour: "warning" },
   expanded: { icon: "mdi:coffin", colour: "warning" },
+  edit: { icon: "typcn:edit", colour: "primary" },
 
   default: { icon: "mdi:coffin", colour: "warning" }
 };

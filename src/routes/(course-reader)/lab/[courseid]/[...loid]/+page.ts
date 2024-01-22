@@ -1,5 +1,6 @@
 import type { PageLoad } from "./$types";
 import { courseService } from "$lib/services/course";
+import { currentLabStepIndex } from "$lib/stores";
 
 export const ssr = false;
 
@@ -8,11 +9,12 @@ export const load: PageLoad = async ({ url, params, fetch }) => {
 
   const lastSegment = url.pathname.substring(url.pathname.lastIndexOf("/") + 1);
   if (lastSegment.startsWith("book")) {
-     liveLab.setFirstPageActive();
-   } else {
-     liveLab.setActivePage(lastSegment);
-   }
+    liveLab.setFirstPageActive();
+  } else {
+    liveLab.setActivePage(lastSegment);
+  }
+  currentLabStepIndex.set(liveLab.index);
   return {
-    lab: liveLab,
+    lab: liveLab
   };
 };
