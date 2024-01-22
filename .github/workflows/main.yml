@@ -29,15 +29,15 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./path/to/your/app
+        working-directory: ./
 
       - name: Create app env
         run: cp .env.example .env
-        working-directory: ./path/to/your/app
+        working-directory: ./
 
       - name: Build app
         run: npm run build
-        working-directory: ./path/to/your/app
+        working-directory: ./
 
   cypress-tests:
     name: Run Cypress Tests
