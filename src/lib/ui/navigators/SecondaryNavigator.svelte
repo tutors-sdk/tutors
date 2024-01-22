@@ -3,8 +3,7 @@
   import { fly } from "svelte/transition";
   import Breadcrumbs from "../icons/Breadcrumbs.svelte";
   import IconBar from "../icons/IconBar.svelte";
-  import EditCoursButton from "./EditCoursButton.svelte";
-  import { Properties } from "$lib/services/models/lo-types";
+  import EditCoursButton from "./buttons/EditCoursButton.svelte";
 </script>
 
 {#if !$currentCourse?.isPortfolio}
