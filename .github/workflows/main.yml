@@ -43,4 +43,6 @@ jobs:
       - name: List contents of dynamic-app-tests
         run: ls -R ./dynamic-app-tests
       - name: Run preview & cypress tests
-        run: npm run preview & npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --config-file ./dynamic-app-tests/cypress/tsconfig.json
+        run: |
+            npm run preview && npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --config-file ./dynamic-app-tests/cypress/tsconfig.json
+        working-directory: ./
