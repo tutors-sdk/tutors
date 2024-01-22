@@ -38,8 +38,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: tutors-sdk/tutors-apps
-          path: ./
+          path: ./cypress-tests
           ref: test/add-cypress-tests
       - name: Run preview & cypress tests
-        run: npm run preview & npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome --config-file cypress/cypress.config.js
+        run: npm run preview & npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome --config-file ./cypress-tests/cypress/cypress.config.js
         working-directory: ./
