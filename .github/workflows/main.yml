@@ -41,8 +41,5 @@ jobs:
         run: npm run build
         working-directory: ./
       - name: Run preview & cypress tests
-        run: |
-             pwd  # Print current directory for debugging
-             ls -R  # List all files and directories for debugging
-             npm run preview & npx cypress run --record --key *** --browser chrome
+        run: npm run preview & npx cypress run --config-file cypress-tests/cypress.config.ts
 
