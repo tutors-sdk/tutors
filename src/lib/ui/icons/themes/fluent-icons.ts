@@ -53,6 +53,7 @@ export const FluentIconLib = {
   calendar: { icon: "fluent:calendar-ltr-12-regular", colour: "bg-base-content" },
   appSettings: { icon: "fluent:settings-24-filled", colour: "primary" },
   listOnline: { icon: "fluent:people-list-24-filled", colour: "primary" },
+  edit: { icon: "typcn:edit", colour: "primary" },
 
   default: { icon: "fluent:re-order-dots-vertical-24-filled", colour: "error" }
 };

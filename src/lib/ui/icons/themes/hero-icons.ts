@@ -45,6 +45,7 @@ export const HeroIconLib = {
   compacted: { icon: "heroicons-outline:dots-vertical", colour: "success" },
   expanded: { icon: "heroicons-outline:dots-horizontal", colour: "success" },
   courseinfo: { icon: "heroicons-outline:information-circle", colour: "bg-base-content" },
+  edit: { icon: "typcn:edit", colour: "primary" },
 
   default: { icon: "heroicons-outline:dots-vertical", colour: "primary" }
 };
