@@ -37,7 +37,7 @@ jobs:
       - name: Check out my e2e tests
         uses: actions/checkout@v3
         with:
-          repository: tutors-sdk/tutors-app
+          repository: tutors-sdk/tutors-apps
           path: ./dynamic-app-tests
           ref: test/add-cypress-tests
       - name: Run preview & cypress tests
