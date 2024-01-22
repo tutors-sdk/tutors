@@ -3,6 +3,8 @@
   import { fly } from "svelte/transition";
   import Breadcrumbs from "../icons/Breadcrumbs.svelte";
   import IconBar from "../icons/IconBar.svelte";
+  import EditCoursButton from "./EditCoursButton.svelte";
+  import { Properties } from "$lib/services/models/lo-types";
 </script>
 
 {#if !$currentCourse?.isPortfolio}
@@ -11,6 +13,11 @@
       <Breadcrumbs />
       {#if $currentCourse}
         <div class="flex flex-auto" />
+        {#if $currentCourse.properties.github}
+          <div class="my-2 ml-2 mr-10 hidden rounded-lg bg-primary-200 bg-opacity-80 dark:bg-primary-800 lg:flex lg:flex-none">
+            <EditCoursButton />
+          </div>
+        {/if}
         <div class="my-2 hidden rounded-lg bg-primary-200 bg-opacity-80 dark:bg-primary-800 lg:flex lg:flex-none">
           <IconBar nav={$currentCourse?.companions} />
         </div>
