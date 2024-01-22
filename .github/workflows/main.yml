@@ -37,7 +37,7 @@ jobs:
       - name: Check out my e2e tests
         uses: actions/checkout@v3
         with:
-          repository: orgname/reponame
+          repository: tutors-sdk/tutors-app
           path: ./dynamic-app-tests
       - name: Run preview & cypress tests
         run: npm run preview & npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --browser chrome
