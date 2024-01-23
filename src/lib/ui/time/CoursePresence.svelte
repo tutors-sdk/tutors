@@ -5,6 +5,8 @@
 
 <div class="flex flex-wrap justify-center">
   {#each $studentsOnlineList as lo}
-    <StudentCard {lo} />
+    {#if lo.user.fullName !== "Anon"}
+      <StudentCard {lo} />
+    {/if}
   {/each}
 </div>
