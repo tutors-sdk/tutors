@@ -68,5 +68,7 @@ jobs:
       - name: List contents of the folder
         run: ls -R /home/runner/work/tutors/tutors/dynamic-app-tests/cypress
       - name: Run Cypress tests
-        run: npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }}
-        working-directory: ./dynamic-app-tests/cypress
+        run: |
+             cd dynamic-app-tests
+             npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} 
+        working-directory: ./
