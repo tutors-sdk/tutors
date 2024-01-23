@@ -39,36 +39,16 @@ jobs:
         run: npm run build
         working-directory: ./
 
-  cypress-tests:
-    name: Run Cypress Tests
-    runs-on: ubuntu-latest
-    needs: app  # Ensure the 'app' job has completed before running Cypress tests
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "npm"
-
-      - name: Install Cypress
-        run: npm install -g cypress
-
-      - name: Check out Cypress tests
+      - name: Check out my e2e tests
         uses: actions/checkout@v3
         with:
           repository: tutors-sdk/tutors-apps
           path: ./dynamic-app-tests
           ref: test/add-cypress-tests
-      - name: List contents of the folder
-        run: ls -R /home/runner/work/tutors/tutors/dynamic-app-tests/cypress
-      - name: Run Cypress tests
-        run: |
-             cd dynamic-app-tests
-             npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} 
+
+      - name: Compile TypeScript
+        run: npx tsc --project ./dynamic-app-tests/cypress/tsconfig.json
+
+      - name: Run preview & cypress tests
+        run: npm run preview && npx cypress run --record --key ${{ secrets.CYPRESS_RECORD_KEY }} --config-file ./dynamic-app-tests/cypress.config.ts
         working-directory: ./
