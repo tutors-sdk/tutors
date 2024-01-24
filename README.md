@@ -1,10 +1,6 @@
 <p align="center">
   <a href="https://tutors.dev">
-    <picture>
-      <source media="(prefers-color-scheme: dark)"  srcset="./assets/tutors-dark.png">
-      <source media="(prefers-color-scheme: light)" srcset="./assets/tutors-light.png">
-      <img alt="Text changing depending on mode. Light: 'Tutors Light Mode Logo' Dark: 'Tutors Dark Mode Logo'" src="./assets/tutors-light.png">
-    </picture>    
+    <img src="./tutors-light.png"
   </a>
 </p>
 
@@ -14,11 +10,9 @@ Tutors: An Open Learning Web Toolkit
 
 <p align="center">
   <a href="https://tutors.dev">Website</a> |
-  <a href="https://docs.tutors.dev">Documentation</a> |
-  <a href="https://discord.tutors.dev">Discord</a>
+  <a href="https://tutors.dev/course/tutors-reference-manual">Documentation</a>
 </p>
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/86f6c9e2-a780-410d-a735-241e08e2b949/deploy-status)](https://app.netlify.com/sites/tutors-dev/deploys) [![CI](https://github.com/tutors-sdk/tutors/actions/workflows/ci.yml/badge.svg)](https://github.com/tutors-sdk/tutors/actions/workflows/ci.yml)
 
 - ### What is Tutors?
 
