@@ -49,12 +49,6 @@ The Tutors Reader has a "live" feature, whereby students who share their presenc
   - [Tutors Reference Manual](https://github.com/tutors-sdk/tutors-reference-manual): The manual is itself a tutors course, and is largely written in Markdown.
   - [Tutors Reference Course](https://github.com/tutors-sdk/tutors-reference-course): A Tutors course to included all tutors learning objects and structures.
 
-# Sponsors
-
-This project is powered by [Netlify Open Source](https://www.netlify.com/open-source/).
-
-[![Deploys by Netlify](https://www.netlify.com/v3/img/components/netlify-color-bg.svg)](https://www.netlify.com)
-
 # License
 
 [![license](https://img.shields.io/badge/license-MIT-3A929B.svg)](./LICENSE)
