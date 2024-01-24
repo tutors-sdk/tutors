@@ -13,7 +13,7 @@ Tutors: An Open Learning Web Toolkit
   <a href="https://tutors.dev/course/tutors-reference-manual">Documentation</a>
 </p>
 
-# What is Tutors?
+### What is Tutors?
 
 Tutors is a collection of open source components and services supporting the creation of transformative learning experiences using open web standards. It consists of two key components:
 
@@ -27,7 +27,16 @@ This repo is the Tutors Reader. A companion repo:
 
 ...host the generators + support tools. These components are developed in the open by an active and friendly community, based on a [simple set of values](https://tutors.dev/course/tutors-reference-manual#tutors-values).
 
-Some representative examples:
+### Tutors Repos
+
+- [Tutors](https://github.com/tutors-sdk/tutors): The course reader application. This is a SvelteKit application, written in TypeScript with a user experience implemented using Tailwind & Skeleton.
+- [Tutors Apps](https://github.com/tutors-sdk/tutors-apps): A monorepo encapsulating the generators, tests + support tools and applications. It is written in TypeScript.
+- [Tutors Reference Manual](https://github.com/tutors-sdk/tutors-reference-manual): The manual is itself a tutors course, and is largely written in Markdown.
+- [Tutors Reference Course](https://github.com/tutors-sdk/tutors-reference-course): A Tutors course to included all tutors learning objects and structures.
+
+### Example Tutors Courses
+
+- [Gallery of Tutors Courses](https://tutors.dev/gallery)
 
 - [Higher Diploma in Computer Science Portal](https://tutors.dev/course/wit-hdip-comp-sci-showcase)
 - [Full Stack Development](https://tutors.dev/course/full-stack-web-dev-oth-2022)
@@ -40,7 +49,7 @@ Some representative examples:
 
 Note: Some courses will request you authenticate via github for access.
 
-# Getting Started
+### Getting Started
 
 Make sure you have Node 18 + installed, and start by cloning this repo:
 
@@ -102,7 +111,7 @@ can be opened by this local reader like this:
 
 - https://localhost:3000/course/full-stack-web-dev-oth-2022
 
-# Contributing
+### Contributing
 
 Please ensure to read the [Code of Conduct](./CODE_OF_CONDUCT.md) before contributing to the Tutors project.
 
@@ -114,14 +123,6 @@ All contributors are eligible to earn a [Holopin](https://holopin.io) - a digita
 
 Every time you open a PR that is accepted, you will be assigned holobytes. Collect these holobytes to see your owl evolve!
 
-# Sponsors
+### License
 
-This project is powered by [Netlify Open Source](https://www.netlify.com/open-source/).
-
-[![Deploys by Netlify](https://www.netlify.com/v3/img/components/netlify-color-bg.svg)](https://www.netlify.com)
-
-# License
-
-[![license](https://img.shields.io/badge/license-MIT-3A929B.svg)](./LICENSE)
-
-This project is licensed under the terms of the [MIT License](./LICENSE).
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
