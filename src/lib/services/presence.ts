@@ -40,6 +40,7 @@ export const presenceService = {
       courseTitle: course.title,
       loRoute: currentLo.route,
       user: getUser(onlineStatus, userDetails),
+      type: currentLo.type,
       isPrivate: (course.properties?.private as unknown as number) === 1
     };
     if (currentLo.icon) {

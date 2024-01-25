@@ -4,23 +4,27 @@
   import TutorsShell from "$lib/ui/app-shells/TutorsShell.svelte";
   import { goto } from "$app/navigation";
   import { SlideToggle } from "@skeletonlabs/skeleton";
-  import { startDataGeneratorService, stopDataGeneratorService } from "./data-generator";
-  import { allStudentsOnlineList } from "./presence-simulator";
+  import { allStudentsOnlineList, presenceSimulatorService } from "./presence-simulator";
   import StudentCard from "$lib/ui/time/StudentCard.svelte";
+  import { presenceGeneratorService } from "./presence-generator";
 
   export let data: any;
 
   let simulator: boolean = false;
   let simulatorTxt = "Simulator OFF";
+  const courses = ["wit-hdip-comp-sci-2024-web-dev-1", "wit-hdip-comp-sci-2024-programming"];
+
+  presenceGeneratorService.initialise(courses, 7);
+  presenceSimulatorService.startSimulatorPresenceService();
 
   function simulate() {
     simulator = !simulator;
     if (simulator) {
       simulatorTxt = "Simulator ON";
-      startDataGeneratorService(data.allCourses);
+      presenceGeneratorService.start(4000);
     } else {
       simulatorTxt = "Simulator OFF";
-      stopDataGeneratorService();
+      presenceGeneratorService.stop();
     }
   }
 

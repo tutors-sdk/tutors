@@ -1,4 +1,4 @@
-import type { IconType } from "$lib/services/models/lo-types";
+import type { IconType, Lo } from "$lib/services/models/lo-types";
 
 export interface LoUser {
   fullName: string;
@@ -16,4 +16,5 @@ export interface LoEvent {
   icon?: IconType;
   isPrivate: boolean;
   user: LoUser;
+  type: string;
 }
