@@ -3,7 +3,7 @@ import type { Course } from "$lib/services/models/lo-types";
 import { generateUser } from "./loGenerator";
 import { isValidCourseName } from "$lib/services/utils/all-course-access";
 import { courseService } from "$lib/services/course";
-import { simulateLoEvent } from "./presence-simulator";
+import { presenceSimulatorService } from "./presence-simulator";
 
 let studentLoEvents = new Array<LoEvent>();
 let courseLoEvents = new Array<LoEvent>();
@@ -13,15 +13,12 @@ let intervalId: any;
 
 export async function startDataGeneratorService(courses: string[]) {
   validCourses = courses.filter((courseId) => isValidCourseName(courseId));
-
-  // Mock a single LoEvent to ensure that there is always a card present for demoing purposes
   mockNewStudent();
-
-  // Replicate behaviour of students randomly opening and closing tutors courses
-  intervalId = setInterval(mockEvent, 5000);
+  intervalId = setInterval(mockEvent, 2000);
+  presenceSimulatorService.startSimulatorPresenceService();
 }
 
-export async function stopDataGeneratorService(courses: string[]) {
+export async function stopDataGeneratorService() {
   clearInterval(intervalId);
 }
 
@@ -92,7 +89,7 @@ function setCurrentCourseLo(lo: LoEvent, course: Course) {
   lo.title = childLo.title;
   lo.img = childLo.img.replace("{{COURSEURL}}", `${course.courseId}.netlify.app`);
 
-  simulateLoEvent(lo);
+  presenceSimulatorService.simulateLoEvent(lo);
 }
 
 async function mockActiveStudent() {
