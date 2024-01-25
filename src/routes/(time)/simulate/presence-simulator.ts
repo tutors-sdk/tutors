@@ -14,7 +14,7 @@ let partyKitSimulator = <PartySocket>{};
 if (PUBLIC_party_kit_main_room !== "XXX") {
   partyKitSimulator = new PartySocket({
     host: partyKitServer,
-    room: "tutors-simulator-access"
+    room: "tutors-simulator"
   });
 }
 

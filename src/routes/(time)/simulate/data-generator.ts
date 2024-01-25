@@ -14,7 +14,7 @@ let intervalId: any;
 export async function startDataGeneratorService(courses: string[]) {
   validCourses = courses.filter((courseId) => isValidCourseName(courseId));
   mockNewStudent();
-  intervalId = setInterval(mockEvent, 2000);
+  intervalId = setInterval(mockEvent, 5000);
   presenceSimulatorService.startSimulatorPresenceService();
 }
 
@@ -85,7 +85,7 @@ function setCurrentCourseLo(lo: LoEvent, course: Course) {
   let index = Math.floor(Math.random() * course.los.length);
   const childLo = course.los[index];
   const route = childLo.route.replace("{{COURSEURL}}", course.courseId);
-  lo.loRoute = `https://tutors.dev${route}`;
+  lo.loRoute = `${route}`;
   lo.title = childLo.title;
   lo.img = childLo.img.replace("{{COURSEURL}}", `${course.courseId}.netlify.app`);
 
