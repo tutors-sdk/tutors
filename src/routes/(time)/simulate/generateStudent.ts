@@ -1,3 +1,5 @@
+import type { LoUser } from "$lib/services/types/presence";
+
 const femaleFirstNames = ["Ava", "Olivia", "Emma", "Isabella", "Sophia", "Mia", "Amelia", "Harper", "Evelyn", "Abigail", "Emily", "Ella", "Madison", "Scarlett", "Grace"];
 
 const maleFirstNames = [
@@ -54,9 +56,9 @@ const lastNames = [
   "King"
 ];
 
-export function generateUser() {
+export function generateStudent(): LoUser {
   const randomGender = Math.random() < 0.5 ? "male" : "female";
-  let fullName, avatar;
+  let fullName;
 
   if (randomGender === "male") {
     fullName = `${getRandomFromList(maleFirstNames)} ${getRandomFromList(lastNames)}`;
@@ -64,29 +66,29 @@ export function generateUser() {
     fullName = `${getRandomFromList(femaleFirstNames)} ${getRandomFromList(lastNames)}`;
   }
 
-  avatar = "";
-  if (randomGender === "male") {
-    avatar = `https://github.com/tutors-sdk/tutors-simulator-assets/blob/main/profiles/maleProfiles/${getRandomImageName()}/?raw=true`;
-  } else {
-    avatar = `https://github.com/tutors-sdk/tutors-simulator-assets/blob/main/profiles/maleProfiles/${getRandomImageName()}/?raw=true`;
-  }
-
   const user = {
     fullName: `${fullName}`,
-    avatar: `${avatar}`,
+    avatar: getAvatar(randomGender),
     id: generateId()
   };
 
   return user;
 }
 
-export function getRandomImageName() {
+function getAvatar(gender: string) {
   const randomNumber = Math.floor(Math.random() * 16); // Generates a random number between 0 and 15
   const twoDigitString = randomNumber.toString(16).padStart(2, "0"); // Converts the random number to a 2-digit hexadecimal string
-  return `image-${twoDigitString}.jpg`;
+  const img = `image-${twoDigitString}.jpg`;
+  let avatar = "";
+  if (gender === "male") {
+    avatar = `https://github.com/tutors-sdk/tutors-simulator-assets/blob/main/profiles/maleProfiles/${img}/?raw=true`;
+  } else {
+    avatar = `https://github.com/tutors-sdk/tutors-simulator-assets/blob/main/profiles/femaleProfiles/${img}/?raw=true`;
+  }
+  return avatar;
 }
 
-export function getRandomFromList(list: any) {
+function getRandomFromList(list: any) {
   return list[Math.floor(Math.random() * list.length)];
 }
 
