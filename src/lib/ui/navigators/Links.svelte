@@ -18,4 +18,7 @@
       <iconify-icon icon="mdi:github" />&nbsp; Source
     </a>
   </div>
+  <div class="mx-auto sm:order-6">
+    <a class="btn btn-xl bg-surface-100-800-token font-bold hover:scale-105 transition-all w-60" href="/simulate" target="_blank" rel="noreferrer"> Simulator </a>
+  </div>
 </div>
