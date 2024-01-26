@@ -49,8 +49,13 @@
 </script>
 
 <TutorsShell subTitle="Simulator" {supabase} {session}>
-  <div slot="header" class="hidden md:inline-block">
-    <SlideToggle name="slider-label" checked on:click={simulate}>{simulatorTxt}</SlideToggle>
+  <div slot="header">
+    <div class="hidden md:inline-block">
+      <div class="flex justify-center content-center">
+        <SlideToggle name="slider-label" checked on:click={simulate}>{simulatorTxt}</SlideToggle>
+        <div class="ml-12 prose align-right">This is a simulation of TutorsLive. All of the students are AI generated, the courses are real.</div>
+      </div>
+    </div>
   </div>
   <div class="flex flex-wrap justify-center">
     {#each $allStudentsOnlineList as lo}
