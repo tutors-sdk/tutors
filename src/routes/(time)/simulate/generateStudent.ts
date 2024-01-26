@@ -1,7 +1,9 @@
 import type { LoUser } from "$lib/services/types/presence";
 
+// Female first names, selected at random
 const femaleFirstNames = ["Ava", "Olivia", "Emma", "Isabella", "Sophia", "Mia", "Amelia", "Harper", "Evelyn", "Abigail", "Emily", "Ella", "Madison", "Scarlett", "Grace"];
 
+// Male first names, selected at random
 const maleFirstNames = [
   "Liam",
   "Noah",
@@ -23,6 +25,7 @@ const maleFirstNames = [
   "Bradley"
 ];
 
+// Last names, matched at random with first names
 const lastNames = [
   "Smith",
   "Johnson",
@@ -56,43 +59,45 @@ const lastNames = [
   "King"
 ];
 
+// Create a fake student
 export function generateStudent(): LoUser {
+  // Pick a gender
   const randomGender = Math.random() < 0.5 ? "male" : "female";
-  let fullName;
 
+  // Get a full name
+  let fullName;
   if (randomGender === "male") {
     fullName = `${getRandomFromList(maleFirstNames)} ${getRandomFromList(lastNames)}`;
   } else {
     fullName = `${getRandomFromList(femaleFirstNames)} ${getRandomFromList(lastNames)}`;
   }
 
-  const user = {
+  // this is the user
+  return {
     fullName: `${fullName}`,
     avatar: getAvatar(randomGender),
-    id: generateId()
+    id: generateId() // these are actually Github IDs in the real system
   };
-
-  return user;
 }
 
 function getAvatar(gender: string) {
+  // Pick a random image name
   const randomNumber = Math.floor(Math.random() * 16); // Generates a random number between 0 and 15
   const twoDigitString = randomNumber.toString(16).padStart(2, "0"); // Converts the random number to a 2-digit hexadecimal string
   const img = `image-${twoDigitString}.jpg`;
-  let avatar = "";
+  // Images are stored on a github repo
   if (gender === "male") {
-    avatar = `https://github.com/tutors-sdk/tutors-simulator-assets/blob/main/profiles/maleProfiles/${img}/?raw=true`;
+    return `https://github.com/tutors-sdk/tutors-simulator-assets/blob/main/profiles/maleProfiles/${img}/?raw=true`;
   } else {
-    avatar = `https://github.com/tutors-sdk/tutors-simulator-assets/blob/main/profiles/femaleProfiles/${img}/?raw=true`;
+    return `https://github.com/tutors-sdk/tutors-simulator-assets/blob/main/profiles/femaleProfiles/${img}/?raw=true`;
   }
-  return avatar;
 }
 
 function getRandomFromList(list: any) {
   return list[Math.floor(Math.random() * list.length)];
 }
 
-function generateId() {
+export function generateId() {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
     const r = (Math.random() * 16) | 0;
     const v = c === "x" ? r : (r & 0x3) | 0x8;
