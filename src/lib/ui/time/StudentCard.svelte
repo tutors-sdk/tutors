@@ -5,6 +5,7 @@
   import { cardTransition } from "$lib/ui/animations";
   import { onDestroy } from "svelte";
   import type { LoEvent } from "$lib/services/types/presence";
+  import Icon from "../icons/Icon.svelte";
 
   export let lo: LoEvent;
 
@@ -38,9 +39,10 @@
 <a href={lo.loRoute} target="_blank" rel="noreferrer">
   <div transition:cardTransition class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 border-primary-500 m-2 {cardWidths} transition-all hover:scale-105">
     <div class="flex">
-      <header class="card-header inline-flex items-center">
+      <header class="card-header flex flex-row items-center justify-between p-3">
         <Avatar src={lo.user.avatar} alt={lo.user.fullName} class="mr-2 {avatarHeight}" />
-        <h6 class={textSize}>{lo.user.fullName}</h6>
+        <h6 class={textSize}>{lo.user.fullName} &nbsp &nbsp</h6>
+        <div class="flex-none"><Icon type={lo.type} height="30" /></div>
       </header>
     </div>
     <div class="card-body">

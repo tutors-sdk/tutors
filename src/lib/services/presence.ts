@@ -40,6 +40,7 @@ export const presenceService = {
       courseTitle: course.title,
       loRoute: currentLo.route,
       user: getUser(onlineStatus, userDetails),
+      type: currentLo.type,
       isPrivate: (course.properties?.private as unknown as number) === 1
     };
     if (currentLo.icon) {
@@ -117,6 +118,7 @@ export const presenceService = {
 function refreshLoEvent(loEvent: LoEvent, nextLoEvent: LoEvent) {
   loEvent.loRoute = `https://tutors.dev${nextLoEvent.loRoute}`;
   loEvent.title = nextLoEvent.title;
+  loEvent.type = nextLoEvent.type;
   if (nextLoEvent.icon) {
     loEvent.icon = nextLoEvent.icon;
     loEvent.img = undefined;
