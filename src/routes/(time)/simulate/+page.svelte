@@ -1,41 +1,51 @@
 <script lang="ts">
   import "../../../app.postcss";
-  import { beforeUpdate } from "svelte";
   import TutorsShell from "$lib/ui/app-shells/TutorsShell.svelte";
-  import { goto } from "$app/navigation";
   import { SlideToggle } from "@skeletonlabs/skeleton";
-  import { allStudentsOnlineList, presenceSimulatorService } from "./presence-simulator";
+  import { allStudentsOnlineList, partykitGateway } from "./partykit-gateway";
   import StudentCard from "$lib/ui/time/StudentCard.svelte";
-  import { presenceGeneratorService } from "./presence-generator";
+  import { presenceServiceSimulator } from "./presence-simulator";
 
   export let data: any;
+  let { supabase, session } = data;
 
+  // simulation stopped by default
   let simulator: boolean = false;
-  let simulatorTxt = "Simulator OFF";
-  const courses = ["wit-hdip-comp-sci-2024-web-dev-1", "wit-hdip-comp-sci-2024-programming"];
+  let simulatorTxt = "Simulator Stopped";
 
-  presenceGeneratorService.initialise(courses, 7);
-  presenceSimulatorService.startSimulatorPresenceService();
+  // these are the course that will be used in the simulation
+  const courses = [
+    "reference-course",
+    "wit-hdip-comp-sci-2024-web-dev-1",
+    "wit-hdip-comp-sci-2024-programming",
+    "wit-hdip-comp-sci-databases-2023",
+    "wit-hdip-comp-sci-2023-comp-sys",
+    "full-stack-1-2023",
+    "wit-hdip-comp-sci-2022-mobile-app-dev",
+    "adv-full-stack-oth-2023.netlify.app",
+    "fsf21.netlify.app",
+    "web-design-for-ecommerce",
+    "classic-design-patterns",
+    "iot-protocols-2022",
+    "netfor"
+  ];
 
+  // initialise the generator, wih the courses above + a max of 16 students
+  presenceServiceSimulator.initialise(courses, 16);
+  // Initialise partykit listener
+  partykitGateway.startListentingForEvents();
+
+  // toggle simulator
   function simulate() {
     simulator = !simulator;
     if (simulator) {
-      simulatorTxt = "Simulator ON";
-      presenceGeneratorService.start(4000);
+      simulatorTxt = "Simulator Started";
+      presenceServiceSimulator.start(4000);
     } else {
-      simulatorTxt = "Simulator OFF";
-      presenceGeneratorService.stop();
+      simulatorTxt = "Simulator Stopped";
+      presenceServiceSimulator.stop();
     }
   }
-
-  let { supabase, session } = data;
-  $: ({ supabase, session } = data);
-
-  beforeUpdate(() => {
-    if (!session?.user) {
-      goto("/auth");
-    }
-  });
 </script>
 
 <TutorsShell subTitle="Simulator" {supabase} {session}>

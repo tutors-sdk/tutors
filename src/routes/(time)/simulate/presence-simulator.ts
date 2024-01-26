@@ -1,58 +1,65 @@
-import PartySocket from "partysocket";
-import type { LoEvent } from "$lib/services/types/presence";
-import { getKeys } from "$lib/environment";
-import { PUBLIC_party_kit_main_room } from "$env/static/public";
-import { writable } from "svelte/store";
+import { courseService } from "$lib/services/course";
+import type { Course } from "$lib/services/models/lo-types";
+import type { LoUser } from "$lib/services/types/presence";
+import { generateLoEvent } from "./generateLo";
+import { generateStudent } from "./generateStudent";
+import { partykitGateway } from "./partykit-gateway";
 
-export const allStudentsOnlineList = writable<LoEvent[]>([]);
+// The heart of the simulation
+export const presenceServiceSimulator = {
+  // the students for the simulation
+  students: new Array<LoUser>(),
+  // the course for the simulation
+  courses: new Array<Course>(),
+  // the students and the course they are interacting with
+  simulation: new Map<string, Course>(),
+  // timout handle for stopping the simulation timer
+  intervalId: 0,
 
-const partyKitServer = getKeys().partyKit.mainRoom;
-let partyKitSimulator = <PartySocket>{};
+  async initialise(courseIds: string[], numberStudents: number) {
+    // Create the fake students
+    for (let i = 0; i < numberStudents; i++) {
+      this.students.push(generateStudent());
+    }
 
-if (PUBLIC_party_kit_main_room !== "XXX") {
-  partyKitSimulator = new PartySocket({
-    host: partyKitServer,
-    room: "tutors-simulator"
-  });
-}
+    // Load all the courses
+    for (let i = 0; i < courseIds.length; i++) {
+      let course = await courseService.getOrLoadCourse(courseIds[i], fetch).catch();
+      this.courses.push(course);
+    }
 
-export const presenceSimulatorService = {
-  allStudentEventMap: new Map<string, LoEvent>(),
-  allStudentLos: new Array<LoEvent>(),
-
-  simulateLoEvent(lo: LoEvent) {
-    const loJson = JSON.stringify(lo);
-    partyKitSimulator.send(loJson);
+    // Assign student to course randomly
+    for (let i = 0; i < numberStudents; i++) {
+      this.simulation.set(this.students[i].id, this.courses[Math.floor(Math.random() * this.courses.length)]);
+    }
   },
 
-  startSimulatorPresenceService() {
-    partyKitSimulator.addEventListener("message", (event) => {
-      try {
-        const nextStudentEvent = JSON.parse(event.data);
-        let studentEvent = this.allStudentEventMap.get(nextStudentEvent.user.id);
-        if (!studentEvent) {
-          this.allStudentLos.push(nextStudentEvent);
-          this.allStudentEventMap.set(nextStudentEvent.user.id, nextStudentEvent);
-        } else {
-          refreshLoEvent(studentEvent, nextStudentEvent);
-        }
-        allStudentsOnlineList.set([...this.allStudentLos]);
-      } catch (e) {
-        console.log(e);
+  // Start the simulation, setting a timer to invoke the event function
+  start(interval: number) {
+    // @ts-ignore
+    this.intervalId = setInterval(() => {
+      this.event();
+    }, interval);
+  },
+
+  // stop the simulation
+  stop() {
+    clearInterval(this.intervalId);
+  },
+
+  // To be called for every event
+  event() {
+    // Get a random student;
+    const student = this.students[Math.floor(Math.random() * this.students.length)];
+    // Get the course the student is interacting with
+    const course = this.simulation.get(student.id);
+    if (course) {
+      // Generate an event
+      const loEvent = generateLoEvent(student, course);
+      if (loEvent) {
+        // Send the event to Partykit
+        partykitGateway.sendLoEvent(loEvent);
       }
-    });
+    }
   }
 };
-
-function refreshLoEvent(loEvent: LoEvent, nextLoEvent: LoEvent) {
-  loEvent.loRoute = `https://tutors.dev${nextLoEvent.loRoute}`;
-  loEvent.title = nextLoEvent.title;
-  loEvent.type = nextLoEvent.type;
-  if (nextLoEvent.icon) {
-    loEvent.icon = nextLoEvent.icon;
-    loEvent.img = undefined;
-  } else {
-    loEvent.img = nextLoEvent.img;
-    loEvent.icon = undefined;
-  }
-}
