@@ -20,8 +20,8 @@ export function generateLoEvent(student: LoUser, course: Course): LoEvent | null
       return {
         courseId: course.id,
         courseUrl: course.route,
-        title: course.title,
-        courseTitle: lo.title,
+        courseTitle: course.title,
+        title: lo.title,
         img: lo.img,
         loRoute: lo.route,
         user: student,
@@ -34,8 +34,8 @@ export function generateLoEvent(student: LoUser, course: Course): LoEvent | null
         return {
           courseId: course.id,
           courseUrl: course.route,
-          title: lo.title,
           courseTitle: course.title,
+          title: lo.title,
           img: lo.parentLo?.img!,
           loRoute: lo.route,
           user: student,
