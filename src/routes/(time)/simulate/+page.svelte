@@ -50,10 +50,10 @@
 
 <TutorsShell subTitle="Simulator" {supabase} {session}>
   <div slot="header">
-    <div class="hidden md:inline-block">
+    <div>
       <div class="flex justify-center content-center">
         <SlideToggle name="slider-label" checked on:click={simulate}>{simulatorTxt}</SlideToggle>
-        <div class="ml-12 prose align-right">This is a simulation of TutorsLive. All of the students are AI generated, the courses are real.</div>
+        <div class="hidden lg:inline-block ml-12 prose align-right">This is a simulation of TutorsLive. All of the students are AI generated, the courses are real.</div>
       </div>
     </div>
   </div>
