@@ -40,59 +40,54 @@ This repo is the Tutors Reader. A companion repo:
 
 ## Getting Started
 
-The first step might be to become familiar with the course structure by [browsing a sample course](https://tutors.dev/course/reference-course), and then scan the [reference manual](https://tutors.dev/course/tutors-reference-manual). The manual will guide you through the process creating and publishing your own course (perhaps a copy of a sample) course. Thereafter you could scan the [Gallery of existing courses](https://tutors.dev/gallery) to get an idea as to how Tutors is used in practice.
+The first step might be to become familiar with the course structure by [browsing a sample course](https://tutors.dev/course/reference-course), and then scan the [reference manual](https://tutors.dev/course/tutors-reference-manual). The manual will guide you through the process creating and publishing your own course (perhaps a copy of a sample). Thereafter you could scan the [Gallery of existing courses](https://tutors.dev/gallery) to get an idea as to how Tutors is used in practice.
 
 Consider setting up your own [development version of tutors](#setting-up-a-tutors-development-environment) for experimentation.
 
 ## Reporting Bugs
 
-We are delighted to get bug reports. If you encounter a bug, please open a [Tutors Issue](https://github.com/tutors-sdk/tutors/issues) with a description of the problem. Include information about the environment where the bug occurred, steps to reproduce it, and any relevant screenshots or error messages. Label the issue 'fix'. Perhaps do a quick scan to see if the bug has been reported - if so you might comment / react to the existing error.
+We are delighted to get bug reports. If you encounter a bug, please open a [Tutors Issue](https://github.com/tutors-sdk/tutors/issues) with a description of the problem. Include information about the environment where the bug occurred, steps to reproduce it, and any relevant screenshots or error messages. Label the issue 'fix'. Perhaps do a quick scan to see if the bug has been reported - if so you might comment / react to the existing error (use filtering to see only '`fix` labeled issues).
 
 ## Requesting Features
 
-If you have an idea for a new feature or enhancement, feel free to open a [Tutors Issue](https://github.com/tutors-sdk/tutors/issues). Describe the proposed feature, its benefits, and any other relevant details. Label the new issue `feature`. Perhaps do a quick scan to see if the feature has already been proposed and consider commenting / reacting to the feature instead of creating a new one.
+If you have an idea for a new feature or enhancement, feel free to open a [Tutors Issue](https://github.com/tutors-sdk/tutors/issues). Describe the proposed feature, its benefits, and any other relevant details. Label the new issue `feature`. Perhaps do a quick scan to see if the feature has already been proposed and consider commenting / reacting to the feature instead of creating a new one (use filtering to see only '`feature` labeled issues).
 
 ## Setting up a tutors Development Environment
 
 Make sure you have Node 18 + installed, and start by cloning this repo:
 
-```bash
+~~~bash
 git clone https://github.com/tutors-sdk/tutors.git
-```
+~~~
 
 Open a shell and change into the project folder and run `npm install`...
 
-```bash
+~~~bash
 cd tutors
 npm install
-```
+~~~
 
 Then copy the file `.env.example` to `.env`
 
-```bash
-cp .env.example .env
-```
-
 Now to start the app you can run this command from the root:
 
-```bash
+~~~bash
 npm run app
-```
+~~~
 
 This should launch the application:
 
-```bash
+~~~bash
   VITE v5.0.12  ready in 1069 ms
 
   ➜  Local:   http://localhost:3000/
   ➜  Network: use --host to expose
   ➜  press h + enter to show help
-
-```
+~~~
 
 Now the app is up and running and you can browse to it by opening the <a href="http://localhost:3000/">local location</a> in your browser.
 
-The Tutors reader relies on a segment of the url to locate the course to display. Any of the samples above can be 'read' with an appropriate url segments appended to the local url you now have running. So for instance:
+The Tutors reader relies on a segment of the url to locate the course to display. Any of the [samples below]((#example-tutors-courses)) can be 'read' with an appropriate url segments appended to the local url you now have running. So for instance:
 
 - <https://tutors.dev/course/reference-course>
 
@@ -100,7 +95,7 @@ The Tutors reader relies on a segment of the url to locate the course to display
 
 - <http://localhost:3000/course/reference-course>
 
-(Note the port number may vary)
+(Note the port number 3000 may vary - see the launch console)
 
 The 'source' for the above course is here:
 
@@ -115,6 +110,8 @@ can be opened by this local reader like this:
 - https://localhost:3000/course/full-stack-web-dev-oth-2022
 
 ### Tutors Project Repos
+
+There are 4 key tutors repos:
 
 - [Tutors](https://github.com/tutors-sdk/tutors): The course reader application. This is a SvelteKit application, written in TypeScript with a user experience implemented using Tailwind & Skeleton.
 - [Tutors Apps](https://github.com/tutors-sdk/tutors-apps): A monorepo encapsulating the generators, tests + support tools and applications. It is written in TypeScript.
@@ -152,11 +149,11 @@ Note: Some courses will request you authenticate via github for access.
 
 ### Contributing
 
-We welcome [feature reuqests](#requesting-features) & [bug reports](#reporting-bugs)! If you would like to try your hand a [tackling an issue](https://github.com/tutors-sdk/tutors/issues) - your own or one off the shelf, then here is how it might work:
+We welcome [feature reuqests](#requesting-features) & [bug reports](#reporting-bugs)! If you would like to try your hand at [tackling an issue](https://github.com/tutors-sdk/tutors/issues) - your own or one off the shelf, then here is how it might work:
 
 1. [Fork the](https://www.freecodecamp.org/news/how-to-fork-a-github-repository/) [tutors repository](https://github.com/tutors-sdk/tutors)
 2. [Set up a local build](#setting-up-a-tutors-development-environment)
-3. Create a new branch for [your selected issue](https://github.com/tutors-sdk/tutors/issues) (feature or bug fix).
+3. Create a new branch for [your selected issue](https://github.com/tutors-sdk/tutors/issues) (feature or fix).
 4. Make your changes, and verify that feature behaves as expected in your local build
 6. Commit your changes, perhpas consider [following these guideline for commit messages](https://www.freecodecamp.org/news/how-to-write-better-git-commit-messages/)
 7. Push your changes to your fork
