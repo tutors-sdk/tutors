@@ -12,8 +12,17 @@ Tutors: An Open Learning Web Toolkit
   <a href="https://tutors.dev">Website</a> |
   <a href="https://tutors.dev/course/tutors-reference-manual">Documentation</a>
 </p>
+## Table of Contents
 
-### What is Tutors?
+- [What is Tutors](#what-is-tutors)
+- [Getting Started](#getting-started)
+- [Requesting Features](#requesting-features)
+- [Reporting Bugs](#reporting-bugs)
+- [Setting Up a Tutors Development Environment](#setting-up-a-tutors-development-environment)
+- [Tutors Repos](#tutors-repos)
+- [Contributing](#contributing)
+
+## What is Tutors
 
 Tutors is a collection of open source components and services supporting the creation of transformative learning experiences using open web standards. It consists of two key components:
 
@@ -27,29 +36,18 @@ This repo is the Tutors Reader. A companion repo:
 
 ...host the generators + support tools. These components are developed in the open by an active and friendly community, based on a [simple set of values](https://tutors.dev/course/tutors-reference-manual#tutors-values).
 
-### Tutors Repos
+## Getting Started
 
-- [Tutors](https://github.com/tutors-sdk/tutors): The course reader application. This is a SvelteKit application, written in TypeScript with a user experience implemented using Tailwind & Skeleton.
-- [Tutors Apps](https://github.com/tutors-sdk/tutors-apps): A monorepo encapsulating the generators, tests + support tools and applications. It is written in TypeScript.
-- [Tutors Reference Manual](https://github.com/tutors-sdk/tutors-reference-manual): The manual is itself a tutors course, and is largely written in Markdown.
-- [Tutors Reference Course](https://github.com/tutors-sdk/tutors-reference-course): A Tutors course to included all tutors learning objects and structures.
+The first step might be to become familiar with the course structure by [browsing a sample course](https://tutors.dev/course/reference-course), and then scan the [reference manual](https://tutors.dev/course/tutors-reference-manual). The manual will guide you through the process creating and publishing your own course (perhaps a copy of  sample) course. Thereafter you could scan the [Gallery of existing courses](https://tutors.dev/gallery) to get an idea as to how Tutors is used in practice.
 
-### Example Tutors Courses
+## Requesting Features
 
-- [Gallery of Tutors Courses](https://tutors.dev/gallery)
+If you have an idea for a new feature or enhancement, feel free to open an issue on our [issue tracker](link-to-issue-tracker). Describe the proposed feature, its benefits, and any other relevant details. 
 
-- [Higher Diploma in Computer Science Portal](https://tutors.dev/course/wit-hdip-comp-sci-showcase)
-- [Full Stack Development](https://tutors.dev/course/full-stack-web-dev-oth-2022)
-- [Data Analytics](https://tutors.dev/course/data-analytics-essentials)
-- [Reference Course](https://tutors.dev/course/reference-course)
-- [Higher Diploma in Computer Science at SETU: 2020-2022](https://tutors.dev/course/wit-hdip-comp-sci-2020)
-- [Classic Design Patterns](https://tutors.dev/course/classic-design-patterns)
-- [Agile Software Development](https://tutors.dev/course/agile-2023)
-- [Technologische Fähigkeiten](https://tutors.dev/course/zusatzstudium-digital-skills-semester1)
+## Reporting Bugs
+If you encounter a bug, please open an issue on our [issue tracker](https://github.com/tutors-sdk/tutors/issues) with a detailed description of the problem. Include information about the environment where the bug occurred, steps to reproduce it, and any relevant screenshots or error messages.
 
-Note: Some courses will request you authenticate via github for access.
-
-### Getting Started
+## Setting up a tutors Development Environment
 
 Make sure you have Node 18 + installed, and start by cloning this repo:
 
@@ -110,6 +108,28 @@ You could try any of the other sample courses above. For example this course:
 can be opened by this local reader like this:
 
 - https://localhost:3000/course/full-stack-web-dev-oth-2022
+
+### Tutors Repos
+
+- [Tutors](https://github.com/tutors-sdk/tutors): The course reader application. This is a SvelteKit application, written in TypeScript with a user experience implemented using Tailwind & Skeleton.
+- [Tutors Apps](https://github.com/tutors-sdk/tutors-apps): A monorepo encapsulating the generators, tests + support tools and applications. It is written in TypeScript.
+- [Tutors Reference Manual](https://github.com/tutors-sdk/tutors-reference-manual): The manual is itself a tutors course, and is largely written in Markdown.
+- [Tutors Reference Course](https://github.com/tutors-sdk/tutors-reference-course): A Tutors course to included all tutors learning objects and structures.
+
+### Example Tutors Courses
+
+- [Gallery of Tutors Courses](https://tutors.dev/gallery)
+
+- [Higher Diploma in Computer Science Portal](https://tutors.dev/course/wit-hdip-comp-sci-showcase)
+- [Full Stack Development](https://tutors.dev/course/full-stack-web-dev-oth-2022)
+- [Data Analytics](https://tutors.dev/course/data-analytics-essentials)
+- [Reference Course](https://tutors.dev/course/reference-course)
+- [Higher Diploma in Computer Science at SETU: 2020-2022](https://tutors.dev/course/wit-hdip-comp-sci-2020)
+- [Classic Design Patterns](https://tutors.dev/course/classic-design-patterns)
+- [Agile Software Development](https://tutors.dev/course/agile-2023)
+- [Technologische Fähigkeiten](https://tutors.dev/course/zusatzstudium-digital-skills-semester1)
+
+Note: Some courses will request you authenticate via github for access.
 
 ### Contributing
 
