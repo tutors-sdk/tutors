@@ -14,6 +14,7 @@ import sub from "markdown-it-sub";
 import sup from "markdown-it-sup";
 // @ts-ignore
 import mark from "markdown-it-mark";
+// @ts-ignore
 import footnote from "markdown-it-footnote";
 // @ts-ignore
 import deflist from "markdown-it-deflist";
