@@ -1,6 +1,5 @@
 <script lang="ts">
   import { AppShell, Modal } from "@skeletonlabs/skeleton";
-  import HomeFooter from "$lib/ui/navigators/footers/HomeFooter.svelte";
   import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
   import TutorsTitle from "$lib/ui/navigators/titles/TutorsTitle.svelte";
