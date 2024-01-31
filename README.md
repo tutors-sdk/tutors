@@ -19,7 +19,8 @@ Tutors: An Open Learning Web Toolkit
 - [Requesting Features](#requesting-features)
 - [Reporting Bugs](#reporting-bugs)
 - [Setting Up a Tutors Development Environment](#setting-up-a-tutors-development-environment)
-- [Tutors Repos](#tutors-repos)
+- [Example Tutors Courses](#example-tutors-courses)
+- [Tutors Project Repos](#tutors-project-repos)
 - [Contributing](#contributing)
 
 ## What is Tutors
@@ -38,14 +39,17 @@ This repo is the Tutors Reader. A companion repo:
 
 ## Getting Started
 
-The first step might be to become familiar with the course structure by [browsing a sample course](https://tutors.dev/course/reference-course), and then scan the [reference manual](https://tutors.dev/course/tutors-reference-manual). The manual will guide you through the process creating and publishing your own course (perhaps a copy of  sample) course. Thereafter you could scan the [Gallery of existing courses](https://tutors.dev/gallery) to get an idea as to how Tutors is used in practice.
+The first step might be to become familiar with the course structure by [browsing a sample course](https://tutors.dev/course/reference-course), and then scan the [reference manual](https://tutors.dev/course/tutors-reference-manual). The manual will guide you through the process creating and publishing your own course (perhaps a copy of a sample) course. Thereafter you could scan the [Gallery of existing courses](https://tutors.dev/gallery) to get an idea as to how Tutors is used in practice.
+
+Consider setting up your own [development version of tutors](#setting-up-a-tutors-development-environment) for experimentation.
+
+## Reporting Bugs
+
+We are delighted to get bug reports. If you encounter a bug, please open a [Tutors Issue](https://github.com/tutors-sdk/tutors/issues) with a description of the problem. Include information about the environment where the bug occurred, steps to reproduce it, and any relevant screenshots or error messages. Label the issue 'fix'. Perhaps do a quick scan to see if the bug has been reported - if so you might comment / react to the existing error.
 
 ## Requesting Features
 
-If you have an idea for a new feature or enhancement, feel free to open an issue on our [issue tracker](link-to-issue-tracker). Describe the proposed feature, its benefits, and any other relevant details. 
-
-## Reporting Bugs
-If you encounter a bug, please open an issue on our [issue tracker](https://github.com/tutors-sdk/tutors/issues) with a detailed description of the problem. Include information about the environment where the bug occurred, steps to reproduce it, and any relevant screenshots or error messages.
+If you have an idea for a new feature or enhancement, feel free to open a [Tutors Issue](https://github.com/tutors-sdk/tutors/issues). Describe the proposed feature, its benefits, and any other relevant details. Label the new issue `feature`. Perhaps do a quick scan to see if the feature has already been proposed and consider commenting / reacting to the feature instead of creating a new one.
 
 ## Setting up a tutors Development Environment
 
@@ -118,7 +122,21 @@ can be opened by this local reader like this:
 
 ### Example Tutors Courses
 
+The reference course might be a place to start:
+
+- [Reference Course](https://github.com/tutors-sdk/tutors-reference-course)
+
+You can clone and rebuild this course following [these instructions.](https://tutors.dev/course/tutors-reference-manual#getting-started)
+
+This is an example of an open source course:
+
+- [Full Stack Development](https://github.com/wit-hdip-comp-sci-2023/full-stack-1)
+
+This is a selected Course Gallery:
+
 - [Gallery of Tutors Courses](https://tutors.dev/gallery)
+
+Some courses of interest:
 
 - [Higher Diploma in Computer Science Portal](https://tutors.dev/course/wit-hdip-comp-sci-showcase)
 - [Full Stack Development](https://tutors.dev/course/full-stack-web-dev-oth-2022)
