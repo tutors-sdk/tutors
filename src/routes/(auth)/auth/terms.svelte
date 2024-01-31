@@ -14,17 +14,13 @@ You can view this information via the Time feature on the profile menu. This dat
 the instructor of your course, but not to other students.
 No other data is gathered, nor is this data transmitted anywhere other than the TutorsTime data store.  
     
-The Live feature, available from the profile menu, may also uses this data to display of panel of students currently online.  
-    
-**You can opt out of these features by disabling the Share Presence option from the profile menu.**
-  
-To learn more about TutorsTime please consult:
+The Live feature, available from the profile menu, may also use this data to display of panel of students currently online.  **You can opt out of these features by disabling the Share Presence option from the profile menu.** To learn more about TutorsTime please consult:
   
 - [Tutors Time FAQ](https://github.com/tutors-sdk/tutors-faqs/blob/main/tutors-time-faq.md)
 - [Tutors Live FAQ](https://github.com/tutors-sdk/tutors-faqs/blob/main/tutors-live-faq.md)
  
 Tutors is an open source application - the data collection component 
-[is here](https://github.com/tutors-sdk/tutors/blob/development/app/src/lib/services/analytics.ts).
+[is here](https://github.com/tutors-sdk/tutors/blob/development/src/lib/services/analytics.ts).
 `;
 
   const content = convertMdToHtml(terms);
