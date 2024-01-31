@@ -12,6 +12,7 @@ Tutors: An Open Learning Web Toolkit
   <a href="https://tutors.dev">Website</a> |
   <a href="https://tutors.dev/course/tutors-reference-manual">Documentation</a>
 </p>
+
 ## Table of Contents
 
 - [What is Tutors](#what-is-tutors)
@@ -113,7 +114,7 @@ can be opened by this local reader like this:
 
 - https://localhost:3000/course/full-stack-web-dev-oth-2022
 
-### Tutors Repos
+### Tutors Project Repos
 
 - [Tutors](https://github.com/tutors-sdk/tutors): The course reader application. This is a SvelteKit application, written in TypeScript with a user experience implemented using Tailwind & Skeleton.
 - [Tutors Apps](https://github.com/tutors-sdk/tutors-apps): A monorepo encapsulating the generators, tests + support tools and applications. It is written in TypeScript.
@@ -151,15 +152,16 @@ Note: Some courses will request you authenticate via github for access.
 
 ### Contributing
 
-Please ensure to read the [Code of Conduct](./CODE_OF_CONDUCT.md) before contributing to the Tutors project.
+We welcome [feature reuqests](#requesting-features) & [bug reports](#reporting-bugs)! If you would like to try your hand a [tackling an issue](https://github.com/tutors-sdk/tutors/issues) - your own or one off the shelf, then here is how it might work:
 
-When contributing, pull requests should be opened to the 'development' branch.
+1. [Fork the](https://www.freecodecamp.org/news/how-to-fork-a-github-repository/) [tutors repository](https://github.com/tutors-sdk/tutors)
+2. [Set up a local build](#setting-up-a-tutors-development-environment)
+3. Create a new branch for [your selected issue](https://github.com/tutors-sdk/tutors/issues) (feature or bug fix).
+4. Make your changes, and verify that feature behaves as expected in your local build
+6. Commit your changes, perhpas consider [following these guideline for commit messages](https://www.freecodecamp.org/news/how-to-write-better-git-commit-messages/)
+7. Push your changes to your fork
+8. Submit a pull request to [tutors](https://github.com/tutors-sdk/tutors).
 
-![Tutors Holopin](static/tutors-holopin.png)
-
-All contributors are eligible to earn a [Holopin](https://holopin.io) - a digital badge that represents your contributions to the project. These badges evolve the more contributions you make to the project!
-
-Every time you open a PR that is accepted, you will be assigned holobytes. Collect these holobytes to see your owl evolve!
 
 ### License
 
