@@ -45,4 +45,4 @@
   });
 </script>
 
-<a class="btn btn-sm" href={editRoute} target="_blank" title="Edit this course"> <Icon type="edit"></Icon> &nbsp;Edit this Page </a>
+<Icon type="edit" link={editRoute} target="_blank" tip="Edit this course" text="Edit this Page"></Icon>

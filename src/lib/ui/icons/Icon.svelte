@@ -2,14 +2,19 @@
   import { getIcon } from "./themes/themes";
   import Icon from "@iconify/svelte";
 
-  export let type: string = "";
-  export let icon: string = "";
-  export let color: string = "";
-  export let link: string = "";
-  export let target: string = "";
-  export let width: string = "";
-  export let height: string = "20";
-  export let tip: string = "";
+  export let type = "";
+  export let icon = "";
+  export let color = "";
+  export let link = "";
+  export let target = "";
+  export let width = "";
+  export let height = "20";
+  export let tip = "";
+  export let text = "";
+
+  if (target === "_blank") {
+    tip = `${tip} (opens in a new Window)`;
+  }
 
   function legacyIconColour(colourInput: string) {
     if (colourInput === "info") {
@@ -26,20 +31,19 @@
   }
 </script>
 
-<span title={tip}>
-  {#if type}
-    {#if link}
-      <a {target} href={link}>
-        <Icon icon={getIcon(type).icon} color={legacyIconColour(getIcon(type).colour)} {width} {height} />
-      </a>
-    {:else}
+{#if type}
+  {#if link}
+    <a class="btn btn-sm" {target} href={link} title={tip}>
       <Icon icon={getIcon(type).icon} color={legacyIconColour(getIcon(type).colour)} {width} {height} />
-    {/if}
-  {:else if link}
-    <a {target} href={link} title={tip}>
-      <Icon {icon} {color} {width} {height} />
+      {text}
     </a>
   {:else}
-    <Icon {icon} {color} {width} {height} />
+    <Icon icon={getIcon(type).icon} color={legacyIconColour(getIcon(type).colour)} {width} {height} />
   {/if}
-</span>
+{:else if link}
+  <a {target} href={link} title={tip}>
+    <Icon {icon} {color} {width} {height} />
+  </a>
+{:else}
+  <Icon {icon} {color} {width} {height} />
+{/if}
