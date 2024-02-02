@@ -8,33 +8,12 @@ import typography from "@tailwindcss/typography";
 
 const config = {
   mode: "jit",
-  content: [
-    "./src/**/*.{html,js,svelte,ts}",
-    "./src/**/**/*.{html,js,svelte,ts}",
-    // 2. Append the path for the Skeleton NPM package and files:
-    join(require.resolve("@skeletonlabs/skeleton"), "../**/*.{html,js,svelte,ts}")
-  ],
+  content: ["./src/**/*.{html,js,svelte,ts}", "./src/**/**/*.{html,js,svelte,ts}", join(require.resolve("@skeletonlabs/skeleton"), "../**/*.{html,js,svelte,ts}")],
   safelist: [
     {
       pattern: /border|text/
     }
   ],
-  theme: {
-    extend: {
-      typography: {
-        DEFAULT: {
-          css: {
-            "code::before": {
-              content: '""'
-            },
-            "code::after": {
-              content: '""'
-            }
-          }
-        }
-      }
-    }
-  },
   plugins: [
     forms,
     typography,
