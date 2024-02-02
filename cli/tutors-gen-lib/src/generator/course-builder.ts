@@ -126,7 +126,8 @@ function buildCompositeLo(lo: Lo, lr: LearningResource, level: number): Lo {
     default:
   }
   lr.lrs.forEach((lr) => {
-    compositeLo.los.push(buildLo(lr, level + 1));
+    const subLo = buildLo(lr, level + 1);
+    if (subLo.type !== "unknown") compositeLo.los.push(subLo);
     compositeLo.los.sort((a: any, b: any) => {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       return preOrder.get(a.type)! - preOrder.get(b.type)!;
