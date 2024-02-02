@@ -26,20 +26,20 @@
   }
 </script>
 
-<span title={tip}>
-  {#if type}
-    {#if link}
-      <a {target} href={link}>
-        <Icon icon={getIcon(type).icon} color={legacyIconColour(getIcon(type).colour)} {width} {height} />
-      </a>
-    {:else}
-      <Icon icon={getIcon(type).icon} color={legacyIconColour(getIcon(type).colour)} {width} {height} />
-    {/if}
-  {:else if link}
+<!-- <span title={tip}> -->
+{#if type}
+  {#if link}
     <a {target} href={link} title={tip}>
-      <Icon {icon} {color} {width} {height} />
+      <Icon icon={getIcon(type).icon} color={legacyIconColour(getIcon(type).colour)} {width} {height} />
     </a>
   {:else}
-    <Icon {icon} {color} {width} {height} />
+    <Icon icon={getIcon(type).icon} color={legacyIconColour(getIcon(type).colour)} {width} {height} />
   {/if}
-</span>
+{:else if link}
+  <a {target} href={link} title={tip}>
+    <Icon {icon} {color} {width} {height} />
+  </a>
+{:else}
+  <Icon {icon} {color} {width} {height} />
+{/if}
+<!-- </span> -->
