@@ -8,6 +8,8 @@
   };
 </script>
 
-<button class="btn btn-sm" on:click={infoDrawerOpen}>
-  <Icon tip={"View course info"} icon="fluent:info-28-regular" color="rgba(var(--color-primary-500))" height="20" />
+<button class="btn btn-sm" on:click={infoDrawerOpen} title="View course info">
+  <span class="text-sm font-bold inline-flex gap-2">
+    <Icon icon="fluent:info-28-regular" color="rgba(var(--color-primary-500))" height="20" />
+  </span>
 </button>
