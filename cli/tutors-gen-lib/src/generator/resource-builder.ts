@@ -25,14 +25,12 @@ export const resourceBuilder = {
     const files = fs.readdirSync(dir);
     if (files.length > 0) {
       for (const file of files) {
-        if (!(file.startsWith(".") || file.startsWith("json") || file.startsWith("html"))) {
-          const filePath = `${dir}/${file}`;
-          const stat = fs.statSync(filePath);
-          if (stat.isDirectory()) {
-            tree.lrs.push(this.build(filePath));
-          } else {
-            tree.files.push(filePath);
-          }
+        const filePath = `${dir}/${file}`;
+        const stat = fs.statSync(filePath);
+        if (stat.isDirectory() && !(file.startsWith(".") || file === "json" || file === "html")) {
+          tree.lrs.push(this.build(filePath));
+        } else {
+          tree.files.push(filePath);
         }
       }
     }
