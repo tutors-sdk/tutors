@@ -149,7 +149,7 @@ Note: Some courses will request you authenticate via github for access.
 
 ### Contributing
 
-We welcome [feature reuqests](#requesting-features) & [bug reports](#reporting-bugs)! If you would like to try your hand at [tackling an issue](https://github.com/tutors-sdk/tutors/issues) - your own or one off the shelf, then here is how it might work:
+We welcome [feature requests](#requesting-features) & [bug reports](#reporting-bugs)! If you would like to try your hand at [tackling an issue](https://github.com/tutors-sdk/tutors/issues) - your own or one off the shelf, then here is how it might work:
 
 1. [Fork the](https://www.freecodecamp.org/news/how-to-fork-a-github-repository/) [tutors repository](https://github.com/tutors-sdk/tutors)
 2. [Set up a local build](#setting-up-a-tutors-development-environment)
