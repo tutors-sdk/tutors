@@ -5,6 +5,6 @@
   let contentHtml = convertMdToHtml(content);
 </script>
 
-<p class="prose prose-sm prose-slate">
+<p class="prose prose-sm prose-slate dark:prose-invert">
   {@html contentHtml}
 </p>
