@@ -159,6 +159,11 @@ We welcome [feature requests](#requesting-features) & [bug reports](#reporting-b
 7. Push your changes to your fork
 8. Submit a pull request to [tutors](https://github.com/tutors-sdk/tutors).
 
+![Tutors Holopin](static/tutors-holopin.png)
+
+All contributors are eligible to earn a [Holopin](https://holopin.io) - a digital badge that represents your contributions to the project. These badges evolve the more contributions you make to the project!
+
+Every time you open a PR that is accepted, you will be assigned holobytes. Collect these holobytes to see your owl evolve!
 
 ### License
 
