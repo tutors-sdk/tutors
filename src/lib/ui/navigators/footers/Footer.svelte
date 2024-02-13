@@ -1,6 +1,7 @@
 <script lang="ts">
   import SetuIcon from "$lib/ui/icons/themes/SetuIcon.svelte";
   import TutorsIcon from "$lib/ui/icons/themes/TutorsIcon.svelte";
+  import TutorsMessage from "./TutorsMessage.svelte";
   import TutorsVersion from "./TutorsVersion.svelte";
 </script>
 
@@ -11,6 +12,9 @@
         <TutorsIcon />
         <div>
           <TutorsVersion />
+        </div>
+        <div class="pl-8">
+          <TutorsMessage />
         </div>
       </div>
       <SetuIcon />
