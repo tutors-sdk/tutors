@@ -14,6 +14,7 @@
   let searchLos: Lo[] = [];
   let searchTerm = "";
   let searchResults: ResultType[] = [];
+  let searchInputElement;
 
   onMount(async () => {
     course = data.course;
@@ -23,6 +24,7 @@
     const notes = filterByType(data.course.los, "note");
     const panelNotes = filterByType(data.course.los, "panelnote");
     searchLos.push(...labs, ...steps, ...notes, ...panelNotes);
+    searchInputElement.focus()
   });
 
   function transformResults(results: ResultType[]) {
@@ -51,7 +53,7 @@
 <div class="card container mx-auto p-4">
   <label for="search" class="label"
     ><span>Enter search term:</span>
-    <input bind:value={searchTerm} type="text" name="search" id="search" class="m-2 p-2 input" placeholder="..." /></label
+    <input bind:value={searchTerm} bind:this={searchInputElement} type="text" name="search" id="search" class="m-2 p-2 input" placeholder="..." /></label
   >
   <div class="flex flex-wrap justify-center">
     {#each searchResults as result}
