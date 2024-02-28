@@ -19,7 +19,7 @@ export const presenceServiceSimulator = {
   async initialise(courseIds: string[], numberStudents: number) {
     // Create the fake students
     for (let i = 0; i < numberStudents; i++) {
-      this.students.push(generateStudent());
+      this.students.push(await generateStudent());
     }
 
     // Load all the courses

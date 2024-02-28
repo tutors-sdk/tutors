@@ -72,7 +72,7 @@ Then copy the file `.env.example` to `.env`
 Now to start the app you can run this command from the root:
 
 ~~~bash
-npm run app
+npm run dev
 ~~~
 
 This should launch the application:

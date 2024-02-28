@@ -1,7 +1,24 @@
 import type { LoUser } from "$lib/services/types/presence";
 
 // Female first names, selected at random
-const femaleFirstNames = ["Ava", "Olivia", "Emma", "Isabella", "Sophia", "Mia", "Amelia", "Harper", "Evelyn", "Abigail", "Emily", "Ella", "Madison", "Scarlett", "Grace"];
+const femaleFirstNames = [
+  "Ava",
+ "Olivia",
+ "Clodagh",
+ "Alka",
+  "Emma",
+  "Isabella",
+  "Sophia",
+  "Mia",
+  "Amelia",
+  "Harper",
+  "Evelyn",
+  "Abigail",
+  "Emily",
+  "Ella",
+  "Madison",
+  "Scarlett",
+  "Grace"];
 
 // Male first names, selected at random
 const maleFirstNames = [
@@ -22,7 +39,8 @@ const maleFirstNames = [
   "David",
   "Seamus",
   "Damien",
-  "Bradley"
+  "Bradley",
+  "Rylan"
 ];
 
 // Last names, matched at random with first names
@@ -60,38 +78,81 @@ const lastNames = [
 ];
 
 // Create a fake student
-export function generateStudent(): LoUser {
-  // Pick a gender
-  const randomGender = Math.random() < 0.5 ? "male" : "female";
-
-  // Get a full name
-  let fullName;
-  if (randomGender === "male") {
-    fullName = `${getRandomFromList(maleFirstNames)} ${getRandomFromList(lastNames)}`;
-  } else {
-    fullName = `${getRandomFromList(femaleFirstNames)} ${getRandomFromList(lastNames)}`;
-  }
-
-  // this is the user
+  export async function generateStudent(): Promise<LoUser> {
+    // Pick a gender
+    const randomGender = Math.random() < 0.5 ? "male" : "female";
+  
+    // Get a full name
+    let fullName;
+    if (randomGender === "male") {
+      fullName = `${getRandomFromList(maleFirstNames)} ${getRandomFromList(lastNames)}`;
+    } else {
+      fullName = `${getRandomFromList(femaleFirstNames)} ${getRandomFromList(lastNames)}`;
+    }
+      // this is the user
   return {
     fullName: `${fullName}`,
-    avatar: getAvatar(randomGender),
-    id: generateId() // these are actually Github IDs in the real system
+    avatar: await (async () => {
+      return await getAvatar(randomGender) || getDefaultAvatar();
+    })(), // Immediately-invoked async function
+    id: generateId()
   };
 }
+  
 
-function getAvatar(gender: string) {
-  // Pick a random image name
-  const randomNumber = Math.floor(Math.random() * 16); // Generates a random number between 0 and 15
-  const twoDigitString = randomNumber.toString(16).padStart(2, "0"); // Converts the random number to a 2-digit hexadecimal string
-  const img = `image-${twoDigitString}.jpg`;
-  // Images are stored on a github repo
-  if (gender === "male") {
-    return `https://github.com/tutors-sdk/tutors-simulator-assets/blob/main/profiles/maleProfiles/${img}/?raw=true`;
-  } else {
-    return `https://github.com/tutors-sdk/tutors-simulator-assets/blob/main/profiles/femaleProfiles/${img}/?raw=true`;
+// This is the profiles we've already generated
+const usedImages: string[] = [];
+
+async function fetchImageNames(gender: string): Promise<string[]> {
+  try {
+    const response = await fetch(`https://api.github.com/repos/tutors-sdk/tutors-simulator-assets/contents/profiles/${gender}Profiles`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch data: ${response.status} ${response.statusText}`);
+    }
+
+    const res = await response.json();
+
+    return res.map((img: { download_url: string }) => img.download_url);
+  } catch (error) {
+    console.error('Error fetching image names:', (error as Error).message);
+    return [];
   }
 }
+
+function getRandomIndex(max: number): number {
+  return Math.floor(Math.random() * max);
+}
+
+function getRandomImage(images: string[], gender: string): string | null {
+  const availableImages = images.filter(image => !usedImages.includes(image));
+
+  if (availableImages.length === 0) {
+    console.log(`No more available images for ${gender} gender.`);
+    return null;
+  }
+
+  const randomIndex = getRandomIndex(availableImages.length);
+  const selectedImage = availableImages[randomIndex];
+  usedImages.push(selectedImage);
+
+  return selectedImage;
+}
+
+async function getAvatar(gender: string): Promise<string | null> {
+  try {
+    if (gender === "male") {
+      const maleImageNames = await fetchImageNames("male");
+      return getRandomImage(maleImageNames, "male");
+    } else {
+      const femaleImageNames = await fetchImageNames("female");
+      return getRandomImage(femaleImageNames, "female");
+    }
+  } catch (error) {
+    console.error('Error fetching avatar:', (error as Error).message);
+    return null;
+  }
+}
+
 
 function getRandomFromList(list: any) {
   return list[Math.floor(Math.random() * list.length)];
@@ -104,3 +165,7 @@ export function generateId() {
     return v.toString(16);
   });
 }
+function getDefaultAvatar(): string {
+  throw new Error("Function not implemented.");
+}
+
