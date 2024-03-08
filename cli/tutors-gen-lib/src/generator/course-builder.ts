@@ -51,6 +51,7 @@ function buildLab(lo: Lo, lr: LearningResource): Lo {
   const lab = lo as Lab;
   lab.los = [];
   const mdFiles = getFilesWithType(lr, "md");
+  const title = lo.title;
   lo.title = "";
   mdFiles.forEach((chapterName) => {
     const wholeFile = readWholeFile(chapterName);
@@ -72,6 +73,13 @@ function buildLab(lo: Lo, lr: LearningResource): Lo {
   });
   lab.img = getLabImage(lr);
   lab.imgFile = `img/${getLabImageFile(lr)}`;
+  if (!lab.img) {
+    lab.img = getImage(lr);
+    lab.imgFile = getImageFile(lr);
+    lab.title = title;
+    lab.pdf = getPdf(lr);
+    lab.pdfFile = getPdfFile(lr);
+  }
   return lo;
 }
 
