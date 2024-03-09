@@ -24,7 +24,7 @@
     const notes = filterByType(data.course.los, "note");
     const panelNotes = filterByType(data.course.los, "panelnote");
     searchLos.push(...labs, ...steps, ...notes, ...panelNotes);
-    searchInputElement.focus()
+    searchInputElement.focus();
   });
 
   function transformResults(results: ResultType[]) {
@@ -57,17 +57,17 @@
   >
   <div class="flex flex-wrap justify-center">
     {#each searchResults as result}
-      <div class="card m-1 w-full p-4 lg:w-72 2xl:w-96">
-        <div>
+      <div class="card m-1 w-full p-4 lg:w-72 2xl:w-96 hover:bg-gray-200 dark:hover:bg-gray-900">
+        <a rel="noopener noreferrer" href={result.link} target="_blank">
           <div>
-            {@html result.html}
-          </div>
-          <div class="pt-4 text-right text-sm">
-            <a rel="noopener noreferrer" href={result.link} target="_blank">
+            <div>
+              {@html result.html}
+            </div>
+            <div class="pt-4 text-right text-sm">
               {result.title}
-            </a>
+            </div>
           </div>
-        </div>
+        </a>
       </div>
     {/each}
   </div>

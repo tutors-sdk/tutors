@@ -12,7 +12,8 @@ import {
   type Composite,
   type PanelTalk,
   type PanelVideo,
-  type PanelNote
+  type PanelNote,
+  type Lab
 } from "./lo-types";
 
 export function flattenLos(los: Lo[]): Lo[] {
@@ -66,6 +67,10 @@ export function injectCourseUrl(los: Lo[], id: string, url: string) {
     if (lo.type == "talk" || lo.type == "paneltalk") {
       const talk = lo as Talk;
       talk.pdf = talk.pdf?.replace("{{COURSEURL}}", url);
+    }
+    if (lo.type == "lab") {
+      const lab = lo as Lab;
+      lab.pdf = lab.pdf?.replace("{{COURSEURL}}", url);
     }
 
     // legacy version of generator included hash based routes;

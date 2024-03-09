@@ -95,6 +95,8 @@ export type LabStep = {
 export type Lab = Lo & {
   type: "lab";
   los: LabStep[];
+  pdf: string; // route to pdf for the lo
+  pdfFile: string; // pdf file name
 };
 
 export type Talk = Lo & {
