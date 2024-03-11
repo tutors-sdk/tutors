@@ -1,6 +1,6 @@
 {
   "name": "tutors-gen-lib",
-  "version": "3.2.15",
+  "version": "3.3.0",
   "description": "Library for tutors generators",
   "scripts": {
     "build": "tsc --build",
