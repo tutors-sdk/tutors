@@ -1,5 +1,4 @@
 import type { Topic } from "$lib/services/models/lo-types";
-import type { Token, User } from "./auth";
 import type { IconType } from "$lib/services/models/lo-types";
 import type { Lo } from "$lib/services/models/lo-types";
 
@@ -18,7 +17,7 @@ export interface DayMeasure {
   metric: number;
 }
 
-export interface UserMetric extends Token {
+export interface UserMetric {
   title: string;
   count: number;
   last: string;
@@ -50,9 +49,7 @@ export interface StudentLoEvent {
   timeout: number;
 }
 
-export type StudentLoUpdate = (kind: string, event: StudentLoEvent) => void;
-
-export type MetricUpdate = (user: User, topic: Topic, lab: Lo, time: number) => void;
-export type MetricDelete = (user: User) => void;
-export type StatusChange = (user: User) => void;
-export type refreshStudents = (students: StudentMetric[]) => void;
+export interface UserSummary {
+  name: string;
+  picture: string;
+}
