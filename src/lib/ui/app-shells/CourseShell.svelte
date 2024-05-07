@@ -18,9 +18,10 @@
   import { goto } from "$app/navigation";
   import { beforeUpdate } from "svelte";
   import { fade } from "svelte/transition";
+  import type { Session, SupabaseClient } from "@supabase/supabase-js";
 
-  export let session: any;
-  export let supabase: any;
+  export let session: Session;
+  export let supabase: SupabaseClient;
 
   const drawerStore = getDrawerStore();
   const toastStore = getToastStore();
