@@ -1,10 +1,10 @@
 import PartySocket from "partysocket";
 import type { Course, Lo } from "./models/lo-types";
-import type { User } from "./types/auth";
 import { currentCourse, studentsOnline, studentsOnlineList, coursesOnline, coursesOnlineList, allStudentsOnlineList, allStudentsOnline } from "$lib/stores";
 import type { LoEvent, LoUser } from "./types/presence";
 import { getKeys } from "$lib/environment";
 import { PUBLIC_party_kit_main_room } from "$env/static/public";
+import type { Session } from "@supabase/supabase-js";
 
 const partyKitServer = getKeys().partyKit.mainRoom;
 
@@ -31,7 +31,7 @@ export const presenceService = {
 
   partyKitCourse: <PartySocket>{},
 
-  sendLoEvent(course: Course, currentLo: Lo, onlineStatus: boolean, userDetails: User) {
+  sendLoEvent(course: Course, currentLo: Lo, onlineStatus: boolean, session: Session) {
     const lo: LoEvent = {
       courseId: course.courseId,
       courseUrl: course.courseUrl,
@@ -39,7 +39,7 @@ export const presenceService = {
       title: currentLo.title,
       courseTitle: course.title,
       loRoute: currentLo.route,
-      user: getUser(onlineStatus, userDetails),
+      user: getUser(onlineStatus, session),
       type: currentLo.type,
       isPrivate: (course.properties?.private as unknown as number) === 1
     };
@@ -137,16 +137,16 @@ currentCourse.subscribe((current) => {
   }
 });
 
-function getUser(onlineStatus: boolean, userDetails: User): LoUser {
+function getUser(onlineStatus: boolean, session: Session): LoUser {
   const user: LoUser = {
     fullName: "Anon",
     avatar: "https://tutors.dev/logo.svg",
     id: getTutorsTimeId()
   };
-  if (userDetails && onlineStatus) {
-    user.fullName = userDetails.user_metadata.full_name ? userDetails.user_metadata.full_name : userDetails.user_metadata.user_name;
-    user.avatar = userDetails.user_metadata.avatar_url;
-    user.id = userDetails.user_metadata.user_name;
+  if (session && onlineStatus) {
+    user.fullName = session.user.user_metadata.full_name ? session.user.user_metadata.full_name : session.user.user_metadata.user_name;
+    user.avatar = session.user.user_metadata.avatar_url;
+    user.id = session.user.user_metadata.user_name;
   }
   return user;
 }
