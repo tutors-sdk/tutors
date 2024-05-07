@@ -39,7 +39,7 @@ export const analyticsService = {
   },
 
   async getOnlineStatus(course: Course, session: Session): Promise<string> {
-    if (!course || !user) {
+    if (!course || !session) {
       return "online";
     }
     const courseId = course.courseUrl.substring(0, course.courseUrl.indexOf("."));
