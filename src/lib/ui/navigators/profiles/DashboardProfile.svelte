@@ -2,7 +2,7 @@
   import { popup } from "@skeletonlabs/skeleton";
   import DashboardProfileButton from "./DashboardProfileButton.svelte";
   import DashboardProfileMenu from "./DashboardProfileMenu.svelte";
-  import type { Session } from "@supabase/supabase-js";
+  import type { Session } from "@supabase/auth-js/src/lib/types";
   export let session: Session;
   export let handleSignOut: () => void;
 </script>

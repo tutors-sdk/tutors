@@ -8,7 +8,8 @@
   import DashboardProfile from "../navigators/profiles/DashboardProfile.svelte";
   import Footer from "../navigators/footers/Footer.svelte";
 
-  import type { Session, SupabaseClient } from "@supabase/supabase-js";
+  import type { SupabaseClient } from "@supabase/supabase-js";
+  import type { Session } from "@supabase/auth-js/src/lib/types";
 
   export let session: Session;
   export let supabase: SupabaseClient;

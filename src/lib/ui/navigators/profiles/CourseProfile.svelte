@@ -1,6 +1,6 @@
 <script lang="ts">
+  import type { Session } from "@supabase/auth-js/src/lib/types";
   import { popup } from "@skeletonlabs/skeleton";
-  import type { Session } from "@supabase/supabase-js";
   import CourseProfileButton from "./CourseProfileButton.svelte";
   import { currentCourse, studentsOnline } from "$lib/stores";
   import CourseProfileMenu from "./CourseProfileMenu.svelte";

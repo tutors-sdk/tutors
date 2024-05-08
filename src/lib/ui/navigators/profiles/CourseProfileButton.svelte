@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
   import { Avatar } from "@skeletonlabs/skeleton";
-  import type { Session } from "@supabase/supabase-js";
+  import type { Session } from "@supabase/auth-js/src/lib/types";
   import { onlineStatus } from "$lib/stores";
   export let session: Session;
   export let usersOnline: string = "";
