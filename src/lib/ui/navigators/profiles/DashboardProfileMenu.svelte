@@ -1,6 +1,6 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
-  import type { Session } from "@supabase/supabase-js";
+  import type { Session } from "@supabase/auth-js/src/lib/types";
   export let session: Session;
   export let handleSignOut: () => void;
 </script>

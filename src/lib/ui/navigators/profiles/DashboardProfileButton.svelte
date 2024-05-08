@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Avatar } from "@skeletonlabs/skeleton";
-  import type { Session } from "@supabase/supabase-js";
+  import type { Session } from "@supabase/auth-js/src/lib/types";
   export let session: Session;
 </script>
 
