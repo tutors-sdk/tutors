@@ -8,8 +8,11 @@
   import DashboardProfile from "../navigators/profiles/DashboardProfile.svelte";
   import Footer from "../navigators/footers/Footer.svelte";
 
-  export let session: any;
-  export let supabase: any;
+  import type { Session, SupabaseClient } from "@supabase/supabase-js";
+
+  export let session: Session;
+  export let supabase: SupabaseClient;
+
   export let title = "Tutors Open Source Project";
   export let subTitle = "Open Web Learning Components";
 
