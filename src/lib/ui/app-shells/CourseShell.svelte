@@ -18,7 +18,8 @@
   import { goto } from "$app/navigation";
   import { beforeUpdate } from "svelte";
   import { fade } from "svelte/transition";
-  import type { Session, SupabaseClient } from "@supabase/supabase-js";
+  import type { SupabaseClient } from "@supabase/supabase-js";
+  import type { Session } from "@supabase/auth-js/src/lib/types";
 
   export let session: Session;
   export let supabase: SupabaseClient;
