@@ -1,22 +1,22 @@
 import { get } from "svelte/store";
 import { updateLo } from "$lib/services/utils/all-course-access";
 import type { Course, Lo } from "$lib/services/models/lo-types";
-import type { TokenResponse } from "$lib/services/types/auth";
-import { currentCourse, currentLo, currentUser, onlineStatus } from "$lib/stores";
+import { currentCourse, currentLo, currentSession, onlineStatus } from "$lib/stores";
 
 import { readValue, sanitise, updateCalendar, updateCount, updateCountValue, updateLastAccess, updateStr, updateVisits } from "$lib/services/utils/firebase";
 import { presenceService } from "./presence";
 import { PUBLIC_SUPABASE_URL } from "$env/static/public";
+import type { Session } from "@supabase/supabase-js";
 
 let course: Course;
-let user: TokenResponse;
+let session: Session;
 let lo: Lo;
 
 currentCourse.subscribe((current) => {
   course = current;
 });
-currentUser.subscribe((current) => {
-  user = current;
+currentSession.subscribe((current) => {
+  session = current;
 });
 currentLo.subscribe((current) => {
   lo = current;
@@ -25,21 +25,21 @@ currentLo.subscribe((current) => {
 export const analyticsService = {
   loRoute: "",
 
-  learningEvent(params: Record<string, string>, session: TokenResponse) {
+  learningEvent(params: Record<string, string>, session: Session) {
     if (params.loid) {
       this.loRoute = sanitise(params.loid);
     }
     this.reportPageLoad(session);
   },
 
-  setOnlineStatus(status: boolean, session: TokenResponse) {
+  setOnlineStatus(status: boolean, session: Session) {
     const onlineStatus = status ? "online" : "offline";
     const key = `${course.courseId}/users/${sanitise(session.user.email)}/onlineStatus`;
     updateStr(key, onlineStatus);
   },
 
-  async getOnlineStatus(course: Course, session: TokenResponse): Promise<string> {
-    if (!course || !user) {
+  async getOnlineStatus(course: Course, session: Session): Promise<string> {
+    if (!course || !session) {
       return "online";
     }
     const courseId = course.courseUrl.substring(0, course.courseUrl.indexOf("."));
@@ -48,16 +48,16 @@ export const analyticsService = {
     return status || "online";
   },
 
-  reportPageLoad(session: TokenResponse) {
+  reportPageLoad(session: Session) {
     if (!lo || PUBLIC_SUPABASE_URL === "XXX") return;
     updateLastAccess(`${course.courseId}/usage/${this.loRoute}`, course.title);
     updateVisits(course.courseUrl.substring(0, course.courseUrl.indexOf(".")));
 
     updateLastAccess(`all-course-access/${course.courseId}`, course.title);
     updateVisits(`all-course-access/${course.courseId}`);
-    updateLo(`all-course-access/${course.courseId}`, course, lo, get(onlineStatus), session?.user);
+    updateLo(`all-course-access/${course.courseId}`, course, lo, get(onlineStatus), session);
 
-    presenceService.sendLoEvent(course, lo, get(onlineStatus), session?.user);
+    presenceService.sendLoEvent(course, lo, get(onlineStatus), session);
 
     if (session) {
       const key = `${course.courseUrl.substring(0, course.courseUrl.indexOf("."))}/users/${sanitise(session.user.email)}/${this.loRoute}`;
@@ -66,13 +66,13 @@ export const analyticsService = {
     }
   },
 
-  updatePageCount(session: TokenResponse) {
+  updatePageCount(session: Session) {
     if (!lo) return;
     updateLastAccess(`${course.courseId}/usage/${this.loRoute}`, course.title);
     updateCount(course.courseId);
     if (session?.user) {
       updateCount(`all-course-access/${course.courseId}`);
-      updateLo(`all-course-access/${course.courseId}`, course, lo, get(onlineStatus), session?.user);
+      updateLo(`all-course-access/${course.courseId}`, course, lo, get(onlineStatus), session);
       const key = `${course.courseId}/users/${sanitise(session.user.email)}/${this.loRoute}`;
       updateLastAccess(key, lo.title);
       updateCount(key);

@@ -2,7 +2,7 @@ import type { Course } from "$lib/services/models/lo-types";
 import type { IconType } from "$lib/services/models/lo-types";
 import type { Lo } from "$lib/services/models/lo-types";
 import { writeObj } from "$lib/services/utils/firebase";
-import type { User, UserMetadata } from "../types/auth";
+import type { Session } from "@supabase/supabase-js";
 
 export interface CourseSummary {
   title: string;
@@ -39,7 +39,7 @@ export async function getCourseSummary(courseId: string): Promise<CourseSummary>
   };
 }
 
-export function updateLo(root: string, course: Course, currentLo: Lo, onlineStatus: boolean, userDetails: User) {
+export function updateLo(root: string, course: Course, currentLo: Lo, onlineStatus: boolean, session: Session) {
   const lo: any = {
     img: currentLo.img,
     title: currentLo.title,
@@ -47,12 +47,12 @@ export function updateLo(root: string, course: Course, currentLo: Lo, onlineStat
     subRoute: currentLo.route,
     isPrivate: course.properties?.private ? course.properties.private : 0
   };
-  if (userDetails && onlineStatus) {
-    const name = userDetails.user_metadata.full_name ? userDetails.user_metadata.full_name : userDetails.user_metadata.user_name;
+  if (session && onlineStatus) {
+    const name = session.user.user_metadata.full_name ? session.user.user_metadata.full_name : session.user.user_metadata.user_name;
     const user = {
       fullName: name,
-      avatar: userDetails.user_metadata.avatar_url,
-      id: userDetails.user_metadata.user_name
+      avatar: session.user.user_metadata.avatar_url,
+      id: session.user.user_metadata.user_name
     };
     lo.user = user;
   } else {
