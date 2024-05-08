@@ -1,7 +1,8 @@
 {
-  "name": "tutors-party",
+  "$schema": "https://www.partykit.io/schema.json",
+  "name": "main-price",
   "main": "src/server.ts",
-  "compatibilityDate": "2023-10-31",
+  "compatibilityDate": "2024-05-08",
   "serve": {
     "path": "public",
     "build": "src/client.ts"
