@@ -2,10 +2,10 @@
   import { onMount } from "svelte";
   import { Grid } from "ag-grid-community";
   import "ag-grid-enterprise";
-  import { CalendarSheet, options } from "$lib/services/sheets/calendar-sheet";
-  import Icon from "../icons/Icon.svelte";
+  import { CalendarSheet, options } from "$lib/ui/time/firebase/sheets/calendar-sheet";
+  import Icon from "../../icons/Icon.svelte";
   import type { Calendar } from "$lib/services/models/lo-types";
-  import type { UserMetric } from "$lib/services/types/metrics";
+  import type { UserMetric } from "$lib/services/types/firebase-metrics";
 
   export let calendarData: Calendar;
   export let userMap: Map<string, UserMetric>;

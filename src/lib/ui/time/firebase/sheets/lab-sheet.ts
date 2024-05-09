@@ -1,6 +1,6 @@
 import type { Grid, ICellRendererParams } from "ag-grid-community";
 import type { Lo } from "$lib/services/models/lo-types";
-import type { UserMetric } from "$lib/services/types/metrics";
+import type { UserMetric } from "$lib/services/types/firebase-metrics";
 
 interface LabSheetColumn {
   headerName: string;

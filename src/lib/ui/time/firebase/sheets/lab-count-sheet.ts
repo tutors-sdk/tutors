@@ -1,7 +1,7 @@
 import type { Lo } from "$lib/services/models/lo-types";
 import { LabSheet } from "./lab-sheet";
 import { deepScheme } from "./heat-map-colours";
-import type { UserMetric } from "$lib/services/types/metrics";
+import type { UserMetric } from "$lib/services/types/firebase-metrics";
 
 export class LabCountSheet extends LabSheet {
   title = "Tutors Time";
