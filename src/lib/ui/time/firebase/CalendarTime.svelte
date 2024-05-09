@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { Grid } from "ag-grid-community";
-  import { CalendarSheet, options } from "../../services/sheets/calendar-sheet";
-  import type { UserMetric } from "$lib/services/types/metrics";
+  import { CalendarSheet, options } from "./sheets/calendar-sheet";
+  import type { UserMetric } from "$lib/services/types/firebase-metrics";
   import type { Calendar } from "$lib/services/models/lo-types";
 
   export let user: UserMetric;

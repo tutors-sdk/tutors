@@ -2,7 +2,7 @@
   import "../../../app.postcss";
   import { onMount } from "svelte";
   import { getCourseSummary, type CourseSummary } from "$lib/services/utils/all-course-access";
-  import { readVisits } from "$lib/services/utils/firebase";
+  import { readVisits } from "$lib/services/utils/firebase-utils";
   import { ProgressBar } from "@skeletonlabs/skeleton";
   import TutorsShell from "$lib/ui/app-shells/TutorsShell.svelte";
   import GalleryCard from "$lib/ui/learning-objects/layout/GalleryCard.svelte";

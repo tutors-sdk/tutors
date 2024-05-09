@@ -20,12 +20,18 @@
   import { fade } from "svelte/transition";
   import type { SupabaseClient } from "@supabase/supabase-js";
   import type { Session } from "@supabase/auth-js/src/lib/types";
+  import type { Course } from "$lib/services/models/lo-types";
 
   export let session: Session;
   export let supabase: SupabaseClient;
 
   const drawerStore = getDrawerStore();
   const toastStore = getToastStore();
+
+  let course: Course;
+  currentCourse.subscribe((current) => {
+    course = current;
+  });
 
   beforeUpdate(() => {
     if ($currentCourse.authLevel > 0) {
@@ -39,7 +45,7 @@
   function handleOnlineStatusChange() {
     status = !status;
     onlineStatus.set(status);
-    analyticsService.setOnlineStatus(status, session);
+    analyticsService.setOnlineStatus(course, status, session);
   }
 
   const handleSignOut = async () => {
