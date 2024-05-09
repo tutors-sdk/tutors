@@ -1,7 +1,7 @@
 import type { Course } from "$lib/services/models/lo-types";
 import type { IconType } from "$lib/services/models/lo-types";
 import type { Lo } from "$lib/services/models/lo-types";
-import { writeObj } from "$lib/services/utils/firebase";
+import { writeObj } from "$lib/services/utils/firebase-utils";
 import type { Session } from "@supabase/supabase-js";
 
 export interface CourseSummary {
