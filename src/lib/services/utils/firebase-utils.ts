@@ -1,7 +1,7 @@
 import { getApp, initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { child, get, getDatabase, ref, runTransaction, remove, set } from "firebase/database";
-import type { UserSummary } from "../types/metrics";
+import type { UserSummary } from "../types/firebase-metrics";
 
 export function getNode(lotype: string, url: string, path: string): string {
   let node = "";

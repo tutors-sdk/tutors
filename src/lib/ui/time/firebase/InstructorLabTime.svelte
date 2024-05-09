@@ -2,11 +2,11 @@
   import { onMount } from "svelte";
   import { Grid } from "ag-grid-community";
   import "ag-grid-enterprise";
-  import Icon from "../icons/Icon.svelte";
-  import type { UserMetric } from "$lib/services/types/metrics";
+  import Icon from "../../icons/Icon.svelte";
+  import type { UserMetric } from "$lib/services/types/firebase-metrics";
   import type { Lo } from "$lib/services/models/lo-types";
-  import { LabCountSheet } from "$lib/services/sheets/lab-count-sheet";
-  import { options } from "$lib/services/sheets/lab-sheet";
+  import { LabCountSheet } from "$lib/ui/time/firebase/sheets/lab-count-sheet";
+  import { options } from "$lib/ui/time/firebase/sheets/lab-sheet";
 
   export let chart = false;
   export let userMap: Map<string, UserMetric>;

@@ -3,10 +3,10 @@
   import { fade } from "svelte/transition";
   import { writable, type Writable } from "svelte/store";
   import { Tab, TabGroup } from "@skeletonlabs/skeleton";
-  import LabTime from "$lib/ui/time/LabTime.svelte";
-  import InstructorLabTime from "$lib/ui/time/InstructorLabTime.svelte";
-  import InstructorCalendarTime from "$lib/ui/time/InstructorCalendarTime.svelte";
-  import CalendarTime from "$lib/ui/time/CalendarTime.svelte";
+  import LabTime from "$lib/ui/time/firebase/LabTime.svelte";
+  import InstructorLabTime from "$lib/ui/time/firebase/InstructorLabTime.svelte";
+  import InstructorCalendarTime from "$lib/ui/time/firebase/InstructorCalendarTime.svelte";
+  import CalendarTime from "$lib/ui/time/firebase/CalendarTime.svelte";
 
   export let data: any;
 

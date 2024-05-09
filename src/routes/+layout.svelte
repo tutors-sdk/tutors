@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import { page } from "$app/stores";
   import { getKeys } from "$lib/environment";
-  import { initFirebase } from "$lib/services/utils/firebase";
+  import { initFirebase } from "$lib/services/utils/firebase-utils";
   import { computePosition, autoUpdate, flip, shift, offset, arrow } from "@floating-ui/dom";
   import { initializeStores, storePopup } from "@skeletonlabs/skeleton";
 
