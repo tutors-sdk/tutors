@@ -1,6 +1,6 @@
 import { getKeys } from "$lib/environment";
 import { isValidCourseName } from "$lib/services/utils/all-course-access";
-import { initFirebase, readAllCourseIds } from "$lib/services/utils/firebase";
+import { initFirebase, readAllCourseIds } from "$lib/services/utils/firebase-utils";
 import type { PageLoad } from "./$types";
 
 export const ssr = false;
