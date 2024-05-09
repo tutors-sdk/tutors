@@ -10,10 +10,22 @@
   import { getKeys } from "$lib/environment";
   import { analyticsService } from "$lib/services/analytics";
   import CourseShell from "$lib/ui/app-shells/CourseShell.svelte";
-  import { initFirebase } from "$lib/services/utils/firebase";
+  import { initFirebase } from "$lib/services/utils/firebase-utils";
   import { PUBLIC_SUPABASE_URL } from "$env/static/public";
+  import type { Course, Lo } from "$lib/services/models/lo-types";
 
   export let data: any;
+
+  let course: Course;
+  let lo: Lo;
+
+  currentCourse.subscribe((current) => {
+    course = current;
+  });
+
+  currentLo.subscribe((current) => {
+    lo = current;
+  });
 
   let { supabase, session } = data;
   $: ({ supabase, session } = data);
@@ -29,7 +41,7 @@
   function updatePageCount() {
     if (!document.hidden && !currentRoute.startsWith("/live") && !currentRoute.startsWith("/dashboard")) {
       if (PUBLIC_SUPABASE_URL !== "XXX") {
-        analyticsService.updatePageCount(session);
+        analyticsService.updatePageCount(course, session, lo);
       }
     }
   }
@@ -59,7 +71,7 @@
       currentRoute = path.route.id;
     }
     if (path.params.courseid && getKeys().firebase.apiKey !== "XXX" && !$currentCourse.isPrivate) {
-      analyticsService.learningEvent(path.params, session);
+      analyticsService.learningEvent(course, path.params, session, lo);
     }
     if (path.url.hash && !path.url.hash.startsWith("#access_token")) {
       const el = document.querySelector(`[id="${path.url.hash}"]`);
