@@ -2,7 +2,7 @@ import { db } from "$lib/db/client";
 import type { Session } from "@supabase/supabase-js";
 import type { Course, Lo } from "../models/lo-types";
 import type { UserMetric, DayMeasure, Metric } from "../types/firebase-metrics";
-import type { LearningRecord, StudentRecord } from "../types/supabase-metrics";
+import type { LearningObject, LearningRecord, StudentRecord } from "../types/supabase-metrics";
 import { getAllCalendarData } from "./supabase-utils";
 
 export async function fetchStudentById(course: Course, session: Session, allLabs, allTopics): Promise<StudentRecord | null> {
@@ -42,7 +42,7 @@ export async function fetchStudentById(course: Course, session: Session, allLabs
     }
 
     if (allTopics) {
-      await populateTopics(courseBase, user);
+      //await populateTopics(courseBase, user);
       await updateStudentMetricsTopicData(courseBase, user);
 
       // user.metric.metrics.forEach(item1 => {
@@ -117,7 +117,7 @@ async function updateStudentMetrics(courseBase: string, course: Course, user: St
         if (m.type === 'lab' || m.type === 'step') {
           let labObject = course.loIndex.get(m.loid);
           if (labObject) {
-            user.allLabs.push(labObject);
+            user.allLabs.push(m);
           }
         }
 
@@ -193,18 +193,32 @@ async function populateStudentCalendar(courseId: string, user: StudentRecord) {
   }
 }
 
+// async function populateStudentsLabUsage(user: StudentRecord, allLabs: Lo[]) {
+//   // user.labActivity = [];
+//   for (const lab of allLabs) {
+//    // const labActivity: LearningRecord = findInStudent(lab.route, user);
+//     user.allLabs.forEach(activity => {
+//       if (lab.route === activity.loid) {
+//       //if (labActivity !== null) {
+//       const totalRecord: LearningObject = {
+//         title: lab.title,
+//         lo: [activity]
+//       };
+//       user.labActivity.push(totalRecord);
+//     }
+//   });
+// }
+
 async function populateStudentsLabUsage(user: StudentRecord, allLabs: Lo[]) {
-  user.labActivity = [];
-  for (const lab of allLabs) {
-    const labActivity = findInStudent(lab.route, user);
-    if (labActivity !== null) {
-      labActivity.title = lab.title;
-      user.labActivity.push(labActivity);
-    }
-  }
+  user.labActivity = allLabs
+    .filter(lab => user.allLabs.some(activity => lab.route === activity.loid))
+    .map(lab => ({
+      title: lab.title,
+      lo: user.allLabs.filter(activity => lab.route === activity.loid)
+    }));
 }
 
-function findInStudent(title: string, user: any) {
+function findInStudent(title: string, user: StudentRecord) {
   return findInStudentMetrics(title, user.metric.metrics);
 }
 

@@ -14,15 +14,16 @@ export interface Student {
     metric: number;
   }
   
-//   export interface LearningObject {
-//     route: string;
-//     type: string;
-//     title: string;
-//     image: string;
-//     icon: string;
-//     parent: string;
-//     child: string;
-//   }
+  export interface LearningObject {
+    //route: string;
+    //type: string;
+    title: string;
+    // image: string;
+    // icon: string;
+    // parent: string;
+    // child: string;
+    lo: LearningRecord[];
+  }
   
   export interface LearningRecord {
     loid: string | null;
@@ -32,7 +33,7 @@ export interface Student {
     pageLoads: number | null;
     timeActive: number;
     type: string;
-    lo: LearningRecord[];
+    //lo: LearningRecord[];
   }
   
   export interface StudentRecord {
@@ -40,9 +41,9 @@ export interface Student {
     course: Course;
     courseAccessLog: DayMeasure[];//calendarActivity
     allLearningRecords: LearningRecord[]; //topics
-    labActivity: LearningRecord[]; //filter by lab and step
+    labActivity: LearningObject[]; //filter by lab and step
     allTopics: Lo[]; //list of topics
-    allLabs: Lo[]; //list of labs
+    allLabs: LearningRecord[]; //list of labs
 
   
   }
