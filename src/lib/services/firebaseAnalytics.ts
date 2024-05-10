@@ -6,8 +6,8 @@ import { onlineStatus } from "$lib/stores";
 import { readValue, sanitise, updateCalendar, updateCount, updateCountValue, updateLastAccess, updateStr, updateVisits } from "$lib/services/utils/firebase-utils";
 import { presenceService } from "./presence";
 import { PUBLIC_SUPABASE_URL } from "$env/static/public";
-import type { Session } from "@supabase/auth-js/src/lib/types";
 import type { Analytics } from "./types/analytics";
+import type { Session } from "@supabase/supabase-js";
 
 export const firebaseAnalytics: Analytics = {
   loRoute: "",

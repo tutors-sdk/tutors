@@ -25,6 +25,7 @@
     "@tailwindcss/forms": "0.5.7",
     "@tailwindcss/line-clamp": "0.4.4",
     "@tailwindcss/typography": "0.5.13",
+    "@types/d3": "^7.4.3",
     "@types/node": "20.12.10",
     "ag-grid-community": "31.3.1",
     "ag-grid-enterprise": "31.3.1",
@@ -66,6 +67,8 @@
     "@supabase/auth-ui-svelte": "^0.2.9",
     "@supabase/ssr": "^0.3.0",
     "@supabase/supabase-js": "^2.43.1",
+    "d3": "^7.9.0",
+    "echarts": "^5.5.0",
     "ws": "^8.17.0"
   }
 }

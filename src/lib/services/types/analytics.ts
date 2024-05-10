@@ -1,4 +1,4 @@
-import type { Session } from "@supabase/auth-js/src/lib/types";
+import type { Session } from "@supabase/supabase-js";
 import type { Course, Lo } from "../models/lo-types";
 
 export interface Analytics {

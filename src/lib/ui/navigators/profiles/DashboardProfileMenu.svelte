@@ -3,6 +3,7 @@
   import type { Session } from "@supabase/auth-js/src/lib/types";
   export let session: Session;
   export let handleSignOut: () => void;
+  export let currentCourseUrl: string = "";
 </script>
 
 <nav class="list-nav card card-body w-56 p-4 space-y-4 shadow-lg" data-popup="avatar">
@@ -15,6 +16,15 @@
         <div class="ml-2">Dashboard</div>
       </a>
     </li>
+    {#if currentCourseUrl}
+    <li>
+      <li>
+        <a href="/course/{currentCourseUrl}">
+          <Icon icon="fluent-mdl2:publish-course" color="rgba(var(--color-primary-500))" height="20" />
+          <div class="ml-2">Course (Home)</div>
+        </a>
+      </li>
+      {/if}
     <li>
       <a href="https://github.com/{session.user.user_metadata.preferred_username}" target="_blank" rel="noreferrer">
         <Icon icon="mdi:github" height="20" />
