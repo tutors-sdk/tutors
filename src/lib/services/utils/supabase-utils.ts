@@ -55,6 +55,11 @@ export async function getCalendarDuration(id: string, studentId: string, courseI
   return data?.duration || 1;
 };
 
+export async function getCalendarCount(id: string, studentId: string, courseId: string): Promise<number> {
+  const { data } = await db.from('calendar').select('count').eq('id', id).eq('student_id', studentId).eq('course_id', courseId).single();
+  return data?.count || 1;
+};
+
 export async function getDurationTotal(key: string, table: string, id: string): Promise<number> {
   const { data } = await db.from(table).select('duration').eq(key, id).single();
   return data?.duration || 1;
@@ -62,7 +67,7 @@ export async function getDurationTotal(key: string, table: string, id: string): 
 
 export async function insertOrUpdateCalendar(studentId: string, courseId: string) {
   const durationPromise = getCalendarDuration(formatDate(new Date()), studentId, courseId);
-  const countPromise = updateCalendarCount(formatDate(new Date()), studentId, courseId);
+  const countPromise = getCalendarCount(formatDate(new Date()), studentId, courseId);
   const [duration, count] = await Promise.all([durationPromise, countPromise]);
   await db
     .from('calendar')
@@ -150,7 +155,7 @@ export async function updateStudentCourseLoInteractionDuration(courseId: string,
   const numOfDuration = await getNumOfStudentCourseLoIncrements('duration', courseId, studentId, loId);
 
   await db
-    .from('learnin_records')
+    .from('learning_records')
     .update({ 'duration': numOfDuration })
     .eq('student_id', studentId)
     .eq('course_id', courseId)

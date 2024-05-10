@@ -7,6 +7,12 @@ export interface Student {
     onlinestatus: boolean;
     nickname: string;
   }
+
+  export interface DayMeasure {
+    date: string;
+    dateObj: number;
+    metric: number;
+  }
   
 //   export interface LearningObject {
 //     route: string;
@@ -25,17 +31,18 @@ export interface Student {
     date: Date | null;
     pageLoads: number | null;
     timeActive: number;
-    //lo: Lo;
+    type: string;
+    lo: LearningRecord[];
   }
   
   export interface StudentRecord {
     student: Student;
     course: Course;
-    courseAccessLog: LearningRecord[];//calendarActivity
+    courseAccessLog: DayMeasure[];//calendarActivity
     allLearningRecords: LearningRecord[]; //topics
     labActivity: LearningRecord[]; //filter by lab and step
     allTopics: Lo[]; //list of topics
-    alllLabs: Lo[]; //list of labs
+    allLabs: Lo[]; //list of labs
 
   
   }
