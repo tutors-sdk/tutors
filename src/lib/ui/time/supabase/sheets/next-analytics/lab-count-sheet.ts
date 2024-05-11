@@ -7,7 +7,6 @@ import {
 import { CanvasRenderer } from 'echarts/renderers';
 import { PieChart, BarChart } from 'echarts/charts';
 import { LabelLayout } from 'echarts/features';
-import type { UserMetric } from '$lib/services/types/metrics';
 import type { Lo } from '$lib/services/models/lo-types';
 import { backgroundPattern, textureBackground } from '../next-charts/next-charts-background-url';
 

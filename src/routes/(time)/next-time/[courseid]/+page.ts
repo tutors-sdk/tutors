@@ -15,9 +15,7 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
   const data = await parent();
   if (data.session) {
     const course: Course = await courseService.readCourse(params.courseid, fetch);
-    const allLabs = course.wallMap?.get("lab");
-    const allTopics = course.los;
-    const user: StudentRecord | null = await fetchStudentById(course, data.session, allLabs, allTopics);
+    await fetchStudentById(course, data.session, course.wallMap?.get("lab"), course.los);
     const allLos = user?.allLearningRecords.map((topic) => topic.learningtitle);
     const users: Map<string, StudentRecord> = await fetchAllStudents(params.courseid, allLabs, allTopics);
     course.enrollment = Array.from(users.keys());

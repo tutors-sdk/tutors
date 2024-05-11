@@ -14,38 +14,29 @@ export interface Student {
     metric: number;
   }
   
-  export interface LearningObject {
-    //route: string;
-    //type: string;
-    title: string;
-    // image: string;
-    // icon: string;
-    // parent: string;
-    // child: string;
-    lo: LearningRecord[];
+  export interface LearningRecordSet {
+    lo: Lo;//this will hold title that we need
+    learnerRecords: LearningRecord[];
   }
   
   export interface LearningRecord {
-    loid: string | null;
+    loid?: string;
     courseid: string;
     studentid: string;
-    date: Date | null;
-    pageLoads: number | null;
+    date: Date;
+    pageLoads: number;
     timeActive: number;
-    type: string;
-    //lo: LearningRecord[];
+    //lo: Lo;
   }
   
-  export interface StudentRecord {
-    student: Student;
-    course: Course;
-    courseAccessLog: DayMeasure[];//calendarActivity
-    allLearningRecords: LearningRecord[]; //topics
-    labActivity: LearningObject[]; //filter by lab and step
-    allTopics: Lo[]; //list of topics
-    allLabs: LearningRecord[]; //list of labs
-
-  
-  }
+//   export interface StudentRecord {
+//     student: Student;
+//     course: Course;
+//     courseAccessLog: DayMeasure[];//calendarActivity
+//     allLearningRecords: LearningRecordSet[]; //topics
+//     labActivity: LearningRecordSet[]; //filter by lab and step
+//     allTopics: LearningRecord[]; //list of topics
+//     allLabs: LearningRecord[]; //list of labs
+//   }
 
 

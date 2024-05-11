@@ -30,7 +30,7 @@ let currentRange: string = new Date().getFullYear().toString();  // Initially se
 const bgPatternImg = new Image();
 bgPatternImg.src = backgroundPattern;
 
-export class CalendarSheet {
+export class cCalendarSheet {
   constructor() {
     this.chartRendered = false;
     this.myChart = null;

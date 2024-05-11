@@ -1,40 +1,74 @@
 import { db } from "$lib/db/client";
 import type { Session } from "@supabase/supabase-js";
 import type { Course, Lo } from "../models/lo-types";
-import type { UserMetric, DayMeasure, Metric } from "../types/firebase-metrics";
-import type { LearningObject, LearningRecord, StudentRecord } from "../types/supabase-metrics";
+import type { DayMeasure, Metric } from "../types/firebase-metrics";
+import type { LearningRecord, LearningRecordSet } from "../types/supabase-metrics";
 import { getAllCalendarData } from "./supabase-utils";
 
-export async function fetchStudentById(course: Course, session: Session, allLabs, allTopics): Promise<StudentRecord | null> {
-  let user: StudentRecord = {
-    student: {
-      name: "",
-      email: "",
-      picture: "",
-      onlinestatus: false,
-      nickname: ""
-    },
-    courseAccessLog: [],
-    allLearningRecords: [],
-    labActivity: [],
-    allTopics: [],
-    allLabs: [],
-    course: course
-  };
-
+export async function fetchStudentById(course: Course, session: Session, allLabs: Lo[], allTopics: Lo[]): Promise<void> {
   const courseBase = course.courseId;
-  const { data: student, error: studentError } = await db.rpc('fetch_course_overview_for_student', {
+  const { data: metrics, error: metricsError } = await db.rpc('get_learner_records', {
     user_name: session.user.user_metadata.user_name,
-    course_base: course.courseId
+    course_base: courseBase
   });
 
-  if (studentError) {
-    throw studentError;
-  }
+  if (metrics && metrics.length > 0 && course.loIndex) {
+    // Iterate over each learning object in course.loIndex
+    const learningRecordSets: LearningRecordSet[] = [];
 
-  user.student = student[0];
-  if (user) {
-    await updateStudentMetrics(courseBase, course, user);
+    // Iterate over each learning object in loIndex
+    course.loIndex.forEach((lo) => {
+        // Find the corresponding learning record in metrics using the route
+        const learningRecord = metrics.find((m) => m.loid === lo.route);
+
+        // Create a new LearningRecordSet
+        const learningRecordSet: LearningRecordSet = {
+            lo: lo,
+            learnerRecords: []
+        };
+
+        // Push the learning record to learnerRecords if found
+        if (learningRecord) {
+            learningRecordSet.learnerRecords.push(learningRecord);
+        }
+
+        // Push the learningRecordSet to the array
+        course.los.push(
+          ...learningRecordSets.flatMap(learningRecordSet =>
+              learningRecordSet.learningRecord.map(learningRecord => ({
+                  lo: learningRecordSet.lo
+              learningRecordSets: learningRecordSet.learnerRecords
+          }))
+      );    });
+}
+    metrics.forEach((m: LearningRecord) => {
+      if (m.loid) {
+        if (m.type === 'lab' || m.type === 'step') {
+          let labObject = course.loIndex.get(m.loid);
+          if (labObject) {
+            user.allLabs.push(m);
+          }
+        }
+
+        let learningObject = course.loIndex.get(m.loid);
+        if (learningObject) {
+          user.allTopics.push(learningObject);
+        }
+      }
+    });
+  }
+  // const { data: student, error: studentError } = await db.rpc('fetch_course_overview_for_student', {
+  //   user_name: session.user.user_metadata.user_name,
+  //   course_base: course.courseId
+  // });
+
+  // if (studentError) {
+  //   throw studentError;
+  // }
+
+  //user.student = student[0];
+  //if (user) {
+    //await updateStudentMetrics(courseBase, course, user);
     await populateStudentCalendar(courseBase, user);
     if (allLabs) {
       //populateDetailedLabInfo(courseBase, user);
@@ -43,7 +77,7 @@ export async function fetchStudentById(course: Course, session: Session, allLabs
 
     if (allTopics) {
       //await populateTopics(courseBase, user);
-      await updateStudentMetricsTopicData(courseBase, user);
+      //await updateStudentMetricsTopicData(courseBase, user);
 
       // user.metric.metrics.forEach(item1 => {
       //   allTopics.forEach(item2 => {
@@ -109,7 +143,7 @@ async function updateStudentMetrics(courseBase: string, course: Course, user: St
     course_base: courseBase
   });
 
-  user.allLearningRecords = metrics;
+  user.allTopics = metrics;
 
   if (metrics && metrics.length > 0 && course.loIndex) {
     metrics.forEach((m: LearningRecord) => {
@@ -184,7 +218,7 @@ async function populateStudentCalendar(courseId: string, user: StudentRecord) {
     data.forEach(item => {
       const calendarId = item.id;
       const dayMeasure: DayMeasure = {
-        date: calendarId, 
+        date: calendarId,
         dateObj: Date.parse(calendarId),
         metric: item.duration,
       };
@@ -248,15 +282,51 @@ function findInStudentMetrics(title: string, calendar: any): Metric {
   return result;
 }
 
+// async function populateStudentsTopicUsage(user: StudentRecord, allTopics: Lo[]) {
+//   user.topicActivity = [];
+//   for (const topic of allTopics) {
+//     const topicActivity: Metric = findInStudent(topic.route, user);
+//     if (topicActivity !== null) {
+//       topicActivity.title = topic.title;
+//       user.topicActivity.push(topicActivity);
+//     }
+//   }
+// }
+
+// async function populateStudentsTopicUsage(user: StudentRecord, allTopics: Lo[]) {
+//   user.allLearningRecords = allTopics
+//     .filter(topic => user.allTopics.some(activity => topic.route === activity.loid))
+//     .map(topic => {
+//       const los = user.allTopics.filter(activity => topic.route === activity.loid);
+//       return {
+//         title: topic.title,
+//         lo: los.map(lo => ({
+//           loid: lo.loid,
+//           courseid: lo.courseid,
+//           studentid: lo.studentid,
+//           date: lo.date,
+//           pageLoads: lo.pageLoads,
+//           timeActive: lo.timeActive,
+//           type: lo.type
+//         })) // Assuming you have properties like id and name for each LO
+//       };
+//     });
+// }
+
 async function populateStudentsTopicUsage(user: StudentRecord, allTopics: Lo[]) {
-  user.topicActivity = [];
-  for (const topic of allTopics) {
-    const topicActivity: Metric = findInStudent(topic.route, user);
-    if (topicActivity !== null) {
-      topicActivity.title = topic.title;
-      user.topicActivity.push(topicActivity);
-    }
-  }
+  // Group all topics by their titles
+  const topicGroups = allTopics.reduce((groups, topic) => {
+    const group = groups.get(topic.title) || [];
+    group.push(topic);
+    groups.set(topic.title, group);
+    return groups;
+  }, new Map<string, Lo[]>());
+
+  // Populate user's learning records
+  user.allLearningRecords = Array.from(topicGroups).map(([title, topics]) => ({
+    title,
+    lo: topics.flatMap(topic => user.allTopics.filter(activity => topic.route === activity.loid))
+  }));
 }
 
 function removeTrailingSlash(str: string): string {

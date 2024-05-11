@@ -1,3 +1,5 @@
+import type { LearningRecord, LearningRecordSet } from "../types/supabase-metrics";
+
 export const imageTypes = ["png", "jpg", "jpeg", "gif", "PNG", "JPG", "JPEG", "GIF"];
 export const assetTypes = imageTypes.concat(["pdf", "zip", "html", "htm", "yaml", "xls", "xlsx", "xlsm", "csv"]);
 
@@ -79,6 +81,9 @@ export type Lo = {
   parentTopic?: Topic;
   parentCourse?: Course; // parent course
   breadCrumbs?: Lo[]; // all los from course to this lo
+
+  learnerRecordSets?: LearningRecordSet[]// holds lo which has a title and array of learningrecords for charts to render
+  learnerRecords?: LearningRecord[] // a reference of a students learner record in supabase
 };
 
 export type LabStep = {
