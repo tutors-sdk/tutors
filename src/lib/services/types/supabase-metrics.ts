@@ -20,9 +20,9 @@ export interface Student {
   }
   
   export interface LearningRecord {
-    loid?: string;
+    //loid?: string;
     courseid: string;
-    studentid: string;
+    //studentid: string;
     date: Date;
     pageLoads: number;
     timeActive: number;

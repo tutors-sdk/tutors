@@ -82,8 +82,7 @@ export type Lo = {
   parentCourse?: Course; // parent course
   breadCrumbs?: Lo[]; // all los from course to this lo
 
-  learnerRecordSets?: LearningRecordSet[]// holds lo which has a title and array of learningrecords for charts to render
-  learnerRecords?: LearningRecord[] // a reference of a students learner record in supabase
+  learningRecords?: Map<string, LearningRecord[]>// a reference of a students learner record in supabase
 };
 
 export type LabStep = {

@@ -1,16 +1,14 @@
 import { db } from "$lib/db/client";
 import type { Session } from "@supabase/supabase-js";
-import type { Course, Lo } from "../models/lo-types";
+import type { Course, Lo, WeekType } from "../models/lo-types";
 import type { DayMeasure, Metric } from "../types/firebase-metrics";
-import type { LearningRecord, LearningRecordSet } from "../types/supabase-metrics";
+import type { LearningRecord } from "../types/supabase-metrics";
 import { getAllCalendarData } from "./supabase-utils";
 
-export async function fetchStudentById(course: Course, session: Session, allLabs: Lo[], allTopics: Lo[]): Promise<void> {
-  const courseBase = course.courseId;
-  try {
+export async function fetchStudentById(course: Course, session: Session): Promise<void> {
     const { data: metrics, error: metricsError } = await db.rpc('get_learner_records', {
       user_name: session.user.user_metadata.user_name,
-      course_base: courseBase
+      course_base: course.courseId
     });
 
     if (metrics && metrics.length > 0 && course.loIndex) {
@@ -18,106 +16,63 @@ export async function fetchStudentById(course: Course, session: Session, allLabs
       // Iterate over each learning object in course.loIndex
       course.loIndex.forEach((lo) => {
         // Find the corresponding learning record in metrics using the route
-        lo.learnerRecords = metrics.get(lo.route);
-        course.loIndex = new Map(course.los.map((lo) => [lo.route, lo]));
+        lo.learningRecords = <session.user.user_metadata.user_name, metrics.find((m: LearningRecord) => m.loid === lo.route);
       });
+      course.loIndex = new Map(course.los.map((lo) => [lo.route, lo]));
     }
+
+    //populateStudentCalendar(course);
+
 }
 
-// metrics.forEach((m: LearningRecord) => {
-//   if (m.loid) {
-//     if (m.type === 'lab' || m.type === 'step') {
-//       let labObject = course.loIndex.get(m.loid);
-//       if (labObject) {
-//         user.allLabs.push(m);
-//       }
-//     }
-
-//     let learningObject = course.loIndex.get(m.loid);
-//     if (learningObject) {
-//       user.allTopics.push(learningObject);
-//     }
-//   }
-// });
- //// }
-// const { data: student, error: studentError } = await db.rpc('fetch_course_overview_for_student', {
-//   user_name: session.user.user_metadata.user_name,
-//   course_base: course.courseId
-// });
-
-// if (studentError) {
-//   throw studentError;
-// }
-
-//user.student = student[0];
-//if (user) {
-//await updateStudentMetrics(courseBase, course, user);
-//await populateStudentCalendar(courseBase, user);
-// if (allLabs) {
-//   //populateDetailedLabInfo(courseBase, user);
-//   populateStudentsLabUsage(user, allLabs);
-// }
-
-// if (allTopics) {
-  //await populateTopics(courseBase, user);
-  //await updateStudentMetricsTopicData(courseBase, user);
-
-  // user.metric.metrics.forEach(item1 => {
-  //   allTopics.forEach(item2 => {
-  //     if (item2.route.includes(item1.route)) {
-  //       item1.title = item2.title;
-  //     }
-  //   });
-  // });
-  //populateStudentsTopicUsage(user, allTopics);
-// }
-// return user;
-//   } else {
-//   return null;
-// }
-//};
-
-export async function fetchAllStudents(courseUrl: string, allLabs, allTopics): Promise<Map<string, StudentRecord>> {
-  let user = null;
-  const users = new Map<string, StudentRecord>();
+export async function fetchAllStudents(course: Course): Promise<void> {
+  //const users = new Map<string, StudentRecord>();
   try {
-    const courseBase = courseUrl.substring(0, courseUrl.indexOf("."));
-    const { data: students, error: studentsError } = await db.rpc('fetch_course_overview_for_students', {
-      course_base: courseBase
+    const courseBase = course.courseId
+    const { data: metrics, error: studentsError } = await db.rpc('get_all_learner_records', {
+      course_base: course.courseId
     });
 
     if (studentsError) {
       throw studentsError;
     }
 
-    for (const student of students) {
-      user = student;
-      await updateStudentMetrics(courseBase, user);
-      populateStudentCalendar(courseBase, user);
-      if (allLabs) {
-        populateDetailedLabInfo(courseBase, user);
-        populateStudentsLabUsage(user, allLabs);
-      }
+    for (const metric of metrics) {
+      if (metrics && metrics.length > 0 && course.loIndex) {
 
-      if (allTopics) {
-        await populateTopics(courseBase, user);
-        await updateStudentMetricsTopicData(courseBase, user);
-      }
-      user.metric.metrics.forEach(item1 => {
-        allTopics.forEach(item2 => {
-          if (item2.route.includes(item1.route)) {
-            item1.title = item2.title;
-          }
+        // Iterate over each learning object in course.loIndex
+        course.loIndex.forEach((lo) => {
+          // Find the corresponding learning record in metrics using the route
+          lo.learningRecords = metrics.find((m: LearningRecord) => m.loid === lo.route);
         });
-      });
-      populateStudentsTopicUsage(user, allTopics);
-      users.set(user.nickname, user);
-
+        course.loIndex = new Map(course.los.map((lo) => [lo.route, lo]));
+      }
     }
+      //await updateStudentMetrics(courseBase, user);
+     // populateStudentCalendar(course);
+    //   if (allLabs) {
+    //     populateDetailedLabInfo(courseBase, user);
+    //     populateStudentsLabUsage(user, allLabs);
+    //   }
+
+    //   if (allTopics) {
+    //     await populateTopics(courseBase, user);
+    //     await updateStudentMetricsTopicData(courseBase, user);
+    //   }
+    //   user.metric.metrics.forEach(item1 => {
+    //     allTopics.forEach(item2 => {
+    //       if (item2.route.includes(item1.route)) {
+    //         item1.title = item2.title;
+    //       }
+    //     });
+    //   });
+    //   populateStudentsTopicUsage(user, allTopics);
+    //   users.set(user.nickname, user);
+
+    // }
   } catch (error) {
     console.error('Error fetching data:', error);
   }
-  return users;
 };
 
 async function updateStudentMetrics(courseBase: string, course: Course, user: StudentRecord) {
@@ -194,21 +149,21 @@ async function updateStudentMetricsTopicData(courseBase: string, user: any) {
   });
 }
 
-async function populateStudentCalendar(courseId: string, user: StudentRecord) {
-  user.courseAccessLog = [];
-  let data = await getAllCalendarData(courseId, user.student.nickname)
-  if (data) {
-    data.forEach(item => {
-      const calendarId = item.id;
-      const dayMeasure: DayMeasure = {
-        date: calendarId,
-        dateObj: Date.parse(calendarId),
-        metric: item.duration,
-      };
-      user.courseAccessLog.push(dayMeasure);
-    });
-  }
-}
+// async function populateStudentCalendar(course: Course, session: Session) {
+//   course
+//   let data = await getAllCalendarData(course.courseId, session.user.user_metadata.user_name)
+//   if (data) {
+//     data.forEach(item => {
+//       const calendarId = item.id;
+//       const weekType: WeekType = {
+//         date: calendarId,
+//         dateObj: Date.parse(calendarId),
+//         metric: item.duration,
+//       };
+//       course.courseCalendar.push(dayMeasure);
+//     });
+//   }
+// }
 
 // async function populateStudentsLabUsage(user: StudentRecord, allLabs: Lo[]) {
 //   // user.labActivity = [];
