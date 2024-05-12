@@ -21,7 +21,7 @@ export interface Student {
   
   export interface LearningRecord {
     //loid?: string;
-    courseid: string;
+    //courseid: string;
     //studentid: string;
     date: Date;
     pageLoads: number;
