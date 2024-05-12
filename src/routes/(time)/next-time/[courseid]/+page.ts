@@ -1,9 +1,7 @@
-
 import type { PageLoad } from "./$types";
 import { courseService } from "$lib/services/course";
 import type { Course } from "$lib/services/models/lo-types";
-import { fetchAllStudents, fetchStudentById } from "$lib/services/utils/supabase-metrics";
-import type { StudentRecord } from "$lib/services/types/supabase-metrics";
+import { fetchLearningRecords } from "$lib/services/utils/supabase-metrics";
 
 export const ssr = false;
 
@@ -15,10 +13,7 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
   const data = await parent();
   if (data.session) {
     const course: Course = await courseService.readCourse(params.courseid, fetch);
-    await fetchStudentById(course, data.session);
-    await fetchAllStudents(course);
-    course.enrollment = Array.from(users.keys());
-    const enrolledUsers: Map<string, StudentRecord> = new Map<string, StudentRecord>();
+    await fetchLearningRecords(course, data.session);
     if (course.hasEnrollment && course.enrollment) {
       for (let i = 0; i < course.enrollment.length; i++) {
         const enrolledUser = users.get(course.enrollment[i]);
@@ -37,15 +32,14 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
       }
     }
     return {
-      user: user,
       course: course,
-      allLabs: course.wallMap?.get("lab"),
-      allTopics: course.los,
-      allActivities: allLos,
-      calendar: course.courseCalendar,
-      ignorePin: course.ignorePin,
-      users: users,
-      enrolledUsers
+      // allLabs: course.wallMap?.get("lab"),
+      // allTopics: course.los,
+      // allActivities: allLos,
+      // calendar: course.courseCalendar,
+      // ignorePin: course.ignorePin,
+      // users: users,
+      // enrolledUsers
     };
   }
 
