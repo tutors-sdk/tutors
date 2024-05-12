@@ -5,69 +5,62 @@ import type { DayMeasure, Metric } from "../types/firebase-metrics";
 import type { LearningRecord } from "../types/supabase-metrics";
 import { getAllCalendarData } from "./supabase-utils";
 
-export async function fetchStudentById(course: Course, session: Session): Promise<void> {
-  // const { data: metrics, error: metricsError } = await db.rpc('get_all_learner_records', {
-  //   user_name: session.user.user_metadata.user_name,
-  //   course_base: course.courseId
-  // });
-
+export async function fetchStudentById(course: Course): Promise<void> {
   const { data: metrics, error: studentsError } = await db.rpc('get_all_learner_records', {
     course_base: course.courseId
   });
 
   if (metrics && metrics.length > 0 && course.loIndex) {
-
-
-    metrics.forEach((metric: { date: any; pageLoads: any; timeActive: any; studentid: string; }) => {
-      const studentRecordsMap = new Map<string, LearningRecord[]>();
-
-      // Create a new object without loid and studentId properties
-      const learningRecord: LearningRecord = {
-        date: metric.date,
-        pageLoads: metric.pageLoads,
-        timeActive: metric.timeActive
-      };
-
+    const studentRecordsMap = new Map<string, LearningRecord[]>();
+    metrics.forEach((metric: { courseid: string, loid: string, date: Date; pageloads: number; timeactive: number; studentid: string; }) => {
       course.loIndex.forEach((lo) => {
-        // Check if the student ID exists in the map
-        if (studentRecordsMap.has(metric.studentid)) {
-          // If the student ID exists, push the modified record to its array
-          studentRecordsMap.get(metric.studentid)?.push(learningRecord);
-        } else {
-          // If the student ID doesn't exist, create a new array with the modified record
-          studentRecordsMap.set(metric.studentid, [learningRecord]);
+        if (metric.loid === lo.route) {
+          // Create a new object without loid and studentId properties
+          const learningRecord: LearningRecord = {
+            date: metric.date,
+            pageLoads: metric.pageloads,
+            timeActive: metric.timeactive
+          };
+          // Check if the student ID exists in the map
+          if (studentRecordsMap.has(metric.studentid)) {
+            // If the student ID exists, push the modified record to its array
+            studentRecordsMap.get(metric.studentid)?.push(learningRecord);
+          } else {
+            // If the student ID doesn't exist, create a new array with the modified record
+            studentRecordsMap.set(metric.studentid, [learningRecord]);
+          }
+          // Find the corresponding learning record in metrics using the route
+          lo.learningRecords = studentRecordsMap;
         }
-        // Find the corresponding learning record in metrics using the route
-        lo.learningRecords = studentRecordsMap;
       });
     });
     course.loIndex = new Map(course.los.map((lo) => [lo.route, lo]));
   }
 };
 
-export async function fetchAllStudents(course: Course): Promise<void> {
-  //const users = new Map<string, StudentRecord>();
-  try {
-    const courseBase = course.courseId
-    const { data: metrics, error: studentsError } = await db.rpc('get_all_learner_records', {
-      course_base: course.courseId
-    });
+// export async function fetchAllStudents(course: Course): Promise<void> {
+//   //const users = new Map<string, StudentRecord>();
+//   try {
+//     const courseBase = course.courseId
+//     const { data: metrics, error: studentsError } = await db.rpc('get_all_learner_records', {
+//       course_base: course.courseId
+//     });
 
-    if (studentsError) {
-      throw studentsError;
-    }
+//     if (studentsError) {
+//       throw studentsError;
+//     }
 
-    for (const metric of metrics) {
-      if (metrics && metrics.length > 0 && course.loIndex) {
+//     for (const metric of metrics) {
+//       if (metrics && metrics.length > 0 && course.loIndex) {
 
-        // Iterate over each learning object in course.loIndex
-        course.loIndex.forEach((lo) => {
-          // Find the corresponding learning record in metrics using the route
-          lo.learningRecords = metrics.find((m: LearningRecord) => m.loid === lo.route);
-        });
-        course.loIndex = new Map(course.los.map((lo) => [lo.route, lo]));
-      }
-    }
+//         // Iterate over each learning object in course.loIndex
+//         course.loIndex.forEach((lo) => {
+//           // Find the corresponding learning record in metrics using the route
+//           lo.learningRecords = metrics.find((m: LearningRecord) => m.loid === lo.route);
+//         });
+//         course.loIndex = new Map(course.los.map((lo) => [lo.route, lo]));
+//       }
+//     }
     //await updateStudentMetrics(courseBase, user);
     // populateStudentCalendar(course);
     //   if (allLabs) {
