@@ -1,13 +1,13 @@
 import * as echarts from 'echarts/core';
 import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
-import { StudentPieChart } from '../es-charts/piechart';
+import { piechart } from '../es-charts/piechart';
 
 const bgPatternSrc = backgroundPattern;
 
 const bgPatternImg = new Image();
 bgPatternImg.src = bgPatternSrc;
 
-export class TopicCountSheet {
+export class TopicPieChart {
   constructor() {
     this.myChart = null;
     this.listOfTopics = [];
@@ -112,13 +112,13 @@ export class TopicCountSheet {
         name: topic.title
       }));
 
-      const option = StudentPieChart(bgPatternImg, this.user, [], singleUserInnerData, singleUserOuterData);
+      const option = piechart(bgPatternImg, this.user, [], singleUserInnerData, singleUserOuterData);
       this.myChart.setOption(option);
       this.singleUserPieClick();
     } else {
       this.multipleUsersPieClick();
       const allUsersTopicActivity = this.aggregateInnerPieTopicData();
-      const option = StudentPieChart(bgPatternImg, this.user, allUsersTopicActivity, [], []);
+      const option = piechart(bgPatternImg, this.user, allUsersTopicActivity, [], []);
       this.myChart.setOption(option);
     }
   }

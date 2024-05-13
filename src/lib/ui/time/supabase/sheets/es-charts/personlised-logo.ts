@@ -7,7 +7,7 @@ echarts.use([GraphicComponent, CanvasRenderer]);
 const bgPatternImg = new Image();
 bgPatternImg.src = backgroundPattern;
 
-export function nextTutorsAnalyticsLogo(logoText: string) {
+export function tutorsAnalyticsLogo(logoText: string) {
 return {
   backgroundColor: {
     image: bgPatternImg,

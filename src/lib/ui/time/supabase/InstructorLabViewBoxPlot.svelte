@@ -1,14 +1,14 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
-  import type { StudentRecord } from "$lib/services/types/supabase-metrics";
-  import { LabBoxPlot } from "./sheets/tutors-analytics/lab-box-plot-chart-chart";
+  import { LabBoxPlotChart } from "./sheets/tutors-analytics/lab-box-plot-chart";
+    import type { Course } from "$lib/services/models/lo-types";
 
-  export let course: Map<string, StudentRecord>;
+  export let course: Course;
 
-  let labBoxPlot: LabBoxPlot | null;
+  let labBoxPlot: LabBoxPlotChart | null;
 
   onMount(() => {
-    labBoxPlot = new LabBoxPlot();
+    labBoxPlot = new LabBoxPlotChart();
     renderCharts();
   });
 

@@ -8,7 +8,7 @@ import {
 import { BoxplotChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
-import { boxplotChart, combinedBoxplotChart } from '../es-charts/boxplot';
+import { boxplot, combinedBoxplotChart } from '../es-charts/boxplot';
 import type { StudentRecord } from '$lib/services/types/supabase-metrics';
 echarts.use([
   TitleComponent,
@@ -21,7 +21,7 @@ echarts.use([
 const bgPatternImg = new Image();
 bgPatternImg.src = backgroundPattern;
 
-export class TopicBoxPlot {
+export class TopicBoxPlotChart {
   prepareBoxplotData(userDataMap: StudentRecord) {
     const boxplotData = [];
     const userNicknames = [];
@@ -83,7 +83,7 @@ export class TopicBoxPlot {
   renderBoxPlot(container, boxplotData, userNicknames) {
     const chart = echarts.init(container);
 
-    const option = boxplotChart(bgPatternImg, userNicknames, boxplotData, 'Topic Activity per Student Boxplot');
+    const option = boxplot(bgPatternImg, userNicknames, boxplotData, 'Topic Activity per Student Boxplot');
 
     chart.setOption(option);
   }

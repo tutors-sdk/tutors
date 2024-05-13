@@ -19,7 +19,7 @@ echarts.use([
   CanvasRenderer
 ]);
 
-export function calendarMap(user: UserMetric, bgPatternImg: HTMLImageElement, currentRange: string): EChartsOption {
+export function calendar(user: UserMetric, bgPatternImg: HTMLImageElement, currentRange: string): EChartsOption {
   return {
     title: {
       top: 30,

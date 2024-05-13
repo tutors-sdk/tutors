@@ -8,10 +8,10 @@ import {
 import { HeatmapChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import type { EChartsOption } from 'echarts';
-import { calendarMap } from '../es-charts/calendar';
+import { calendar } from '../es-charts/calendar';
 import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
 import { GraphicComponent } from 'echarts/components';
-import { nextTutorsAnalyticsLogo } from '../es-charts/personlised-logo';
+import { tutorsAnalyticsLogo } from '../es-charts/personlised-logo';
 import type { Student, StudentRecord } from '$lib/services/types/supabase-metrics';
 
 echarts.use([
@@ -30,7 +30,7 @@ let currentRange: string = new Date().getFullYear().toString();  // Initially se
 const bgPatternImg = new Image();
 bgPatternImg.src = backgroundPattern;
 
-export class CalendarSheet {
+export class CalendarChart {
   constructor() {
     this.chartRendered = false;
     this.myChart = null;
@@ -96,11 +96,11 @@ export class CalendarSheet {
 
     const chart = echarts.init(chartContainer);
     if (!sessionStorage.getItem('logoShown')) {
-      chart.setOption(nextTutorsAnalyticsLogo("Next Tutors Analytics"));
+      chart.setOption(tutorsAnalyticsLogo("Next Tutors Analytics"));
       sessionStorage.setItem('logoShown', 'true');
       setTimeout(() => {
         // Prepare the actual data settings
-        const option = calendarMap(user, bgPatternImg, currentRange);
+        const option = calendar(user, bgPatternImg, currentRange);
   
         chart.setOption(option, true); // The 'true' parameter clears the previous setting completely before applying new options
   
@@ -112,7 +112,7 @@ export class CalendarSheet {
     }else{
     this.myCharts[user?.nickname] = chart;
       // Prepare the actual data settings
-      const option = calendarMap(user, bgPatternImg, currentRange);
+      const option = calendar(user, bgPatternImg, currentRange);
 
       chart.setOption(option, true); // The 'true' parameter clears the previous setting completely before applying new options
 

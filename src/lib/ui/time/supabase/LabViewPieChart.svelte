@@ -1,30 +1,28 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
-  import type { Lo } from "$lib/services/models/lo-types";
-  import type { StudentRecord } from "$lib/services/types/supabase-metrics";
-  import { LabCountSheet } from "./sheets/tutors-analytics/lab-pie-chartartt
+  import type { Course, Lo } from "$lib/services/models/lo-types";
+  import { LabPieChart } from "./sheets/tutors-analytics/lab-pie-chart";
 
-  export let user: StudentRecord;
-  export let allLabs: Lo[] = [];
-  let labCountSheet: LabCountSheet | null;
+  export let user: Course;
+  let labPieChart: LabPieChart | null;
 
   onMount(async () => {
-    labCountSheet = new LabCountSheet(user);
-    labCountSheet.populateCols(allLabs);
-    labCountSheet.renderChart();
+    labPieChart = new LabPieChart(user);
+    labPieChart.populateCols(allLabs);
+    labPieChart.renderChart();
   });
 
   // Destroy the chart instance when the component unmounts
   onDestroy(() => {
-    if (labCountSheet) {
-      labCountSheet = null;
+    if (labPieChart) {
+      labPieChart = null;
     }
   });
 
   // Function to render the chart
   const renderChart = () => {
-    if (labCountSheet) {
-      labCountSheet.renderChart();
+    if (labPieChart) {
+      labPieChart.renderChart();
     }
   };
 

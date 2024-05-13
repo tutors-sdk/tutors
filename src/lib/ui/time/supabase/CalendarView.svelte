@@ -1,12 +1,12 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
-  import type { StudentRecord } from "$lib/services/types/supabase-metrics";
-  import { CalendarSheet } from "./sheets/tutors-analytics/calendar-chartrt";
+  import { CalendarChart } from "./sheets/tutors-analytics/calendar-chart";
+  import type { Course } from "$lib/services/models/lo-types";
 
-  export let course: StudentRecord;
+  export let course: Course;
 
-  let calendarSheet: CalendarSheet | null;
-  calendarSheet = new CalendarSheet();
+  let calendarChart: CalendarChart | null;
+  calendarChart = new CalendarChart();
 
   onMount(() => {
     renderChart();
@@ -14,9 +14,9 @@
 
   // Destroy the chart instance when the component unmounts
   onDestroy(() => {
-    if (calendarSheet) {
+    if (calendarChart) {
       // Clean up resources if needed
-      calendarSheet = null;
+      calendarChart = null;
     }
   });
 
@@ -27,9 +27,9 @@
 
   // Function to render the chart
   const renderChart = () => {
-    if (calendarSheet) {
-      calendarSheet.createChartContainer(course?.student.nickname);
-      calendarSheet.renderChart(course);
+    if (calendarChart) {
+      calendarChart.createChartContainer(course?.student.nickname);
+      calendarChart.renderChart(course);
     }
   };
 

@@ -34,7 +34,7 @@ piePatternImg.src = bgTexture;
 const bgPatternImg = new Image();
 bgPatternImg.src = bgPatternSrc;
 
-export class LabCountSheet {
+export class LabPieChart {
   private myChart: echarts.ECharts | null;
   private listOfLabs: string[];
 

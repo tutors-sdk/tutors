@@ -1,6 +1,6 @@
 import type { EChartsOption } from "echarts";
 
-export function boxplotChart(bgPatternImg: HTMLImageElement, userNicknames: string[], boxplotData: number[][], chartTitle: string): EChartsOption {
+export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[], boxplotData: number[][], chartTitle: string): EChartsOption {
 return {
     title: {
       text: chartTitle

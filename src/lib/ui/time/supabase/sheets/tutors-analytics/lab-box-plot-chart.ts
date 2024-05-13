@@ -9,7 +9,7 @@ import {
 import { BoxplotChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
-import { boxplotChart, combinedBoxplotChart } from '../es-charts/boxplot';
+import { boxplot, combinedBoxplotChart } from '../es-charts/boxplot';
 echarts.use([
   TitleComponent,
   TooltipComponent,
@@ -21,7 +21,7 @@ echarts.use([
 const bgPatternImg = new Image();
 bgPatternImg.src = backgroundPattern;
 
-export class LabBoxPlot {
+export class LabBoxPlotChart {
   prepareBoxplotData(userDataMap) {
     const boxplotData = [];
     const userNicknames = [];
@@ -83,7 +83,7 @@ export class LabBoxPlot {
 
   renderBoxPlot(container, boxplotData, userNicknames) {
     const chart = echarts.init(container);
-    const option = boxplotChart(bgPatternImg, userNicknames ,boxplotData, 'Lab Activity per Student Boxplot');
+    const option = boxplot(bgPatternImg, userNicknames ,boxplotData, 'Lab Activity per Student Boxplot');
     chart.setOption(option);
   }
 

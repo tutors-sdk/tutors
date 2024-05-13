@@ -1,29 +1,28 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
-  import type { Topic } from "$lib/services/models/lo-types";
-  import type { StudentRecord } from "$lib/services/types/supabase-metrics";
-  import { TopicCountSheet } from "./sheets/tutors-analytics/topic-pie-chartartt
+  import type { Course, Topic } from "$lib/services/models/lo-types";
+  import { TopicPieChart } from "./sheets/tutors-analytics/topic-pie-chart";
 
-  export let course: Map<string, StudentRecord>;
+  export let course: Course;
   export const topics: Topic[] = [];
 
-  let topicCountSheet: TopicCountSheet | null;
+  let topicPieChart: TopicPieChart | null;
 
   onMount(() => {
-    topicCountSheet = new TopicCountSheet();
-    topicCountSheet.populateUsersData(course);
+    topicPieChart = new TopicPieChart();
+    topicPieChart.populateUsersData(course);
     renderChart();
   });
 
   const renderChart = () => {
-    if (topicCountSheet) {
-      topicCountSheet.renderChart();
+    if (topicPieChart) {
+      topicPieChart.renderChart();
     }
   };
 
   onDestroy(() => {
-    if (topicCountSheet) {
-      topicCountSheet = null;
+    if (topicPieChart) {
+      topicPieChart = null;
     }
   });
 

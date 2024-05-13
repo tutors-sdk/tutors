@@ -1,22 +1,22 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import type { Course, Lo } from "$lib/services/models/lo-types";
-  import { LabSheet } from "./sheets/tutors-analytics/lab-heat-map-chartmap-chart";
+  import { LabHeatMapChart } from "./sheets/tutors-analytics/lab-heat-map-chart";
 
   export let course: Course;
-  let labSheet: LabSheet | null;
-  labSheet = new LabSheet(course);
+  let labHeatMapChart: LabHeatMapChart | null;
+  labHeatMapChart = new LabHeatMapChart(course);
 
   onMount(() => {
-    labSheet?.populateUsersData();
+    labHeatMapChart?.populateUsersData();
     renderChart();
   });
 
   // Destroy the chart instance when the component unmounts
   onDestroy(() => {
-    if (labSheet) {
+    if (labHeatMapChart) {
       // Clean up resources if needed
-      labSheet = null;
+      labHeatMapChart = null;
     }
   });
 
@@ -27,16 +27,16 @@
 
   // Function to render the chart
   const renderChart = () => {
-    if (labSheet) {
-      const container = labSheet.getChartContainer();
-      labSheet.renderChart(container);
+    if (labHeatMapChart) {
+      const container = labHeatMapChart.getChartContainer();
+      labHeatMapChart.renderChart(container);
 
-      const combinedLabData = labSheet.prepareCombinedLabData(course);
+      const combinedLabData = labHeatMapChart.prepareCombinedLabData(course);
       const element = document.getElementById("combined-heatmap");
       if (!element) {
         throw new Error("Element with ID 'combined-heatmap' not found");
       }
-      labSheet.renderCombinedLabChart(element, combinedLabData, "Total Time: Labs");
+      labHeatMapChart.renderCombinedLabChart(element, combinedLabData, "Total Time: Labs");
     }
   };
 

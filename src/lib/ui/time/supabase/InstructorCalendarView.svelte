@@ -1,22 +1,22 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
-  import { CalendarSheet } from "./sheets/tutors-analytics/calendar-chartrt";
+  import { CalendarChart } from "./sheets/tutors-analytics/calendar-chart";
   import type { Course } from "$lib/services/models/lo-types";
 
   export let course: Course;
 
-  let calendarSheet: CalendarSheet | null;
+  let calendarChart: CalendarChart | null;
 
   onMount(() => {
-    calendarSheet = new CalendarSheet();
+    calendarChart = new CalendarChart();
     createAndRenderChart();
   });
 
   // Destroy the chart instance when the component unmounts
   onDestroy(() => {
-    if (calendarSheet) {
+    if (calendarChart) {
       // Clean up resources if needed
-      calendarSheet = null;
+      calendarChart = null;
     }
   });
 
@@ -27,7 +27,7 @@
 
   // Function to render the chart
   const renderChart = () => {
-    if (calendarSheet && course.loIndex.size > 0) {
+    if (calendarChart && course.loIndex.size > 0) {
       createAndRenderChart();
     }
   };
@@ -35,12 +35,12 @@
   const createAndRenderChart = () => {
     if (course.los.learningRecord.size > 0) {
       Array.from(course.values()).forEach((user) => {
-        calendarSheet?.createChartContainer(user.student.nickname);
-        calendarSheet?.renderChart(user);
+        calendarChart?.createChartContainer(user.student.nickname);
+        calendarChart?.renderChart(user);
       });
     } else {
-      calendarSheet?.createChartContainer(course.values().next().value);
-      calendarSheet?.renderChart(course.values().next().value);
+      calendarChart?.createChartContainer(course.values().next().value);
+      calendarChart?.renderChart(course.values().next().value);
     }
   };
 

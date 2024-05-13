@@ -22,7 +22,7 @@ echarts.use([
 const bgPatternImg = new Image();
 bgPatternImg.src = backgroundPattern;
 
-export class TopicSheet {
+export class TopicHeatMapChart {
   chartRendered: boolean = false;
 
   constructor(topics, userData) {

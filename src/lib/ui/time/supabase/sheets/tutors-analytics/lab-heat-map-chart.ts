@@ -6,7 +6,6 @@ import {
 } from 'echarts/components';
 import { HeatmapChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
-import type { UserMetric } from '$lib/services/types/metrics';
 import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
 import { heatmap } from '../es-charts/heatmap';
 import type { Course, Lo } from '$lib/services/models/lo-types';
@@ -22,7 +21,7 @@ echarts.use([
 const bgPatternImg = new Image();
 bgPatternImg.src = backgroundPattern;
 
-export class LabSheet {
+export class LabHeatMapChart {
   chartRendered: boolean = false;
   chartInstances: Map<any, any>;
   labs: Lo[] | undefined;

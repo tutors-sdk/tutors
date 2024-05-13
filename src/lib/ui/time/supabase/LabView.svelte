@@ -1,24 +1,23 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
-  import type { Lo } from "$lib/services/models/lo-types";
-  import { LabSheet } from "./sheets/tutors-analytics/lab-heat-map-chartmap-chart";
-  import type { StudentRecord } from "$lib/services/types/supabase-metrics";
+  import type { Course, Lo } from "$lib/services/models/lo-types";
+  import { LabHeatMapChart } from "./sheets/tutors-analytics/lab-heat-map-chart";
 
-  export let user: StudentRecord;
+  export let user: Course;
   export let allLabs: Lo[] = [];
 
-  let labSheet: LabSheet | null;
-  labSheet = new LabSheet(allLabs, user);
+  let labHeatMapChart: LabHeatMapChart | null;
+  labHeatMapChart = new LabHeatMapChart(allLabs, user);
 
   onMount(() => {
-    labSheet?.populateSingleUserData(user);
+    labHeatMapChart?.populateSingleUserData(user);
     renderChart();
   });
 
   // Destroy the chart instance when the component unmounts
   onDestroy(() => {
-    if (labSheet) {
-      labSheet = null;
+    if (labHeatMapChart) {
+      labHeatMapChart = null;
     }
   });
 
@@ -29,9 +28,9 @@
 
   // Function to render the chart
   const renderChart = () => {
-    if (labSheet && user) {
-      const container = labSheet.getChartContainer();
-      labSheet.renderChart(container);
+    if (labHeatMapChart && user) {
+      const container = labHeatMapChart.getChartContainer();
+      labHeatMapChart.renderChart(container);
     }
   };
 

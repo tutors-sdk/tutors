@@ -1,26 +1,25 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
-  import type { StudentRecord } from "$lib/services/types/supabase-metrics";
-  import { LiveStudentFeedSheet } from "./sheets/tutors-analytics/live-student-feeded";
+  import { LiveStudentFeedChart } from "./sheets/tutors-analytics/live-student-feed";
   export let userMap: Map<string, StudentRecord>;
   export let courseName: string;
 
-  let liveStudentFeedSheet: LiveStudentFeedSheet | null;
+  let liveStudentFeedChart: LiveStudentFeedChart | null;
 
   onMount(() => {
-    liveStudentFeedSheet = new LiveStudentFeedSheet(Array.from(userMap.values()), courseName);
-    liveStudentFeedSheet.renderCharts();
+    liveStudentFeedChart = new LiveStudentFeedChart(Array.from(userMap.values()), courseName);
+    liveStudentFeedChart.renderCharts();
   });
 
   onDestroy(() => {
-    if (liveStudentFeedSheet) {
-      liveStudentFeedSheet = null;
+    if (liveStudentFeedChart) {
+      liveStudentFeedChart = null;
     }
   });
 
   const renderCharts = () => {
-    if (liveStudentFeedSheet) {
-      liveStudentFeedSheet.renderCharts();
+    if (liveStudentFeedChart) {
+      liveStudentFeedChart.renderCharts();
     }
   };
 

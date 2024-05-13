@@ -1,24 +1,23 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import type { Course, Topic } from "$lib/services/models/lo-types";
-  import { TopicSheet } from "./sheets/tutors-analytics/topic-heat-map-charttsmap-chartts";
+  import { TopicHeatMapChart } from "./sheets/tutors-analytics/topic-heat-map-chart";
 
   export let course: Course;
   export let topics: Topic[] = [];
-  let topicSheet: TopicSheet | null;
-  topicSheet = new TopicSheet(topics, course);
+  let topicHeatMapChart: TopicHeatMapChart | null;
+  topicHeatMapChart = new TopicHeatMapChart(topics, course);
 
   onMount(() => {
-    topicSheet?.populateUsersData();
-    //combined
+    topicHeatMapChart?.populateUsersData();
     renderChart();
   });
 
   // Destroy the chart instance when the component unmounts
   onDestroy(() => {
-    if (topicSheet) {
+    if (topicHeatMapChart) {
       // Clean up resources if needed
-      topicSheet = null;
+      topicHeatMapChart = null;
     }
   });
 
@@ -29,17 +28,17 @@
 
   // Function to render the chart
   const renderChart = () => {
-    if (topicSheet) {
-      const container = topicSheet.getChartContainer();
-      topicSheet.renderChart(container);
+    if (topicHeatMapChart) {
+      const container = topicHeatMapChart.getChartContainer();
+      topicHeatMapChart.renderChart(container);
 
       //combined
-      const combinedTopicData = topicSheet.prepareCombinedTopicData(course);
+      const combinedTopicData = topicHeatMapChart.prepareCombinedTopicData(course);
       const element = document.getElementById("combined-heatmap");
       if (!element) {
         throw new Error("Element with ID 'combined-heatmap' not found");
       }
-      topicSheet.renderCombinedTopicChart(element, combinedTopicData, "Total Time: Topics");
+      topicHeatMapChart.renderCombinedTopicChart(element, combinedTopicData, "Total Time: Topics");
     }
   };
 

@@ -25,7 +25,7 @@ piePatternImg.src = bgTextureImg;
 const bgPatternImg = new Image();
 bgPatternImg.src = bgPatternSrc;
 
-export class LiveStudentFeedSheet {
+export class LiveStudentFeedChart {
   constructor(users, courseName) {
     // If users is already a Map, use it directly; otherwise, convert it to a Map
     this.users = users instanceof Map ? users : new Map(Object.entries(users));

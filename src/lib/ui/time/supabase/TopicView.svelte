@@ -1,29 +1,29 @@
 <script lang="ts">
     import { onDestroy, onMount } from "svelte";
-    import type {  Topic } from "$lib/services/models/lo-types";
-    import { TopicSheet } from "./sheets/tutors-analytics/topic-heat-map-charttsmap-chartts";
+    import type {  Course, Topic } from "$lib/services/models/lo-types";
+    import { TopicHeatMapChart } from "./sheets/tutors-analytics/topic-heat-map-chart";
 
-    export let user: StudentRecord;
+    export let user: Course;
     export let topics: Topic[] = [];
 
-    let topicSheet: TopicSheet | null;
-    topicSheet = new TopicSheet(topics, user);
+    let topicHeatMapChart: TopicHeatMapChart | null;
+    topicHeatMapChart = new TopicHeatMapChart(topics, user);
   
     onMount(() => {
-      topicSheet?.populateSingleUserData(user);
+      topicHeatMapChart?.populateSingleUserData(user);
       renderChart();
     });
 
     onDestroy(() => {
-      if (topicSheet) {
-        topicSheet = null;
+      if (topicHeatMapChart) {
+        topicHeatMapChart = null;
       }
     });
 
     const renderChart = () => {
-      if (topicSheet && user) {
-        const container = topicSheet.getChartContainer();
-        topicSheet.renderChart(container);
+      if (topicHeatMapChart && user) {
+        const container = topicHeatMapChart.getChartContainer();
+        topicHeatMapChart.renderChart(container);
       }
     };
 

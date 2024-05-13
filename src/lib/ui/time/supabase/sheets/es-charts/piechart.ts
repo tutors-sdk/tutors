@@ -1,6 +1,6 @@
 import type { UserMetric } from '$lib/services/types/metrics';
 
-export function StudentPieChart(bgPatternImg: any, user: UserMetric, allUsersTopicActivity: any[], singleUserInnerData: any[], singleUserOuterData: any[]) {
+export function piechart(bgPatternImg: any, user: UserMetric, allUsersTopicActivity: any[], singleUserInnerData: any[], singleUserOuterData: any[]) {
   return {
     tooltip: {
       trigger: 'item',
