@@ -6,10 +6,9 @@ import {
 } from 'echarts/components';
 import { HeatmapChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
-import { backgroundPattern } from '../next-charts/next-charts-background-url';
-import { heatmap } from '../next-charts/heatmap';
+import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
+import { heatmap } from '../es-charts/heatmap';
 import type { Topic } from '$lib/services/models/lo-types';
-import type { StudentRecord } from '$lib/services/types/supabase-metrics';
 
 echarts.use([
   TooltipComponent,

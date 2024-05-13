@@ -85,7 +85,7 @@
     {#if instructorMode}
       <!-- <NewInstructorCalendarTime course={data}  /> -->
     {:else}
-      <CalendarTimeNewChart course={data} />
+      <!-- <CalendarTimeNewChart course={data} /> -->
     {/if}
   {:else if tabSet === 1}
     {#if instructorMode}

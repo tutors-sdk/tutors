@@ -8,10 +8,10 @@
   export let session: Session
 
   let labHeatMapChart: LabHeatMapChart | null;
-  labHeatMapChart = new LabHeatMapChart(course);
+  labHeatMapChart = new LabHeatMapChart(course, session);
 
   onMount(() => {
-    labHeatMapChart?.populateSingleUserData(course, session);
+    labHeatMapChart?.populateSingleUserData();
     renderChart();
   });
 
