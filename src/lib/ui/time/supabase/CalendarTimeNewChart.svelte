@@ -3,7 +3,7 @@
   import type { StudentRecord } from "$lib/services/types/supabase-metrics";
   import { CalendarSheet } from "./sheets/next-analytics/calendar-sheet";
 
-  export let user: StudentRecord;
+  export let course: StudentRecord;
 
   let calendarSheet: CalendarSheet | null;
   calendarSheet = new CalendarSheet();
@@ -28,8 +28,8 @@
   // Function to render the chart
   const renderChart = () => {
     if (calendarSheet) {
-      calendarSheet.createChartContainer(user?.student.nickname);
-      calendarSheet.renderChart(user);
+      calendarSheet.createChartContainer(course?.student.nickname);
+      calendarSheet.renderChart(course);
     }
   };
 
@@ -38,8 +38,8 @@
 </script>
 
 <div class="h-screen">
-  {#if user}
-    <div id={`chart-${user?.student.nickname}`} style="height: 100%;"></div>
+  {#if course}
+    <div id={`chart-${course?.student.nickname}`} style="height: 100%;"></div>
   {:else}
     <div id="heatmap-container" style="height: 100%"></div>
   {/if}

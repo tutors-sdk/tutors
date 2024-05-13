@@ -1,5 +1,3 @@
-import type { LearningRecord, LearningRecordSet } from "../types/supabase-metrics";
-
 export const imageTypes = ["png", "jpg", "jpeg", "gif", "PNG", "JPG", "JPEG", "GIF"];
 export const assetTypes = imageTypes.concat(["pdf", "zip", "html", "htm", "yaml", "xls", "xlsx", "xlsm", "csv"]);
 
@@ -82,8 +80,14 @@ export type Lo = {
   parentCourse?: Course; // parent course
   breadCrumbs?: Lo[]; // all los from course to this lo
 
-  learningRecords?: Map<string, LearningRecord[]>// a reference of a students learner record in supabase
+  learningRecords?: Map<string, LearningRecord[]>// a reference of a students learner record in supabase, studentId -> LearningRecord[]
 };
+
+export interface LearningRecord {
+  date: Date;
+  pageLoads: number;
+  timeActive: number;
+}
 
 export type LabStep = {
   title: string;

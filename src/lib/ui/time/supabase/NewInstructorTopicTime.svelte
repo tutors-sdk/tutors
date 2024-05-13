@@ -4,10 +4,10 @@
   import type { StudentRecord } from "$lib/services/types/supabase-metrics";
   import { TopicSheet } from "./sheets/next-analytics/topic-sheet";
 
-  export let userMap: Map<string, StudentRecord>;
+  export let course: Map<string, StudentRecord>;
   export let topics: Topic[] = [];
   let topicSheet: TopicSheet | null;
-  topicSheet = new TopicSheet(topics, userMap);
+  topicSheet = new TopicSheet(topics, course);
 
   onMount(() => {
     topicSheet?.populateUsersData();
@@ -35,7 +35,7 @@
       topicSheet.renderChart(container);
 
       //combined
-      const combinedTopicData = topicSheet.prepareCombinedTopicData(userMap);
+      const combinedTopicData = topicSheet.prepareCombinedTopicData(course);
       const element = document.getElementById("combined-heatmap");
       if (!element) {
         throw new Error("Element with ID 'combined-heatmap' not found");

@@ -14,23 +14,23 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
   if (data.session) {
     const course: Course = await courseService.readCourse(params.courseid, fetch);
     await fetchLearningRecords(course, data.session);
-    if (course.hasEnrollment && course.enrollment) {
-      for (let i = 0; i < course.enrollment.length; i++) {
-        const enrolledUser = users.get(course.enrollment[i]);
-        if (enrolledUser) {
-          if (!enrolledUser.student.name) {
-            const response = await fetch(`https://api.github.com/users/${enrolledUser.nickname}`);
-            const latestProfile = await response.json();
-            if (latestProfile.name) {
-              enrolledUser.student.name = latestProfile.name;
-            } else {
-              enrolledUser.student.name = latestProfile.login;
-            }
-          }
-          enrolledUsers.set(course.enrollment[i], enrolledUser);
-        }
-      }
-    }
+    // if (course.hasEnrollment && course.enrollment) {
+    //   for (let i = 0; i < course.enrollment.length; i++) {
+    //     const enrolledUser = users.get(course.enrollment[i]);
+    //     if (enrolledUser) {
+    //       if (!enrolledUser.student.name) {
+    //         const response = await fetch(`https://api.github.com/users/${enrolledUser.nickname}`);
+    //         const latestProfile = await response.json();
+    //         if (latestProfile.name) {
+    //           enrolledUser.student.name = latestProfile.name;
+    //         } else {
+    //           enrolledUser.student.name = latestProfile.login;
+    //         }
+    //       }
+    //       enrolledUsers.set(course.enrollment[i], enrolledUser);
+    //     }
+    //   }
+    //}
     return {
       course: course,
       // allLabs: course.wallMap?.get("lab"),

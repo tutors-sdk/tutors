@@ -4,14 +4,14 @@
   import type { StudentRecord } from "$lib/services/types/supabase-metrics";
   import { TopicCountSheet } from "./sheets/next-analytics/topic-count-sheet";
 
-  export let userMap: Map<string, StudentRecord>;
+  export let course: Map<string, StudentRecord>;
   export const topics: Topic[] = [];
 
   let topicCountSheet: TopicCountSheet | null;
 
   onMount(() => {
     topicCountSheet = new TopicCountSheet();
-    topicCountSheet.populateUsersData(userMap);
+    topicCountSheet.populateUsersData(course);
     renderChart();
   });
 

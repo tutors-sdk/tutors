@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type { StudentRecord } from "$lib/services/types/supabase-metrics";
   import { onDestroy, onMount } from "svelte";
-    import { CalendarSheet } from "./sheets/next-analytics/calendar-sheet";
+  import { CalendarSheet } from "./sheets/next-analytics/calendar-sheet";
+  import type { Course } from "$lib/services/models/lo-types";
 
-  export let userMap: Map<string, StudentRecord>;
+  export let course: Course;
 
   let calendarSheet: CalendarSheet | null;
 
@@ -27,32 +27,32 @@
 
   // Function to render the chart
   const renderChart = () => {
-    if (calendarSheet && userMap.size > 0) {
+    if (calendarSheet && course.loIndex.size > 0) {
       createAndRenderChart();
     }
   };
 
   const createAndRenderChart = () => {
-    if (userMap.size > 0) {
-        Array.from(userMap.values()).forEach((user) => {
-          calendarSheet?.createChartContainer(user.student.nickname);
-          calendarSheet?.renderChart(user);
-        });
-      } else {
-        calendarSheet?.createChartContainer(userMap.values().next().value);
-        calendarSheet?.renderChart(userMap.values().next().value);
-      }
+    if (course.los.learningRecord.size > 0) {
+      Array.from(course.values()).forEach((user) => {
+        calendarSheet?.createChartContainer(user.student.nickname);
+        calendarSheet?.renderChart(user);
+      });
+    } else {
+      calendarSheet?.createChartContainer(course.values().next().value);
+      calendarSheet?.renderChart(course.values().next().value);
+    }
   };
 
   // Calculate the height of each chart container dynamically
-  $: chartHeight = userMap && userMap.size > 0 ? 100 / userMap.size + "%" : "50%";
+  $: chartHeight = course && course.size > 0 ? 100 / course.size + "%" : "50%";
   // Listen for window focus event to trigger chart refresh
   window.addEventListener("focus", handleFocus);
 </script>
 
 <div class="h-screen overflow-auto">
-  {#if userMap.size > 0}
-    {#each Array.from(userMap?.keys()) as userId}
+  {#if course.size > 0}
+    {#each Array.from(course?.keys()) as userId}
       <div id={`chart-${userId}`} style={`height: 50%; width:100%;overflow-y: scroll;`}></div>
     {/each}
     <div id="heatmap-container" style="height: ${chartHeight}; width:100%;"></div>

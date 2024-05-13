@@ -4,7 +4,7 @@
     import type { StudentRecord } from "$lib/services/types/supabase-metrics";
     import { TopicBoxPlot } from "./sheets/next-analytics/topic-box-plot";
 
-  export let userMap: Map<string, StudentRecord>;
+  export let course: Map<string, StudentRecord>;
 
   let topicBoxPlot: TopicBoxPlot | null;
 
@@ -29,9 +29,9 @@
   // Function to render the charts
   const renderCharts = () => {
     if (topicBoxPlot) {
-      const { boxplotData, userNicknames } = topicBoxPlot.prepareBoxplotData(userMap);
+      const { boxplotData, userNicknames } = topicBoxPlot.prepareBoxplotData(course);
       topicBoxPlot.renderBoxPlot(document.getElementById("heatmap-container"), boxplotData, userNicknames);
-      const combinedBoxplotData = topicBoxPlot.prepareCombinedBoxplotData(userMap);
+      const combinedBoxplotData = topicBoxPlot.prepareCombinedBoxplotData(course);
       topicBoxPlot.renderCombinedBoxplotChart(document.getElementById('combinedBoxPlot'), combinedBoxplotData);
     }
   };
