@@ -2,15 +2,16 @@
   import { onDestroy, onMount } from "svelte";
   import type { Course, Lo } from "$lib/services/models/lo-types";
   import { LabHeatMapChart } from "./sheets/tutors-analytics/lab-heat-map-chart";
+    import type { Session } from "@supabase/supabase-js";
 
-  export let user: Course;
-  export let allLabs: Lo[] = [];
+  export let course: Course;
+  export let session: Session
 
   let labHeatMapChart: LabHeatMapChart | null;
-  labHeatMapChart = new LabHeatMapChart(allLabs, user);
+  labHeatMapChart = new LabHeatMapChart(course);
 
   onMount(() => {
-    labHeatMapChart?.populateSingleUserData(user);
+    labHeatMapChart?.populateSingleUserData(course, session);
     renderChart();
   });
 
@@ -28,7 +29,7 @@
 
   // Function to render the chart
   const renderChart = () => {
-    if (labHeatMapChart && user) {
+    if (labHeatMapChart && course) {
       const container = labHeatMapChart.getChartContainer();
       labHeatMapChart.renderChart(container);
     }

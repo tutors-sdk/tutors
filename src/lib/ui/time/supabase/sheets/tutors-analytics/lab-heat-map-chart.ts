@@ -9,6 +9,8 @@ import { CanvasRenderer } from 'echarts/renderers';
 import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
 import { heatmap } from '../es-charts/heatmap';
 import type { Course, Lo } from '$lib/services/models/lo-types';
+import type { Session } from '@supabase/supabase-js';
+import { filterByType } from '$lib/services/models/lo-utils';
 
 echarts.use([
   TooltipComponent,
@@ -28,8 +30,10 @@ export class LabHeatMapChart {
   categories: Set<String>;
   yAxisData: number[];
   series: string[];
+  course: Course;
+  session: Session;
 
-  constructor(course: Course) {
+  constructor(course: Course, session: Session) {
     this.chartRendered = false;
     this.chartInstances = new Map();
     this.labs = course.wallMap?.get("lab") // Array of lab titles
@@ -38,17 +42,23 @@ export class LabHeatMapChart {
     //this.user = null;
     this.yAxisData = [];
     this.series = [];
+    this.course = course;
+    this.session = session;
   }
 
   populateUsersData() {
-    this.populateLabTitles(this.labs)
-    this.populateAndRenderUsersData(this.users, this.labs);
+    if (this.labs) {
+      this.populateLabTitles(this.labs)
+      this.populateAndRenderUsersData(this.users, this.labs);
+    }
   }
 
-  populateSingleUserData(user: UserMetric) {
-    this.user = user;
-    this.populateLabTitles(this.labs)
-    this.populateAndRenderSingleUserData(this.user, this.labs);
+  populateSingleUserData(course: Course, session: Session) {
+   // this.user = user;
+    if (this.labs) {
+      this.populateLabTitles(this.labs)
+      this.populateAndRenderSingleUserData(session, this.labs);
+    }
   }
 
   populateLabTitles(allLabs: Lo[]) {
@@ -90,16 +100,16 @@ export class LabHeatMapChart {
     }];
   }
 
-  populateSingleUserSeriesData(user: UserMetric, allLabs) {
-    const labTitles = allLabs.map(lab => lab.title.trim());
+  populateSingleUserSeriesData(course: Course, allLabs: Lo[]) {
+    const labTitles = allLabs.map((lab: { title: string; }) => lab.title.trim());
     this.categories = new Set(labTitles);
+    let los = filterByType(course.los, 'lab');
 
-    const seriesData = user?.labActivity?.map(activity => [
-      labTitles.indexOf(activity.title.trim()),
+    const seriesData = los.map(lo => [
+      labTitles.indexOf(lo.title.trim()),
       0,
-      activity.count
-    ])
-
+      lo.learningRecords?.get(this.session.user.user_metadata.user_name)?.timeActive || 0
+    ]);
     return [{
       name: 'Lab Activity',
       type: 'heatmap',
@@ -110,13 +120,13 @@ export class LabHeatMapChart {
     }];
   }
 
-  populateAndRenderSingleUserData(user: UserMetric, allLabs: any) {
+  populateAndRenderSingleUserData(session: Session, allLabs: Lo[]) {
     const container = this.getChartContainer();
     if (!container) return;
 
-    this.yAxisData = [user?.nickname];
+    this.yAxisData = [session.user.user_metadata.user_name];
 
-    const seriesData = this.populateSingleUserSeriesData(user, allLabs);
+    const seriesData = this.populateSingleUserSeriesData(this.course, allLabs);
     this.series = [{
       name: 'Lab Activity',
       type: 'heatmap',
@@ -136,7 +146,7 @@ export class LabHeatMapChart {
 
     let allSeriesData = [];
     usersData?.forEach((user, nickname) => {
-      this.yAxisData.push(user?.nickname)
+      this.yAxisData.push(session.user.user_metadata.user_name)
 
       const index = this.getIndexFromMap(usersData, nickname);
 
