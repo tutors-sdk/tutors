@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
   import type { StudentRecord } from "$lib/services/types/supabase-metrics";
-  import { CalendarSheet } from "./sheets/next-analytics/calendar-sheet";
+  import { CalendarSheet } from "./sheets/tutors-analytics/calendar-chartrt";
 
   export let course: StudentRecord;
 

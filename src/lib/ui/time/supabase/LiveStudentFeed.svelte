@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import type { StudentRecord } from "$lib/services/types/supabase-metrics";
-  import { LiveStudentFeedSheet } from "./sheets/next-analytics/live-student-feed";
+  import { LiveStudentFeedSheet } from "./sheets/tutors-analytics/live-student-feeded";
   export let userMap: Map<string, StudentRecord>;
   export let courseName: string;
 

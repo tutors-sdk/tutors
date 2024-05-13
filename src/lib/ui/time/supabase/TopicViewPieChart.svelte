@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import type { Topic } from "$lib/services/models/lo-types";
-  import { TopicCountSheet } from "./sheets/next-analytics/topic-count-sheet";
+  import { TopicCountSheet } from "./sheets/tutors-analytics/topic-pie-chartartt
   import type { StudentRecord } from "$lib/services/types/supabase-metrics";
 
   export let user: StudentRecord;

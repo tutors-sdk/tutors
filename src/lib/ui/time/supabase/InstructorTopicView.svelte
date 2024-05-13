@@ -1,24 +1,24 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
-  import type { Lo } from "$lib/services/models/lo-types";
-  import type { StudentRecord } from "$lib/services/types/supabase-metrics";
-  import { LabSheet } from "./sheets/next-analytics/lab-sheet";
+  import type { Course, Topic } from "$lib/services/models/lo-types";
+  import { TopicSheet } from "./sheets/tutors-analytics/topic-heat-map-charttsmap-chartts";
 
-  export let userMap: Map<string, StudentRecord>;
-  export let allLabs: Lo[] = [];
-  let labSheet: LabSheet | null;
-  labSheet = new LabSheet(allLabs, userMap);
+  export let course: Course;
+  export let topics: Topic[] = [];
+  let topicSheet: TopicSheet | null;
+  topicSheet = new TopicSheet(topics, course);
 
   onMount(() => {
-    labSheet?.populateUsersData();
+    topicSheet?.populateUsersData();
+    //combined
     renderChart();
   });
 
   // Destroy the chart instance when the component unmounts
   onDestroy(() => {
-    if (labSheet) {
+    if (topicSheet) {
       // Clean up resources if needed
-      labSheet = null;
+      topicSheet = null;
     }
   });
 
@@ -29,16 +29,17 @@
 
   // Function to render the chart
   const renderChart = () => {
-    if (labSheet) {
-      const container = labSheet.getChartContainer();
-      labSheet.renderChart(container);
+    if (topicSheet) {
+      const container = topicSheet.getChartContainer();
+      topicSheet.renderChart(container);
 
-      const combinedLabData = labSheet.prepareCombinedLabData(userMap);
+      //combined
+      const combinedTopicData = topicSheet.prepareCombinedTopicData(course);
       const element = document.getElementById("combined-heatmap");
       if (!element) {
         throw new Error("Element with ID 'combined-heatmap' not found");
       }
-      labSheet.renderCombinedLabChart(element, combinedLabData, "Total Time: Labs");
+      topicSheet.renderCombinedTopicChart(element, combinedTopicData, "Total Time: Topics");
     }
   };
 

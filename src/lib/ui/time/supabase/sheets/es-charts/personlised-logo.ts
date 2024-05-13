@@ -1,7 +1,7 @@
 import * as echarts from 'echarts/core';
 import { GraphicComponent} from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
-import { backgroundPattern } from '../next-charts/next-charts-background-url';
+import { backgroundPattern } from './tutors-charts-background-url';
 
 echarts.use([GraphicComponent, CanvasRenderer]);
 const bgPatternImg = new Image();

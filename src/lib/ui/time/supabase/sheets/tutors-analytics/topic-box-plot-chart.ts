@@ -7,8 +7,8 @@ import {
 } from 'echarts/components';
 import { BoxplotChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
-import { backgroundPattern } from '../next-charts/next-charts-background-url';
-import { boxplotChart, combinedBoxplotChart } from '../next-charts/boxplot';
+import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
+import { boxplotChart, combinedBoxplotChart } from '../es-charts/boxplot';
 import type { StudentRecord } from '$lib/services/types/supabase-metrics';
 echarts.use([
   TitleComponent,

@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
   import type { StudentRecord } from "$lib/services/types/supabase-metrics";
-  import { LabBoxPlot } from "./sheets/next-analytics/lab-box-plot";
+  import { LabBoxPlot } from "./sheets/tutors-analytics/lab-box-plot-chart-chart";
 
-  export let userMap: Map<string, StudentRecord>;
+  export let course: Map<string, StudentRecord>;
 
   let labBoxPlot: LabBoxPlot | null;
 
@@ -28,9 +28,9 @@
   // Function to render the charts
   const renderCharts = () => {
     if (labBoxPlot) {
-      const { boxplotData, userNicknames } = labBoxPlot.prepareBoxplotData(userMap);
+      const { boxplotData, userNicknames } = labBoxPlot.prepareBoxplotData(course);
       labBoxPlot.renderBoxPlot(document.getElementById("heatmap-container"), boxplotData, userNicknames);
-      const combinedBoxplotData = labBoxPlot.prepareCombinedBoxplotData(userMap);
+      const combinedBoxplotData = labBoxPlot.prepareCombinedBoxplotData(course);
       labBoxPlot.renderCombinedBoxplotChart(document.getElementById("combinedBoxPlot"), combinedBoxplotData);
     }
   };

@@ -1,4 +1,4 @@
-import { db } from "$lib/db/client";
+import { db } from "$lib/services/utils/db/client";
 import type { Course, Lo } from "../models/lo-types";
 import type { User, Session } from "@supabase/supabase-js";
 

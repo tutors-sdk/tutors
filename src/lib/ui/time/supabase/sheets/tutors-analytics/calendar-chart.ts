@@ -8,10 +8,10 @@ import {
 import { HeatmapChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import type { EChartsOption } from 'echarts';
-import { calendarMap } from '../next-charts/calendar';
-import { backgroundPattern } from '../next-charts/next-charts-background-url';
+import { calendarMap } from '../es-charts/calendar';
+import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
 import { GraphicComponent } from 'echarts/components';
-import { nextTutorsAnalyticsLogo } from '../next-charts/personlised-logo';
+import { nextTutorsAnalyticsLogo } from '../es-charts/personlised-logo';
 import type { Student, StudentRecord } from '$lib/services/types/supabase-metrics';
 
 echarts.use([

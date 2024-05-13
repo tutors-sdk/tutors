@@ -2,8 +2,8 @@ import * as echarts from 'echarts/core';
 import { BarChart } from 'echarts/charts';
 import { TooltipComponent, GridComponent, GraphicComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
-import { textureBackground, backgroundPattern } from '../next-charts/next-charts-background-url';
-import { barchart } from '../next-charts/barchart';
+import { textureBackground, backgroundPattern } from '../es-charts/tutors-charts-background-url';
+import { barchart } from '../es-charts/barchart';
 
 echarts.use([
   BarChart,

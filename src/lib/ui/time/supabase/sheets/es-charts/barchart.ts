@@ -1,4 +1,3 @@
-import type { UserMetric } from "$lib/services/types/metrics";
 import type { EChartsOption } from "echarts";
 
 export function barchart(piePatternImg: HTMLImageElement, bgPatternImg:  HTMLImageElement,chartData: UserMetric[]): EChartsOption {

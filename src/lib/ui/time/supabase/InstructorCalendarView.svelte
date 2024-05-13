@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
-  import { CalendarSheet } from "./sheets/next-analytics/calendar-sheet";
+  import { CalendarSheet } from "./sheets/tutors-analytics/calendar-chartrt";
   import type { Course } from "$lib/services/models/lo-types";
 
   export let course: Course;

@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from "svelte";
   import type { Topic } from "$lib/services/models/lo-types";
   import type { StudentRecord } from "$lib/services/types/supabase-metrics";
-  import { TopicCountSheet } from "./sheets/next-analytics/topic-count-sheet";
+  import { TopicCountSheet } from "./sheets/tutors-analytics/topic-pie-chartartt
 
   export let course: Map<string, StudentRecord>;
   export const topics: Topic[] = [];

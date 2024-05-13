@@ -1,8 +1,7 @@
 <script lang="ts">
     import { onDestroy, onMount } from "svelte";
-    import type { StudentRecord } from "$lib/services/types/supabase-metrics";
     import type {  Topic } from "$lib/services/models/lo-types";
-    import { TopicSheet } from "./sheets/next-analytics/topic-sheet";
+    import { TopicSheet } from "./sheets/tutors-analytics/topic-heat-map-charttsmap-chartts";
 
     export let user: StudentRecord;
     export let topics: Topic[] = [];

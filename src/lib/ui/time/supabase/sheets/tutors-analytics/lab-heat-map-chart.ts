@@ -7,9 +7,9 @@ import {
 import { HeatmapChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import type { UserMetric } from '$lib/services/types/metrics';
-import { backgroundPattern } from '../next-charts/next-charts-background-url';
-import { heatmap } from '../next-charts/heatmap';
-import type { Lo } from '$lib/services/models/lo-types';
+import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
+import { heatmap } from '../es-charts/heatmap';
+import type { Course, Lo } from '$lib/services/models/lo-types';
 
 echarts.use([
   TooltipComponent,
@@ -24,14 +24,19 @@ bgPatternImg.src = backgroundPattern;
 
 export class LabSheet {
   chartRendered: boolean = false;
+  chartInstances: Map<any, any>;
+  labs: Lo[] | undefined;
+  categories: Set<String>;
+  yAxisData: number[];
+  series: string[];
 
-  constructor(allLabs, userData) {
+  constructor(course: Course) {
     this.chartRendered = false;
     this.chartInstances = new Map();
-    this.labs = allLabs; // Array of lab titles
-    this.users = userData; // Array of user objects
+    this.labs = course.wallMap?.get("lab") // Array of lab titles
+    //this.users = userData; // Array of user objects
     this.categories = new Set();
-    this.user = null;
+    //this.user = null;
     this.yAxisData = [];
     this.series = [];
   }

@@ -1,8 +1,6 @@
 import * as echarts from 'echarts/core';
-import { backgroundPattern } from '../next-charts/next-charts-background-url';
-import { StudentPieChart } from '../next-charts/pie-chart';
-import type { StudentRecord } from '$lib/services/types/supabase-metrics';
-
+import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
+import { StudentPieChart } from '../es-charts/piechart';
 
 const bgPatternSrc = backgroundPattern;
 

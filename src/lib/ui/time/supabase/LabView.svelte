@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import type { Lo } from "$lib/services/models/lo-types";
-  import { LabSheet } from "./sheets/next-analytics/lab-sheet";
+  import { LabSheet } from "./sheets/tutors-analytics/lab-heat-map-chartmap-chart";
   import type { StudentRecord } from "$lib/services/types/supabase-metrics";
 
   export let user: StudentRecord;

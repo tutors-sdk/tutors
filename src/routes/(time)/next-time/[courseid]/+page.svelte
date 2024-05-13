@@ -3,18 +3,18 @@
   import { fade } from "svelte/transition";
   import { writable, type Writable } from "svelte/store";
   import { Tab, TabGroup } from "@skeletonlabs/skeleton";
-  import BoxPlotInstructorChart from "$lib/ui/time/supabase/BoxPlotInstructorChart.svelte";
-  import CalendarTimeNewChart from "$lib/ui/time/supabase/CalendarTimeNewChart.svelte";
-  import InstructorTopicBoxPlotChart from "$lib/ui/time/supabase/InstructorTopicBoxPlotChart.svelte";
-  import InstructorTotalTopicTimePieChart from "$lib/ui/time/supabase/InstructorTotalTopicTimePieChart.svelte";
-  import LabTimeNewChart from "$lib/ui/time/supabase/LabTimeNewChart.svelte";
+  import BoxPlotInstructorChart from "$lib/ui/time/supabase/InstructorLabViewBoxPlot.svelte";
+  import CalendarTimeNewChart from "$lib/ui/time/supabase/CalendarView.svelte";
+  import InstructorTopicBoxPlotChart from "$lib/ui/time/supabase/InstructorTopicViewBoxPlot.svelte";
+  import InstructorTotalTopicTimePieChart from "$lib/ui/time/supabase/InstructorTopicViewPieChart.svelte";
+  import LabTimeNewChart from "$lib/ui/time/supabase/LabViewPieChart.svelte";
   import LiveStudentFeed from "$lib/ui/time/supabase/LiveStudentFeed.svelte";
-  import NewInstructorCalendarTime from "$lib/ui/time/supabase/NewInstructorCalendarTime.svelte";
-  import NewInstructorLabTime from "$lib/ui/time/supabase/NewInstructorLabTime.svelte";
-  import NewInstructorTopicTime from "$lib/ui/time/supabase/NewInstructorTopicTime.svelte";
-  import NewLabTime from "$lib/ui/time/supabase/NewLabTime.svelte";
-  import NewTopicTime from "$lib/ui/time/supabase/NewTopicTime.svelte";
-  import TopicTimeNewChart from "$lib/ui/time/supabase/TopicTimeNewChart.svelte";
+  import NewInstructorCalendarTime from "$lib/ui/time/supabase/InstructorCalendarView.svelte";
+  import NewInstructorLabTime from "$lib/ui/time/supabase/InstructorLabView.svelte";
+  import NewInstructorTopicTime from "$lib/ui/time/supabase/InstructorTopicView.svelte";
+  import NewLabTime from "$lib/ui/time/supabase/LabView.svelte";
+  import NewTopicTime from "$lib/ui/time/supabase/TopicView.svelte";
+  import TopicTimeNewChart from "$lib/ui/time/supabase/TopicViewPieChart.svelte";
 
   export let course: any;
 
@@ -126,9 +126,9 @@
       </select>
       <!-- Display selected lab chart -->
       {#if selectedInstructorLabChart === "NewInstructorLabTime"}
-        <NewInstructorLabTime userMap={course.users} allLabs={course.allLabs} />
+        <NewInstructorLabTime course={course} /> 
       {:else if selectedInstructorLabChart === "BoxPlotInstructorChart"}
-        <BoxPlotInstructorChart userMap={course.users} allLabs={course.allLabs} />
+        <BoxPlotInstructorChart course={course} />
       {/if}
     {:else}
       <!-- Dropdown for selecting lab charts -->
