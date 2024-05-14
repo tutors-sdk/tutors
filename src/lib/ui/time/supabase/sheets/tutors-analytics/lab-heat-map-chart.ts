@@ -11,7 +11,7 @@ import { heatmap } from '../es-charts/heatmap';
 import type { Course, Lo } from '$lib/services/models/lo-types';
 import type { Session } from '@supabase/supabase-js';
 import { filterByType } from '$lib/services/models/lo-utils';
-import type { HeatMapSeriesData } from '$lib/services/types/supabase-metrics';
+import type { HeatMapSeriesData, LearningObject, learningObject } from '$lib/services/types/supabase-metrics';
 
 echarts.use([
   TooltipComponent,
@@ -90,13 +90,12 @@ export class LabHeatMapChart {
     return keysArray.indexOf(key);
   }
 
-  populateSeriesData(course: Course, userIndex: number, allLabs: Lo[]) {
+  populateSeriesData(learningObjects: LearningObject[], userIndex: number, allLabs: Lo[]) {
     const labTitles = allLabs.map(lab => lab.title.trim());
     this.categories = new Set(labTitles);
 
-    const seriesData = course?.learningRecords?.forEach(activity => [
-      course.
-      labTitles.indexOf(activity.),
+    const seriesData = learningObjects?.forEach(activity => [
+      labTitles.indexOf(activity.loTitle.trim()),
       userIndex, // yIndex is now the index of the user in usersData array
       activity.timeActive
     ])
@@ -159,25 +158,43 @@ export class LabHeatMapChart {
     let allSeriesData: HeatMapSeriesData[] = [];
     let yAxisData: string[] = []; // Array to store yAxis data
 
-    // Filter labs by type 'lab'
+    const labTitles = allLabs.map((lab: { title: string; }) => lab.title.trim());
+    this.categories = new Set(labTitles);
     let los = filterByType(course.los, 'lab');
 
-
-    los?.forEach((lo, nickname) => {
-      let returnedLearnerObjects = [];
+    los?.forEach((lo: Lo) => {
       if (lo.hasOwnProperty('learningRecords')) {
         // Iterate through each user's learning records for the current lab
         usersIds.forEach((userId, index) => {
-          const records = lo.learningRecords?.get(userId);
+          let records: LearningObject[] = [];
+          if (lo.learningRecords) {
+              // Filter records for the current user
+              const userRecords = Array.from(lo.learningRecords.entries())
+                  .filter(([key, value]) => key === userId)
+                  .map(([_, value]) => value);
+      
+              // Push each record into the records array
+              userRecords.forEach(record => {
+                  let learningObject: LearningObject = {
+                      timeActive: record.timeActive,
+                      date: record.date,
+                      pageLoads: record.pageLoads,
+                      nickname: userId,
+                      route: lo.route,
+                      loTitle: lo.title,
+                      parentLoTitle: lo.parentLo?.title,
+                  };
+                  records.push(learningObject);
+              });
+          }
+          // records.route = lo.route;
           if (records) {
-            for (const record in records) {
-              // Push the username to yAxisData for each record
-              this.yAxisData.push(index);
+            // Push the username to yAxisData for each record
+            this.yAxisData.push(index);
 
-              // Populate series data for the current lab and user
-              const seriesData = this.populateSeriesData(course, index, allLabs);
-              allSeriesData = allSeriesData.concat(seriesData[0].data);
-            }
+            // Populate series data for the current lab and user
+            const seriesData = this.populateSeriesData(records, index, allLabs);
+            allSeriesData = allSeriesData.concat(seriesData[0].data);
           }
         });
       }
