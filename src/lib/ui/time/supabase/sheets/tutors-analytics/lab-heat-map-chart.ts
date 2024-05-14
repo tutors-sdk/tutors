@@ -34,12 +34,13 @@ export class LabHeatMapChart {
   session: Session;
   series: HeatMapSeriesData;
   los: Lo[];
+  userIds: string[];
 
-  constructor(course: Course, session: Session) {
+  constructor(course: Course, session: Session, userIds: string[]) {
     this.chartRendered = false;
     this.chartInstances = new Map();
     this.labs = course.wallMap?.get("lab") // Array of lab titles
-    //this.users = userData; // Array of user objects
+    this.userIds = userIds;
     this.categories = new Set();
     this.yAxisData = [];
     this.series = {
@@ -58,8 +59,8 @@ export class LabHeatMapChart {
 
   populateUsersData() {
     if (this.labs) {
-      this.populateLabTitles(this.labs)
-      this.populateAndRenderUsersData(this.course, this.labs);
+      this.populateLabTitles(this.labs);
+      this.populateAndRenderUsersData(this.course, this.labs, this.userIds);
     }
   }
 
@@ -89,14 +90,15 @@ export class LabHeatMapChart {
     return keysArray.indexOf(key);
   }
 
-  populateSeriesData(user: UserMetric, userIndex: number, allLabs) {
+  populateSeriesData(course: Course, userIndex: number, allLabs: Lo[]) {
     const labTitles = allLabs.map(lab => lab.title.trim());
     this.categories = new Set(labTitles);
 
-    const seriesData = user?.labActivity?.map(activity => [
-      labTitles.indexOf(activity.title.trim()),
+    const seriesData = course?.learningRecords?.forEach(activity => [
+      course.
+      labTitles.indexOf(activity.),
       userIndex, // yIndex is now the index of the user in usersData array
-      activity.count
+      activity.timeActive
     ])
 
     return [{
@@ -150,21 +152,36 @@ export class LabHeatMapChart {
     this.renderChart(container);
   };
 
-  populateAndRenderUsersData(course: Course, allLabs: Lo[]) {
+  populateAndRenderUsersData(course: Course, allLabs: Lo[], usersIds: string[]) {
     const container = this.getChartContainer();
     if (!container) return;
 
     let allSeriesData: HeatMapSeriesData[] = [];
+    let yAxisData: string[] = []; // Array to store yAxis data
 
+    // Filter labs by type 'lab'
     let los = filterByType(course.los, 'lab');
 
+
     los?.forEach((lo, nickname) => {
-      this.yAxisData.push(nickname)
+      let returnedLearnerObjects = [];
+      if (lo.hasOwnProperty('learningRecords')) {
+        // Iterate through each user's learning records for the current lab
+        usersIds.forEach((userId, index) => {
+          const records = lo.learningRecords?.get(userId);
+          if (records) {
+            for (const record in records) {
+              // Push the username to yAxisData for each record
+              this.yAxisData.push(index);
 
-      const index = this.getIndexFromMap(los, nickname);
+              // Populate series data for the current lab and user
+              const seriesData = this.populateSeriesData(course, index, allLabs);
+              allSeriesData = allSeriesData.concat(seriesData[0].data);
+            }
+          }
+        });
+      }
 
-      const seriesData = this.populateSeriesData(lo, index, allLabs);
-      allSeriesData = allSeriesData.concat(seriesData[0].data);
     });
 
     this.series = [{
@@ -174,10 +191,13 @@ export class LabHeatMapChart {
       label: {
         show: true
       }
-    }] || [];
+    }];
+
+    this.yAxisData = yAxisData; // Assign yAxisData to this.yAxisData
 
     this.renderChart(container);
   };
+
 
   renderChart(container: HTMLElement) {
     const chartInstance = echarts.init(container);
@@ -213,7 +233,7 @@ export class LabHeatMapChart {
     this.renderChart(container);
   };
 
-  prepareCombinedLabData() {
+  prepareCombinedLabData(userIds: string[]) {
     const labActivities = new Map();
 
     this.los?.forEach(lo => {

@@ -29,7 +29,7 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
     //}
     return {
       course: course,
-      usersIds: userIds,
+      userIds: userIds,
       session: data.session
       // allLabs: course.wallMap?.get("lab"),
       // allTopics: course.los,

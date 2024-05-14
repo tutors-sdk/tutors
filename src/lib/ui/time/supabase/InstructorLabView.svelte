@@ -6,8 +6,9 @@
 
   export let course: Course;
   export let session: Session;
+  export let userIds: string[];
   let labHeatMapChart: LabHeatMapChart | null;
-  labHeatMapChart = new LabHeatMapChart(course, session);
+  labHeatMapChart = new LabHeatMapChart(course, session, userIds);
 
   onMount(() => {
     labHeatMapChart?.populateUsersData();
@@ -33,7 +34,7 @@
       const container = labHeatMapChart.getChartContainer();
       if(container) labHeatMapChart.renderChart(container);
 
-      const combinedLabData = labHeatMapChart.prepareCombinedLabData();
+      const combinedLabData = labHeatMapChart.prepareCombinedLabData(userIds);
       const element = document.getElementById("combined-heatmap");
       if (!element) {
         throw new Error("Element with ID 'combined-heatmap' not found");

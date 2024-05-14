@@ -6,9 +6,10 @@
 
   export let course: Course;
   export let session: Session
+  export let userIds: string[];
 
   let labHeatMapChart: LabHeatMapChart | null;
-  labHeatMapChart = new LabHeatMapChart(course, session);
+  labHeatMapChart = new LabHeatMapChart(course, session, userIds);
 
   onMount(() => {
     labHeatMapChart?.populateSingleUserData();
