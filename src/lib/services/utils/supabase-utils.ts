@@ -1,5 +1,5 @@
 import { db } from "$lib/services/utils/db/client";
-import type { Course, Lo } from "../models/lo-types";
+import type { Course, LearningRecord, Lo } from "../models/lo-types";
 import type { User, Session } from "@supabase/supabase-js";
 
 // export async function getNumOfStudentCourseLoIncrements(fieldName: string, courseId: string, studentId: string, loId: string) {
@@ -244,6 +244,24 @@ export async function manageStudentCourseLo(courseId: string, studentId: string,
 //     return undefined;
 //   }
 // };
+
+
+export function filterByUser(list: Map<string, LearningRecord>, userId: String): Lo[] {
+  const los = flattenLos(list);
+  return los.filter((lo) => lo.type === userId);
+}
+
+export function flattenLos(los:  Map<string, LearningRecord>): Lo[] {
+  let result: Lo[] = [];
+  los.forEach((lo) => {
+    result.push(lo);
+    if ("los" in lo) {
+      // @ts-ignore
+      result = result.concat(flattenLos(lo.los));
+    }
+  });
+  return result;
+}
 
 export function formatDate(date: Date): string {
     const d = new Date(date);

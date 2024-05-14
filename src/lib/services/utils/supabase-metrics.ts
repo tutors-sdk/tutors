@@ -13,7 +13,8 @@ export async function fetchLearningRecords(course: Course, session: Session): Pr
     return [];
   }
 
-  const userIds = metrics?.map((m: LearningInteraction) => m.studentid);
+  const userIds: string[] = [...new Set(metrics.map((m: LearningInteraction) => m.studentid))] as string[];
+  
   if (metrics && metrics.length > 0 && course.loIndex) {
     course.loIndex.forEach((lo) => {
       let learningRecord = metrics.find((m: LearningInteraction) => m.loid === lo.route);

@@ -186,32 +186,32 @@ export class LabHeatMapChart {
     chartInstance.resize();
   };
 
-  // populateAndRenderCombinedUsersData(usersData, allLabs) {
-  //   const container = this.getChartContainer();
-  //   if (!container) return;
+  populateAndRenderCombinedUsersData() {
+    const container = this.getChartContainer();
+    if (!container) return;
 
-  //   let allSeriesData = [];
-  //   let yAxisData: [] = [];
-  //   usersData?.forEach((user, nickname) => {
-  //     yAxisData.push(user?.nickname)
+    let allSeriesData = [];
+    let yAxisData: [] = [];
+    this.los?.forEach((user, nickname) => {
+      yAxisData.push(user?.nickname)
 
-  //     const index = this.getIndexFromMap(usersData, nickname);
+      const index = this.getIndexFromMap(usersData, nickname);
 
-  //     const seriesData = this.populateSeriesData(user, index, allLabs);
-  //     allSeriesData = allSeriesData.concat(seriesData[0].data);
-  //   });
+      const seriesData = this.populateSeriesData(user, index, allLabs);
+      allSeriesData = allSeriesData.concat(seriesData[0].data);
+    });
 
-  //   const series = [{
-  //     name: 'Lab Activity',
-  //     type: 'heatmap',
-  //     data: allSeriesData,
-  //     label: {
-  //       show: true
-  //     }
-  //   }];
+    const series = [{
+      name: 'Lab Activity',
+      type: 'heatmap',
+      data: allSeriesData,
+      label: {
+        show: true
+      }
+    }];
 
-  //   this.renderChart(container);
-  // };
+    this.renderChart(container);
+  };
 
   prepareCombinedLabData() {
     const labActivities = new Map();

@@ -125,7 +125,7 @@
       </select>
       <!-- Display selected lab chart -->
      {#if selectedInstructorLabChart === "NewInstructorLabTime"}
-        <NewInstructorLabTime course={data.course} />  
+        <NewInstructorLabTime course={data.course} session={data.session} />  
       {:else if selectedInstructorLabChart === "BoxPlotInstructorChart"}
         <!-- <BoxPlotInstructorChart course={data} /> -->
       {/if} 
