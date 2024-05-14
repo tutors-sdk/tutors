@@ -44,27 +44,27 @@
         tabSet = 1;
       }
     }
-  }
+  };
 
   // Event handler for dropdown change
   function handleLabChartChange(event: Event) {
     selectedLabChart = (event.target as HTMLSelectElement).value;
-  }
+  };
 
   // Event handler for dropdown change
   function handleTopicChartChange(event: Event) {
     selectedTopicChart = (event.target as HTMLSelectElement).value;
-  }
+  };
 
   // Event handler for dropdown change
   function handleInstructorLabChartChange(event: Event) {
     selectedInstructorLabChart = (event.target as HTMLSelectElement).value;
-  }
+  };
 
   // Event handler for dropdown change
   function handleInstructorTopicChartChange(event: Event) {
     selectedInstructorTopicChart = (event.target as HTMLSelectElement).value;
-  }
+  };
 </script>
 
 <div in:fade={{ duration: 500 }} class="bg-base-200 mt-3">
@@ -124,11 +124,11 @@
         <option value="BoxPlotInstructorChart">Instructor Lab Time Box Plot Chart</option>
       </select>
       <!-- Display selected lab chart -->
-      <!-- {#if selectedInstructorLabChart === "NewInstructorLabTime"}
-        <NewInstructorLabTime course={data} /> 
+     {#if selectedInstructorLabChart === "NewInstructorLabTime"}
+        <NewInstructorLabTime course={data.course} />  
       {:else if selectedInstructorLabChart === "BoxPlotInstructorChart"}
-        <BoxPlotInstructorChart course={data} />
-      {/if} -->
+        <!-- <BoxPlotInstructorChart course={data} /> -->
+      {/if} 
     {:else}
       <!-- Dropdown for selecting lab charts -->
       <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleLabChartChange} bind:value={selectedLabChart}>
@@ -137,7 +137,9 @@
       </select>
       <!-- Display selected lab chart -->
       {#if selectedLabChart === "LabView"}
-        <LabView course={data.course} session={data.session} />
+        <!-- <LabView course={data.course} session={data.session} /> -->
+        <NewInstructorLabTime course={data.course} session={data.session} />  
+
       <!-- {:else if selectedLabChart === "LabTimeNewChart"}
         <LabTimeNewChart user={data.user} allLabs={data.allLabs} /> -->
       {/if}

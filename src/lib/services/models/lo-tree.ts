@@ -58,12 +58,4 @@ export function decorateLoTree(course: Course, lo: Lo) {
       }
     }
   }
-
-  // Check if the current Lo has associated learning records
-  if (course.loIndex && course.loIndex.has(lo.route)) {
-    // Retrieve the learning records associated with the current Lo
-    const learningRecords = course.loIndex.get(lo.route)?.learningRecords;
-    // Assign the learning records to the current Lo
-    lo.learningRecords = learningRecords || [];
-  }
 }

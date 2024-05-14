@@ -58,7 +58,7 @@ export interface LearningRecord {
   date: Date;
   pageLoads: number;
   timeActive: number;
-}
+};
 
 export type Lo = {
   type: string;

@@ -33,6 +33,7 @@ export class LabHeatMapChart {
   course: Course;
   session: Session;
   series: HeatMapSeriesData;
+  los: Lo[];
 
   constructor(course: Course, session: Session) {
     this.chartRendered = false;
@@ -40,27 +41,27 @@ export class LabHeatMapChart {
     this.labs = course.wallMap?.get("lab") // Array of lab titles
     //this.users = userData; // Array of user objects
     this.categories = new Set();
-    //this.user = null;
     this.yAxisData = [];
     this.series = {
       name: "",
       type: "",
       top: "",
       data: [],
-      label: { 
+      label: {
         show: true
       }
-    };    
+    };
     this.course = course;
     this.session = session;
+    this.los = filterByType(this.course.los, 'lab');
   }
 
-  // populateUsersData() {
-  //   if (this.labs) {
-  //     this.populateLabTitles(this.labs)
-  //     this.populateAndRenderUsersData(this.users, this.labs);
-  //   }
-  // }
+  populateUsersData() {
+    if (this.labs) {
+      this.populateLabTitles(this.labs)
+      this.populateAndRenderUsersData(this.course, this.labs);
+    }
+  }
 
   populateSingleUserData() {
     if (this.labs) {
@@ -83,7 +84,7 @@ export class LabHeatMapChart {
     return container;
   }
 
-  getIndexFromMap(map, key) {
+  getIndexFromMap(map: Lo[], key) {
     const keysArray = Array.from(map.keys());
     return keysArray.indexOf(key);
   }
@@ -118,6 +119,7 @@ export class LabHeatMapChart {
       0,
       lo.learningRecords?.get(this.session.user.user_metadata.user_name)?.timeActive || 0
     ]);
+
     return [{
       name: 'Lab Activity for ' + this.session.user.user_metadata.user_name,
       type: 'heatmap',
@@ -148,33 +150,36 @@ export class LabHeatMapChart {
     this.renderChart(container);
   };
 
-  // populateAndRenderUsersData(usersData, allLabs) {
-  //   const container = this.getChartContainer();
-  //   if (!container) return;
+  populateAndRenderUsersData(course: Course, allLabs: Lo[]) {
+    const container = this.getChartContainer();
+    if (!container) return;
 
-  //   let allSeriesData = [];
-  //   usersData?.forEach((user, nickname) => {
-  //     this.yAxisData.push(session.user.user_metadata.user_name)
+    let allSeriesData: HeatMapSeriesData[] = [];
 
-  //     const index = this.getIndexFromMap(usersData, nickname);
+    let los = filterByType(course.los, 'lab');
 
-  //     const seriesData = this.populateSeriesData(user, index, allLabs);
-  //     allSeriesData = allSeriesData.concat(seriesData[0].data);
-  //   });
+    los?.forEach((lo, nickname) => {
+      this.yAxisData.push(nickname)
 
-  //   this.series = [{
-  //     name: 'Lab Activity',
-  //     type: 'heatmap',
-  //     data: allSeriesData || [],
-  //     label: {
-  //       show: true
-  //     }
-  //   }] || [];
+      const index = this.getIndexFromMap(los, nickname);
 
-  //   this.renderChart(container);
-  // };
+      const seriesData = this.populateSeriesData(lo, index, allLabs);
+      allSeriesData = allSeriesData.concat(seriesData[0].data);
+    });
 
-  renderChart(container) {
+    this.series = [{
+      name: 'Lab Activity',
+      type: 'heatmap',
+      data: allSeriesData || [],
+      label: {
+        show: true
+      }
+    }] || [];
+
+    this.renderChart(container);
+  };
+
+  renderChart(container: HTMLElement) {
     const chartInstance = echarts.init(container);
     const option = heatmap(this.categories, this.yAxisData, this.series, bgPatternImg, 'Lab Time: Per Student');
     chartInstance.setOption(option);
@@ -208,106 +213,108 @@ export class LabHeatMapChart {
   //   this.renderChart(container);
   // };
 
-  // prepareCombinedLabData(data) {
-  //   const labActivities = new Map();
+  prepareCombinedLabData() {
+    const labActivities = new Map();
 
-  //   data?.forEach(user => {
-  //     user?.labActivity.forEach(lab => {
-  //       if (!labActivities.has(lab.title)) {
-  //         labActivities.set(lab.title, []);
-  //       }
-  //       labActivities.get(lab.title).push({ count: lab.count, nickname: user.nickname, image: user.picture });
-  //     });
-  //   });
+    this.los?.forEach(lo => {
+      if (lo.learningRecords) {
+        lo?.learningRecords.forEach(lab => {
+          if (!labActivities.has(lo.title)) {
+            labActivities.set(lo.title, []);
+          }
+          labActivities.get(lo.title).push({ timeActive: lab.timeActive, nickname: this.session.user.user_metadata.user_name, image: this.session.user.user_metadata.avatar_url });
+        });
+      }
+    });
 
-  //   const heatmapData = Array.from(labActivities).map(([title, activities]) => {
-  //     activities.sort((a, b) => a.count - b.count);
-  //     const addedCount = activities.reduce((acc, curr) => acc + curr.count, 0);
+    const heatmapData = Array.from(labActivities).map(([title, activities]) => {
+      activities.sort((a: { timeActive: number; }, b: { timeActive: number; }) => a.timeActive - b.timeActive);
+      const addedCount = activities.reduce((acc: any, curr: { timeActive: any; }) => acc + curr.timeActive, 0);
 
-  //     const lowData = activities[0];
-  //     const highData = activities[activities.length - 1];
-  //     return {
-  //       value: addedCount,
-  //       title: title,
-  //       lowValue: lowData.count,
-  //       highValue: highData.count,
-  //       lowNickname: lowData.nickname,
-  //       highNickname: highData.nickname,
-  //     };
-  //   });
+      const lowData = activities[0];
+      const highData = activities[activities.length - 1];
+      return {
+        value: addedCount,
+        title: title,
+        lowValue: lowData.count,
+        highValue: highData.count,
+        lowNickname: lowData.nickname,
+        highNickname: highData.nickname,
+      };
+    });
 
-  //   return heatmapData;
-  // }
+    return heatmapData;
+  }
 
-  // renderCombinedLabChart(container: HTMLElement, labData: any[], chartTitle: string) {
-  //   const chart = echarts.init(container);
+  renderCombinedLabChart(container: HTMLElement, labData: any[], chartTitle: string) {
+    const chart = echarts.init(container);
 
-  //   const heatmapData = labData.map((item, index) => [index, 0, item.value]);
-  //   const titles = labData.map(item => item.title);
+    const heatmapData = labData.map((item, index) => [index, 0, item.value]);
+    const titles = labData.map(item => item.title);
 
-  //   const option = {
-  //     title: {
-  //       top: '5%',
-  //       left: 'center',
-  //       text: chartTitle,
-  //     },
-  //     tooltip: {
-  //       position: 'bottom',
-  //       formatter: function (params) {
-  //         const dataIndex = params.dataIndex;
-  //         const dataItem = labData[dataIndex];
-  //         let tipHtml = dataItem.title + '<br />';
-  //         tipHtml += 'Min: ' + dataItem.lowValue + ' (' + dataItem.lowNickname + ')<br />';
-  //         tipHtml += 'Max: ' + dataItem.highValue + ' (' + dataItem.highNickname + ')';
-  //         return tipHtml;
-  //       }
-  //     },
-  //     backgroundColor: {
-  //       image: bgPatternImg,
-  //       repeat: 'repeat'
-  //     },
-  //     grid: {
-  //       height: '30%',
-  //       top: '15%'
-  //     },
-  //     xAxis: {
-  //       type: 'category',
-  //       data: titles,
-  //     },
-  //     yAxis: {
-  //       type: 'category',
-  //       data: [''] // Single category axis
-  //       , axisLabel: {
-  //         interval: 0,
-  //         fontSize: 15
-  //       },
-  //     },
-  //     visualMap: {
-  //       min: 0,
-  //       max: this.series[0]?.data.length !== 0 ? Math.max(...this.series[0]?.data?.map(item => item[2])) : 0,
-  //       calculable: true,
-  //       orient: 'horizontal',
-  //       left: 'center',
-  //       bottom: '15%'
-  //     },
-  //     series: [{
-  //       name: 'Value',
-  //       type: 'heatmap',
-  //       data: heatmapData,
-  //       label: {
-  //         show: true
-  //       },
-  //       emphasis: {
-  //         itemStyle: {
-  //           shadowBlur: 10,
-  //           shadowColor: 'rgba(0, 0, 0, 0.5)'
-  //         }
-  //       }
-  //     }]
-  //   };
+    const option = {
+      title: {
+        top: '5%',
+        left: 'center',
+        text: chartTitle,
+      },
+      tooltip: {
+        position: 'bottom',
+        formatter: function (params: { dataIndex: any; }) {
+          const dataIndex = params.dataIndex;
+          const dataItem = labData[dataIndex];
+          let tipHtml = dataItem.title + '<br />';
+          tipHtml += 'Min: ' + dataItem.lowValue + ' (' + dataItem.lowNickname + ')<br />';
+          tipHtml += 'Max: ' + dataItem.highValue + ' (' + dataItem.highNickname + ')';
+          return tipHtml;
+        }
+      },
+      backgroundColor: {
+        image: bgPatternImg,
+        repeat: 'repeat'
+      },
+      grid: {
+        height: '30%',
+        top: '15%'
+      },
+      xAxis: {
+        type: 'category',
+        data: titles,
+      },
+      yAxis: {
+        type: 'category',
+        data: [''] // Single category axis
+        , axisLabel: {
+          interval: 0,
+          fontSize: 15
+        },
+      },
+      visualMap: {
+        min: 0,
+        max: this.series[0]?.data.length !== 0 ? Math.max(...this.series[0]?.data?.map(item => item[2])) : 0,
+        calculable: true,
+        orient: 'horizontal',
+        left: 'center',
+        bottom: '15%'
+      },
+      series: [{
+        name: 'Value',
+        type: 'heatmap',
+        data: heatmapData,
+        label: {
+          show: true
+        },
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowColor: 'rgba(0, 0, 0, 0.5)'
+          }
+        }
+      }]
+    };
 
-  //   // Set the option to the chart
-  //   chart.setOption(option);
-  // };
+    // Set the option to the chart
+    chart.setOption(option);
+  };
 }
 

@@ -12,13 +12,13 @@ export async function fetchLearningRecords(course: Course, session: Session): Pr
     console.error(studentsError);
     return [];
   }
-  
+
   const userIds = metrics?.map((m: LearningInteraction) => m.studentid);
   if (metrics && metrics.length > 0 && course.loIndex) {
     course.loIndex.forEach((lo) => {
       let learningRecord = metrics.find((m: LearningInteraction) => m.loid === lo.route);
       if (learningRecord) {
-        const filteredLearningRecord: LearningRecord = {
+        const attachLearningRecords: LearningRecord = {
           date: learningRecord.date,
           pageLoads: learningRecord.pageloads,
           timeActive: learningRecord.timeactive
@@ -27,7 +27,7 @@ export async function fetchLearningRecords(course: Course, session: Session): Pr
           lo.learningRecords = new Map<string, LearningRecord>();
         }
         // Associate the filtered learning record with the user's student ID
-        lo.learningRecords.set(session.user.user_metadata.user_name, filteredLearningRecord);
+        lo.learningRecords.set(session.user.user_metadata.user_name, attachLearningRecords);
       }
     });
     course.loIndex = new Map(course.los.map((lo) => [lo.route, lo]));

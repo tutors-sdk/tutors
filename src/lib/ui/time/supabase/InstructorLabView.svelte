@@ -2,10 +2,12 @@
   import { onDestroy, onMount } from "svelte";
   import type { Course, Lo } from "$lib/services/models/lo-types";
   import { LabHeatMapChart } from "./sheets/tutors-analytics/lab-heat-map-chart";
+    import type { Session } from "@supabase/supabase-js";
 
   export let course: Course;
+  export let session: Session;
   let labHeatMapChart: LabHeatMapChart | null;
-  labHeatMapChart = new LabHeatMapChart(course);
+  labHeatMapChart = new LabHeatMapChart(course, session);
 
   onMount(() => {
     labHeatMapChart?.populateUsersData();
@@ -29,9 +31,9 @@
   const renderChart = () => {
     if (labHeatMapChart) {
       const container = labHeatMapChart.getChartContainer();
-      labHeatMapChart.renderChart(container);
+      if(container) labHeatMapChart.renderChart(container);
 
-      const combinedLabData = labHeatMapChart.prepareCombinedLabData(course);
+      const combinedLabData = labHeatMapChart.prepareCombinedLabData();
       const element = document.getElementById("combined-heatmap");
       if (!element) {
         throw new Error("Element with ID 'combined-heatmap' not found");
