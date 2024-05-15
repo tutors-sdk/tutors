@@ -6,6 +6,7 @@
   import TutorsCredits from "./TutorsCredits.svelte";
   import TutorsShell from "$lib/ui/app-shells/TutorsShell.svelte";
   import HomeFooter from "$lib/ui/navigators/footers/HomeFooter.svelte";
+  import TutorsDesign from "./TutorsDesign.svelte";
 
   export let data: any;
   let { supabase, session } = data;
@@ -14,6 +15,7 @@
 <TutorsShell {supabase} {session}>
   <TutorsLinks />
   <TutorsValues />
+  <TutorsDesign />
   <TutorsCredits />
   <HomeFooter />
 </TutorsShell>
