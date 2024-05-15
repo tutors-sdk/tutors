@@ -195,40 +195,41 @@ export class LabHeatMapChart {
 
   prepareCombinedLabData(userIds: string[]) {
     const labActivities = new Map();
+    const labs = filterByType(this.course.los, 'lab');
     const steps = filterByType(this.course.los, 'step');
 
-    steps?.forEach(lo => {
-      if (lo.parentLo?.learningRecords) {
-        lo.parentLo?.learningRecords.forEach((lab, key) => {
-          if (!labActivities.has(lo.title)) {
-            labActivities.set(lo.title, []);
+
+    labs?.forEach(lo => {
+      if (lo.learningRecords) {
+        if (!labActivities.has(lo.title)) {
+          labActivities.set(lo.title, []);
+        }
+
+        lo.learningRecords.forEach((lab, key) => {
+          if (userIds.includes(key)) {
+            // Push the activity to the corresponding title in labActivities
+            labActivities.get(lo.title).push({
+              timeActive: lab.timeActive,
+              nickname: key
+            });
           }
-          // Iterate through each userId and include their nickname with their activities
-          userIds.forEach(userId => {
-            if(key === userId){
-              labActivities.get(lo.parentLo?.title).push({
-                timeActive: lab.timeActive,
-                nickname: userId
-              });
-            }
-          });
         });
       }
     });
 
     const heatmapData = Array.from(labActivities).map(([title, activities]) => {
       activities.sort((a: { timeActive: number; }, b: { timeActive: number; }) => a.timeActive - b.timeActive);
-      const addedCount = activities.reduce((acc: any, curr: { timeActive: any; }) => acc + curr.timeActive, 0);
+      const addedCount = activities.reduce((acc: number, curr: { timeActive: number; }) => acc + curr.timeActive, 0);
 
       const lowData = activities[0];
       const highData = activities[activities.length - 1];
       return {
         value: addedCount,
         title: title,
-        lowValue: lowData.timeActive,
-        highValue: highData.timeActive,
-        lowNickname: lowData.nickname,
-        highNickname: highData.nickname,
+        lowValue: lowData?.timeActive,
+        highValue: highData?.timeActive,
+        lowNickname: lowData?.nickname,
+        highNickname: highData?.nickname,
       };
     });
 

@@ -9,7 +9,7 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
   const data = await parent();
   if (data.session) {
     const course: Course = await courseService.readCourse(params.courseid, fetch);
-    const userIds: string[] = await fetchLearningRecords(course, data.session);
+    const userIds: string[] = await fetchLearningRecords(course);
     // if (course.hasEnrollment && course.enrollment) {
     //   for (let i = 0; i < course.enrollment.length; i++) {
     //     const enrolledUser = users.get(course.enrollment[i]);

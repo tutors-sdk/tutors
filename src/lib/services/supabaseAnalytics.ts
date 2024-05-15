@@ -12,7 +12,9 @@ export const supabaseAnalytics: Analytics = {
   learningEvent(course: Course, params: Record<string, string>, session: Session, lo: Lo) {
     try {
       if (lo.route) {
-        this.loRoute = lo.route;
+        const targetRouteParts = lo.route.split('/');
+        const trimmedTargetRoute = targetRouteParts.slice(0, 3).join('/');
+        this.loRoute = trimmedTargetRoute+'/'+params.loid;
       }
       this.reportPageLoad(course, session, lo);
     } catch (error: any) {
@@ -31,7 +33,7 @@ export const supabaseAnalytics: Analytics = {
 
   reportPageLoad(course: Course, session: Session, lo: Lo) {
     try {
-      storeStudentCourseLearningObjectInSupabase(course, lo.route, lo, session?.user);
+      storeStudentCourseLearningObjectInSupabase(course, this.loRoute, lo, session?.user);
       presenceService.sendLoEvent(course, lo, get(onlineStatus), session);
     } catch (error: any) {
       console.log(`TutorStore Error: ${error.message}`);
@@ -41,7 +43,7 @@ export const supabaseAnalytics: Analytics = {
   updatePageCount(course: Course, session: Session, lo: Lo) {
     try {
       if (session?.user) {
-        if (lo.route) updateStudentCourseLoInteractionDuration(course.courseId, session?.user.user_metadata.user_name, lo.route);
+        if (lo.route) updateStudentCourseLoInteractionDuration(course.courseId, session?.user.user_metadata.user_name, this.loRoute);
         updateDuration("id", "students", session.user.user_metadata.user_name);
         updateLastAccess("id", session.user.user_metadata.user_name, "students");
         updateDuration("course_id", "course", course.courseId);

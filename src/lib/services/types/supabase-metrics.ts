@@ -1,5 +1,3 @@
-import type { Lo } from "../models/lo-types";
-
 export interface LearningInteraction {
     loid: string,
     courseid: string,
@@ -26,9 +24,3 @@ export interface LearningObject{
     timeActive: number;
     nickname: string;
 };
-
-
-
-
-
-
