@@ -11,7 +11,7 @@ import { heatmap } from '../es-charts/heatmap';
 import type { Course, Lo } from '$lib/services/models/lo-types';
 import type { Session } from '@supabase/supabase-js';
 import { filterByType } from '$lib/services/models/lo-utils';
-import type { HeatMapSeriesData, LearningObject, learningObject } from '$lib/services/types/supabase-metrics';
+import type { HeatMapSeriesData, LearningObject } from '$lib/services/types/supabase-metrics';
 
 echarts.use([
   TooltipComponent,
@@ -29,7 +29,7 @@ export class LabHeatMapChart {
   chartInstances: Map<any, any>;
   labs: Lo[] | undefined;
   categories: Set<String>;
-  yAxisData: number[];
+  yAxisData: string[];
   course: Course;
   session: Session;
   series: HeatMapSeriesData;
@@ -94,11 +94,12 @@ export class LabHeatMapChart {
     const labTitles = allLabs.map(lab => lab.title.trim());
     this.categories = new Set(labTitles);
 
-    const seriesData = learningObjects?.forEach(activity => [
-      labTitles.indexOf(activity.loTitle.trim()),
-      userIndex, // yIndex is now the index of the user in usersData array
+    // Map each learning object to series data
+    const seriesData = learningObjects.map(activity => [
+      labTitles.indexOf(activity.parentLoTitle.trim()), // x-axis index
+      userIndex, // y-axis index
       activity.timeActive
-    ])
+    ]);
 
     return [{
       name: 'Lab Activity',
@@ -109,6 +110,7 @@ export class LabHeatMapChart {
       }
     }];
   }
+
 
   populateSingleUserSeriesData(course: Course, allLabs: Lo[]) {
     const labTitles = allLabs.map((lab: { title: string; }) => lab.title.trim());
@@ -161,36 +163,36 @@ export class LabHeatMapChart {
     const labTitles = allLabs.map((lab: { title: string; }) => lab.title.trim());
     this.categories = new Set(labTitles);
     let los = filterByType(course.los, 'lab');
+    let steps = filterByType(course.los, 'step');
 
-    los?.forEach((lo: Lo) => {
-      if (lo.hasOwnProperty('learningRecords')) {
-        // Iterate through each user's learning records for the current lab
+    steps?.forEach((lo: Lo) => {
+      if (lo.parentLo?.hasOwnProperty('learningRecords')) {
         usersIds.forEach((userId, index) => {
-          let records: LearningObject[] = [];
-          if (lo.learningRecords) {
-              // Filter records for the current user
-              const userRecords = Array.from(lo.learningRecords.entries())
-                  .filter(([key, value]) => key === userId)
-                  .map(([_, value]) => value);
-      
-              // Push each record into the records array
-              userRecords.forEach(record => {
-                  let learningObject: LearningObject = {
-                      timeActive: record.timeActive,
-                      date: record.date,
-                      pageLoads: record.pageLoads,
-                      nickname: userId,
-                      route: lo.route,
-                      loTitle: lo.title,
-                      parentLoTitle: lo.parentLo?.title,
-                  };
-                  records.push(learningObject);
-              });
-          }
-          // records.route = lo.route;
-          if (records) {
-            // Push the username to yAxisData for each record
-            this.yAxisData.push(index);
+          if (lo.parentLo?.learningRecords) {
+            // Get all learning records for the current user
+            const userRecords = Array.from(lo.parentLo.learningRecords.entries())
+              .filter(([key, _]) => key === userId)
+              .map(([_, value]) => value);
+
+            let records: LearningObject[] = [];
+
+            userRecords.forEach(record => {
+              let learningObject: LearningObject = {
+                timeActive: record.timeActive,
+                date: record.date,
+                pageLoads: record.pageLoads,
+                nickname: userId,
+                route: lo.route,
+                loTitle: lo.title,
+                parentLoTitle: lo.parentLo?.title,
+              };
+              records.push(learningObject);
+            });
+
+            // Push userId to yAxisData only if it's not already there
+            if (!yAxisData.includes(userId)) {
+              yAxisData.push(userId);
+            }
 
             // Populate series data for the current lab and user
             const seriesData = this.populateSeriesData(records, index, allLabs);
@@ -198,7 +200,6 @@ export class LabHeatMapChart {
           }
         });
       }
-
     });
 
     this.series = [{
@@ -210,10 +211,11 @@ export class LabHeatMapChart {
       }
     }];
 
-    this.yAxisData = yAxisData; // Assign yAxisData to this.yAxisData
+    this.yAxisData = yAxisData;
 
     this.renderChart(container);
   };
+
 
 
   renderChart(container: HTMLElement) {
@@ -230,7 +232,7 @@ export class LabHeatMapChart {
     let allSeriesData = [];
     let yAxisData: [] = [];
     this.los?.forEach((user, nickname) => {
-      yAxisData.push(user?.nickname)
+      yAxisData.push(this.session.user.user_metadata?.user_name)
 
       const index = this.getIndexFromMap(usersData, nickname);
 
