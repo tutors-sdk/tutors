@@ -4,9 +4,9 @@
   import EducatorExperience from "./values/EducatorExperience.svelte";
 </script>
 
-<div class="container py-20 mx-auto justify-center items-center">
+<div class="container py-5 mx-auto justify-center items-center">
   <div class="w-full m-4">
-    <h2 class="font-bold !text-5xl inline-block my-4">
+    <h2 class="font-bold !text-5xl inline-block">
       The <span class="font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone">Values</span> of the
       project
     </h2>
