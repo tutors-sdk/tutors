@@ -24,7 +24,7 @@
   let tabSet = 0;
   let selectedLabChart: string = "LabView"; // Set default lab chart
   let selectedTopicChart: string = "NewTopicTime"; // Set default topic chart
-  let selectedInstructorLabChart: string = "NewInstructorLabTime"; // Set default instructor lab chart
+  let selectedInstructorLabChart: string = "InstructorLabView"; // Set default instructor lab chart
   let selectedInstructorTopicChart: string = "NewInstructorTopicTime"; // Set default instructor topic chart
 
   onMount(async () => {
@@ -37,7 +37,7 @@
   // Event handling function
   function keypressInput(e: KeyboardEvent) {
     pinBuffer = pinBuffer.concat(e.key);
-    if (pinBuffer === data.ignorePin) {
+    if (pinBuffer === data.course.ignorePin) {
       instructorMode = true;
       tabSet = 0;
       if (!data?.course.hasCalendar) {
@@ -124,7 +124,7 @@
         <option value="BoxPlotInstructorChart">Instructor Lab Time Box Plot Chart</option>
       </select>
       <!-- Display selected lab chart -->
-     {#if selectedInstructorLabChart === "NewInstructorLabTime"}
+     {#if selectedInstructorLabChart === "InstructorLabView"}
         <NewInstructorLabTime course={data.course} session={data.session} userIds={data.userIds} />  
       {:else if selectedInstructorLabChart === "BoxPlotInstructorChart"}
         <!-- <BoxPlotInstructorChart course={data} /> -->
@@ -137,8 +137,8 @@
       </select>
       <!-- Display selected lab chart -->
       {#if selectedLabChart === "LabView"}
-        <!-- <LabView course={data.course} session={data.session} /> -->
-        <NewInstructorLabTime course={data.course} session={data.session} userIds={data.userIds} />  
+        <LabView course={data.course} session={data.session} userIds={data.userIds} />
+        <!-- <NewInstructorLabTime course={data.course} session={data.session} userIds={data.userIds} />   -->
 
       <!-- {:else if selectedLabChart === "LabTimeNewChart"}
         <LabTimeNewChart user={data.user} allLabs={data.allLabs} /> -->

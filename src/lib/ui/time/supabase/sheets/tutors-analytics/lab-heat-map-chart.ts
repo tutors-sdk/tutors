@@ -8,7 +8,7 @@ import { HeatmapChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
 import { heatmap } from '../es-charts/heatmap';
-import type { Course, Lo } from '$lib/services/models/lo-types';
+import type { Course, LearningRecord, Lo } from '$lib/services/models/lo-types';
 import type { Session } from '@supabase/supabase-js';
 import { filterByType } from '$lib/services/models/lo-utils';
 import type { HeatMapSeriesData, LearningObject } from '$lib/services/types/supabase-metrics';
@@ -112,15 +112,15 @@ export class LabHeatMapChart {
   }
 
 
-  populateSingleUserSeriesData(course: Course, allLabs: Lo[]) {
+  populateSingleUserSeriesData(course: Course, allLabs: Lo[], userId: string, index: number = 0) {
     const labTitles = allLabs.map((lab: { title: string; }) => lab.title.trim());
     this.categories = new Set(labTitles);
     let los = filterByType(course.los, 'lab');
 
     const seriesData = los.map(lo => [
       labTitles.indexOf(lo.title.trim()),
-      0,
-      lo.learningRecords?.get(this.session.user.user_metadata.user_name)?.timeActive || 0
+      index,
+      lo.learningRecords?.get(userId)?.timeActive || 0
     ]);
 
     return [{
@@ -133,13 +133,15 @@ export class LabHeatMapChart {
     }];
   }
 
+
+
   populateAndRenderSingleUserData(session: Session, allLabs: Lo[]) {
     const container = this.getChartContainer();
     if (!container) return;
 
     this.yAxisData = [session.user.user_metadata.user_name];
 
-    const seriesData = this.populateSingleUserSeriesData(this.course, allLabs);
+    const seriesData = this.populateSingleUserSeriesData(this.course, allLabs, session.user.user_metadata.user_name);
     this.series = {
       name: 'Lab Activity',
       type: 'heatmap',
@@ -165,42 +167,54 @@ export class LabHeatMapChart {
     let los = filterByType(course.los, 'lab');
     let steps = filterByType(course.los, 'step');
 
-    steps?.forEach((lo: Lo) => {
-      if (lo.parentLo?.hasOwnProperty('learningRecords')) {
-        usersIds.forEach((userId, index) => {
-          if (lo.parentLo?.learningRecords) {
-            // Get all learning records for the current user
-            const userRecords = Array.from(lo.parentLo.learningRecords.entries())
-              .filter(([key, _]) => key === userId)
-              .map(([_, value]) => value);
+    usersIds.forEach((userId, index) => {
+      const seriesData = this.populateSingleUserSeriesData(course, allLabs, userId, index);
+      allSeriesData = allSeriesData.concat(seriesData[0].data);
 
-            let records: LearningObject[] = [];
-
-            userRecords.forEach(record => {
-              let learningObject: LearningObject = {
-                timeActive: record.timeActive,
-                date: record.date,
-                pageLoads: record.pageLoads,
-                nickname: userId,
-                route: lo.route,
-                loTitle: lo.title,
-                parentLoTitle: lo.parentLo?.title,
-              };
-              records.push(learningObject);
-            });
-
-            // Push userId to yAxisData only if it's not already there
-            if (!yAxisData.includes(userId)) {
-              yAxisData.push(userId);
-            }
-
-            // Populate series data for the current lab and user
-            const seriesData = this.populateSeriesData(records, index, allLabs);
-            allSeriesData = allSeriesData.concat(seriesData[0].data);
-          }
-        });
+      if (!yAxisData.includes(userId)) {
+        yAxisData.push(userId);
       }
     });
+
+
+    // steps?.forEach((lo: Lo) => {
+    //   if (lo.parentLo?.hasOwnProperty('learningRecords')) {
+    //       // let records: LearningObject[] = [];
+    //       let records: LearningRecord[] = [];
+
+    //       const recods = usersIds.forEach((userId) => {
+    //       return records.push(lo.parentLo?.learningRecords?.get(usersId));
+    //       }
+
+
+    //         userRecords.forEach(record => {
+    //           let learningObject: LearningObject = {
+    //             timeActive: record.timeActive,
+    //             date: record.date,
+    //             pageLoads: record.pageLoads,
+    //             nickname: userId,
+    //             route: lo.route,
+    //             loTitle: lo.title,
+    //             parentLoTitle: lo.parentLo?.title,
+    //           };
+    //           records.push(learningObject);
+    //         });
+
+    //         // Push userId to yAxisData only if it's not already there
+    //         if (!yAxisData.includes(userId)) {
+    //           yAxisData.push(userId);
+    //         }
+    //       }
+
+    //       // Find the index of the current userId in the usersIds array
+    //       const userIndex = usersIds.indexOf(userId);
+
+    //       // Populate series data for the current lab and user
+    //       const seriesData = this.populateSeriesData(records, userIndex, allLabs);
+    //       allSeriesData = allSeriesData.concat(seriesData[0].data);
+    //     });
+    //   }
+    // });
 
     this.series = [{
       name: 'Lab Activity',
@@ -215,8 +229,6 @@ export class LabHeatMapChart {
 
     this.renderChart(container);
   };
-
-
 
   renderChart(container: HTMLElement) {
     const chartInstance = echarts.init(container);
@@ -275,8 +287,8 @@ export class LabHeatMapChart {
       return {
         value: addedCount,
         title: title,
-        lowValue: lowData.count,
-        highValue: highData.count,
+        lowValue: lowData.timeActive,
+        highValue: highData.timeActive,
         lowNickname: lowData.nickname,
         highNickname: highData.nickname,
       };

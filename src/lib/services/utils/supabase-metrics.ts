@@ -28,7 +28,7 @@ export async function fetchLearningRecords(course: Course, session: Session): Pr
           lo.learningRecords = new Map<string, LearningRecord>();
         }
         // Associate the filtered learning record with the user's student ID
-        lo.learningRecords.set(session.user.user_metadata.user_name, attachLearningRecords);
+        lo.learningRecords.set(learningRecord.studentid, attachLearningRecords);
       }
     });
     course.loIndex = new Map(course.los.map((lo) => [lo.route, lo]));
