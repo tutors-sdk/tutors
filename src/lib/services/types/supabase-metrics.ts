@@ -5,8 +5,8 @@ export interface LearningInteraction {
     courseid: string,
     studentid: string,
     date: Date;
-    pageLoads: number;
-    timeActive: number;
+    pageloads: number;
+    timeactive: number;
 };
 
 export interface HeatMapSeriesData {

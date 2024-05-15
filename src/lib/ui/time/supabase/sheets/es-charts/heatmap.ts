@@ -17,7 +17,7 @@ echarts.use([
 ]);
 
 export function heatmap(categories: any, yAxisData: any, series: any, bgPatternImg: HTMLImageElement, chartTitleString: string): EChartsOption {
-   let visualmapValue: number;
+  let visualmapValue: number;
 
   if (series[0]?.data) {
     visualmapValue = series[0].data.length !== 0 ? Math.max(...series[0].data.map(item => item[2])) : 0;

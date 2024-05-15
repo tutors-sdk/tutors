@@ -111,7 +111,6 @@ export class LabHeatMapChart {
     }];
   }
 
-
   populateSingleUserSeriesData(course: Course, allLabs: Lo[], userId: string, index: number = 0) {
     const labTitles = allLabs.map((lab: { title: string; }) => lab.title.trim());
     this.categories = new Set(labTitles);
@@ -132,8 +131,6 @@ export class LabHeatMapChart {
       }
     }];
   }
-
-
 
   populateAndRenderSingleUserData(session: Session, allLabs: Lo[]) {
     const container = this.getChartContainer();
@@ -176,46 +173,6 @@ export class LabHeatMapChart {
       }
     });
 
-
-    // steps?.forEach((lo: Lo) => {
-    //   if (lo.parentLo?.hasOwnProperty('learningRecords')) {
-    //       // let records: LearningObject[] = [];
-    //       let records: LearningRecord[] = [];
-
-    //       const recods = usersIds.forEach((userId) => {
-    //       return records.push(lo.parentLo?.learningRecords?.get(usersId));
-    //       }
-
-
-    //         userRecords.forEach(record => {
-    //           let learningObject: LearningObject = {
-    //             timeActive: record.timeActive,
-    //             date: record.date,
-    //             pageLoads: record.pageLoads,
-    //             nickname: userId,
-    //             route: lo.route,
-    //             loTitle: lo.title,
-    //             parentLoTitle: lo.parentLo?.title,
-    //           };
-    //           records.push(learningObject);
-    //         });
-
-    //         // Push userId to yAxisData only if it's not already there
-    //         if (!yAxisData.includes(userId)) {
-    //           yAxisData.push(userId);
-    //         }
-    //       }
-
-    //       // Find the index of the current userId in the usersIds array
-    //       const userIndex = usersIds.indexOf(userId);
-
-    //       // Populate series data for the current lab and user
-    //       const seriesData = this.populateSeriesData(records, userIndex, allLabs);
-    //       allSeriesData = allSeriesData.concat(seriesData[0].data);
-    //     });
-    //   }
-    // });
-
     this.series = [{
       name: 'Lab Activity',
       type: 'heatmap',
@@ -226,7 +183,6 @@ export class LabHeatMapChart {
     }];
 
     this.yAxisData = yAxisData;
-
     this.renderChart(container);
   };
 
@@ -237,43 +193,25 @@ export class LabHeatMapChart {
     chartInstance.resize();
   };
 
-  populateAndRenderCombinedUsersData() {
-    const container = this.getChartContainer();
-    if (!container) return;
-
-    let allSeriesData = [];
-    let yAxisData: [] = [];
-    this.los?.forEach((user, nickname) => {
-      yAxisData.push(this.session.user.user_metadata?.user_name)
-
-      const index = this.getIndexFromMap(usersData, nickname);
-
-      const seriesData = this.populateSeriesData(user, index, allLabs);
-      allSeriesData = allSeriesData.concat(seriesData[0].data);
-    });
-
-    const series = [{
-      name: 'Lab Activity',
-      type: 'heatmap',
-      data: allSeriesData,
-      label: {
-        show: true
-      }
-    }];
-
-    this.renderChart(container);
-  };
-
   prepareCombinedLabData(userIds: string[]) {
     const labActivities = new Map();
+    const steps = filterByType(this.course.los, 'step');
 
-    this.los?.forEach(lo => {
-      if (lo.learningRecords) {
-        lo?.learningRecords.forEach(lab => {
+    steps?.forEach(lo => {
+      if (lo.parentLo?.learningRecords) {
+        lo.parentLo?.learningRecords.forEach((lab, key) => {
           if (!labActivities.has(lo.title)) {
             labActivities.set(lo.title, []);
           }
-          labActivities.get(lo.title).push({ timeActive: lab.timeActive, nickname: this.session.user.user_metadata.user_name, image: this.session.user.user_metadata.avatar_url });
+          // Iterate through each userId and include their nickname with their activities
+          userIds.forEach(userId => {
+            if(key === userId){
+              labActivities.get(lo.parentLo?.title).push({
+                timeActive: lab.timeActive,
+                nickname: userId
+              });
+            }
+          });
         });
       }
     });
@@ -296,6 +234,7 @@ export class LabHeatMapChart {
 
     return heatmapData;
   }
+
 
   renderCombinedLabChart(container: HTMLElement, labData: any[], chartTitle: string) {
     const chart = echarts.init(container);
