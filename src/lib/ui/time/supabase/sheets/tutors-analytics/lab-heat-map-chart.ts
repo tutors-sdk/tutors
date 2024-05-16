@@ -85,33 +85,7 @@ export class LabHeatMapChart {
     return container;
   }
 
-  getIndexFromMap(map: Lo[], key) {
-    const keysArray = Array.from(map.keys());
-    return keysArray.indexOf(key);
-  }
-
-  populateSeriesData(learningObjects: LearningObject[], userIndex: number, allLabs: Lo[]) {
-    const labTitles = allLabs.map(lab => lab.title.trim());
-    this.categories = new Set(labTitles);
-
-    // Map each learning object to series data
-    const seriesData = learningObjects.map(activity => [
-      labTitles.indexOf(activity.parentLoTitle.trim()), // x-axis index
-      userIndex, // y-axis index
-      activity.timeActive
-    ]);
-
-    return [{
-      name: 'Lab Activity',
-      type: 'heatmap',
-      data: seriesData,
-      label: {
-        show: true
-      }
-    }];
-  }
-
-  populateSingleUserSeriesData(course: Course, allLabs: Lo[], userId: string, index: number = 0) {
+  populatePerUserSeriesData(course: Course, allLabs: Lo[], userId: string, index: number = 0) {
     const labTitles = allLabs.map((lab: { title: string; }) => lab.title.trim());
     this.categories = new Set(labTitles);
 
@@ -120,73 +94,40 @@ export class LabHeatMapChart {
 
     const allLabSteps = [...labs, ...steps];
 
-    const seriesData = allLabSteps.map((step) => {
-        const title = step.parentLo?.type === 'lab' ? step.parentLo?.title : step.title;
-        if (step.learningRecords?.has(userId)) {
-            return [
-                labTitles.indexOf(title.trim()),
-                index,
-                step.learningRecords?.get(userId)?.timeActive || 0
-            ];
-        }
-        return null; // Return null for steps without activity for the user
-    }).filter(data => data !== null); // Filter out null values
+    // Map to store total timeActive for each step
+    const totalTimesMap = new Map<string, number>();
 
-    return [{
-        name: 'Lab Activity for ' + this.session.user.user_metadata.user_name,
-        type: 'heatmap',
-        data: seriesData,
-        label: {
-            show: true
-        }
-    }];
-}
-
-populatePerUserSeriesData(course: Course, allLabs: Lo[], userId: string, index: number = 0) {
-  const labTitles = allLabs.map((lab: { title: string; }) => lab.title.trim());
-  this.categories = new Set(labTitles);
-
-  let labs = filterByType(course.los, 'lab');
-  let steps = filterByType(course.los, 'step');
-
-  const allLabSteps = [...labs, ...steps];
-
-  // Map to store total timeActive for each step
-  const totalTimesMap = new Map<string, number>();
-
-  // Iterate over allLabSteps to aggregate total timeActive for each step
-  allLabSteps.forEach((step, stepIndex) => {
+    // Iterate over allLabSteps to aggregate total timeActive for each step
+    allLabSteps.forEach((step, stepIndex) => {
       const title = step.parentLo?.type === 'lab' ? step.parentLo?.title : step.title;
       const timeActive = step.learningRecords?.get(userId)?.timeActive || 0;
 
       // Add timeActive to the total time for the step
       if (totalTimesMap.has(title)) {
-          totalTimesMap.set(title, totalTimesMap.get(title)! + timeActive);
+        totalTimesMap.set(title, totalTimesMap.get(title)! + timeActive);
       } else {
-          totalTimesMap.set(title, timeActive);
+        totalTimesMap.set(title, timeActive);
       }
-  });
+    });
 
-  // Construct seriesData array using the aggregated total times
-  const seriesData = Array.from(totalTimesMap.entries()).map(([title, timeActive], stepIndex) => {
+    // Construct seriesData array using the aggregated total times
+    const seriesData = Array.from(totalTimesMap.entries()).map(([title, timeActive], stepIndex) => {
       return [
-          labTitles.indexOf(title.trim()),
-          index,
-          timeActive
+        labTitles.indexOf(title.trim()),
+        index,
+        timeActive
       ];
-  });
+    });
 
-  return [{
+    return [{
       name: 'Lab Activity for ' + this.session.user.user_metadata.user_name,
       type: 'heatmap',
       data: seriesData,
       label: {
-          show: true
+        show: true
       }
-  }];
-}
-
-
+    }];
+  }
 
   populateAndRenderSingleUserData(session: Session, allLabs: Lo[]) {
     const container = this.getChartContainer();

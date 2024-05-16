@@ -1,7 +1,8 @@
 import type { PageLoad } from "./$types";
 import { courseService } from "$lib/services/course";
 import type { Course } from "$lib/services/models/lo-types";
-import { fetchLearningRecords } from "$lib/services/utils/supabase-metrics";
+import { aggregateTimeActiveByDate, decorateLearningRecords, fetchLearningInteractions } from "$lib/services/utils/supabase-metrics";
+import type { LearningInteraction } from "$lib/services/types/supabase-metrics";
 
 export const ssr = false;
 
@@ -9,7 +10,10 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
   const data = await parent();
   if (data.session) {
     const course: Course = await courseService.readCourse(params.courseid, fetch);
-    const userIds: string[] = await fetchLearningRecords(course);
+    const metrics: LearningInteraction[] = await fetchLearningInteractions(course);
+    const userIds: string[] = [...new Set(metrics.map((m: LearningInteraction) => m.studentid))] as string[];
+    const timeActiveMap = await aggregateTimeActiveByDate(metrics);
+    await decorateLearningRecords(course, metrics);
     // if (course.hasEnrollment && course.enrollment) {
     //   for (let i = 0; i < course.enrollment.length; i++) {
     //     const enrolledUser = users.get(course.enrollment[i]);
@@ -30,7 +34,8 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
     return {
       course: course,
       userIds: userIds,
-      session: data.session
+      session: data.session,
+      timeActiveMap: timeActiveMap
       // allLabs: course.wallMap?.get("lab"),
       // allTopics: course.los,
       // allActivities: allLos,

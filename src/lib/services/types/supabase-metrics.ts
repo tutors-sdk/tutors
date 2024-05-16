@@ -15,7 +15,7 @@ export interface HeatMapSeriesData {
     label: { show: boolean; };
 };
 
-export interface LearningObject{
+export interface LearningObject {
     route: string;
     loTitle: string;
     parentLoTitle: string | undefined;
@@ -23,4 +23,17 @@ export interface LearningObject{
     pageLoads: number;
     timeActive: number;
     nickname: string;
+};
+
+export interface CalendarMap {
+    date: string;
+    timeActive: number;
+};
+
+// export interface CalendarMapCollection {
+//     [key: string]: CalendarMap[];
+// };
+
+export interface CalendarMapCollection {
+    calendarMaps: CalendarMap[];
 };

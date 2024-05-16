@@ -2,8 +2,11 @@
   import { onMount, onDestroy } from "svelte";
   import { CalendarChart } from "./sheets/tutors-analytics/calendar-chart";
   import type { Course } from "$lib/services/models/lo-types";
+    import type { Session } from "@supabase/supabase-js";
 
   export let course: Course;
+  export let timeActiveMap: Map<string, Map<string, number>>;
+  export let session: Session;
 
   let calendarChart: CalendarChart | null;
   calendarChart = new CalendarChart();
@@ -28,8 +31,8 @@
   // Function to render the chart
   const renderChart = () => {
     if (calendarChart) {
-      calendarChart.createChartContainer(course?.student.nickname);
-      calendarChart.renderChart(course);
+      calendarChart.createChartContainer(session.user.user_metadata.user_name);
+      calendarChart.renderChart(course, timeActiveMap, session);
     }
   };
 
@@ -39,7 +42,7 @@
 
 <div class="h-screen">
   {#if course}
-    <div id={`chart-${course?.student.nickname}`} style="height: 100%;"></div>
+    <div id={`chart-${session.user.user_metadata.user_name}`} style="height: 100%;"></div>
   {:else}
     <div id="heatmap-container" style="height: 100%"></div>
   {/if}

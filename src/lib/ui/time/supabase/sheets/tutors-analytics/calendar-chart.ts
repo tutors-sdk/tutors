@@ -12,7 +12,9 @@ import { calendar } from '../es-charts/calendar';
 import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
 import { GraphicComponent } from 'echarts/components';
 import { tutorsAnalyticsLogo } from '../es-charts/personlised-logo';
-import type { Student, StudentRecord } from '$lib/services/types/supabase-metrics';
+import type { CalendarMap, CalendarMapCollection, Student, StudentRecord } from '$lib/services/types/supabase-metrics';
+import type { Course } from '$lib/services/models/lo-types';
+import type { Session } from '@supabase/supabase-js';
 
 echarts.use([
   TitleComponent,
@@ -86,13 +88,26 @@ export class CalendarChart {
     return document.getElementById(`chart-${nickname}`);
   };
 
-  renderChart(user: UserMetric) {
-    const chartContainer = this.getChartContainer(user?.nickname);
+  renderChart(course: Course, timeActiveMap: Map<string, Map<string, number>>, session: Session) {
+    const chartContainer = this.getChartContainer(session.user.user_metadata.user_name);
 
     if (!chartContainer) {
-      console.error('Chart container not found for user:', user?.nickname);
+      console.error('Chart container not found for user:', session.user.user_metadata.user_name);
       return;
     }
+
+    const callendarMapCollection: CalendarMap[] = [];
+        for (const [key, value] of timeActiveMap.entries()) {
+          if (key.includes(session.user.user_metadata.user_name)) {
+            for (const [date, timeActive] of value.entries()) {
+              const calendarMap: CalendarMap = {
+                date: date,
+                timeActive: timeActive
+              };
+              callendarMapCollection.push(calendarMap);
+            }
+          }
+        }
 
     const chart = echarts.init(chartContainer);
     if (!sessionStorage.getItem('logoShown')) {
@@ -100,23 +115,24 @@ export class CalendarChart {
       sessionStorage.setItem('logoShown', 'true');
       setTimeout(() => {
         // Prepare the actual data settings
-        const option = calendar(user, bgPatternImg, currentRange);
-  
+        
+        const option = calendar(session, callendarMapCollection, bgPatternImg, currentRange);
+
         chart.setOption(option, true); // The 'true' parameter clears the previous setting completely before applying new options
-  
-        // Explicitly refresh the chart to ensure updates are visible
+
+        // Explicitly refresh the chart to ensure updates are visiw ble
         chart.hideLoading();  // Hide loading overlay if used
         chart.resize();       // Force a resize to ensure proper layout
       }, 2900);
 
-    }else{
-    this.myCharts[user?.nickname] = chart;
+    } else {
+      this.myCharts[session.user.user_metadata.user_name] = chart;
       // Prepare the actual data settings
-      const option = calendar(user, bgPatternImg, currentRange);
+      const option = calendar(session, callendarMapCollection, bgPatternImg, currentRange);
 
       chart.setOption(option, true); // The 'true' parameter clears the previous setting completely before applying new options
 
-  }
+    }
 
     this.clickMonth(chart);
   };

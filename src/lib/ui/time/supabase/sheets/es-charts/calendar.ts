@@ -8,7 +8,8 @@ import {
 import { HeatmapChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import type { EChartsOption } from 'echarts';
-import type { UserMetric } from '$lib/services/types/metrics';
+import type { Session } from '@supabase/supabase-js';
+import type { CalendarMap } from '$lib/services/types/supabase-metrics';
 
 echarts.use([
   TitleComponent,
@@ -19,13 +20,13 @@ echarts.use([
   CanvasRenderer
 ]);
 
-export function calendar(user: UserMetric, bgPatternImg: HTMLImageElement, currentRange: string): EChartsOption {
+export function calendar(session: Session, calendarMap: CalendarMap[], bgPatternImg: HTMLImageElement, currentRange: string): EChartsOption {
   return {
     title: {
       top: 30,
       left: 'center',
-      text: 'GitHub Account for ' + user?.name || user?.nickname ? user?.name || user?.nickname : '',
-      link: 'https://www.github.com/' + user?.nickname || '',
+      text: 'GitHub Account for ' + session.user.user_metadata.user_name,
+      link: 'https://www.github.com/' + session.user.user_metadata.user_name,
       target: 'self'
     },
     backgroundColor: {
@@ -41,7 +42,7 @@ export function calendar(user: UserMetric, bgPatternImg: HTMLImageElement, curre
         z: 100,
         bounding: 'raw',
         style: {
-          image: user?.picture,  // URL to user's profile picture
+          image: session.user.user_metadata.avatar_url,  // URL to user's profile picture
           width: 50,
           height: 50
         }
@@ -87,14 +88,18 @@ export function calendar(user: UserMetric, bgPatternImg: HTMLImageElement, curre
     series: {
       type: 'heatmap',
       coordinateSystem: 'calendar',
-      data: user?.calendarActivity?.map((calendar) => ([
+      data: calendarMap.map((calendar) => ([
         echarts.time.format(calendar.date, '{yyyy}-{MM}-{dd}', false),
-        Math.round(calendar.metric / 2) || 0
+        Math.round(calendar.timeActive / 2) || 0
       ])) || [],
+      // data: user?.calendarActivity?.map((calendar) => ([
+      //   echarts.time.format(calendar.date, '{yyyy}-{MM}-{dd}', false),
+      //   Math.round(calendar.metric / 2) || 0
+      // ])) || [],
     },
     label: {
       show: true,
-      formatter: function (params) {
+      formatter: function (params: { value: any[]; }) {
         return params.value[1]; // Display the value of the heatmap data
       }
     },
