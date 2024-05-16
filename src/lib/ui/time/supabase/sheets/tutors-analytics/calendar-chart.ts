@@ -8,11 +8,11 @@ import {
 import { HeatmapChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import type { EChartsOption } from 'echarts';
-import { calendar } from '../es-charts/calendar';
+import { calendar, calendarCombined } from '../es-charts/calendar';
 import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
 import { GraphicComponent } from 'echarts/components';
 import { tutorsAnalyticsLogo } from '../es-charts/personlised-logo';
-import type { CalendarMap, CalendarMapCollection, Student, StudentRecord } from '$lib/services/types/supabase-metrics';
+import type { CalendarMap } from '$lib/services/types/supabase-metrics';
 import type { Course } from '$lib/services/models/lo-types';
 import type { Session } from '@supabase/supabase-js';
 
@@ -33,6 +33,9 @@ const bgPatternImg = new Image();
 bgPatternImg.src = backgroundPattern;
 
 export class CalendarChart {
+  chartRendered: boolean;
+  myChart: null;
+  chartDom: null;
   constructor() {
     this.chartRendered = false;
     this.myChart = null;
@@ -97,17 +100,17 @@ export class CalendarChart {
     }
 
     const callendarMapCollection: CalendarMap[] = [];
-        for (const [key, value] of timeActiveMap.entries()) {
-          if (key.includes(session.user.user_metadata.user_name)) {
-            for (const [date, timeActive] of value.entries()) {
-              const calendarMap: CalendarMap = {
-                date: date,
-                timeActive: timeActive
-              };
-              callendarMapCollection.push(calendarMap);
-            }
-          }
+    for (const [key, value] of timeActiveMap.entries()) {
+      if (key.includes(session.user.user_metadata.user_name)) {
+        for (const [date, timeActive] of value.entries()) {
+          const calendarMap: CalendarMap = {
+            date: date,
+            timeActive: timeActive
+          };
+          callendarMapCollection.push(calendarMap);
         }
+      }
+    };
 
     const chart = echarts.init(chartContainer);
     if (!sessionStorage.getItem('logoShown')) {
@@ -115,7 +118,7 @@ export class CalendarChart {
       sessionStorage.setItem('logoShown', 'true');
       setTimeout(() => {
         // Prepare the actual data settings
-        
+
         const option = calendar(session, callendarMapCollection, bgPatternImg, currentRange);
 
         chart.setOption(option, true); // The 'true' parameter clears the previous setting completely before applying new options
@@ -137,4 +140,21 @@ export class CalendarChart {
     this.clickMonth(chart);
   };
 
-}
+  renderCombinedChart(course: Course, calendarMap: Map<string, number>, userId: string) {
+    const chartContainer = this.getChartContainer(userId);
+
+    if (!chartContainer) {
+      console.error('Chart container not found for user:', userId);
+      return;
+    }
+
+    const chart = echarts.init(chartContainer);
+
+    const option = calendarCombined(userId, calendarMap, bgPatternImg, currentRange);
+
+    chart.setOption(option, true);
+
+  }
+};
+
+

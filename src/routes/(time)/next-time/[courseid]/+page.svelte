@@ -83,7 +83,7 @@
 
   {#if tabSet === 0}
     {#if instructorMode}
-      <!-- <NewInstructorCalendarTime course={data}  /> -->
+      <NewInstructorCalendarTime course={data.course} timeActiveMap={data.timeActiveMap} userIds={data.userIds}  />
     {:else}
       <CalendarTimeNewChart course={data.course} timeActiveMap={data.timeActiveMap} session={data.session} />
     {/if}
