@@ -199,16 +199,34 @@ export class LabHeatMapChart {
     const steps = filterByType(this.course.los, 'step');
 
 
-    labs?.forEach(lo => {
-      if (lo.learningRecords) {
-        if (!labActivities.has(lo.title)) {
-          labActivities.set(lo.title, []);
+    // labs?.forEach(lo => {
+    //   if (lo.learningRecords) {
+    //     if (!labActivities.has(lo.title)) {
+    //       labActivities.set(lo.title, []);
+    //     }
+
+    //     lo.learningRecords.forEach((lab, key) => {
+    //       if (userIds.includes(key)) {
+    //         // Push the activity to the corresponding title in labActivities
+    //         labActivities.get(lo.title).push({
+    //           timeActive: lab.timeActive,
+    //           nickname: key
+    //         });
+    //       }
+    //     });
+    //   }
+    // });
+
+    steps?.forEach(step => {
+      if (step.learningRecords) {
+        if (!labActivities.has(step.parentLo?.title)) {
+          labActivities.set(step.parentLo?.title, []);
         }
 
-        lo.learningRecords.forEach((lab, key) => {
+        step.learningRecords.forEach((lab, key) => {
           if (userIds.includes(key)) {
             // Push the activity to the corresponding title in labActivities
-            labActivities.get(lo.title).push({
+            labActivities.get(step.parentLo?.title).push({
               timeActive: lab.timeActive,
               nickname: key
             });
