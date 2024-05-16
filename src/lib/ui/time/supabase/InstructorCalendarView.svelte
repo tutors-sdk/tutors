@@ -37,21 +37,16 @@
 
   const createAndRenderChart = () => {
 
-     if (timeActiveMap.size > 1) {
+     if (timeActiveMap.size > 0) {
       timeActiveMap.forEach((calendarMap, userId) => {
         calendarChart?.createChartContainer(userId);
         calendarChart?.renderCombinedChart(course, calendarMap, userId);
       });
     }
-    
-    // } else {
-    //   calendarChart?.createChartContainer(course.values().next().value);
-    //   calendarChart?.renderChart(course.values().next().value);
-    // }
   };
 
   // Calculate the height of each chart container dynamically
-  $: chartHeight = userIds && userIds.length > 0 ? 100 / userIds.length + "%" : "50%";
+  $: chartHeight = userIds && userIds.length > 0 ? 100 / userIds.length + "%" : "90%";
   // Listen for window focus event to trigger chart refresh
   window.addEventListener("focus", handleFocus);
 </script>
