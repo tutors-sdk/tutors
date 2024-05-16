@@ -114,23 +114,79 @@ export class LabHeatMapChart {
   populateSingleUserSeriesData(course: Course, allLabs: Lo[], userId: string, index: number = 0) {
     const labTitles = allLabs.map((lab: { title: string; }) => lab.title.trim());
     this.categories = new Set(labTitles);
-    let los = filterByType(course.los, 'lab');
 
-    const seriesData = los.map(lo => [
-      labTitles.indexOf(lo.title.trim()),
-      index,
-      lo.learningRecords?.get(userId)?.timeActive || 0
-    ]);
+    let labs = filterByType(course.los, 'lab');
+    let steps = filterByType(course.los, 'step');
+
+    const allLabSteps = [...labs, ...steps];
+
+    const seriesData = allLabSteps.map((step) => {
+        const title = step.parentLo?.type === 'lab' ? step.parentLo?.title : step.title;
+        if (step.learningRecords?.has(userId)) {
+            return [
+                labTitles.indexOf(title.trim()),
+                index,
+                step.learningRecords?.get(userId)?.timeActive || 0
+            ];
+        }
+        return null; // Return null for steps without activity for the user
+    }).filter(data => data !== null); // Filter out null values
 
     return [{
+        name: 'Lab Activity for ' + this.session.user.user_metadata.user_name,
+        type: 'heatmap',
+        data: seriesData,
+        label: {
+            show: true
+        }
+    }];
+}
+
+populatePerUserSeriesData(course: Course, allLabs: Lo[], userId: string, index: number = 0) {
+  const labTitles = allLabs.map((lab: { title: string; }) => lab.title.trim());
+  this.categories = new Set(labTitles);
+
+  let labs = filterByType(course.los, 'lab');
+  let steps = filterByType(course.los, 'step');
+
+  const allLabSteps = [...labs, ...steps];
+
+  // Map to store total timeActive for each step
+  const totalTimesMap = new Map<string, number>();
+
+  // Iterate over allLabSteps to aggregate total timeActive for each step
+  allLabSteps.forEach((step, stepIndex) => {
+      const title = step.parentLo?.type === 'lab' ? step.parentLo?.title : step.title;
+      const timeActive = step.learningRecords?.get(userId)?.timeActive || 0;
+
+      // Add timeActive to the total time for the step
+      if (totalTimesMap.has(title)) {
+          totalTimesMap.set(title, totalTimesMap.get(title)! + timeActive);
+      } else {
+          totalTimesMap.set(title, timeActive);
+      }
+  });
+
+  // Construct seriesData array using the aggregated total times
+  const seriesData = Array.from(totalTimesMap.entries()).map(([title, timeActive], stepIndex) => {
+      return [
+          labTitles.indexOf(title.trim()),
+          index,
+          timeActive
+      ];
+  });
+
+  return [{
       name: 'Lab Activity for ' + this.session.user.user_metadata.user_name,
       type: 'heatmap',
       data: seriesData,
       label: {
-        show: true
+          show: true
       }
-    }];
-  }
+  }];
+}
+
+
 
   populateAndRenderSingleUserData(session: Session, allLabs: Lo[]) {
     const container = this.getChartContainer();
@@ -138,7 +194,7 @@ export class LabHeatMapChart {
 
     this.yAxisData = [session.user.user_metadata.user_name];
 
-    const seriesData = this.populateSingleUserSeriesData(this.course, allLabs, session.user.user_metadata.user_name);
+    const seriesData = this.populatePerUserSeriesData(this.course, allLabs, session.user.user_metadata.user_name);
     this.series = {
       name: 'Lab Activity',
       type: 'heatmap',
@@ -159,13 +215,16 @@ export class LabHeatMapChart {
     let allSeriesData: HeatMapSeriesData[] = [];
     let yAxisData: string[] = []; // Array to store yAxis data
 
+
     const labTitles = allLabs.map((lab: { title: string; }) => lab.title.trim());
     this.categories = new Set(labTitles);
-    let los = filterByType(course.los, 'lab');
-    let steps = filterByType(course.los, 'step');
 
     usersIds.forEach((userId, index) => {
-      const seriesData = this.populateSingleUserSeriesData(course, allLabs, userId, index);
+
+
+
+
+      const seriesData = this.populatePerUserSeriesData(course, allLabs, userId, index);
       allSeriesData = allSeriesData.concat(seriesData[0].data);
 
       if (!yAxisData.includes(userId)) {
@@ -198,35 +257,19 @@ export class LabHeatMapChart {
     const labs = filterByType(this.course.los, 'lab');
     const steps = filterByType(this.course.los, 'step');
 
+    const allLabSteps = [...labs, ...steps];
 
-    // labs?.forEach(lo => {
-    //   if (lo.learningRecords) {
-    //     if (!labActivities.has(lo.title)) {
-    //       labActivities.set(lo.title, []);
-    //     }
-
-    //     lo.learningRecords.forEach((lab, key) => {
-    //       if (userIds.includes(key)) {
-    //         // Push the activity to the corresponding title in labActivities
-    //         labActivities.get(lo.title).push({
-    //           timeActive: lab.timeActive,
-    //           nickname: key
-    //         });
-    //       }
-    //     });
-    //   }
-    // });
-
-    steps?.forEach(step => {
+    allLabSteps?.forEach(step => {
       if (step.learningRecords) {
-        if (!labActivities.has(step.parentLo?.title)) {
-          labActivities.set(step.parentLo?.title, []);
+        const title = step.parentLo?.type === 'lab' ? step.parentLo?.title : step.title;
+        if (!labActivities.has(title)) {
+          labActivities.set(title, []);
         }
 
         step.learningRecords.forEach((lab, key) => {
           if (userIds.includes(key)) {
             // Push the activity to the corresponding title in labActivities
-            labActivities.get(step.parentLo?.title).push({
+            labActivities.get(title).push({
               timeActive: lab.timeActive,
               nickname: key
             });
@@ -244,10 +287,10 @@ export class LabHeatMapChart {
       return {
         value: addedCount,
         title: title,
-        lowValue: lowData?.timeActive,
-        highValue: highData?.timeActive,
-        lowNickname: lowData?.nickname,
-        highNickname: highData?.nickname,
+        lowValue: lowData?.timeActive || 0,
+        highValue: highData?.timeActive || 0,
+        lowNickname: lowData?.nickname || 'No Interaction',
+        highNickname: highData?.nickname || 'No Interaction',
       };
     });
 
@@ -257,6 +300,8 @@ export class LabHeatMapChart {
 
   renderCombinedLabChart(container: HTMLElement, labData: any[], chartTitle: string) {
     const chart = echarts.init(container);
+
+    labData.sort((a, b) => a.title.localeCompare(b.title));
 
     const heatmapData = labData.map((item, index) => [index, 0, item.value]);
     const titles = labData.map(item => item.title);
@@ -289,6 +334,18 @@ export class LabHeatMapChart {
       xAxis: {
         type: 'category',
         data: titles,
+        splitArea: {
+          show: true
+        },
+        axisLabel: {
+          rotate: -40,
+          interval: 0,
+          fontSize: 15
+        },
+        axisPointer: {
+          type: 'shadow'
+        },
+        position: 'bottom'
       },
       yAxis: {
         type: 'category',
