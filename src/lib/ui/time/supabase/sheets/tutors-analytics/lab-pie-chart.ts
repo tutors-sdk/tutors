@@ -7,8 +7,9 @@ import {
 import { CanvasRenderer } from 'echarts/renderers';
 import { PieChart, BarChart } from 'echarts/charts';
 import { LabelLayout } from 'echarts/features';
-import type { Lo } from '$lib/services/models/lo-types';
+import type { Course, Lo } from '$lib/services/models/lo-types';
 import { backgroundPattern, textureBackground } from '../es-charts/tutors-charts-background-url';
+import type { Session } from '@supabase/supabase-js';
 
 echarts.use([
   TooltipComponent,
@@ -37,15 +38,18 @@ bgPatternImg.src = bgPatternSrc;
 export class LabPieChart {
   private myChart: echarts.ECharts | null;
   private listOfLabs: string[];
+  course: Course;
+  session: Session;
 
-  constructor(userData: UserMetric) {
+  constructor(course: Course, session: Session) {
     this.myChart = null;
     this.listOfLabs = [];
-    this.user = userData;
+    this.course = course;
+    this.session = session;
   }
 
-  populateCols(los: Lo[]) {
-    this.listOfLabs = los.map(lab => lab.title).filter(Boolean);
+  populateCols() {
+    this.listOfLabs = this.course.los.map(lab => lab.title).filter(Boolean);
   }
 
   createChartContainer(containerId: string) {
@@ -56,7 +60,7 @@ export class LabPieChart {
   }
 
   renderChart() {
-    const chartId = this.user ? `chart-${this.user?.nickname}` : 'chart';
+    const chartId = this.session.user.user_metadata.user_name ? `chart-${this.session.user.user_metadata.user_name}` : 'chart';
     let chartContainer = document.getElementById(chartId);
 
     // Create chart container dynamically if it doesn't exist

@@ -2,12 +2,15 @@
   import { onMount, onDestroy } from "svelte";
   import type { Course, Lo } from "$lib/services/models/lo-types";
   import { LabPieChart } from "./sheets/tutors-analytics/lab-pie-chart";
+    import type { Session } from "inspector";
 
-  export let user: Course;
+  export let course: Course;
+  export let session:Session;
+
   let labPieChart: LabPieChart | null;
 
   onMount(async () => {
-    labPieChart = new LabPieChart(user);
+    labPieChart = new LabPieChart(course, session);
     labPieChart.populateCols(allLabs);
     labPieChart.renderChart();
   });
