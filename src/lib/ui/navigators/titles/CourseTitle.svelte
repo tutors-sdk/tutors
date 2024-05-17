@@ -26,7 +26,7 @@
       {#if !wall}
         <Image {lo} miniImage={true} />
       {:else}
-        <Icon icon={getIcon(lo.type).icon} class="text-{getIcon(lo.type).colour}" width="40" height="40" />
+        <Icon icon={getIcon(lo.type).type} class="text-{getIcon(lo.type).color}" width="40" height="40" />
       {/if}
     </div>
   </div>
