@@ -28,7 +28,7 @@ export class LabHeatMapChart {
   chartRendered: boolean = false;
   chartInstances: Map<any, any>;
   labs: Lo[] | undefined;
-  categories: Set<String>;
+  categories: Set<string>;
   yAxisData: string[];
   course: Course;
   session: Session;
@@ -161,10 +161,6 @@ export class LabHeatMapChart {
     this.categories = new Set(labTitles);
 
     usersIds.forEach((userId, index) => {
-
-
-
-
       const seriesData = this.populatePerUserSeriesData(course, allLabs, userId, index);
       allSeriesData = allSeriesData.concat(seriesData[0].data);
 

@@ -32,7 +32,7 @@
   const renderChart = () => {
     if (labHeatMapChart && course) {
       const container = labHeatMapChart.getChartContainer();
-      labHeatMapChart.renderChart(container);
+      labHeatMapChart.renderChart(container!);
     }
   };
 

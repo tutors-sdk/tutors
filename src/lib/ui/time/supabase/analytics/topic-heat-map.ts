@@ -8,7 +8,9 @@ import { HeatmapChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import { backgroundPattern } from '../charts/tutors-charts-background-url';
 import { heatmap } from '../charts/heatmap-chart';
-import type { Topic } from '$lib/services/models/lo-types';
+import type { Course, Lo, Topic } from '$lib/services/models/lo-types';
+import type { Session } from '@supabase/supabase-js';
+import { filterByType } from '$lib/services/models/lo-utils';
 
 echarts.use([
   TooltipComponent,
@@ -23,29 +25,38 @@ bgPatternImg.src = backgroundPattern;
 
 export class TopicHeatMapChart {
   chartRendered: boolean = false;
+  chartInstances: Map<any, any>;
+  course: Course;
+  categories: Set<string>;
+  yAxisData: string[];
+  series: any[];
+  topics: string[];
+  session: Session;
+  userIds: string[];
 
-  constructor(topics, userData) {
+  constructor(course: Course, session: Session, userIds: string[]) {
     this.chartRendered = false;
     this.chartInstances = new Map();
-    this.topics = topics;
-    this.users = userData;
+    this.topics = [];
+    this.course = course;
     this.categories = new Set();
-    this.user = null;
     this.yAxisData = [];
     this.series = [];
+    this.session = session;
+    this.userIds = userIds;
   }
 
   populateUsersData() {
-    this.populateTopicTitles(this.topics)
+    this.populateTopicTitles(this.course.los)
     this.populateAndRenderUsersData(this.users, this.topics);
   }
 
-  populateSingleUserData(user: StudentRecord) {
-    this.user = user;
-    this.populateAndRenderSingleUserData(this.user, this.topics);
+  populateSingleUserData() {
+    this.populateTopicTitles(this.course.los)
+    this.populateAndRenderSingleUserData();
   }
 
-  populateTopicTitles(allTopics: Topic[]) {
+  populateTopicTitles(allTopics: Lo[]) {
     const topicTitles = allTopics.map(topic => topic.title.trim());
     this.categories = new Set(topicTitles);
   }
@@ -86,34 +97,129 @@ export class TopicHeatMapChart {
     }];
   }
 
-  populateSingleUserSeriesData(user: StudentRecord, topics) {
-    const topicTitles = topics.map(topic => topic.title.trim());
-    this.categories = new Set(topicTitles);
+  populateSingleUserSeriesData() {
+    //   const topicTitles = this.course.los.map(topic => topic.title.trim());
+    //   // this.categories = new Set(topicTitles);
 
-    const seriesData = user?.topicActivity.map(activity => [
-      topicTitles.indexOf(activity.title.trim()),
-      0,
-      activity.count
-    ])
+    //   const seriesData = this.course.learningRecords?.forEach((value, key) => 
+
+    //     [
+    //       topicTitles.indexOf(value.title.trim()),
+    //     0,
+    //     value.timeactive
+    // ])
+
+    // return [{
+    //   name: 'Topic Activity',
+    //   type: 'heatmap',
+    //   data: seriesData,
+    //   label: {
+    //     show: true
+    //   }
+    // }];
+  }
+
+  getCompositeValues() {
+    const units = filterByType(this.course.los, "unit");
+    const sides = filterByType(this.course.los, 'side');
+    const topics = filterByType(this.course.los, 'topic');
+
+    return [...units, ...sides, ...topics];
+  }
+
+  getSimpleTypesValues() {
+    const notes = filterByType(this.course.los, "note");
+    const archives = filterByType(this.course.los, 'archive');
+    const webs = filterByType(this.course.los, 'web');
+    const githubs = filterByType(this.course.los, "github");
+    const panelnotes = filterByType(this.course.los, 'panelnote');
+    const paneltalks = filterByType(this.course.los, 'paneltalk');
+    const panelVideos = filterByType(this.course.los, "panelvideo");
+    const talks = filterByType(this.course.los, 'talk');
+    const books = filterByType(this.course.los, 'book');
+    const labs = filterByType(this.course.los, "lab");
+    const steps = filterByType(this.course.los, "step");
+
+    return [...notes, ...archives, ...webs, ...githubs, ...panelnotes, ...paneltalks, ...panelVideos, ...talks, ...books, ...labs, ...steps];
+  }
+
+  prepareLabData(index: number = 0) {
+    const composites = new Map();
+    const allComposites = this.getCompositeValues();
+    const allSimpleTypes = this.getSimpleTypesValues();
+    const allTypes = [...allComposites, ...allSimpleTypes];
+
+    // Map to store total timeActive for each step
+    const totalTimesMap = new Map<string, number>();
+
+    // Iterate over allLabSteps to aggregate total timeActive for each step
+    allTypes.forEach((lo) => {
+      let title: string = "";
+        if(lo.parentTopic?.type === 'topic') {
+          title = lo.parentTopic?.title
+        }else if(lo.parentLo?.parentTopic?.type === 'topic') {
+          title = lo.parentLo?.parentTopic?.title
+        }else{
+          title = lo.title
+        }
+        // const title = (lo.parentTopic?.type === 'topic' || lo.parentLo?.parentTopic?.type === 'topic')
+        // ? (lo.parentTopic?.type === 'topic' ? lo.parentTopic?.title : lo.parentLo?.parentTopic?.title)
+        // : lo.title;
+      const timeActive = lo.learningRecords?.get(this.session.user.user_metadata.user_name)?.timeActive || 0;
+
+      
+      // Add timeActive to the total time for the step
+      if (totalTimesMap.has(title!)) {
+        totalTimesMap.set(title!, totalTimesMap.get(title!)! + timeActive);
+      } else {
+        totalTimesMap.set(title!, timeActive);
+      }
+    
+    });
+
+    // this.course.topicIndex.forEach((value, key) => {
+    //   const title = value.parentTopic?.type === 'topic' ? value.parentTopic?.title : value.title;
+
+    //   const timeActive = value.learningRecords?.get(this.session.user.user_metadata.user_name)?.timeActive || 0;
+
+    //   // Add timeActive to the total time for the step
+    //   if (totalTimesMap.has(title)) {
+    //     totalTimesMap.set(title, totalTimesMap.get(title)! + timeActive);
+    //   } else {
+    //     totalTimesMap.set(title, timeActive);
+    //   }
+
+    // });
+
+    const topicTitles = this.course.los.map(topic => topic.title.trim());
+
+    // Construct seriesData array using the aggregated total times
+    const seriesData = Array.from(totalTimesMap.entries()).map(([title, timeActive], stepIndex) => {
+      return [
+        topicTitles.indexOf(title.trim()),
+        index,
+        timeActive
+      ];
+    });
 
     return [{
-      name: 'Topic Activity',
+      name: 'Lab Activity for ' + this.session.user.user_metadata.user_name,
       type: 'heatmap',
       data: seriesData,
       label: {
         show: true
       }
     }];
-  }
+  };
 
-  populateAndRenderSingleUserData(user: StudentRecord, topics: any) {
+  populateAndRenderSingleUserData() {
     const container = this.getChartContainer();
     if (!container) return; // Exit if no container found
 
     // yAxisData for a single user should be an array with a single element
-    this.yAxisData = [user?.student.nickname]; // Even for a single user, this should be an array
+    this.yAxisData = [this.session.user.user_metadata.user_name]; // Even for a single user, this should be an array
 
-    const seriesData = this.populateSingleUserSeriesData(user, topics);
+    const seriesData = this.prepareLabData();
 
     // Now seriesData contains the data for a single user
     this.series = [{

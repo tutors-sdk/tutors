@@ -2,15 +2,17 @@
     import { onDestroy, onMount } from "svelte";
     import type {  Course, Topic } from "$lib/services/models/lo-types";
     import { TopicHeatMapChart } from "../analytics/topic-heat-map";
+    import type { Session } from "@supabase/supabase-js";
 
-    export let user: Course;
-    export let topics: Topic[] = [];
+    export let course: Course;
+    export let session: Session;
+    export let userIds: string[] = [];
 
     let topicHeatMapChart: TopicHeatMapChart | null;
-    topicHeatMapChart = new TopicHeatMapChart(topics, user);
+    topicHeatMapChart = new TopicHeatMapChart(course, session, userIds);
   
     onMount(() => {
-      topicHeatMapChart?.populateSingleUserData(user);
+      topicHeatMapChart?.populateSingleUserData();
       renderChart();
     });
 
@@ -21,7 +23,7 @@
     });
 
     const renderChart = () => {
-      if (topicHeatMapChart && user) {
+      if (topicHeatMapChart && course) {
         const container = topicHeatMapChart.getChartContainer();
         topicHeatMapChart.renderChart(container);
       }

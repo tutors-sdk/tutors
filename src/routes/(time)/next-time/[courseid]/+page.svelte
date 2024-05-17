@@ -4,9 +4,10 @@
   import { writable, type Writable } from "svelte/store";
   import { Tab, TabGroup } from "@skeletonlabs/skeleton";
   import LabView from "$lib/ui/time/supabase/views/LabView.svelte";
-  import NewInstructorLabTime from "$lib/ui/time/supabase/views/InstructorLabView.svelte";
+  import InstructorLabView from "$lib/ui/time/supabase/views/InstructorLabView.svelte";
   import NewInstructorCalendarTime from "$lib/ui/time/supabase/views/InstructorCalendarView.svelte";
   import CalendarView from "$lib/ui/time/supabase/views/CalendarView.svelte";
+    import TopicView from "$lib/ui/time/supabase/views/TopicView.svelte";
 
   export let data: any;
 
@@ -15,7 +16,7 @@
   let instructorMode = false;
   let tabSet = 0;
   let selectedLabChart: string = "LabView"; // Set default lab chart
-  let selectedTopicChart: string = "NewTopicTime"; // Set default topic chart
+  let selectedTopicChart: string = "TopicView"; // Set default topic chart
   let selectedInstructorLabChart: string = "InstructorLabView"; // Set default instructor lab chart
   let selectedInstructorTopicChart: string = "NewInstructorTopicTime"; // Set default instructor topic chart
 
@@ -98,15 +99,15 @@
     {:else}
       <!-- Dropdown for selecting topic charts -->
       <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleTopicChartChange} bind:value={selectedTopicChart}>
-        <option value="NewTopicTime">Topic Time Heat-Map</option>
+        <option value="TopicView">Topic Time Heat-Map</option>
         <option value="TopicTimeNewChart">Topic Time Pie-Chart</option>
       </select>
       <!-- Display selected topic chart -->
-      <!-- {#if selectedTopicChart === "NewTopicTime"}
-        <NewTopicTime user={data.user} topics={data.allTopics} />
-      {:else if selectedTopicChart === "TopicTimeNewChart"}
-        <TopicTimeNewChart user={data.user} topics={data.allTopics} />
-      {/if} -->
+      {#if selectedTopicChart === "TopicView"}
+        <TopicView course={data.course} session={data.session} userIds={data.userIds} />
+      <!-- {:else if selectedTopicChart === "TopicTimeNewChart"}
+        <TopicTimeNewChart user={data.user} topics={data.allTopics} /> -->
+      {/if}
     {/if}
   {:else if tabSet === 2} 
     {#if instructorMode}
@@ -117,7 +118,7 @@
       </select>
       <!-- Display selected lab chart -->
      {#if selectedInstructorLabChart === "InstructorLabView"}
-        <NewInstructorLabTime course={data.course} session={data.session} userIds={data.userIds} />  
+        <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} />  
       {:else if selectedInstructorLabChart === "BoxPlotInstructorChart"}
         <!-- <BoxPlotInstructorChart course={data} /> -->
       {/if} 
