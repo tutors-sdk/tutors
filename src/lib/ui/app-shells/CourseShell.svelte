@@ -4,7 +4,7 @@
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
   import CalendarButton from "$lib/ui/navigators/buttons/CalendarButton.svelte";
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
-  import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
+  import LayoutMenu from "$lib/ui/themes/menu/LayoutMenu.svelte";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
   import CourseTitle from "$lib/ui/navigators/titles/CourseTitle.svelte";
   import CourseProfile from "$lib/ui/navigators/profiles/CourseProfile.svelte";

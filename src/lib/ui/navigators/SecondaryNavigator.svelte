@@ -1,9 +1,9 @@
 <script lang="ts">
   import { currentCourse } from "$lib/stores";
   import { fly } from "svelte/transition";
-  import Breadcrumbs from "../icons/Breadcrumbs.svelte";
-  import IconBar from "../icons/IconBar.svelte";
+  import Breadcrumbs from "../themes/icons/Breadcrumbs.svelte";
   import EditCoursButton from "./buttons/EditCoursButton.svelte";
+  import IconBar from "../themes/icons/IconBar.svelte";
 </script>
 
 {#if !$currentCourse?.isPortfolio}

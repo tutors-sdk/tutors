@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { getIcon } from "./themes/themes";
   import Icon from "@iconify/svelte";
+  import { getIcon } from "../styles/icon-lib";
 
   export let type = "";
   export let icon = "";
@@ -34,11 +34,11 @@
 {#if type}
   {#if link}
     <a class="btn btn-sm" {target} href={link} title={tip}>
-      <Icon icon={getIcon(type).icon} color={legacyIconColour(getIcon(type).colour)} {width} {height} />
+      <Icon icon={getIcon(type).type} color={legacyIconColour(getIcon(type).color)} {width} {height} />
       {text}
     </a>
   {:else}
-    <Icon icon={getIcon(type).icon} color={legacyIconColour(getIcon(type).colour)} {width} {height} />
+    <Icon icon={getIcon(type).type} color={legacyIconColour(getIcon(type).color)} {width} {height} />
   {/if}
 {:else if link}
   <a {target} href={link} title={tip}>

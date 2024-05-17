@@ -4,7 +4,7 @@
   import { onDestroy } from "svelte";
   import Panels from "./Panels.svelte";
   import Cards from "./Cards.svelte";
-  import Image from "../../icons/Image.svelte";
+  import Image from "../../themes/Image.svelte";
   export let units: Composite[];
 
   let text = "!text-xl font-semibold";

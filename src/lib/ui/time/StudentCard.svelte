@@ -5,7 +5,7 @@
   import { cardTransition } from "$lib/ui/animations";
   import { onDestroy } from "svelte";
   import type { LoEvent } from "$lib/services/types/presence";
-  import Icon from "../icons/Icon.svelte";
+  import Icon from "$lib/ui/themes/icons/Icon.svelte";
 
   export let lo: LoEvent;
 
