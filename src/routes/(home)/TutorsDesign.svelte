@@ -1,6 +1,5 @@
 <script lang="ts">
-  import Icon from "$lib/ui/icons/Icon.svelte";
-  import { Avatar } from "@skeletonlabs/skeleton";
+  import Icon from "$lib/ui/themes/icons/Icon.svelte";
 
   let elemCarousel: HTMLDivElement;
   const designs = [

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Topic } from "$lib/services/models/lo-types";
   import { currentCourse } from "$lib/stores";
-  import Icon from "../../icons/Icon.svelte";
+  import Icon from "$lib/ui/themes/icons/Icon.svelte";
 
   export let topic: Topic;
 </script>

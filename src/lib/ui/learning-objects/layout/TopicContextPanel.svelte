@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Topic } from "$lib/services/models/lo-types";
   import type { Lo } from "$lib/services/models/lo-types";
-  import Image from "../../icons/Image.svelte";
+  import Image from "../../themes/Image.svelte";
   import { currentLo, layout } from "$lib/stores";
   import { onDestroy } from "svelte";
   import TopicContext from "../structure/TopicContext.svelte";

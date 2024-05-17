@@ -1,6 +1,6 @@
 <script lang="ts">
   import { AppShell, Modal } from "@skeletonlabs/skeleton";
-  import LayoutMenu from "$lib/ui/navigators/menus/LayoutMenu.svelte";
+  import LayoutMenu from "$lib/ui/themes/menu/LayoutMenu.svelte";
   import MainNavigator from "$lib/ui/navigators/MainNavigator.svelte";
   import TutorsTitle from "$lib/ui/navigators/titles/TutorsTitle.svelte";
   import { goto } from "$app/navigation";
