@@ -2,7 +2,6 @@
   import { onDestroy, onMount } from "svelte";
   import { CalendarChart } from "../analytics/calendar";
   import type { Course } from "$lib/services/models/lo-types";
-  import type { Session } from "@supabase/supabase-js";
 
   export let course: Course;
   export let timeActiveMap: Map<string, Map<string, number>>;
@@ -23,11 +22,6 @@
     }
   });
 
-  // Re-render the chart when the tab regains focus
-  const handleFocus = () => {
-    renderChart();
-  };
-
   // Function to render the chart
   const renderChart = () => {
     // if (calendarChart && course.loIndex.size > 0) {
@@ -45,20 +39,23 @@
     }
   };
 
-  // Calculate the height of each chart container dynamically
-  $: chartHeight = userIds && userIds.length > 0 ? 100 / userIds.length + "%" : "90%";
-  // Listen for window focus event to trigger chart refresh
-  window.addEventListener("focus", handleFocus);
+  $: chartHeight = userIds.length > 0 ? 60  + "%" : "90%";
 </script>
+
+<style>
+  .chart-container {
+    height: var(--chart-height);
+    width: 100%;
+    overflow-y: scroll;
+  }
+</style>
 
 <div class="h-screen overflow-auto">
   {#if userIds.length > 0}
     {#each userIds as userId}
-      <div id={`chart-${userId}`} class="h-1/2 w-full overflow-y-scroll"></div>
+      <div id={`chart-${userId}`} class="chart-container" style="--chart-height: {chartHeight};"></div>
     {/each}
-    <div id="heatmap-container" class="h-${chartHeight} w-full"></div>
   {:else}
     <div id="heatmap-container" class="h-90 w-full"></div>
   {/if}
 </div>
-

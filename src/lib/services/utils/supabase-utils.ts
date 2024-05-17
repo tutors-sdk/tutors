@@ -28,8 +28,13 @@ export async function readValue(key: string): Promise<any> {
   return data;
 };
 
-export async function getAllCalendarData(courseId: string, studentId: string): Promise<any> {
+export async function getCalendarDataPerStudent(courseId: string, studentId: string): Promise<any> {
   const { data, error } = await db.from('calendar').select().eq('student_id', studentId).eq('course_id', courseId);
+  return data;
+};
+
+export async function getCalendarDataForAll(courseId: string): Promise<any> {
+  const { data, error } = await db.from('calendar').select().eq('courseid', courseId);
   return data;
 };
 

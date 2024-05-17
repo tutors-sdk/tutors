@@ -3,6 +3,7 @@ import { courseService } from "$lib/services/course";
 import type { Course } from "$lib/services/models/lo-types";
 import { aggregateTimeActiveByDate, decorateLearningRecords, fetchLearningInteractions } from "$lib/services/utils/supabase-metrics";
 import type { LearningInteraction } from "$lib/services/types/supabase-metrics";
+import { getCalendarDataForAll } from "$lib/services/utils/supabase-utils";
 
 export const ssr = false;
 
@@ -12,7 +13,9 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
     const course: Course = await courseService.readCourse(params.courseid, fetch);
     const metrics: LearningInteraction[] = await fetchLearningInteractions(course);
     const userIds: string[] = [...new Set(metrics.map((m: LearningInteraction) => m.studentid))] as string[];
-    const timeActiveMap = await aggregateTimeActiveByDate(metrics);
+    const records = await getCalendarDataForAll(course.courseId);
+    const aggregatedData = await aggregateTimeActiveByDate(records); 
+    const calendarIds: string[] = [...new Set(Array.from(aggregatedData.entries()).map(([studentId, dateMap]) => studentId))] as string[];
     await decorateLearningRecords(course, metrics);
     // if (course.hasEnrollment && course.enrollment) {
     //   for (let i = 0; i < course.enrollment.length; i++) {
@@ -34,8 +37,9 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
     return {
       course: course,
       userIds: userIds,
+      calendarIds: calendarIds, // Because of mismatch data in the dbs (reintroduce calendar)
       session: data.session,
-      timeActiveMap: timeActiveMap
+      timeActiveMap: aggregatedData
       // allLabs: course.wallMap?.get("lab"),
       // allTopics: course.los,
       // allActivities: allLos,

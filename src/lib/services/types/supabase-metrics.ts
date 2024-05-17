@@ -1,5 +1,6 @@
 export interface LearningInteraction {
-    loid: string,
+    id?: Date;
+    loid?: string,
     courseid: string,
     studentid: string,
     date: Date;

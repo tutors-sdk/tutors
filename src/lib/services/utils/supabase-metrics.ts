@@ -2,7 +2,7 @@ import { db } from "$lib/services/utils/db/client";
 import type { Session } from "@supabase/supabase-js";
 import type { Course, LearningRecord } from "../models/lo-types";
 import type { LearningInteraction } from "../types/supabase-metrics";
-import { formatDate } from "./supabase-utils";
+import { formatDate, getCalendarDataForAll } from "./supabase-utils";
 
 export async function fetchLearningInteractions(course: Course): Promise<LearningInteraction[]> {
   const { data: metrics, error: studentsError } = await db.rpc('get_all_learner_records', {
@@ -19,23 +19,25 @@ export async function fetchLearningInteractions(course: Course): Promise<Learnin
 export async function aggregateTimeActiveByDate(records: LearningInteraction[]): Promise<Map<string, Map<string, number>>> {
   const timeActiveMap = new Map<string, Map<string, number>>();
 
+  // Iterate over the records
   records.forEach(record => {
-    const formattedDate = formatDate(record.date);
-    const key = record.studentid; // Using studentid and formatted date as a composite key
+    const formattedDate = formatDate(record.id);  
+    const studentId = record.studentid;
+    const timeActive = record.timeactive;
 
-    if (!timeActiveMap.has(key)) {
-      timeActiveMap.set(key, new Map<string, number>());
+    // If the studentId is not in the map, add it with a new Map
+    if (!timeActiveMap.has(studentId)) {
+      timeActiveMap.set(studentId, new Map<string, number>());
     }
 
-    const dateMap = timeActiveMap.get(key)!;
-    if (dateMap.has(formattedDate)) {
-      dateMap.set(formattedDate, dateMap.get(formattedDate)! + record.timeactive);
-    } else {
-      dateMap.set(formattedDate, record.timeactive);
-    }
+    // Get the dateMap for the studentId
+    const dateMap = timeActiveMap.get(studentId)!;
+    dateMap.set(formattedDate, timeActive);
+
   });
+
   return timeActiveMap;
-}
+};
 
 export async function decorateLearningRecords(course: Course, metrics: LearningInteraction[]): Promise<void> {
   if (metrics && metrics.length > 0 && course.loIndex) {
