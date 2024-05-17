@@ -7,6 +7,6 @@
 
 <div class="flex-auto">
   {#each nav?.bar as i}
-    <Icon type={i.icon} link={i.link} target={i.target} tip={i.tip} />
+    <Icon type={i.type} link={i.link} target={i.target} tip={i.tip} />
   {/each}
 </div>

@@ -1,4 +1,4 @@
-import { addIcon } from "$lib/ui/icons/themes/themes";
+import { addIcon } from "$lib/ui/themes/styles/icon-lib";
 import type { Composite, Course, IconNav, Lo, LoType, Topic } from "./lo-types";
 import { filterByType, setShowHide } from "./lo-utils";
 
@@ -29,16 +29,16 @@ export function createCompanions(course: Course) {
     bar: []
   };
   const companionsList = [
-    { key: "slack", icon: "slack", target: "_blank", tip: "Go to module Slack channel" },
-    { key: "zoom", icon: "zoom", target: "_blank", tip: "Go to module Zoom meeting" },
-    { key: "moodle", icon: "moodle", target: "_blank", tip: "Go to module Moodle page" },
-    { key: "youtube", icon: "youtube", target: "_blank", tip: "Go to module YouTube channel" },
-    { key: "teams", icon: "teams", target: "_blank", tip: "Go to module Teams meeting" }
+    { key: "slack", type: "slack", target: "_blank", tip: "Go to module Slack channel" },
+    { key: "zoom", type: "zoom", target: "_blank", tip: "Go to module Zoom meeting" },
+    { key: "moodle", type: "moodle", target: "_blank", tip: "Go to module Moodle page" },
+    { key: "youtube", type: "youtube", target: "_blank", tip: "Go to module YouTube channel" },
+    { key: "teams", type: "teams", target: "_blank", tip: "Go to module Teams meeting" }
   ];
   companionsList.forEach((companionItem) => {
-    const { key, icon, target, tip } = companionItem;
+    const { key, type, target, tip } = companionItem;
     if (course.properties[key]) {
-      course.companions.bar.push({ link: course.properties[key], icon, target, tip });
+      course.companions.bar.push({ link: course.properties[key], type, target, tip });
     }
   });
   if (course.properties.companions) {
@@ -47,7 +47,7 @@ export function createCompanions(course: Course) {
       addIcon(key, companion.icon);
       course.companions.bar.push({
         link: companion.link,
-        icon: key,
+        type: key,
         target: "_blank",
         tip: companion.title
       });
@@ -72,7 +72,7 @@ export function createWalls(course: Course) {
 function createWallLink(type: string, course: Course): IconNav {
   return {
     link: `/wall/${type}/${course.courseUrl}`,
-    icon: type,
+    type: type,
     tip: `All ${type}s in the course`,
     target: ""
   };

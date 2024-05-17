@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import type { Lo } from "$lib/services/models/lo-types";
   import { currentCourse } from "$lib/stores";
-  import { getIcon } from "../../icons/themes/themes";
+  import { getIcon } from "../../themes/styles/icon-lib";
 
   let firefox = false;
 
@@ -22,7 +22,7 @@
   let defaultId = parts.pop() || parts.pop();
 
   if (lo && lo.type === "panelvideo") {
-    lo.icon = { type: getIcon("video").icon, color: getIcon("video").colour };
+    lo.icon = { type: getIcon("video").type, color: getIcon("video").color };
   }
 
   if (lo.videoids) {

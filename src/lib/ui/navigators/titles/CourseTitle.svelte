@@ -1,10 +1,10 @@
 <script lang="ts">
   import { currentCourse, currentLo } from "$lib/stores";
-  import Image from "../../icons/Image.svelte";
+  import Image from "../../themes/Image.svelte";
   import type { Lo } from "$lib/services/models/lo-types";
-  import { getIcon } from "../../icons/themes/themes";
+  import { getIcon } from "../../themes/styles/icon-lib";
   import { onDestroy } from "svelte";
-  import Icon from "$lib/ui/icons/Icon.svelte";
+  import Icon from "$lib/ui/themes/icons/Icon.svelte";
 
   let lo: Lo;
   let wall = false;
@@ -26,7 +26,7 @@
       {#if !wall}
         <Image {lo} miniImage={true} />
       {:else}
-        <Icon icon={getIcon(lo.type).icon} class="text-{getIcon(lo.type).colour}" width="40" height="40" />
+        <Icon icon={getIcon(lo.type).type} class="text-{getIcon(lo.type).color}" width="40" height="40" />
       {/if}
     </div>
   </div>
