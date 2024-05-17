@@ -54,6 +54,7 @@ export const FluentIconLib = {
   appSettings: { type: "fluent:settings-24-filled", color: "primary" },
   listOnline: { type: "fluent:people-list-24-filled", color: "primary" },
   edit: { type: "typcn:edit", color: "primary" },
+  info: { type: "fluent:info-28-regular", color: "primary" },
 
   default: { type: "fluent:re-order-dots-vertical-24-filled", color: "error" }
 };
