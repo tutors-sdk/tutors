@@ -6,8 +6,8 @@ import {
 } from 'echarts/components';
 import { HeatmapChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
-import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
-import { heatmap } from '../es-charts/heatmap';
+import { backgroundPattern } from '../charts/tutors-charts-background-url';
+import { heatmap } from '../charts/heatmap-chart';
 import type { Topic } from '$lib/services/models/lo-types';
 
 echarts.use([

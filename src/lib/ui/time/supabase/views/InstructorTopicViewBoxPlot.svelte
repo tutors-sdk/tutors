@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
-  import { TopicBoxPlotChart } from "./sheets/tutors-analytics/topic-box-plot-chart";
+  import { TopicBoxPlotChart } from "../analytics/topic-box-plot";
 
   export let course: Map<string, StudentRecord>;
 

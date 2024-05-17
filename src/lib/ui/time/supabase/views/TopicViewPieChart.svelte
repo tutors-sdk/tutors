@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import type { Course, Topic } from "$lib/services/models/lo-types";
-  import { TopicPieChart } from "./sheets/tutors-analytics/topic-pie-chart";
+  import { TopicPieChart } from "../analytics/topic-pie";
 
   export let user: Course;
   export let topics: Topic[] = [];

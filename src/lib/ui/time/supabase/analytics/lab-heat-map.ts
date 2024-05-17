@@ -6,12 +6,12 @@ import {
 } from 'echarts/components';
 import { HeatmapChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
-import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
-import { heatmap } from '../es-charts/heatmap';
-import type { Course, LearningRecord, Lo } from '$lib/services/models/lo-types';
+import { backgroundPattern } from '../charts/tutors-charts-background-url';
+import { heatmap } from '../charts/heatmap-chart';
+import type { Course, Lo } from '$lib/services/models/lo-types';
 import type { Session } from '@supabase/supabase-js';
 import { filterByType } from '$lib/services/models/lo-utils';
-import type { HeatMapSeriesData, LearningObject } from '$lib/services/types/supabase-metrics';
+import type { HeatMapSeriesData } from '$lib/services/types/supabase-metrics';
 
 echarts.use([
   TooltipComponent,

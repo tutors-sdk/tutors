@@ -1,5 +1,6 @@
 import * as echarts from 'echarts/core';
 import * as d3 from 'd3';
+
 import {
   TitleComponent,
   TooltipComponent,
@@ -7,9 +8,8 @@ import {
 } from 'echarts/components';
 import { BoxplotChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
-import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
-import { boxplot, combinedBoxplotChart } from '../es-charts/boxplot';
-import type { StudentRecord } from '$lib/services/types/supabase-metrics';
+import { backgroundPattern } from '../charts/tutors-charts-background-url';
+import { boxplot, combinedBoxplotChart } from '../charts/boxplot-chart';
 echarts.use([
   TitleComponent,
   TooltipComponent,
@@ -21,15 +21,15 @@ echarts.use([
 const bgPatternImg = new Image();
 bgPatternImg.src = backgroundPattern;
 
-export class TopicBoxPlotChart {
-  prepareBoxplotData(userDataMap: StudentRecord) {
+export class LabBoxPlotChart {
+  prepareBoxplotData(userDataMap) {
     const boxplotData = [];
     const userNicknames = [];
 
     userDataMap.forEach((userData, nickname) => {
       userNicknames.push(nickname); // Collect nicknames for the y-axis
 
-      const counts = userData?.topicActivity.map(activity => activity.count);
+      const counts = userData?.labActivity.map(activity => activity.count);
       counts.sort((a, b) => a - b);
 
       const min = d3.min(counts);
@@ -46,20 +46,20 @@ export class TopicBoxPlotChart {
 
   //combined boxplot
   prepareCombinedBoxplotData(data) {
-    const topicActivities = new Map();
+    const labActivities = new Map();
 
     // Aggregate counts and nicknames for each lab
     data.forEach(user => {
-      user?.topicActivity.forEach(topic => {
-        if (!topicActivities.has(topic.title)) {
-          topicActivities.set(topic.title, []);
+      user?.labActivity.forEach(lab => {
+        if (!labActivities.has(lab.title)) {
+          labActivities.set(lab.title, []);
         }
         // Push an object containing count and nickname
-        topicActivities.get(topic.title).push({ count: topic.count, nickname: user.nickname });
+        labActivities.get(lab.title).push({ count: lab.count, nickname: user.nickname });
       });
     });
 
-    const boxplotData = Array.from(topicActivities).map(([title, activities]) => {
+    const boxplotData = Array.from(labActivities).map(([title, activities]) => {
       activities.sort((a, b) => a.count - b.count);
       const lowData = activities[0];
       const q1 = d3.quantileSorted(activities.map(a => a.count), 0.25);
@@ -74,6 +74,7 @@ export class TopicBoxPlotChart {
         highNickname: highData.nickname
       };
     });
+
     // Sort by median
     boxplotData.sort((a, b) => a.median - b.median);
 
@@ -82,18 +83,17 @@ export class TopicBoxPlotChart {
 
   renderBoxPlot(container, boxplotData, userNicknames) {
     const chart = echarts.init(container);
-
-    const option = boxplot(bgPatternImg, userNicknames, boxplotData, 'Topic Activity per Student Boxplot');
-
+    const option = boxplot(bgPatternImg, userNicknames ,boxplotData, 'Lab Activity per Student Boxplot');
     chart.setOption(option);
   }
 
   renderCombinedBoxplotChart(container, boxplotData) {
     const chartInstance = echarts.init(container);
 
-    const option = combinedBoxplotChart(bgPatternImg, boxplotData, 'All Topic Activity Boxplot');
+    const option = combinedBoxplotChart(bgPatternImg, boxplotData, 'All Lab Activity Boxplot');
 
     chartInstance.setOption(option);
+    chartInstance.resize();       // Force a resize to ensure proper layout
   }
 }
 

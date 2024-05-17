@@ -113,7 +113,7 @@ export function calendar(session: Session, calendarMap: CalendarMap[], bgPattern
 
 };
 
-export function calendarCombined(userId: string, calendarMap: Map<string, number>, bgPatternImg: HTMLImageElement, currentRange: string): EChartsOption {
+export function calendarCombined(userId: string, calendarMap: Map<string, number>, bgPatternImg: HTMLImageElement, currentRange: string, avatarUrl: string): EChartsOption {
   return {
     title: {
       top: 30,
@@ -135,7 +135,7 @@ export function calendarCombined(userId: string, calendarMap: Map<string, number
         z: 100,
         bounding: 'raw',
         style: {
-          image: '',  // URL to user's profile picture
+          image: avatarUrl,
           width: 50,
           height: 50
         }
@@ -205,3 +205,4 @@ export function calendarCombined(userId: string, calendarMap: Map<string, number
   }
 
 };
+

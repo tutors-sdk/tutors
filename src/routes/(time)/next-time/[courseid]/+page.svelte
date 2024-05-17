@@ -3,18 +3,10 @@
   import { fade } from "svelte/transition";
   import { writable, type Writable } from "svelte/store";
   import { Tab, TabGroup } from "@skeletonlabs/skeleton";
-  import BoxPlotInstructorChart from "$lib/ui/time/supabase/InstructorLabViewBoxPlot.svelte";
-  import CalendarTimeNewChart from "$lib/ui/time/supabase/CalendarView.svelte";
-  import InstructorTopicBoxPlotChart from "$lib/ui/time/supabase/InstructorTopicViewBoxPlot.svelte";
-  import InstructorTotalTopicTimePieChart from "$lib/ui/time/supabase/InstructorTopicViewPieChart.svelte";
-  import LabTimeNewChart from "$lib/ui/time/supabase/LabViewPieChart.svelte";
-  import LiveStudentFeed from "$lib/ui/time/supabase/LiveStudentFeed.svelte";
-  import NewInstructorCalendarTime from "$lib/ui/time/supabase/InstructorCalendarView.svelte";
-  import NewInstructorLabTime from "$lib/ui/time/supabase/InstructorLabView.svelte";
-  import NewInstructorTopicTime from "$lib/ui/time/supabase/InstructorTopicView.svelte";
-  import LabView from "$lib/ui/time/supabase/LabView.svelte";
-  import NewTopicTime from "$lib/ui/time/supabase/TopicView.svelte";
-  import TopicTimeNewChart from "$lib/ui/time/supabase/TopicViewPieChart.svelte";
+  import LabView from "$lib/ui/time/supabase/views/LabView.svelte";
+  import NewInstructorLabTime from "$lib/ui/time/supabase/views/InstructorLabView.svelte";
+  import NewInstructorCalendarTime from "$lib/ui/time/supabase/views/InstructorCalendarView.svelte";
+  import CalendarView from "$lib/ui/time/supabase/views/CalendarView.svelte";
 
   export let data: any;
 
@@ -76,16 +68,16 @@
     <Tab bind:group={tabSet} name="Labs" value={2}>
       {instructorMode ? "Labs (Tutors View)" : "Labs"}
     </Tab>
-    {#if instructorMode}
+    <!-- {#if instructorMode}
       <Tab bind:group={tabSet} name="LiveStudents" value={3}>Live Students</Tab>
-    {/if}
+    {/if} -->
   </TabGroup>
 
   {#if tabSet === 0}
     {#if instructorMode}
       <NewInstructorCalendarTime course={data.course} timeActiveMap={data.timeActiveMap} userIds={data.userIds}  />
     {:else}
-      <CalendarTimeNewChart course={data.course} timeActiveMap={data.timeActiveMap} session={data.session} />
+      <CalendarView course={data.course} timeActiveMap={data.timeActiveMap} session={data.session} />
     {/if}
   {:else if tabSet === 1}
     {#if instructorMode}
@@ -144,8 +136,8 @@
         <LabTimeNewChart user={data.user} allLabs={data.allLabs} /> -->
       {/if}
     {/if}
-  {:else if tabSet === 3}
-    <LiveStudentFeed userMap={data.users} courseName={data.course.courseId} />
+  <!-- {:else if tabSet === 3}
+    <LiveStudentFeed userMap={data.users} courseName={data.course.courseId} /> -->
   {/if}
 </div>
 

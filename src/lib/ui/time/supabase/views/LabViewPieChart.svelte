@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
   import type { Course, Lo } from "$lib/services/models/lo-types";
-  import { LabPieChart } from "./sheets/tutors-analytics/lab-pie-chart";
+  import { LabPieChart } from "../analytics/lab-pie";
     import type { Session } from "inspector";
 
   export let course: Course;

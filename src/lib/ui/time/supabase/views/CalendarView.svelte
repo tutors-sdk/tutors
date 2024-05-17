@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
-  import { CalendarChart } from "./sheets/tutors-analytics/calendar-chart";
+  import { CalendarChart } from "../analytics/calendar";
   import type { Course } from "$lib/services/models/lo-types";
     import type { Session } from "@supabase/supabase-js";
 

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
-  import { LabBoxPlotChart } from "./sheets/tutors-analytics/lab-box-plot-chart";
+  import { LabBoxPlotChart } from "../analytics/lab-box-plot";
     import type { Course } from "$lib/services/models/lo-types";
 
   export let course: Course;

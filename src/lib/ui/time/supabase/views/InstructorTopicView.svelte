@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import type { Course, Topic } from "$lib/services/models/lo-types";
-  import { TopicHeatMapChart } from "./sheets/tutors-analytics/topic-heat-map-chart";
+  import { TopicHeatMapChart } from "../analytics/topic-heat-map";
 
   export let course: Course;
   export let topics: Topic[] = [];

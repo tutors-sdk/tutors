@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
-  import { LiveStudentFeedChart } from "./sheets/tutors-analytics/live-student-feed";
+  import { LiveStudentFeedChart } from "../analytics/live-student-feed";
   export let userMap: Map<string, StudentRecord>;
   export let courseName: string;
 

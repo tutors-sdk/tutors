@@ -7,6 +7,7 @@ import {
 import { HeatmapChart } from 'echarts/charts';
 import type { EChartsOption } from 'echarts';
 import { CanvasRenderer } from 'echarts/renderers';
+import type { HeatMapSeriesData } from '$lib/services/types/supabase-metrics';
 
 echarts.use([
   TooltipComponent,
@@ -16,7 +17,7 @@ echarts.use([
   CanvasRenderer
 ]);
 
-export function heatmap(categories: any, yAxisData: any, series: any, bgPatternImg: HTMLImageElement, chartTitleString: string): EChartsOption {
+export function heatmap(categories: Set<string>, yAxisData: string, series: HeatMapSeriesData[], bgPatternImg: HTMLImageElement, chartTitleString: string): EChartsOption {
   let visualmapValue: number;
 
   if (series[0]?.data) {

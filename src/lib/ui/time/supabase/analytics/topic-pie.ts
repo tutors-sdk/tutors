@@ -1,6 +1,6 @@
 import * as echarts from 'echarts/core';
-import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
-import { piechart } from '../es-charts/piechart';
+import { backgroundPattern } from '../charts/tutors-charts-background-url';
+import { piechart } from '../charts/piechart';
 
 const bgPatternSrc = backgroundPattern;
 

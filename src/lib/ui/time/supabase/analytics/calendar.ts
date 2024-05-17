@@ -8,10 +8,10 @@ import {
 import { HeatmapChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import type { EChartsOption } from 'echarts';
-import { calendar, calendarCombined } from '../es-charts/calendar';
-import { backgroundPattern } from '../es-charts/tutors-charts-background-url';
+import { calendar, calendarCombined } from '../charts/calendar-chart';
+import { backgroundPattern } from '../charts/tutors-charts-background-url';
 import { GraphicComponent } from 'echarts/components';
-import { tutorsAnalyticsLogo } from '../es-charts/personlised-logo';
+import { tutorsAnalyticsLogo } from '../charts/personlised-logo';
 import type { CalendarMap } from '$lib/services/types/supabase-metrics';
 import type { Course } from '$lib/services/models/lo-types';
 import type { Session } from '@supabase/supabase-js';
@@ -140,7 +140,7 @@ export class CalendarChart {
     this.clickMonth(chart);
   };
 
-  renderCombinedChart(course: Course, calendarMap: Map<string, number>, userId: string) {
+  async renderCombinedChart(course: Course, calendarMap: Map<string, number>, userId: string) {
     const chartContainer = this.getChartContainer(userId);
 
     if (!chartContainer) {
@@ -149,12 +149,26 @@ export class CalendarChart {
     }
 
     const chart = echarts.init(chartContainer);
+    const avatarUrl = await getGithubAvatarUrl(userId);
 
-    const option = calendarCombined(userId, calendarMap, bgPatternImg, currentRange);
+    const option = calendarCombined(userId, calendarMap, bgPatternImg, currentRange, avatarUrl);
 
     chart.setOption(option, true);
 
   }
 };
 
-
+async function getGithubAvatarUrl(username:string) {
+  const url = `https://api.github.com/users/${username}`;
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`User not found: ${response.status}`);
+    }
+    const data = await response.json();
+    return data.avatar_url;
+  } catch (error) {
+    console.error('Error fetching the avatar URL:', error);
+    return null;
+  }
+}
