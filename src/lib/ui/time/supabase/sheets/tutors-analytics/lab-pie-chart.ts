@@ -10,6 +10,7 @@ import { LabelLayout } from 'echarts/features';
 import type { Course, Lo } from '$lib/services/models/lo-types';
 import { backgroundPattern, textureBackground } from '../es-charts/tutors-charts-background-url';
 import type { Session } from '@supabase/supabase-js';
+import { filterByType } from '$lib/services/models/lo-utils';
 
 echarts.use([
   TooltipComponent,
@@ -40,12 +41,14 @@ export class LabPieChart {
   private listOfLabs: string[];
   course: Course;
   session: Session;
+  categories: Set<string>;
 
   constructor(course: Course, session: Session) {
     this.myChart = null;
     this.listOfLabs = [];
     this.course = course;
     this.session = session;
+    this.categories = new Set();
   }
 
   populateCols() {
@@ -58,6 +61,28 @@ export class LabPieChart {
     document.body.appendChild(container);  // Append the container to the body or a specific parent element
     return container;
   }
+
+  populatePerUserSeriesData(course: Course, allLabs: Lo[], userId: string) {
+    const labTitles = allLabs.map((lab: { title: string; }) => lab.title.trim());
+    this.categories = new Set(labTitles);
+
+    let labs = filterByType(course.los, 'lab');
+    // let steps = filterByType(course.los, 'step');
+
+    // const allLabSteps = [...labs, ...steps];
+
+    // Map to store total timeActive for each step
+    const totalTimesMap = new Map<string, number>();
+
+    // Iterate over allLabSteps to aggregate total timeActive for each step
+    labs.forEach((lab) => {
+      const title = lab.title;
+      const timeActive = lab.learningRecords?.get(userId)?.timeActive || 0;
+      totalTimesMap.set(title, timeActive);
+    });
+
+    return totalTimesMap;
+  };
 
   renderChart() {
     const chartId = this.session.user.user_metadata.user_name ? `chart-${this.session.user.user_metadata.user_name}` : 'chart';
@@ -92,6 +117,8 @@ export class LabPieChart {
   }
 
   private configurePieSeries(series: (echarts.PieSeriesOption | echarts.BarSeriesOption)[]) {
+    const pieData = this.populatePerUserSeriesData(this.course, this.listOfLabs, this.session.user.id)
+
     const pieSeries: echarts.PieSeriesOption = {
       name: 'Inner Pie',
       type: 'pie',
@@ -110,9 +137,9 @@ export class LabPieChart {
       labelLine: {
         show: false
       },
-      data: this.user?.labActivity.map((lab) => ({
-        value: Math.round(lab.count / 2) || 0,
-        name: lab.title
+      data: this.course?.learningRecords?.forEach((value, key) => ({
+        value: Math.round(value.timeActive / 2) || 0,
+        name: value.date
       })) || []
     };
     series.push(pieSeries);

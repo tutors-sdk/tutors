@@ -127,7 +127,7 @@ export class LabHeatMapChart {
         show: true
       }
     }];
-  }
+  };
 
   populateAndRenderSingleUserData(session: Session, allLabs: Lo[]) {
     const container = this.getChartContainer();
