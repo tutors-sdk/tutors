@@ -2,10 +2,10 @@
   import type { Lo } from "$lib/services/models/lo-types";
   import { currentCourse, layout } from "$lib/stores";
   import { onDestroy } from "svelte";
-  import Image from "../../icons/Image.svelte";
-  import { getIcon } from "../../icons/themes/themes";
+  import Image from "../../themes/Image.svelte";
+  import { getIcon } from "../../themes/styles/icon-lib";
   import { cardTransition } from "$lib/ui/animations";
-  import Icon from "../../icons/Icon.svelte";
+  import Icon from "$lib/ui/themes/icons/Icon.svelte";
 
   export let lo: Lo;
   let target = "";
@@ -38,7 +38,7 @@
 </script>
 
 <a href={lo.route} {target}>
-  <div transition:cardTransition class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 border-{getIcon(lo.type).colour}-500 m-2 {cardWidths} transition-all hover:scale-105">
+  <div transition:cardTransition class="card !bg-surface-50 dark:!bg-surface-700 border-y-8 border-{getIcon(lo.type).color}-500 m-2 {cardWidths} transition-all hover:scale-105">
     <header class="card-header flex flex-row items-center justify-between p-3">
       <div class="inline-flex w-full">
         <div class="line-clamp-2 flex-auto {headingText} !text-black dark:!text-white">

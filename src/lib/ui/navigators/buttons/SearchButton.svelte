@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentCourse } from "$lib/stores";
-  import Icon from "$lib/ui/icons/Icon.svelte";
+  import Icon from "$lib/ui/themes/icons/Icon.svelte";
 </script>
 
 <a class="btn btn-sm" href="/search/{$currentCourse?.courseUrl}">

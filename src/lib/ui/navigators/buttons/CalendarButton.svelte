@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentCourse } from "$lib/stores";
-  import Icon from "$lib/ui/icons/Icon.svelte";
+  import Icon from "$lib/ui/themes/icons/Icon.svelte";
   import { getDrawerStore, type DrawerSettings } from "@skeletonlabs/skeleton";
   const drawerStore = getDrawerStore();
   const calendarDrawerOpen: any = () => {

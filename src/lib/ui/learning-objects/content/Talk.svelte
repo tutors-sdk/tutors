@@ -1,6 +1,6 @@
 <script lang="ts">
   import { BROWSER } from "esm-env";
-  import Icon from "../../icons/Icon.svelte";
+  import Icon from "$lib/ui/themes/icons/Icon.svelte";
   import * as pdfjs from "pdfjs-dist";
   // @ts-ignore
   import FileSaver from "file-saver";

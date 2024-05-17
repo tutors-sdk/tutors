@@ -3,7 +3,7 @@
   import { onMount } from "svelte";
   import Terms from "./terms.svelte";
   import Login from "./login.svelte";
-  import { getIcon } from "$lib/ui/icons/themes/themes";
+  import { getIcon } from "$lib/ui/themes/styles/icon-lib";
 
   export let data;
   let { supabase } = data;

@@ -1,6 +1,6 @@
 <script lang="ts">
-  import SetuIcon from "$lib/ui/icons/themes/SetuIcon.svelte";
-  import TutorsIcon from "$lib/ui/icons/themes/TutorsIcon.svelte";
+  import SetuIcon from "$lib/ui/support/SetuIcon.svelte";
+  import TutorsIcon from "$lib/ui/support/TutorsIcon.svelte";
   import TutorsMessage from "./TutorsMessage.svelte";
   import TutorsVersion from "./TutorsVersion.svelte";
 </script>

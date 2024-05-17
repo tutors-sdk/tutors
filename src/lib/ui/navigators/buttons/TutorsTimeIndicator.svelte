@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentCourse, onlineStatus } from "$lib/stores";
-  import Icon from "$lib/ui/icons/Icon.svelte";
+  import Icon from "$lib/ui/themes/icons/Icon.svelte";
 </script>
 
 {#if $currentCourse.authLevel > 0 && $onlineStatus}
