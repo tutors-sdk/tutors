@@ -44,7 +44,7 @@ export type IconType = {
 
 export type IconNav = {
   link: string;
-  icon: string;
+  type: string;
   tip: string;
   target: string;
 };
