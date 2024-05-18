@@ -1,22 +1,22 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
-  import type { Course, Topic } from "$lib/services/models/lo-types";
+  import type { Course } from "$lib/services/models/lo-types";
   import { TopicPieChart } from "../analytics/topic-pie";
+    import type { Session } from "@supabase/supabase-js";
 
-  export let user: Course;
-  export let topics: Topic[] = [];
+  export let course: Course;
+  export let session: Session;
+  export let userIds: string[];
   let topicPieChart: TopicPieChart | null;
-  topicPieChart = new TopicPieChart();
+  topicPieChart = new TopicPieChart(course, session);
 
   onMount(async () => {
-    if (topics.length > 0) {
-      topicPieChart?.populateUserData(user);
       topicPieChart?.renderChart();
-    }
+    
   });
 
   const renderChart = () => {
-    if (topicPieChart && user) {
+    if (topicPieChart) {
       topicPieChart.renderChart();
     }
   };

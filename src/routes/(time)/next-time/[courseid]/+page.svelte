@@ -9,6 +9,7 @@
   import CalendarView from "$lib/ui/time/supabase/views/CalendarView.svelte";
     import TopicView from "$lib/ui/time/supabase/views/TopicView.svelte";
     import InstructorTopicView from "$lib/ui/time/supabase/views/InstructorTopicView.svelte";
+    import TopicViewPieChart from "$lib/ui/time/supabase/views/TopicViewPieChart.svelte";
 
   export let data: any;
 
@@ -101,13 +102,13 @@
       <!-- Dropdown for selecting topic charts -->
       <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleTopicChartChange} bind:value={selectedTopicChart}>
         <option value="TopicView">Topic Time Heat-Map</option>
-        <option value="TopicTimeNewChart">Topic Time Pie-Chart</option>
+        <option value="TopicViewPieChart">Topic Time Pie-Chart</option>
       </select>
       <!-- Display selected topic chart -->
       {#if selectedTopicChart === "TopicView"}
         <TopicView course={data.course} session={data.session} userIds={data.userIds} />
-      <!-- {:else if selectedTopicChart === "TopicTimeNewChart"}
-        <TopicTimeNewChart user={data.user} topics={data.allTopics} /> -->
+      {:else if selectedTopicChart === "TopicViewPieChart"}
+        <TopicViewPieChart course={data.course} session={data.session} userIds={data.userIds}  />
       {/if}
     {/if}
   {:else if tabSet === 2} 

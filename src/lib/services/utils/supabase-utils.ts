@@ -1,6 +1,7 @@
 import { db } from "$lib/services/utils/db/client";
 import type { Course, LearningRecord, Lo } from "../models/lo-types";
 import type { User, Session } from "@supabase/supabase-js";
+import { filterByType } from "../models/lo-utils";
 
 export async function getNumOfStudentCourseLoIncrements(fieldName: string, courseId: string, studentId: string, loId: string) {
   if (!courseId || !studentId || !loId) return 0;
@@ -227,4 +228,28 @@ export function formatDate(date: Date): string {
     if (month.length < 2) month = "0" + month;
     if (day.length < 2) day = "0" + day;
     return [year, month, day].join("-");
+  };
+
+  export function getCompositeValues(los: Lo[]) {
+    const units = filterByType(los, "unit");
+    const sides = filterByType(los, 'side');
+    const topics = filterByType(los, 'topic');
+
+    return [...units, ...sides, ...topics];
+  };
+
+  export function getSimpleTypesValues(los: Lo[]) {
+    const notes = filterByType(los, "note");
+    const archives = filterByType(los, 'archive');
+    const webs = filterByType(los, 'web');
+    const githubs = filterByType(los, "github");
+    const panelnotes = filterByType(los, 'panelnote');
+    const paneltalks = filterByType(los, 'paneltalk');
+    const panelVideos = filterByType(los, "panelvideo");
+    const talks = filterByType(los, 'talk');
+    const books = filterByType(los, 'book');
+    const labs = filterByType(los, "lab");
+    const steps = filterByType(los, "step");
+
+    return [...notes, ...archives, ...webs, ...githubs, ...panelnotes, ...paneltalks, ...panelVideos, ...talks, ...books, ...labs, ...steps];
   };

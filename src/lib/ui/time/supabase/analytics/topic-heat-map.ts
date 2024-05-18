@@ -12,6 +12,7 @@ import type { Course, Lo, Topic } from '$lib/services/models/lo-types';
 import type { Session } from '@supabase/supabase-js';
 import { filterByType } from '$lib/services/models/lo-utils';
 import type { HeatMapSeriesData } from '$lib/services/types/supabase-metrics';
+import { getCompositeValues, getSimpleTypesValues } from '$lib/services/utils/supabase-utils';
 
 echarts.use([
   TooltipComponent,
@@ -72,88 +73,14 @@ export class TopicHeatMapChart {
     return container;
   }
 
-  getIndexFromMap(map, key) {
-    const keysArray = Array.from(map.keys());
-    return keysArray.indexOf(key);
-  }
-
-  populateSeriesData(user, userIndex: number, topics) {
-    const topicTitles = topics.map(topic => topic.title.trim());
-    this.categories = new Set(topicTitles);
-
-    //const seriesData = usersData.forEach((user, userIndex) => 
-    const seriesData = user?.topicActivity?.map(activity => [
-      topicTitles.indexOf(activity.title.trim()),
-      userIndex, // yIndex is now the index of the user in usersData array
-      activity.count
-    ])
-
-    return [{
-      name: 'Topic Activity',
-      type: 'heatmap',
-      data: seriesData,
-      label: {
-        show: true
-      }
-    }];
-  }
-
-  populateSingleUserSeriesData() {
-    //   const topicTitles = this.course.los.map(topic => topic.title.trim());
-    //   // this.categories = new Set(topicTitles);
-
-    //   const seriesData = this.course.learningRecords?.forEach((value, key) => 
-
-    //     [
-    //       topicTitles.indexOf(value.title.trim()),
-    //     0,
-    //     value.timeactive
-    // ])
-
-    // return [{
-    //   name: 'Topic Activity',
-    //   type: 'heatmap',
-    //   data: seriesData,
-    //   label: {
-    //     show: true
-    //   }
-    // }];
-  }
-
-  getCompositeValues() {
-    const units = filterByType(this.course.los, "unit");
-    const sides = filterByType(this.course.los, 'side');
-    const topics = filterByType(this.course.los, 'topic');
-
-    return [...units, ...sides, ...topics];
-  }
-
-  getSimpleTypesValues() {
-    const notes = filterByType(this.course.los, "note");
-    const archives = filterByType(this.course.los, 'archive');
-    const webs = filterByType(this.course.los, 'web');
-    const githubs = filterByType(this.course.los, "github");
-    const panelnotes = filterByType(this.course.los, 'panelnote');
-    const paneltalks = filterByType(this.course.los, 'paneltalk');
-    const panelVideos = filterByType(this.course.los, "panelvideo");
-    const talks = filterByType(this.course.los, 'talk');
-    const books = filterByType(this.course.los, 'book');
-    const labs = filterByType(this.course.los, "lab");
-    const steps = filterByType(this.course.los, "step");
-
-    return [...notes, ...archives, ...webs, ...githubs, ...panelnotes, ...paneltalks, ...panelVideos, ...talks, ...books, ...labs, ...steps];
-  }
-
   prepareTopicData(userId: string, index: number = 0) {
-    const composites = new Map();
-    const allComposites = this.getCompositeValues();
-    const allSimpleTypes = this.getSimpleTypesValues();
+    const allComposites = getCompositeValues(this.course.los);
+    const allSimpleTypes = getSimpleTypesValues(this.course.los);
     const allTypes = [...allComposites, ...allSimpleTypes];
 
     // Map to store total timeActive for each step
     const totalTimesMap = new Map<string, number>();
 
-    // Iterate over allLabSteps to aggregate total timeActive for each step
     allTypes.forEach((lo) => {
       let title: string = "";
       if (lo.parentTopic?.type === 'topic') {
@@ -250,9 +177,7 @@ export class TopicHeatMapChart {
 
   renderChart(container: HTMLElement | null | undefined) {
     const chartInstance = echarts.init(container);
-
     const option = heatmap(this.categories, this.yAxisData, this.series, bgPatternImg, 'Topic Time: Per Student');
-
     chartInstance.setOption(option);
   };
 
@@ -306,41 +231,7 @@ export class TopicHeatMapChart {
     });
 
     return heatmapData;
-  }
-
-  // prepareCombinedTopicData() {
-  //   const topicActivities = new Map();
-
-  //   // Aggregate counts and nicknames for each lab
-  //   this.?.forEach(user => {
-  //     user?.topicActivity.forEach(topic => {
-  //       if (!topicActivities.has(topic.title)) {
-  //         topicActivities.set(topic.title, []);
-  //       }
-  //       // Push an object containing count and nickname
-  //       topicActivities.get(topic.title).push({ count: topic.count, nickname: user.nickname });
-  //     });
-  //   });
-
-  //   const heatmapData = Array.from(topicActivities).map(([title, activities]) => {
-  //     activities.sort((a, b) => a.count - b.count);
-  //     const addedCount = activities.reduce((acc, curr) => acc + curr.count, 0);
-
-  //     const lowData = activities[0];
-  //     const highData = activities[activities.length - 1];
-  //     // Convert the data into the format expected by ECharts
-  //     return {
-  //       value: addedCount,
-  //       title: title,
-  //       lowValue: lowData.count,
-  //       highValue: highData.count,
-  //       lowNickname: lowData.nickname,
-  //       highNickname: highData.nickname
-  //     };
-  //   });
-
-  //   return heatmapData;
-  // }
+  };  
 
   renderCombinedTopicChart(container: HTMLElement, heatmapActivities: any[], chartTitle: string) {
     const chart = echarts.init(container);

@@ -1,6 +1,6 @@
-import type { UserMetric } from '$lib/services/types/metrics';
+import type { Course } from '$lib/services/models/lo-types';
 
-export function piechart(bgPatternImg: any, user: UserMetric, allUsersTopicActivity: any[], singleUserInnerData: any[], singleUserOuterData: any[]) {
+export function piechart(bgPatternImg: HTMLImageElement, course: Course, allUsersTopicActivity: string | any[], singleUserInnerData: { name: string; value: number; }[], singleUserOuterData: { name: string; value: number; }[]) {
   return {
     tooltip: {
       trigger: 'item',
@@ -11,7 +11,7 @@ export function piechart(bgPatternImg: any, user: UserMetric, allUsersTopicActiv
       repeat: 'repeat'
     },
     legend: {
-      data: user?.topicActivity.map((topic) => topic.title) || []
+      data: course.los.map((topic) => topic.title) || []
     },
     series: [
       {
