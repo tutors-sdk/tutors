@@ -8,6 +8,7 @@
   import NewInstructorCalendarTime from "$lib/ui/time/supabase/views/InstructorCalendarView.svelte";
   import CalendarView from "$lib/ui/time/supabase/views/CalendarView.svelte";
     import TopicView from "$lib/ui/time/supabase/views/TopicView.svelte";
+    import InstructorTopicView from "$lib/ui/time/supabase/views/InstructorTopicView.svelte";
 
   export let data: any;
 
@@ -18,7 +19,7 @@
   let selectedLabChart: string = "LabView"; // Set default lab chart
   let selectedTopicChart: string = "TopicView"; // Set default topic chart
   let selectedInstructorLabChart: string = "InstructorLabView"; // Set default instructor lab chart
-  let selectedInstructorTopicChart: string = "NewInstructorTopicTime"; // Set default instructor topic chart
+  let selectedInstructorTopicChart: string = "InstructorTopicView"; // Set default instructor topic chart
 
   onMount(async () => {
     window.addEventListener("keydown", keypressInput);
@@ -89,13 +90,13 @@
         <option value="InstructorTopicBoxPlotChart">Instructor Topic Box Plot Chart</option>
       </select>
       <!-- Display selected topic chart -->
-      <!-- {#if selectedInstructorTopicChart === "NewInstructorTopicTime"}
-        <NewInstructorTopicTime course={data}/>
-      {:else if selectedInstructorTopicChart === "InstructorTotalTopicTimePieChart"}
+      {#if selectedInstructorTopicChart === "NewInstructorTopicTime"}
+        <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds}/> 
+      <!-- {:else if selectedInstructorTopicChart === "InstructorTotalTopicTimePieChart"}
         <InstructorTotalTopicTimePieChart course={data}/>
       {:else if selectedInstructorTopicChart === "InstructorTopicBoxPlotChart"}
-        <InstructorTopicBoxPlotChart course={data}/>
-      {/if} -->
+        <InstructorTopicBoxPlotChart course={data}/> -->
+      {/if}
     {:else}
       <!-- Dropdown for selecting topic charts -->
       <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleTopicChartChange} bind:value={selectedTopicChart}>

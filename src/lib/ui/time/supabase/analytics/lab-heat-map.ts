@@ -234,7 +234,6 @@ export class LabHeatMapChart {
     return heatmapData;
   }
 
-
   renderCombinedLabChart(container: HTMLElement, labData: any[], chartTitle: string) {
     const chart = echarts.init(container);
 

@@ -2,11 +2,13 @@
   import { onDestroy, onMount } from "svelte";
   import type { Course, Topic } from "$lib/services/models/lo-types";
   import { TopicHeatMapChart } from "../analytics/topic-heat-map";
+  import type { Session } from "@supabase/supabase-js";
 
   export let course: Course;
-  export let topics: Topic[] = [];
+  export let session: Session;
+  export let userIds: string[];
   let topicHeatMapChart: TopicHeatMapChart | null;
-  topicHeatMapChart = new TopicHeatMapChart(topics, course);
+  topicHeatMapChart = new TopicHeatMapChart(course, session, userIds);
 
   onMount(() => {
     topicHeatMapChart?.populateUsersData();
@@ -33,7 +35,7 @@
       topicHeatMapChart.renderChart(container);
 
       //combined
-      const combinedTopicData = topicHeatMapChart.prepareCombinedTopicData(course);
+      const combinedTopicData = topicHeatMapChart.prepareCombinedTopicData(userIds);
       const element = document.getElementById("combined-heatmap");
       if (!element) {
         throw new Error("Element with ID 'combined-heatmap' not found");
