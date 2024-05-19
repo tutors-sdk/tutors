@@ -11,6 +11,8 @@
   import InstructorTopicView from "$lib/ui/time/supabase/views/InstructorTopicView.svelte";
   import TopicViewPieChart from "$lib/ui/time/supabase/views/TopicViewPieChart.svelte";
   import InstructorTopicViewPieChart from "$lib/ui/time/supabase/views/InstructorTopicViewPieChart.svelte";
+  import InstructorLabViewBoxPlot from "$lib/ui/time/supabase/views/InstructorLabViewBoxPlot.svelte";
+  import InstructorTopicViewBoxPlot from "$lib/ui/time/supabase/views/InstructorTopicViewBoxPlot.svelte";
 
   export let data: any;
 
@@ -87,17 +89,17 @@
     {#if instructorMode}
       <!-- Dropdown for selecting topic charts -->
       <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleInstructorTopicChartChange} bind:value={selectedInstructorTopicChart}>
-        <option value="NewInstructorTopicTime">Instructor Topic Time Heat-Map</option>
+        <option value="InstructorTopicView">Instructor Topic Time Heat-Map</option>
         <option value="InstructorTopicViewPieChart">Instructor Topic Time Pie-Chart</option>
-        <option value="InstructorTopicBoxPlotChart">Instructor Topic Box Plot Chart</option>
+        <option value="InstructorTopicViewBoxPlot">Instructor Topic Box Plot Chart</option>
       </select>
       <!-- Display selected topic chart -->
-      {#if selectedInstructorTopicChart === "NewInstructorTopicTime"}
+      {#if selectedInstructorTopicChart === "Instructor"}
         <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds} />
       {:else if selectedInstructorTopicChart === "InstructorTopicViewPieChart"}
         <InstructorTopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
-        <!-- {:else if selectedInstructorTopicChart === "InstructorTopicBoxPlotChart"}
-        <InstructorTopicBoxPlotChart course={data}/> -->
+      {:else if selectedInstructorTopicChart === "InstructorTopicViewBoxPlot"}
+        <InstructorTopicViewBoxPlot course={data.course} userIds={data.userIds} />
       {/if}
     {:else}
       <!-- Dropdown for selecting topic charts -->
@@ -122,8 +124,8 @@
       <!-- Display selected lab chart -->
       {#if selectedInstructorLabChart === "InstructorLabView"}
         <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} />
-      {:else if selectedInstructorLabChart === "BoxPlotInstructorChart"}
-        <!-- <BoxPlotInstructorChart course={data} /> -->
+      {:else if selectedInstructorLabChart === "InstructorLabViewBoxPlot"}
+        <InstructorLabViewBoxPlot course={data.course} userIds={data.userIds} />
       {/if}
     {:else}
       <!-- Dropdown for selecting lab charts -->

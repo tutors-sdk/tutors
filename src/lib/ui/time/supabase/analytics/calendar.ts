@@ -36,11 +36,11 @@ export class CalendarChart {
   chartRendered: boolean;
   myChart: null;
   chartDom: null;
+  myCharts: {};
   constructor() {
     this.chartRendered = false;
     this.myChart = null;
     this.chartDom = null;
-    this.users = null;
     this.myCharts = {};
   }
 

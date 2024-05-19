@@ -10,7 +10,6 @@ import { backgroundPattern } from '../charts/tutors-charts-background-url';
 import { heatmap } from '../charts/heatmap-chart';
 import type { Course, Lo, Topic } from '$lib/services/models/lo-types';
 import type { Session } from '@supabase/supabase-js';
-import { filterByType } from '$lib/services/models/lo-utils';
 import type { HeatMapSeriesData } from '$lib/services/types/supabase-metrics';
 import { getCompositeValues, getSimpleTypesValues } from '$lib/services/utils/supabase-utils';
 
@@ -247,7 +246,7 @@ export class TopicHeatMapChart {
       },
       tooltip: {
         position: 'bottom',
-        formatter: function (params) {
+        formatter: function (params: { dataIndex: any; }) {
           const dataIndex = params.dataIndex;
           const dataItem = heatmapActivities[dataIndex];
           let tipHtml = dataItem.title + '<br />';

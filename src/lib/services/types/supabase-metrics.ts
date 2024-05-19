@@ -35,6 +35,13 @@ export interface CalendarMap {
 //     [key: string]: CalendarMap[];
 // };
 
+export interface BoxplotData {
+    value: [number, number, number, number, number];
+    title: string;
+    lowNickname: string;
+    highNickname: string;
+};
+
 export interface CalendarMapCollection {
     calendarMaps: CalendarMap[];
 };

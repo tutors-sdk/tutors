@@ -4,11 +4,12 @@
     import type { Course } from "$lib/services/models/lo-types";
 
   export let course: Course;
+  export let userIds: string[];
 
   let labBoxPlot: LabBoxPlotChart | null;
 
   onMount(() => {
-    labBoxPlot = new LabBoxPlotChart();
+    labBoxPlot = new LabBoxPlotChart(course, userIds);
     renderCharts();
   });
 

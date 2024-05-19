@@ -1,14 +1,16 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
   import { TopicBoxPlotChart } from "../analytics/topic-box-plot";
+    import type { Course } from "$lib/services/models/lo-types";
 
-  export let course: Map<string, StudentRecord>;
+  export let course: Course;
+  export let userIds: string[];
 
   let topicBoxPlotChart: TopicBoxPlotChart | null;
 
   // Initialise the charts and render them when the component mounts
   onMount(() => {
-    topicBoxPlotChart = new TopicBoxPlotChart();
+    topicBoxPlotChart = new TopicBoxPlotChart(course, userIds);
     renderCharts();
   });
 
@@ -27,9 +29,9 @@
   // Function to render the charts
   const renderCharts = () => {
     if (topicBoxPlotChart) {
-      const { boxplotData, userNicknames } = topicBoxPlotChart.prepareBoxplotData(course);
+      const { boxplotData, userNicknames } = topicBoxPlotChart.prepareBoxplotData();
       topicBoxPlotChart.renderBoxPlot(document.getElementById("heatmap-container"), boxplotData, userNicknames);
-      const combinedBoxplotData = topicBoxPlotChart.prepareCombinedBoxplotData(course);
+      const combinedBoxplotData = topicBoxPlotChart.prepareCombinedBoxplotData();
       topicBoxPlotChart.renderCombinedBoxplotChart(document.getElementById("combinedBoxPlot"), combinedBoxplotData);
     }
   };
