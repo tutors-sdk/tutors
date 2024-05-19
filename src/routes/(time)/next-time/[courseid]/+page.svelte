@@ -7,9 +7,10 @@
   import InstructorLabView from "$lib/ui/time/supabase/views/InstructorLabView.svelte";
   import NewInstructorCalendarTime from "$lib/ui/time/supabase/views/InstructorCalendarView.svelte";
   import CalendarView from "$lib/ui/time/supabase/views/CalendarView.svelte";
-    import TopicView from "$lib/ui/time/supabase/views/TopicView.svelte";
-    import InstructorTopicView from "$lib/ui/time/supabase/views/InstructorTopicView.svelte";
-    import TopicViewPieChart from "$lib/ui/time/supabase/views/TopicViewPieChart.svelte";
+  import TopicView from "$lib/ui/time/supabase/views/TopicView.svelte";
+  import InstructorTopicView from "$lib/ui/time/supabase/views/InstructorTopicView.svelte";
+  import TopicViewPieChart from "$lib/ui/time/supabase/views/TopicViewPieChart.svelte";
+  import InstructorTopicViewPieChart from "$lib/ui/time/supabase/views/InstructorTopicViewPieChart.svelte";
 
   export let data: any;
 
@@ -39,27 +40,27 @@
         tabSet = 1;
       }
     }
-  };
+  }
 
   // Event handler for dropdown change
   function handleLabChartChange(event: Event) {
     selectedLabChart = (event.target as HTMLSelectElement).value;
-  };
+  }
 
   // Event handler for dropdown change
   function handleTopicChartChange(event: Event) {
     selectedTopicChart = (event.target as HTMLSelectElement).value;
-  };
+  }
 
   // Event handler for dropdown change
   function handleInstructorLabChartChange(event: Event) {
     selectedInstructorLabChart = (event.target as HTMLSelectElement).value;
-  };
+  }
 
   // Event handler for dropdown change
   function handleInstructorTopicChartChange(event: Event) {
     selectedInstructorTopicChart = (event.target as HTMLSelectElement).value;
-  };
+  }
 </script>
 
 <div in:fade={{ duration: 500 }} class="bg-base-200 mt-3">
@@ -78,7 +79,7 @@
 
   {#if tabSet === 0}
     {#if instructorMode}
-      <NewInstructorCalendarTime course={data.course} timeActiveMap={data.timeActiveMap} userIds={data.calendarIds}  />
+      <NewInstructorCalendarTime course={data.course} timeActiveMap={data.timeActiveMap} userIds={data.calendarIds} />
     {:else}
       <CalendarView course={data.course} timeActiveMap={data.timeActiveMap} session={data.session} />
     {/if}
@@ -87,15 +88,15 @@
       <!-- Dropdown for selecting topic charts -->
       <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleInstructorTopicChartChange} bind:value={selectedInstructorTopicChart}>
         <option value="NewInstructorTopicTime">Instructor Topic Time Heat-Map</option>
-        <option value="InstructorTotalTopicTimePieChart">Instructor Topic Time Pie-Chart</option>
+        <option value="InstructorTopicViewPieChart">Instructor Topic Time Pie-Chart</option>
         <option value="InstructorTopicBoxPlotChart">Instructor Topic Box Plot Chart</option>
       </select>
       <!-- Display selected topic chart -->
       {#if selectedInstructorTopicChart === "NewInstructorTopicTime"}
-        <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds}/> 
-      <!-- {:else if selectedInstructorTopicChart === "InstructorTotalTopicTimePieChart"}
-        <InstructorTotalTopicTimePieChart course={data}/>
-      {:else if selectedInstructorTopicChart === "InstructorTopicBoxPlotChart"}
+        <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds} />
+      {:else if selectedInstructorTopicChart === "InstructorTopicViewPieChart"}
+        <InstructorTopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
+        <!-- {:else if selectedInstructorTopicChart === "InstructorTopicBoxPlotChart"}
         <InstructorTopicBoxPlotChart course={data}/> -->
       {/if}
     {:else}
@@ -108,10 +109,10 @@
       {#if selectedTopicChart === "TopicView"}
         <TopicView course={data.course} session={data.session} userIds={data.userIds} />
       {:else if selectedTopicChart === "TopicViewPieChart"}
-        <TopicViewPieChart course={data.course} session={data.session} userIds={data.userIds}  />
+        <TopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
       {/if}
     {/if}
-  {:else if tabSet === 2} 
+  {:else if tabSet === 2}
     {#if instructorMode}
       <!-- Dropdown for selecting lab charts -->
       <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleInstructorLabChartChange} bind:value={selectedInstructorLabChart}>
@@ -119,11 +120,11 @@
         <option value="BoxPlotInstructorChart">Instructor Lab Time Box Plot Chart</option>
       </select>
       <!-- Display selected lab chart -->
-     {#if selectedInstructorLabChart === "InstructorLabView"}
-        <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} />  
+      {#if selectedInstructorLabChart === "InstructorLabView"}
+        <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} />
       {:else if selectedInstructorLabChart === "BoxPlotInstructorChart"}
         <!-- <BoxPlotInstructorChart course={data} /> -->
-      {/if} 
+      {/if}
     {:else}
       <!-- Dropdown for selecting lab charts -->
       <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleLabChartChange} bind:value={selectedLabChart}>
@@ -135,14 +136,11 @@
         <LabView course={data.course} session={data.session} userIds={data.userIds} />
         <!-- <NewInstructorLabTime course={data.course} session={data.session} userIds={data.userIds} />   -->
 
-      <!-- {:else if selectedLabChart === "LabTimeNewChart"}
+        <!-- {:else if selectedLabChart === "LabTimeNewChart"}
         <LabTimeNewChart user={data.user} allLabs={data.allLabs} /> -->
       {/if}
     {/if}
-  <!-- {:else if tabSet === 3}
+    <!-- {:else if tabSet === 3}
     <LiveStudentFeed userMap={data.users} courseName={data.course.courseId} /> -->
   {/if}
 </div>
-
-
-

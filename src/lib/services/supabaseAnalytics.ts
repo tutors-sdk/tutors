@@ -11,10 +11,12 @@ export const supabaseAnalytics: Analytics = {
 
   learningEvent(course: Course, params: Record<string, string>, session: Session, lo: Lo) {
     try {
-      if (lo.route) {
+      if (params.loid) {
         const targetRouteParts = lo.route.split('/');
         const trimmedTargetRoute = targetRouteParts.slice(0, 3).join('/');
         this.loRoute = trimmedTargetRoute+'/'+params.loid;
+      }else{
+        this.loRoute = lo.route;
       }
       this.reportPageLoad(course, session, lo);
     } catch (error: any) {

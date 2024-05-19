@@ -64,7 +64,6 @@ export class TopicHeatMapChart {
   }
 
   getChartContainer() {
-    // Assuming there is one container for the whole heatmap
     const container = document.getElementById('heatmap-container');
     if (container) {
       container.style.width = '100%';
@@ -183,8 +182,8 @@ export class TopicHeatMapChart {
 
   prepareCombinedTopicData(userIds: string[]) {
     const topicActivities = new Map();
-    const allComposites = this.getCompositeValues();
-    const allSimpleTypes = this.getSimpleTypesValues();
+    const allComposites =  getCompositeValues(this.course.los);
+    const allSimpleTypes = getSimpleTypesValues(this.course.los);
     const allTypes = [...allComposites, ...allSimpleTypes];
 
     allTypes?.forEach(lo => {

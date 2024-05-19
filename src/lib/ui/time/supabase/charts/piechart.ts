@@ -1,6 +1,6 @@
 import type { Course } from '$lib/services/models/lo-types';
 
-export function piechart(bgPatternImg: HTMLImageElement, course: Course, allUsersTopicActivity: string | any[], singleUserInnerData: { name: string; value: number; }[], singleUserOuterData: { name: string; value: number; }[]) {
+export function piechart(bgPatternImg: HTMLImageElement, course: Course, allUsersTopicActivity: any[], singleUserInnerData: { name: string; value: number; }[], singleUserOuterData: { name: string; value: { timeActive: number; topicTitle: string; }; }[]) {
   return {
     tooltip: {
       trigger: 'item',
@@ -26,9 +26,7 @@ export function piechart(bgPatternImg: HTMLImageElement, course: Course, allUser
         labelLine: {
           show: false
         },
-        
-        // data: allUsersTopicActivity.length !== 0 ? allUsersTopicActivity : singleUserInnerData || []
-        data:  singleUserInnerData.filter(topic => topic.value > 0)|| []
+        data: allUsersTopicActivity.length !== 0 ? allUsersTopicActivity.filter(topic => topic.value > 0) : singleUserInnerData.filter(topic => topic.value > 0) || []
       },
       {
         name: 'Outer Pie',

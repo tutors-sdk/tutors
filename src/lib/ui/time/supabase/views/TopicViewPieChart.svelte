@@ -7,8 +7,9 @@
   export let course: Course;
   export let session: Session;
   export let userIds: string[];
+  const multipleUsers = false;
   let topicPieChart: TopicPieChart | null;
-  topicPieChart = new TopicPieChart(course, session);
+  topicPieChart = new TopicPieChart(course, session, userIds, multipleUsers);
 
   onMount(async () => {
       topicPieChart?.renderChart();

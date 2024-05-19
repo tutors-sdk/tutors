@@ -22,7 +22,9 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
 
   if (series[0]?.data) {
     visualmapValue = series[0].data.length !== 0 ? Math.max(...series[0].data.map(item => item[2])) : 0;
-  } else {
+  } else if (series?.data) {
+    visualmapValue = series.data.length !== 0 ? Math.max(...series.data.map(item => item[2])) : 0;
+  }else {
     visualmapValue = 0;
   }
 

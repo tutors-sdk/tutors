@@ -8,7 +8,6 @@ import { PieChart } from 'echarts/charts';
 import { TitleComponent, TooltipComponent, LegendComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
 
-// Register the required components and charts
 echarts.use([TitleComponent, TooltipComponent, LegendComponent, PieChart, CanvasRenderer]);
 
 const bgPatternSrc = backgroundPattern;
@@ -23,13 +22,17 @@ export class TopicPieChart {
   session: Session;
   topicTitleTimesMap = new Map<string, number>();
   totalTimesMap: Map<string, { timeActive: number; topicTitle: string }> = new Map();
-  constructor(course: Course, session: Session) {
+  userIds: string[];
+  multipleUsers: boolean;
+  constructor(course: Course, session: Session, userIds: string[], multipleUsers: boolean) {
     this.myChart = null;
     this.topics = [];
     this.course = course;
     this.session = session;
+    this.userIds = userIds;
     this.topicTitleTimesMap = new Map<string, number>();
     this.totalTimesMap = new Map<string, { timeActive: number; topicTitle: string }>();
+    this.multipleUsers = multipleUsers;
   }
 
   singleUserPieClick() {
@@ -60,53 +63,46 @@ export class TopicPieChart {
       chartInstance.setOption({
         series: [{
           name: 'Outer Pie',
-          data: outerPieData
+          data: outerPieData.filter(topic => topic.value > 0) || [{}]
         }]
       });
     }
   };
 
-  multipleUsersPieClick() {
-    this.myChart.on('click', (params) => {
+  multipleUsersInnerPieClick() {
+    this.myChart.on('click', (params: { seriesName: string; name: any; }) => {
       if (params.seriesName === 'Inner Pie') {
-        // Aggregate total_duration for the clicked topic for all users
-        const usersArray = Array.from(this.users.values());
-        const outerPieData = usersArray.reduce((acc, user) => {
-          user.topics.forEach(topic => {
-            if (topic.topic_title === params.name) {
+        const outerPieData: { value: number; name: string; }[] = [];
 
-              const existing = acc.find(a => a.name === topic.lo_title);
-              if (existing) {
-                existing.value += topic.total_duration;
-              } else {
-                acc.push({ value: topic.total_duration, name: topic.lo_title });
-              }
+        this.totalTimesMap.forEach((value, key) => {
+          if (value.topicTitle === params.name) {
+            const existing = outerPieData.find(data => data.name === key);
+            if (existing) {
+              existing.value += value.timeActive;
+            } else {
+              outerPieData.push({ value: value.timeActive, name: key });
             }
-          });
+          }
+        });
 
-          return acc;
-        }, []);
         this.populateOuterPieData(outerPieData);
       }
     });
-  };
+  }
 
-  // aggregateInnerPieTopicData(): any[] {
-  //   let allUsersTopicActivity: any = [];
-  //   const usersArray = Array.from(this.users.values());
-  //   allUsersTopicActivity = usersArray.reduce((acc, user) => {
-  //     user.topicActivity.forEach(activity => {
-  //       let existing = acc.find(item => item.name === activity.title);
-  //       if (existing) {
-  //         existing.value += activity.count;
-  //       } else {
-  //         acc.push({ value: activity.count, name: activity.title });
-  //       }
-  //     });
-  //     return acc;
-  //   }, []);
-  //   return allUsersTopicActivity;
-  // }
+  getOuterPieDataForMultipleUsers(): { value: number, name: string }[] {
+    const outerPieData: { value: number; name: string; }[] = [];
+    this.topicTitleTimesMap.forEach((value, key) => {
+      const existing = outerPieData.find(data => data.name === key);
+        if (existing) {
+          existing.value += value;
+        } else {
+          outerPieData.push({ value, name: key });
+        }
+    });
+
+    return outerPieData;
+  };
 
   renderChart() {
     if (this.myChart === null) {
@@ -147,27 +143,27 @@ export class TopicPieChart {
       }
     });
 
-    // if (this.course === null) {
+    if (this.multipleUsers === false) {
 
-    const singleUserInnerData = Array.from(this.topicTitleTimesMap.entries()).map(([title, timeActive]) => ({
-      name: title,
-      value: timeActive
-    }));
+      const singleUserInnerData = Array.from(this.topicTitleTimesMap.entries()).map(([title, timeActive]) => ({
+        name: title,
+        value: timeActive
+      }));
 
-    const singleUserOuterData = Array.from(this.totalTimesMap.entries()).map(([title, timeActive]) => ({
-      name: title,
-      value: timeActive
-    }));
+      const singleUserOuterData = Array.from(this.totalTimesMap.entries()).map(([title, timeActive]) => ({
+        name: title,
+        value: timeActive
+      }));
 
-    const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, singleUserOuterData);
-    this.myChart.setOption(option);
-    this.singleUserPieClick();
-    // } else {
-    //   this.multipleUsersPieClick();
-    //   const allUsersTopicActivity = this.aggregateInnerPieTopicData();
-    //   const option = piechart(bgPatternImg, this.user, allUsersTopicActivity, [], []);
-    //   this.myChart.setOption(option);
-    // }
+      const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, singleUserOuterData);
+      this.myChart.setOption(option);
+      this.singleUserPieClick();
+    } else {
+      const allUsersTopicActivity = this.getOuterPieDataForMultipleUsers();
+      const option = piechart(bgPatternImg, this.course, allUsersTopicActivity, [], []);
+      this.myChart.setOption(option);
+      this.multipleUsersInnerPieClick();
+    }
   }
 };
 
