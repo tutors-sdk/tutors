@@ -11,7 +11,7 @@ export function piechart(bgPatternImg: HTMLImageElement, course: Course, allUser
       repeat: 'repeat'
     },
     legend: {
-      data: course.los.map((topic) => topic.title) || []
+      data: singleUserInnerData.filter(topic => topic.value > 0)|| []
     },
     series: [
       {
@@ -27,7 +27,8 @@ export function piechart(bgPatternImg: HTMLImageElement, course: Course, allUser
           show: false
         },
         
-        data: allUsersTopicActivity.length !== 0 ? allUsersTopicActivity : singleUserInnerData || []
+        // data: allUsersTopicActivity.length !== 0 ? allUsersTopicActivity : singleUserInnerData || []
+        data:  singleUserInnerData.filter(topic => topic.value > 0)|| []
       },
       {
         name: 'Outer Pie',

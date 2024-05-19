@@ -40,13 +40,13 @@ export async function getCalendarDataForAll(courseId: string): Promise<any> {
 };
 
 export async function getCalendarDuration(id: string, studentId: string, courseId: string): Promise<number> {
-  const { data } = await db.from('calendar').select('duration').eq('id', id).eq('student_id', studentId).eq('course_id', courseId).single();
-  return data?.duration || 1;
+  const { data } = await db.from('calendar').select('timeactive').eq('id', id).eq('studentid', studentId).eq('courseid', courseId).maybeSingle();
+  return data?.timeactive || 1;
 };
 
 export async function getCalendarCount(id: string, studentId: string, courseId: string): Promise<number> {
-  const { data } = await db.from('calendar').select('count').eq('id', id).eq('student_id', studentId).eq('course_id', courseId).single();
-  return data?.count || 1;
+  const { data } = await db.from('calendar').select('pageloads').eq('id', id).eq('studentid', studentId).eq('courseid', courseId).maybeSingle();
+  return data?.pageloads || 1;
 };
 
 export async function getDurationTotal(key: string, table: string, id: string): Promise<number> {
@@ -57,17 +57,17 @@ export async function getDurationTotal(key: string, table: string, id: string): 
 export async function insertOrUpdateCalendar(studentId: string, courseId: string) {
   const durationPromise = getCalendarDuration(formatDate(new Date()), studentId, courseId);
   const countPromise = getCalendarCount(formatDate(new Date()), studentId, courseId);
-  const [duration, count] = await Promise.all([durationPromise, countPromise]);
+  const [timeActive, pageLoads] = await Promise.all([durationPromise, countPromise]);
   await db
     .from('calendar')
     .upsert({
       id: formatDate(new Date()),
-      student_id: studentId,
-      duration: duration,
-      count: count,
-      course_id: courseId
+      studentid: studentId,
+      timeactive: timeActive,
+      pageloads: pageLoads,
+      courseid: courseId
     }, {
-      onConflict: 'id, student_id, course_id'
+      onConflict: 'id, studentid, courseid'
     });
 };
 
@@ -163,12 +163,12 @@ export async function updateDuration(key: string, table: string, id: string) {
 
 export const updateCalendarCount = async (id: string, studentId: string, courseId: string) => {
   if (!id || !studentId || !courseId) return;
-  await db.rpc('increment_calendar', { field_name: 'count', row_id: id, student_id_value: studentId, course_id_value: courseId });
+  await db.rpc('increment_calendar', { field_name: 'pageloads', row_id: id, student_id_value: studentId, course_id_value: courseId });
 };
 
 export const updateCalendarDuration = async (id: string, studentId: string, courseId: string) => {
   if (!id || !studentId || !courseId) return;
-  await db.rpc('increment_calendar', { field_name: 'duration', row_id: id, student_id_value: studentId, course_id_value: courseId });
+  await db.rpc('increment_calendar', { field_name: 'timeactive', row_id: id, student_id_value: studentId, course_id_value: courseId });
 };
 
 export async function storeStudentCourseLearningObjectInSupabase(course: Course, loid: string, lo: Lo, userDetails: User) {
