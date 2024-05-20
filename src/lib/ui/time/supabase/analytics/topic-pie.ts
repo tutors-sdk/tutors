@@ -1,7 +1,7 @@
 import * as echarts from 'echarts/core';
 import { backgroundPattern } from '../charts/tutors-charts-background-url';
 import { piechart } from '../charts/piechart';
-import type { Course } from '$lib/services/models/lo-types';
+import type { Course, Lo } from '$lib/services/models/lo-types';
 import type { Session } from '@supabase/supabase-js';
 import { getCompositeValues, getSimpleTypesValues } from '$lib/services/utils/supabase-utils';
 import { PieChart } from 'echarts/charts';
@@ -94,17 +94,17 @@ export class TopicPieChart {
     const outerPieData: { value: number; name: string; }[] = [];
     this.topicTitleTimesMap.forEach((value, key) => {
       const existing = outerPieData.find(data => data.name === key);
-        if (existing) {
-          existing.value += value;
-        } else {
-          outerPieData.push({ value, name: key });
-        }
+      if (existing) {
+        existing.value += value;
+      } else {
+        outerPieData.push({ value, name: key });
+      }
     });
 
     return outerPieData;
   };
 
-  renderChart() {
+  renderChart(userIds = null as string[] | null) {
     if (this.myChart === null) {
       // If chart instance doesn't exist, create a new one
       this.myChart = echarts.init(document.getElementById('chart'));
@@ -114,8 +114,8 @@ export class TopicPieChart {
     const allSimpleTypes = getSimpleTypesValues(this.course.los);
     const allTypes = [...allComposites, ...allSimpleTypes];
 
-    allTypes.forEach((lo) => {
-      let topicTitle: string = "";
+    const updateMaps = (lo: Lo, userName: string, timeActive: number) => {
+      let topicTitle = "";
       let loTitle = lo.title;
       if (lo.parentTopic?.type === 'topic') {
         topicTitle = lo.parentTopic?.title;
@@ -124,7 +124,6 @@ export class TopicPieChart {
       } else {
         topicTitle = lo.title;
       }
-      const timeActive = lo.learningRecords?.get(this.session.user.user_metadata.user_name)?.timeActive || 0;
 
       // Add timeActive to the total time for the topic
       if (this.topicTitleTimesMap.has(topicTitle)) {
@@ -135,24 +134,37 @@ export class TopicPieChart {
 
       // Add timeActive and topicTitle to the totalTimesMap
       if (this.totalTimesMap.has(loTitle)) {
-        const existingEntry = this.totalTimesMap.get(loTitle)!;
-        existingEntry.timeActive += timeActive;
-        existingEntry.topicTitle = topicTitle;
+        const existingEntry = this.totalTimesMap.get(loTitle);
+        if (existingEntry) {
+          existingEntry.timeActive += timeActive;
+          existingEntry.topicTitle = topicTitle;
+        }
       } else {
         this.totalTimesMap.set(loTitle, { timeActive, topicTitle });
+      }
+    };
+
+    allTypes.forEach((lo) => {
+      if (userIds && userIds.length > 0) {
+        userIds.forEach((userId) => {
+          const timeActive = lo.learningRecords?.get(userId)?.timeActive || 0;
+          updateMaps(lo, userId, timeActive);
+        });
+      } else {
+        const timeActive = lo.learningRecords?.get(this.session.user.user_metadata.user_name)?.timeActive || 0;
+        updateMaps(lo, this.session.user.user_metadata.user_name, timeActive);
       }
     });
 
     if (this.multipleUsers === false) {
-
       const singleUserInnerData = Array.from(this.topicTitleTimesMap.entries()).map(([title, timeActive]) => ({
         name: title,
-        value: timeActive
+        value: timeActive / 2
       }));
 
       const singleUserOuterData = Array.from(this.totalTimesMap.entries()).map(([title, timeActive]) => ({
         name: title,
-        value: timeActive
+        value: timeActive / 2
       }));
 
       const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, singleUserOuterData);

@@ -94,7 +94,7 @@
         <option value="InstructorTopicViewBoxPlot">Instructor Topic Box Plot Chart</option>
       </select>
       <!-- Display selected topic chart -->
-      {#if selectedInstructorTopicChart === "Instructor"}
+      {#if selectedInstructorTopicChart === "InstructorTopicView"}
         <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds} />
       {:else if selectedInstructorTopicChart === "InstructorTopicViewPieChart"}
         <InstructorTopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />

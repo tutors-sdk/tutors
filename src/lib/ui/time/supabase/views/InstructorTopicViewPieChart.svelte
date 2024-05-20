@@ -18,7 +18,7 @@
 
   const renderChart = () => {
     if (topicPieChart) {
-      topicPieChart.renderChart();
+      topicPieChart.renderChart(userIds);
     }
   };
 
