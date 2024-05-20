@@ -43,6 +43,7 @@ export class LabBoxPlotChart {
     // Iterate over allLabSteps to aggregate total timeActive for each step
     allLabSteps.forEach(step => {
       const title = step.parentLo?.type === 'lab' ? step.parentLo?.title : step.title;
+      
       if (!labActivities.has(title)) {
         labActivities.set(title, []);
       }
@@ -60,7 +61,9 @@ export class LabBoxPlotChart {
     });
   
     Array.from(labActivities.entries()).forEach(([title, activities]) => {
-      const timeActiveValues = activities.map(a => a.timeActive || 0).sort((a, b) => a - b);
+      activities.sort((a, b) => a.timeActive - b.timeActive);
+
+      const timeActiveValues = activities.map(a => a.timeActive || 0);
   
       const min = d3.min(timeActiveValues) ?? 0;
       const q1 = d3.quantileSorted(timeActiveValues, 0.25) ?? 0;
@@ -72,7 +75,6 @@ export class LabBoxPlotChart {
     });
   
     const userNicknames = Array.from(userNicknamesSet); // Convert Set to Array
-  
     return { boxplotData, userNicknames };
   }
   
@@ -93,7 +95,7 @@ export class LabBoxPlotChart {
     }
 
     lab.learningRecords?.forEach((lab, key) => {
-      userNicknamesSet.add(key); // Collect nicknames for the y-axis
+      // userNicknamesSet.add(key); // Collect nicknames for the y-axis
 
       if (this.userIds?.includes(key)) {
         labActivities.get(title)?.push({
@@ -134,10 +136,7 @@ export class LabBoxPlotChart {
 
   renderCombinedBoxplotChart(container: HTMLElement | null | undefined, boxplotData: BoxplotData[]) {
     const chartInstance = echarts.init(container);
-
     const option = combinedBoxplotChart(bgPatternImg, boxplotData, 'All Lab Activity Boxplot');
-
     chartInstance.setOption(option);
-    chartInstance.resize();       // Force a resize to ensure proper layout
   }
 }

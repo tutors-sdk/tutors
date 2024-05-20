@@ -164,7 +164,7 @@ export class TopicPieChart {
 
       const singleUserOuterData = Array.from(this.totalTimesMap.entries()).map(([title, timeActive]) => ({
         name: title,
-        value: timeActive / 2
+        value: timeActive.timeActive / 2
       }));
 
       const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, singleUserOuterData);

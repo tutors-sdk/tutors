@@ -10,7 +10,6 @@
 
   onMount(async () => {
     labPieChart = new LabPieChart(course, session);
-    labPieChart.populateCols();
     labPieChart.renderChart();
   });
 
@@ -38,11 +37,5 @@
 </script>
 
 <div class="h-screen">
-  <div id="chart-container" class="w-full h-full">
-    {#if session}
-      <div id={`chart-${session.user.user_metadata.username}`} style="width: 100%; height: 100%"></div>
-    {:else}
-      <div id="chart" style="width: 100%; height: 100%"></div>
-    {/if}
-  </div>
+  <div id="chart" style="height: 100%; width:100%"></div>
 </div>

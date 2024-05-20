@@ -31,9 +31,10 @@ export interface CalendarMap {
     timeActive: number;
 };
 
-// export interface CalendarMapCollection {
-//     [key: string]: CalendarMap[];
-// };
+export interface LabStepData {
+    aggregatedTimeActive: number;
+    title: string;
+}
 
 export interface BoxplotData {
     value: [number, number, number, number, number];

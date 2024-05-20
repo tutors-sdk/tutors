@@ -1,7 +1,7 @@
 import type { BoxplotData } from "$lib/services/types/supabase-metrics";
 import type { EChartsOption } from "echarts";
 
-export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[], boxplotData: number[][], chartTitle: string): EChartsOption {
+export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[], boxplotData: any[], chartTitle: string): EChartsOption {
 return {
     title: {
       text: chartTitle
@@ -18,7 +18,7 @@ return {
     },
     yAxis: {
       type: 'category',
-      data: userNicknames
+      data: userNicknames.map(name => name),
     },
     xAxis: {
       type: 'value'
@@ -27,7 +27,7 @@ return {
       {
         name: chartTitle,
         type: 'boxplot',
-        data: boxplotData
+        data: boxplotData,
       }
     ]
   };

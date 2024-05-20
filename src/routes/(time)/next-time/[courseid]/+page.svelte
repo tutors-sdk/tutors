@@ -13,6 +13,7 @@
   import InstructorTopicViewPieChart from "$lib/ui/time/supabase/views/InstructorTopicViewPieChart.svelte";
   import InstructorLabViewBoxPlot from "$lib/ui/time/supabase/views/InstructorLabViewBoxPlot.svelte";
   import InstructorTopicViewBoxPlot from "$lib/ui/time/supabase/views/InstructorTopicViewBoxPlot.svelte";
+    import LabViewPieChart from "$lib/ui/time/supabase/views/LabViewPieChart.svelte";
 
   export let data: any;
 
@@ -130,16 +131,16 @@
     {:else}
       <!-- Dropdown for selecting lab charts -->
       <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleLabChartChange} bind:value={selectedLabChart}>
-        <option value="NewLabTime">Lab Time Heat-Map</option>
-        <option value="LabTimeNewChart">Lab Time Bar/Pie-Chart</option>
+        <option value="LabView">Lab Time Heat-Map</option>
+        <option value="LabViewPieChart">Lab Time Bar/Pie-Chart</option>
       </select>
       <!-- Display selected lab chart -->
       {#if selectedLabChart === "LabView"}
         <LabView course={data.course} session={data.session} userIds={data.userIds} />
         <!-- <NewInstructorLabTime course={data.course} session={data.session} userIds={data.userIds} />   -->
 
-        <!-- {:else if selectedLabChart === "LabTimeNewChart"}
-        <LabTimeNewChart user={data.user} allLabs={data.allLabs} /> -->
+        {:else if selectedLabChart === "LabViewPieChart"}
+        <LabViewPieChart course={data.course} session={data.session} />
       {/if}
     {/if}
     <!-- {:else if tabSet === 3}

@@ -44,21 +44,6 @@ export class CalendarChart {
     this.myCharts = {};
   }
 
-  populateUserData(userData: StudentRecord) {
-    this.user = userData;
-  }
-
-  populateUsersData(usersData: any) {
-    this.users = usersData;
-  }
-
-  populateAndRenderUsersData(usersData: any) {
-    usersData?.forEach(user => {
-      this.createChartContainer(user?.nickname);
-      this.renderChart(user);
-    });
-  }
-
   createChartContainer(containerId: string) {
     const container = document.createElement('div');
     container.id = `chart-${containerId}`;
