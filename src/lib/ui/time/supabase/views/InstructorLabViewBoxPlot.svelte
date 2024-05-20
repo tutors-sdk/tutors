@@ -29,9 +29,9 @@
   // Function to render the charts
   const renderCharts = () => {
     if (labBoxPlot) {
-      const { boxplotData, userNicknames } = labBoxPlot.prepareBoxplotData(course);
+      const { boxplotData, userNicknames } = labBoxPlot.prepareBoxplotData();
       labBoxPlot.renderBoxPlot(document.getElementById("heatmap-container"), boxplotData, userNicknames);
-      const combinedBoxplotData = labBoxPlot.prepareCombinedBoxplotData(course);
+      const combinedBoxplotData = labBoxPlot.prepareCombinedBoxplotData();
       labBoxPlot.renderCombinedBoxplotChart(document.getElementById("combinedBoxPlot"), combinedBoxplotData);
     }
   };

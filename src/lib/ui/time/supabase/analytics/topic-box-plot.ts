@@ -154,7 +154,3 @@ export class TopicBoxPlotChart {
     chartInstance.setOption(option);
   }
 }
-
-
-
-

@@ -74,7 +74,7 @@
     <Tab bind:group={tabSet} name="Labs" value={2}>
       {instructorMode ? "Labs (Tutors View)" : "Labs"}
     </Tab>
-    <!-- {#if instructorMode}
+    <!-- {#if instructorMode} //maybe a future implementation
       <Tab bind:group={tabSet} name="LiveStudents" value={3}>Live Students</Tab>
     {/if} -->
   </TabGroup>
@@ -118,8 +118,8 @@
     {#if instructorMode}
       <!-- Dropdown for selecting lab charts -->
       <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleInstructorLabChartChange} bind:value={selectedInstructorLabChart}>
-        <option value="NewInstructorLabTime">Instructor Lab Time Heat-Map</option>
-        <option value="BoxPlotInstructorChart">Instructor Lab Time Box Plot Chart</option>
+        <option value="InstructorLabView">Instructor Lab Time Heat-Map</option>
+        <option value="InstructorLabViewBoxPlot">Instructor Lab Time Box Plot Chart</option>
       </select>
       <!-- Display selected lab chart -->
       {#if selectedInstructorLabChart === "InstructorLabView"}

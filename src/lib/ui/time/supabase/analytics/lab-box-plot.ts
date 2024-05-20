@@ -10,6 +10,9 @@ import { BoxplotChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import { backgroundPattern } from '../charts/tutors-charts-background-url';
 import { boxplot, combinedBoxplotChart } from '../charts/boxplot-chart';
+import type { Course } from '$lib/services/models/lo-types';
+import { filterByType } from '$lib/services/models/lo-utils';
+import type { BoxplotData } from '$lib/services/types/supabase-metrics';
 echarts.use([
   TitleComponent,
   TooltipComponent,
@@ -22,72 +25,114 @@ const bgPatternImg = new Image();
 bgPatternImg.src = backgroundPattern;
 
 export class LabBoxPlotChart {
-  prepareBoxplotData(userDataMap) {
-    const boxplotData = [];
-    const userNicknames = [];
-
-    userDataMap.forEach((userData, nickname) => {
-      userNicknames.push(nickname); // Collect nicknames for the y-axis
-
-      const counts = userData?.labActivity.map(activity => activity.count);
-      counts.sort((a, b) => a - b);
-
-      const min = d3.min(counts);
-      const q1 = d3.quantileSorted(counts, 0.25);
-      const median = d3.median(counts);
-      const q3 = d3.quantileSorted(counts, 0.75);
-      const max = d3.max(counts);
-
-      boxplotData.push([min, q1, median, q3, max]);
-    });
-
-    return { boxplotData, userNicknames };
+  course: Course;
+  userIds: string[];
+  constructor(course: Course, userIds: string[]) {
+    this.course = course;
+    this.userIds = userIds;
   }
 
-  //combined boxplot
-  prepareCombinedBoxplotData(data) {
-    const labActivities = new Map();
-
-    // Aggregate counts and nicknames for each lab
-    data.forEach(user => {
-      user?.labActivity.forEach(lab => {
-        if (!labActivities.has(lab.title)) {
-          labActivities.set(lab.title, []);
+  prepareBoxplotData() {
+    let boxplotData: number[][] = [];
+    const userNicknamesSet: Set<string> = new Set();
+    let labs = filterByType(this.course.los, 'lab');
+    let steps = filterByType(this.course.los, 'step');
+    const allLabSteps = [...labs, ...steps];
+    const labActivities = new Map<string, { timeActive: number; nickname: string }[]>();
+  
+    // Iterate over allLabSteps to aggregate total timeActive for each step
+    allLabSteps.forEach(step => {
+      const title = step.parentLo?.type === 'lab' ? step.parentLo?.title : step.title;
+      if (!labActivities.has(title)) {
+        labActivities.set(title, []);
+      }
+  
+      step.learningRecords?.forEach((lab, key) => {
+        userNicknamesSet.add(key); // Collect nicknames for the y-axis
+  
+        if (this.userIds?.includes(key)) {
+          labActivities.get(title)?.push({
+            timeActive: lab.timeActive,
+            nickname: key
+          });
         }
-        // Push an object containing count and nickname
-        labActivities.get(lab.title).push({ count: lab.count, nickname: user.nickname });
       });
     });
+  
+    Array.from(labActivities.entries()).forEach(([title, activities]) => {
+      const timeActiveValues = activities.map(a => a.timeActive || 0).sort((a, b) => a - b);
+  
+      const min = d3.min(timeActiveValues) ?? 0;
+      const q1 = d3.quantileSorted(timeActiveValues, 0.25) ?? 0;
+      const median = d3.median(timeActiveValues) ?? 0;
+      const q3 = d3.quantileSorted(timeActiveValues, 0.75) ?? 0;
+      const max = d3.max(timeActiveValues) ?? 0;
+  
+      boxplotData.push([min, q1, median, q3, max]);
+    });
+  
+    const userNicknames = Array.from(userNicknamesSet); // Convert Set to Array
+  
+    return { boxplotData, userNicknames };
+  }
+  
+  //combined boxplot
+  prepareCombinedBoxplotData(): BoxplotData[] {
+    const userNicknamesSet: Set<string> = new Set();
+    let labs = filterByType(this.course.los, 'lab');
+    let steps = filterByType(this.course.los, 'step');
+    const allLabSteps = [...labs, ...steps];
+    const labActivities = new Map<string, { timeActive: number; nickname: string }[]>();
 
-    const boxplotData = Array.from(labActivities).map(([title, activities]) => {
-      activities.sort((a, b) => a.count - b.count);
-      const lowData = activities[0];
-      const q1 = d3.quantileSorted(activities.map(a => a.count), 0.25);
-      const median = d3.quantileSorted(activities.map(a => a.count), 0.5);
-      const q3 = d3.quantileSorted(activities.map(a => a.count), 0.75);
-      const highData = activities[activities.length - 1];
-      // Convert the data into the format expected by ECharts
+    // Aggregate counts and nicknames for each lab
+    allLabSteps.forEach(lab => {
+    const title = lab.parentLo?.type === 'lab' ? lab.parentLo?.title : lab.title;
+
+    if (!labActivities.has(title)) {
+      labActivities.set(title, []);
+    }
+
+    lab.learningRecords?.forEach((lab, key) => {
+      userNicknamesSet.add(key); // Collect nicknames for the y-axis
+
+      if (this.userIds?.includes(key)) {
+        labActivities.get(title)?.push({
+          timeActive: lab.timeActive,
+          nickname: key
+        });
+      }
+    });
+  });
+
+    const boxplotData: BoxplotData[] = Array.from(labActivities.entries()).map(([title, activities]) => {
+      activities.sort((a, b) => a.timeActive - b.timeActive);
+
+      const timeActiveValues = activities.map(a => a.timeActive || 0);
+
+      const lowData = activities[0] ?? { timeActive: 0, nickname: 'No Interaction' };
+      const q1 = d3.quantileSorted(timeActiveValues, 0.25) ?? 0;
+      const median = d3.median(timeActiveValues) ?? 0;
+      const q3 = d3.quantileSorted(timeActiveValues, 0.75) ?? 0;
+      const highData = activities[activities.length - 1] ?? { timeActive: 0, nickname: 'No Interaction' };
+
       return {
-        value: [lowData.count, q1, median, q3, highData.count],
-        title: title, // Keep the title for xAxis labels
+        value: [lowData.timeActive, q1, median, q3, highData.timeActive],
+        title: title,
         lowNickname: lowData.nickname,
         highNickname: highData.nickname
       };
     });
 
-    // Sort by median
-    boxplotData.sort((a, b) => a.median - b.median);
-
     return boxplotData;
-  }
+}
 
-  renderBoxPlot(container, boxplotData, userNicknames) {
+  renderBoxPlot(container: HTMLElement | null | undefined, boxplotData: number[][], userNicknames: string[]) {
     const chart = echarts.init(container);
     const option = boxplot(bgPatternImg, userNicknames ,boxplotData, 'Lab Activity per Student Boxplot');
     chart.setOption(option);
   }
 
-  renderCombinedBoxplotChart(container, boxplotData) {
+  renderCombinedBoxplotChart(container: HTMLElement | null | undefined, boxplotData: BoxplotData[]) {
     const chartInstance = echarts.init(container);
 
     const option = combinedBoxplotChart(bgPatternImg, boxplotData, 'All Lab Activity Boxplot');
@@ -96,7 +141,3 @@ export class LabBoxPlotChart {
     chartInstance.resize();       // Force a resize to ensure proper layout
   }
 }
-
-
-
-
