@@ -7,6 +7,7 @@ import { getCompositeValues, getSimpleTypesValues } from '$lib/services/utils/su
 import { PieChart } from 'echarts/charts';
 import { TitleComponent, TooltipComponent, LegendComponent } from 'echarts/components';
 import { CanvasRenderer } from 'echarts/renderers';
+import type { LabStepData, OuterPieData } from '$lib/services/types/supabase-metrics';
 
 echarts.use([TitleComponent, TooltipComponent, LegendComponent, PieChart, CanvasRenderer]);
 
@@ -21,7 +22,7 @@ export class TopicPieChart {
   course: Course;
   session: Session;
   topicTitleTimesMap = new Map<string, number>();
-  totalTimesMap: Map<string, { timeActive: number; topicTitle: string }> = new Map();
+  totalTimesMap: Map<string, LabStepData> = new Map();
   userIds: string[];
   multipleUsers: boolean;
   constructor(course: Course, session: Session, userIds: string[], multipleUsers: boolean) {
@@ -31,7 +32,7 @@ export class TopicPieChart {
     this.session = session;
     this.userIds = userIds;
     this.topicTitleTimesMap = new Map<string, number>();
-    this.totalTimesMap = new Map<string, { timeActive: number; topicTitle: string }>();
+    this.totalTimesMap = new Map<string, LabStepData>();
     this.multipleUsers = multipleUsers;
   }
 
@@ -40,13 +41,13 @@ export class TopicPieChart {
       // Listen to click event on the inner pie chart
       this.myChart.on('click', (params: { seriesName: string; name: string; }) => {
         if (params.seriesName === 'Inner Pie') {
-          let outerPieData: { value: number; name: string; }[] = []; // Reset outerPieData array
+          let outerPieData: OuterPieData[] = []; // Reset outerPieData array
 
           // Find the corresponding data for the clicked inner pie slice
           this.totalTimesMap.forEach((lo, key) => {
-            if (lo.topicTitle === params.name) {
-              if (lo?.timeActive !== 0) {
-                outerPieData.push({ value: Math.round(lo.timeActive/2)!, name: key });
+            if (lo.title === params.name) {
+              if (lo?.aggregatedTimeActive !== 0) {
+                outerPieData.push({ value: lo.aggregatedTimeActive!, name: key, type: lo.loType });
               }
             }
           });
@@ -56,7 +57,7 @@ export class TopicPieChart {
     };
   }
 
-  populateOuterPieData(outerPieData: { value: number; name: string; }[]) {
+  populateOuterPieData(outerPieData: OuterPieData[]) {
     // Update the data for the outer pie chart
     const chartInstance = echarts.getInstanceByDom(document.getElementById('chart'));
     if (chartInstance) {
@@ -72,15 +73,17 @@ export class TopicPieChart {
   multipleUsersInnerPieClick() {
     this.myChart.on('click', (params: { seriesName: string; name: any; }) => {
       if (params.seriesName === 'Inner Pie') {
-        const outerPieData: { value: number; name: string; }[] = [];
+        const outerPieData: OuterPieData[] = [];
 
         this.totalTimesMap.forEach((value, key) => {
-          if (value.topicTitle === params.name) {
+          if (value.title === params.name) {
             const existing = outerPieData.find(data => data.name === key);
             if (existing) {
-              existing.value += value.timeActive;
+              existing.value += value.aggregatedTimeActive;
             } else {
-              outerPieData.push({ value: value.timeActive, name: key });
+              //outerPieData.push({ value: value.timeActive, name: key });
+              outerPieData.push({ value: value.aggregatedTimeActive!, name: key, type: value.loType });
+
             }
           }
         });
@@ -95,7 +98,7 @@ export class TopicPieChart {
     this.topicTitleTimesMap.forEach((value, key) => {
       const existing = outerPieData.find(data => data.name === key);
       if (existing) {
-        Math.round(existing.value += value/2);
+        existing.value += value;
       } else {
         outerPieData.push({ value, name: key });
       }
@@ -135,12 +138,14 @@ export class TopicPieChart {
       // Add timeActive and topicTitle to the totalTimesMap
       if (this.totalTimesMap.has(loTitle)) {
         const existingEntry = this.totalTimesMap.get(loTitle);
-        if (existingEntry) {
-          existingEntry.timeActive += timeActive;
-          existingEntry.topicTitle = topicTitle;
+        if (existingEntry && existingEntry?.aggregatedTimeActive !== 0) {
+          existingEntry.aggregatedTimeActive += timeActive;
+          existingEntry.title = topicTitle;
+          existingEntry.loType = lo.type;
+          this.totalTimesMap.set(loTitle, existingEntry);
         }
       } else {
-        this.totalTimesMap.set(loTitle, { timeActive, topicTitle });
+        this.totalTimesMap.set(loTitle, { aggregatedTimeActive: timeActive, title: topicTitle, loType: lo.type });
       }
     };
 
@@ -159,20 +164,20 @@ export class TopicPieChart {
     if (this.multipleUsers === false) {
       const singleUserInnerData = Array.from(this.topicTitleTimesMap.entries()).map(([title, timeActive]) => ({
         name: title,
-        value: Math.round(timeActive / 2)
+        value: timeActive
       }));
 
       const singleUserOuterData = Array.from(this.totalTimesMap.entries()).map(([title, timeActive]) => ({
         name: title,
-        value: Math.round(timeActive.timeActive / 2)
+        value: timeActive.aggregatedTimeActive
       }));
 
-      const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, singleUserOuterData);
+      const option = piechart(bgPatternImg, this.course, [], singleUserInnerData);
       this.myChart.setOption(option);
       this.singleUserPieClick();
     } else {
       const allUsersTopicActivity = this.getOuterPieDataForMultipleUsers();
-      const option = piechart(bgPatternImg, this.course, allUsersTopicActivity, [], []);
+      const option = piechart(bgPatternImg, this.course, allUsersTopicActivity, []);
       this.myChart.setOption(option);
       this.multipleUsersInnerPieClick();
     }

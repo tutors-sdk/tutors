@@ -34,6 +34,7 @@ export interface CalendarMap {
 export interface LabStepData {
     aggregatedTimeActive: number;
     title: string;
+    loType: string;
 }
 
 export interface BoxplotData {
@@ -43,6 +44,8 @@ export interface BoxplotData {
     highNickname: string;
 };
 
-export interface CalendarMapCollection {
-    calendarMaps: CalendarMap[];
-};
+export type OuterPieData = {
+    value: number;
+    name: string;
+    type: string;
+  };

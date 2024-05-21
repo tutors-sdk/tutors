@@ -13,6 +13,7 @@ import type { Session } from '@supabase/supabase-js';
 import { filterByType } from '$lib/services/models/lo-utils';
 import type { EChartsOption, SeriesOption } from 'echarts';
 import { piechart } from '../charts/piechart';
+import type { LabStepData, OuterPieData } from '$lib/services/types/supabase-metrics';
 
 echarts.use([
   TooltipComponent,
@@ -40,14 +41,15 @@ export class LabPieChart {
   course: Course;
   session: Session;
   labTitleTimesMap = new Map<string, number>();
-  totalTimesMap: Map<string, { timeActive: number; topicTitle: string }> = new Map();
+  totalTimesMap: Map<string, LabStepData> = new Map();
+
   constructor(course: Course, session: Session) {
     this.myChart = null;
     this.labs = [];
     this.course = course;
     this.session = session;
     this.labTitleTimesMap = new Map<string, number>();
-    this.totalTimesMap = new Map<string, { timeActive: number; topicTitle: string }>();
+    this.totalTimesMap = new Map<string, LabStepData>();
   }
 
   singleUserPieClick() {
@@ -55,13 +57,13 @@ export class LabPieChart {
       // Listen to click event on the inner pie chart
       this.myChart.on('click', (params: { seriesName: string; name: string; }) => {
         if (params.seriesName === 'Inner Pie') {
-          let outerPieData: { value: number; name: string; }[] = []; // Reset outerPieData array
+          const outerPieData: OuterPieData[] = []; // Reset outerPieData array
 
           // Find the corresponding data for the clicked inner pie slice
           this.totalTimesMap.forEach((lo, key) => {
-            if (lo.topicTitle === params.name) {
-              if (lo?.timeActive !== 0) {
-                outerPieData.push({ value: Math.round(lo.timeActive/2)!, name: key });
+            if (lo.title === params.name) {
+              if (lo.aggregatedTimeActive !== 0) {
+                outerPieData.push({ value: lo.aggregatedTimeActive!, name: key, type: lo.loType });
               }
             }
           });
@@ -71,18 +73,18 @@ export class LabPieChart {
     };
   }
 
-  populateOuterPieData(outerPieData: { value: number; name: string; }[]) {
+  populateOuterPieData(outerPieData: OuterPieData[]) {
     // Update the data for the outer pie chart
     const chartInstance = echarts.getInstanceByDom(document.getElementById('chart'));
     if (chartInstance) {
       chartInstance.setOption({
         series: [{
-          name: 'Outer Pie',
-          data: outerPieData.filter(topic => topic.value > 0) || [{}]
+          name: "Outer Pie",
+          data: outerPieData
         }]
       });
     }
-  };
+  }
 
   renderChart() {
     if (this.myChart === null) {
@@ -102,7 +104,7 @@ export class LabPieChart {
       // Add timeActive to the total time for the topic
       if (this.labTitleTimesMap.has(topicTitle)) {
         this.labTitleTimesMap.set(topicTitle, this.labTitleTimesMap.get(topicTitle)! + timeActive);
-      }else{
+      } else {
         this.labTitleTimesMap.set(topicTitle, timeActive);
       }
 
@@ -110,44 +112,35 @@ export class LabPieChart {
       if (this.totalTimesMap.has(loTitle)) {
         const existingEntry = this.totalTimesMap.get(loTitle);
         if (existingEntry) {
-          existingEntry.timeActive += timeActive;
-          existingEntry.topicTitle = topicTitle;
+          existingEntry.aggregatedTimeActive += timeActive;
+          existingEntry.title = topicTitle;
+          existingEntry.loType = lo.type;
+          this.totalTimesMap.set(loTitle, existingEntry);
         }
       } else {
-        this.totalTimesMap.set(loTitle, { timeActive, topicTitle });
+        this.totalTimesMap.set(loTitle, { aggregatedTimeActive: timeActive, title: topicTitle, loType: lo.type });
       }
-
-      // Add timeActive and topicTitle to the totalTimesMap
-      // if (this.totalTimesMap.has(topicTitle)) {
-      //   const existingEntry = this.totalTimesMap.get(topicTitle);
-      //   if (existingEntry) {
-      //     existingEntry.timeActive += timeActive;
-      //   }
-      // } else {
-      //   this.totalTimesMap.set(topicTitle, { timeActive, loTitle });
-      // }
     };
 
     allLabSteps.forEach((lo) => {
-        const timeActive = lo.learningRecords?.get(this.session.user.user_metadata.user_name)?.timeActive || 0;
-        updateMaps(lo, this.session.user.user_metadata.user_name, timeActive);
-      
+      const timeActive = lo.learningRecords?.get(this.session.user.user_metadata.user_name)?.timeActive || 0;
+      updateMaps(lo, this.session.user.user_metadata.user_name, timeActive);
     });
 
-      const singleUserInnerData = Array.from(this.labTitleTimesMap.entries()).map(([title, timeActive]) => ({
-        name: title,
-        value: timeActive / 2
-      }));
+    const singleUserInnerData = Array.from(this.labTitleTimesMap.entries()).map(([title, timeActive]) => ({
+      name: title,
+      value: timeActive 
+    }));
 
-      const singleUserOuterData = Array.from(this.totalTimesMap.entries()).map(([title, timeActive]) => ({
-        name: title,
-        value: timeActive.timeActive / 2
-      }));
+    const singleUserOuterData = Array.from(this.totalTimesMap.entries()).map(([title, object]) => ({
+      name: title,
+      value: object.aggregatedTimeActive 
+    }));
 
-      const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, singleUserOuterData);
-      this.myChart.setOption(option);
-      this.singleUserPieClick();
-     
+    const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, );
+    this.myChart.setOption(option);
+    this.singleUserPieClick();
+
   }
 };
 

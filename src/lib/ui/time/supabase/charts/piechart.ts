@@ -1,6 +1,6 @@
 import type { Course } from '$lib/services/models/lo-types';
 
-export function piechart(bgPatternImg: HTMLImageElement, course: Course, allUsersTopicActivity: any[], singleUserInnerData: { name: string; value: number; }[], singleUserOuterData: { name: string; value: { timeActive: number; topicTitle: string; }; }[]) {
+export function piechart(bgPatternImg: HTMLImageElement, course: Course, allUsersTopicActivity: any[], singleUserInnerData: { name: string; value: number; }[]) {
   return {
     tooltip: {
       trigger: 'item',
@@ -36,7 +36,9 @@ export function piechart(bgPatternImg: HTMLImageElement, course: Course, allUser
           length: 30
         },
         label: {
-          formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}:}{c} mins  {per|{d}%}  ',
+          formatter: (params: any) => {
+            return `{a|${params.data.type}}{abg|}\n{hr|}\n  {b|${params.name}:}{c|${params.value} mins}  {per|${params.percent}%}  `;
+          },
           backgroundColor: '#F6F8FC',
           borderColor: '#8C8D8E',
           borderWidth: 1,
@@ -57,6 +59,12 @@ export function piechart(bgPatternImg: HTMLImageElement, course: Course, allUser
               color: '#4C5058',
               fontSize: 14,
               fontWeight: 'bold',
+              lineHeight: 33
+            },
+            c: {
+              color: '#4C5058',
+              fontSize: 14,
+              fontWeight: 'normal',
               lineHeight: 33
             },
             per: {
