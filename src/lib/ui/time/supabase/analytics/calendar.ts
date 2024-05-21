@@ -135,13 +135,20 @@ export class CalendarChart {
 
     const chart = echarts.init(chartContainer);
     const avatarUrl = await getGithubAvatarUrl(userId);
-
-    const option = calendarCombined(userId, calendarMap, bgPatternImg, currentRange, avatarUrl);
+    const fullName = await getUser(userId);
+    const option = calendarCombined(userId, calendarMap, bgPatternImg, currentRange, avatarUrl, fullName);
 
     chart.setOption(option, true);
-
   }
 };
+
+async function getUser(username: string) {
+  return fetch(`https://api.github.com/users/${username}`)
+  .then(response => response.json())
+  .then(response => {
+      return response.name;
+  })
+}
 
 async function getGithubAvatarUrl(username:string) {
   const url = `https://api.github.com/users/${username}`;

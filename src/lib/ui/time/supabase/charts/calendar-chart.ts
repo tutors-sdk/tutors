@@ -25,7 +25,7 @@ export function calendar(session: Session, calendarMap: CalendarMap[], bgPattern
     title: {
       top: 30,
       left: 'center',
-      text: 'GitHub Account for ' + session.user.user_metadata.user_name,
+      text: 'GitHub Account for ' + session.user.user_metadata.full_name,
       link: 'https://www.github.com/' + session.user.user_metadata.user_name,
       target: 'self'
     },
@@ -113,12 +113,13 @@ export function calendar(session: Session, calendarMap: CalendarMap[], bgPattern
 
 };
 
-export function calendarCombined(userId: string, calendarMap: Map<string, number>, bgPatternImg: HTMLImageElement, currentRange: string, avatarUrl: string): EChartsOption {
+export function calendarCombined(userId: string, calendarMap: Map<string, number>, bgPatternImg: HTMLImageElement, currentRange: string, avatarUrl: string, fullName: string): EChartsOption {
+  const userName = fullName !== null ?  fullName : userId
   return {
     title: {
       top: 30,
       left: 'center',
-      text: 'GitHub Account for ' + userId,
+      text: 'GitHub Account for ' + userName,
       link: 'https://www.github.com/' + userId,
       target: 'self'
     },

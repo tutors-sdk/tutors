@@ -1,8 +1,8 @@
 import type { BoxplotData } from "$lib/services/types/supabase-metrics";
 import type { EChartsOption } from "echarts";
 
-export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[], boxplotData: any[], chartTitle: string): EChartsOption {
-return {
+export function boxplot(bgPatternImg: HTMLImageElement,userNicknames: string[],boxplotData: number[][],chartTitle: string): EChartsOption {
+  return {
     title: {
       text: chartTitle
     },
@@ -14,11 +14,21 @@ return {
       trigger: 'item',
       axisPointer: {
         type: 'shadow'
+      },
+      formatter: (param: any) => {
+        return [
+          `User ${param.name}:`,
+          `Max: ${param.data[4]}`,
+          `Q3: ${param.data[3]}`,
+          `Median: ${param.data[2]}`,
+          `Q1: ${param.data[1]}`,
+          `Min: ${param.data[0]}`
+        ].join('<br/>');
       }
     },
     yAxis: {
       type: 'category',
-      data: userNicknames.map(name => name),
+      data: userNicknames
     },
     xAxis: {
       type: 'value'
@@ -27,11 +37,12 @@ return {
       {
         name: chartTitle,
         type: 'boxplot',
-        data: boxplotData,
+        data: boxplotData
       }
     ]
   };
-};
+}
+
 
 import * as echarts from 'echarts';
 

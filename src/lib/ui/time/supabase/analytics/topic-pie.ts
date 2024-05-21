@@ -46,7 +46,7 @@ export class TopicPieChart {
           this.totalTimesMap.forEach((lo, key) => {
             if (lo.topicTitle === params.name) {
               if (lo?.timeActive !== 0) {
-                outerPieData.push({ value: lo.timeActive!, name: key });
+                outerPieData.push({ value: Math.round(lo.timeActive/2)!, name: key });
               }
             }
           });
@@ -95,7 +95,7 @@ export class TopicPieChart {
     this.topicTitleTimesMap.forEach((value, key) => {
       const existing = outerPieData.find(data => data.name === key);
       if (existing) {
-        existing.value += value;
+        Math.round(existing.value += value/2);
       } else {
         outerPieData.push({ value, name: key });
       }
@@ -159,12 +159,12 @@ export class TopicPieChart {
     if (this.multipleUsers === false) {
       const singleUserInnerData = Array.from(this.topicTitleTimesMap.entries()).map(([title, timeActive]) => ({
         name: title,
-        value: timeActive / 2
+        value: Math.round(timeActive / 2)
       }));
 
       const singleUserOuterData = Array.from(this.totalTimesMap.entries()).map(([title, timeActive]) => ({
         name: title,
-        value: timeActive.timeActive / 2
+        value: Math.round(timeActive.timeActive / 2)
       }));
 
       const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, singleUserOuterData);

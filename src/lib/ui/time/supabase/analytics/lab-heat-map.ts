@@ -115,7 +115,7 @@ export class LabHeatMapChart {
       return [
         labTitles.indexOf(title.trim()),
         index,
-        timeActive
+        Math.round(timeActive/2)
       ];
     });
 
