@@ -30,6 +30,9 @@
   const renderCharts = () => {
     if (labBoxPlot) {
       const { boxplotData, userNicknames } = labBoxPlot.prepareBoxplotData();
+      // const boxplotDataPerUser= labBoxPlot.prepareBoxplotData();
+      // labBoxPlot.renderBoxPlot(document.getElementById("heatmap-container"), boxplotDataPerUser);
+
       labBoxPlot.renderBoxPlot(document.getElementById("heatmap-container"), boxplotData, userNicknames);
       const combinedBoxplotData = labBoxPlot.prepareCombinedBoxplotData();
       labBoxPlot.renderCombinedBoxplotChart(document.getElementById("combinedBoxPlot"), combinedBoxplotData);

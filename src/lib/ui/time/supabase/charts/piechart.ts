@@ -1,6 +1,6 @@
 import type { Course } from '$lib/services/models/lo-types';
 
-export function piechart(bgPatternImg: HTMLImageElement, course: Course, allUsersTopicActivity: any[], singleUserInnerData: { name: string; value: number; }[]) {
+export function piechart(bgPatternImg: HTMLImageElement, course: Course, allUsersTopicActivity: any[], singleUserInnerData: { name: string; value: number; }[], singleUserOuterData: { value: number; name: string; type: string; }[]) {
   return {
     tooltip: {
       trigger: 'item',
@@ -75,7 +75,7 @@ export function piechart(bgPatternImg: HTMLImageElement, course: Course, allUser
             }
           }
         },
-        data: ['']
+        data: singleUserOuterData || [''] 
       }
     ]
   };

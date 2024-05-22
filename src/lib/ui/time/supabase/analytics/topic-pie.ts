@@ -81,13 +81,11 @@ export class TopicPieChart {
             if (existing) {
               existing.value += value.aggregatedTimeActive;
             } else {
-              //outerPieData.push({ value: value.timeActive, name: key });
               outerPieData.push({ value: value.aggregatedTimeActive!, name: key, type: value.loType });
 
             }
           }
         });
-
         this.populateOuterPieData(outerPieData);
       }
     });
@@ -119,7 +117,7 @@ export class TopicPieChart {
 
     const updateMaps = (lo: Lo, userName: string, timeActive: number) => {
       let topicTitle = "";
-      let loTitle = lo.title;
+      let loTitle = lo.id;
       if (lo.parentTopic?.type === 'topic') {
         topicTitle = lo.parentTopic?.title;
       } else if (lo.parentLo?.parentTopic?.type === 'topic') {
@@ -165,11 +163,6 @@ export class TopicPieChart {
       const singleUserInnerData = Array.from(this.topicTitleTimesMap.entries()).map(([title, timeActive]) => ({
         name: title,
         value: timeActive
-      }));
-
-      const singleUserOuterData = Array.from(this.totalTimesMap.entries()).map(([title, timeActive]) => ({
-        name: title,
-        value: timeActive.aggregatedTimeActive
       }));
 
       const option = piechart(bgPatternImg, this.course, [], singleUserInnerData);

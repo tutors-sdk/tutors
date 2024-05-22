@@ -40,21 +40,26 @@ export class LabPieChart {
   labs: string[];
   course: Course;
   session: Session;
-  labTitleTimesMap = new Map<string, number>();
+  //labTitleTimesMap = new Map<string, number>();
+  //totalTimesMap: Map<string, LabStepData> = new Map();
   totalTimesMap: Map<string, LabStepData> = new Map();
+  labTitleTimesMap: Map<string, number> = new Map();
 
   constructor(course: Course, session: Session) {
     this.myChart = null;
     this.labs = [];
     this.course = course;
     this.session = session;
-    this.labTitleTimesMap = new Map<string, number>();
-    this.totalTimesMap = new Map<string, LabStepData>();
+    //this.labTitleTimesMap = new Map<string, number>();
+    //this.totalTimesMap = new Map<string, LabStepData>();
+    this.labTitleTimesMap = new Map();
+    this.totalTimesMap = new Map();
   }
 
   singleUserPieClick() {
     if (this.myChart !== null) {
-      // Listen to click event on the inner pie chart
+      // Remove any existing click listeners to prevent multiple handlers
+      this.myChart.off('click');
       this.myChart.on('click', (params: { seriesName: string; name: string; }) => {
         if (params.seriesName === 'Inner Pie') {
           const outerPieData: OuterPieData[] = []; // Reset outerPieData array
@@ -63,7 +68,7 @@ export class LabPieChart {
           this.totalTimesMap.forEach((lo, key) => {
             if (lo.title === params.name) {
               if (lo.aggregatedTimeActive !== 0) {
-                outerPieData.push({ value: lo.aggregatedTimeActive!, name: key, type: lo.loType });
+                outerPieData.push({ value:lo.aggregatedTimeActive!, name: key, type: lo.loType });
               }
             }
           });
@@ -87,10 +92,14 @@ export class LabPieChart {
   }
 
   renderChart() {
-    if (this.myChart === null) {
-      // If chart instance doesn't exist, create a new one
+    if (!this.myChart) {
+      // Create a new chart instance if it doesn't exist
       this.myChart = echarts.init(document.getElementById('chart'));
-    }
+  } else {
+      // Clear the previous chart to prevent aggregation issues
+      this.myChart.clear();
+  }
+
 
     let labs = filterByType(this.course.los, 'lab');
     let steps = filterByType(this.course.los, 'step');
@@ -98,8 +107,8 @@ export class LabPieChart {
     const allLabSteps = [...labs, ...steps];
 
     const updateMaps = (lo: Lo, userName: string, timeActive: number) => {
-      let topicTitle = lo.parentLo?.type === 'lab' ? lo.parentLo?.title : lo.title;
-      let loTitle = lo.title;
+      let topicTitle = lo.type === 'lab' ? lo.title : lo.parentLo!.title;
+      let loTitle = lo.id;
 
       // Add timeActive to the total time for the topic
       if (this.labTitleTimesMap.has(topicTitle)) {
@@ -108,18 +117,12 @@ export class LabPieChart {
         this.labTitleTimesMap.set(topicTitle, timeActive);
       }
 
-      // // Add timeActive and topicTitle to the totalTimesMap
-      if (this.totalTimesMap.has(loTitle)) {
-        const existingEntry = this.totalTimesMap.get(loTitle);
+      const existingEntry = this.totalTimesMap.get(loTitle);
         if (existingEntry) {
-          existingEntry.aggregatedTimeActive += timeActive;
-          existingEntry.title = topicTitle;
-          existingEntry.loType = lo.type;
-          this.totalTimesMap.set(loTitle, existingEntry);
+            existingEntry.aggregatedTimeActive += timeActive;
+        } else {
+            this.totalTimesMap.set(loTitle, { aggregatedTimeActive: timeActive, title: topicTitle, loType: lo.type});
         }
-      } else {
-        this.totalTimesMap.set(loTitle, { aggregatedTimeActive: timeActive, title: topicTitle, loType: lo.type });
-      }
     };
 
     allLabSteps.forEach((lo) => {
@@ -137,7 +140,7 @@ export class LabPieChart {
       value: object.aggregatedTimeActive 
     }));
 
-    const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, );
+    const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, singleUserOuterData);
     this.myChart.setOption(option);
     this.singleUserPieClick();
 
