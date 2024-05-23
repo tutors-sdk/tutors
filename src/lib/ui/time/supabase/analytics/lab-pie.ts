@@ -40,18 +40,14 @@ export class LabPieChart {
   labs: string[];
   course: Course;
   session: Session;
-  //labTitleTimesMap = new Map<string, number>();
-  //totalTimesMap: Map<string, LabStepData> = new Map();
-  totalTimesMap: Map<string, LabStepData> = new Map();
-  labTitleTimesMap: Map<string, number> = new Map();
+  totalTimesMap: Map<string, LabStepData[]>;
+  labTitleTimesMap: Map<string, number>;
 
   constructor(course: Course, session: Session) {
     this.myChart = null;
     this.labs = [];
     this.course = course;
     this.session = session;
-    //this.labTitleTimesMap = new Map<string, number>();
-    //this.totalTimesMap = new Map<string, LabStepData>();
     this.labTitleTimesMap = new Map();
     this.totalTimesMap = new Map();
   }
@@ -65,11 +61,13 @@ export class LabPieChart {
           const outerPieData: OuterPieData[] = []; // Reset outerPieData array
 
           // Find the corresponding data for the clicked inner pie slice
-          this.totalTimesMap.forEach((lo, key) => {
-            if (lo.title === params.name) {
-              if (lo.aggregatedTimeActive !== 0) {
-                outerPieData.push({ value: lo.aggregatedTimeActive!, name: key, type: lo.loType });
-              }
+          this.totalTimesMap.forEach((steps, topicTitle) => {
+            if (topicTitle === params.name) {
+              steps.forEach((step) => {
+                if (step.aggregatedTimeActive !== 0) {
+                  outerPieData.push({ value: step.aggregatedTimeActive, name: step.title, type: step.loType });
+                }
+              });
             }
           });
           this.populateOuterPieData(outerPieData);
@@ -103,14 +101,13 @@ export class LabPieChart {
     this.labTitleTimesMap.clear();
     this.totalTimesMap.clear();
 
-
     let labs = filterByType(this.course.los, 'lab');
     let steps = filterByType(this.course.los, 'step');
 
     const allLabSteps = [...labs, ...steps];
 
     const updateMaps = (lo: Lo, userName: string, timeActive: number) => {
-      let topicTitle = lo.type === 'lab' ? lo.id : lo.parentLo!.id;
+      let topicTitle = lo.type === 'lab' ? lo.title : lo.parentLo!.title;
       let loTitle = lo.title;
 
       // Add timeActive to the total time for the topic
@@ -120,11 +117,17 @@ export class LabPieChart {
         this.labTitleTimesMap.set(topicTitle, timeActive);
       }
 
-      const existingEntry = this.totalTimesMap.get(loTitle);
+      if (!this.totalTimesMap.has(topicTitle)) {
+        this.totalTimesMap.set(topicTitle, []);
+      }
+
+      const existingEntries = this.totalTimesMap.get(topicTitle)!;
+      const existingEntry = existingEntries.find(entry => entry.title === loTitle);
+
       if (existingEntry) {
         existingEntry.aggregatedTimeActive += timeActive;
       } else {
-        this.totalTimesMap.set(loTitle, { aggregatedTimeActive: timeActive, title: topicTitle, loType: lo.type });
+        existingEntries.push({ aggregatedTimeActive: timeActive, title: loTitle, loType: lo.type });
       }
     };
 
@@ -138,15 +141,19 @@ export class LabPieChart {
       value: timeActive
     }));
 
-    const singleUserOuterData = Array.from(this.totalTimesMap.entries()).map(([title, object]) => ({
-      name: title,
-      value: object.aggregatedTimeActive
-    }));
+    const singleUserOuterData: OuterPieData[] = [];
+    this.totalTimesMap.forEach((steps, topicTitle) => {
+      steps.forEach(step => {
+        singleUserOuterData.push({
+          name: step.title,
+          value: step.aggregatedTimeActive,
+          type: step.loType
+        });
+      });
+    });
 
     const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, singleUserOuterData);
     this.myChart.setOption(option);
     this.singleUserPieClick();
-
   }
 };
-
