@@ -107,8 +107,8 @@ export class LabPieChart {
     const allLabSteps = [...labs, ...steps];
 
     const updateMaps = (lo: Lo, userName: string, timeActive: number) => {
-      let topicTitle = lo.type === 'lab' ? lo.title : lo.parentLo!.title;
-      let loTitle = lo.id;
+      let topicTitle = lo.type === 'lab' ? lo.id : lo.parentLo!.id;
+      let loTitle = lo.title;
 
       // Add timeActive to the total time for the topic
       if (this.labTitleTimesMap.has(topicTitle)) {

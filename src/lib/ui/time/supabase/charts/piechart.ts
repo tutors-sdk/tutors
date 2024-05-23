@@ -75,7 +75,7 @@ export function piechart(bgPatternImg: HTMLImageElement, course: Course, allUser
             }
           }
         },
-        data: singleUserOuterData || [''] 
+        data: [''] 
       }
     ]
   };
