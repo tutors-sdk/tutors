@@ -15,6 +15,7 @@ import { tutorsAnalyticsLogo } from '../charts/personlised-logo';
 import type { CalendarMap } from '$lib/services/types/supabase-metrics';
 import type { Course } from '$lib/services/models/lo-types';
 import type { Session } from '@supabase/supabase-js';
+import { getUser } from '$lib/services/utils/supabase-utils';
 
 echarts.use([
   TitleComponent,
@@ -142,14 +143,6 @@ export class CalendarChart {
   }
 };
 
-async function getUser(username: string) {
-  return fetch(`https://api.github.com/users/${username}`)
-  .then(response => response.json())
-  .then(response => {
-      return response.name;
-  })
-}
-
 async function getGithubAvatarUrl(username:string) {
   const url = `https://api.github.com/users/${username}`;
   try {
@@ -163,4 +156,4 @@ async function getGithubAvatarUrl(username:string) {
     console.error('Error fetching the avatar URL:', error);
     return null;
   }
-}
+};

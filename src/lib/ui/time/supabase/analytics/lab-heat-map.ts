@@ -319,4 +319,3 @@ export class LabHeatMapChart {
     chart.setOption(option);
   };
 }
-

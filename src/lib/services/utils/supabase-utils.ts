@@ -253,3 +253,11 @@ export function formatDate(date: Date): string {
 
     return [...notes, ...archives, ...webs, ...githubs, ...panelnotes, ...paneltalks, ...panelVideos, ...talks, ...books, ...labs, ...steps];
   };
+
+  export async function getUser(username: string) {
+    return fetch(`https://api.github.com/users/${username}`)
+    .then(response => response.json())
+    .then(response => {
+        return response.name;
+    })
+  };

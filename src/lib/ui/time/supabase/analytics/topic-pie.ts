@@ -22,9 +22,10 @@ export class TopicPieChart {
   course: Course;
   session: Session;
   topicTitleTimesMap = new Map<string, number>();
-  totalTimesMap: Map<string, LabStepData> = new Map();
+  totalTimesMap: Map<string, LabStepData[]>;
   userIds: string[];
   multipleUsers: boolean;
+
   constructor(course: Course, session: Session, userIds: string[], multipleUsers: boolean) {
     this.myChart = null;
     this.topics = [];
@@ -32,7 +33,7 @@ export class TopicPieChart {
     this.session = session;
     this.userIds = userIds;
     this.topicTitleTimesMap = new Map<string, number>();
-    this.totalTimesMap = new Map<string, LabStepData>();
+    this.totalTimesMap = new Map<string, LabStepData[]>();
     this.multipleUsers = multipleUsers;
   }
 
@@ -44,17 +45,19 @@ export class TopicPieChart {
           let outerPieData: OuterPieData[] = []; // Reset outerPieData array
 
           // Find the corresponding data for the clicked inner pie slice
-          this.totalTimesMap.forEach((lo, key) => {
-            if (lo.title === params.name) {
-              if (lo?.aggregatedTimeActive !== 0) {
-                outerPieData.push({ value: lo.aggregatedTimeActive!, name: key, type: lo.loType });
-              }
+          this.totalTimesMap.forEach((steps, topicTitle) => {
+            if (topicTitle === params.name) {
+              steps.forEach((step) => {
+                if (step.aggregatedTimeActive !== 0) {
+                  outerPieData.push({ value: step.aggregatedTimeActive, name: step.title, type: step.loType });
+                }
+              });
             }
           });
           this.populateOuterPieData(outerPieData);
         }
       });
-    };
+    }
   }
 
   populateOuterPieData(outerPieData: OuterPieData[]) {
@@ -68,22 +71,23 @@ export class TopicPieChart {
         }]
       });
     }
-  };
+  }
 
   multipleUsersInnerPieClick() {
     this.myChart.on('click', (params: { seriesName: string; name: any; }) => {
       if (params.seriesName === 'Inner Pie') {
         const outerPieData: OuterPieData[] = [];
 
-        this.totalTimesMap.forEach((value, key) => {
-          if (value.title === params.name) {
-            const existing = outerPieData.find(data => data.name === key);
-            if (existing) {
-              existing.value += value.aggregatedTimeActive;
-            } else {
-              outerPieData.push({ value: value.aggregatedTimeActive!, name: key, type: value.loType });
-
-            }
+        this.totalTimesMap.forEach((steps, topicTitle) => {
+          if (topicTitle === params.name) {
+            steps.forEach(step => {
+              const existing = outerPieData.find(data => data.name === step.title);
+              if (existing) {
+                existing.value += step.aggregatedTimeActive;
+              } else {
+                outerPieData.push({ value: step.aggregatedTimeActive, name: step.title, type: step.loType });
+              }
+            });
           }
         });
         this.populateOuterPieData(outerPieData);
@@ -103,7 +107,7 @@ export class TopicPieChart {
     });
 
     return outerPieData;
-  };
+  }
 
   renderChart(userIds = null as string[] | null) {
     if (this.myChart === null) {
@@ -117,7 +121,7 @@ export class TopicPieChart {
 
     const updateMaps = (lo: Lo, userName: string, timeActive: number) => {
       let topicTitle = "";
-      let loTitle = lo.id;
+      let loTitle = lo.title;
       if (lo.parentTopic?.type === 'topic') {
         topicTitle = lo.parentTopic?.title;
       } else if (lo.parentLo?.parentTopic?.type === 'topic') {
@@ -133,17 +137,17 @@ export class TopicPieChart {
         this.topicTitleTimesMap.set(topicTitle, timeActive);
       }
 
-      // Add timeActive and topicTitle to the totalTimesMap
-      if (this.totalTimesMap.has(loTitle)) {
-        const existingEntry = this.totalTimesMap.get(loTitle);
-        if (existingEntry && existingEntry?.aggregatedTimeActive !== 0) {
-          existingEntry.aggregatedTimeActive += timeActive;
-          existingEntry.title = topicTitle;
-          existingEntry.loType = lo.type;
-          this.totalTimesMap.set(loTitle, existingEntry);
-        }
+      if (!this.totalTimesMap.has(topicTitle)) {
+        this.totalTimesMap.set(topicTitle, []);
+      }
+
+      const existingEntries = this.totalTimesMap.get(topicTitle)!;
+      const existingEntry = existingEntries.find(entry => entry.title === loTitle);
+
+      if (existingEntry) {
+        existingEntry.aggregatedTimeActive += timeActive;
       } else {
-        this.totalTimesMap.set(loTitle, { aggregatedTimeActive: timeActive, title: topicTitle, loType: lo.type });
+        existingEntries.push({ aggregatedTimeActive: timeActive, title: loTitle, loType: lo.type });
       }
     };
 
@@ -165,15 +169,14 @@ export class TopicPieChart {
         value: timeActive
       }));
 
-      const option = piechart(bgPatternImg, this.course, [], singleUserInnerData);
+      const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, []);
       this.myChart.setOption(option);
       this.singleUserPieClick();
     } else {
       const allUsersTopicActivity = this.getOuterPieDataForMultipleUsers();
-      const option = piechart(bgPatternImg, this.course, allUsersTopicActivity, []);
+      const option = piechart(bgPatternImg, this.course, allUsersTopicActivity, [], []);
       this.myChart.setOption(option);
       this.multipleUsersInnerPieClick();
     }
   }
-};
-
+}
