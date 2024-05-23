@@ -29,8 +29,8 @@
   // Function to render the charts
   const renderCharts = () => {
     if (topicBoxPlotChart) {
-      // const { boxplotData, userNicknames } = topicBoxPlotChart.prepareBoxplotData();
-      // topicBoxPlotChart.renderBoxPlot(document.getElementById("heatmap-container"), boxplotData, userNicknames);
+      const { boxplotData, userNicknames } = topicBoxPlotChart.prepareBoxplotData();
+      topicBoxPlotChart.renderBoxPlot(document.getElementById("heatmap-container"), boxplotData, userNicknames);
       const combinedBoxplotData = topicBoxPlotChart.prepareCombinedBoxplotData();
       topicBoxPlotChart.renderCombinedBoxplotChart(document.getElementById("combinedBoxPlot"), combinedBoxplotData);
     }

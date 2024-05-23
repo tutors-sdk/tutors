@@ -1,5 +1,4 @@
 import * as echarts from 'echarts/core';
-import * as d3 from 'd3';
 import {
   TitleComponent,
   TooltipComponent,
@@ -8,10 +7,11 @@ import {
 import { BoxplotChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
 import { backgroundPattern } from '../charts/tutors-charts-background-url';
-import { combinedBoxplotChart } from '../charts/boxplot-chart';
-import type { Course, LearningRecord } from '$lib/services/models/lo-types';
+import { boxplot, combinedBoxplotChart } from '../charts/boxplot-chart';
+import type { Course } from '$lib/services/models/lo-types';
 import { getCompositeValues, getSimpleTypesValues } from '$lib/services/utils/supabase-utils';
-import type { BoxplotData, LearningObject } from '$lib/services/types/supabase-metrics';
+import type { BoxplotData } from '$lib/services/types/supabase-metrics';
+import * as d3 from 'd3';
 
 echarts.use([
   TitleComponent,
@@ -24,103 +24,71 @@ echarts.use([
 const bgPatternImg = new Image();
 bgPatternImg.src = backgroundPattern;
 
+function calculateBoxplotStats(values: number[]): [number, number, number, number, number] {
+  if (values.length === 0) {
+    return [0, 0, 0, 0, 0];
+  }
+
+  // Sort the array
+  values.sort((a, b) => a - b);
+
+  const min = d3.min(values) ?? 0;
+  const q1 = d3.quantile(values, 0.25) ?? 0;
+  const median = d3.median(values) ?? 0;
+  const q3 = d3.quantile(values, 0.75) ?? 0;
+  const max = d3.max(values) ?? 0;
+
+  return [min, q1, median, q3, max];
+}
+
 export class TopicBoxPlotChart {
   course: Course;
   userIds: string[];
+
   constructor(course: Course, userIds: string[]) {
     this.course = course;
     this.userIds = userIds;
   }
 
-  // prepareBoxplotData() {
-  //   const boxplotData: number[][] = [];
-  //   const userNicknames: string[] = [];
+  prepareBoxplotData() {
+    const boxplotData: number[][] = [];
+    const userNicknames: string[] = [];
+    const allComposites = getCompositeValues(this.course.los);
+    const allSimpleTypes = getSimpleTypesValues(this.course.los);
+    const allTypes = [...allComposites, ...allSimpleTypes];
+    const userActivities = new Map<string, number[]>();
 
-  //   this.course.loIndex.forEach((userData, nickname) => {
-  //     userNicknames.push(nickname); // Collect nicknames for the y-axis
+    allTypes.forEach(lo => {
+      lo.learningRecords?.forEach((record, userId) => {
+        if (this.userIds.includes(userId)) {
+          if (!userActivities.has(userId)) {
+            userActivities.set(userId, []);
+          }
+          userActivities.get(userId)!.push(record.timeActive);
+        }
+      });
+    });
 
-  //     const records = userData?.learningRecords?.get(nickname);
-  //     const timeActiveValues = Array(records)?.map(record => record?.timeActive) ?? [];
+    userActivities.forEach((activities, userId) => {
+      if (activities.length > 0) {
+        const [min, q1, median, q3, max] = calculateBoxplotStats(activities);
+        boxplotData.push([min, q1, median, q3, max]);
+        userNicknames.push(userId); // Ensure nicknames are added in corresponding order
+      }
+    });
 
-  //     timeActiveValues.sort((a, b) => a - b);
+    return { boxplotData, userNicknames };
+  }
 
-  //     const min = d3.min(timeActiveValues) ?? 0;
-  //     const q1 = d3.quantileSorted(timeActiveValues, 0.25) ?? 0;
-  //     const median = d3.median(timeActiveValues) ?? 0;
-  //     const q3 = d3.quantileSorted(timeActiveValues, 0.75) ?? 0;
-  //     const max = d3.max(timeActiveValues) ?? 0;
-
-  //     boxplotData.push([min, q1, median, q3, max]);
-  //   });
-
-  //   return { boxplotData, userNicknames };
-  // }
-
-  // prepareBoxplotData() {
-  //   let boxplotData: number[][] = [];
-  //   const userNicknamesSet: Set<string> = new Set();
-  //   const allComposites = getCompositeValues(this.course.los);
-  //   const allSimpleTypes = getSimpleTypesValues(this.course.los);
-  //   const topicActivities = new Map<string, { timeActive: number; nickname: string }[]>();
-
-  //   const allTypes = [...allComposites, ...allSimpleTypes];
-
-  //   allTypes?.forEach(lo => {
-  //     if (lo.learningRecords?.size !== 0) {
-  //       let title: string = "";
-  //       if (lo.parentTopic?.type === 'topic') {
-  //         title = lo.parentTopic?.title;
-  //       } else if (lo.parentLo?.parentTopic?.type === 'topic') {
-  //         title = lo.parentLo?.parentTopic?.title;
-  //       } else {
-  //         title = lo.title;
-  //       }
-
-  //       if (!topicActivities.has(title)) {
-  //         topicActivities.set(title, []);
-  //       }
-
-  //       lo.learningRecords?.forEach((topic, key) => {
-  //         userNicknamesSet.add(key); // Collect nicknames for the y-axis
-
-  //         if (this.userIds?.includes(key)) {
-  //           topicActivities.get(title)?.push({
-  //             timeActive: topic.timeActive,
-  //             nickname: key
-  //           });
-  //         }
-  //       });
-  //     }
-  //   });
-
-  //   Array.from(topicActivities.entries()).map(([title, activities]) => {
-
-  //     activities.sort((a, b) => a.timeActive - b.timeActive);
-
-  //     const timeActiveValues = activities.map(a => a.timeActive || 0);
-  //     const min = d3.min(timeActiveValues) ?? 0;
-  //     const q1 = d3.quantileSorted(timeActiveValues, 0.25) ?? 0;
-  //     const median = d3.median(timeActiveValues) ?? 0;
-  //     const q3 = d3.quantileSorted(timeActiveValues, 0.75) ?? 0;
-  //     const max = d3.max(timeActiveValues) ?? 0;
-  //     boxplotData.push([min, q1, median, q3, max]);
-  //   });
-
-  //   const userNicknames = Array.from(userNicknamesSet); // Convert Set to Array
-
-  //   return { boxplotData, userNicknames };
-  // }
-
-  //combined boxplot
   prepareCombinedBoxplotData(): BoxplotData[] {
     const topicActivities = new Map<string, { timeActive: number; nickname: string }[]>();
     const allComposites = getCompositeValues(this.course.los);
     const allSimpleTypes = getSimpleTypesValues(this.course.los);
     const allTypes = [...allComposites, ...allSimpleTypes];
 
-    allTypes?.forEach(lo => {
-      if (lo.learningRecords?.size !== 0) {
-        let title: string = "";
+    allTypes.forEach(lo => {
+      if (lo.learningRecords && lo.learningRecords.size !== 0) {
+        let title = "";
         if (lo.parentTopic?.type === 'topic') {
           title = lo.parentTopic?.title;
         } else if (lo.parentLo?.parentTopic?.type === 'topic') {
@@ -133,11 +101,11 @@ export class TopicBoxPlotChart {
           topicActivities.set(title, []);
         }
 
-        lo.learningRecords?.forEach((topic, key) => {
-          if (this.userIds?.includes(key)) {
-            topicActivities.get(title)?.push({
-              timeActive: topic.timeActive,
-              nickname: key
+        lo.learningRecords.forEach((record, userId) => {
+          if (this.userIds.includes(userId)) {
+            topicActivities.get(title)!.push({
+              timeActive: record.timeActive,
+              nickname: userId,
             });
           }
         });
@@ -145,36 +113,36 @@ export class TopicBoxPlotChart {
     });
 
     const boxplotData: BoxplotData[] = Array.from(topicActivities.entries()).map(([title, activities]) => {
-      activities.sort((a, b) => a.timeActive - b.timeActive);
+      const timeActiveValues = activities.map(a => a.timeActive);
+      const [min, q1, median, q3, max] = calculateBoxplotStats(timeActiveValues);
 
-      const timeActiveValues = activities.map(a => a.timeActive || 0);
-
-      const lowData = activities[0] ?? { timeActive: 0, nickname: 'No Interaction' };
-      const q1 = d3.quantileSorted(timeActiveValues, 0.25) ?? 0;
-      const median = d3.median(timeActiveValues) ?? 0;
-      const q3 = d3.quantileSorted(timeActiveValues, 0.75) ?? 0;
-      const highData = activities[activities.length - 1] ?? { timeActive: 0, nickname: 'No Interaction' };
+      const lowNickname = activities[0]?.nickname || 'No Interaction';
+      const highNickname = activities[activities.length - 1]?.nickname || 'No Interaction';
 
       return {
-        value: [lowData.timeActive, q1, median, q3, highData.timeActive],
+        value: [min, q1, median, q3, max],
         title: title,
-        lowNickname: lowData.nickname,
-        highNickname: highData.nickname
+        lowNickname: lowNickname,
+        highNickname: highNickname,
       };
     });
 
     return boxplotData;
   }
 
-  // renderBoxPlot(container: HTMLElement | null | undefined, boxplotData: number[][], userNicknames: string[]) {
-  //   const chart = echarts.init(container);
-  //   const option = boxplot(bgPatternImg, userNicknames, boxplotData, 'Topic Activity per Student Boxplot');
-  //   chart.setOption(option);
-  // }
+  renderBoxPlot(container: HTMLElement | null | undefined, boxplotData: number[][], userNicknames: string[]) {
+    if (!container) return;
+
+    const chart = echarts.init(container);
+    const option = boxplot(bgPatternImg, userNicknames, boxplotData, 'Topic Activity (steps) per Student Boxplot');
+    chart.setOption(option);
+  }
 
   renderCombinedBoxplotChart(container: HTMLElement | null | undefined, boxplotData: BoxplotData[]) {
+    if (!container) return;
+
     const chartInstance = echarts.init(container);
-    const option = combinedBoxplotChart(bgPatternImg, boxplotData, 'All Topic Activity Boxplot');
+    const option = combinedBoxplotChart(bgPatternImg, boxplotData, 'Topic Activity (students) per Topic Boxplot');
     chartInstance.setOption(option);
   }
 }
