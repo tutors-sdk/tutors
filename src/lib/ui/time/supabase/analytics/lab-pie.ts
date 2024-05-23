@@ -68,7 +68,7 @@ export class LabPieChart {
           this.totalTimesMap.forEach((lo, key) => {
             if (lo.title === params.name) {
               if (lo.aggregatedTimeActive !== 0) {
-                outerPieData.push({ value:lo.aggregatedTimeActive!, name: key, type: lo.loType });
+                outerPieData.push({ value: lo.aggregatedTimeActive!, name: key, type: lo.loType });
               }
             }
           });
@@ -95,10 +95,13 @@ export class LabPieChart {
     if (!this.myChart) {
       // Create a new chart instance if it doesn't exist
       this.myChart = echarts.init(document.getElementById('chart'));
-  } else {
+    } else {
       // Clear the previous chart to prevent aggregation issues
       this.myChart.clear();
-  }
+    }
+
+    this.labTitleTimesMap.clear();
+    this.totalTimesMap.clear();
 
 
     let labs = filterByType(this.course.los, 'lab');
@@ -118,11 +121,11 @@ export class LabPieChart {
       }
 
       const existingEntry = this.totalTimesMap.get(loTitle);
-        if (existingEntry) {
-            existingEntry.aggregatedTimeActive += timeActive;
-        } else {
-            this.totalTimesMap.set(loTitle, { aggregatedTimeActive: timeActive, title: topicTitle, loType: lo.type});
-        }
+      if (existingEntry) {
+        existingEntry.aggregatedTimeActive += timeActive;
+      } else {
+        this.totalTimesMap.set(loTitle, { aggregatedTimeActive: timeActive, title: topicTitle, loType: lo.type });
+      }
     };
 
     allLabSteps.forEach((lo) => {
@@ -132,12 +135,12 @@ export class LabPieChart {
 
     const singleUserInnerData = Array.from(this.labTitleTimesMap.entries()).map(([title, timeActive]) => ({
       name: title,
-      value: timeActive 
+      value: timeActive
     }));
 
     const singleUserOuterData = Array.from(this.totalTimesMap.entries()).map(([title, object]) => ({
       name: title,
-      value: object.aggregatedTimeActive 
+      value: object.aggregatedTimeActive
     }));
 
     const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, singleUserOuterData);
