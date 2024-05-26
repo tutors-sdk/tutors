@@ -4,7 +4,7 @@ import type { Analytics } from "./types/analytics";
 import { onlineStatus } from "$lib/stores";
 import { get } from "svelte/store";
 import { presenceService } from "./presence";
-import { updateStudentsStatus, storeStudentCourseLearningObjectInSupabase, updateStudentCourseLoInteractionDuration, updateDuration, updateCalendarDuration, addOrUpdateStudent, updateLastAccess, readValue, formatDate } from "./utils/supabase-utils";
+import { updateStudentsStatus, storeStudentCourseLearningObjectInSupabase, updateLearningRecordsDuration, updateDuration, updateCalendarDuration, addOrUpdateStudent, updateLastAccess, readValue, formatDate } from "./utils/supabase-utils";
 
 export const supabaseAnalytics: Analytics = {
   loRoute: "",
@@ -45,7 +45,7 @@ export const supabaseAnalytics: Analytics = {
   updatePageCount(course: Course, session: Session, lo: Lo) {
     try {
       if (session?.user) {
-        if (lo.route) updateStudentCourseLoInteractionDuration(course.courseId, session?.user.user_metadata.user_name, this.loRoute);
+        if (lo.route) updateLearningRecordsDuration(course.courseId, session.user.user_metadata.user_name, this.loRoute);
         // updateDuration("id", "students", session.user.user_metadata.user_name);
         // updateLastAccess("id", session.user.user_metadata.user_name, "students");
         // updateDuration("course_id", "course", course.courseId);

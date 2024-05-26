@@ -11,7 +11,7 @@ import type { Course, Lo } from '$lib/services/models/lo-types';
 import { backgroundPattern, textureBackground } from '../charts/tutors-charts-background-url';
 import type { Session } from '@supabase/supabase-js';
 import { filterByType } from '$lib/services/models/lo-utils';
-import type { EChartsOption, SeriesOption } from 'echarts';
+import type { EChartsOption } from 'echarts';
 import { piechart } from '../charts/piechart';
 import type { LabStepData, OuterPieData } from '$lib/services/types/supabase-metrics';
 
@@ -106,7 +106,7 @@ export class LabPieChart {
 
     const allLabSteps = [...labs, ...steps];
 
-    const updateMaps = (lo: Lo, userName: string, timeActive: number) => {
+    const updateMaps = (lo: Lo, timeActive: number) => {
       let topicTitle = lo.type === 'lab' ? lo.title : lo.parentLo!.title;
       let loTitle = lo.title;
 
@@ -133,7 +133,7 @@ export class LabPieChart {
 
     allLabSteps.forEach((lo) => {
       const timeActive = lo.learningRecords?.get(this.session.user.user_metadata.user_name)?.timeActive || 0;
-      updateMaps(lo, this.session.user.user_metadata.user_name, timeActive);
+      updateMaps(lo, timeActive);
     });
 
     const singleUserInnerData = Array.from(this.labTitleTimesMap.entries()).map(([title, timeActive]) => ({

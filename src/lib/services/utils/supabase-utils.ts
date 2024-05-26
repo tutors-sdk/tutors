@@ -3,7 +3,7 @@ import type { Course, LearningRecord, Lo } from "../models/lo-types";
 import type { User, Session } from "@supabase/supabase-js";
 import { filterByType } from "../models/lo-utils";
 
-export async function getNumOfStudentCourseLoIncrements(fieldName: string, courseId: string, studentId: string, loId: string) {
+export async function getNumOfLearningRecordsIncrements(fieldName: string, courseId: string, studentId: string, loId: string) {
   if (!courseId || !studentId || !loId) return 0;
 
   const { data: student, error } = await db.rpc('get_count_learning_records', {
@@ -140,16 +140,37 @@ export async function addOrUpdateLo(loid: string, currentLo: Lo, loTitle: string
   if (error) throw error;
 };
 
-export async function updateStudentCourseLoInteractionDuration(courseId: string, studentId: string, loId: string) {
-  const numOfDuration = await getNumOfStudentCourseLoIncrements('duration', courseId, studentId, loId);
+export async function updateLearningRecordsDuration(courseId: string, studentId: string, loId: string) {
+  const numOfDuration = await getNumOfLearningRecordsIncrements('duration', courseId, studentId, loId);
+  const dateLastAccessed = await getDateLastAccessed(courseId, studentId, loId);
 
-  await db
+  if (dateLastAccessed) {
+    const now = new Date();
+    const lastAccessTime = new Date(dateLastAccessed);
+    const minutesSinceLastAccess = (now.getTime() - lastAccessTime.getTime()) / (1000 * 60);
+
+    if (minutesSinceLastAccess <= 200) {
+      await db
+        .from('learning_records')
+        .update({ 'duration': numOfDuration })
+        .eq('student_id', studentId)
+        .eq('course_id', courseId)
+        .eq('lo_id', loId);
+    }
+  }
+}
+
+async function getDateLastAccessed(courseId: string, studentId: string, loId: string) {
+  const result = await db
     .from('learning_records')
-    .update({ 'duration': numOfDuration })
+    .select('date_last_accessed')
     .eq('student_id', studentId)
     .eq('course_id', courseId)
-    .eq('lo_id', loId);
-};
+    .eq('lo_id', loId)
+    .single();
+
+  return result.data ? result.data.date_last_accessed : null;
+}
 
 export async function updateCount(key: string, table: string, id: string) {
   if (!key || !table || !id) return;
@@ -172,11 +193,11 @@ export const updateCalendarDuration = async (id: string, studentId: string, cour
 };
 
 export async function storeStudentCourseLearningObjectInSupabase(course: Course, loid: string, lo: Lo, userDetails: User) {
-//   const loTitle = getLoTitle(params)
+  //   const loTitle = getLoTitle(params)
   if (userDetails?.user_metadata.full_name === "Anon") return;
-  await insertOrUpdateCourse(course);
-  await addOrUpdateStudent(userDetails);
-  await addOrUpdateLo(loid, lo, lo.title);
+  // await insertOrUpdateCourse(course);
+  // await addOrUpdateStudent(userDetails);
+  // await addOrUpdateLo(loid, lo, lo.title);
   await handleInteractionData(course.courseId, userDetails.user_metadata.user_name, loid, lo);
   await insertOrUpdateCalendar(userDetails.user_metadata.user_name, course.courseId);
 };
@@ -200,8 +221,8 @@ export function studentInteractionsUpdates(callback: (arg: any) => void) {
 };
 
 export async function manageStudentCourseLo(courseId: string, studentId: string, loId: string, lo: Lo) {
-  const durationPromise = getNumOfStudentCourseLoIncrements('duration', courseId, studentId, loId);
-  const countPromise = getNumOfStudentCourseLoIncrements('count', courseId, studentId, loId);
+  const durationPromise = getNumOfLearningRecordsIncrements('duration', courseId, studentId, loId);
+  const countPromise = getNumOfLearningRecordsIncrements('count', courseId, studentId, loId);
   const [duration, count] = await Promise.all([durationPromise, countPromise]);
   const { error } = await db
     .from('learning_records')
@@ -221,43 +242,43 @@ export async function manageStudentCourseLo(courseId: string, studentId: string,
 };
 
 export function formatDate(date: Date): string {
-    const d = new Date(date);
-    const year = d.getFullYear().toString();
-    let month = (d.getMonth() + 1).toString();
-    let day = d.getDate().toString();
-    if (month.length < 2) month = "0" + month;
-    if (day.length < 2) day = "0" + day;
-    return [year, month, day].join("-");
-  };
+  const d = new Date(date);
+  const year = d.getFullYear().toString();
+  let month = (d.getMonth() + 1).toString();
+  let day = d.getDate().toString();
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+  return [year, month, day].join("-");
+};
 
-  export function getCompositeValues(los: Lo[]) {
-    const units = filterByType(los, "unit");
-    const sides = filterByType(los, 'side');
-    const topics = filterByType(los, 'topic');
+export function getCompositeValues(los: Lo[]) {
+  const units = filterByType(los, "unit");
+  const sides = filterByType(los, 'side');
+  const topics = filterByType(los, 'topic');
 
-    return [...units, ...sides, ...topics];
-  };
+  return [...units, ...sides, ...topics];
+};
 
-  export function getSimpleTypesValues(los: Lo[]) {
-    const notes = filterByType(los, "note");
-    const archives = filterByType(los, 'archive');
-    const webs = filterByType(los, 'web');
-    const githubs = filterByType(los, "github");
-    const panelnotes = filterByType(los, 'panelnote');
-    const paneltalks = filterByType(los, 'paneltalk');
-    const panelVideos = filterByType(los, "panelvideo");
-    const talks = filterByType(los, 'talk');
-    const books = filterByType(los, 'book');
-    const labs = filterByType(los, "lab");
-    const steps = filterByType(los, "step");
+export function getSimpleTypesValues(los: Lo[]) {
+  const notes = filterByType(los, "note");
+  const archives = filterByType(los, 'archive');
+  const webs = filterByType(los, 'web');
+  const githubs = filterByType(los, "github");
+  const panelnotes = filterByType(los, 'panelnote');
+  const paneltalks = filterByType(los, 'paneltalk');
+  const panelVideos = filterByType(los, "panelvideo");
+  const talks = filterByType(los, 'talk');
+  const books = filterByType(los, 'book');
+  const labs = filterByType(los, "lab");
+  const steps = filterByType(los, "step");
 
-    return [...notes, ...archives, ...webs, ...githubs, ...panelnotes, ...paneltalks, ...panelVideos, ...talks, ...books, ...labs, ...steps];
-  };
+  return [...notes, ...archives, ...webs, ...githubs, ...panelnotes, ...paneltalks, ...panelVideos, ...talks, ...books, ...labs, ...steps];
+};
 
-  export async function getUser(username: string) {
-    return fetch(`https://api.github.com/users/${username}`)
+export async function getUser(username: string) {
+  return fetch(`https://api.github.com/users/${username}`)
     .then(response => response.json())
     .then(response => {
-        return response.name;
+      return response.name;
     })
-  };
+};
