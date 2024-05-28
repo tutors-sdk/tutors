@@ -1,0 +1,49 @@
+<script lang="ts">
+  import { onMount, onDestroy } from "svelte";
+  import { CalendarChart } from "../analytics/calendar";
+  import type { Course } from "$lib/services/models/lo-types";
+    import type { Session } from "@supabase/supabase-js";
+
+  export let course: Course;
+  export let timeActiveMap: Map<string, Map<string, number>>;
+  export let session: Session;
+
+  let calendarChart: CalendarChart | null;
+  calendarChart = new CalendarChart();
+
+  onMount(() => {
+    renderChart();
+  });
+
+  // Destroy the chart instance when the component unmounts
+  onDestroy(() => {
+    if (calendarChart) {
+      // Clean up resources if needed
+      calendarChart = null;
+    }
+  });
+
+  // Re-render the chart when the tab regains focus
+  const handleFocus = () => {
+    renderChart();
+  };
+
+  // Function to render the chart
+  const renderChart = () => {
+    if (calendarChart) {
+      calendarChart.createChartContainer(session.user.user_metadata.user_name);
+      calendarChart.renderChart(course, timeActiveMap, session);
+    }
+  };
+
+  // Listen for window focus event to trigger chart refresh
+  window.addEventListener("focus", handleFocus);
+</script>
+
+<div class="h-screen">
+  {#if course}
+    <div id={`chart-${session.user.user_metadata.user_name}`} style="height: 100%;"></div>
+  {:else}
+    <div id="heatmap-container" style="height: 100%"></div>
+  {/if}
+</div>

@@ -54,6 +54,12 @@ export type IconNavBar = {
   bar: IconNav[];
 };
 
+export interface LearningRecord {
+  date: Date;
+  pageLoads: number;
+  timeActive: number;
+};
+
 export type Lo = {
   type: string;
   id: string; // folder name containing the lo
@@ -79,6 +85,8 @@ export type Lo = {
   parentTopic?: Topic;
   parentCourse?: Course; // parent course
   breadCrumbs?: Lo[]; // all los from course to this lo
+
+  learningRecords?: Map<string, LearningRecord>// a reference of a students learner record in supabase, studentId -> LearningRecord[]
 };
 
 export type LabStep = {
