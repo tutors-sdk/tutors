@@ -20,7 +20,7 @@ export async function aggregateTimeActiveByDate(records: LearningInteraction[]):
   const timeActiveMap = new Map<string, Map<string, number>>();
 
   // Iterate over the records
-  records.forEach(record => {
+  records?.forEach(record => {
     const formattedDate = formatDate(record.id);  
     const studentId = record.studentid;
     const timeActive = record.timeactive;
