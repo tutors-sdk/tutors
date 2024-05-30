@@ -92,10 +92,6 @@ export function calendar(session: Session, calendarMap: CalendarMap[], bgPattern
         echarts.time.format(calendar.date, '{yyyy}-{MM}-{dd}', false),
         Math.round(calendar.timeActive / 2) || 0
       ])) || [],
-      // data: user?.calendarActivity?.map((calendar) => ([
-      //   echarts.time.format(calendar.date, '{yyyy}-{MM}-{dd}', false),
-      //   Math.round(calendar.metric / 2) || 0
-      // ])) || [],
     },
     label: {
       show: true,
@@ -114,7 +110,7 @@ export function calendar(session: Session, calendarMap: CalendarMap[], bgPattern
 };
 
 export function calendarCombined(userId: string, calendarMap: Map<string, number>, bgPatternImg: HTMLImageElement, currentRange: string, avatarUrl: string, fullName: string): EChartsOption {
-  const userName = fullName !== null ?  fullName : userId
+  const userName = (fullName !== null && fullName !== undefined) ? fullName : userId;
   return {
     title: {
       top: 30,

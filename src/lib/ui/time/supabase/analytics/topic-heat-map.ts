@@ -105,7 +105,7 @@ export class TopicHeatMapChart {
       return [
         topicTitles.indexOf(title.trim()),
         index,
-        timeActive
+        Math.round(timeActive/2)
       ];
     });
 
@@ -235,7 +235,7 @@ export class TopicHeatMapChart {
   renderCombinedTopicChart(container: HTMLElement, heatmapActivities: any[], chartTitle: string) {
     const chart = echarts.init(container);
 
-    const heatmapData = heatmapActivities.map((item, index) => [index, 0, item.value]);
+    const heatmapData = heatmapActivities.map((item, index) => [index, 0, Math.round(item.value/2)]);
     const titles = heatmapActivities.map(item => item.title);
 
     // Heatmap option

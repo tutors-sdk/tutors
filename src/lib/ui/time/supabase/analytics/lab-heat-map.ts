@@ -115,7 +115,7 @@ export class LabHeatMapChart {
       return [
         labTitles.indexOf(title.trim()),
         index,
-        timeActive
+        Math.round(timeActive/2)
       ];
     });
 
@@ -222,7 +222,7 @@ export class LabHeatMapChart {
       const lowData = activities[0];
       const highData = activities[activities.length - 1];
       return {
-        value: addedCount,
+        value: Math.round(addedCount/2),
         title: title,
         lowValue: lowData?.timeActive || 0,
         highValue: highData?.timeActive || 0,
