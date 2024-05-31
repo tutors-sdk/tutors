@@ -202,7 +202,7 @@ export class TopicHeatMapChart {
           topicActivities.set(title, []);
         }
 
-        lo.learningRecords!.forEach((topic, key) => {
+        lo.learningRecords?.forEach((topic, key) => {
           if (userIds.includes(key)) {
             topicActivities.get(title).push({
               timeActive: topic.timeActive,
