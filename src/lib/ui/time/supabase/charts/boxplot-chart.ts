@@ -18,7 +18,6 @@ export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[],
       },
       formatter: (param: any) => {
         const value = param.value;
-        console.log(`Tooltip data for ${param.name}:`, value);
         return [
           `${param.name}:`,
           `Min: ${value[1]}`,
