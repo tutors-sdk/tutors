@@ -132,7 +132,7 @@
       <!-- Dropdown for selecting lab charts -->
       <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleLabChartChange} bind:value={selectedLabChart}>
         <option value="LabView">Lab Time Heat-Map</option>
-        <option value="LabViewPieChart">Lab Time Bar/Pie-Chart</option>
+        <option value="LabViewPieChart">Lab Time Pie-Chart</option>
       </select>
       <!-- Display selected lab chart -->
       {#if selectedLabChart === "LabView"}
