@@ -163,7 +163,7 @@ export class TopicHeatMapChart {
     }
 
     this.series = [{
-      name: 'Lab Activity',
+      name: 'Topic Activity For All Users',
       type: 'heatmap',
       data: allSeriesData || [],
       label: {
