@@ -232,14 +232,17 @@ export class LabHeatMapChart {
 
   renderCombinedLabChart(container: HTMLElement, labData: any[], chartTitle: string) {
     if (!labData || labData.length === 0) return;
-
+  
     const chart = echarts.init(container);
-
+  
     labData.sort((a, b) => a.title.localeCompare(b.title));
-
+  
     const heatmapData = labData.map((item, index) => [index, 0, item.value]);
     const titles = labData.map(item => item.title);
-
+  
+    // Ensure heatmapData and titles are not empty
+    const maxHeatmapValue = heatmapData.length > 0 ? Math.max(...heatmapData.map(item => item[2])) : 0;
+  
     const option = {
       title: {
         top: '5%',
@@ -291,7 +294,7 @@ export class LabHeatMapChart {
       },
       visualMap: {
         min: 0,
-        max: Math.max(...heatmapData.map(item => item[2])), // Calculate max from heatmapData
+        max: maxHeatmapValue, // Ensure this handles empty data gracefully
         calculable: true,
         orient: 'horizontal',
         left: 'center',
@@ -312,7 +315,7 @@ export class LabHeatMapChart {
         }
       }]
     };
-
+  
     // Set the option to the chart
     chart.setOption(option);
   }
