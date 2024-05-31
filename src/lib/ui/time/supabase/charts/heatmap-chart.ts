@@ -1,30 +1,45 @@
-import * as echarts from 'echarts/core';
-import {
-  TooltipComponent,
-  GridComponent,
-  VisualMapComponent
-} from 'echarts/components';
-import { HeatmapChart } from 'echarts/charts';
-import type { EChartsOption } from 'echarts';
-import { CanvasRenderer } from 'echarts/renderers';
-import type { HeatMapSeriesData } from '$lib/services/types/supabase-metrics';
-
-echarts.use([
-  TooltipComponent,
-  GridComponent,
-  VisualMapComponent,
-  HeatmapChart,
-  CanvasRenderer
-]);
-
 export function heatmap(categories: Set<string>, yAxisData: string[], series: HeatMapSeriesData[], bgPatternImg: HTMLImageElement, chartTitleString: string): EChartsOption {
   let visualmapValue: number;
+  let gridConfig;
+
 
   if (series[0]?.data) {
+    if(series[0].name === 'Lab Activity For All Users' || series[0].name === 'Topic Activity For All Users'){
+    gridConfig = {
+      left: '30%',
+      right: '30%',
+      bottom: '10%',
+      top: '15%',
+      width: '40%',  // Fixed width
+      height: '400px',  // Fixed height
+      containLabel: false  // Prevent resizing based on labels
+    };
+      
+  }else{
+    gridConfig = {
+      left: '30%',
+      right: '30%',
+      bottom: '10%',
+      top: '15%',
+      width: '40%',  // Fixed width
+      height: '60px',  // Fixed height
+      containLabel: false  // Prevent resizing based on labels
+    };
+  }
+    
     visualmapValue = series[0].data.length !== 0 ? Math.max(...series[0].data.map(item => item[2])) : 0;
   } else if (series?.data) {
+    gridConfig = {
+      left: '30%',
+      right: '30%',
+      bottom: '10%',
+      top: '15%',
+      width: '40%',  // Fixed width
+      height: '300px',  // Fixed height
+      containLabel: false  // Prevent resizing based on labels
+    };
     visualmapValue = series.data.length !== 0 ? Math.max(...series.data.map(item => item[2])) : 0;
-  }else {
+  } else {
     visualmapValue = 0;
   }
 
@@ -41,14 +56,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       image: bgPatternImg,
       repeat: 'repeat'
     },
-    grid: {
-      left: '10%',
-      right: '10%',
-      bottom: '10%',
-      top: '10%',
-      height: '50%',
-      containLabel: true
-    },
+    grid: gridConfig,
     xAxis: {
       type: 'category',
       data: Array.from(categories),
@@ -58,7 +66,11 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       axisLabel: {
         rotate: -40,
         interval: 0,
-        fontSize: 15
+        fontSize: 15,
+        margin: 5, // Adjust margin to control spacing
+      },
+      axisTick: {
+        alignWithLabel: true
       },
       axisPointer: {
         type: 'shadow'
@@ -82,7 +94,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       calculable: true,
       orient: 'horizontal',
       left: 'center',
-      bottom: '25%'
+      bottom: '5%' // Adjusted position to avoid overlap with grid
     },
     series: series
   }
