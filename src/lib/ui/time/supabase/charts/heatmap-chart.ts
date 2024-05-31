@@ -8,10 +8,10 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
     gridConfig = {
       left: '30%',
       right: '30%',
-      bottom: '10%',
+      bottom: '15%',
       top: '15%',
       width: '40%',  // Fixed width
-      height: '400px',  // Fixed height
+      height: '300px',  // Fixed height
       containLabel: false  // Prevent resizing based on labels
     };
       
@@ -19,7 +19,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
     gridConfig = {
       left: '30%',
       right: '30%',
-      bottom: '10%',
+      bottom: '15%',
       top: '15%',
       width: '40%',  // Fixed width
       height: '60px',  // Fixed height
@@ -32,7 +32,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
     gridConfig = {
       left: '30%',
       right: '30%',
-      bottom: '10%',
+      bottom: '15%',
       top: '15%',
       width: '40%',  // Fixed width
       height: '300px',  // Fixed height

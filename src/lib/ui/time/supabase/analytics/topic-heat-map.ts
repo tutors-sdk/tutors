@@ -149,10 +149,10 @@ export class TopicHeatMapChart {
 
     let allSeriesData: HeatMapSeriesData[] = [];
     let yAxisData: string[] = []; // Array to store yAxis data
-    const labTitles = topics.map((topic: { title: string; }) => topic.title.trim());
-    this.categories = new Set(labTitles);
+    const topicTitles = topics.map((topic: { title: string; }) => topic.title.trim());
+    this.categories = new Set(topicTitles);
 
-    for (let [index, userId] of usersIds.entries()) {
+    for (const [index, userId] of usersIds.entries()) {
       const seriesData = await this.prepareTopicData(userId, index);
       allSeriesData = allSeriesData.concat(seriesData[0].data);
 
@@ -163,7 +163,7 @@ export class TopicHeatMapChart {
     }
 
     this.series = [{
-      name: 'Topic Activity For All Users',
+      name: 'Topic Activity',
       type: 'heatmap',
       data: allSeriesData || [],
       label: {
@@ -182,13 +182,13 @@ export class TopicHeatMapChart {
   }
 
   prepareCombinedTopicData(userIds: string[]) {
-    const topicActivities = new Map<string, { timeActive: number, nickname: string }[]>();
+    const topicActivities = new Map();
     const allComposites = getCompositeValues(this.course.los);
     const allSimpleTypes = getSimpleTypesValues(this.course.los);
     const allTypes = [...allComposites, ...allSimpleTypes];
 
     allTypes.forEach(lo => {
-      if (lo.learningRecords?.size !== 0) {
+      // if (lo.learningRecords?.size !== 0) {
         let title: string = "";
         if (lo.parentTopic?.type === 'topic') {
           title = lo.parentTopic?.title;
@@ -202,20 +202,20 @@ export class TopicHeatMapChart {
           topicActivities.set(title, []);
         }
 
-        lo.learningRecords?.forEach((topic, key) => {
+        lo.learningRecords!.forEach((topic, key) => {
           if (userIds.includes(key)) {
-            topicActivities.get(title)?.push({
+            topicActivities.get(title).push({
               timeActive: topic.timeActive,
               nickname: key
             });
           }
         });
-      }
+      //}
     });
 
     const heatmapData = Array.from(topicActivities.entries()).map(([title, activities]) => {
-      activities.sort((a, b) => a.timeActive - b.timeActive);
-      const addedCount = activities.reduce((acc, curr) => acc + curr.timeActive, 0);
+      activities.sort((a: { timeActive: number; }, b: { timeActive: number; }) => a.timeActive - b.timeActive);
+      const addedCount = activities.reduce((acc: number, curr: { timeActive: number; }) => acc + curr.timeActive, 0);
 
       const lowData = activities[0];
       const highData = activities[activities.length - 1];
