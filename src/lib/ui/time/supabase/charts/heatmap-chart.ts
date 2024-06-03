@@ -11,18 +11,18 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       bottom: '15%',
       top: '15%',
       width: '40%',  // Fixed width
-      height: '300px',  // Fixed height
+      height: '50%',  // Fixed height
       containLabel: false  // Prevent resizing based on labels
     };
       
   }else{
     gridConfig = {
-      left: '30%',
-      right: '30%',
+      left: '20%',
+      right: '10%',
       bottom: '15%',
       top: '15%',
-      width: '40%',  // Fixed width
-      height: '60px',  // Fixed height
+      width: '60%',  // Fixed width
+      height: '80px',  // Fixed height
       containLabel: false  // Prevent resizing based on labels
     };
   }
@@ -35,7 +35,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       bottom: '15%',
       top: '15%',
       width: '40%',  // Fixed width
-      height: '300px',  // Fixed height
+      height: '40%',  // Fixed height
       containLabel: false  // Prevent resizing based on labels
     };
     visualmapValue = series.data.length !== 0 ? Math.max(...series.data.map(item => item[2])) : 0;

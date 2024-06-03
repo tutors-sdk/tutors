@@ -1,8 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { fade } from "svelte/transition";
   import { writable, type Writable } from "svelte/store";
-  import { Tab, TabGroup } from "@skeletonlabs/skeleton";
   import LabView from "$lib/ui/time/supabase/views/LabView.svelte";
   import InstructorLabView from "$lib/ui/time/supabase/views/InstructorLabView.svelte";
   import NewInstructorCalendarTime from "$lib/ui/time/supabase/views/InstructorCalendarView.svelte";
@@ -13,18 +11,15 @@
   import InstructorTopicViewPieChart from "$lib/ui/time/supabase/views/InstructorTopicViewPieChart.svelte";
   import InstructorLabViewBoxPlot from "$lib/ui/time/supabase/views/InstructorLabViewBoxPlot.svelte";
   import InstructorTopicViewBoxPlot from "$lib/ui/time/supabase/views/InstructorTopicViewBoxPlot.svelte";
-    import LabViewPieChart from "$lib/ui/time/supabase/views/LabViewPieChart.svelte";
+  import LabViewPieChart from "$lib/ui/time/supabase/views/LabViewPieChart.svelte";
 
   export let data: any;
 
-  const storeTab: Writable<string> = writable("Labs");
+  const storeTab: Writable<string> = writable("Calendar");
+  const storeSubTab: Writable<string> = writable("");
   let pinBuffer = "";
   let instructorMode = false;
   let tabSet = 0;
-  let selectedLabChart: string = "LabView"; // Set default lab chart
-  let selectedTopicChart: string = "TopicView"; // Set default topic chart
-  let selectedInstructorLabChart: string = "InstructorLabView"; // Set default instructor lab chart
-  let selectedInstructorTopicChart: string = "InstructorTopicView"; // Set default instructor topic chart
 
   onMount(async () => {
     window.addEventListener("keydown", keypressInput);
@@ -45,105 +40,99 @@
     }
   }
 
-  // Event handler for dropdown change
-  function handleLabChartChange(event: Event) {
-    selectedLabChart = (event.target as HTMLSelectElement).value;
+  function handleTabChange(tab: string) {
+    storeTab.set(tab);
+    // Reset sub-tab based on the selected main tab
+    if (tab === "Topics") {
+      storeSubTab.set(instructorMode ? "InstructorTopicView" : "TopicView");
+    } else if (tab === "Labs") {
+      storeSubTab.set(instructorMode ? "InstructorLabView" : "LabView");
+    } else {
+      storeSubTab.set("");
+    }
   }
 
-  // Event handler for dropdown change
-  function handleTopicChartChange(event: Event) {
-    selectedTopicChart = (event.target as HTMLSelectElement).value;
-  }
-
-  // Event handler for dropdown change
-  function handleInstructorLabChartChange(event: Event) {
-    selectedInstructorLabChart = (event.target as HTMLSelectElement).value;
-  }
-
-  // Event handler for dropdown change
-  function handleInstructorTopicChartChange(event: Event) {
-    selectedInstructorTopicChart = (event.target as HTMLSelectElement).value;
+  function handleSubTabChange(subTab: string) {
+    storeSubTab.set(subTab);
   }
 </script>
 
-<div in:fade={{ duration: 500 }} class="bg-base-200 mt-3">
-  <TabGroup selected={storeTab}>
-    <Tab bind:group={tabSet} name="Calendar" value={0}>Calendar</Tab>
-    <Tab bind:group={tabSet} name="Topics" value={1}>
-      {instructorMode ? "Topics (Tutors View)" : "Topics"}
-    </Tab>
-    <Tab bind:group={tabSet} name="Labs" value={2}>
-      {instructorMode ? "Labs (Tutors View)" : "Labs"}
-    </Tab>
-    <!-- {#if instructorMode} //maybe a future implementation
-      <Tab bind:group={tabSet} name="LiveStudents" value={3}>Live Students</Tab>
-    {/if} -->
-  </TabGroup>
+<style>
+  .active {
+    @apply bg-gray-200 font-bold;
+  }
+</style>
 
-  {#if tabSet === 0}
-    {#if instructorMode}
-      <NewInstructorCalendarTime course={data.course} timeActiveMap={data.timeActiveMap} userIds={data.calendarIds} />
-    {:else}
-      <CalendarView course={data.course} timeActiveMap={data.timeActiveMap} session={data.session} />
-    {/if}
-  {:else if tabSet === 1}
-    {#if instructorMode}
-      <!-- Dropdown for selecting topic charts -->
-      <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleInstructorTopicChartChange} bind:value={selectedInstructorTopicChart}>
-        <option value="InstructorTopicView">Instructor Topic Time Heat-Map</option>
-        <option value="InstructorTopicViewPieChart">Instructor Topic Time Pie-Chart</option>
-        <option value="InstructorTopicViewBoxPlot">Instructor Topic Box Plot Chart</option>
-      </select>
-      <!-- Display selected topic chart -->
-      {#if selectedInstructorTopicChart === "InstructorTopicView"}
-        <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds} />
-      {:else if selectedInstructorTopicChart === "InstructorTopicViewPieChart"}
-        <InstructorTopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
-      {:else if selectedInstructorTopicChart === "InstructorTopicViewBoxPlot"}
-        <InstructorTopicViewBoxPlot course={data.course} userIds={data.userIds} />
+<div class="flex">
+  <!-- Side Tabs -->
+  <div class="flex flex-col w-1/6 border-r border-gray-300">
+    <button type="button" class="p-4 text-left" class:active={$storeTab === 'Calendar'} on:click={() => handleTabChange('Calendar')} on:keydown={(e) => e.key === 'Enter' && handleTabChange('Calendar')}>Calendar</button>
+    <button type="button" class="p-4 text-left" class:active={$storeTab === 'Topics'} on:click={() => handleTabChange('Topics')} on:keydown={(e) => e.key === 'Enter' && handleTabChange('Topics')}>Topics</button>
+    <button type="button" class="p-4 text-left" class:active={$storeTab === 'Labs'} on:click={() => handleTabChange('Labs')} on:keydown={(e) => e.key === 'Enter' && handleTabChange('Labs')}>Labs</button>
+  </div>
+  <!-- Content Area -->
+  <div class="flex-grow p-4 w-4/5">
+    <!-- Top Tabs for Sub-items -->
+    <div class="flex border-b border-gray-300 mb-4">
+      {#if $storeTab === 'Topics'}
+        {#if instructorMode}
+          <button type="button" class="p-2 text-left" class:active={$storeSubTab === 'InstructorTopicView'} on:click={() => handleSubTabChange('InstructorTopicView')} on:keydown={(e) => e.key === 'Enter' && handleSubTabChange('InstructorTopicView')}>Instructor Topic Time Heat-Map</button>
+          <button type="button" class="p-2 text-left" class:active={$storeSubTab === 'InstructorTopicViewPieChart'} on:click={() => handleSubTabChange('InstructorTopicViewPieChart')} on:keydown={(e) => e.key === 'Enter' && handleSubTabChange('InstructorTopicViewPieChart')}>Instructor Topic Time Pie-Chart</button>
+          <button type="button" class="p-2 text-left" class:active={$storeSubTab === 'InstructorTopicViewBoxPlot'} on:click={() => handleSubTabChange('InstructorTopicViewBoxPlot')} on:keydown={(e) => e.key === 'Enter' && handleSubTabChange('InstructorTopicViewBoxPlot')}>Instructor Topic Box Plot Chart</button>
+        {:else}
+          <button type="button" class="p-2 text-left" class:active={$storeSubTab === 'TopicView'} on:click={() => handleSubTabChange('TopicView')} on:keydown={(e) => e.key === 'Enter' && handleSubTabChange('TopicView')}>Topic Time Heat-Map</button>
+          <button type="button" class="p-2 text-left" class:active={$storeSubTab === 'TopicViewPieChart'} on:click={() => handleSubTabChange('TopicViewPieChart')} on:keydown={(e) => e.key === 'Enter' && handleSubTabChange('TopicViewPieChart')}>Topic Time Pie-Chart</button>
+        {/if}
       {/if}
-    {:else}
-      <!-- Dropdown for selecting topic charts -->
-      <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleTopicChartChange} bind:value={selectedTopicChart}>
-        <option value="TopicView">Topic Time Heat-Map</option>
-        <option value="TopicViewPieChart">Topic Time Pie-Chart</option>
-      </select>
-      <!-- Display selected topic chart -->
-      {#if selectedTopicChart === "TopicView"}
-        <TopicView course={data.course} session={data.session} userIds={data.userIds} />
-      {:else if selectedTopicChart === "TopicViewPieChart"}
-        <TopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
+      {#if $storeTab === 'Labs'}
+        {#if instructorMode}
+          <button type="button" class="p-2 text-left" class:active={$storeSubTab === 'InstructorLabView'} on:click={() => handleSubTabChange('InstructorLabView')} on:keydown={(e) => e.key === 'Enter' && handleSubTabChange('InstructorLabView')}>Instructor Lab Time Heat-Map</button>
+          <button type="button" class="p-2 text-left" class:active={$storeSubTab === 'InstructorLabViewBoxPlot'} on:click={() => handleSubTabChange('InstructorLabViewBoxPlot')} on:keydown={(e) => e.key === 'Enter' && handleSubTabChange('InstructorLabViewBoxPlot')}>Instructor Lab Time Box Plot Chart</button>
+        {:else}
+          <button type="button" class="p-2 text-left" class:active={$storeSubTab === 'LabView'} on:click={() => handleSubTabChange('LabView')} on:keydown={(e) => e.key === 'Enter' && handleSubTabChange('LabView')}>Lab Time Heat-Map</button>
+          <button type="button" class="p-2 text-left" class:active={$storeSubTab === 'LabViewPieChart'} on:click={() => handleSubTabChange('LabViewPieChart')} on:keydown={(e) => e.key === 'Enter' && handleSubTabChange('LabViewPieChart')}>Lab Time Pie-Chart</button>
+        {/if}
       {/if}
-    {/if}
-  {:else if tabSet === 2}
-    {#if instructorMode}
-      <!-- Dropdown for selecting lab charts -->
-      <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleInstructorLabChartChange} bind:value={selectedInstructorLabChart}>
-        <option value="InstructorLabView">Instructor Lab Time Heat-Map</option>
-        <option value="InstructorLabViewBoxPlot">Instructor Lab Time Box Plot Chart</option>
-      </select>
-      <!-- Display selected lab chart -->
-      {#if selectedInstructorLabChart === "InstructorLabView"}
-        <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} />
-      {:else if selectedInstructorLabChart === "InstructorLabViewBoxPlot"}
-        <InstructorLabViewBoxPlot course={data.course} userIds={data.userIds} />
+    </div>
+    <!-- Main Content -->
+    <div class="w-full">
+      {#if $storeTab === 'Calendar'}
+        {#if instructorMode}
+          <NewInstructorCalendarTime course={data.course} timeActiveMap={data.timeActiveMap} userIds={data.calendarIds} />
+        {:else}
+          <CalendarView course={data.course} timeActiveMap={data.timeActiveMap} session={data.session} />
+        {/if}
+      {:else if $storeTab === 'Topics'}
+        {#if instructorMode}
+          {#if $storeSubTab === 'InstructorTopicView'}
+            <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds} />
+          {:else if $storeSubTab === 'InstructorTopicViewPieChart'}
+            <InstructorTopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
+          {:else if $storeSubTab === 'InstructorTopicViewBoxPlot'}
+            <InstructorTopicViewBoxPlot course={data.course} userIds={data.userIds} />
+          {/if}
+        {:else}
+          {#if $storeSubTab === 'TopicView'}
+            <TopicView course={data.course} session={data.session} userIds={data.userIds} />
+          {:else if $storeSubTab === 'TopicViewPieChart'}
+            <TopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
+          {/if}
+        {/if}
+      {:else if $storeTab === 'Labs'}
+        {#if instructorMode}
+          {#if $storeSubTab === 'InstructorLabView'}
+            <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} />
+          {:else if $storeSubTab === 'InstructorLabViewBoxPlot'}
+            <InstructorLabViewBoxPlot course={data.course} userIds={data.userIds} />
+          {/if}
+        {:else}
+          {#if $storeSubTab === 'LabView'}
+            <LabView course={data.course} session={data.session} userIds={data.userIds} />
+          {:else if $storeSubTab === 'LabViewPieChart'}
+            <LabViewPieChart course={data.course} session={data.session} />
+          {/if}
+        {/if}
       {/if}
-    {:else}
-      <!-- Dropdown for selecting lab charts -->
-      <select class="mt-2 block w-full py-2 px-3 border rounded-md shadow-sm bg-white" on:change={handleLabChartChange} bind:value={selectedLabChart}>
-        <option value="LabView">Lab Time Heat-Map</option>
-        <option value="LabViewPieChart">Lab Time Pie-Chart</option>
-      </select>
-      <!-- Display selected lab chart -->
-      {#if selectedLabChart === "LabView"}
-        <LabView course={data.course} session={data.session} userIds={data.userIds} />
-        <!-- <NewInstructorLabTime course={data.course} session={data.session} userIds={data.userIds} />   -->
-
-        {:else if selectedLabChart === "LabViewPieChart"}
-        <LabViewPieChart course={data.course} session={data.session} />
-      {/if}
-    {/if}
-    <!-- {:else if tabSet === 3}
-    <LiveStudentFeed userMap={data.users} courseName={data.course.courseId} /> -->
-  {/if}
+    </div>
+  </div>
 </div>
