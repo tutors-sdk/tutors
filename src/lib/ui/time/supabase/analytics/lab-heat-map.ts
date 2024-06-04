@@ -169,7 +169,7 @@ export class LabHeatMapChart {
       top:'5%',
       name: 'Lab Activity',
       type: 'heatmap',
-      data: seriesData[0].data || [],
+      data: seriesData[0]?.data || [],
       label: {
         show: true
       }
