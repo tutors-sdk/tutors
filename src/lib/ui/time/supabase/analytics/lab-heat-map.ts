@@ -12,6 +12,7 @@ import type { Course, Lo } from '$lib/services/models/lo-types';
 import type { Session } from '@supabase/supabase-js';
 import { filterByType } from '$lib/services/models/lo-utils';
 import type { HeatMapSeriesData } from '$lib/services/types/supabase-metrics';
+import { getUser } from '$lib/services/utils/supabase-utils';
 
 echarts.use([
   TooltipComponent,
@@ -32,26 +33,18 @@ export class LabHeatMapChart {
   yAxisData: string[];
   course: Course;
   session: Session;
-  series: HeatMapSeriesData;
+  series: HeatMapSeriesData[];
   los: Lo[];
   userIds: string[];
 
   constructor(course: Course, session: Session, userIds: string[]) {
     this.chartRendered = false;
     this.chartInstances = new Map();
-    this.labs = course.wallMap?.get("lab") // Array of lab titles
+    this.labs = course.wallMap?.get("lab"); // Array of lab titles
     this.userIds = userIds;
     this.categories = new Set();
     this.yAxisData = [];
-    this.series = {
-      name: "",
-      type: "",
-      top: "",
-      data: [],
-      label: {
-        show: true
-      }
-    };
+    this.series = [];
     this.course = course;
     this.session = session;
     this.los = filterByType(this.course.los, 'lab');
@@ -64,9 +57,9 @@ export class LabHeatMapChart {
     }
   }
 
-  populateSingleUserData() {
+  async populateSingleUserData() {
     if (this.labs) {
-      this.populateLabTitles(this.labs)
+      this.populateLabTitles(this.labs);
       this.populateAndRenderSingleUserData(this.session, this.labs);
     }
   }
@@ -85,7 +78,7 @@ export class LabHeatMapChart {
     return container;
   }
 
-  populatePerUserSeriesData(course: Course, allLabs: Lo[], userId: string, index: number = 0) {
+  async populatePerUserSeriesData(course: Course, allLabs: Lo[], userId: string, index: number = 0) {
     const labTitles = allLabs.map((lab: { title: string; }) => lab.title.trim());
     this.categories = new Set(labTitles);
 
@@ -115,62 +108,44 @@ export class LabHeatMapChart {
       return [
         labTitles.indexOf(title.trim()),
         index,
-        Math.round(timeActive/2)
+        Math.round(timeActive / 2)
       ];
     });
 
+    const userFullName = await getUser(userId) || userId;
+
     return [{
-      name: 'Lab Activity for ' + this.session.user.user_metadata.user_name,
+      name: 'Lab Activity for ' + userFullName,
       type: 'heatmap',
       data: seriesData,
       label: {
         show: true
       }
     }];
-  };
+  }
 
-  populateAndRenderSingleUserData(session: Session, allLabs: Lo[]) {
-    const container = this.getChartContainer();
-    if (!container) return;
-
-    this.yAxisData = [session.user.user_metadata.user_name];
-
-    const seriesData = this.populatePerUserSeriesData(this.course, allLabs, session.user.user_metadata.user_name);
-    this.series = {
-      name: 'Lab Activity',
-      type: 'heatmap',
-      top: '5%',
-      data: seriesData[0]?.data || [],
-      label: {
-        show: true
-      }
-    };
-
-    this.renderChart(container);
-  };
-
-  populateAndRenderUsersData(course: Course, allLabs: Lo[], usersIds: string[]) {
+  async populateAndRenderUsersData(course: Course, allLabs: Lo[], userIds: string[]) {
     const container = this.getChartContainer();
     if (!container) return;
 
     let allSeriesData: HeatMapSeriesData[] = [];
     let yAxisData: string[] = []; // Array to store yAxis data
 
-
     const labTitles = allLabs.map((lab: { title: string; }) => lab.title.trim());
     this.categories = new Set(labTitles);
 
-    usersIds.forEach((userId, index) => {
-      const seriesData = this.populatePerUserSeriesData(course, allLabs, userId, index);
+    for (const [index, userId] of userIds.entries()) {
+      const seriesData = await this.populatePerUserSeriesData(course, allLabs, userId, index);
       allSeriesData = allSeriesData.concat(seriesData[0].data);
 
       if (!yAxisData.includes(userId)) {
-        yAxisData.push(userId);
+        const fullname = await getUser(userId) || userId;
+        yAxisData.push(fullname);
       }
-    });
+    }
 
     this.series = [{
-      name: 'Lab Activity',
+      name: 'Lab Activity For All Users',
       type: 'heatmap',
       data: allSeriesData || [],
       label: {
@@ -180,14 +155,35 @@ export class LabHeatMapChart {
 
     this.yAxisData = yAxisData;
     this.renderChart(container);
-  };
+  }
+
+  async populateAndRenderSingleUserData(session: Session, allLabs: Lo[]) {
+    const container = this.getChartContainer();
+    if (!container) return;
+
+    const userId = session.user.user_metadata.full_name ?? session.user.user_metadata.user_name;
+    this.yAxisData = [userId];
+
+    const seriesData = await this.populatePerUserSeriesData(this.course, allLabs, session.user.user_metadata.user_name);
+    this.series = [{
+      top:'5%',
+      name: 'Lab Activity',
+      type: 'heatmap',
+      data: seriesData[0]?.data || [],
+      label: {
+        show: true
+      }
+    }];
+
+    this.renderChart(container);
+  }
 
   renderChart(container: HTMLElement) {
     const chartInstance = echarts.init(container);
     const option = heatmap(this.categories, this.yAxisData, this.series, bgPatternImg, 'Lab Time: Per Student');
     chartInstance.setOption(option);
     chartInstance.resize();
-  };
+  }
 
   prepareCombinedLabData(userIds: string[]) {
     const labActivities = new Map();
@@ -222,7 +218,7 @@ export class LabHeatMapChart {
       const lowData = activities[0];
       const highData = activities[activities.length - 1];
       return {
-        value: Math.round(addedCount/2),
+        value: Math.round(addedCount / 2),
         title: title,
         lowValue: lowData?.timeActive || 0,
         highValue: highData?.timeActive || 0,
@@ -235,13 +231,18 @@ export class LabHeatMapChart {
   }
 
   renderCombinedLabChart(container: HTMLElement, labData: any[], chartTitle: string) {
+    if (!labData || labData.length === 0) return;
+  
     const chart = echarts.init(container);
-
+  
     labData.sort((a, b) => a.title.localeCompare(b.title));
-
+  
     const heatmapData = labData.map((item, index) => [index, 0, item.value]);
     const titles = labData.map(item => item.title);
-
+  
+    // Ensure heatmapData and titles are not empty
+    const maxHeatmapValue = heatmapData.length > 0 ? Math.max(...heatmapData.map(item => item[2])) : 0;
+  
     const option = {
       title: {
         top: '5%',
@@ -285,15 +286,15 @@ export class LabHeatMapChart {
       },
       yAxis: {
         type: 'category',
-        data: [''] // Single category axis
-        , axisLabel: {
+        data: [''], // Single category axis
+        axisLabel: {
           interval: 0,
           fontSize: 15
         },
       },
       visualMap: {
         min: 0,
-        max: this.series[0]?.data.length !== 0 ? Math.max(...this.series[0]?.data?.map(item => item[2])) : 0,
+        max: maxHeatmapValue, // Ensure this handles empty data gracefully
         calculable: true,
         orient: 'horizontal',
         left: 'center',
@@ -314,8 +315,8 @@ export class LabHeatMapChart {
         }
       }]
     };
-
+  
     // Set the option to the chart
     chart.setOption(option);
-  };
+  }
 }

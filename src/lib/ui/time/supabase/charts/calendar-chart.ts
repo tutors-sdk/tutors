@@ -106,7 +106,6 @@ export function calendar(session: Session, calendarMap: CalendarMap[], bgPattern
       }
     }
   }
-
 };
 
 export function calendarCombined(userId: string, calendarMap: Map<string, number>, bgPatternImg: HTMLImageElement, currentRange: string, avatarUrl: string, fullName: string): EChartsOption {
@@ -178,14 +177,10 @@ export function calendarCombined(userId: string, calendarMap: Map<string, number
     series: {
       type: 'heatmap',
       coordinateSystem: 'calendar',
-      data: Array.from(calendarMap).map(([date, timeActive]) => ([
+      data: Array.from(calendarMap)?.map(([date, timeActive]) => ([
         echarts.time.format(date, '{yyyy}-{MM}-{dd}', false),
         Math.round(timeActive / 2) || 0
       ])) || [],
-      // data: user?.calendarActivity?.map((calendar) => ([
-      //   echarts.time.format(calendar.date, '{yyyy}-{MM}-{dd}', false),
-      //   Math.round(calendar.metric / 2) || 0
-      // ])) || [],
     },
     label: {
       show: true,
@@ -200,6 +195,5 @@ export function calendarCombined(userId: string, calendarMap: Map<string, number
       }
     }
   }
-
 };
 

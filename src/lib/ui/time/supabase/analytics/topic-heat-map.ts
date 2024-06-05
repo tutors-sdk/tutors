@@ -111,7 +111,7 @@ export class TopicHeatMapChart {
 
     const userFullName = await getUser(userId) || userId;
     return [{
-      name: 'Lab Activity for ' + userFullName,
+      name: 'Topic Activity for ' + userFullName,
       type: 'heatmap',
       data: seriesData,
       label: {
@@ -149,10 +149,10 @@ export class TopicHeatMapChart {
 
     let allSeriesData: HeatMapSeriesData[] = [];
     let yAxisData: string[] = []; // Array to store yAxis data
-    const labTitles = topics.map((topic: { title: string; }) => topic.title.trim());
-    this.categories = new Set(labTitles);
+    const topicTitles = topics.map((topic: { title: string; }) => topic.title.trim());
+    this.categories = new Set(topicTitles);
 
-    for (let [index, userId] of usersIds.entries()) {
+    for (const [index, userId] of usersIds.entries()) {
       const seriesData = await this.prepareTopicData(userId, index);
       allSeriesData = allSeriesData.concat(seriesData[0].data);
 
@@ -163,7 +163,7 @@ export class TopicHeatMapChart {
     }
 
     this.series = [{
-      name: 'Lab Activity',
+      name: 'Topic Activity For All Users',
       type: 'heatmap',
       data: allSeriesData || [],
       label: {
@@ -182,13 +182,12 @@ export class TopicHeatMapChart {
   }
 
   prepareCombinedTopicData(userIds: string[]) {
-    const topicActivities = new Map<string, { timeActive: number, nickname: string }[]>();
+    const topicActivities = new Map();
     const allComposites = getCompositeValues(this.course.los);
     const allSimpleTypes = getSimpleTypesValues(this.course.los);
     const allTypes = [...allComposites, ...allSimpleTypes];
 
     allTypes.forEach(lo => {
-      if (lo.learningRecords?.size !== 0) {
         let title: string = "";
         if (lo.parentTopic?.type === 'topic') {
           title = lo.parentTopic?.title;
@@ -204,28 +203,32 @@ export class TopicHeatMapChart {
 
         lo.learningRecords?.forEach((topic, key) => {
           if (userIds.includes(key)) {
-            topicActivities.get(title)?.push({
+            topicActivities.get(title).push({
               timeActive: topic.timeActive,
               nickname: key
             });
           }
         });
-      }
     });
 
     const heatmapData = Array.from(topicActivities.entries()).map(([title, activities]) => {
-      activities.sort((a, b) => a.timeActive - b.timeActive);
-      const addedCount = activities.reduce((acc, curr) => acc + curr.timeActive, 0);
-
+      // Sort activities by timeActive to get low and high values
+      activities.sort((a: { timeActive: number; }, b: { timeActive: number; }) => a.timeActive - b.timeActive);
+    
+      // Calculate the total time spent on each topic
+      const addedCount = activities.reduce((acc: number, curr: { timeActive: any; }) => acc + curr.timeActive, 0);
+    
+      // Extract low and high data points
       const lowData = activities[0];
       const highData = activities[activities.length - 1];
+    
       return {
-        value: addedCount,
-        title: title,
-        lowValue: lowData?.timeActive || 0,
-        highValue: highData?.timeActive || 0,
-        lowNickname: lowData?.nickname || 'No Interaction',
-        highNickname: highData?.nickname || 'No Interaction',
+        value: addedCount, // Total time spent on the topic
+        title: title,      // Topic title
+        lowValue: lowData?.timeActive || 0, // Lowest timeActive value
+        highValue: highData?.timeActive || 0, // Highest timeActive value
+        lowNickname: lowData?.nickname || 'No Interaction', // Nickname of the lowest timeActive value
+        highNickname: highData?.nickname || 'No Interaction', // Nickname of the highest timeActive value
       };
     });
 
@@ -247,7 +250,7 @@ export class TopicHeatMapChart {
       },
       tooltip: {
         position: 'bottom',
-        formatter: function (params: { dataIndex: any; }) {
+        formatter: function (params: { dataIndex: number; }) {
           const dataIndex = params.dataIndex;
           const dataItem = heatmapActivities[dataIndex];
           if (dataItem) {
