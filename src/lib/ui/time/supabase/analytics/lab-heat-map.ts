@@ -36,6 +36,7 @@ export class LabHeatMapChart {
   series: HeatMapSeriesData[];
   los: Lo[];
   userIds: string[];
+  chartInstance: any;
 
   constructor(course: Course, session: Session, userIds: string[]) {
     this.chartRendered = false;
@@ -48,6 +49,7 @@ export class LabHeatMapChart {
     this.course = course;
     this.session = session;
     this.los = filterByType(this.course.los, 'lab');
+    this.chartInstance = null;
   }
 
   populateUsersData() {
@@ -179,10 +181,10 @@ export class LabHeatMapChart {
   }
 
   renderChart(container: HTMLElement) {
-    const chartInstance = echarts.init(container);
-    const option = heatmap(this.categories, this.yAxisData, this.series, bgPatternImg, 'Lab Time: Per Student');
-    chartInstance.setOption(option);
-    chartInstance.resize();
+    this.chartInstance = echarts.init(container);
+    const option = heatmap(this.categories, this.yAxisData, this.series, bgPatternImg, 'Lab Time: Per Student (click a cell to sort)');
+    this.chartInstance.setOption(option);
+    this.chartInstance.resize();
   }
 
   prepareCombinedLabData(userIds: string[]) {
@@ -228,6 +230,41 @@ export class LabHeatMapChart {
     });
 
     return heatmapData;
+  }
+
+  async sortHeatMapValues() {
+    if (this.chartInstance !== null) {
+      this.chartInstance.off('click');
+      this.chartInstance.on('click', async (params: { componentType: string; seriesType: string; value: any[]; }) => {
+        if (params.componentType === 'series' && params.seriesType === 'heatmap') {
+          const colIndex = params.value[0]; // Column index of the clicked cell  
+          // Extract the data for the clicked column
+          let columnData = this.series[0].data.filter((item: any[]) => item[0] === colIndex);
+          // Sort the column data by the value (timeActive) in ascending order
+          columnData.sort((a: number[], b: number[]) => a[2] - b[2]);
+          // Reorder yAxisData based on sorted column data
+          const sortedUserIndices = columnData.map((item: any[]) => item[1]);
+          const sortedYAxisData = sortedUserIndices.map((index: string | number) => this.yAxisData[index]);
+          // Reconstruct the series data with sorted y-axis order
+          let newData = this.series[0].data.map((item: any[]) => {
+            const newIndex = sortedUserIndices.indexOf(item[1]);
+            return [item[0], newIndex, item[2]];
+          });
+          // Update the y-axis data and series data
+          this.yAxisData = sortedYAxisData;
+          this.series[0].data = newData;
+          // Refresh the chart instance
+          this.chartInstance.setOption({
+            yAxis: {
+              data: this.yAxisData
+            },
+            series: [{
+              data: this.series[0].data
+            }]
+          });
+        }
+      });
+    }
   }
 
   renderCombinedLabChart(container: HTMLElement, labData: any[], chartTitle: string) {
@@ -318,5 +355,7 @@ export class LabHeatMapChart {
   
     // Set the option to the chart
     chart.setOption(option);
+    this.sortHeatMapValues();
+
   }
 }

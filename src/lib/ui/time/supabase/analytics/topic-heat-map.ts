@@ -182,9 +182,8 @@ export class TopicHeatMapChart {
 
   renderChart(container: HTMLElement | null | undefined) {
     this.chartInstance = echarts.init(container);
-    const option = heatmap(this.categories, this.yAxisData, this.series, bgPatternImg, 'Topic Time: Per Student');
+    const option = heatmap(this.categories, this.yAxisData, this.series, bgPatternImg, 'Topic Time: Per Student (click a cell to sort)');
     this.chartInstance.setOption(option);
-    this.singleUserPieClick();
   }
 
   prepareCombinedTopicData(userIds: string[]) {
@@ -238,7 +237,7 @@ export class TopicHeatMapChart {
     return heatmapData;
   }
 
-  async singleUserPieClick() {
+  async sortHeatMapValues() {
     if (this.chartInstance !== null) {
       this.chartInstance.off('click');
       this.chartInstance.on('click', async (params: { componentType: string; seriesType: string; value: any[]; }) => {
@@ -344,6 +343,6 @@ export class TopicHeatMapChart {
     };
 
     this.chart.setOption(option);
-    this.singleUserPieClick();
+    this.sortHeatMapValues();
   }
 }
