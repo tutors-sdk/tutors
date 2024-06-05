@@ -34,6 +34,8 @@ export class TopicHeatMapChart {
   topics: string[];
   session: Session;
   userIds: string[];
+  chart: any;
+  chartInstance: any;
 
   constructor(course: Course, session: Session, userIds: string[]) {
     this.chartRendered = false;
@@ -45,6 +47,8 @@ export class TopicHeatMapChart {
     this.series = [];
     this.session = session;
     this.userIds = userIds;
+    this.chart = null;
+    this.chartInstance = null;
   }
 
   populateUsersData() {
@@ -76,7 +80,6 @@ export class TopicHeatMapChart {
     const allSimpleTypes = getSimpleTypesValues(this.course.los);
     const allTypes = [...allComposites, ...allSimpleTypes];
 
-    // Map to store total timeActive for each step
     const totalTimesMap = new Map<string, number>();
 
     allTypes.forEach((lo) => {
@@ -90,7 +93,6 @@ export class TopicHeatMapChart {
       }
       const timeActive = lo.learningRecords?.get(userId)?.timeActive || 0;
 
-      // Add timeActive to the total time for the lo
       if (totalTimesMap.has(title)) {
         totalTimesMap.set(title, totalTimesMap.get(title)! + timeActive);
       } else {
@@ -100,14 +102,15 @@ export class TopicHeatMapChart {
 
     const topicTitles = this.course.los.map(topic => topic.title.trim());
 
-    // Construct seriesData array using the aggregated total times
-    const seriesData = Array.from(totalTimesMap.entries()).map(([title, timeActive]) => {
+    let seriesData = Array.from(totalTimesMap.entries()).map(([title, timeActive]) => {
       return [
         topicTitles.indexOf(title.trim()),
         index,
-        Math.round(timeActive/2)
+        Math.round(timeActive / 2)
       ];
     });
+
+    seriesData.sort((a, b) => b[2] - a[2]);
 
     const userFullName = await getUser(userId) || userId;
     return [{
@@ -122,18 +125,17 @@ export class TopicHeatMapChart {
 
   async populateAndRenderSingleUserData() {
     const container = this.getChartContainer();
-    if (!container) return; // Exit if no container found
+    if (!container) return;
 
-    // yAxisData for a single user should be an array with a single element
-    this.yAxisData = [this.session.user.user_metadata.user_name]; // Even for a single user, this should be an array
+    this.yAxisData = [this.session.user.user_metadata.user_name];
 
     const seriesData = await this.prepareTopicData(this.session.user.user_metadata.user_name);
 
-    // Now seriesData contains the data for a single user
     this.series = [{
       name: 'Topic Activity',
       type: 'heatmap',
       data: seriesData[0]?.data || [],
+      selectedMode: 'single',
       top: '5%',
       label: {
         show: true
@@ -148,7 +150,7 @@ export class TopicHeatMapChart {
     if (!container) return;
 
     let allSeriesData: HeatMapSeriesData[] = [];
-    let yAxisData: string[] = []; // Array to store yAxis data
+    let yAxisData: string[] = [];
     const topicTitles = topics.map((topic: { title: string; }) => topic.title.trim());
     this.categories = new Set(topicTitles);
 
@@ -162,10 +164,13 @@ export class TopicHeatMapChart {
       }
     }
 
+    allSeriesData.sort((a, b) => b[2] - a[2]);
+
     this.series = [{
       name: 'Topic Activity For All Users',
       type: 'heatmap',
       data: allSeriesData || [],
+      selectedMode: 'single',
       label: {
         show: true
       }
@@ -176,9 +181,10 @@ export class TopicHeatMapChart {
   }
 
   renderChart(container: HTMLElement | null | undefined) {
-    const chartInstance = echarts.init(container);
+    this.chartInstance = echarts.init(container);
     const option = heatmap(this.categories, this.yAxisData, this.series, bgPatternImg, 'Topic Time: Per Student');
-    chartInstance.setOption(option);
+    this.chartInstance.setOption(option);
+    this.singleUserPieClick();
   }
 
   prepareCombinedTopicData(userIds: string[]) {
@@ -188,60 +194,91 @@ export class TopicHeatMapChart {
     const allTypes = [...allComposites, ...allSimpleTypes];
 
     allTypes.forEach(lo => {
-        let title: string = "";
-        if (lo.parentTopic?.type === 'topic') {
-          title = lo.parentTopic?.title;
-        } else if (lo.parentLo?.parentTopic?.type === 'topic') {
-          title = lo.parentLo?.parentTopic?.title;
-        } else {
-          title = lo.title;
-        }
+      let title: string = "";
+      if (lo.parentTopic?.type === 'topic') {
+        title = lo.parentTopic?.title;
+      } else if (lo.parentLo?.parentTopic?.type === 'topic') {
+        title = lo.parentLo?.parentTopic?.title;
+      } else {
+        title = lo.title;
+      }
 
-        if (!topicActivities.has(title)) {
-          topicActivities.set(title, []);
-        }
+      if (!topicActivities.has(title)) {
+        topicActivities.set(title, []);
+      }
 
-        lo.learningRecords?.forEach((topic, key) => {
-          if (userIds.includes(key)) {
-            topicActivities.get(title).push({
-              timeActive: topic.timeActive,
-              nickname: key
-            });
-          }
-        });
+      lo.learningRecords?.forEach((topic, key) => {
+        if (userIds.includes(key)) {
+          topicActivities.get(title).push({
+            timeActive: topic.timeActive,
+            nickname: key
+          });
+        }
+      });
     });
 
     const heatmapData = Array.from(topicActivities.entries()).map(([title, activities]) => {
-      // Sort activities by timeActive to get low and high values
       activities.sort((a: { timeActive: number; }, b: { timeActive: number; }) => a.timeActive - b.timeActive);
-    
-      // Calculate the total time spent on each topic
+
       const addedCount = activities.reduce((acc: number, curr: { timeActive: any; }) => acc + curr.timeActive, 0);
-    
-      // Extract low and high data points
+
       const lowData = activities[0];
       const highData = activities[activities.length - 1];
-    
+
       return {
-        value: addedCount, // Total time spent on the topic
-        title: title,      // Topic title
-        lowValue: lowData?.timeActive || 0, // Lowest timeActive value
-        highValue: highData?.timeActive || 0, // Highest timeActive value
-        lowNickname: lowData?.nickname || 'No Interaction', // Nickname of the lowest timeActive value
-        highNickname: highData?.nickname || 'No Interaction', // Nickname of the highest timeActive value
+        value: addedCount,
+        title: title,
+        lowValue: lowData?.timeActive || 0,
+        highValue: highData?.timeActive || 0,
+        lowNickname: lowData?.nickname || 'No Interaction',
+        highNickname: highData?.nickname || 'No Interaction',
       };
     });
 
     return heatmapData;
   }
 
-  renderCombinedTopicChart(container: HTMLElement, heatmapActivities: any[], chartTitle: string) {
-    const chart = echarts.init(container);
+  async singleUserPieClick() {
+    if (this.chartInstance !== null) {
+      this.chartInstance.off('click');
+      this.chartInstance.on('click', async (params: { componentType: string; seriesType: string; value: any[]; }) => {
+        if (params.componentType === 'series' && params.seriesType === 'heatmap') {
+          const colIndex = params.value[0]; // Column index of the clicked cell  
+          // Extract the data for the clicked column
+          let columnData = this.series[0].data.filter((item: any[]) => item[0] === colIndex);
+          // Sort the column data by the value (timeActive) in ascending order
+          columnData.sort((a: number[], b: number[]) => a[2] - b[2]);
+          // Reorder yAxisData based on sorted column data
+          const sortedUserIndices = columnData.map((item: any[]) => item[1]);
+          const sortedYAxisData = sortedUserIndices.map((index: string | number) => this.yAxisData[index]);
+          // Reconstruct the series data with sorted y-axis order
+          let newData = this.series[0].data.map((item: any[]) => {
+            const newIndex = sortedUserIndices.indexOf(item[1]);
+            return [item[0], newIndex, item[2]];
+          });
+          // Update the y-axis data and series data
+          this.yAxisData = sortedYAxisData;
+          this.series[0].data = newData;
+          // Refresh the chart instance
+          this.chartInstance.setOption({
+            yAxis: {
+              data: this.yAxisData
+            },
+            series: [{
+              data: this.series[0].data
+            }]
+          });
+        }
+      });
+    }
+  }
 
-    const heatmapData = heatmapActivities.map((item, index) => [index, 0, Math.round(item.value/2)]);
+  renderCombinedTopicChart(container: HTMLElement, heatmapActivities: any[], chartTitle: string) {
+    this.chart = echarts.init(container);
+
+    const heatmapData = heatmapActivities.map((item, index) => [index, 0, Math.round(item.value / 2)]);
     const titles = heatmapActivities.map(item => item.title);
 
-    // Heatmap option
     const option = {
       title: {
         top: 30,
@@ -276,7 +313,7 @@ export class TopicHeatMapChart {
       },
       yAxis: {
         type: 'category',
-        data: [''], // Single category axis
+        data: [''],
       },
       axisLabel: {
         interval: 0,
@@ -293,7 +330,7 @@ export class TopicHeatMapChart {
       series: [{
         name: 'Value',
         type: 'heatmap',
-        data: heatmapData, // the format of data [index, 0, value]
+        data: heatmapData,
         label: {
           show: true
         },
@@ -306,7 +343,7 @@ export class TopicHeatMapChart {
       }]
     };
 
-    // Set the option to the chart
-    chart.setOption(option);
+    this.chart.setOption(option);
+    this.singleUserPieClick();
   }
 }
