@@ -1,3 +1,6 @@
+import type { HeatMapSeriesData } from "$lib/services/types/supabase-metrics";
+import type { EChartsOption } from "echarts";
+
 export function heatmap(categories: Set<string>, yAxisData: string[], series: HeatMapSeriesData[], bgPatternImg: HTMLImageElement, chartTitleString: string): EChartsOption {
   let visualmapValue: number;
   let gridConfig;
@@ -9,9 +12,9 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       left: '30%',
       right: '30%',
       bottom: '15%',
-      top: '15%',
+      top: '10%',
       width: '40%',  // Fixed width
-      height: '50%',  // Fixed height
+      height: '80%',  // Fixed height
       containLabel: false  // Prevent resizing based on labels
     };
       
@@ -64,10 +67,9 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
         show: true
       },
       axisLabel: {
-        rotate: -40,
-        interval: 0,
+        interval: 1,
         fontSize: 15,
-        margin: 5, // Adjust margin to control spacing
+        margin: 10, // Adjust margin to control spacing
       },
       axisTick: {
         alignWithLabel: true
@@ -85,7 +87,8 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       },
       axisLabel: {
         interval: 0,
-        fontSize: 15
+        fontSize: 15,
+        padding: [10, 0, 10, 0], // Increase space between rows
       },
     },
     visualMap: {
@@ -94,7 +97,6 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       calculable: true,
       orient: 'horizontal',
       left: 'center',
-      bottom: '5%' // Adjusted position to avoid overlap with grid
     },
     series: series
   }
