@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
-  import type { Course, Lo } from "$lib/services/models/lo-types";
+  import type { Course } from "$lib/services/models/lo-types";
   import { LabHeatMapChart } from "../analytics/lab-heat-map";
-    import type { Session } from "@supabase/supabase-js";
+  import type { Session } from "@supabase/supabase-js";
 
   export let course: Course;
   export let session: Session;
@@ -48,6 +48,6 @@
 </script>
 
 <div class="h-screen flex flex-col">
-  <div id="heatmap-container" class="h-1/2 w-full overflow-y-scroll"></div>
-  <div id="combined-heatmap" class="h-1/2 w-full overflow-y-scroll"></div>
+  <div id="heatmap-container" class="h-3/4 w-full overflow-y-scroll"></div>
+  <div id="combined-heatmap" class="h-1/4 w-full overflow-y-scroll"></div>
 </div>

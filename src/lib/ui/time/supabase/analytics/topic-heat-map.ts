@@ -280,7 +280,7 @@ export class TopicHeatMapChart {
 
     const option = {
       title: {
-        top: 30,
+        top: '15%',
         left: 'center',
         text: chartTitle,
       },
@@ -304,7 +304,7 @@ export class TopicHeatMapChart {
       },
       grid: {
         height: '30%',
-        top: '20%'
+        top: '30%'
       },
       xAxis: {
         type: 'category',

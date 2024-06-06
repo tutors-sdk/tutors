@@ -64,7 +64,7 @@ export async function insertOrUpdateCalendar(studentId: string, courseId: string
       id: formatDate(new Date()),
       studentid: studentId,
       timeactive: timeActive,
-      pageloads: pageLoads,
+      pageloads: pageLoads + 1,
       courseid: courseId
     }, {
       onConflict: 'id, studentid, courseid'
