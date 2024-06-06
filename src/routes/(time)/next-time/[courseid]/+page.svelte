@@ -110,12 +110,16 @@
             <InstructorTopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
           {:else if $storeSubTab === 'InstructorTopicViewBoxPlot'}
             <InstructorTopicViewBoxPlot course={data.course} userIds={data.userIds} />
+          {:else}
+            <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds} />
           {/if}
         {:else}
           {#if $storeSubTab === 'TopicView'}
             <TopicView course={data.course} session={data.session} userIds={data.userIds} />
           {:else if $storeSubTab === 'TopicViewPieChart'}
             <TopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
+          {:else}
+            <TopicView course={data.course} session={data.session} userIds={data.userIds} />
           {/if}
         {/if}
       {:else if $storeTab === 'Labs'}
@@ -124,12 +128,16 @@
             <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} />
           {:else if $storeSubTab === 'InstructorLabViewBoxPlot'}
             <InstructorLabViewBoxPlot course={data.course} userIds={data.userIds} />
+          {:else}
+            <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} />
           {/if}
         {:else}
           {#if $storeSubTab === 'LabView'}
             <LabView course={data.course} session={data.session} userIds={data.userIds} />
           {:else if $storeSubTab === 'LabViewPieChart'}
             <LabViewPieChart course={data.course} session={data.session} />
+          {:else}
+            <LabView course={data.course} session={data.session} userIds={data.userIds} />
           {/if}
         {/if}
       {/if}
