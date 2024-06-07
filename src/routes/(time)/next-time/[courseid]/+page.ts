@@ -3,7 +3,7 @@ import { courseService } from "$lib/services/course";
 import type { Course } from "$lib/services/models/lo-types";
 import { aggregateTimeActiveByDate, decorateLearningRecords, fetchLearningInteractions } from "$lib/services/utils/supabase-metrics";
 import type { LearningInteraction } from "$lib/services/types/supabase-metrics";
-import { getCalendarDataForAll } from "$lib/services/utils/supabase-utils";
+import { getCalendarDataForAll, getMedianTimeActivePerDate } from "$lib/services/utils/supabase-utils";
 
 export const ssr = false;
 
@@ -15,6 +15,7 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
     const userIds: string[] = [...new Set(metrics.map((m: LearningInteraction) => m.studentid))] as string[];
     const records = await getCalendarDataForAll(course.courseId);
     const aggregatedData = await aggregateTimeActiveByDate(records); 
+    const medianCalendarTime = await getMedianTimeActivePerDate(course.courseId);
     const calendarIds: string[] = [...new Set(Array.from(aggregatedData.entries()).map(([studentId, dateMap]) => studentId))] as string[];
     await decorateLearningRecords(course, metrics);
     // if (course.hasEnrollment && course.enrollment) {
@@ -39,7 +40,8 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
       userIds: userIds,
       calendarIds: calendarIds, // Because of mismatch data in the dbs (reintroduce calendar)
       session: data.session,
-      timeActiveMap: aggregatedData
+      timeActiveMap: aggregatedData,
+      medianTime: medianCalendarTime
       // allLabs: course.wallMap?.get("lab"),
       // allTopics: course.los,
       // allActivities: allLos,

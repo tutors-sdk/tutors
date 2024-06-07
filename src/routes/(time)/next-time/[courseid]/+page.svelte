@@ -100,7 +100,7 @@
         {#if instructorMode}
           <NewInstructorCalendarTime course={data.course} timeActiveMap={data.timeActiveMap} userIds={data.calendarIds} />
         {:else}
-          <CalendarView course={data.course} timeActiveMap={data.timeActiveMap} session={data.session} />
+          <CalendarView timeActiveMap={data.timeActiveMap} session={data.session} medianTime={data.medianTime} />
         {/if}
       {:else if $storeTab === 'Topics'}
         {#if instructorMode}
