@@ -54,7 +54,7 @@ export function calendar(session: Session, calendarMap: CalendarMap[], bgPattern
     tooltip: { position: 'top' },
     visualMap: {
       min: 0,
-      max: 300, // total amount of minutes in a day
+      max: Math.max(...calendarMap.map((item) => item.timeActive)),
       type: 'piecewise',
       orient: 'horizontal',
       left: 'center',

@@ -20,6 +20,20 @@ export async function getNumOfLearningRecordsIncrements(fieldName: string, cours
   return student ? student[0].increment + 1 : 1;
 };
 
+export async function getMedianTimeActivePerDate(courseId: string) {
+  if (!courseId) return 0;
+
+  const { data, error } = await db.rpc('get_median_time_active_per_date', {
+    course_base: courseId
+  });
+
+  if (error) {
+    console.error('Error fetching calendar data:', error);
+    return 0;
+  }
+  return data;
+};
+
 export async function updateStudentsStatus(key: string, str: string) {
   await db.from('students').update({ online_status: str, }).eq('id', key);
 };
@@ -64,7 +78,7 @@ export async function insertOrUpdateCalendar(studentId: string, courseId: string
       id: formatDate(new Date()),
       studentid: studentId,
       timeactive: timeActive,
-      pageloads: pageLoads,
+      pageloads: pageLoads + 1,
       courseid: courseId
     }, {
       onConflict: 'id, studentid, courseid'

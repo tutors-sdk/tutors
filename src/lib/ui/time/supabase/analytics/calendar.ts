@@ -35,14 +35,17 @@ bgPatternImg.src = backgroundPattern;
 
 export class CalendarChart {
   chartRendered: boolean;
-  myChart: null;
-  chartDom: null;
-  myCharts: {};
+  myChart: any; // Type to any to avoid issues with initialization
+  chartDom: any; // Type to any to avoid issues with initialization
+  myCharts: { [key: string]: any };
+  medianCalendarRendered: boolean;
+
   constructor() {
     this.chartRendered = false;
     this.myChart = null;
     this.chartDom = null;
     this.myCharts = {};
+    this.medianCalendarRendered = false;
   }
 
   createChartContainer(containerId: string) {
@@ -55,29 +58,31 @@ export class CalendarChart {
     return container;
   };
 
-  clickMonth(chart) {
-    chart.on('click', (params) => {
-      // Check the current range and toggle it
-      if (currentRange.length === 4) {  // Only the year is currently set
-        const date = new Date(params.data[0]);
-        currentRange = echarts.time.format(date, '{yyyy}-{MM}', false); // Change to specific month
-      } else {
-        currentRange = currentRange.substring(0, 4); // Reset to only the year
-      }
+  // clickMonth() {
+  //   if (this.myChart) {
+  //     this.myChart.on('click', (params) => {
+  //       // Check the current range and toggle it
+  //       if (currentRange.length === 4) {  // Only the year is currently set
+  //         const date = new Date(params.data[0]);
+  //         currentRange = echarts.time.format(date, '{yyyy}-{MM}', false); // Change to specific month
+  //       } else {
+  //         currentRange = currentRange.substring(0, 4); // Reset to only the year
+  //       }
 
-      chart.setOption({
-        calendar: {
-          range: currentRange,
-        },
-      });
-    });
-  };
+  //       this.myChart.setOption({
+  //         calendar: {
+  //           range: currentRange,
+  //         },
+  //       });
+  //     });
+  //   }
+  // };
 
   getChartContainer(nickname: string) {
     return document.getElementById(`chart-${nickname}`);
   };
 
-  renderChart(course: Course, timeActiveMap: Map<string, Map<string, number>>, session: Session) {
+  renderChart(timeActiveMap: Map<string, Map<string, number>>, session: Session) {
     const chartContainer = this.getChartContainer(session.user.user_metadata.user_name);
 
     if (!chartContainer) {
@@ -103,27 +108,22 @@ export class CalendarChart {
       chart.setOption(tutorsAnalyticsLogo("Next Tutors Analytics"));
       sessionStorage.setItem('logoShown', 'true');
       setTimeout(() => {
-        // Prepare the actual data settings
-
         const option = calendar(session, callendarMapCollection, bgPatternImg, currentRange);
 
         chart.setOption(option, true); // The 'true' parameter clears the previous setting completely before applying new options
 
-        // Explicitly refresh the chart to ensure updates are visiw ble
         chart.hideLoading();  // Hide loading overlay if used
         chart.resize();       // Force a resize to ensure proper layout
       }, 2900);
 
     } else {
       this.myCharts[session.user.user_metadata.user_name] = chart;
-      // Prepare the actual data settings
       const option = calendar(session, callendarMapCollection, bgPatternImg, currentRange);
 
       chart.setOption(option, true); // The 'true' parameter clears the previous setting completely before applying new options
-
     }
 
-    this.clickMonth(chart);
+    //this.clickMonth();
   };
 
   async renderCombinedChart(course: Course, calendarMap: Map<string, number>, userId: string) {
@@ -141,9 +141,101 @@ export class CalendarChart {
 
     chart.setOption(option, true);
   }
-};
 
-async function getGithubAvatarUrl(username:string) {
+  // New method to render the additional calendar for median timeactive values
+  renderMedianTimeCalendar(medianTime: Map<string, number>) {
+    if (this.medianCalendarRendered) {
+      // If the median calendar has already been rendered, update its data
+      const chart = echarts.getInstanceByDom(document.getElementById('median-calendar'));
+      if (chart) {
+        const medianCalendarData = Array.from(medianTime.entries()).map(([date, mediantimeactive]) => ({
+          date,
+          mediantimeactive
+        }));
+        const option: EChartsOption = {
+          series: [{
+            data: medianCalendarData.map(item => [
+              echarts.time.format(item.date, '{yyyy}-{MM}-{dd}', false),
+              item.mediantimeactive
+            ]),
+          }]
+        };
+        chart.setOption(option);
+      }
+      return;
+    }
+
+    const medianCalendarContainer = document.getElementById('median-chart');
+
+    const chart = echarts.init(medianCalendarContainer);
+    const option: EChartsOption = {
+      title: {
+        text: 'Median Time Active Per Day',
+        left: 'center'
+      },
+      tooltip: {
+        trigger: 'item'
+      },
+      backgroundColor: {
+        image: bgPatternImg,
+        repeat: 'repeat'
+      },
+      visualMap: {
+        min: 0,
+        max: Math.max(...medianTime.map(item => item.mediantimeactive)),
+        type: 'piecewise',
+      orient: 'horizontal',
+      left: 'center',
+      top: 65,
+      pieces: [
+        { min: 0, max: 25, color: '#EDEDED' },
+        { min: 25, max: 50, color: '#D7E5A1' },
+        { min: 50, max: 75, color: '#B0D98C' },
+        { min: 75, max: 100, color: '#89CC78' },
+        { min: 100, max: 125, color: '#63C168' },
+        { min: 125, max: 150, color: '#44B95B' },
+        { min: 150, max: 175, color: '#2EA94F' },
+        { min: 175, max: 200, color: '#1D9543' },
+        { min: 200, max: 225, color: '#0F7C38' },
+        { min: 225, max: 250, color: '#006E31' },
+        { min: 250, max: 275, color: '#005E2C' },
+        { min: 275, max: 300, color: '#004F27' }
+      ]
+    },
+    calendar: {
+      top: 120,
+      left: '5%',
+      right: '5%',
+      cellSize: ['auto', 20],
+      range: currentRange,
+      itemStyle: {
+        borderWidth: 0.5
+      },
+      yearLabel: { show: true }
+    },
+      series: [{
+        type: 'heatmap',
+        coordinateSystem: 'calendar',
+        data: medianTime.map(item => [
+          echarts.time.format(item.date, '{yyyy}-{MM}-{dd}', false),
+          item.mediantimeactive
+        ]),
+        label: {
+          show: true,
+          formatter: '{@[1]}', // Display the mediantimeactive value in the cell
+          color: '#000', 
+          fontSize: 10, 
+        },
+      }]
+    };
+
+    chart.setOption(option);
+    this.medianCalendarRendered = true;
+  }
+}
+
+
+async function getGithubAvatarUrl(username: string) {
   const url = `https://api.github.com/users/${username}`;
   try {
     const response = await fetch(url);

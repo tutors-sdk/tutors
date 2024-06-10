@@ -302,7 +302,7 @@ export class LabHeatMapChart {
         repeat: 'repeat'
       },
       grid: {
-        height: '30%',
+        height: '20%',
         top: '15%'
       },
       xAxis: {
@@ -312,8 +312,7 @@ export class LabHeatMapChart {
           show: true
         },
         axisLabel: {
-          rotate: -40,
-          interval: 0,
+          interval: 1,
           fontSize: 15
         },
         axisPointer: {
@@ -335,7 +334,7 @@ export class LabHeatMapChart {
         calculable: true,
         orient: 'horizontal',
         left: 'center',
-        bottom: '15%'
+        bottom: '5%'
       },
       series: [{
         name: 'Value',
