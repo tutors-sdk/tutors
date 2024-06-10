@@ -1,12 +1,11 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
   import { CalendarChart } from "../analytics/calendar";
-  import type { Course } from "$lib/services/models/lo-types";
-    import type { Session } from "@supabase/supabase-js";
+  import type { Session } from "@supabase/supabase-js";
 
-  export let course: Course;
   export let timeActiveMap: Map<string, Map<string, number>>;
   export let session: Session;
+  export let medianTime: Map<string, number>;
 
   let calendarChart: CalendarChart | null;
   calendarChart = new CalendarChart();
@@ -32,7 +31,9 @@
   const renderChart = () => {
     if (calendarChart) {
       calendarChart.createChartContainer(session.user.user_metadata.user_name);
-      calendarChart.renderChart(course, timeActiveMap, session);
+      calendarChart.renderChart(timeActiveMap, session);
+      calendarChart.renderMedianTimeCalendar(medianTime);
+
     }
   };
 
@@ -41,8 +42,9 @@
 </script>
 
 <div class="h-screen">
-  {#if course}
-    <div id={`chart-${session.user.user_metadata.user_name}`} style="height: 100%;"></div>
+  {#if session}
+    <div id={`chart-${session.user.user_metadata.user_name}`} style="height: 50%;"></div>
+    <div id="median-chart" style="height: 50%;"></div>
   {:else}
     <div id="heatmap-container" style="height: 100%"></div>
   {/if}

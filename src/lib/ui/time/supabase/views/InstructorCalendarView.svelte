@@ -22,16 +22,8 @@
     }
   });
 
-  // Function to render the chart
-  const renderChart = () => {
-    // if (calendarChart && course.loIndex.size > 0) {
-      createAndRenderChart();
-    //}
-  };
-
   const createAndRenderChart = () => {
-
-     if (timeActiveMap.size > 0) {
+    if (timeActiveMap.size > 0) {
       timeActiveMap.forEach((calendarMap, userId) => {
         calendarChart?.createChartContainer(userId);
         calendarChart?.renderCombinedChart(course, calendarMap, userId);
@@ -39,16 +31,8 @@
     }
   };
 
-  $: chartHeight = userIds.length > 0 ? 60  + "%" : "90%";
+  $: chartHeight = userIds.length > 0 ? 60 + "%" : "90%";
 </script>
-
-<style>
-  .chart-container {
-    height: var(--chart-height);
-    width: 100%;
-    overflow-y: scroll;
-  }
-</style>
 
 <div class="h-screen overflow-auto">
   {#if userIds.length > 0}
@@ -59,3 +43,11 @@
     <div id="heatmap-container" class="h-90 w-full"></div>
   {/if}
 </div>
+
+<style>
+  .chart-container {
+    height: var(--chart-height);
+    width: 100%;
+    overflow-y: scroll;
+  }
+</style>
