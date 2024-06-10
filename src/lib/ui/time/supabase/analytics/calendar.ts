@@ -170,8 +170,7 @@ export class CalendarChart {
     const chart = echarts.init(medianCalendarContainer);
     const option: EChartsOption = {
       title: {
-        top: 30,
-        text: 'Median Time Active Per Day For All Students',
+        text: 'Median Time Active Per Day',
         left: 'center'
       },
       tooltip: {
