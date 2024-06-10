@@ -43,8 +43,8 @@
 
 <div class="h-screen">
   {#if session}
-    <div id={`chart-${session.user.user_metadata.user_name}`} style="height: 50%;"></div>
-    <div id="median-chart" style="height: 50%;"></div>
+    <div id={`chart-${session.user.user_metadata.user_name}`} style="height: 60%;"></div>
+    <div id="median-chart" style="height: 40%;"></div>
   {:else}
     <div id="heatmap-container" style="height: 100%"></div>
   {/if}
