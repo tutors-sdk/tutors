@@ -1,5 +1,6 @@
 import type { LoUser } from "$lib/services/types/presence";
-
+let img = new Image();
+img.src = '/profile-placeholder.png'; // Create a new Image object
 // Female first names, selected at random
 const femaleFirstNames = [
   "Ava",
@@ -95,6 +96,29 @@ const lastNames = [
     avatar: await (async () => {
       return await getAvatar(randomGender) || getDefaultAvatar();
     })(), // Immediately-invoked async function
+    id: generateId()
+  };
+}
+
+
+export async function generateStudentObject(): Promise<LoUser> {
+  // Pick a gender
+  const randomGender = Math.random() < 0.5 ? "male" : "female";
+
+  // Get a full name
+  let fullName;
+  if (randomGender === "male") {
+    fullName = `${getRandomFromList(maleFirstNames)} ${getRandomFromList(lastNames)}`;
+  } else {
+    fullName = `${getRandomFromList(femaleFirstNames)} ${getRandomFromList(lastNames)}`;
+  }
+  // this is the user
+  return {
+    fullName: `${fullName}`,
+    avatar: img.src,
+    // avatar: await (async () => {
+    //   return await getAvatar(randomGender) || getDefaultAvatar();
+    // })(), // Immediately-invoked async function
     id: generateId()
   };
 }

@@ -13,6 +13,7 @@ import type { Session } from '@supabase/supabase-js';
 import { filterByType } from '$lib/services/models/lo-utils';
 import type { HeatMapSeriesData } from '$lib/services/types/supabase-metrics';
 import { getUser } from '$lib/services/utils/supabase-utils';
+import { generateStudentObject } from '../../../../../routes/(time)/simulate/generateStudent';
 
 echarts.use([
   TooltipComponent,
@@ -139,9 +140,10 @@ export class LabHeatMapChart {
     for (const [index, userId] of userIds.entries()) {
       const seriesData = await this.populatePerUserSeriesData(course, allLabs, userId, index);
       allSeriesData = allSeriesData.concat(seriesData[0].data);
-
+    
       if (!yAxisData.includes(userId)) {
-        const fullname = await getUser(userId) || userId;
+        //const fullname = await getUser(userId) || userId; //real
+        const fullname = (await generateStudentObject()).fullName
         yAxisData.push(fullname);
       }
     }

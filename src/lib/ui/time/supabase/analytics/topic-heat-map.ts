@@ -12,6 +12,7 @@ import type { Course, Lo, Topic } from '$lib/services/models/lo-types';
 import type { Session } from '@supabase/supabase-js';
 import type { HeatMapSeriesData } from '$lib/services/types/supabase-metrics';
 import { getCompositeValues, getSimpleTypesValues, getUser } from '$lib/services/utils/supabase-utils';
+import { generateStudentObject } from '../../../../../routes/(time)/simulate/generateStudent';
 
 echarts.use([
   TooltipComponent,
@@ -159,7 +160,8 @@ export class TopicHeatMapChart {
       allSeriesData = allSeriesData.concat(seriesData[0].data);
 
       if (!yAxisData.includes(userId)) {
-        const fullname = await getUser(userId) || userId;
+        // const fullname = await getUser(userId) || userId; //real
+        const fullname = (await generateStudentObject()).fullName //fake
         yAxisData.push(fullname);
       }
     }
