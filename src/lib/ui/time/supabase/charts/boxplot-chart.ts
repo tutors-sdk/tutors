@@ -1,8 +1,12 @@
-import type { BoxplotData } from "$lib/services/types/supabase-metrics";
-
+import type { BoxplotData } from '$lib/services/types/supabase-metrics';
 import * as echarts from 'echarts';
 
-export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[], boxplotData: number[][], chartTitle: string): echarts.EChartsOption {
+export function boxplot(
+  bgPatternImg: HTMLImageElement,
+  userNicknames: string[],
+  boxplotData: number[][],
+  chartTitle: string
+): echarts.EChartsOption {
   return {
     title: {
       text: chartTitle,
@@ -20,11 +24,11 @@ export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[],
         const value = param.value;
         return [
           `${param.name}:`,
-          `Min: ${value[1]}`,
-          `Q1: ${value[2]}`,
-          `Median: ${value[3]}`,
-          `Q3: ${value[4]}`,
-          `Max: ${value[5]}`,
+          `Min: ${value[0]}`,
+          `Q1: ${value[1]}`,
+          `Median: ${value[2]}`,
+          `Q3: ${value[3]}`,
+          `Max: ${value[4]}`,
         ].join('<br/>');
       },
     },
@@ -45,8 +49,11 @@ export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[],
   };
 }
 
-
-export function combinedBoxplotChart(bgPatternImg: HTMLImageElement, boxplotData: BoxplotData[], chartTitle: string): echarts.EChartsOption {
+export function combinedBoxplotChart(
+  bgPatternImg: HTMLImageElement,
+  boxplotData: BoxplotData[],
+  chartTitle: string
+): echarts.EChartsOption {
   return {
     title: {
       text: chartTitle,

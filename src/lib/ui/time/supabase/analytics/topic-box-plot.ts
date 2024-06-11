@@ -12,13 +12,14 @@ import type { Course } from '$lib/services/models/lo-types';
 import { getCompositeValues, getSimpleTypesValues } from '$lib/services/utils/supabase-utils';
 import type { BoxplotData } from '$lib/services/types/supabase-metrics';
 import * as d3 from 'd3';
+import { generateStudentObject } from '../../../../../routes/(time)/simulate/generateStudent';
 
 echarts.use([
   TitleComponent,
   TooltipComponent,
   GridComponent,
   BoxplotChart,
-  CanvasRenderer
+  CanvasRenderer,
 ]);
 
 const bgPatternImg = new Image();
@@ -50,7 +51,11 @@ export class TopicBoxPlotChart {
     this.userIds = userIds;
   }
 
-  prepareBoxplotData() {
+  async getName(): Promise<string> {
+    return (await generateStudentObject()).fullName;
+  }
+
+  async prepareBoxplotData() {
     const boxplotData: number[][] = [];
     const userNicknames: string[] = [];
     const allComposites = getCompositeValues(this.course.los);
@@ -69,24 +74,27 @@ export class TopicBoxPlotChart {
       });
     });
 
-    userActivities.forEach((activities, userId) => {
+    const userActivitiesPromises = Array.from(userActivities.entries()).map(async ([userId, activities]) => {
       if (activities.length > 0) {
+        const fullname = await this.getName();
         const [min, q1, median, q3, max] = calculateBoxplotStats(activities);
         boxplotData.push([min, q1, median, q3, max]);
-        userNicknames.push(userId); // Ensure nicknames are added in corresponding order
+        userNicknames.push(fullname); // replace with userId when changing back
       }
     });
+
+    await Promise.all(userActivitiesPromises);
 
     return { boxplotData, userNicknames };
   }
 
-  prepareCombinedBoxplotData(): BoxplotData[] {
+  async prepareCombinedBoxplotData(): Promise<BoxplotData[]> {
     const topicActivities = new Map<string, { timeActive: number; nickname: string }[]>();
     const allComposites = getCompositeValues(this.course.los);
     const allSimpleTypes = getSimpleTypesValues(this.course.los);
     const allTypes = [...allComposites, ...allSimpleTypes];
 
-    allTypes.forEach(lo => {
+    const promises = allTypes.map(async lo => {
       if (lo.learningRecords && lo.learningRecords.size !== 0) {
         let title = "";
         if (lo.parentTopic?.type === 'topic') {
@@ -101,16 +109,21 @@ export class TopicBoxPlotChart {
           topicActivities.set(title, []);
         }
 
-        lo.learningRecords.forEach((record, userId) => {
+        const recordsPromises = Array.from(lo.learningRecords.entries()).map(async ([userId, record]) => {
           if (this.userIds.includes(userId)) {
+            const nickname = await this.getName();
             topicActivities.get(title)!.push({
               timeActive: record.timeActive,
-              nickname: userId,
+              nickname: nickname, // change to userId when changing back
             });
           }
         });
+
+        await Promise.all(recordsPromises);
       }
     });
+
+    await Promise.all(promises);
 
     const boxplotData: BoxplotData[] = Array.from(topicActivities.entries()).map(([title, activities]) => {
       const timeActiveValues = activities.map(a => a.timeActive);
@@ -134,7 +147,7 @@ export class TopicBoxPlotChart {
     if (!container) return;
 
     const chart = echarts.init(container);
-    const option = boxplot(bgPatternImg, userNicknames, boxplotData, 'Topic Activity (steps) per Student Boxplot');
+    const option = boxplot(bgPatternImg, userNicknames, boxplotData, 'Topic Activity per Student Boxplot');
     chart.setOption(option);
   }
 

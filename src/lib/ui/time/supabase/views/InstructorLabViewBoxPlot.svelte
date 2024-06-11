@@ -9,12 +9,14 @@
   let labBoxPlot: LabBoxPlotChart | null = null;
 
   const renderCharts = () => {
-    if (labBoxPlot) {
-      const { boxplotData, userNicknames } = labBoxPlot.prepareBoxplotData();
-      labBoxPlot.renderBoxPlot(document.getElementById("heatmap-container"), boxplotData, userNicknames);
-      const combinedBoxplotData = labBoxPlot.prepareCombinedBoxplotData();
-      labBoxPlot.renderCombinedBoxplotChart(document.getElementById("combinedBoxPlot"), combinedBoxplotData);
-    }
+    if (labBoxPlot !== null) {
+  labBoxPlot.prepareBoxplotData().then(({ boxplotData, userNicknames }) => {
+    labBoxPlot?.renderBoxPlot(document.getElementById("heatmap-container"), boxplotData, userNicknames);
+    labBoxPlot?.prepareCombinedBoxplotData().then(combinedBoxplotData => {
+      labBoxPlot?.renderCombinedBoxplotChart(document.getElementById("combinedBoxPlot"), combinedBoxplotData);
+    });
+  });
+}
   };
 
   const handleFocus = () => {

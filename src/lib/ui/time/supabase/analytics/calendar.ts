@@ -16,6 +16,7 @@ import type { CalendarMap } from '$lib/services/types/supabase-metrics';
 import type { Course } from '$lib/services/models/lo-types';
 import type { Session } from '@supabase/supabase-js';
 import { getUser } from '$lib/services/utils/supabase-utils';
+import { generateStudentObject } from '../../../../../routes/(time)/simulate/generateStudent';
 
 echarts.use([
   TitleComponent,
@@ -135,8 +136,11 @@ export class CalendarChart {
     }
 
     const chart = echarts.init(chartContainer);
-    const avatarUrl = await getGithubAvatarUrl(userId);
-    const fullName = await getUser(userId);
+    // const avatarUrl = await getGithubAvatarUrl(userId); //real
+    // const fullName = await getUser(userId);
+
+    const avatarUrl = (await generateStudentObject()).avatar; //fake
+    const fullName = (await generateStudentObject()).fullName;
     const option = calendarCombined(userId, calendarMap, bgPatternImg, currentRange, avatarUrl, fullName);
 
     chart.setOption(option, true);
