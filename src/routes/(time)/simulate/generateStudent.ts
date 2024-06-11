@@ -150,8 +150,7 @@ function getRandomImage(images: string[], gender: string): string | null {
   const availableImages = images.filter((image) => !usedImages.includes(image));
 
   if (availableImages.length === 0) {
-    console.log(`No more available images for ${gender} gender.`);
-    return null;
+    return getDefaultAvatar();
   }
 
   const randomIndex = getRandomIndex(availableImages.length);
