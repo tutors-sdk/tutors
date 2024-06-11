@@ -1,26 +1,16 @@
-import * as echarts from 'echarts/core';
-import * as d3 from 'd3';
-import {
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-} from 'echarts/components';
-import { BoxplotChart } from 'echarts/charts';
-import { CanvasRenderer } from 'echarts/renderers';
-import { backgroundPattern } from '../charts/tutors-charts-background-url';
-import { boxplot, combinedBoxplotChart } from '../charts/boxplot-chart';
-import type { Course } from '$lib/services/models/lo-types';
-import { filterByType } from '$lib/services/models/lo-utils';
-import type { BoxplotData } from '$lib/services/types/supabase-metrics';
-import { generateStudentObject } from '../../../../../routes/(time)/simulate/generateStudent';
+import * as echarts from "echarts/core";
+import * as d3 from "d3";
+import { TitleComponent, TooltipComponent, GridComponent } from "echarts/components";
+import { BoxplotChart } from "echarts/charts";
+import { CanvasRenderer } from "echarts/renderers";
+import { backgroundPattern } from "../charts/tutors-charts-background-url";
+import { boxplot, combinedBoxplotChart } from "../charts/boxplot-chart";
+import type { Course } from "$lib/services/models/lo-types";
+import { filterByType } from "$lib/services/models/lo-utils";
+import type { BoxplotData } from "$lib/services/types/supabase-metrics";
+import { generateStudent } from "../../../../../routes/(time)/simulate/generateStudent";
 
-echarts.use([
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-  BoxplotChart,
-  CanvasRenderer,
-]);
+echarts.use([TitleComponent, TooltipComponent, GridComponent, BoxplotChart, CanvasRenderer]);
 
 const bgPatternImg = new Image();
 bgPatternImg.src = backgroundPattern;
@@ -35,14 +25,14 @@ export class LabBoxPlotChart {
   }
 
   async getName(): Promise<string> {
-    return (await generateStudentObject()).fullName;
+    return (await generateStudent()).fullName;
   }
 
   async prepareBoxplotData() {
     const boxplotData: number[][] = [];
     const userNicknames: string[] = [];
-    const labs = filterByType(this.course.los, 'lab');
-    const steps = filterByType(this.course.los, 'step');
+    const labs = filterByType(this.course.los, "lab");
+    const steps = filterByType(this.course.los, "step");
     const allLabSteps = [...labs, ...steps];
     const userActivities = new Map<string, number[]>();
 
@@ -81,13 +71,13 @@ export class LabBoxPlotChart {
   }
 
   async prepareCombinedBoxplotData(): Promise<BoxplotData[]> {
-    const labs = filterByType(this.course.los, 'lab');
-    const steps = filterByType(this.course.los, 'step');
+    const labs = filterByType(this.course.los, "lab");
+    const steps = filterByType(this.course.los, "step");
     const allLabSteps = [...labs, ...steps];
     const labActivities = new Map<string, { timeActive: number; nickname: string }[]>();
 
     for (const lab of allLabSteps) {
-      const title = lab.parentLo?.type === 'lab' ? lab.parentLo?.title : lab.title;
+      const title = lab.parentLo?.type === "lab" ? lab.parentLo?.title : lab.title;
 
       if (!labActivities.has(title)) {
         labActivities.set(title, []);
@@ -98,7 +88,7 @@ export class LabBoxPlotChart {
           const nickname = await this.getName();
           labActivities.get(title)?.push({
             timeActive: labRecord.timeActive,
-            nickname: nickname,
+            nickname: nickname
           });
         }
       }
@@ -135,7 +125,7 @@ export class LabBoxPlotChart {
           value: [min, q1, median, q3, max],
           title: title,
           lowNickname: lowNickname,
-          highNickname: highNickname,
+          highNickname: highNickname
         });
       }
     }
@@ -147,7 +137,7 @@ export class LabBoxPlotChart {
     if (!container) return;
 
     const chart = echarts.init(container);
-    const option = boxplot(bgPatternImg, userNicknames, boxplotData, 'Lab Activity (steps) per Student Boxplot');
+    const option = boxplot(bgPatternImg, userNicknames, boxplotData, "Lab Activity (steps) per Student Boxplot");
     chart.setOption(option);
   }
 
@@ -155,7 +145,7 @@ export class LabBoxPlotChart {
     if (!container) return;
 
     const chartInstance = echarts.init(container);
-    const option = combinedBoxplotChart(bgPatternImg, boxplotData, 'Lab Activity (students) per Lab Boxplot');
+    const option = combinedBoxplotChart(bgPatternImg, boxplotData, "Lab Activity (students) per Lab Boxplot");
     chartInstance.setOption(option);
   }
 }
