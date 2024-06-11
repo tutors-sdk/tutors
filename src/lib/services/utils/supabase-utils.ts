@@ -55,12 +55,12 @@ export async function getCalendarDataForAll(courseId: string): Promise<any> {
 
 export async function getCalendarDuration(id: string, studentId: string, courseId: string): Promise<number> {
   const { data } = await db.from('calendar').select('timeactive').eq('id', id).eq('studentid', studentId).eq('courseid', courseId).maybeSingle();
-  return data?.timeactive || 1;
+  return data?.timeactive ? data.timeactive + 1 : 1;
 };
 
 export async function getCalendarCount(id: string, studentId: string, courseId: string): Promise<number> {
   const { data } = await db.from('calendar').select('pageloads').eq('id', id).eq('studentid', studentId).eq('courseid', courseId).maybeSingle();
-  return data?.pageloads || 1;
+  return data?.pageloads ? data.pageloads + 1 : 1;
 };
 
 export async function getDurationTotal(key: string, table: string, id: string): Promise<number> {
@@ -78,7 +78,7 @@ export async function insertOrUpdateCalendar(studentId: string, courseId: string
       id: formatDate(new Date()),
       studentid: studentId,
       timeactive: timeActive,
-      pageloads: pageLoads + 1,
+      pageloads: pageLoads,
       courseid: courseId
     }, {
       onConflict: 'id, studentid, courseid'
@@ -156,22 +156,22 @@ export async function addOrUpdateLo(loid: string, currentLo: Lo, loTitle: string
 
 export async function updateLearningRecordsDuration(courseId: string, studentId: string, loId: string) {
   const numOfDuration = await getNumOfLearningRecordsIncrements('duration', courseId, studentId, loId);
-  const dateLastAccessed = await getDateLastAccessed(courseId, studentId, loId);
+  //const dateLastAccessed = await getDateLastAccessed(courseId, studentId, loId);
 
-  if (dateLastAccessed) {
-    const now = new Date();
-    const lastAccessTime = new Date(dateLastAccessed);
-    const minutesSinceLastAccess = (now.getTime() - lastAccessTime.getTime()) / (1000 * 60);
+  //if (dateLastAccessed) {
+    //const now = new Date();
+    //const lastAccessTime = new Date(dateLastAccessed);
+    //const minutesSinceLastAccess = (now.getTime() - lastAccessTime.getTime()) / (1000 * 60);
 
-    if (minutesSinceLastAccess <= 200) {
+   // if (minutesSinceLastAccess <= 200) {
       await db
         .from('learning_records')
         .update({ 'duration': numOfDuration })
         .eq('student_id', studentId)
         .eq('course_id', courseId)
         .eq('lo_id', loId);
-    }
-  }
+    //}
+  //}
 }
 
 async function getDateLastAccessed(courseId: string, studentId: string, loId: string) {

@@ -25,7 +25,7 @@ export function calendar(session: Session, calendarMap: CalendarMap[], bgPattern
     title: {
       top: 30,
       left: 'center',
-      text: 'GitHub Account for ' + session.user.user_metadata.full_name,
+      text: session.user.user_metadata.full_name,
       link: 'https://www.github.com/' + session.user.user_metadata.user_name,
       target: 'self'
     },
@@ -47,7 +47,6 @@ export function calendar(session: Session, calendarMap: CalendarMap[], bgPattern
           height: 50
         }
       },
-
     ],
     responsive: true,
     maintainAspectRatio: false,
@@ -78,7 +77,7 @@ export function calendar(session: Session, calendarMap: CalendarMap[], bgPattern
       top: 120,
       left: '5%',
       right: '5%',
-      cellSize: ['auto', 50],
+      cellSize: ['auto', 20],
       range: currentRange,
       itemStyle: {
         borderWidth: 0.5
@@ -167,7 +166,7 @@ export function calendarCombined(userId: string, calendarMap: Map<string, number
       top: 120,
       left: '5%',
       right: '5%',
-      cellSize: ['auto', 50],
+      cellSize: ['auto', 20],
       range: currentRange,
       itemStyle: {
         borderWidth: 0.5
