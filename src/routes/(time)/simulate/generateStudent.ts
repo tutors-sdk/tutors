@@ -1,9 +1,5 @@
 import type { LoUser } from "$lib/services/types/presence";
 
-let img = new Image();
-img.src = '/profile-placeholder.png'; // Create a new Image object
-
-
 const imageNames = [
   "image-00.jpg",
   "image-01.jpg",
@@ -22,7 +18,6 @@ const imageNames = [
   "image-0e.jpg",
   "image-0f.jpg"
 ];
-
 
 // Female first names, selected at random
 const femaleFirstNames = [
@@ -124,31 +119,6 @@ export async function generateStudent(): Promise<LoUser> {
   };
 }
 
-
-
-export async function generateStudentObject(): Promise<LoUser> {
-  // Pick a gender
-  const randomGender = Math.random() < 0.5 ? "male" : "female";
-
-  // Get a full name
-  let fullName;
-  if (randomGender === "male") {
-    fullName = `${getRandomFromList(maleFirstNames)} ${getRandomFromList(lastNames)}`;
-  } else {
-    fullName = `${getRandomFromList(femaleFirstNames)} ${getRandomFromList(lastNames)}`;
-  }
-  // this is the user
-  return {
-    fullName: `${fullName}`,
-    avatar: img.src,
-    // avatar: await (async () => {
-    //   return await getAvatar(randomGender) || getDefaultAvatar();
-    // })(), // Immediately-invoked async function
-    id: generateId()
-  };
-}
-  
-
 // This is the profiles we've already generated
 const usedImages: string[] = [];
 
@@ -180,8 +150,7 @@ function getRandomImage(images: string[], gender: string): string | null {
   const availableImages = images.filter((image) => !usedImages.includes(image));
 
   if (availableImages.length === 0) {
-    console.log(`No more available images for ${gender} gender.`);
-    return null;
+    return getDefaultAvatar();
   }
 
   const randomIndex = getRandomIndex(availableImages.length);
@@ -220,5 +189,5 @@ export function generateId() {
   });
 }
 function getDefaultAvatar(): string {
-  throw new Error("Function not implemented.");
+  return "/profile-placeholder.png";
 }
