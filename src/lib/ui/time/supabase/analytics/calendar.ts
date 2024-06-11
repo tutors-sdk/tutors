@@ -203,7 +203,7 @@ export class CalendarChart {
         { min: 200, max: 225, color: '#0F7C38' },
         { min: 225, max: 250, color: '#006E31' },
         { min: 250, max: 275, color: '#005E2C' },
-        { min: 275, max: 300, color: '#004F27' }
+        { min: 275, max: 1000, color: '#004F27' }
       ]
     },
     calendar: {
@@ -237,7 +237,6 @@ export class CalendarChart {
     this.medianCalendarRendered = true;
   }
 }
-
 
 async function getGithubAvatarUrl(username: string) {
   const url = `https://api.github.com/users/${username}`;

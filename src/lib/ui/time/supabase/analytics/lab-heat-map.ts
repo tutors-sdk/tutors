@@ -115,7 +115,8 @@ export class LabHeatMapChart {
       ];
     });
 
-    const userFullName = await getUser(userId) || userId;
+    //const userFullName = await getUser(userId) || userId;
+    const userFullName = userId;
 
     return [{
       name: 'Lab Activity for ' + userFullName,
