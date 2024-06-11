@@ -19,7 +19,7 @@
     "wit-hdip-comp-sci-2024-web-dev-1",
     "wit-hdip-comp-sci-2024-programming",
     "wit-hdip-comp-sci-databases-2023",
-    "wit-hdip-comp-sci-2023-comp-sys",
+    "setu-hdip-comp-sci-2024-comp-sys",
     "full-stack-1-2023",
     "wit-hdip-comp-sci-2022-mobile-app-dev",
     "adv-full-stack-oth-2023.netlify.app",
