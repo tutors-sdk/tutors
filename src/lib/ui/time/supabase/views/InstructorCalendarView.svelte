@@ -31,7 +31,7 @@
     }
   };
 
-  $: chartHeight = userIds.length > 0 ? 60 + "%" : "90%";
+  $: chartHeight = userIds.length > 0 ? 30 + "%" : "90%";
 </script>
 
 <div class="h-screen overflow-auto">

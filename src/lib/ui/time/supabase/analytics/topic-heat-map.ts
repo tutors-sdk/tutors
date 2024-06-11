@@ -99,15 +99,14 @@ export class TopicHeatMapChart {
 
     seriesData.sort((a, b) => b[2] - a[2]);
 
-    const userFullName = (await getUser(userId)) || userId;
-    return [
-      {
-        name: "Topic Activity for " + userFullName,
-        type: "heatmap",
-        data: seriesData,
-        label: {
-          show: true
-        }
+    //const userFullName = await getUser(userId) || userId;
+    const userFullName = userId; 
+    return [{
+      name: 'Topic Activity for ' + userFullName,
+      type: 'heatmap',
+      data: seriesData,
+      label: {
+        show: true
       }
     ];
   }

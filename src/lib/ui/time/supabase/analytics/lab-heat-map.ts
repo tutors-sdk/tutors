@@ -101,7 +101,8 @@ export class LabHeatMapChart {
       return [labTitles.indexOf(title.trim()), index, Math.round(timeActive / 2)];
     });
 
-    const userFullName = (await getUser(userId)) || userId;
+    //const userFullName = await getUser(userId) || userId;
+    const userFullName = userId;
 
     return [
       {
