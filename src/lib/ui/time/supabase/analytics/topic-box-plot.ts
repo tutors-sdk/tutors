@@ -1,25 +1,16 @@
-import * as echarts from 'echarts/core';
-import {
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-} from 'echarts/components';
-import { BoxplotChart } from 'echarts/charts';
-import { CanvasRenderer } from 'echarts/renderers';
-import { backgroundPattern } from '../charts/tutors-charts-background-url';
-import { boxplot, combinedBoxplotChart } from '../charts/boxplot-chart';
-import type { Course } from '$lib/services/models/lo-types';
-import { getCompositeValues, getSimpleTypesValues } from '$lib/services/utils/supabase-utils';
-import type { BoxplotData } from '$lib/services/types/supabase-metrics';
-import * as d3 from 'd3';
+import * as echarts from "echarts/core";
+import { TitleComponent, TooltipComponent, GridComponent } from "echarts/components";
+import { BoxplotChart } from "echarts/charts";
+import { CanvasRenderer } from "echarts/renderers";
+import { backgroundPattern } from "../charts/tutors-charts-background-url";
+import { boxplot, combinedBoxplotChart } from "../charts/boxplot-chart";
+import type { Course } from "$lib/services/models/lo-types";
+import { getCompositeValues, getSimpleTypesValues } from "$lib/services/utils/supabase-utils";
+import type { BoxplotData } from "$lib/services/types/supabase-metrics";
+import * as d3 from "d3";
+import { generateStudent } from "../../../../../routes/(time)/simulate/generateStudent";
 
-echarts.use([
-  TitleComponent,
-  TooltipComponent,
-  GridComponent,
-  BoxplotChart,
-  CanvasRenderer
-]);
+echarts.use([TitleComponent, TooltipComponent, GridComponent, BoxplotChart, CanvasRenderer]);
 
 const bgPatternImg = new Image();
 bgPatternImg.src = backgroundPattern;
@@ -50,7 +41,11 @@ export class TopicBoxPlotChart {
     this.userIds = userIds;
   }
 
-  prepareBoxplotData() {
+  async getName(): Promise<string> {
+    return (await generateStudent()).fullName;
+  }
+
+  async prepareBoxplotData() {
     const boxplotData: number[][] = [];
     const userNicknames: string[] = [];
     const allComposites = getCompositeValues(this.course.los);
@@ -58,7 +53,7 @@ export class TopicBoxPlotChart {
     const allTypes = [...allComposites, ...allSimpleTypes];
     const userActivities = new Map<string, number[]>();
 
-    allTypes.forEach(lo => {
+    allTypes.forEach((lo) => {
       lo.learningRecords?.forEach((record, userId) => {
         if (this.userIds.includes(userId)) {
           if (!userActivities.has(userId)) {
@@ -69,29 +64,32 @@ export class TopicBoxPlotChart {
       });
     });
 
-    userActivities.forEach((activities, userId) => {
+    const userActivitiesPromises = Array.from(userActivities.entries()).map(async ([userId, activities]) => {
       if (activities.length > 0) {
+        const fullname = await this.getName();
         const [min, q1, median, q3, max] = calculateBoxplotStats(activities);
         boxplotData.push([min, q1, median, q3, max]);
-        userNicknames.push(userId); // Ensure nicknames are added in corresponding order
+        userNicknames.push(fullname); // replace with userId when changing back
       }
     });
+
+    await Promise.all(userActivitiesPromises);
 
     return { boxplotData, userNicknames };
   }
 
-  prepareCombinedBoxplotData(): BoxplotData[] {
+  async prepareCombinedBoxplotData(): Promise<BoxplotData[]> {
     const topicActivities = new Map<string, { timeActive: number; nickname: string }[]>();
     const allComposites = getCompositeValues(this.course.los);
     const allSimpleTypes = getSimpleTypesValues(this.course.los);
     const allTypes = [...allComposites, ...allSimpleTypes];
 
-    allTypes.forEach(lo => {
+    const promises = allTypes.map(async (lo) => {
       if (lo.learningRecords && lo.learningRecords.size !== 0) {
         let title = "";
-        if (lo.parentTopic?.type === 'topic') {
+        if (lo.parentTopic?.type === "topic") {
           title = lo.parentTopic?.title;
-        } else if (lo.parentLo?.parentTopic?.type === 'topic') {
+        } else if (lo.parentLo?.parentTopic?.type === "topic") {
           title = lo.parentLo?.parentTopic?.title;
         } else {
           title = lo.title;
@@ -101,29 +99,34 @@ export class TopicBoxPlotChart {
           topicActivities.set(title, []);
         }
 
-        lo.learningRecords.forEach((record, userId) => {
+        const recordsPromises = Array.from(lo.learningRecords.entries()).map(async ([userId, record]) => {
           if (this.userIds.includes(userId)) {
+            const nickname = await this.getName();
             topicActivities.get(title)!.push({
               timeActive: record.timeActive,
-              nickname: userId,
+              nickname: nickname // change to userId when changing back
             });
           }
         });
+
+        await Promise.all(recordsPromises);
       }
     });
 
+    await Promise.all(promises);
+
     const boxplotData: BoxplotData[] = Array.from(topicActivities.entries()).map(([title, activities]) => {
-      const timeActiveValues = activities.map(a => a.timeActive);
+      const timeActiveValues = activities.map((a) => a.timeActive);
       const [min, q1, median, q3, max] = calculateBoxplotStats(timeActiveValues);
 
-      const lowNickname = activities[0]?.nickname || 'No Interaction';
-      const highNickname = activities[activities.length - 1]?.nickname || 'No Interaction';
+      const lowNickname = activities[0]?.nickname || "No Interaction";
+      const highNickname = activities[activities.length - 1]?.nickname || "No Interaction";
 
       return {
         value: [min, q1, median, q3, max],
         title: title,
         lowNickname: lowNickname,
-        highNickname: highNickname,
+        highNickname: highNickname
       };
     });
 
@@ -134,7 +137,7 @@ export class TopicBoxPlotChart {
     if (!container) return;
 
     const chart = echarts.init(container);
-    const option = boxplot(bgPatternImg, userNicknames, boxplotData, 'Topic Activity (steps) per Student Boxplot');
+    const option = boxplot(bgPatternImg, userNicknames, boxplotData, "Topic Activity per Student Boxplot");
     chart.setOption(option);
   }
 
@@ -142,7 +145,7 @@ export class TopicBoxPlotChart {
     if (!container) return;
 
     const chartInstance = echarts.init(container);
-    const option = combinedBoxplotChart(bgPatternImg, boxplotData, 'Topic Activity (students) per Topic Boxplot');
+    const option = combinedBoxplotChart(bgPatternImg, boxplotData, "Topic Activity (students) per Topic Boxplot");
     chartInstance.setOption(option);
   }
 }
