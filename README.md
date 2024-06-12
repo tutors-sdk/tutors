@@ -38,6 +38,22 @@ There are three components making up the generators family of components:
 
 See the tutors manual for [guidance on using the generators](https://tutors.dev/course/tutors-reference-manual#publish ) command line applications.
 
+### JSON Manager
+
+There is a component in cli/tutors-json-manager that adds the capability to encyrpt and / or compress the JSON file. 
+
+It's a simple standalone CLI tool but more importantly it standardises on a set of libraries and commonalities (such as base64 encoding) so that when this gets implemented in the reader application we can have consistency.
+Arguments:
+  file             JSON file to process
+
+Options:
+  --encrypt <key>  Encrypt the file with the specified key
+  --compress       Compress the file
+  --key <key>      Key to decrypt the file
+  -h, --help       display help for command
+
+  The rough compression saved % is printed out for convenience but we accept no liability for the accuracy!!
+
 ### Partykit
 
 The Tutors Reader has a "live" feature, whereby students who share their presence appear on a real time dashboard summarising their current learning object interactions. This feature relies on the [Partykit](https://www.partykit.io/) service, and the tutors-party-kit service component here.

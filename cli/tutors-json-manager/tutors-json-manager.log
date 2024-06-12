@@ -1,0 +1,27 @@
+2024-06-12T14:16:58.902Z [[32minfo[39m]: Encryption successful.
+2024-06-12T14:16:58.908Z [[32minfo[39m]: Compression successful. Space saved: -24.07%
+2024-06-12T14:16:58.909Z [[32minfo[39m]: Processed file: ./myFile.json
+2024-06-12T14:17:12.983Z [[32minfo[39m]: Decompression successful.
+2024-06-12T14:17:12.987Z [[32minfo[39m]: Decryption successful.
+2024-06-12T14:17:12.988Z [[32minfo[39m]: Processed file: ./myFile.json
+2024-06-12T14:17:20.868Z [[32minfo[39m]: Encryption successful.
+2024-06-12T14:17:20.870Z [[32minfo[39m]: Processed file: ./myFile.json
+2024-06-12T14:17:30.094Z [[32minfo[39m]: Compression successful. Space saved: -21.35%
+2024-06-12T14:17:30.096Z [[32minfo[39m]: Processed file: ./myFile.json
+2024-06-12T14:17:36.401Z [[32minfo[39m]: Decompression successful.
+2024-06-12T14:17:36.403Z [[32minfo[39m]: Processed file: ./myFile.json
+2024-06-12T14:17:41.323Z [[32minfo[39m]: Compression successful. Space saved: -21.35%
+2024-06-12T14:17:41.325Z [[32minfo[39m]: Processed file: ./myFile.json
+2024-06-12T14:17:46.157Z [[32minfo[39m]: Decompression successful.
+2024-06-12T14:17:46.159Z [[32minfo[39m]: Processed file: ./myFile.json
+2024-06-12T14:17:49.283Z [[32minfo[39m]: Encryption successful.
+2024-06-12T14:17:49.289Z [[32minfo[39m]: Compression successful. Space saved: -12.50%
+2024-06-12T14:17:49.290Z [[32minfo[39m]: Processed file: ./myFile.json
+2024-06-12T14:31:10.706Z [[32minfo[39m]: Encryption successful.
+2024-06-12T14:31:10.713Z [[32minfo[39m]: Compression successful. Space saved: -45.45%
+2024-06-12T14:31:10.714Z [[32minfo[39m]: Encrypted and Compressed Data:
+2024-06-12T14:31:10.714Z [[32minfo[39m]: Data State Detection:
+2024-06-12T14:31:10.717Z [[32minfo[39m]: Decompression successful.
+2024-06-12T14:31:10.718Z [[32minfo[39m]: Decryption successful.
+2024-06-12T14:31:10.719Z [[32minfo[39m]: Decrypted and Decompressed Data:
+2024-06-12T14:31:10.719Z [[32minfo[39m]: Test passed

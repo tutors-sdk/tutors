@@ -1,0 +1,30 @@
+{
+  "name": "tutors-json-manager",
+  "version": "1.0.0",
+  "description": "A simple manager for JSON files to encrypt and compress",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && npm link",
+    "start": "ts-node src/cli.ts"
+  },
+  "author": "lgriffin",
+  "license": "MIT",
+  "keywords": [],
+  "dependencies": {
+    "buffer": "^6.0.3",
+    "commander": "^9.0.0",
+    "crypto-js": "^4.1.1",
+    "pako": "^2.0.4",
+    "winston": "^3.13.0"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
+    "@types/node": "^16.11.6",
+    "@types/pako": "^2.0.3",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.4.4"
+  },
+  "bin": {
+    "tutors-json-manager": "./dist/cli.js"
+  }
+}
