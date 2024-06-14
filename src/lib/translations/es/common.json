@@ -1,0 +1,23 @@
+{
+    "developerExperience": {
+      "title": "Experiencia del desarrollador",
+      "description": "La <b>Experiencia del desarrollador</b> prioriza la especificación e implementación de <b>componentes y servicios robustos, bien documentados y de bajo acoplamiento</b>, integrados en un <b>conjunto de herramientas coherente</b> abierto a contribuciones de <b>diversas habilidades</b>."
+    },
+    "educatorExperience": {
+      "title": "Experiencia del educador",
+      "description": "La <b>Experiencia del educador</b> prioriza la creación de <b>rutas guiadas</b> a través de un currículo mediante la creación de materiales didácticos que son <b>autónomos, estructuralmente alineados, componibles, auditables, extensibles, versionados</b> y <b>independientes</b>."
+    },
+    "learnerExperience": {
+      "title": "Experiencia del estudiante",
+      "description": "La <b>Experiencia del estudiante</b> prioriza las interacciones web que son <b>atractivas, contextuales, enlazables, buscables, accesibles</b> y <b>responsivas</b>. Además, la experiencia debe fomentar un sentido de <b>comunidad</b> y <b>conexión</b> entre los estudiantes."
+    },
+    "valuesSection": {
+      "title": "Los <span class=\"font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 a secundario-500 bg-clip-text text-transparent box-decoration-clone\">Valores</span> del proyecto"
+    },
+    "creditsSection": {
+      "title": "Un proyecto completamente <span class=\"font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 a secundario-500 bg-clip-text text-transparent box-decoration-clone\">Open Source</span>",
+      "description": "Tutors es un proyecto de código abierto disponible de forma gratuita en GitHub bajo la licencia MIT.",
+      "viewSource": "Ver código fuente"
+    }
+  }
+  

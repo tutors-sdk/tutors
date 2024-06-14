@@ -1,14 +1,19 @@
 <script lang="ts">
   import ExperienceCard from "./ExperienceCard.svelte";
+  import { t, locale } from '$lib/translations';
 
-  const title = "Learner Experience";
+  let title = '';
+  let content = '';
+
+  $: {
+    title = $t('common.learnerExperience.title');
+    content = $t('common.learnerExperience.description');
+    console.log('Title:', title);
+    console.log('Content:', content);
+  }
+
   const icon = "ph:student";
   const link = "https://tutors.dev/course/tutors-reference-manual#tutors-values";
-  const content = `
-  The **_Learner Experience_** prioritises web interactions that are **engaging**, **contextual**, 
-  **linkable**, **searchable**, **accessible** and **responsive**. In addition the experience 
-  should foster a sense of **community** and **connection** among fellow learners.
-`;
 </script>
 
 <ExperienceCard {title} {icon} {link} {content} />

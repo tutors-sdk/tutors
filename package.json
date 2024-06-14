@@ -69,6 +69,7 @@
     "@supabase/supabase-js": "^2.43.1",
     "d3": "^7.9.0",
     "echarts": "^5.5.0",
+    "sveltekit-i18n": "^2.4.2",
     "ws": "^8.17.0"
   }
 }

@@ -4,7 +4,9 @@
   export let icon = "";
   export let title = "";
   export let content = "";
-  let contentHtml = convertMdToHtml(content);
+  let contentHtml = '';
+
+  $: contentHtml = convertMdToHtml(content);
 </script>
 
 <a href={link} target="_blank" rel="noreferrer">
