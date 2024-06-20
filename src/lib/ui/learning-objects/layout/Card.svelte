@@ -60,7 +60,7 @@
       </figure>
     </div>
     <footer class="card-footer">
-      <div class="prose dark:prose-invert line-clamp-3 text-center leading-6 align-middle">
+      <div class="mt-4 prose dark:prose-invert line-clamp-3 text-center leading-6">
         {@html lo.summary}
       </div>
     </footer>
