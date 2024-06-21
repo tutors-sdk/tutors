@@ -13,7 +13,7 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
     const course: Course = await courseService.readCourse(params.courseid, fetch);
     const metrics: LearningInteraction[] = await fetchLearningInteractions(course);
     const userIds: string[] = [...new Set(metrics.map((m: LearningInteraction) => m.studentid))] as string[];
-    const records = await getCalendarDataForAll(course.courseId);
+    const records: LearningInteraction[] = await getCalendarDataForAll(course.courseId);
     const aggregatedData = await aggregateTimeActiveByDate(records); 
     const medianCalendarTime = await getMedianTimeActivePerDate(course.courseId);
     const calendarIds: string[] = [...new Set(Array.from(aggregatedData.entries()).map(([studentId, dateMap]) => studentId))] as string[];

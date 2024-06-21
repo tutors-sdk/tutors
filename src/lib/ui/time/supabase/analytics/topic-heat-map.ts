@@ -116,8 +116,9 @@ export class TopicHeatMapChart {
   async populateAndRenderSingleUserData() {
     const container = this.getChartContainer();
     if (!container) return;
+    const userId = this.session.user.user_metadata.full_name ?? this.session.user.user_metadata.user_name;
 
-    this.yAxisData = [this.session.user.user_metadata.user_name];
+    this.yAxisData = [userId];
 
     const seriesData = await this.prepareTopicData(this.session.user.user_metadata.user_name);
 
@@ -201,11 +202,11 @@ export class TopicHeatMapChart {
         topicActivities.set(title, []);
       }
 
-      lo.learningRecords?.forEach((topic, key) => {
-        if (userIds.includes(key)) {
+      lo.learningRecords?.forEach((topic, userId) => {
+        if (userIds.includes(userId)) {
           topicActivities.get(title).push({
             timeActive: topic.timeActive,
-            nickname: key
+            nickname: userId
           });
         }
       });

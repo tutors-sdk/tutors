@@ -10,7 +10,7 @@ import { tutorsAnalyticsLogo } from "../charts/personlised-logo";
 import type { CalendarMap } from "$lib/services/types/supabase-metrics";
 import type { Course } from "$lib/services/models/lo-types";
 import type { Session } from "@supabase/supabase-js";
-import { getUser } from "$lib/services/utils/supabase-utils";
+import { getGithubAvatarUrl, getUser } from "$lib/services/utils/supabase-utils";
 import { generateStudent } from "../../../../../routes/(time)/simulate/generateStudent";
 
 echarts.use([TitleComponent, CalendarComponent, TooltipComponent, VisualMapComponent, HeatmapChart, CanvasRenderer, GraphicComponent]);
@@ -23,8 +23,8 @@ bgPatternImg.src = backgroundPattern;
 
 export class CalendarChart {
   chartRendered: boolean;
-  myChart: any; // Type to any to avoid issues with initialization
-  chartDom: any; // Type to any to avoid issues with initialization
+  myChart: any; 
+  chartDom: any; 
   myCharts: { [key: string]: any };
   medianCalendarRendered: boolean;
 
@@ -123,9 +123,9 @@ export class CalendarChart {
 
     const chart = echarts.init(chartContainer);
 
-    const student = await generateStudent();
-    const avatarUrl = student.avatar; //fake
-    const fullName = student.fullName;
+    //const student = await generateStudent(); //generate fake student
+    const avatarUrl = await getGithubAvatarUrl(userId)
+    const fullName = await getUser(userId)
     const option = calendarCombined(userId, calendarMap, bgPatternImg, currentRange, avatarUrl, fullName);
 
     chart.setOption(option, true);
@@ -170,35 +170,35 @@ export class CalendarChart {
       },
       visualMap: {
         min: 0,
-        max: Math.max(...medianTime.map(item => item.mediantimeactive)),
-        type: 'piecewise',
-      orient: 'horizontal',
-      left: 'center',
-      top: 65,
-      pieces: [
-        { min: 0, max: 25, color: '#EDEDED' },
-        { min: 25, max: 50, color: '#D7E5A1' },
-        { min: 50, max: 75, color: '#B0D98C' },
-        { min: 75, max: 100, color: '#89CC78' },
-        { min: 100, max: 125, color: '#63C168' },
-        { min: 125, max: 150, color: '#44B95B' },
-        { min: 150, max: 175, color: '#2EA94F' },
-        { min: 175, max: 200, color: '#1D9543' },
-        { min: 200, max: 225, color: '#0F7C38' },
-        { min: 225, max: 250, color: '#006E31' },
-        { min: 250, max: 275, color: '#005E2C' },
-        { min: 275, max: 1000, color: '#004F27' }
-      ]
-    },
-    calendar: {
-      top: 120,
-      left: '5%',
-      right: '5%',
-      cellSize: ['auto', 20],
-      range: currentRange,
-      itemStyle: {
-        borderWidth: 0.5
+        max: Math.max(...medianTime.map((item) => item.mediantimeactive)),
+        type: "piecewise",
+        orient: "horizontal",
+        left: "center",
+        top: 65,
+        pieces: [
+          { min: 0, max: 25, color: "#EDEDED" },
+          { min: 25, max: 50, color: "#D7E5A1" },
+          { min: 50, max: 75, color: "#B0D98C" },
+          { min: 75, max: 100, color: "#89CC78" },
+          { min: 100, max: 125, color: "#63C168" },
+          { min: 125, max: 150, color: "#44B95B" },
+          { min: 150, max: 175, color: "#2EA94F" },
+          { min: 175, max: 200, color: "#1D9543" },
+          { min: 200, max: 225, color: "#0F7C38" },
+          { min: 225, max: 250, color: "#006E31" },
+          { min: 250, max: 275, color: "#005E2C" },
+          { min: 275, max: 1000, color: "#004F27" }
+        ]
       },
+      calendar: {
+        top: 120,
+        left: "5%",
+        right: "5%",
+        cellSize: ["auto", 20],
+        range: currentRange,
+        itemStyle: {
+          borderWidth: 0.5
+        },
         yearLabel: { show: true }
       },
       series: [
@@ -218,20 +218,5 @@ export class CalendarChart {
 
     chart.setOption(option);
     this.medianCalendarRendered = true;
-  }
-}
-
-async function getGithubAvatarUrl(username: string) {
-  const url = `https://api.github.com/users/${username}`;
-  try {
-    const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`User not found: ${response.status}`);
-    }
-    const data = await response.json();
-    return data.avatar_url;
-  } catch (error) {
-    console.error("Error fetching the avatar URL:", error);
-    return null;
   }
 }

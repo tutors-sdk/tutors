@@ -4,7 +4,17 @@ import type { Analytics } from "./types/analytics";
 import { onlineStatus } from "$lib/stores";
 import { get } from "svelte/store";
 import { presenceService } from "./presence";
-import { updateStudentsStatus, storeStudentCourseLearningObjectInSupabase, updateLearningRecordsDuration, updateDuration, updateCalendarDuration, addOrUpdateStudent, updateLastAccess, readValue, formatDate } from "./utils/supabase-utils";
+import {
+  updateStudentsStatus,
+  storeStudentCourseLearningObjectInSupabase,
+  updateLearningRecordsDuration,
+  updateDuration,
+  updateCalendarDuration,
+  addOrUpdateStudent,
+  updateLastAccess,
+  readValue,
+  formatDate
+} from "./utils/supabase-utils";
 
 export const supabaseAnalytics: Analytics = {
   loRoute: "",
@@ -12,10 +22,10 @@ export const supabaseAnalytics: Analytics = {
   learningEvent(course: Course, params: Record<string, string>, session: Session, lo: Lo) {
     try {
       if (params.loid) {
-        const targetRouteParts = lo.route.split('/');
-        const trimmedTargetRoute = targetRouteParts.slice(0, 3).join('/');
-        this.loRoute = trimmedTargetRoute+'/'+params.loid;
-      }else{
+        const targetRouteParts = lo.route.split("/");
+        const trimmedTargetRoute = targetRouteParts.slice(0, 3).join("/");
+        this.loRoute = trimmedTargetRoute + "/" + params.loid;
+      } else {
         this.loRoute = lo.route;
       }
       this.reportPageLoad(course, session, lo);
