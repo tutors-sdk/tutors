@@ -4,17 +4,73 @@
   import * as pdfjs from "pdfjs-dist";
   // @ts-ignore
   import FileSaver from "file-saver";
-  import { getContext, onDestroy, setContext, tick } from "svelte";
+  import { getContext, onDestroy, setContext, tick, beforeUpdate, afterUpdate, onMount } from "svelte";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
-
   import { PDFWorker, getDocument } from "pdfjs-dist";
   import type { Talk } from "$lib/services/models/lo-types";
 
-  set_pdfjs_context();
+  // Ensure the worker is not instantiated before setting the workerSrc
+  pdfjs.GlobalWorkerOptions.workerSrc = '/node_modules/pdfjs-dist/build/pdf.worker.min.mjs';
+
+  let worker: PDFWorker | undefined;
+
+  // Set the initial context with a placeholder worker
+  setContext("svelte_pdfjs_worker", worker);
+
+  async function setupWorker() {
+    if (BROWSER) {
+      try {
+        const workerSrcUrl = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url);
+        const response = await fetch(workerSrcUrl);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch worker script: ${response.statusText}`);
+        }
+        let workerScript = await response.text();
+
+        // Remove any export statements to ensure the script can be executed in the worker context
+        workerScript = workerScript.replace(/export\s+.*;/g, '');
+
+        const blob = new Blob([workerScript], { type: 'application/javascript' });
+        const url = URL.createObjectURL(blob);
+
+        pdfjs.GlobalWorkerOptions.workerSrc = url;
+
+        return new pdfjs.PDFWorker({ port: new Worker(url) });
+      } catch (error) {
+        throw error;
+      }
+    } else {
+      throw new Error("Not in a browser environment.");
+    }
+  }
+
+  async function initialLoad() {
+    await setupWorker();
+    if (!pdfjs.GlobalWorkerOptions.workerSrc) {
+      return;
+    }
+    window.addEventListener("keydown", keypressInput);
+    let loadingTask = getDocument({ url, worker });
+    loadingTask.promise
+      .then(async function (pdfDoc_) {
+        pdfDoc = pdfDoc_;
+        await tick();
+        pageCount = pdfDoc.numPages;
+        totalPage = pageCount;
+        renderPage(pageNum);
+      })
+      .catch(function (error) {
+        console.error("Error loading document:", error);
+      });
+  }
+
+  onMount(() => {
+    initialLoad();
+  });
 
   export let url = "";
   export let scale = 1.8;
-  export let pageNum = 1; //must be number
+  export let pageNum = 1; // must be number
   export let lo: Talk;
 
   url = lo.pdf;
@@ -31,7 +87,7 @@
 
   let pages: any = [];
 
-  const renderPage = (num: any) => {
+  function renderPage(num: any) {
     pageRendering = true;
 
     pdfDoc.getPage(num).then(function (page: any) {
@@ -52,7 +108,6 @@
           pageRendering = false;
           if (pageNumPending !== null) {
             // New page rendering is pending
-            // renderPage(pageNumPending);
             if (pageNum < pdfDoc.totalPage) {
               pages[pageNum] = canvas;
               pageNum++;
@@ -64,68 +119,57 @@
             }
             pageNumPending = null;
           }
+        }).catch(function (error) {
+          console.error(`Error rendering page ${num}`, error);
         });
       }
+    }).catch(function (error) {
+      console.error(`Error getting page ${num}`, error);
     });
-  };
+  }
 
-  const queueRenderPage = (num: any) => {
+  function queueRenderPage(num: any) {
     if (pageRendering) {
       pageNumPending = num;
     } else {
       renderPage(num);
     }
-  };
+  }
 
-  const onPrevPage = () => {
+  function onPrevPage() {
     if (pageNum <= 1) {
       return;
     }
     pageNum--;
     queueRenderPage(pageNum);
-  };
+  }
 
-  const onNextPage = () => {
+  function onNextPage() {
     if (pageNum >= pdfDoc.numPages) {
       return;
     }
     pageNum++;
     queueRenderPage(pageNum);
-  };
+  }
 
-  const clockwiseRotate = () => {
+  function clockwiseRotate() {
     rotation = rotation + 90;
     queueRenderPage(pageNum);
-  };
+  }
 
-  const downloadPdf = () => {
+  function downloadPdf() {
     let fileName = url.substring(url.lastIndexOf("/") + 1);
     FileSaver.saveAs(url, fileName);
-  };
-
-  const worker = getContext<PDFWorker | undefined>("svelte_pdfjs_worker");
-
-  const initialLoad = () => {
-    window.addEventListener("keydown", keypressInput);
-    let loadingTask = getDocument({ url, worker });
-    loadingTask.promise
-      .then(async function (pdfDoc_) {
-        pdfDoc = pdfDoc_;
-        await tick();
-        pageCount = pdfDoc.numPages;
-        totalPage = pageCount;
-        renderPage(pageNum);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-  initialLoad();
+  }
 
   onDestroy(() => {
     clearInterval(interval);
     clearInterval(secondInterval);
-    window.removeEventListener("keypress", keypressInput);
+    window.removeEventListener("keydown", keypressInput);
+    if (worker) {
+      worker.destroy();
+      worker = undefined;
+    }
   });
 
   function keypressInput(e) {
@@ -135,16 +179,6 @@
     } else if (e.key === "ArrowLeft") {
       e.preventDefault();
       onPrevPage();
-    }
-  }
-
-  export function set_pdfjs_context() {
-    if (BROWSER) {
-      const worker = new pdfjs.PDFWorker({
-        port: new Worker(new URL("pdfjs-dist/build/pdf.worker.min.js", import.meta.url)) as unknown as null
-      });
-      setContext("svelte_pdfjs_worker", worker);
-      onDestroy(() => worker.destroy());
     }
   }
 </script>
