@@ -131,8 +131,8 @@ export class LabHeatMapChart {
       allSeriesData = allSeriesData.concat(seriesData[0].data);
 
       if (!yAxisData.includes(userId)) {
-        //const fullname = await getUser(userId) || userId; //real
-        const fullname = (await generateStudent()).fullName;
+        const fullname = await getUser(userId) || userId; //real name
+        //const fullname = (await generateStudent()).fullName; //populate with generated names
         yAxisData.push(fullname);
       }
     }
