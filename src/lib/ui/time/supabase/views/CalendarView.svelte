@@ -33,7 +33,6 @@
       calendarChart.createChartContainer(session.user.user_metadata.user_name);
       calendarChart.renderChart(timeActiveMap, session);
       calendarChart.renderMedianTimeCalendar(medianTime);
-
     }
   };
 

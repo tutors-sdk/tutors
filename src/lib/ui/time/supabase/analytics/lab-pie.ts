@@ -1,29 +1,17 @@
-import * as echarts from 'echarts/core';
-import {
-  TooltipComponent,
-  LegendComponent,
-  GridComponent
-} from 'echarts/components';
-import { CanvasRenderer } from 'echarts/renderers';
-import { PieChart, BarChart } from 'echarts/charts';
-import { LabelLayout } from 'echarts/features';
-import type { Course, Lo } from '$lib/services/models/lo-types';
-import { backgroundPattern, textureBackground } from '../charts/tutors-charts-background-url';
-import type { Session } from '@supabase/supabase-js';
-import { filterByType } from '$lib/services/models/lo-utils';
-import type { EChartsOption } from 'echarts';
-import { piechart } from '../charts/piechart';
-import type { LabStepData, OuterPieData } from '$lib/services/types/supabase-metrics';
+import * as echarts from "echarts/core";
+import { TooltipComponent, LegendComponent, GridComponent } from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
+import { PieChart, BarChart } from "echarts/charts";
+import { LabelLayout } from "echarts/features";
+import type { Course, Lo } from "$lib/services/models/lo-types";
+import { backgroundPattern, textureBackground } from "../charts/tutors-charts-background-url";
+import type { Session } from "@supabase/supabase-js";
+import { filterByType } from "$lib/services/models/lo-utils";
+import type { EChartsOption } from "echarts";
+import { piechart } from "../charts/piechart";
+import type { LabStepData, OuterPieData } from "$lib/services/types/supabase-metrics";
 
-echarts.use([
-  TooltipComponent,
-  LegendComponent,
-  PieChart,
-  BarChart,
-  GridComponent,
-  CanvasRenderer,
-  LabelLayout,
-]);
+echarts.use([TooltipComponent, LegendComponent, PieChart, BarChart, GridComponent, CanvasRenderer, LabelLayout]);
 
 let option: EChartsOption;
 
@@ -55,9 +43,9 @@ export class LabPieChart {
   singleUserPieClick() {
     if (this.myChart !== null) {
       // Remove any existing click listeners to prevent multiple handlers
-      this.myChart.off('click');
-      this.myChart.on('click', (params: { seriesName: string; name: string; }) => {
-        if (params.seriesName === 'Inner Pie') {
+      this.myChart.off("click");
+      this.myChart.on("click", (params: { seriesName: string; name: string }) => {
+        if (params.seriesName === "Inner Pie") {
           const outerPieData: OuterPieData[] = []; // Reset outerPieData array
 
           // Find the corresponding data for the clicked inner pie slice
@@ -73,18 +61,20 @@ export class LabPieChart {
           this.populateOuterPieData(outerPieData);
         }
       });
-    };
+    }
   }
 
   populateOuterPieData(outerPieData: OuterPieData[]) {
     // Update the data for the outer pie chart
-    const chartInstance = echarts.getInstanceByDom(document.getElementById('chart'));
+    const chartInstance = echarts.getInstanceByDom(document.getElementById("chart"));
     if (chartInstance) {
       chartInstance.setOption({
-        series: [{
-          name: "Outer Pie",
-          data: outerPieData
-        }]
+        series: [
+          {
+            name: "Outer Pie",
+            data: outerPieData
+          }
+        ]
       });
     }
   }
@@ -92,7 +82,7 @@ export class LabPieChart {
   renderChart() {
     if (!this.myChart) {
       // Create a new chart instance if it doesn't exist
-      this.myChart = echarts.init(document.getElementById('chart'));
+      this.myChart = echarts.init(document.getElementById("chart"));
     } else {
       // Clear the previous chart to prevent aggregation issues
       this.myChart.clear();
@@ -101,13 +91,13 @@ export class LabPieChart {
     this.labTitleTimesMap.clear();
     this.totalTimesMap.clear();
 
-    let labs = filterByType(this.course.los, 'lab');
-    let steps = filterByType(this.course.los, 'step');
+    let labs = filterByType(this.course.los, "lab");
+    let steps = filterByType(this.course.los, "step");
 
     const allLabSteps = [...labs, ...steps];
 
     const updateMaps = (lo: Lo, timeActive: number) => {
-      let topicTitle = lo.type === 'lab' ? lo.title : lo.parentLo!.title;
+      let topicTitle = lo.type === "lab" ? lo.title : lo.parentLo!.title;
       let loTitle = lo.title;
 
       // Add timeActive to the total time for the topic
@@ -122,7 +112,7 @@ export class LabPieChart {
       }
 
       const existingEntries = this.totalTimesMap.get(topicTitle)!;
-      const existingEntry = existingEntries.find(entry => entry.title === loTitle);
+      const existingEntry = existingEntries.find((entry) => entry.title === loTitle);
 
       if (existingEntry) {
         existingEntry.aggregatedTimeActive += timeActive;
@@ -143,7 +133,7 @@ export class LabPieChart {
 
     const singleUserOuterData: OuterPieData[] = [];
     this.totalTimesMap.forEach((steps, topicTitle) => {
-      steps.forEach(step => {
+      steps.forEach((step) => {
         singleUserOuterData.push({
           name: step.title,
           value: step.aggregatedTimeActive,
@@ -156,4 +146,4 @@ export class LabPieChart {
     this.myChart.setOption(option);
     this.singleUserPieClick();
   }
-};
+}

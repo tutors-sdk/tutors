@@ -32,7 +32,7 @@
   const renderChart = () => {
     if (labHeatMapChart) {
       const container = labHeatMapChart.getChartContainer();
-      if(container) labHeatMapChart.renderChart(container);
+      if (container) labHeatMapChart.renderChart(container);
 
       const combinedLabData = labHeatMapChart.prepareCombinedLabData(userIds);
       const element = document.getElementById("combined-heatmap");

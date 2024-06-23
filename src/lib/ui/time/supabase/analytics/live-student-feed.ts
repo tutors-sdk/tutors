@@ -1,21 +1,13 @@
-import * as echarts from 'echarts/core';
-import { BarChart } from 'echarts/charts';
-import { TooltipComponent, GridComponent, GraphicComponent } from 'echarts/components';
-import { CanvasRenderer } from 'echarts/renderers';
-import { textureBackground, backgroundPattern } from '../charts/tutors-charts-background-url';
-import { barchart } from '../charts/barchart';
+import * as echarts from "echarts/core";
+import { BarChart } from "echarts/charts";
+import { TooltipComponent, GridComponent, GraphicComponent } from "echarts/components";
+import { CanvasRenderer } from "echarts/renderers";
+import { textureBackground, backgroundPattern } from "../charts/tutors-charts-background-url";
+import { barchart } from "../charts/barchart";
 
-echarts.use([
-  BarChart,
-  TooltipComponent,
-  GridComponent,
-  GraphicComponent,
-  CanvasRenderer
-]);
-
+echarts.use([BarChart, TooltipComponent, GridComponent, GraphicComponent, CanvasRenderer]);
 
 echarts.use([GraphicComponent, CanvasRenderer]);
-
 
 const bgTextureImg = textureBackground;
 const bgPatternSrc = backgroundPattern;
@@ -31,15 +23,15 @@ export class LiveStudentFeedChart {
     this.users = users instanceof Map ? users : new Map(Object.entries(users));
     this.chart = null;
     this.courseId = courseName;
-    this.loadingIndicator = document.getElementById('loadingIndicator');
+    this.loadingIndicator = document.getElementById("loadingIndicator");
   }
 
   showLoading() {
-    this.loadingIndicator.style.display = 'block';
+    this.loadingIndicator.style.display = "block";
   }
 
   hideLoading() {
-    this.loadingIndicator.style.display = 'none';
+    this.loadingIndicator.style.display = "none";
   }
 
   renderCharts() {
@@ -55,17 +47,17 @@ export class LiveStudentFeedChart {
   }
 
   getChartContainer() {
-    const container = document.getElementById('heatmap-container');
+    const container = document.getElementById("heatmap-container");
     if (container) {
-      container.style.width = '100%';
-      container.style.height = '100%';
+      container.style.width = "100%";
+      container.style.height = "100%";
     }
     return container;
   }
 
   updateChartData(usersData) {
-    const chartData = usersData.map(user => user[1] || user);
-   let option = barchart(piePatternImg, bgPatternImg, chartData);
+    const chartData = usersData.map((user) => user[1] || user);
+    let option = barchart(piePatternImg, bgPatternImg, chartData);
     this.chart.setOption(option, true);
   }
 
@@ -88,5 +80,3 @@ export class LiveStudentFeedChart {
     });
   }
 }
-
-

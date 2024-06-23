@@ -9,6 +9,7 @@ import type { Course } from "$lib/services/models/lo-types";
 import { filterByType } from "$lib/services/models/lo-utils";
 import type { BoxplotData } from "$lib/services/types/supabase-metrics";
 import { generateStudent } from "../../../../../routes/(time)/simulate/generateStudent";
+import { getUser } from "$lib/services/utils/supabase-utils";
 
 echarts.use([TitleComponent, TooltipComponent, GridComponent, BoxplotChart, CanvasRenderer]);
 
@@ -52,8 +53,8 @@ export class LabBoxPlotChart {
 
     const userActivitiesPromises = Array.from(userActivities.entries()).map(async ([userId, activities]) => {
       if (activities.length > 0) {
-        const fullname = await this.getName();
-
+        //const fullname = await this.getName(); //generate fake name
+        const fullname = (await getUser(userId)) || userId;
         activities.sort((a, b) => a - b);
         const min = d3.min(activities) ?? 0;
         const q1 = d3.quantile(activities, 0.25) ?? 0;
@@ -83,9 +84,10 @@ export class LabBoxPlotChart {
         labActivities.set(title, []);
       }
 
-      for (const [key, labRecord] of lab.learningRecords || []) {
-        if (this.userIds?.includes(key) && labRecord.timeActive != null) {
-          const nickname = await this.getName();
+      for (const [userId, labRecord] of lab.learningRecords || []) {
+        if (this.userIds?.includes(userId) && labRecord.timeActive != null) {
+          //const nickname = await this.getName(); //generate fake names
+          const nickname = (await getUser(userId)) || userId;
           labActivities.get(title)?.push({
             timeActive: labRecord.timeActive,
             nickname: nickname
@@ -137,7 +139,7 @@ export class LabBoxPlotChart {
     if (!container) return;
 
     const chart = echarts.init(container);
-    const option = boxplot(bgPatternImg, userNicknames, boxplotData, "Lab Activity (steps) per Student Boxplot");
+    const option = boxplot(bgPatternImg, userNicknames, boxplotData, "Lab Activity per Student Boxplot");
     chart.setOption(option);
   }
 

@@ -5,7 +5,7 @@ import type { LearningInteraction } from "../types/supabase-metrics";
 import { formatDate, getCalendarDataForAll } from "./supabase-utils";
 
 export async function fetchLearningInteractions(course: Course): Promise<LearningInteraction[]> {
-  const { data: metrics, error: studentsError } = await db.rpc('get_all_learner_records', {
+  const { data: metrics, error: studentsError } = await db.rpc("get_all_learner_records", {
     course_base: course.courseId
   });
 
@@ -14,14 +14,14 @@ export async function fetchLearningInteractions(course: Course): Promise<Learnin
     return [];
   }
   return metrics;
-};
+}
 
 export async function aggregateTimeActiveByDate(records: LearningInteraction[]): Promise<Map<string, Map<string, number>>> {
   const timeActiveMap = new Map<string, Map<string, number>>();
 
   // Iterate over the records
-  records?.forEach(record => {
-    const formattedDate = formatDate(record.id);  
+  records?.forEach((record) => {
+    const formattedDate = formatDate(record.id);
     const studentId = record.studentid;
     const timeActive = record.timeactive;
 
@@ -33,11 +33,10 @@ export async function aggregateTimeActiveByDate(records: LearningInteraction[]):
     // Get the dateMap for the studentId
     const dateMap = timeActiveMap.get(studentId)!;
     dateMap.set(formattedDate, timeActive);
-
   });
 
   return timeActiveMap;
-};
+}
 
 export async function decorateLearningRecords(course: Course, metrics: LearningInteraction[]): Promise<void> {
   if (metrics && metrics.length > 0 && course.loIndex) {
@@ -62,4 +61,4 @@ export async function decorateLearningRecords(course: Course, metrics: LearningI
     });
     course.loIndex = new Map(course.los.map((lo) => [lo.route, lo]));
   }
-};
+}
