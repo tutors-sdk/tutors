@@ -12,5 +12,8 @@
     "party/*"
   ],
   "scripts": {},
-  "devDependencies": {}
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "pako": "^2.1.0"
+  }
 }
