@@ -44,7 +44,7 @@
 </script>
 
 {#if $currentCourse && !$currentCourse.areVideosHidden}
-  <div class="mr-2 w-full p-8">
+  <div class="w-full p-2">
     {#if heanet}
       {#if showVime}
         <div class="relative mx-auto aspect-video w-3/4" style="padding-top: 40%;">
@@ -80,7 +80,7 @@
           <iframe title={lo.title} class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/{defaultId}?&autoplay=1" allow="encrypted-media" allowfullscreen />
         </div>
       {:else}
-        <div class="relative mx-auto aspect-video w-3/4" style="padding-top: 40%;">
+        <div class="relative mx-auto aspect-video" style="padding-top: 40%;">
           <iframe title={lo.title} class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/{defaultId}" allow="encrypted-media" allowfullscreen />
         </div>
       {/if}
