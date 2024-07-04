@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { modeCurrent } from "@skeletonlabs/skeleton";
-    import Links from "$lib/ui/navigators/Links.svelte";
+  import { modeCurrent } from "@skeletonlabs/skeleton";
+  import Links from "$lib/ui/navigators/Links.svelte";
 </script>
 
 <div class="bg-gradient-to-l from-primary-50 dark:from-primary-900 to-accent-50 dark:to-accent-900">
@@ -11,10 +11,16 @@
         <span class="font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone">Open Learning </span>
         Web Toolkit
       </h1>
-      <p class="font-bold !text-lg my-4">
-        A collection of open source components & services supporting the creation of transformative learning experiences using open web standards.
+      <p class="!text-lg my-4 py-4">
+        A collection of open source components & services supporting the creation of transformative learning experiences using open web standards. Developed to support the <a
+          class="font-bold underline"
+          href="/course/wit-hdip-comp-sci-showcase.netlify.app"
+        >
+          Higher Diploma in Computer Science
+        </a>
+        at <a class="font-bold underline" href="https://www.setu.ie">SETU</a>
       </p>
-      <Links/>
+      <Links />
     </div>
     <div class="w-full lg:w-1/2">
       <img src={$modeCurrent ? "/tutors-reader-light.png" : "/tutors-reader-dark.png"} alt="tutors reader screenshot" />
