@@ -7,7 +7,7 @@
 </script>
 
 {#if $currentCourse.footer}
-  <div class="fixed bottom-0 left-0 w-screen h-24">
+  <div class="fixed bottom-0 left-0 w-screen">
     <img src="https://{$currentCourse.courseUrl}/{$currentCourse.footer}" alt="sponsors" />
   </div>
 {:else}
