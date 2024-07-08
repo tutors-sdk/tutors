@@ -21,6 +21,7 @@
   import type { SupabaseClient } from "@supabase/supabase-js";
   import type { Session } from "@supabase/auth-js/src/lib/types";
   import type { Course } from "$lib/services/models/lo-types";
+  import { ForgottenPassword } from "@supabase/auth-ui-svelte";
 
   export let session: Session;
   export let supabase: SupabaseClient;
@@ -112,7 +113,14 @@
       </div>
     </div>
   {/key}
+
   <svelte:fragment slot="pageFooter">
-    <Footer />
+    {#if !$currentCourse.hasFooter}
+      <Footer />
+    {:else}
+      <div class="fixed bottom-0 left-0 border-solid border-4 w-screen h-20">
+        <img src="https://{$currentCourse.courseUrl}/footer.jpg" alt="sponsors" />
+      </div>
+    {/if}
   </svelte:fragment>
 </AppShell>
