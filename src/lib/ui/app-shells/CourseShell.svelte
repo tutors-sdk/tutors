@@ -21,6 +21,7 @@
   import type { SupabaseClient } from "@supabase/supabase-js";
   import type { Session } from "@supabase/auth-js/src/lib/types";
   import type { Course } from "$lib/services/models/lo-types";
+  import { ForgottenPassword } from "@supabase/auth-ui-svelte";
 
   export let session: Session;
   export let supabase: SupabaseClient;
@@ -112,6 +113,7 @@
       </div>
     </div>
   {/key}
+
   <svelte:fragment slot="pageFooter">
     <Footer />
   </svelte:fragment>

@@ -58,7 +58,7 @@ export interface LearningRecord {
   date: Date;
   pageLoads: number;
   timeActive: number;
-};
+}
 
 export type Lo = {
   type: string;
@@ -86,7 +86,7 @@ export type Lo = {
   parentCourse?: Course; // parent course
   breadCrumbs?: Lo[]; // all los from course to this lo
 
-  learningRecords?: Map<string, LearningRecord>// a reference of a students learner record in supabase, studentId -> LearningRecord[]
+  learningRecords?: Map<string, LearningRecord>; // a reference of a students learner record in supabase, studentId -> LearningRecord[]
 };
 
 export type LabStep = {
@@ -193,6 +193,7 @@ export type Course = Composite & {
   hasEnrollment: boolean;
   hasCalendar: boolean;
   hasWhiteList: boolean;
+  footer: string;
   ignorePin: string;
   companions: IconNavBar;
   wallBar: IconNavBar;
