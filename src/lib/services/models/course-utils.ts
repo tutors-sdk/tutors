@@ -93,7 +93,7 @@ export function loadPropertyFlags(course: Course) {
   course.isPortfolio = (course.properties?.portfolio as unknown as boolean) === true;
   course.isPrivate = (course.properties?.private as unknown as number) === 1;
   course.areVideosHidden = (course.properties?.hideVideos as unknown as boolean) === true;
-  course.hasFooter = (course.properties?.footer as unknown as boolean) === true;
+  course.footer = course.properties?.footer as unknown as string;
   course.areLabStepsAutoNumbered = (course.properties?.labStepsAutoNumber as unknown as boolean) === true;
   course.authLevel = course.properties.auth as unknown as number;
   if (course.enrollment) {

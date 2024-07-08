@@ -193,7 +193,7 @@ export type Course = Composite & {
   hasEnrollment: boolean;
   hasCalendar: boolean;
   hasWhiteList: boolean;
-  hasFooter: boolean;
+  footer: string;
   ignorePin: string;
   companions: IconNavBar;
   wallBar: IconNavBar;
