@@ -115,12 +115,6 @@
   {/key}
 
   <svelte:fragment slot="pageFooter">
-    {#if !$currentCourse.hasFooter}
-      <Footer />
-    {:else}
-      <div class="fixed bottom-0 left-0 border-solid border-4 w-screen h-20">
-        <img src="https://{$currentCourse.courseUrl}/footer.jpg" alt="sponsors" />
-      </div>
-    {/if}
+    <Footer />
   </svelte:fragment>
 </AppShell>
