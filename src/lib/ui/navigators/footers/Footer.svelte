@@ -6,7 +6,7 @@
   import TutorsVersion from "./TutorsVersion.svelte";
 </script>
 
-{#if $currentCourse.footer}
+{#if $currentCourse?.footer}
   <div class="fixed bottom-0 left-0 w-screen">
     <img src="https://{$currentCourse.courseUrl}/{$currentCourse.footer}" alt="sponsors" />
   </div>
