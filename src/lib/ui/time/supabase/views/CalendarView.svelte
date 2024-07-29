@@ -6,9 +6,11 @@
   export let timeActiveMap: Map<string, Map<string, number>>;
   export let session: Session;
   export let medianTime: Map<string, number>;
+  export let userNamesUseridsMap: Map<string, string>;
+  export let userAvatarsUseridsMap: Map<string, string>;
 
   let calendarChart: CalendarChart | null;
-  calendarChart = new CalendarChart();
+  calendarChart = new CalendarChart(userAvatarsUseridsMap, userNamesUseridsMap);
 
   onMount(() => {
     renderChart();
@@ -23,9 +25,9 @@
   });
 
   // Re-render the chart when the tab regains focus
-  const handleFocus = () => {
-    renderChart();
-  };
+  // const handleFocus = () => {
+  //   renderChart();
+  // };
 
   // Function to render the chart
   const renderChart = () => {
@@ -37,7 +39,7 @@
   };
 
   // Listen for window focus event to trigger chart refresh
-  window.addEventListener("focus", handleFocus);
+  // window.addEventListener("focus", handleFocus);
 </script>
 
 <div class="h-screen">

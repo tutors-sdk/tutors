@@ -7,9 +7,10 @@ import { heatmap } from "../charts/heatmap-chart";
 import type { Course, Lo } from "$lib/services/models/lo-types";
 import type { Session } from "@supabase/supabase-js";
 import { filterByType } from "$lib/services/models/lo-utils";
-import type { HeatMapSeriesData } from "$lib/services/types/supabase-metrics";
-import { getUser } from "$lib/services/utils/supabase-utils";
+import type { HeatMapSeriesData, HeatMapChartConfig } from "$lib/services/types/supabase-metrics";
+// import { getUser } from "$lib/services/utils/supabase-utils";
 import { generateStudent } from "../../../../../routes/(time)/simulate/generateStudent";
+import type { ECharts } from "echarts";
 
 echarts.use([TooltipComponent, GridComponent, VisualMapComponent, HeatmapChart, CanvasRenderer]);
 
@@ -18,29 +19,40 @@ bgPatternImg.src = backgroundPattern;
 
 export class LabHeatMapChart {
   chartRendered: boolean = false;
-  chartInstances: Map<any, any>;
+  chartInstances: Map<ECharts, ECharts>;
   labs: Lo[] | undefined;
   categories: Set<string>;
   yAxisData: string[];
   course: Course;
   session: Session;
-  series: HeatMapSeriesData[];
+  series: HeatMapSeriesData;
   los: Lo[];
   userIds: string[];
-  chartInstance: any;
+  chartInstance: ECharts;
+  userNamesUseridsMap: Map<string, string>;
 
-  constructor(course: Course, session: Session, userIds: string[]) {
+  constructor(course: Course, session: Session, userIds: string[], userNamesUseridsMap: Map<string, string>) {
     this.chartRendered = false;
     this.chartInstances = new Map();
     this.labs = course.wallMap?.get("lab"); // Array of lab titles
     this.userIds = userIds;
     this.categories = new Set();
     this.yAxisData = [];
-    this.series = [];
+    this.series = {
+      top: "",
+      name: "",
+      data: [],
+      type: "heatmap",
+      selectedMode: "single",
+      label: {
+        show: true
+      }
+    };
     this.course = course;
     this.session = session;
     this.los = filterByType(this.course.los, "lab");
     this.chartInstance = null;
+    this.userNamesUseridsMap = userNamesUseridsMap;
   }
 
   populateUsersData() {
@@ -71,7 +83,7 @@ export class LabHeatMapChart {
     return container;
   }
 
-  async populatePerUserSeriesData(course: Course, allLabs: Lo[], userId: string, index: number = 0) {
+  async populatePerUserSeriesData(course: Course, allLabs: Lo[], userId: string, index: number = 0): Promise<number[][]> {
     const labTitles = allLabs.map((lab: { title: string }) => lab.title.trim());
     this.categories = new Set(labTitles);
 
@@ -97,56 +109,50 @@ export class LabHeatMapChart {
     });
 
     // Construct seriesData array using the aggregated total times
-    const seriesData = Array.from(totalTimesMap.entries()).map(([title, timeActive], stepIndex) => {
+    const seriesData: number[][] = Array.from(totalTimesMap.entries()).map(([title, timeActive], stepIndex) => {
       return [labTitles.indexOf(title.trim()), index, Math.round(timeActive / 2)];
     });
 
     //const userFullName = await getUser(userId) || userId;
-    const userFullName = userId;
 
-    return [
-      {
-        name: "Lab Activity for " + userFullName,
-        type: "heatmap",
-        data: seriesData,
-        label: {
-          show: true
-        }
-      }
-    ];
+    return seriesData;
   }
 
   async populateAndRenderUsersData(course: Course, allLabs: Lo[], userIds: string[]) {
     const container = this.getChartContainer();
     if (!container) return;
 
-    let allSeriesData: HeatMapSeriesData[] = [];
+    let allSeriesData: number[][] = []; // Array to store all series data
     let yAxisData: string[] = []; // Array to store yAxis data
 
     const labTitles = allLabs.map((lab: { title: string }) => lab.title.trim());
     this.categories = new Set(labTitles);
-
+    let seriesData: number[][];
     for (const [index, userId] of userIds.entries()) {
-      const seriesData = await this.populatePerUserSeriesData(course, allLabs, userId, index);
-      allSeriesData = allSeriesData.concat(seriesData[0].data);
+      seriesData = await this.populatePerUserSeriesData(course, allLabs, userId, index);
+      allSeriesData = allSeriesData.concat(seriesData);
 
       if (!yAxisData.includes(userId)) {
-        const fullname = await getUser(userId) || userId; //real name
-        //const fullname = (await generateStudent()).fullName; //populate with generated names
-        yAxisData.push(fullname);
+        const fullName = this.userNamesUseridsMap.get(userId) || userId;
+        //const fullname = (await getUser(userId)) || userId; //real
+        //const fullname = (await generateStudent()).fullName; //fake
+        yAxisData.push(fullName);
       }
+      //const fullname = await getUser(userId) || userId; //real name
+      //const fullname = (await generateStudent()).fullName; //populate with generated names
+      //yAxisData.push(fullname);
     }
 
-    this.series = [
-      {
-        name: "Lab Activity For All Users",
-        type: "heatmap",
-        data: allSeriesData || [],
-        label: {
-          show: true
-        }
+    this.series = {
+      name: "Lab Activity For All Users",
+      type: "heatmap",
+      data: allSeriesData || [],
+      selectedMode: "single",
+      top: "5%",
+      label: {
+        show: true
       }
-    ];
+    };
 
     this.yAxisData = yAxisData;
     this.renderChart(container);
@@ -159,25 +165,24 @@ export class LabHeatMapChart {
     const userId = session.user.user_metadata.full_name ?? session.user.user_metadata.user_name;
     this.yAxisData = [userId];
 
-    const seriesData = await this.populatePerUserSeriesData(this.course, allLabs, session.user.user_metadata.user_name);
-    this.series = [
-      {
-        top: "5%",
-        name: "Lab Activity",
-        type: "heatmap",
-        data: seriesData[0]?.data || [],
-        label: {
-          show: true
-        }
+    const seriesData: number[][] = await this.populatePerUserSeriesData(this.course, allLabs, session.user.user_metadata.user_name);
+    this.series = {
+      top: "5%",
+      name: "Lab Activity",
+      type: "heatmap",
+      data: seriesData || [],
+      selectedMode: "single",
+      label: {
+        show: true
       }
-    ];
+    };
 
     this.renderChart(container);
   }
 
   renderChart(container: HTMLElement) {
     this.chartInstance = echarts.init(container);
-    const option = heatmap(this.categories, this.yAxisData, this.series, bgPatternImg, "Lab Time: Per Student (click a cell to sort)");
+    const option: HeatMapChartConfig = heatmap(this.categories, this.yAxisData, this.series, bgPatternImg, "Lab Time: Per Student (click a cell to sort)");
     this.chartInstance.setOption(option);
     this.chartInstance.resize();
   }
@@ -234,20 +239,20 @@ export class LabHeatMapChart {
         if (params.componentType === "series" && params.seriesType === "heatmap") {
           const colIndex = params.value[0]; // Column index of the clicked cell
           // Extract the data for the clicked column
-          let columnData = this.series[0].data.filter((item: any[]) => item[0] === colIndex);
+          let columnData = this.series.data.filter((item: any[]) => item[0] === colIndex);
           // Sort the column data by the value (timeActive) in ascending order
           columnData.sort((a: number[], b: number[]) => a[2] - b[2]);
           // Reorder yAxisData based on sorted column data
           const sortedUserIndices = columnData.map((item: any[]) => item[1]);
           const sortedYAxisData = sortedUserIndices.map((index: string | number) => this.yAxisData[index]);
           // Reconstruct the series data with sorted y-axis order
-          let newData = this.series[0].data.map((item: any[]) => {
+          let newData = this.series.data.map((item: any[]) => {
             const newIndex = sortedUserIndices.indexOf(item[1]);
             return [item[0], newIndex, item[2]];
           });
           // Update the y-axis data and series data
           this.yAxisData = sortedYAxisData;
-          this.series[0].data = newData;
+          this.series.data = newData;
           // Refresh the chart instance
           this.chartInstance.setOption({
             yAxis: {
@@ -255,7 +260,7 @@ export class LabHeatMapChart {
             },
             series: [
               {
-                data: this.series[0].data
+                data: this.series.data
               }
             ]
           });

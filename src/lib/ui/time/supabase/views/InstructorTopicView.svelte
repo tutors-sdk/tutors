@@ -7,10 +7,11 @@
   export let course: Course;
   export let session: Session;
   export let userIds: string[];
+  export let userNamesUseridsMap: Map<string, string>;
   let topicHeatMapChart: TopicHeatMapChart | null;
-  topicHeatMapChart = new TopicHeatMapChart(course, session, userIds);
 
   onMount(() => {
+    topicHeatMapChart = new TopicHeatMapChart(course, session, userIds, userNamesUseridsMap);
     topicHeatMapChart?.populateUsersData();
     renderChart();
   });
@@ -23,10 +24,10 @@
     }
   });
 
-  // Re-render the chart when the tab regains focus
-  const handleFocus = () => {
-    renderChart();
-  };
+  // // Re-render the chart when the tab regains focus
+  // const handleFocus = () => {
+  //   renderChart();
+  // };
 
   // Function to render the chart
   const renderChart = () => {
@@ -45,7 +46,7 @@
   };
 
   // Listen for window focus event to trigger chart refresh
-  window.addEventListener("focus", handleFocus);
+  // window.addEventListener("focus", handleFocus);
 </script>
 
 <div class="h-screen flex flex-col">

@@ -7,13 +7,10 @@ import type { Course, Lo } from "$lib/services/models/lo-types";
 import { backgroundPattern, textureBackground } from "../charts/tutors-charts-background-url";
 import type { Session } from "@supabase/supabase-js";
 import { filterByType } from "$lib/services/models/lo-utils";
-import type { EChartsOption } from "echarts";
 import { piechart } from "../charts/piechart";
-import type { LabStepData, OuterPieData } from "$lib/services/types/supabase-metrics";
+import type { DrilledDownData } from "$lib/services/types/supabase-metrics";
 
 echarts.use([TooltipComponent, LegendComponent, PieChart, BarChart, GridComponent, CanvasRenderer, LabelLayout]);
-
-let option: EChartsOption;
 
 const bgTexture = textureBackground;
 const bgPatternSrc = backgroundPattern;
@@ -28,7 +25,7 @@ export class LabPieChart {
   labs: string[];
   course: Course;
   session: Session;
-  totalTimesMap: Map<string, LabStepData[]>;
+  totalTimesMap: Map<string, DrilledDownData[]>;
   labTitleTimesMap: Map<string, number>;
 
   constructor(course: Course, session: Session) {
@@ -46,14 +43,14 @@ export class LabPieChart {
       this.myChart.off("click");
       this.myChart.on("click", (params: { seriesName: string; name: string }) => {
         if (params.seriesName === "Inner Pie") {
-          const outerPieData: OuterPieData[] = []; // Reset outerPieData array
+          const outerPieData: DrilledDownData[] = []; // Reset outerPieData array
 
           // Find the corresponding data for the clicked inner pie slice
           this.totalTimesMap.forEach((steps, topicTitle) => {
             if (topicTitle === params.name) {
               steps.forEach((step) => {
-                if (step.aggregatedTimeActive !== 0) {
-                  outerPieData.push({ value: step.aggregatedTimeActive, name: step.title, type: step.loType });
+                if (step.value !== 0) {
+                  outerPieData.push({ value: step.value, name: step.name, type: step.type });
                 }
               });
             }
@@ -64,18 +61,21 @@ export class LabPieChart {
     }
   }
 
-  populateOuterPieData(outerPieData: OuterPieData[]) {
+  populateOuterPieData(outerPieData: DrilledDownData[]) {
     // Update the data for the outer pie chart
-    const chartInstance = echarts.getInstanceByDom(document.getElementById("chart"));
-    if (chartInstance) {
-      chartInstance.setOption({
-        series: [
-          {
-            name: "Outer Pie",
-            data: outerPieData
-          }
-        ]
-      });
+    const element = document.getElementById("chart");
+    if (element) {
+      const chartInstance = echarts.getInstanceByDom(element);
+      if (chartInstance) {
+        chartInstance.setOption({
+          series: [
+            {
+              name: "Outer Pie",
+              data: outerPieData
+            }
+          ]
+        });
+      }
     }
   }
 
@@ -112,12 +112,12 @@ export class LabPieChart {
       }
 
       const existingEntries = this.totalTimesMap.get(topicTitle)!;
-      const existingEntry = existingEntries.find((entry) => entry.title === loTitle);
+      const existingEntry = existingEntries.find((entry) => entry.name === loTitle);
 
       if (existingEntry) {
-        existingEntry.aggregatedTimeActive += timeActive;
+        existingEntry.value += timeActive;
       } else {
-        existingEntries.push({ aggregatedTimeActive: timeActive, title: loTitle, loType: lo.type });
+        existingEntries.push({ value: timeActive, name: loTitle, type: lo.type });
       }
     };
 
@@ -131,18 +131,20 @@ export class LabPieChart {
       value: timeActive
     }));
 
-    const singleUserOuterData: OuterPieData[] = [];
+    const singleUserOuterData: DrilledDownData[] = [];
     this.totalTimesMap.forEach((steps, topicTitle) => {
       steps.forEach((step) => {
-        singleUserOuterData.push({
-          name: step.title,
-          value: step.aggregatedTimeActive,
-          type: step.loType
-        });
+        if (step.type !== undefined) {
+          singleUserOuterData.push({
+            name: step.name,
+            value: step.value,
+            type: step.type
+          });
+        }
       });
     });
 
-    const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, singleUserOuterData);
+    const option = piechart(bgPatternImg, [], singleUserInnerData, singleUserOuterData);
     this.myChart.setOption(option);
     this.singleUserPieClick();
   }

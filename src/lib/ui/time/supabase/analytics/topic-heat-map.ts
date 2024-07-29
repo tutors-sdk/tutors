@@ -4,10 +4,10 @@ import { HeatmapChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
 import { backgroundPattern } from "../charts/tutors-charts-background-url";
 import { heatmap } from "../charts/heatmap-chart";
-import type { Course, Lo, Topic } from "$lib/services/models/lo-types";
+import type { Course, Lo } from "$lib/services/models/lo-types";
 import type { Session } from "@supabase/supabase-js";
 import type { HeatMapSeriesData } from "$lib/services/types/supabase-metrics";
-import { getCompositeValues, getSimpleTypesValues, getUser } from "$lib/services/utils/supabase-utils";
+import { getCompositeValues, getSimpleTypesValues } from "$lib/services/utils/supabase-utils";
 import { generateStudent } from "../../../../../routes/(time)/simulate/generateStudent";
 
 echarts.use([TooltipComponent, GridComponent, VisualMapComponent, HeatmapChart, CanvasRenderer]);
@@ -21,25 +21,36 @@ export class TopicHeatMapChart {
   course: Course;
   categories: Set<string>;
   yAxisData: string[];
-  series: any[];
+  series: HeatMapSeriesData;
   topics: string[];
   session: Session;
   userIds: string[];
   chart: any;
   chartInstance: any;
+  userNamesUseridsMap: Map<string, string>;
 
-  constructor(course: Course, session: Session, userIds: string[]) {
+  constructor(course: Course, session: Session, userIds: string[], userNamesUseridsMap: Map<string, string>) {
     this.chartRendered = false;
     this.chartInstances = new Map();
     this.topics = course.los.map((topic) => topic.title.trim());
     this.course = course;
     this.categories = new Set();
     this.yAxisData = [];
-    this.series = [];
+    this.series = {
+      top: "",
+      name: "",
+      data: [],
+      type: "heatmap",
+      selectedMode: "single",
+      label: {
+        show: true
+      }
+    };
     this.session = session;
     this.userIds = userIds;
     this.chart = null;
     this.chartInstance = null;
+    this.userNamesUseridsMap = userNamesUseridsMap;
   }
 
   populateUsersData() {
@@ -93,24 +104,14 @@ export class TopicHeatMapChart {
 
     const topicTitles = this.course.los.map((topic) => topic.title.trim());
 
-    let seriesData = Array.from(totalTimesMap.entries()).map(([title, timeActive]) => {
+    const seriesData: number[][] = Array.from(totalTimesMap.entries()).map(([title, timeActive]) => {
       return [topicTitles.indexOf(title.trim()), index, Math.round(timeActive / 2)];
     });
 
     seriesData.sort((a, b) => b[2] - a[2]);
 
     //const userFullName = await getUser(userId) || userId;
-    const userFullName = userId;
-    return [
-      {
-        name: "Topic Activity for " + userFullName,
-        type: "heatmap",
-        data: seriesData,
-        label: {
-          show: true
-        }
-      }
-    ];
+    return seriesData;
   }
 
   async populateAndRenderSingleUserData() {
@@ -120,20 +121,18 @@ export class TopicHeatMapChart {
 
     this.yAxisData = [userId];
 
-    const seriesData = await this.prepareTopicData(this.session.user.user_metadata.user_name);
+    const seriesData: number[][] = await this.prepareTopicData(this.session.user.user_metadata.user_name);
 
-    this.series = [
-      {
-        name: "Topic Activity",
-        type: "heatmap",
-        data: seriesData[0]?.data || [],
-        selectedMode: "single",
-        top: "5%",
-        label: {
-          show: true
-        }
+    this.series = {
+      name: "Topic Activity",
+      type: "heatmap",
+      data: seriesData || [],
+      selectedMode: "single",
+      top: "5%",
+      label: {
+        show: true
       }
-    ];
+    };
 
     this.renderChart(container);
   }
@@ -142,35 +141,36 @@ export class TopicHeatMapChart {
     const container = this.getChartContainer();
     if (!container) return;
 
-    let allSeriesData: HeatMapSeriesData[] = [];
+    let allSeriesData: number[][] = [];
     let yAxisData: string[] = [];
     const topicTitles = topics.map((topic: { title: string }) => topic.title.trim());
     this.categories = new Set(topicTitles);
 
     for (const [index, userId] of usersIds.entries()) {
-      const seriesData = await this.prepareTopicData(userId, index);
-      allSeriesData = allSeriesData.concat(seriesData[0].data);
+      let seriesData: number[][] = await this.prepareTopicData(userId, index);
+      allSeriesData = allSeriesData.concat(seriesData);
 
       if (!yAxisData.includes(userId)) {
-        // const fullname = await getUser(userId) || userId; //real
-        const fullname = (await generateStudent()).fullName; //fake
-        yAxisData.push(fullname);
+        const fullName = this.userNamesUseridsMap.get(userId) || userId;
+
+        //const fullname = (await getUser(userId)) || userId; //real
+        //const fullname = (await generateStudent()).fullName; //fake
+        yAxisData.push(fullName);
       }
     }
 
     allSeriesData.sort((a, b) => b[2] - a[2]);
 
-    this.series = [
-      {
-        name: "Topic Activity For All Users",
-        type: "heatmap",
-        data: allSeriesData || [],
-        selectedMode: "single",
-        label: {
-          show: true
-        }
+    this.series = {
+      name: "Topic Activity For All Users",
+      type: "heatmap",
+      top: "5%",
+      data: allSeriesData || [],
+      selectedMode: "single",
+      label: {
+        show: true
       }
-    ];
+    };
 
     this.yAxisData = yAxisData;
     this.renderChart(container);
@@ -240,20 +240,20 @@ export class TopicHeatMapChart {
         if (params.componentType === "series" && params.seriesType === "heatmap") {
           const colIndex = params.value[0]; // Column index of the clicked cell
           // Extract the data for the clicked column
-          let columnData = this.series[0].data.filter((item: any[]) => item[0] === colIndex);
+          let columnData = this.series.data.filter((item: any[]) => item[0] === colIndex);
           // Sort the column data by the value (timeActive) in ascending order
           columnData.sort((a: number[], b: number[]) => a[2] - b[2]);
           // Reorder yAxisData based on sorted column data
           const sortedUserIndices = columnData.map((item: any[]) => item[1]);
           const sortedYAxisData = sortedUserIndices.map((index: string | number) => this.yAxisData[index]);
           // Reconstruct the series data with sorted y-axis order
-          let newData = this.series[0].data.map((item: any[]) => {
+          let newData = this.series.data.map((item: any[]) => {
             const newIndex = sortedUserIndices.indexOf(item[1]);
             return [item[0], newIndex, item[2]];
           });
           // Update the y-axis data and series data
           this.yAxisData = sortedYAxisData;
-          this.series[0].data = newData;
+          this.series.data = newData;
           // Refresh the chart instance
           this.chartInstance.setOption({
             yAxis: {
@@ -261,7 +261,7 @@ export class TopicHeatMapChart {
             },
             series: [
               {
-                data: this.series[0].data
+                data: this.series.data
               }
             ]
           });
