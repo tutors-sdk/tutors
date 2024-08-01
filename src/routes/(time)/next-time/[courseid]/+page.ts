@@ -3,7 +3,7 @@ import { courseService } from "$lib/services/course";
 import type { Course } from "$lib/services/models/lo-types";
 import { aggregateTimeActiveByDate, decorateLearningRecords, fetchLearningInteractions } from "$lib/services/utils/supabase-metrics";
 import type { LearningInteraction } from "$lib/services/types/supabase-metrics";
-import { getCalendarDataForAll, getMedianTimeActivePerDate } from "$lib/services/utils/supabase-utils";
+import { getCalendarDataForAll, getGithubAvatarUrl, getMedianTimeActivePerDate, getUserNames } from "$lib/services/utils/supabase-utils";
 
 export const ssr = false;
 
@@ -13,6 +13,8 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
     const course: Course = await courseService.readCourse(params.courseid, fetch);
     const metrics: LearningInteraction[] = await fetchLearningInteractions(course);
     const userIds: string[] = [...new Set(metrics.map((m: LearningInteraction) => m.studentid))] as string[];
+    const userNamesUseridsMap: Map<string, string> = await getUserNames(userIds);
+    const userAvatarsUseridsMap: Map<string, string> = await getGithubAvatarUrl(userIds);
     const records: LearningInteraction[] = await getCalendarDataForAll(course.courseId);
     const aggregatedData = await aggregateTimeActiveByDate(records); 
     const medianCalendarTime = await getMedianTimeActivePerDate(course.courseId);
@@ -38,6 +40,8 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
     return {
       course: course,
       userIds: userIds,
+      userNamesUseridsMap: userNamesUseridsMap,
+      userAvatarsUseridsMap: userAvatarsUseridsMap,
       calendarIds: calendarIds, // Because of mismatch data in the dbs (reintroduce calendar)
       session: data.session,
       timeActiveMap: aggregatedData,

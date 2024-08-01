@@ -7,8 +7,9 @@
   export let course: Course;
   export let session: Session;
   export let userIds: string[];
+  export let userNamesUseridsMap: Map<string, string>;
   let labHeatMapChart: LabHeatMapChart | null;
-  labHeatMapChart = new LabHeatMapChart(course, session, userIds);
+  labHeatMapChart = new LabHeatMapChart(course, session, userIds, userNamesUseridsMap);
 
   onMount(() => {
     labHeatMapChart?.populateUsersData();
@@ -22,11 +23,6 @@
       labHeatMapChart = null;
     }
   });
-
-  // Re-render the chart when the tab regains focus
-  const handleFocus = () => {
-    renderChart();
-  };
 
   // Function to render the chart
   const renderChart = () => {
@@ -43,8 +39,6 @@
     }
   };
 
-  // Listen for window focus event to trigger chart refresh
-  window.addEventListener("focus", handleFocus);
 </script>
 
 <div class="h-screen flex flex-col">

@@ -7,7 +7,7 @@ import { getCompositeValues, getSimpleTypesValues } from "$lib/services/utils/su
 import { PieChart } from "echarts/charts";
 import { TitleComponent, TooltipComponent, LegendComponent } from "echarts/components";
 import { CanvasRenderer } from "echarts/renderers";
-import type { LabStepData, OuterPieData } from "$lib/services/types/supabase-metrics";
+import type { DrilledDownData } from "$lib/services/types/supabase-metrics";
 
 echarts.use([TitleComponent, TooltipComponent, LegendComponent, PieChart, CanvasRenderer]);
 
@@ -22,7 +22,7 @@ export class TopicPieChart {
   course: Course;
   session: Session;
   topicTitleTimesMap = new Map<string, number>();
-  totalTimesMap: Map<string, LabStepData[]>;
+  totalTimesMap: Map<string, DrilledDownData[]>;
   userIds: string[];
   multipleUsers: boolean;
 
@@ -32,8 +32,8 @@ export class TopicPieChart {
     this.course = course;
     this.session = session;
     this.userIds = userIds;
-    this.topicTitleTimesMap = new Map<string, number>();
-    this.totalTimesMap = new Map<string, LabStepData[]>();
+    this.topicTitleTimesMap = new Map();
+    this.totalTimesMap = new Map();
     this.multipleUsers = multipleUsers;
   }
 
@@ -42,14 +42,14 @@ export class TopicPieChart {
       // Listen to click event on the inner pie chart
       this.myChart.on("click", (params: { seriesName: string; name: string }) => {
         if (params.seriesName === "Inner Pie") {
-          let outerPieData: OuterPieData[] = []; // Reset outerPieData array
+          let outerPieData: DrilledDownData[] = []; // Reset outerPieData array
 
           // Find the corresponding data for the clicked inner pie slice
           this.totalTimesMap.forEach((steps, topicTitle) => {
             if (topicTitle === params.name) {
               steps.forEach((step) => {
-                if (step.aggregatedTimeActive !== 0) {
-                  outerPieData.push({ value: step.aggregatedTimeActive, name: step.title, type: step.loType });
+                if (step.value !== 0) {
+                  outerPieData.push({ value: step.value, name: step.name, type: step.type });
                 }
               });
             }
@@ -60,41 +60,48 @@ export class TopicPieChart {
     }
   }
 
-  populateOuterPieData(outerPieData: OuterPieData[]) {
-    // Update the data for the outer pie chart
-    const chartInstance = echarts.getInstanceByDom(document.getElementById("chart"));
-    if (chartInstance) {
-      chartInstance.setOption({
-        series: [
-          {
-            name: "Outer Pie",
-            data: outerPieData.filter((topic) => topic.value > 0) || [{}]
-          }
-        ]
-      });
+  populateOuterPieData(outerPieData: DrilledDownData[]) {
+    const element = document.getElementById("chart");
+    if (element) {
+      // Update the data for the outer pie chart
+      const chartInstance = echarts.getInstanceByDom(element);
+      if (chartInstance) {
+        chartInstance.setOption({
+          series: [
+            {
+              name: "Outer Pie",
+              data: outerPieData.filter((topic) => topic.value > 0) || [{ value: 0, name: "No data" }]
+            }
+          ]
+        });
+      }
     }
   }
 
   multipleUsersInnerPieClick() {
-    this.myChart.on("click", (params: { seriesName: string; name: any }) => {
-      if (params.seriesName === "Inner Pie") {
-        const outerPieData: OuterPieData[] = [];
+    if (this.myChart !== null) {
+      // Remove any existing click listeners to prevent multiple handlers
+      this.myChart.off("click");
+      this.myChart.on("click", (params: { seriesName: string; name: string }) => {
+        if (params.seriesName === "Inner Pie") {
+          const outerPieData: DrilledDownData[] = [];
 
-        this.totalTimesMap.forEach((steps, topicTitle) => {
-          if (topicTitle === params.name) {
-            steps.forEach((step) => {
-              const existing = outerPieData.find((data) => data.name === step.title);
-              if (existing) {
-                existing.value += step.aggregatedTimeActive;
-              } else {
-                outerPieData.push({ value: step.aggregatedTimeActive, name: step.title, type: step.loType });
-              }
-            });
-          }
-        });
-        this.populateOuterPieData(outerPieData);
-      }
-    });
+          this.totalTimesMap.forEach((steps, topicTitle) => {
+            if (topicTitle === params.name) {
+              steps.forEach((step) => {
+                const existing = outerPieData.find((data) => data.name === step.name);
+                if (existing) {
+                  existing.value += step.value;
+                } else {
+                  outerPieData.push({ value: step.value, name: step.name, type: step.type });
+                }
+              });
+            }
+          });
+          this.populateOuterPieData(outerPieData);
+        }
+      });
+    }
   }
 
   getOuterPieDataForMultipleUsers(): { value: number; name: string }[] {
@@ -112,9 +119,12 @@ export class TopicPieChart {
   }
 
   renderChart(userIds = null as string[] | null) {
-    if (this.myChart === null) {
-      // If chart instance doesn't exist, create a new one
+    if (!this.myChart) {
+      // Create a new chart instance if it doesn't exist
       this.myChart = echarts.init(document.getElementById("chart"));
+    } else {
+      // Clear the previous chart to prevent aggregation issues
+      this.myChart.clear();
     }
 
     const allComposites = getCompositeValues(this.course.los);
@@ -144,12 +154,12 @@ export class TopicPieChart {
       }
 
       const existingEntries = this.totalTimesMap.get(topicTitle)!;
-      const existingEntry = existingEntries.find((entry) => entry.title === loTitle);
+      const existingEntry = existingEntries.find((entry) => entry.name === loTitle);
 
       if (existingEntry) {
-        existingEntry.aggregatedTimeActive += timeActive;
+        existingEntry.value += timeActive;
       } else {
-        existingEntries.push({ aggregatedTimeActive: timeActive, title: loTitle, loType: lo.type });
+        existingEntries.push({ value: timeActive, name: loTitle, type: lo.type });
       }
     };
 
@@ -171,12 +181,12 @@ export class TopicPieChart {
         value: timeActive
       }));
 
-      const option = piechart(bgPatternImg, this.course, [], singleUserInnerData, []);
+      const option = piechart(bgPatternImg, [], singleUserInnerData, []);
       this.myChart.setOption(option);
       this.singleUserPieClick();
     } else {
       const allUsersTopicActivity = this.getOuterPieDataForMultipleUsers();
-      const option = piechart(bgPatternImg, this.course, allUsersTopicActivity, [], []);
+      const option = piechart(bgPatternImg, allUsersTopicActivity, [], []);
       this.myChart.setOption(option);
       this.multipleUsersInnerPieClick();
     }

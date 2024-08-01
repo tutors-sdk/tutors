@@ -5,7 +5,7 @@ import { CanvasRenderer } from "echarts/renderers";
 import { backgroundPattern } from "../charts/tutors-charts-background-url";
 import { boxplot, combinedBoxplotChart } from "../charts/boxplot-chart";
 import type { Course } from "$lib/services/models/lo-types";
-import { getCompositeValues, getSimpleTypesValues, getUser } from "$lib/services/utils/supabase-utils";
+import { getCompositeValues, getSimpleTypesValues } from "$lib/services/utils/supabase-utils";
 import type { BoxplotData } from "$lib/services/types/supabase-metrics";
 import * as d3 from "d3";
 import { generateStudent } from "../../../../../routes/(time)/simulate/generateStudent";
@@ -35,10 +35,12 @@ function calculateBoxplotStats(values: number[]): [number, number, number, numbe
 export class TopicBoxPlotChart {
   course: Course;
   userIds: string[];
+  userNamesUseridsMap: Map<string, string>;
 
-  constructor(course: Course, userIds: string[]) {
+  constructor(course: Course, userIds: string[], userNamesUseridsMap: Map<string, string>) {
     this.course = course;
     this.userIds = userIds;
+    this.userNamesUseridsMap = userNamesUseridsMap;
   }
 
   async getName(): Promise<string> {
@@ -67,7 +69,9 @@ export class TopicBoxPlotChart {
     const userActivitiesPromises = Array.from(userActivities.entries()).map(async ([userId, activities]) => {
       if (activities.length > 0) {
         //const fullname = await this.getName(); //generate fakenames
-        const fullname = (await getUser(userId)) || userId;
+        //const fullname = (await getUser(userId)) || userId;
+        const fullname = this.userNamesUseridsMap.get(userId) || userId;
+
         const [min, q1, median, q3, max] = calculateBoxplotStats(activities);
         boxplotData.push([min, q1, median, q3, max]);
         userNicknames.push(fullname); // replace with userId when changing back
@@ -103,7 +107,9 @@ export class TopicBoxPlotChart {
         const recordsPromises = Array.from(lo.learningRecords.entries()).map(async ([userId, record]) => {
           if (this.userIds.includes(userId)) {
             //const nickname = await this.getName(); //generate a fake name
-            const nickname = (await getUser(userId)) || userId;
+            //const nickname = (await getUser(userId)) || userId;
+            const nickname = this.userNamesUseridsMap.get(userId) || userId;
+
             topicActivities.get(title)!.push({
               timeActive: record.timeActive,
               nickname: nickname // change to userId when changing back
@@ -126,7 +132,7 @@ export class TopicBoxPlotChart {
 
       return {
         value: [min, q1, median, q3, max],
-        title: title,
+        name: title,
         lowNickname: lowNickname,
         highNickname: highNickname
       };

@@ -1,12 +1,7 @@
 import type { Course } from "$lib/services/models/lo-types";
+import type { DrilledDownData } from "$lib/services/types/supabase-metrics";
 
-export function piechart(
-  bgPatternImg: HTMLImageElement,
-  course: Course,
-  allUsersTopicActivity: any[],
-  singleUserInnerData: { name: string; value: number }[],
-  singleUserOuterData: { value: number; name: string; type: string }[]
-) {
+export function piechart(bgPatternImg: HTMLImageElement, allUsersTopicActivity: any[], singleUserInnerData: DrilledDownData[], singleUserOuterData: DrilledDownData[]) {
   return {
     tooltip: {
       trigger: "item",
