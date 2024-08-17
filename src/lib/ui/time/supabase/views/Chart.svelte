@@ -18,6 +18,9 @@
       chartInstance = new LabPieChart(course, session);
     } else if (chartType === 'TopicPieChart') {
       chartInstance = new TopicPieChart(course, session, userIds, multipleUsers);
+    }else{
+      //this would be type never the narraowest type
+      throw new Error(`Invalid chart type: ${chartType}`);
     }
     renderChart();
   });

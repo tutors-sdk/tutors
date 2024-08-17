@@ -10,7 +10,7 @@ import { tutorsAnalyticsLogo } from "../charts/personlised-logo";
 import type { CalendarMap } from "$lib/services/types/supabase-metrics";
 import type { Course } from "$lib/services/models/lo-types";
 import type { Session } from "@supabase/supabase-js";
- import { getGithubAvatarUrl } from "$lib/services/utils/supabase-utils";
+import { getGithubAvatarUrl } from "$lib/services/utils/supabase-utils";
 import { generateStudent } from "../../../../../routes/(time)/simulate/generateStudent";
 
 echarts.use([TitleComponent, CalendarComponent, TooltipComponent, VisualMapComponent, HeatmapChart, CanvasRenderer, GraphicComponent]);
@@ -134,7 +134,7 @@ export class CalendarChart {
 
     //const fullname = (await getUser(userId)) || userId; //real
     //const fullname = (await generateStudent()).fullName; //fake
-    
+
     //const student = await generateStudent(); //generate fake student
     // const avatarUrl = await getGithubAvatarUrl(userId);
     // const fullName = await getUser(userId);

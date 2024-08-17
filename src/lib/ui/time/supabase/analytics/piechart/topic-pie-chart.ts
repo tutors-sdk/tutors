@@ -11,7 +11,6 @@ import { BasePieChart } from "./base-pie-chart";
 import { piechart } from "../../charts/piechart";
 import { getCompositeValues, getSimpleTypesValues } from "$lib/services/utils/supabase-utils";
 
-
 echarts.use([TooltipComponent, LegendComponent, PieChart, BarChart, GridComponent, CanvasRenderer, LabelLayout]);
 
 const bgTexture = textureBackground;
@@ -41,6 +40,7 @@ export class TopicPieChart extends BasePieChart<number> {
       if (existing) {
         existing.value += value;
       } else {
+        value = Math.round(value / 2);
         outerPieData.push({ value, name: key });
       }
     });
@@ -56,7 +56,7 @@ export class TopicPieChart extends BasePieChart<number> {
     const allTypes = [...allComposites, ...allSimpleTypes];
 
     allTypes.forEach((lo) => {
-      if (this.userIds && this.userIds.length > 0) {
+      if (this.multipleUsers) {
         this.userIds.forEach((userId) => {
           const timeActive = lo.learningRecords?.get(userId)?.timeActive || 0;
           this.updateMaps(lo, timeActive, (lo) =>
@@ -74,7 +74,7 @@ export class TopicPieChart extends BasePieChart<number> {
     if (this.multipleUsers === false) {
       const singleUserInnerData = Array.from(this.titleTimesMap.entries()).map(([title, timeActive]) => ({
         name: title,
-        value: timeActive
+        value: Math.round(timeActive / 2)
       }));
 
       const option = piechart(bgPatternImg, [], singleUserInnerData, []);

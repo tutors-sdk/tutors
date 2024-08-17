@@ -14,7 +14,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
   };
 
   if (series?.data) {
-    if (series.name === "Lab Activity For All Users" || series.name === "Topic Activity For All Users") {
+    if (series.name === "lab activity for all users" || series.name === "topic activity for all users") {
       gridConfig = {
         left: "30%",
         right: "30%",
@@ -95,5 +95,76 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       bottom: 0
     },
     series: seriesArray
+  };
+}
+
+export function renderCombinedChart(heatmapActivities: any[], bgPatternImg: HTMLImageElement, chartTitle: string) {
+  const heatmapData = heatmapActivities.map((item, index) => [index, 0, Math.round(item.value / 2)]);
+  const titles = heatmapActivities.map((item) => item.title);
+
+  return {
+    title: {
+      top: "15%",
+      left: "center",
+      text: chartTitle
+    },
+    tooltip: {
+      position: "bottom",
+      formatter: function (params: { dataIndex: number }) {
+        const dataIndex = params.dataIndex;
+        const dataItem = heatmapActivities[dataIndex];
+        if (dataItem) {
+          let tipHtml = dataItem.title + "<br />";
+          tipHtml += "Min: " + dataItem.lowValue + " (" + dataItem.lowNickname + ")<br />";
+          tipHtml += "Max: " + dataItem.highValue + " (" + dataItem.highNickname + ")";
+          return tipHtml;
+        }
+        return "";
+      }
+    },
+    backgroundColor: {
+      image: bgPatternImg,
+      repeat: "repeat"
+    },
+    grid: {
+      height: "30%",
+      top: "30%"
+    },
+    xAxis: {
+      type: "category",
+      data: titles
+    },
+    yAxis: {
+      type: "category",
+      data: [""]
+    },
+    axisLabel: {
+      interval: 0,
+      fontSize: 15
+    },
+    visualMap: {
+      min: 0,
+      max: Math.max(...heatmapActivities.map((item) => item.value / 2)),
+      calculable: true,
+      orient: "horizontal",
+      left: "center",
+      bottom: "15%"
+    },
+    series: [
+      {
+        name: "Value",
+        type: "heatmap",
+        data: heatmapData,
+        label: {
+          show: true
+        },
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowColor: "rgba(0, 0, 0, 0.5)"
+          }
+        }
+      }
+    ]
   };
 }

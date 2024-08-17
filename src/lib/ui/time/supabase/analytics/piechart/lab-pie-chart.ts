@@ -29,7 +29,7 @@ export class LabPieChart extends BasePieChart<number> {
   }
 
   renderChart() {
-    super.renderChart(); // Initialize and set up click handlers
+    super.renderChart(); // Initialise and set up click handlers
 
     this.titleTimesMap.clear();
     this.totalTimesMap.clear();
@@ -46,7 +46,7 @@ export class LabPieChart extends BasePieChart<number> {
 
     const singleUserInnerData = Array.from(this.titleTimesMap.entries()).map(([title, timeActive]) => ({
       name: title,
-      value: timeActive
+      value: Math.round(timeActive / 2)
     }));
 
     const singleUserOuterData: DrilledDownData[] = [];
@@ -55,7 +55,7 @@ export class LabPieChart extends BasePieChart<number> {
         if (step.type !== undefined) {
           singleUserOuterData.push({
             name: step.name,
-            value: step.value,
+            value: Math.round(step.value / 2),
             type: step.type
           });
         }

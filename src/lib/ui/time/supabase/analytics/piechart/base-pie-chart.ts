@@ -56,7 +56,7 @@ export class BasePieChart<T> {
             if (title === params.name) {
               steps.forEach((step) => {
                 if (step.value !== 0) {
-                  outerPieData.push({ value: step.value, name: step.name, type: step.type });
+                  outerPieData.push({ value: Math.round(step.value / 2), name: step.name, type: step.type });
                 }
               });
             }
@@ -90,6 +90,7 @@ export class BasePieChart<T> {
     const loTitle = lo.title;
     // Add timeActive to the total time for the title
     if (this.titleTimesMap.has(title)) {
+      // casting as unknow increses type safety and then casts as T which is number in this case
       this.titleTimesMap.set(title, ((this.titleTimesMap.get(title)! as number) + timeActive) as unknown as T);
     } else {
       this.titleTimesMap.set(title, timeActive as unknown as T);
