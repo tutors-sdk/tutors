@@ -7,9 +7,9 @@ import { backgroundPattern } from "../charts/tutors-charts-background-url";
 import { boxplot, combinedBoxplotChart } from "../charts/boxplot-chart";
 import type { Course } from "$lib/services/models/lo-types";
 import { filterByType } from "$lib/services/models/lo-utils";
-import type { BoxplotData } from "$lib/services/types/supabase-metrics";
+import type { BoxplotChartConfig, BoxplotData } from "$lib/services/types/supabase-metrics";
 import { generateStudent } from "../../../../../routes/(time)/simulate/generateStudent";
-import { getUser } from "$lib/services/utils/supabase-utils";
+// import { getUser } from "$lib/services/utils/supabase-utils";
 
 echarts.use([TitleComponent, TooltipComponent, GridComponent, BoxplotChart, CanvasRenderer]);
 
@@ -19,10 +19,12 @@ bgPatternImg.src = backgroundPattern;
 export class LabBoxPlotChart {
   course: Course;
   userIds: string[];
+  userNamesUseridsMap: Map<string, string>;
 
-  constructor(course: Course, userIds: string[]) {
+  constructor(course: Course, userIds: string[], userNamesUseridsMap: Map<string, string>) {
     this.course = course;
     this.userIds = userIds;
+    this.userNamesUseridsMap = userNamesUseridsMap;
   }
 
   async getName(): Promise<string> {
@@ -54,7 +56,8 @@ export class LabBoxPlotChart {
     const userActivitiesPromises = Array.from(userActivities.entries()).map(async ([userId, activities]) => {
       if (activities.length > 0) {
         //const fullname = await this.getName(); //generate fake name
-        const fullname = (await getUser(userId)) || userId;
+        //const fullname = (await getUser(userId)) || userId;
+        const fullname = this.userNamesUseridsMap.get(userId) || userId;
         activities.sort((a, b) => a - b);
         const min = d3.min(activities) ?? 0;
         const q1 = d3.quantile(activities, 0.25) ?? 0;
@@ -87,7 +90,8 @@ export class LabBoxPlotChart {
       for (const [userId, labRecord] of lab.learningRecords || []) {
         if (this.userIds?.includes(userId) && labRecord.timeActive != null) {
           //const nickname = await this.getName(); //generate fake names
-          const nickname = (await getUser(userId)) || userId;
+          //const nickname = (await getUser(userId)) || userId;
+          const nickname = this.userNamesUseridsMap.get(userId) || userId;
           labActivities.get(title)?.push({
             timeActive: labRecord.timeActive,
             nickname: nickname
@@ -125,7 +129,7 @@ export class LabBoxPlotChart {
 
         boxplotData.push({
           value: [min, q1, median, q3, max],
-          title: title,
+          name: title,
           lowNickname: lowNickname,
           highNickname: highNickname
         });
@@ -139,7 +143,7 @@ export class LabBoxPlotChart {
     if (!container) return;
 
     const chart = echarts.init(container);
-    const option = boxplot(bgPatternImg, userNicknames, boxplotData, "Lab Activity per Student Boxplot");
+    const option: BoxplotChartConfig = boxplot(bgPatternImg, userNicknames, boxplotData, "Lab Activity per Student Boxplot");
     chart.setOption(option);
   }
 

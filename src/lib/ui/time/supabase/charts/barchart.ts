@@ -1,6 +1,8 @@
+import type { BoxplotChartConfig, ChartType } from "$lib/services/types/supabase-metrics";
 import type { EChartsOption } from "echarts";
 
-export function barchart(piePatternImg: HTMLImageElement, bgPatternImg: HTMLImageElement, chartData: UserMetric[]): EChartsOption {
+export function barchart(piePatternImg: string, bgPatternImg: string, chartData: UserMetric[]): BoxplotChartConfig {
+  let type: ChartType = "bar"; // OK
   return {
     backgroundColor: {
       image: bgPatternImg,
@@ -16,7 +18,7 @@ export function barchart(piePatternImg: HTMLImageElement, bgPatternImg: HTMLImag
     },
     series: [
       {
-        type: "bar",
+        type: type,
         data: chartData.map((user) => Math.round(user.duration / 2) || 0),
         itemStyle: {
           color: {

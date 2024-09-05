@@ -290,25 +290,27 @@ export function getSimpleTypesValues(los: Lo[]) {
   return [...notes, ...archives, ...webs, ...githubs, ...panelnotes, ...paneltalks, ...panelVideos, ...talks, ...books, ...labs, ...steps];
 }
 
-export async function getUser(username: string) {
-  return fetch(`https://api.github.com/users/${username}`)
-    .then((response) => response.json())
-    .then((response) => {
-      return response.name;
-    });
+export async function getUserNames(usernames: string[]): Promise<Map<string, string>> {
+  const userMap = new Map<string, string>();
+  for (const username of usernames) {
+    const response = await fetch(`https://api.github.com/users/${username}`);
+    const user = await response.json();
+    if (user.name) {
+      userMap.set(username, user.name);
+    }
+  }
+  return userMap;
 }
 
-export async function getGithubAvatarUrl(username: string) {
-  const url = `https://api.github.com/users/${username}`;
-  try {
+export async function getGithubAvatarUrl(usernames: string[]): Promise<Map<string, string>> {
+  const imageMap = new Map<string, string>();
+  for (const username of usernames) {
+    const url = `https://api.github.com/users/${username}`;
     const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`User not found: ${response.status}`);
-    }
     const data = await response.json();
-    return data.avatar_url;
-  } catch (error) {
-    console.error("Error fetching the avatar URL:", error);
-    return null;
+    if (data.avatar_url) {
+      imageMap.set(username, data.avatar_url);
+    }
   }
+  return imageMap;
 }

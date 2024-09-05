@@ -1,12 +1,20 @@
-import type { HeatMapSeriesData } from "$lib/services/types/supabase-metrics";
-import type { EChartsOption } from "echarts";
+import type { ChartType, GridConfig, HeatMapChartConfig, HeatMapSeriesData } from "$lib/services/types/supabase-metrics";
 
-export function heatmap(categories: Set<string>, yAxisData: string[], series: HeatMapSeriesData[], bgPatternImg: HTMLImageElement, chartTitleString: string): EChartsOption {
+export function heatmap(categories: Set<string>, yAxisData: string[], series: HeatMapSeriesData, bgPatternImg: HTMLImageElement, chartTitleString: string): HeatMapChartConfig {
   let visualmapValue: number;
-  let gridConfig;
+  let seriesArray: HeatMapSeriesData[] = [series];
+  let gridConfig: GridConfig = {
+    left: "30%",
+    right: "30%",
+    bottom: "15%",
+    top: "10%",
+    width: "40%", // Fixed width
+    height: "80%", // Fixed height
+    containLabel: false
+  };
 
-  if (series[0]?.data) {
-    if (series[0].name === "Lab Activity For All Users" || series[0].name === "Topic Activity For All Users") {
+  if (series?.data) {
+    if (series.name === "lab activity for all users" || series.name === "topic activity for all users") {
       gridConfig = {
         left: "30%",
         right: "30%",
@@ -27,18 +35,6 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
         containLabel: false // Prevent resizing based on labels
       };
     }
-
-    visualmapValue = series[0].data.length !== 0 ? Math.max(...series[0].data.map((item) => item[2])) : 0;
-  } else if (series?.data) {
-    gridConfig = {
-      left: "30%",
-      right: "30%",
-      bottom: "15%",
-      top: "15%",
-      width: "40%", // Fixed width
-      height: "40%", // Fixed height
-      containLabel: false // Prevent resizing based on labels
-    };
     visualmapValue = series.data.length !== 0 ? Math.max(...series.data.map((item) => item[2])) : 0;
   } else {
     visualmapValue = 0;
@@ -65,7 +61,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
         show: true
       },
       axisLabel: {
-        interval: 1,
+        interval: 2,
         fontSize: 15,
         margin: 10 // Adjust margin to control spacing
       },
@@ -79,7 +75,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
     },
     yAxis: {
       type: "category",
-      data: yAxisData[0] !== undefined ? yAxisData : "",
+      data: yAxisData[0] !== undefined ? yAxisData : [],
       splitArea: {
         show: true
       },
@@ -94,8 +90,81 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       max: visualmapValue,
       calculable: true,
       orient: "horizontal",
-      left: "center"
+      left: "center",
+      align: "auto",
+      bottom: 0
     },
-    series: series
+    series: seriesArray
+  };
+}
+
+export function renderCombinedChart(heatmapActivities: any[], bgPatternImg: HTMLImageElement, chartTitle: string) {
+  const heatmapData = heatmapActivities.map((item, index) => [index, 0, Math.round(item.value / 2)]);
+  const titles = heatmapActivities.map((item) => item.title);
+
+  return {
+    title: {
+      top: "15%",
+      left: "center",
+      text: chartTitle
+    },
+    tooltip: {
+      position: "bottom",
+      formatter: function (params: { dataIndex: number }) {
+        const dataIndex = params.dataIndex;
+        const dataItem = heatmapActivities[dataIndex];
+        if (dataItem) {
+          let tipHtml = dataItem.title + "<br />";
+          tipHtml += "Min: " + dataItem.lowValue + " (" + dataItem.lowNickname + ")<br />";
+          tipHtml += "Max: " + dataItem.highValue + " (" + dataItem.highNickname + ")";
+          return tipHtml;
+        }
+        return "";
+      }
+    },
+    backgroundColor: {
+      image: bgPatternImg,
+      repeat: "repeat"
+    },
+    grid: {
+      height: "30%",
+      top: "30%"
+    },
+    xAxis: {
+      type: "category",
+      data: titles
+    },
+    yAxis: {
+      type: "category",
+      data: [""]
+    },
+    axisLabel: {
+      interval: 0,
+      fontSize: 15
+    },
+    visualMap: {
+      min: 0,
+      max: Math.max(...heatmapActivities.map((item) => item.value / 2)),
+      calculable: true,
+      orient: "horizontal",
+      left: "center",
+      bottom: "15%"
+    },
+    series: [
+      {
+        name: "Value",
+        type: "heatmap",
+        data: heatmapData,
+        label: {
+          show: true
+        },
+        emphasis: {
+          itemStyle: {
+            shadowBlur: 10,
+            shadowColor: "rgba(0, 0, 0, 0.5)"
+          }
+        }
+      }
+    ]
   };
 }
