@@ -16,23 +16,23 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
   if (series?.data) {
     if (series.name === "lab activity for all users" || series.name === "topic activity for all users") {
       gridConfig = {
-        left: "30%",
-        right: "30%",
-        bottom: "15%",
+        left: "15%",
+        right: "10%",
+        bottom: "10%",
         top: "10%",
-        width: "40%", // Fixed width
+        width: "80%", // Fixed width
         height: "80%", // Fixed height
         containLabel: false // Prevent resizing based on labels
       };
     } else {
       gridConfig = {
-        left: "20%",
-        right: "10%",
+        left: "15%",
+        right: "15%",
         bottom: "15%",
         top: "15%",
-        width: "60%", // Fixed width
+        width: "80%", // Fixed width
         height: "80px", // Fixed height
-        containLabel: false // Prevent resizing based on labels
+        containLabel: true // Prevent resizing based on labels
       };
     }
     visualmapValue = series.data.length !== 0 ? Math.max(...series.data.map((item) => item[2])) : 0;
@@ -61,8 +61,8 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
         show: true
       },
       axisLabel: {
-        interval: 2,
-        fontSize: 15,
+        interval: 3,
+        fontSize: 12,
         margin: 10 // Adjust margin to control spacing
       },
       axisTick: {
@@ -74,17 +74,17 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       position: "bottom"
     },
     yAxis: {
-      type: "category",
-      data: yAxisData[0] !== undefined ? yAxisData : [],
-      splitArea: {
-        show: true
-      },
+  type: "category",
+  data: yAxisData[0] !== undefined ? yAxisData : [],
+  splitArea: {
+    show: true
+  },
       axisLabel: {
         interval: 0,
         fontSize: 15,
         padding: [10, 0, 10, 0] // Increase space between rows
       }
-    },
+  },
     visualMap: {
       min: 0,
       max: visualmapValue,
@@ -140,7 +140,7 @@ export function renderCombinedChart(heatmapActivities: any[], bgPatternImg: HTML
     },
     axisLabel: {
       interval: 0,
-      fontSize: 15
+      fontSize: 12
     },
     visualMap: {
       min: 0,
