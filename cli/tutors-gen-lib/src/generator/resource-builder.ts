@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import path from "path";
-import { copyFileToFolder, findFirstMatchingString, getFileName, getFileType } from "./file-utils";
+import { copyFileToFolder, findFirstMatchingString, findLastMatchingString, getFileName, getFileType } from "./file-utils";
 import { assetTypes, LearningResource, loTypes } from "../models/lo-types";
 
 const loSignatures: string[] = [];
@@ -11,7 +11,11 @@ export const resourceBuilder = {
   root: "",
 
   getLoType(route: string): string {
-    let lotype = findFirstMatchingString(loSignatures, route, this.root);
+    let lotype2 = findFirstMatchingString(loSignatures, route, this.root);
+    console.log(route);
+    console.log("left to right: " + lotype2);
+    let lotype = findLastMatchingString(loSignatures, route, this.root);
+    console.log("right to Left: " + lotype);
     if (lotype == "book") {
       lotype = "lab";
     } else if (lotype == "") {
