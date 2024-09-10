@@ -1,19 +1,7 @@
 <script lang="ts">
-  import type { Lo } from "$lib/services/models/lo-types";
   import { currentCourse, currentLo } from "$lib/stores";
   import Icon from "./Icon.svelte";
-
   let truncated = [true, true, true, true, true, true, true];
-  let unitId = "";
-
-  function getUnitId(type: string, id: string) {
-    if (type == "unit" || type == "side") {
-      unitId = id;
-    } else {
-      unitId = "";
-    }
-    return unitId;
-  }
 
   function truncate(input: string) {
     if (input.length > 16) {
@@ -29,18 +17,28 @@
     return input;
   }
 
-  let breadCrumbs: Lo[];
+  interface Crumb {
+    route: string;
+    type: string;
+    title: string;
+  }
+  let breadCrumbs: Crumb[] = [];
+
   currentLo.subscribe((lo) => {
-    breadCrumbs = lo.breadCrumbs;
-    // if (breadCrumbs.length > 1) {
-    //   if (breadCrumbs[1].type === "unit" || breadCrumbs[1].type === "side") {
-    //     breadCrumbs.splice(1, 1);
-    //   }
-    // }
-    for (let i = breadCrumbs.length - 1; i > 1; i--) {
-      if (breadCrumbs[i].type == "unit" || breadCrumbs[i].type == "side") {
-        breadCrumbs[i] = breadCrumbs[i - 1];
+    breadCrumbs = [];
+    lo.breadCrumbs?.forEach((lo) => {
+      let route = lo.route;
+      if (route.endsWith("/")) {
+        route = route.slice(0, -1);
       }
+      breadCrumbs.push({ route: route, type: lo.type, title: lo.title });
+    });
+    if (breadCrumbs.length === 3) {
+      const segments = breadCrumbs[1].route.split("/");
+      if (segments[1] === "topic" && segments[2] === $currentCourse.courseId) {
+        breadCrumbs[1].route = breadCrumbs[1].route.replace("topic", "course");
+      }
+      console.log(segments);
     }
     console.log(breadCrumbs);
   });
@@ -77,20 +75,6 @@
               >{title(lo.title, truncated[i], i)}
             </span>
           </a>
-          <!-- <a href="{lo.route}{getUnitId(lo.type, lo.id)}" class="!space-x-[-1rem] lg:!space-x-0 inline-flex !text-black dark:!text-white">
-            <span><Icon type={lo.type} tip={`Go to ${lo.title}`} /></span>
-
-            <span
-              class="hidden lg:inline-flex pl-2 items-center"
-              on:mouseenter={() => {
-                truncated[i] = false;
-              }}
-              on:mouseleave={() => {
-                truncated[i] = true;
-              }}
-              >{title(lo.title, truncated[i], i)}
-            </span>
-          </a> -->
         </li>
       {/each}
     {/if}
