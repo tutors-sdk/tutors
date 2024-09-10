@@ -32,11 +32,17 @@
   let breadCrumbs: Lo[];
   currentLo.subscribe((lo) => {
     breadCrumbs = lo.breadCrumbs;
-    if (breadCrumbs.length > 1) {
-      if (breadCrumbs[1].type === "unit" || breadCrumbs[1].type === "side") {
-        breadCrumbs.splice(1, 1);
+    // if (breadCrumbs.length > 1) {
+    //   if (breadCrumbs[1].type === "unit" || breadCrumbs[1].type === "side") {
+    //     breadCrumbs.splice(1, 1);
+    //   }
+    // }
+    for (let i = breadCrumbs.length - 1; i > 1; i--) {
+      if (breadCrumbs[i].type == "unit" || breadCrumbs[i].type == "side") {
+        breadCrumbs[i] = breadCrumbs[i - 1];
       }
     }
+    console.log(breadCrumbs);
   });
 </script>
 
@@ -57,7 +63,7 @@
           <li class="crumb-separator" aria-hidden>&rsaquo;</li>
         {/if}
         <li class="crumb">
-          <a href="{lo.route}{getUnitId(lo.type, lo.id)}" class="!space-x-[-1rem] lg:!space-x-0 inline-flex !text-black dark:!text-white">
+          <a href={lo.route} class="!space-x-[-1rem] lg:!space-x-0 inline-flex !text-black dark:!text-white">
             <span><Icon type={lo.type} tip={`Go to ${lo.title}`} /></span>
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             <span
@@ -71,6 +77,20 @@
               >{title(lo.title, truncated[i], i)}
             </span>
           </a>
+          <!-- <a href="{lo.route}{getUnitId(lo.type, lo.id)}" class="!space-x-[-1rem] lg:!space-x-0 inline-flex !text-black dark:!text-white">
+            <span><Icon type={lo.type} tip={`Go to ${lo.title}`} /></span>
+
+            <span
+              class="hidden lg:inline-flex pl-2 items-center"
+              on:mouseenter={() => {
+                truncated[i] = false;
+              }}
+              on:mouseleave={() => {
+                truncated[i] = true;
+              }}
+              >{title(lo.title, truncated[i], i)}
+            </span>
+          </a> -->
         </li>
       {/each}
     {/if}
