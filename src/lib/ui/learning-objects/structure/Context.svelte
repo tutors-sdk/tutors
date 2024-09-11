@@ -2,6 +2,7 @@
   import type { Lo } from "$lib/services/models/lo-types";
   import TopicContextPanel from "../layout/TopicContextPanel.svelte";
   export let lo: Lo;
+  console.log(lo);
 </script>
 
 <div class="flex w-11/12 mx-auto">

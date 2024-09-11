@@ -4,7 +4,7 @@
   import Image from "../../themes/Image.svelte";
   import { currentLo, layout } from "$lib/stores";
   import { onDestroy } from "svelte";
-  import TopicContext from "../structure/TopicContext.svelte";
+  import TopicContext from "../structure/LoContext.svelte";
 
   export let topic: Topic;
 

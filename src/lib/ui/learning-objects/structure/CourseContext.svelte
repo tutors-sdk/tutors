@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { Course } from "$lib/services/models/lo-types";
-  import Composite from "./Composite.svelte";
-  import TopicContext from "./TopicContext.svelte";
+  import LoContext from "./LoContext.svelte";
   import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
 
   export let course: Course;
@@ -14,7 +13,7 @@
       <AccordionItem>
         <svelte:fragment slot="summary">{lo.title}</svelte:fragment>
         <svelte:fragment slot="content">
-          <TopicContext {lo} />
+          <LoContext {lo} />
         </svelte:fragment>
       </AccordionItem>
     {/if}
