@@ -33,7 +33,7 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   loadPropertyFlags(course);
   createCompanions(course);
   createWalls(course);
-  createToc(course);
+  // createToc(course);
   initCalendar(course);
 }
 
@@ -53,6 +53,17 @@ export function decorateLoTree(course: Course, lo: Lo) {
     const compositeLo = lo as Composite;
     compositeLo.panels = getPanels(compositeLo.los);
     compositeLo.units = getUnits(compositeLo.los);
+
+    compositeLo.toc = [];
+    compositeLo.toc.push(
+      ...compositeLo?.panels?.panelVideos,
+      ...compositeLo?.panels?.panelTalks,
+      ...compositeLo?.panels?.panelNotes,
+      ...compositeLo?.units?.units,
+      ...compositeLo?.units?.standardLos,
+      ...compositeLo?.units?.sides
+    );
+
     for (const childLo of compositeLo.los) {
       childLo.parentLo = lo;
       if (compositeLo.los) {

@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Course } from "$lib/services/models/lo-types";
+  import Composite from "./Composite.svelte";
   import TopicContext from "./TopicContext.svelte";
   import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
 
@@ -8,11 +9,12 @@
 
 <Accordion regionPanel="space-y-0.5">
   {#each course.los as lo}
-    {#if lo.type === "topic" && !lo.hide}
+    <!-- {#if lo.type === "topic" && !lo.hide} -->
+    {#if !lo.hide}
       <AccordionItem>
         <svelte:fragment slot="summary">{lo.title}</svelte:fragment>
         <svelte:fragment slot="content">
-          <TopicContext topic={lo} />
+          <TopicContext {lo} />
         </svelte:fragment>
       </AccordionItem>
     {/if}
