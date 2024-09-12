@@ -10,7 +10,7 @@
   {#each course.los as lo}
     <!-- {#if lo.type === "topic" && !lo.hide} -->
     {#if !lo.hide}
-      <AccordionItem>
+      <AccordionItem open>
         <svelte:fragment slot="summary">{lo.title}</svelte:fragment>
         <svelte:fragment slot="content">
           <LoContext {lo} />
