@@ -24,11 +24,15 @@ export function findFirstMatchingString(strings: string[], search: string, cours
   return "unknown";
 }
 
-export function findLastMatchingString(strings: string[], search: string): string {
-  for (let index = strings.length - 1; index >= 0; index--) {
-    const match = strings[index];
-    if (search.includes(match)) {
-      return match.slice(1);
+export function findLastMatchingString(loTypes: string[], path: string, courseRoot: string): string {
+  path = path.replace(courseRoot, "");
+  const segments = path.split("/");
+  for (let i = segments.length - 1; i >= 0; i--) {
+    for (let j = 0; j < loTypes.length; j++) {
+      const loType = loTypes[j].slice(1);
+      if (segments[i].startsWith(loType)) {
+        return loType;
+      }
     }
   }
   return "unknown";
