@@ -1,8 +1,13 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models/lo-types";
-  import TopicContextPanel from "../layout/TopicContextPanel.svelte";
+  import LoContextPanel from "../layout/LoContextPanel.svelte";
   export let lo: Lo;
-  console.log(lo);
+  let loContext = lo;
+  if (loContext) {
+    while (loContext.type !== "topic" && loContext.type !== "course") {
+      loContext = loContext.parentLo!;
+    }
+  }
 </script>
 
 <div class="flex w-11/12 mx-auto">
@@ -11,9 +16,9 @@
       <slot />
     {/key}
   </div>
-  {#if lo.parentTopic}
+  {#if loContext}
     <div class="hidden md:block">
-      <TopicContextPanel topic={lo.parentTopic} />
+      <LoContextPanel {loContext} />
     </div>
   {/if}
 </div>

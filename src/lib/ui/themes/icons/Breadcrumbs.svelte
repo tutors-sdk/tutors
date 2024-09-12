@@ -33,14 +33,11 @@
       }
       breadCrumbs.push({ route: route, type: lo.type, title: lo.title });
     });
-    if (breadCrumbs.length === 3) {
-      const segments = breadCrumbs[1].route.split("/");
-      if (segments[1] === "topic" && segments[2] === $currentCourse.courseId) {
+    if (breadCrumbs.length > 2) {
+      if (breadCrumbs[1].type === "unit" || breadCrumbs[1].type === "side") {
         breadCrumbs[1].route = breadCrumbs[1].route.replace("topic", "course");
       }
-      console.log(segments);
     }
-    console.log(breadCrumbs);
   });
 </script>
 
