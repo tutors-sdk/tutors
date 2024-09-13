@@ -1,16 +1,16 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import { CalendarChart } from "../analytics/calendar";
-  import type { Course } from "$lib/services/models/lo-types";
 
-  export let course: Course;
   export let timeActiveMap: Map<string, Map<string, number>>;
+  export let userAvatarsUseridsMap: Map<string, string>;
+  export let userNamesUseridsMap: Map<string, string>;
   export let userIds: string[];
 
   let calendarChart: CalendarChart | null;
 
   onMount(() => {
-    calendarChart = new CalendarChart();
+    calendarChart = new CalendarChart(userAvatarsUseridsMap, userNamesUseridsMap);
     createAndRenderChart();
   });
 
@@ -26,7 +26,7 @@
     if (timeActiveMap.size > 0) {
       timeActiveMap.forEach((calendarMap, userId) => {
         calendarChart?.createChartContainer(userId);
-        calendarChart?.renderCombinedChart(course, calendarMap, userId);
+        calendarChart?.renderCombinedChart(calendarMap, userId);
       });
     }
   };

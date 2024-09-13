@@ -1,19 +1,7 @@
 <script lang="ts">
-  import type { Lo } from "$lib/services/models/lo-types";
   import { currentCourse, currentLo } from "$lib/stores";
   import Icon from "./Icon.svelte";
-
   let truncated = [true, true, true, true, true, true, true];
-  let unitId = "";
-
-  function getUnitId(type: string, id: string) {
-    if (type == "unit" || type == "side") {
-      unitId = id;
-    } else {
-      unitId = "";
-    }
-    return unitId;
-  }
 
   function truncate(input: string) {
     if (input.length > 16) {
@@ -29,12 +17,25 @@
     return input;
   }
 
-  let breadCrumbs: Lo[];
+  interface Crumb {
+    route: string;
+    type: string;
+    title: string;
+  }
+  let breadCrumbs: Crumb[] = [];
+
   currentLo.subscribe((lo) => {
-    breadCrumbs = lo.breadCrumbs;
-    if (breadCrumbs.length > 1) {
+    breadCrumbs = [];
+    lo.breadCrumbs?.forEach((lo) => {
+      let route = lo.route;
+      if (route.endsWith("/")) {
+        route = route.slice(0, -1);
+      }
+      breadCrumbs.push({ route: route, type: lo.type, title: lo.title });
+    });
+    if (breadCrumbs.length > 2) {
       if (breadCrumbs[1].type === "unit" || breadCrumbs[1].type === "side") {
-        breadCrumbs.splice(1, 1);
+        breadCrumbs[1].route = breadCrumbs[1].route.replace("topic", "course");
       }
     }
   });
@@ -57,7 +58,7 @@
           <li class="crumb-separator" aria-hidden>&rsaquo;</li>
         {/if}
         <li class="crumb">
-          <a href="{lo.route}{getUnitId(lo.type, lo.id)}" class="!space-x-[-1rem] lg:!space-x-0 inline-flex !text-black dark:!text-white">
+          <a href={lo.route} class="!space-x-[-1rem] lg:!space-x-0 inline-flex !text-black dark:!text-white">
             <span><Icon type={lo.type} tip={`Go to ${lo.title}`} /></span>
             <!-- svelte-ignore a11y-no-static-element-interactions -->
             <span

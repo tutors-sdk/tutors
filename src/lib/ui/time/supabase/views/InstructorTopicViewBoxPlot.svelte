@@ -5,12 +5,13 @@
 
   export let course: Course;
   export let userIds: string[];
+  export let userNamesUseridsMap: Map<string, string>;
 
   let topicBoxPlotChart: TopicBoxPlotChart | null;
 
   // Initialise the charts and render them when the component mounts
   onMount(() => {
-    topicBoxPlotChart = new TopicBoxPlotChart(course, userIds);
+    topicBoxPlotChart = new TopicBoxPlotChart(course, userIds, userNamesUseridsMap);
     renderCharts();
   });
 

@@ -73,6 +73,7 @@ export async function getDurationTotal(key: string, table: string, id: string): 
 }
 
 export async function insertOrUpdateCalendar(studentId: string, courseId: string) {
+  if(!studentId || !courseId) return;
   const durationPromise = getCalendarDuration(formatDate(new Date()), studentId, courseId);
   const countPromise = getCalendarCount(formatDate(new Date()), studentId, courseId);
   const [timeActive, pageLoads] = await Promise.all([durationPromise, countPromise]);
@@ -205,12 +206,12 @@ export const updateCalendarDuration = async (id: string, studentId: string, cour
 
 export async function storeStudentCourseLearningObjectInSupabase(course: Course, loid: string, lo: Lo, userDetails: User) {
   //   const loTitle = getLoTitle(params)
-  if (userDetails?.user_metadata.full_name === "Anon") return;
+  if (userDetails?.user_metadata?.full_name === "Anon") return;
   // await insertOrUpdateCourse(course);
   // await addOrUpdateStudent(userDetails);
   // await addOrUpdateLo(loid, lo, lo.title);
-  await handleInteractionData(course.courseId, userDetails.user_metadata.user_name, loid, lo);
-  await insertOrUpdateCalendar(userDetails.user_metadata.user_name, course.courseId);
+  await handleInteractionData(course.courseId, userDetails?.user_metadata?.user_name, loid, lo);
+  await insertOrUpdateCalendar(userDetails?.user_metadata?.user_name, course.courseId);
 }
 
 export async function handleInteractionData(courseId: string, studentId: string, loId: string, lo: Lo) {
@@ -290,25 +291,27 @@ export function getSimpleTypesValues(los: Lo[]) {
   return [...notes, ...archives, ...webs, ...githubs, ...panelnotes, ...paneltalks, ...panelVideos, ...talks, ...books, ...labs, ...steps];
 }
 
-export async function getUser(username: string) {
-  return fetch(`https://api.github.com/users/${username}`)
-    .then((response) => response.json())
-    .then((response) => {
-      return response.name;
-    });
+export async function getUserNames(usernames: string[]): Promise<Map<string, string>> {
+  const userMap = new Map<string, string>();
+  for (const username of usernames) {
+    const response = await fetch(`https://api.github.com/users/${username}`);
+    const user = await response.json();
+    if (user.name) {
+      userMap.set(username, user.name);
+    }
+  }
+  return userMap;
 }
 
-export async function getGithubAvatarUrl(username: string) {
-  const url = `https://api.github.com/users/${username}`;
-  try {
+export async function getGithubAvatarUrl(usernames: string[]): Promise<Map<string, string>> {
+  const imageMap = new Map<string, string>();
+  for (const username of usernames) {
+    const url = `https://api.github.com/users/${username}`;
     const response = await fetch(url);
-    if (!response.ok) {
-      throw new Error(`User not found: ${response.status}`);
-    }
     const data = await response.json();
-    return data.avatar_url;
-  } catch (error) {
-    console.error("Error fetching the avatar URL:", error);
-    return null;
+    if (data.avatar_url) {
+      imageMap.set(username, data.avatar_url);
+    }
   }
+  return imageMap;
 }

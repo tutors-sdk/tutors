@@ -10,7 +10,7 @@ import { tutorsAnalyticsLogo } from "../charts/personlised-logo";
 import type { CalendarMap } from "$lib/services/types/supabase-metrics";
 import type { Course } from "$lib/services/models/lo-types";
 import type { Session } from "@supabase/supabase-js";
-import { getGithubAvatarUrl, getUser } from "$lib/services/utils/supabase-utils";
+import { getGithubAvatarUrl } from "$lib/services/utils/supabase-utils";
 import { generateStudent } from "../../../../../routes/(time)/simulate/generateStudent";
 
 echarts.use([TitleComponent, CalendarComponent, TooltipComponent, VisualMapComponent, HeatmapChart, CanvasRenderer, GraphicComponent]);
@@ -23,17 +23,21 @@ bgPatternImg.src = backgroundPattern;
 
 export class CalendarChart {
   chartRendered: boolean;
-  myChart: any; 
-  chartDom: any; 
+  myChart: any;
+  chartDom: any;
   myCharts: { [key: string]: any };
   medianCalendarRendered: boolean;
+  userNamesUseridsMap: Map<string, string>;
+  userAvatarsUseridsMap: Map<string, string>;
 
-  constructor() {
+  constructor(userAvatarsUseridsMap: Map<string, string>, userNamesUseridsMap: Map<string, string>) {
     this.chartRendered = false;
     this.myChart = null;
     this.chartDom = null;
     this.myCharts = {};
     this.medianCalendarRendered = false;
+    this.userAvatarsUseridsMap = userAvatarsUseridsMap;
+    this.userNamesUseridsMap = userNamesUseridsMap;
   }
 
   createChartContainer(containerId: string) {
@@ -113,7 +117,7 @@ export class CalendarChart {
     //this.clickMonth();
   }
 
-  async renderCombinedChart(course: Course, calendarMap: Map<string, number>, userId: string) {
+  async renderCombinedChart(calendarMap: Map<string, number>, userId: string) {
     const chartContainer = this.getChartContainer(userId);
 
     if (!chartContainer) {
@@ -122,13 +126,21 @@ export class CalendarChart {
     }
 
     const chart = echarts.init(chartContainer);
-
-    //const student = await generateStudent(); //generate fake student
-    const avatarUrl = await getGithubAvatarUrl(userId)
-    const fullName = await getUser(userId)
+    const fullName = this.userNamesUseridsMap.get(userId) || userId;
+    const avatarUrl = this.userAvatarsUseridsMap.get(userId) || "";
     const option = calendarCombined(userId, calendarMap, bgPatternImg, currentRange, avatarUrl, fullName);
 
     chart.setOption(option, true);
+
+    //const fullname = (await getUser(userId)) || userId; //real
+    //const fullname = (await generateStudent()).fullName; //fake
+
+    //const student = await generateStudent(); //generate fake student
+    // const avatarUrl = await getGithubAvatarUrl(userId);
+    // const fullName = await getUser(userId);
+    // const option = calendarCombined(userId, calendarMap, bgPatternImg, currentRange, avatarUrl, fullName);
+
+    // chart.setOption(option, true);
   }
 
   // New method to render the additional calendar for median timeactive values

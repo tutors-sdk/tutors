@@ -1,7 +1,7 @@
-import type { BoxplotData } from "$lib/services/types/supabase-metrics";
+import type { BoxplotData, BoxplotChartConfig } from "$lib/services/types/supabase-metrics";
 import * as echarts from "echarts";
 
-export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[], boxplotData: number[][], chartTitle: string): echarts.EChartsOption {
+export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[], boxplotData: number[][], chartTitle: string): BoxplotChartConfig {
   return {
     title: {
       text: chartTitle
@@ -25,7 +25,8 @@ export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[],
       data: userNicknames
     },
     xAxis: {
-      type: "value"
+      type: "value",
+      boundaryGap: [0, 0.3]
     },
     series: [
       {
@@ -54,7 +55,7 @@ export function combinedBoxplotChart(bgPatternImg: HTMLImageElement, boxplotData
       formatter: function (params) {
         const dataIndex = params.dataIndex;
         const dataItem = boxplotData[dataIndex];
-        let tipHtml = `${dataItem.title}<br />`;
+        let tipHtml = `${dataItem.name}<br />`;
         tipHtml += `Min: ${dataItem.value[0]} (${dataItem.lowNickname})<br />`;
         tipHtml += `Q1: ${dataItem.value[1]}<br />`;
         tipHtml += `Median: ${dataItem.value[2]}<br />`;
@@ -65,7 +66,7 @@ export function combinedBoxplotChart(bgPatternImg: HTMLImageElement, boxplotData
     },
     xAxis: {
       type: "category",
-      data: boxplotData.map((item) => item.title), // topic titles
+      data: boxplotData.map((item) => item.name), // topic titles
       boundaryGap: true,
       nameGap: 30,
       splitArea: {
@@ -91,7 +92,7 @@ export function combinedBoxplotChart(bgPatternImg: HTMLImageElement, boxplotData
           formatter: function (params) {
             const dataIndex = params.dataIndex;
             const dataItem = boxplotData[dataIndex];
-            let tipHtml = `${dataItem.title}<br />`;
+            let tipHtml = `${dataItem.name}<br />`;
             tipHtml += `Min: ${dataItem.value[0]} (${dataItem.lowNickname})<br />`;
             tipHtml += `Q1: ${dataItem.value[1]}<br />`;
             tipHtml += `Median: ${dataItem.value[2]}<br />`;
