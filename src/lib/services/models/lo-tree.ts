@@ -1,6 +1,6 @@
 import { isCompositeLo, type Course, type Lo, type Composite, type LoType, type Topic } from "./lo-types";
 import { convertLoToHtml } from "./markdown-utils";
-import { allVideoLos, crumbs, flattenLos, loadIcon, getPanels, getUnits, injectCourseUrl, removeUnknownLos } from "./lo-utils";
+import { allVideoLos, crumbs, flattenLos, loadIcon, getPanels, getUnits, injectCourseUrl, removeUnknownLos, filterByType } from "./lo-utils";
 import { createCompanions, createToc, createWalls, initCalendar, loadPropertyFlags } from "./course-utils";
 
 export function decorateCourseTree(course: Course, courseId: string = "", courseUrl = "") {
@@ -26,12 +26,14 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   const videoLos = allVideoLos(allLos);
   videoLos.forEach((lo) => course.loIndex.set(lo.video, lo));
   course.topicIndex = new Map<string, Topic>();
-  course.los.forEach((lo) => course.topicIndex.set(lo.route, lo as Topic));
+  //course.los.forEach((lo) => course.topicIndex.set(lo.route, lo as Topic));
+  const topicLos = filterByType(allLos, "topic");
+  topicLos.forEach((lo) => course.topicIndex.set(lo.route, lo as Topic));
 
   loadPropertyFlags(course);
   createCompanions(course);
   createWalls(course);
-  createToc(course);
+  // createToc(course);
   initCalendar(course);
 }
 
@@ -51,6 +53,17 @@ export function decorateLoTree(course: Course, lo: Lo) {
     const compositeLo = lo as Composite;
     compositeLo.panels = getPanels(compositeLo.los);
     compositeLo.units = getUnits(compositeLo.los);
+
+    compositeLo.toc = [];
+    compositeLo.toc.push(
+      ...compositeLo?.panels?.panelVideos,
+      ...compositeLo?.panels?.panelTalks,
+      ...compositeLo?.panels?.panelNotes,
+      ...compositeLo?.units?.units,
+      ...compositeLo?.units?.standardLos,
+      ...compositeLo?.units?.sides
+    );
+
     for (const childLo of compositeLo.los) {
       childLo.parentLo = lo;
       if (compositeLo.los) {

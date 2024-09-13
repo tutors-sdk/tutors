@@ -2,6 +2,25 @@ import { addIcon } from "$lib/ui/themes/styles/icon-lib";
 import type { Composite, Course, IconNav, Lo, LoType, Topic } from "./lo-types";
 import { filterByType, setShowHide } from "./lo-utils";
 
+function threadToc(lo: Lo, course: Course) {
+  if (lo.type == "topic") {
+    const topic = lo as Topic;
+    topic.toc = [];
+    topic.toc.push(...topic.panels.panelVideos, ...topic.panels.panelTalks, ...topic.panels.panelNotes, ...topic.units.units, ...topic.units.standardLos, ...topic.units.sides);
+
+    topic.toc.forEach((lo) => {
+      lo.parentLo = course;
+      lo.parentTopic = topic;
+      if (lo.type === "unit" || lo.type === "side") {
+        const composite = lo as Composite;
+        composite.los.forEach((subLo) => {
+          subLo.parentTopic = topic;
+        });
+      }
+    });
+  }
+}
+
 export function createToc(course: Course) {
   course.los.forEach((lo) => {
     if (lo.type == "topic") {

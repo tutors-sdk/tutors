@@ -155,13 +155,13 @@ export type Units = {
 };
 
 export type Composite = Lo & {
+  toc: Lo[];
   los: Lo[]; // child los
   panels: Panels; // child panel los - paneltalks, panelvideos, panelnotes.
   units: Units; // child units, including side units
 };
 
 export type Topic = Composite & {
-  toc: Lo[];
   type: "topic";
 };
 

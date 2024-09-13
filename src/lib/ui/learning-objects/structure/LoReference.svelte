@@ -1,0 +1,17 @@
+<script lang="ts">
+  import type { Lo } from "$lib/services/models/lo-types";
+  import Icon from "$lib/ui/themes/icons/Icon.svelte";
+
+  export let lo: Lo;
+  export let indent = 0;
+</script>
+
+<a href={lo?.route} class="flex py-1 pl-{indent}">
+  <Icon type={lo.type} />
+  <span class="ml-2 mb-1"> {@html lo.title} </span>
+  {#if lo.video && lo.type != "panelvideo"}
+    <a class="flex pl-4" href={lo.video}>
+      <Icon type="video" />
+    </a>
+  {/if}
+</a>
