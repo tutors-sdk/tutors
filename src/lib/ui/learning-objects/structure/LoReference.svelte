@@ -6,7 +6,7 @@
   export let indent = 0;
 </script>
 
-<a href={lo?.route} class="flex py-1 pl-{indent}">
+<a href={lo?.route} class="flex py-1 ml-{indent}">
   <Icon type={lo.type} />
   <span class="ml-2 mb-1"> {@html lo.title} </span>
   {#if lo.video && lo.type != "panelvideo"}
