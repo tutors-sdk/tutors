@@ -4,6 +4,7 @@
   import { currentLo, layout } from "$lib/stores";
   import { onDestroy } from "svelte";
   import LoContext from "../structure/LoContext.svelte";
+  import { TreeView } from "@skeletonlabs/skeleton";
 
   export let loContext: Lo;
 
@@ -33,6 +34,8 @@
     <figure class="flex justify-center p-2">
       <Image {lo} />
     </figure>
-    <LoContext lo={loContext} />
+    <TreeView padding="p-1">
+      <LoContext lo={loContext} />
+    </TreeView>
   </div>
 </div>

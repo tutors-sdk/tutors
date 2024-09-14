@@ -1,20 +1,20 @@
 <script lang="ts">
-  import { isCompositeLo, type Course } from "$lib/services/models/lo-types";
+  import { type Course } from "$lib/services/models/lo-types";
   import LoContext from "./LoContext.svelte";
-  import { Accordion, AccordionItem } from "@skeletonlabs/skeleton";
+  import { TreeView, TreeViewItem } from "@skeletonlabs/skeleton";
 
   export let course: Course;
 </script>
 
-<Accordion regionPanel="space-y-0.5">
+<TreeView padding="p-1">
   {#each course.los as lo}
     {#if !lo.hide}
-      <AccordionItem>
-        <svelte:fragment slot="summary">{lo.title}</svelte:fragment>
-        <svelte:fragment slot="content">
+      <TreeViewItem>
+        {lo.title}
+        <svelte:fragment slot="children">
           <LoContext {lo} />
         </svelte:fragment>
-      </AccordionItem>
+      </TreeViewItem>
     {/if}
   {/each}
-</Accordion>
+</TreeView>
