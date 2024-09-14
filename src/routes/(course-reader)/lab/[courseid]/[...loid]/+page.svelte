@@ -11,5 +11,7 @@
     <Talk lo={data.lab.lab} />
   </Context>
 {:else}
-  <Lab lab={data.lab} />
+  <Context lo={data.lab.lab}>
+    <Lab lab={data.lab} />
+  </Context>
 {/if}

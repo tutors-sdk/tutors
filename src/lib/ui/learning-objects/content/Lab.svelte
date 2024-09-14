@@ -50,9 +50,9 @@
 </div>
 
 <div class="w-full">
-  <div class="flex lg:w-10/12 2xl:w-3/4 mx-auto">
+  <div class="flex max-w-l">
     <div class="hidden lg:block h-auto w-72 mr-2">
-      <div class="sticky h-auto card bg-surface-100-800-token py-4 m-2 rounded-xl top-6 w-full">
+      <div class="sticky h-auto card bg-surface-100-800-token py-4 m-2 rounded-xl top-6">
         <nav class="nav-list">
           <ul>
             {@html lab.navbarHtml}
@@ -60,12 +60,10 @@
         </nav>
       </div>
     </div>
-    <div id="lab-panel" class="flex-1 w-1/2 min-h-screen">
-      <div class="card bg-surface-100-800-token p-8 lg:px-4 py-8 m-2 rounded-xl">
-        <article class="mx-auto prose dark:prose-invert max-w-none w-[80%]">
-          {@html lab.content}
-        </article>
-      </div>
+    <div id="lab-panel" class="flex-1 min-h-screen">
+      <article class="prose dark:prose-invert max-w-3xl w-[90%]">
+        {@html lab.content}
+      </article>
     </div>
   </div>
 </div>
