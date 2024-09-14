@@ -10,28 +10,12 @@
       }
     });
   }
+  export let indent = 0;
 </script>
 
 {#each lo?.toc as lo}
-  <LoReference {lo} />
+  <LoReference {lo} indent={indent + 4} />
   {#if lo.toc}
-    {#each lo?.toc as lo}
-      <LoReference {lo} indent={4} />
-      {#if lo.toc}
-        {#each lo?.toc as lo}
-          <LoReference {lo} indent={8} />
-          {#if lo.toc}
-            {#each lo?.toc as lo}
-              <LoReference {lo} indent={12} />
-              {#if lo.toc}
-                {#each lo?.toc as lo}
-                  <LoReference {lo} indent={16} />
-                {/each}
-              {/if}
-            {/each}
-          {/if}
-        {/each}
-      {/if}
-    {/each}
+    <svelte:self {lo} indent={indent + 4} />
   {/if}
 {/each}
