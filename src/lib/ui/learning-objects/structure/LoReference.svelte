@@ -4,6 +4,9 @@
 
   export let lo: Lo;
   export let indent = 0;
+  if (indent > 16) {
+    indent = 16;
+  }
 </script>
 
 <a href={lo?.route} class="flex py-1 ml-{indent}">
