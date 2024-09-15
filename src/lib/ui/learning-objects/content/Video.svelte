@@ -44,7 +44,7 @@
 </script>
 
 {#if $currentCourse && !$currentCourse.areVideosHidden}
-  <div class="w-full p-2">
+  <div class="w-full p-8">
     {#if heanet}
       {#if showVime}
         <div class="relative mx-auto aspect-video w-3/4" style="padding-top: 40%;">
