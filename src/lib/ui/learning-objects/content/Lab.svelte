@@ -61,7 +61,7 @@
       </div>
     </div>
     <div id="lab-panel" class="flex-1 min-h-screen">
-      <article class="prose dark:prose-invert max-w-3xl w-[90%]">
+      <article class="prose dark:prose-invert max-w-2xl">
         {@html lab.content}
       </article>
     </div>
