@@ -10,14 +10,14 @@
   }
 </script>
 
-<div class="flex w-11/12 mx-auto">
+<div class="flex justify-between ml-10 mr-10">
   <div class="w-full">
     {#key lo}
       <slot />
     {/key}
   </div>
   {#if loContext}
-    <div class="hidden md:block">
+    <div class="hidden xl:block">
       <LoContextPanel {loContext} />
     </div>
   {/if}
