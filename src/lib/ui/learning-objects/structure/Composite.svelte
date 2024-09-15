@@ -7,7 +7,7 @@
   export let composite: Composite;
 </script>
 
-{#if composite.units?.sides?.length > 0}
+{#if composite?.units?.sides?.length > 0}
   <div class="block md:flex w-11/12 mx-auto">
     <div class="w-full">
       <Panels panels={composite.panels} />
@@ -18,10 +18,10 @@
       <Units units={composite.units?.sides} />
     </div>
   </div>
-{:else}
+{:else if composite}
   <div class="flex flex-wrap justify-center w-11/12 mx-auto">
-    <Panels panels={composite.panels} />
-    <Units units={composite.units.units} />
-    <Cards los={composite.units.standardLos} />
+    <Panels panels={composite?.panels} />
+    <Units units={composite?.units.units} />
+    <Cards los={composite?.units.standardLos} />
   </div>
 {/if}
