@@ -71,41 +71,54 @@ export class BaseHeatMapChart<T> {
   async populatePerUserSeriesData(allItems: Lo[], userId: string, index: number, learninObjValue: string): Promise<number[][]> {
     const totalTimesMap = new Map<string, number>();
     const titleList: string[] = [];
+
+    // Recursive function to find the topmost parentLo of type 'topic', skipping hidden items
+    const getTopTopicParentLo = (lo: Lo): Lo | null => {
+      if (lo.hide) return null; // Skip hidden items
+      if (lo.type === "topic") return lo; // Return the Lo if it's of type 'topic'
+      if (lo.parentLo) return getTopTopicParentLo(lo.parentLo); // Recursively traverse up the hierarchy
+      return null; // If no parentLo or no topic found, return null
+    };
+
     allItems.forEach((item) => {
+      if (item.hide) return; // Skip hidden items
       let title: string = "";
+
       if (learninObjValue === "lab") {
-        title = item.parentLo?.type === "lab" ? item.parentLo?.title : item.title;
-      } else {
-        if (item.parentTopic?.type === "topic") {
-          title = item.parentTopic?.title;
-        } else if (item.parentLo?.parentTopic?.type === "topic") {
-          title = item.parentLo?.parentTopic?.title;
+        // For labs, ensure that both the item and its parent are not hidden
+        if (item.parentLo?.type === "lab") {
+          if (item.hide || item.parentLo.hide) return; // Skip if either the item or its parent is hidden
+          title = item.parentLo.title;
         } else {
           title = item.title;
         }
+      } else {
+        // For other types (like topic), traverse to the top parent of type 'topic', skipping hidden ones
+        const topTopicLo = getTopTopicParentLo(item);
+        if (!topTopicLo || topTopicLo.hide) return; // Skip if no topic parent is found or if it's hidden
+        title = topTopicLo.title;
       }
 
+      // Get the timeActive for the user from learningRecords
       const timeActive = item.learningRecords?.get(userId)?.timeActive || 0;
-      // Add timeActive to the total time for the step
+
+      // Aggregate timeActive under the determined title
       if (totalTimesMap.has(title)) {
         totalTimesMap.set(title, totalTimesMap.get(title)! + timeActive);
-        titleList.push(title);
       } else {
         totalTimesMap.set(title, timeActive);
         titleList.push(title.trim());
       }
     });
 
+    // Create a Set of unique categories from the titles
     this.categories = new Set(Array.from(totalTimesMap.keys()));
     const categoriesArray = Array.from(this.categories);
 
-    // Construct seriesData array using the aggregated total times
-    const seriesData: number[][] = Array.from(totalTimesMap.entries()).map(([title, timeActive], stepIndex) => {
-      //return [titleList.indexOf(title.trim()), index, Math.round(timeActive / 2)];
+    // Construct the seriesData array using the aggregated total times
+    const seriesData: number[][] = Array.from(totalTimesMap.entries()).map(([title, timeActive]) => {
       return [categoriesArray.indexOf(title), index, Math.floor(timeActive / 2)];
     });
-
-    //const userFullName = await getUser(userId) || userId;
 
     return seriesData;
   }
@@ -125,7 +138,7 @@ export class BaseHeatMapChart<T> {
     }
 
     this.series = {
-      name: `lab activity for all users`,
+      name: `student engagement for ${learninObjValue}`,
       type: "heatmap",
       data: allSeriesData,
       selectedMode: "single",
@@ -146,7 +159,7 @@ export class BaseHeatMapChart<T> {
     const userId = session.user.user_metadata.full_name ?? session.user.user_metadata.user_name;
     this.yAxisData = [userId];
 
-    const seriesData: number[][] = await this.populatePerUserSeriesData(allItems, session.user.user_metadata.user_name, 0, learninObjValue.valueOf());
+    const seriesData: number[][] = await this.populatePerUserSeriesData(allItems, session.user.user_metadata.user_name, 0, learninObjValue);
     this.series = {
       top: "5%",
       name: `${learninObjValue.valueOf()} Activity`,
@@ -169,12 +182,27 @@ export class BaseHeatMapChart<T> {
     this.sortHeatMapValues();
   }
 
-  prepareCombinedTopicData(allTypes: Lo[], userIds: string[], getTitle: (lo: Lo) => string) {
+  prepareCombinedTopicData(allTypes: Lo[], userIds: string[], getTitle: (lo: Lo) => string | undefined) {
     const loActivities = new Map();
     const container = this.getCombinedChartContainer();
-    if (!container) return;
+    if (!container) return undefined;
+
+    // Recursive function to find the topmost parentLo of type 'topic', skipping hidden items
+    const getTopTopicParentLo = (lo: Lo): Lo | null => {
+      if (lo.hide) return null;
+      if (lo.type === "topic") return lo;
+      if (lo.parentLo) return getTopTopicParentLo(lo.parentLo);
+      return null;
+    };
+
     allTypes.forEach((lo) => {
-      const title = getTitle(lo);
+      if (lo.hide) return; // Skip if the LO itself is hidden
+
+      // For all types, traverse to the top parent of type 'topic', skipping hidden ones
+      const topTopicLo = getTopTopicParentLo(lo);
+      if (!topTopicLo || topTopicLo.hide) return; // Skip if no topic parent or it's hidden
+      const title = topTopicLo.title;
+
       if (!loActivities.has(title)) {
         loActivities.set(title, []);
       }

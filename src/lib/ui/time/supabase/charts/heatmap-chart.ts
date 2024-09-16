@@ -14,7 +14,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
   };
 
   if (series?.data) {
-    if (series.name === "lab activity for all users" || series.name === "topic activity for all users") {
+    if (series.name === "student engagement for lab" || series.name === "student engagement for topic") {
       gridConfig = {
         left: "15%",
         right: "10%",
@@ -74,17 +74,17 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       position: "bottom"
     },
     yAxis: {
-  type: "category",
-  data: yAxisData[0] !== undefined ? yAxisData : [],
-  splitArea: {
-    show: true
-  },
+      type: "category",
+      data: yAxisData[0] !== undefined ? yAxisData : [],
+      splitArea: {
+        show: true
+      },
       axisLabel: {
         interval: 0,
         fontSize: 15,
         padding: [10, 0, 10, 0] // Increase space between rows
       }
-  },
+    },
     visualMap: {
       min: 0,
       max: visualmapValue,

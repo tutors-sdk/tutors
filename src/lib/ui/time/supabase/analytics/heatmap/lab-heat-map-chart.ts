@@ -23,6 +23,16 @@ export class LabHeatMapChart extends BaseHeatMapChart<number> {
     }
   }
 
+  getTitleRecursively(lo: Lo) {
+    // Base case: if the lo has a parentLo with type 'topic', return the parent's title
+    if (lo.parentLo?.type === "lab") {
+      return lo.parentLo.title;
+    }
+
+    // Default case: return the current lo's title
+    return lo.title;
+  }
+
   renderChart(container: HTMLElement) {
     super.renderChart(container, "Lab Activity: Per Student (click a cell to sort)");
   }
