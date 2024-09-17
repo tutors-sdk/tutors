@@ -31,7 +31,7 @@
   const renderCharts = async () => {
   if (topicBoxPlotChart) {
     const { boxplotData, userNicknames } = await topicBoxPlotChart.prepareBoxplotData();
-    topicBoxPlotChart.renderBoxPlot(document.getElementById("heatmap-container"), boxplotData, userNicknames);
+    topicBoxPlotChart.renderBoxPlot(document.getElementById("boxplot-container"), boxplotData, userNicknames);
     const combinedBoxplotData = await topicBoxPlotChart.prepareCombinedBoxplotData();
     topicBoxPlotChart.renderCombinedBoxplotChart(document.getElementById("combinedBoxPlot"), combinedBoxplotData);
   }
@@ -41,7 +41,7 @@
   window.addEventListener("focus", handleFocus);
 </script>
 
-<div class="h-screen">
-  <div id="heatmap-container" style="height: 50%; width:100%; overflow-y: scroll;"></div>
-  <div id="combinedBoxPlot" style="height: 50%; width:100%; overflow-y: scroll;"></div>
+<div class="flex flex-col h-screen">
+  <div id="boxplot-container" class="flex-1 overflow-y-scroll"></div>
+  <div id="combinedBoxPlot" class="flex-1 overflow-y-scroll"></div>
 </div>
