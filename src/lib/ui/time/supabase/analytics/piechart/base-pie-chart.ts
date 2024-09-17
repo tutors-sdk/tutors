@@ -85,17 +85,23 @@ export class BasePieChart<T> {
     }
   }
 
-  updateMaps(lo: Lo, timeActive: number, getTitle: (lo: Lo) => string) {
+  updateMaps(lo: Lo, timeActive: number, getTitle: (lo: Lo) => string | null) {
     const title = getTitle(lo);
     const loTitle = lo.title;
+
+    if (!title) {
+      return;
+    }
+
     // Add timeActive to the total time for the title
     if (this.titleTimesMap.has(title)) {
-      // casting as unknow increses type safety and then casts as T which is number in this case
+      // Update the total time for the title
       this.titleTimesMap.set(title, ((this.titleTimesMap.get(title)! as number) + timeActive) as unknown as T);
     } else {
       this.titleTimesMap.set(title, timeActive as unknown as T);
     }
 
+    // Initialize totalTimesMap for the title if it doesn't exist
     if (!this.totalTimesMap.has(title)) {
       this.totalTimesMap.set(title, []);
     }
@@ -103,6 +109,7 @@ export class BasePieChart<T> {
     const existingEntries = this.totalTimesMap.get(title)!;
     const existingEntry = existingEntries.find((entry) => entry.name === loTitle);
 
+    // Update or add the timeActive for this particular LO
     if (existingEntry) {
       existingEntry.value += timeActive;
     } else {
