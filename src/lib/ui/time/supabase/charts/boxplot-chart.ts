@@ -2,6 +2,10 @@ import type { BoxplotData, BoxplotChartConfig } from "$lib/services/types/supaba
 import * as echarts from "echarts";
 
 export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[], boxplotData: number[][], chartTitle: string): BoxplotChartConfig {
+  // Determine the min/max range from boxplotData for proper scaling
+  const yMin = Math.min(...boxplotData.flat()); // Get the minimum value across all data points
+  const yMax = Math.max(...boxplotData.flat()); // Get the maximum value across all data points
+
   return {
     title: {
       text: chartTitle
@@ -16,27 +20,43 @@ export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[],
         type: "shadow"
       },
       formatter: (param: any) => {
-        const value = param.value;
-        return [`${param.name}:`, `Min: ${value[0]}`, `Q1: ${value[1]}`, `Median: ${value[2]}`, `Q3: ${value[3]}`, `Max: ${value[4]}`].join("<br/>");
+        return [`${param.name}:`, `Min: ${param.value[0]}`, `Q1: ${param.value[1]}`, `Median: ${param.value[2]}`, `Q3: ${param.value[3]}`, `Max: ${param.value[4]}`].join("<br/>");
+      }
+    },
+    xAxis: {
+      type: "value", // Numeric axis for the values (flipped to x-axis)
+      name: "Time Active (mins)", // Moved to xAxis since it's now horizontal
+      min: Math.floor(yMin * 0.9), // Set xAxis minimum slightly lower than the smallest value
+      max: Math.ceil(yMax * 1.1), // Set xAxis maximum slightly higher than the largest value
+      axisLabel: {
+        formatter: "{value} mins" // Label indicating that the axis represents minutes
+      },
+      splitLine: {
+        show: true // Show grid lines for better readability
       }
     },
     yAxis: {
-      type: "category",
-      data: userNicknames
-    },
-    xAxis: {
-      type: "value",
-      boundaryGap: [0, 0.3]
+      type: "category", // Category axis for student names (flipped to y-axis)
+      data: userNicknames, // Ensure userNicknames appear on the y-axis
+      name: "Students", // Label for the student names
+      boundaryGap: true // Gap between categories for better spacing
     },
     series: [
       {
         name: chartTitle,
         type: "boxplot",
-        data: boxplotData
+        data: boxplotData, // Boxplot data (array of [min, Q1, median, Q3, max])
+        tooltip: {
+          formatter: (param: any) => {
+            const value = param.value;
+            return [`${param.name}:`, `Min: ${value[0]}`, `Q1: ${value[1]}`, `Median: ${value[2]}`, `Q3: ${value[3]}`, `Max: ${value[4]}`].join("<br/>");
+          }
+        }
       }
     ]
   };
 }
+
 
 export function combinedBoxplotChart(bgPatternImg: HTMLImageElement, boxplotData: BoxplotData[], chartTitle: string): echarts.EChartsOption {
   return {
