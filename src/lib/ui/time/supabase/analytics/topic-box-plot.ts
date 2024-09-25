@@ -81,11 +81,11 @@ export class TopicBoxPlotChart {
       if (activities.length > 0) {
         //const fullname = await this.getName(); //generate fakenames
         //const fullname = this.userNamesUseridsMap.get(userId) || userId;
-        const [fullName] = this.userNamesUseridsMap?.get(userId) || [undefined, undefined];
+        const [fullname] = this.userNamesUseridsMap?.get(userId) || [undefined, undefined];
 
         const [min, q1, median, q3, max] = calculateBoxplotStats(activities);
         boxplotData.push([min, q1, median, q3, max]);
-        userNicknames.push(fullName ?? userId);
+        userNicknames.push(fullname ?? userId);
       }
     });
 
@@ -120,11 +120,11 @@ export class TopicBoxPlotChart {
           if (this.userIds.includes(userId)) {
             //const nickname = await this.getName(); //generate a fake name
             //const nickname = this.userNamesUseridsMap.get(userId) || userId;
-            const [fullName] = this.userNamesUseridsMap?.get(userId) || [undefined, undefined];
+            const [fullname] = this.userNamesUseridsMap?.get(userId) || [undefined, undefined];
 
             topicActivities.get(title)!.push({
               timeActive: record.timeActive,
-              nickname: fullName ?? userId // change to userId when changing back
+              nickname: fullname ?? userId // change to userId when changing back
             });
           }
         });

@@ -13,7 +13,7 @@ export const load: PageLoad = async ({ parent, params, fetch }) => {
     const course: Course = await courseService.readCourse(params.courseid, fetch);
     const userMetrics: LearningInteraction[] = await fetchLearningUserInteractions(course);
     const userIds: string[] = [...new Set(userMetrics.map((m: LearningInteraction) => m.studentid))] as string[];
-    const userNamesAvatars: Map<string, [string | undefined, string | undefined]> = new Map(userMetrics.map((m: LearningInteraction) => [m.studentid, [m.fullName, m.avatarUrl]]));
+    const userNamesAvatars: Map<string, [string | undefined, string | undefined]> = new Map(userMetrics.map((m: LearningInteraction) => [m.studentid, [m.fullname, m.avatarurl]]));
     // const userNamesUseridsMap: Map<string, string> = await getUserNames(userIds);
     // const userAvatarsUseridsMap: Map<string, string> = await getGithubAvatarUrl(userIds);
     const records: LearningInteraction[] = await getCalendarDataForAll(course.courseId);

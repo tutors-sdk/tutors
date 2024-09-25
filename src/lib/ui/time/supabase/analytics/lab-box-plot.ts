@@ -58,7 +58,7 @@ export class LabBoxPlotChart {
         //const fullname = await this.getName(); //generate fake name
         //const fullname = (await getUser(userId)) || userId;
         //const fullname = this.userNamesUseridsMap.get(userId) || userId;
-        const [fullName] = this.userNamesUseridsMap?.get(userId) || [undefined, undefined];
+        const [fullname] = this.userNamesUseridsMap?.get(userId) || [undefined, undefined];
 
         activities.sort((a, b) => a - b);
         const min = d3.min(activities) ?? 0;
@@ -67,7 +67,7 @@ export class LabBoxPlotChart {
         const q3 = d3.quantile(activities, 0.75) ?? 0;
         const max = d3.max(activities) ?? 0;
         boxplotData.push([min, q1, median, q3, max]);
-        userNicknames.push(fullName ?? userId);
+        userNicknames.push(fullname ?? userId);
       }
     });
 
@@ -93,12 +93,12 @@ export class LabBoxPlotChart {
         if (this.userIds?.includes(userId) && labRecord.timeActive != null) {
           //const nickname = await this.getName(); //generate fake names
           //const nickname = (await getUser(userId)) || userId;
-          const [fullName] = this.userNamesUseridsMap?.get(userId) || [undefined, undefined];
+          const [fullname] = this.userNamesUseridsMap?.get(userId) || [undefined, undefined];
 
           //const nickname = this.userNamesUseridsMap.get(userId) || userId;
           labActivities.get(title)?.push({
             timeActive: labRecord.timeActive,
-            nickname: fullName ?? userId
+            nickname: fullname ?? userId
           });
         }
       }

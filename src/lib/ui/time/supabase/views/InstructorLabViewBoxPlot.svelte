@@ -5,7 +5,7 @@
 
   export let course: Course;
   export let userIds: string[];
-  export let userNamesUseridsMap: Map<string, [string, string]>;
+  export let userNamesAvatars: Map<string, [string, string]>;
 
   let labBoxPlot: LabBoxPlotChart | null = null;
 
@@ -25,7 +25,7 @@
   };
 
   onMount(() => {
-    labBoxPlot = new LabBoxPlotChart(course, userIds, userNamesUseridsMap);
+    labBoxPlot = new LabBoxPlotChart(course, userIds, userNamesAvatars);
     renderCharts();
     window.addEventListener("focus", handleFocus);
   });

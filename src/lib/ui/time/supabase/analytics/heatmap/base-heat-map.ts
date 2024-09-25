@@ -133,10 +133,10 @@ export class BaseHeatMapChart<T> {
     for (const [index, userId] of userIds.entries()) {
       const seriesData = await this.populatePerUserSeriesData(allItems, userId, index, learninObjValue);
       allSeriesData = allSeriesData.concat(seriesData);
-      const [fullName] = this.userAvatarsUseridsMap?.get(userId) || [undefined, undefined];
+      const [fullname] = this.userAvatarsUseridsMap?.get(userId) || [undefined, undefined];
 
       //const fullName = await this.getUserFullName(userId);
-      yAxisData.push(fullName ?? userId);
+      yAxisData.push(fullname ?? userId);
     }
 
     this.series = {

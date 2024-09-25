@@ -124,10 +124,10 @@ export class CalendarChart {
     }
 
     const chart = echarts.init(chartContainer);
-    const [fullName, avatarUrl] = this.userAvatarsUseridsMap?.get(userId) || [undefined, undefined];
+    const [fullname, avatarurl] = this.userAvatarsUseridsMap?.get(userId) || [undefined, undefined];
     // const fullName = this.userNamesUseridsMap.get(userId) || userId;
     // const avatarUrl = this.userAvatarsUseridsMap.get(userId) || "";
-    const option = calendarCombined(userId, calendarMap, bgPatternImg, currentRange, avatarUrl ?? getDefaultAvatar(), fullName ?? userId);
+    const option = calendarCombined(userId, calendarMap, bgPatternImg, currentRange, avatarurl ?? getDefaultAvatar(), fullname ?? userId);
 
     chart.setOption(option, true);
 

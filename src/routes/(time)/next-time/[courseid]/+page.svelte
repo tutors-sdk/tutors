@@ -178,7 +178,7 @@
             <InstructorTopicViewBoxPlot
               course={data.course}
               userIds={data.userIds}
-              userAvatarsUseridsMap={data.userAvatarsUseridsMap}
+              userNamesAvatars={data.userNamesAvatars}
               userNamesUseridsMap={data.userNamesUseridsMap}
             />
           {:else}
@@ -194,11 +194,11 @@
       {:else if $storeTab === "Labs"}
         {#if instructorMode}
           {#if $storeSubTab === "InstructorLabView"}
-            <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} userNamesUseridsMap={data.userNamesUseridsMap} />
+            <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} userNamesAvatars={data.userNamesAvatars} />
           {:else if $storeSubTab === "InstructorLabViewBoxPlot"}
-            <InstructorLabViewBoxPlot course={data.course} userIds={data.userIds} userNamesUseridsMap={data.userNamesUseridsMap} />
+            <InstructorLabViewBoxPlot course={data.course} userIds={data.userIds} userNamesAvatars={data.userNamesAvatars} />
           {:else}
-            <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} userNamesUseridsMap={data.userNamesUseridsMap} />
+            <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} userNamesAvatars={data.userNamesAvatars} />
           {/if}
         {:else if $storeSubTab === "LabView"}
           <LabView course={data.course} session={data.session} userIds={data.userIds} userNamesUseridsMap={data.userNamesUseridsMap} />
