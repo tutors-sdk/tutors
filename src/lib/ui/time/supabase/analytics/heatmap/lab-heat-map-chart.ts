@@ -6,8 +6,8 @@ import type { Session } from "@supabase/supabase-js";
 export class LabHeatMapChart extends BaseHeatMapChart<number> {
   labs: Lo[];
 
-  constructor(course: any, session: Session, userIds: string[], userNamesUseridsMap: Map<string, string>, multipleUsers: boolean) {
-    super(course, session, userIds, userNamesUseridsMap, multipleUsers);
+  constructor(course: any, session: Session, userIds: string[], userAvatarsUseridsMap: Map<string, [string, string]>, multipleUsers: boolean) {
+    super(course, session, userIds, userAvatarsUseridsMap, multipleUsers);
     let labs = filterByType(course.los, "lab");
     let steps = filterByType(course.los, "step");
 

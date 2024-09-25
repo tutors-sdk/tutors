@@ -20,7 +20,7 @@ export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[],
         type: "shadow"
       },
       formatter: (param: any) => {
-        return [`${param.name}:`, `Min: ${param.value[0]}`, `Q1: ${param.value[1]}`, `Median: ${param.value[2]}`, `Q3: ${param.value[3]}`, `Max: ${param.value[4]}`].join("<br/>");
+        return [`${param.name}:`, `Min: ${param.value[1]}`, `Q1: ${param.value[2]}`, `Median: ${param.value[3]}`, `Q3: ${param.value[4]}`, `Max: ${param.value[5]}`].join("<br/>");
       }
     },
     xAxis: {
@@ -38,7 +38,7 @@ export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[],
     yAxis: {
       type: "category", // Category axis for student names (flipped to y-axis)
       data: userNicknames, // Ensure userNicknames appear on the y-axis
-      name: "Students", // Label for the student names
+      name: "Students (metrics are based on a global context)", // Label for the student names
       boundaryGap: true // Gap between categories for better spacing
     },
     series: [
@@ -49,14 +49,13 @@ export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[],
         tooltip: {
           formatter: (param: any) => {
             const value = param.value;
-            return [`${param.name}:`, `Min: ${value[0]}`, `Q1: ${value[1]}`, `Median: ${value[2]}`, `Q3: ${value[3]}`, `Max: ${value[4]}`].join("<br/>");
+            return [`${param.name}:`, `Min: ${value[1]}`, `Q1: ${value[2]}`, `Median: ${value[3]}`, `Q3: ${value[4]}`, `Max: ${value[5]}`].join("<br/>");
           }
         }
       }
     ]
   };
 }
-
 
 export function combinedBoxplotChart(bgPatternImg: HTMLImageElement, boxplotData: BoxplotData[], chartTitle: string): echarts.EChartsOption {
   return {

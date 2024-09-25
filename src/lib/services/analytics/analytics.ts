@@ -1,6 +1,6 @@
 import type { Course, Lo } from "$lib/services/models/lo-types";
 import type { Session } from "@supabase/supabase-js";
-import type { Analytics } from "./types/analytics";
+import type { Analytics } from "../types/analytics";
 import { firebaseAnalytics } from "./firebaseAnalytics";
 import { supabaseAnalytics } from "./supabaseAnalytics";
 

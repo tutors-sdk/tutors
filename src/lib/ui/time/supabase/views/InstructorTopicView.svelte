@@ -6,8 +6,8 @@
   export let course: Course;
   export let session: Session;
   export let userIds: string[];
-  export let userNamesUseridsMap: Map<string, string>;
+  export let userNamesAvatars: Map<string, [string, string]>;
   export let multipleUsers: boolean = true;
 </script>
 
-<TopicHeatMapChart chartType="TopicHeatMap" {course} {session} {userIds} {userNamesUseridsMap} {multipleUsers} />
+<TopicHeatMapChart chartType="TopicHeatMap" {course} {session} {userIds} {userNamesAvatars} {multipleUsers} />

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
   import { TopicBoxPlotChart } from "../analytics/topic-box-plot";
-    import type { Course } from "$lib/services/models/lo-types";
+  import type { Course } from "$lib/services/models/lo-types";
 
   export let course: Course;
   export let userIds: string[];
@@ -29,13 +29,13 @@
 
   // Function to render the charts
   const renderCharts = async () => {
-  if (topicBoxPlotChart) {
-    const { boxplotData, userNicknames } = await topicBoxPlotChart.prepareBoxplotData();
-    topicBoxPlotChart.renderBoxPlot(document.getElementById("boxplot-container"), boxplotData, userNicknames);
-    const combinedBoxplotData = await topicBoxPlotChart.prepareCombinedBoxplotData();
-    topicBoxPlotChart.renderCombinedBoxplotChart(document.getElementById("combinedBoxPlot"), combinedBoxplotData);
-  }
-};
+    if (topicBoxPlotChart) {
+      const { boxplotData, userNicknames } = await topicBoxPlotChart.prepareBoxplotData();
+      topicBoxPlotChart.renderBoxPlot(document.getElementById("boxplot-container"), boxplotData, userNicknames);
+      const combinedBoxplotData = await topicBoxPlotChart.prepareCombinedBoxplotData();
+      topicBoxPlotChart.renderCombinedBoxplotChart(document.getElementById("combinedBoxPlot"), combinedBoxplotData);
+    }
+  };
 
   // Listen for window focus event to trigger chart refresh
   window.addEventListener("focus", handleFocus);

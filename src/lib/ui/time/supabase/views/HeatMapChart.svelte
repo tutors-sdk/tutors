@@ -8,7 +8,7 @@
   export let course: Course;
   export let session: Session;
   export let userIds: string[] = [];
-  export let userNamesUseridsMap: Map<string, string> = new Map();
+  export let userNamesAvatars: Map<string, [string, string]> = new Map();
   export let multipleUsers: boolean = false;
   export let chartType: "LabHeatMap" | "TopicHeatMap";
 
@@ -16,9 +16,9 @@
 
   onMount(() => {
     if (chartType === "LabHeatMap") {
-      chartInstance = new LabHeatMapChart(course, session, userIds, userNamesUseridsMap, multipleUsers);
+      chartInstance = new LabHeatMapChart(course, session, userIds, userNamesAvatars, multipleUsers);
     } else if (chartType === "TopicHeatMap") {
-      chartInstance = new TopicHeatMapChart(course, session, userIds, userNamesUseridsMap, multipleUsers);
+      chartInstance = new TopicHeatMapChart(course, session, userIds, userNamesAvatars, multipleUsers);
     } else {
       throw new Error(`Invalid chart type: ${chartType}`);
     }

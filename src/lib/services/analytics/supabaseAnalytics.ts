@@ -1,9 +1,9 @@
 import type { Course, Lo } from "$lib/services/models/lo-types";
 import type { Session } from "@supabase/supabase-js";
-import type { Analytics } from "./types/analytics";
+import type { Analytics } from "../types/analytics";
 import { onlineStatus } from "$lib/stores";
 import { get } from "svelte/store";
-import { presenceService } from "./presence";
+import { presenceService } from "../presence";
 import {
   updateStudentsStatus,
   storeStudentCourseLearningObjectInSupabase,
@@ -14,7 +14,7 @@ import {
   updateLastAccess,
   readValue,
   formatDate
-} from "./utils/supabase-utils";
+} from "../utils/supabase-utils";
 
 export const supabaseAnalytics: Analytics = {
   loRoute: "",
@@ -37,10 +37,18 @@ export const supabaseAnalytics: Analytics = {
   setOnlineStatus(course: Course, status: boolean, session: Session) {
     try {
       const onlineStatus = status ? "online" : "offline";
-      updateStudentsStatus(session.user.user_metadata.user_name, onlineStatus);
+      updateStudentsStatus(session.user.id, onlineStatus);
     } catch (error: any) {
       console.log(`TutorStore Error: ${error.message}`);
     }
+  },
+
+  async getOnlineStatus(course: Course, session: Session): Promise<string> {
+    if (!course || !session) {
+      return "online";
+    }
+    const status = await readValue(session.user.id);
+    return status || "online";
   },
 
   reportPageLoad(course: Course, session: Session, lo: Lo) {
@@ -73,23 +81,5 @@ export const supabaseAnalytics: Analytics = {
     } catch (error: any) {
       console.log(`TutorStore Error: ${error.message}`);
     }
-  },
-
-  getOnlineStatus: function (course: Course, session: Session): Promise<string> {
-    return new Promise((resolve, reject) => {
-      if (!course || !session.user) {
-        resolve("online");
-      } else {
-        const key = session.user.id;
-        // Assuming readValue is an asynchronous function
-        readValue(key)
-          .then((status: string | undefined) => {
-            resolve(status || "online");
-          })
-          .catch((error: any) => {
-            reject(error);
-          });
-      }
-    });
   }
 };

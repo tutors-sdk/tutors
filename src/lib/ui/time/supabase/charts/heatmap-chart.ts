@@ -61,17 +61,17 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
         show: true
       },
       axisLabel: {
-            interval: function(index, value) {
-                // Define your logic based on label length
-                let maxLabelLength = 10; // Set the max number of characters for default interval
-                return value.length > maxLabelLength ? 3 : 0; // Adjust interval based on label length
-            },
-            formatter: function(value) {
-                // You can also add custom formatting
-                return value.length > 10 ? value.slice(0, 10) + '...' : value;
-            },
-            fontSize: 12,
-    },
+        interval: function (index, value) {
+          // Define your logic based on label length
+          let maxLabelLength = 10; // Set the max number of characters for default interval
+          return value.length > maxLabelLength ? 3 : 0; // Adjust interval based on label length
+        },
+        formatter: function (value) {
+          // You can also add custom formatting
+          return value.length > 10 ? value.slice(0, 10) + "..." : value;
+        },
+        fontSize: 12
+      },
       axisTick: {
         alignWithLabel: true
       },

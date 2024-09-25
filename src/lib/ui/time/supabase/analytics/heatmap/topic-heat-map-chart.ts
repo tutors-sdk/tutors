@@ -6,17 +6,15 @@ import type { Session } from "@supabase/supabase-js";
 export class TopicHeatMapChart extends BaseHeatMapChart<number> {
   topics: Lo[];
 
-  constructor(course: Course, session: Session, userIds: string[], userNamesUseridsMap: Map<string, string>, multipleUsers: boolean) {
-    super(course, session, userIds, userNamesUseridsMap, multipleUsers);
+  constructor(course: Course, session: Session, userIds: string[], userAvatarsUseridsMap: Map<string, [string, string]>, multipleUsers: boolean) {
+    super(course, session, userIds, userAvatarsUseridsMap, multipleUsers);
     this.topics = getCompositeValues(course.los).concat(getSimpleTypesValues(course.los));
   }
 
   async populateAndRenderData() {
     if (this.multipleUsers) {
       await this.populateAndRenderUsersData(this.topics, this.userIds, "topic");
-      this.prepareCombinedTopicData(this.topics, this.userIds, (lo) =>
-        lo.parentLo?.type === "topic" ? lo.parentLo.title : lo.title
-      );
+      this.prepareCombinedTopicData(this.topics, this.userIds, (lo) => (lo.parentLo?.type === "topic" ? lo.parentLo.title : lo.title));
     } else {
       await this.populateAndRenderSingleUserData(this.session, this.topics, "topic");
     }

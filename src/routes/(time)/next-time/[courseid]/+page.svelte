@@ -164,28 +164,28 @@
     <div class="w-full">
       {#if $storeTab === "Calendar"}
         {#if instructorMode}
-          <NewInstructorCalendarTime
-            timeActiveMap={data.timeActiveMap}
-            userIds={data.calendarIds}
-            userNamesUseridsMap={data.userNamesUseridsMap}
-            userAvatarsUseridsMap={data.userAvatarsUseridsMap}
-          />
+          <NewInstructorCalendarTime timeActiveMap={data.timeActiveMap} userIds={data.calendarIds} userNamesAvatars={data.userNamesAvatars} />
         {:else}
           <CalendarView timeActiveMap={data.timeActiveMap} session={data.session} medianTime={data.medianTime} />
         {/if}
       {:else if $storeTab === "Topics"}
         {#if instructorMode}
           {#if $storeSubTab === "InstructorTopicView"}
-            <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds} userNamesUseridsMap={data.userNamesUseridsMap} />
+            <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds} userNamesAvatars={data.userNamesAvatars} />
           {:else if $storeSubTab === "InstructorTopicViewPieChart"}
             <InstructorTopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
           {:else if $storeSubTab === "InstructorTopicViewBoxPlot"}
-            <InstructorTopicViewBoxPlot course={data.course} userIds={data.userIds} userNamesUseridsMap={data.userNamesUseridsMap} />
+            <InstructorTopicViewBoxPlot
+              course={data.course}
+              userIds={data.userIds}
+              userAvatarsUseridsMap={data.userAvatarsUseridsMap}
+              userNamesUseridsMap={data.userNamesUseridsMap}
+            />
           {:else}
-            <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds} userNamesUseridsMap={data.userNamesUseridsMap} />
+            <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds} userAvatarsUseridsMap={data.userAvatarsUseridsMap} />
           {/if}
         {:else if $storeSubTab === "TopicView"}
-          <TopicView course={data.course} session={data.session} userIds={data.userIds} userNamesUseridsMap={data.userNamesUseridsMap} />
+          <TopicView course={data.course} session={data.session} userIds={data.userIds} userAvatarsUseridsMap={[]} />
         {:else if $storeSubTab === "TopicViewPieChart"}
           <TopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
         {:else}

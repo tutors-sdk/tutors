@@ -35,9 +35,9 @@ function calculateBoxplotStats(values: number[]): [number, number, number, numbe
 export class TopicBoxPlotChart {
   course: Course;
   userIds: string[];
-  userNamesUseridsMap: Map<string, string>;
+  userNamesUseridsMap: Map<string, [string, string]>;
 
-  constructor(course: Course, userIds: string[], userNamesUseridsMap: Map<string, string>) {
+  constructor(course: Course, userIds: string[], userNamesUseridsMap: Map<string, [string, string]>) {
     this.course = course;
     this.userIds = userIds;
     this.userNamesUseridsMap = userNamesUseridsMap;
@@ -80,11 +80,12 @@ export class TopicBoxPlotChart {
     const userActivitiesPromises = Array.from(userActivities.entries()).map(async ([userId, activities]) => {
       if (activities.length > 0) {
         //const fullname = await this.getName(); //generate fakenames
-        const fullname = this.userNamesUseridsMap.get(userId) || userId;
+        //const fullname = this.userNamesUseridsMap.get(userId) || userId;
+        const [fullName] = this.userNamesUseridsMap?.get(userId) || [undefined, undefined];
 
         const [min, q1, median, q3, max] = calculateBoxplotStats(activities);
         boxplotData.push([min, q1, median, q3, max]);
-        userNicknames.push(fullname); // replace with userId when changing back
+        userNicknames.push(fullName ?? userId);
       }
     });
 
@@ -118,11 +119,12 @@ export class TopicBoxPlotChart {
         const recordsPromises = Array.from(lo.learningRecords.entries()).map(async ([userId, record]) => {
           if (this.userIds.includes(userId)) {
             //const nickname = await this.getName(); //generate a fake name
-            const nickname = this.userNamesUseridsMap.get(userId) || userId;
+            //const nickname = this.userNamesUseridsMap.get(userId) || userId;
+            const [fullName] = this.userNamesUseridsMap?.get(userId) || [undefined, undefined];
 
             topicActivities.get(title)!.push({
               timeActive: record.timeActive,
-              nickname: nickname // change to userId when changing back
+              nickname: fullName ?? userId // change to userId when changing back
             });
           }
         });

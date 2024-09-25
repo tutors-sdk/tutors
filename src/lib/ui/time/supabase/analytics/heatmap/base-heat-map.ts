@@ -19,7 +19,7 @@ export class BaseHeatMapChart<T> {
   course: Course;
   session: Session;
   userIds: string[];
-  userNamesUseridsMap: Map<string, string>;
+  userAvatarsUseridsMap: Map<string, [string, string]>;
   chartInstance: echarts.ECharts | null = null;
   categories: Set<string> = new Set();
   yAxisData: string[] = [];
@@ -35,12 +35,12 @@ export class BaseHeatMapChart<T> {
   };
   multipleUsers: boolean;
 
-  constructor(course: Course, session: Session, userIds: string[], userNamesUseridsMap: Map<string, string>, multipleUsers: boolean) {
+  constructor(course: Course, session: Session, userIds: string[], userAvatarsUseridsMap: Map<string, [string, string]>, multipleUsers: boolean) {
     this.chartInstances = new Map();
     this.course = course;
     this.session = session;
     this.userIds = userIds;
-    this.userNamesUseridsMap = userNamesUseridsMap;
+    this.userAvatarsUseridsMap = userAvatarsUseridsMap;
     this.multipleUsers = multipleUsers;
   }
 
@@ -65,7 +65,7 @@ export class BaseHeatMapChart<T> {
   }
 
   async getUserFullName(userId: string) {
-    return this.userNamesUseridsMap.get(userId) || userId;
+    return this.userAvatarsUseridsMap.get(userId) || userId;
   }
 
   async populatePerUserSeriesData(allItems: Lo[], userId: string, index: number, learninObjValue: string): Promise<number[][]> {
@@ -133,8 +133,10 @@ export class BaseHeatMapChart<T> {
     for (const [index, userId] of userIds.entries()) {
       const seriesData = await this.populatePerUserSeriesData(allItems, userId, index, learninObjValue);
       allSeriesData = allSeriesData.concat(seriesData);
-      const fullName = await this.getUserFullName(userId);
-      yAxisData.push(fullName);
+      const [fullName] = this.userAvatarsUseridsMap?.get(userId) || [undefined, undefined];
+
+      //const fullName = await this.getUserFullName(userId);
+      yAxisData.push(fullName ?? userId);
     }
 
     this.series = {

@@ -8,7 +8,7 @@
   import { setInitialClassState } from "@skeletonlabs/skeleton";
   import { onlineStatus, storeTheme, transitionKey, currentLo, currentCourse } from "$lib/stores";
   import { getKeys } from "$lib/environment";
-  import { analyticsService } from "$lib/services/analytics";
+  import { analyticsService } from "$lib/services/analytics/analytics";
   import CourseShell from "$lib/ui/app-shells/CourseShell.svelte";
   import { initFirebase } from "$lib/services/utils/firebase-utils";
   import { PUBLIC_SUPABASE_URL } from "$env/static/public";
