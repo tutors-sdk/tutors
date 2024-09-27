@@ -6,11 +6,12 @@
   export let timeActiveMap: Map<string, Map<string, number>>;
   export let session: Session;
   export let medianTime: Map<string, number>;
-  export let userNamesUseridsMap: Map<string, string>;
-  export let userAvatarsUseridsMap: Map<string, string>;
+  //export let userNamesUseridsMap: Map<string, string>;
+  export let userAvatarsUseridsMap: Map<string, [string, string]>;
 
   let calendarChart: CalendarChart | null;
-  calendarChart = new CalendarChart(userAvatarsUseridsMap, userNamesUseridsMap);
+  // calendarChart = new CalendarChart(userAvatarsUseridsMap, userNamesUseridsMap);
+  calendarChart = new CalendarChart(userAvatarsUseridsMap);
 
   onMount(() => {
     renderChart();

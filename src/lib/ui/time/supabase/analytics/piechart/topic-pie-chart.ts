@@ -40,7 +40,7 @@ export class TopicPieChart extends BasePieChart<number> {
       if (existing) {
         existing.value += value;
       } else {
-        value = Math.round(value / 2);
+        value = Math.floor(value / 2);
         outerPieData.push({ value, name: key });
       }
     });
@@ -49,27 +49,43 @@ export class TopicPieChart extends BasePieChart<number> {
   }
 
   renderChart() {
-    super.renderChart(); // Initialize and set up click handlers
+    super.renderChart(); // Initialise and set up click handlers
 
     const allComposites = getCompositeValues(this.course.los);
     const allSimpleTypes = getSimpleTypesValues(this.course.los);
     const allTypes = [...allComposites, ...allSimpleTypes];
 
     allTypes.forEach((lo) => {
+      const getTopTopicParentLo = (lo: Lo): Lo | null => {
+        if (lo.hide) return null;
+        if (lo.type === "topic") return lo;
+        if (lo.parentLo) return getTopTopicParentLo(lo.parentLo);
+        return null;
+      };
+
       if (this.multipleUsers) {
         this.userIds.forEach((userId) => {
           const timeActive = lo.learningRecords?.get(userId)?.timeActive || 0;
-          this.updateMaps(lo, timeActive, (lo) =>
-            lo.parentTopic?.type === "topic" ? lo.parentTopic.title : lo.parentLo?.parentTopic?.type === "topic" ? lo.parentLo?.parentTopic?.title : lo.title
-          );
+          this.updateMaps(lo, timeActive, (lo) => {
+            const topTopic = getTopTopicParentLo(lo);
+            return topTopic ? topTopic.title : null;
+          });
         });
       } else {
         const timeActive = lo.learningRecords?.get(this.session.user.user_metadata.user_name)?.timeActive || 0;
-        this.updateMaps(lo, timeActive, (lo) =>
-          lo.parentTopic?.type === "topic" ? lo.parentTopic.title : lo.parentLo?.parentTopic?.type === "topic" ? lo.parentLo?.parentTopic?.title : lo.title
-        );
+        this.updateMaps(lo, timeActive, (lo) => {
+          const topTopic = getTopTopicParentLo(lo);
+          return topTopic ? topTopic.title : null;
+        });
       }
     });
+
+    const getTopTopicParentLo = (lo: Lo): Lo | null => {
+      if (lo.hide) return null; // Skip hidden items
+      if (lo.type === "topic") return lo; // Return the Lo if it's of type 'topic'
+      if (lo.parentLo) return getTopTopicParentLo(lo.parentLo); // Recursively traverse up the hierarchy
+      return null; // If no parentLo or no topic found, return null
+    };
 
     if (this.multipleUsers === false) {
       const singleUserInnerData = Array.from(this.titleTimesMap.entries()).map(([title, timeActive]) => ({

@@ -19,9 +19,9 @@ bgPatternImg.src = backgroundPattern;
 export class LabBoxPlotChart {
   course: Course;
   userIds: string[];
-  userNamesUseridsMap: Map<string, string>;
+  userNamesUseridsMap: Map<string, [string, string]>;
 
-  constructor(course: Course, userIds: string[], userNamesUseridsMap: Map<string, string>) {
+  constructor(course: Course, userIds: string[], userNamesUseridsMap: Map<string, [string, string]>) {
     this.course = course;
     this.userIds = userIds;
     this.userNamesUseridsMap = userNamesUseridsMap;
@@ -57,7 +57,9 @@ export class LabBoxPlotChart {
       if (activities.length > 0) {
         //const fullname = await this.getName(); //generate fake name
         //const fullname = (await getUser(userId)) || userId;
-        const fullname = this.userNamesUseridsMap.get(userId) || userId;
+        //const fullname = this.userNamesUseridsMap.get(userId) || userId;
+        const [fullname] = this.userNamesUseridsMap?.get(userId) || [undefined, undefined];
+
         activities.sort((a, b) => a - b);
         const min = d3.min(activities) ?? 0;
         const q1 = d3.quantile(activities, 0.25) ?? 0;
@@ -65,7 +67,7 @@ export class LabBoxPlotChart {
         const q3 = d3.quantile(activities, 0.75) ?? 0;
         const max = d3.max(activities) ?? 0;
         boxplotData.push([min, q1, median, q3, max]);
-        userNicknames.push(fullname);
+        userNicknames.push(fullname ?? userId);
       }
     });
 
@@ -91,10 +93,12 @@ export class LabBoxPlotChart {
         if (this.userIds?.includes(userId) && labRecord.timeActive != null) {
           //const nickname = await this.getName(); //generate fake names
           //const nickname = (await getUser(userId)) || userId;
-          const nickname = this.userNamesUseridsMap.get(userId) || userId;
+          const [fullname] = this.userNamesUseridsMap?.get(userId) || [undefined, undefined];
+
+          //const nickname = this.userNamesUseridsMap.get(userId) || userId;
           labActivities.get(title)?.push({
             timeActive: labRecord.timeActive,
-            nickname: nickname
+            nickname: fullname ?? userId
           });
         }
       }

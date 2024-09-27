@@ -3,14 +3,15 @@
   import { CalendarChart } from "../analytics/calendar";
 
   export let timeActiveMap: Map<string, Map<string, number>>;
-  export let userAvatarsUseridsMap: Map<string, string>;
-  export let userNamesUseridsMap: Map<string, string>;
+  export let userNamesAvatars: Map<string, [string, string]>;
+  // export let userNamesUseridsMap: Map<string, string>;
+
   export let userIds: string[];
 
   let calendarChart: CalendarChart | null;
 
   onMount(() => {
-    calendarChart = new CalendarChart(userAvatarsUseridsMap, userNamesUseridsMap);
+    calendarChart = new CalendarChart(userNamesAvatars);
     createAndRenderChart();
   });
 

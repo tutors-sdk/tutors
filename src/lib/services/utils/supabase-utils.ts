@@ -35,17 +35,29 @@ export async function getMedianTimeActivePerDate(courseId: string) {
   return data;
 }
 
-export async function updateStudentsStatus(key: string, str: string) {
-  await db.from("students").update({ online_status: str }).eq("id", key);
+export async function updateStudentsStatus(key: string, status: string) {
+  const { data, error } = await db.from("users").update({ online_status: status }).eq("id", key);
+
+  if (error) {
+    console.error("Error updating status:", error.message);
+  } else {
+    console.log("Status updated successfully:", data);
+  }
 }
 
 export async function readValue(key: string): Promise<any> {
-  const { data, error } = await db.from("students").select().eq("id", key);
+  const { data, error } = await db.from("users").select().eq("id", key);
   return data;
 }
 
 export async function getCalendarDataPerStudent(courseId: string, studentId: string): Promise<any> {
   const { data, error } = await db.from("calendar").select().eq("student_id", studentId).eq("course_id", courseId);
+  return data;
+}
+
+
+export async function getStudentData(id: string): Promise<any> {
+  const { data, error } = await db.from("users").select().eq("id", id);
   return data;
 }
 
@@ -73,7 +85,7 @@ export async function getDurationTotal(key: string, table: string, id: string): 
 }
 
 export async function insertOrUpdateCalendar(studentId: string, courseId: string) {
-  if(!studentId || !courseId) return;
+  if (!studentId || !courseId) return;
   const durationPromise = getCalendarDuration(formatDate(new Date()), studentId, courseId);
   const countPromise = getCalendarCount(formatDate(new Date()), studentId, courseId);
   const [timeActive, pageLoads] = await Promise.all([durationPromise, countPromise]);
@@ -112,18 +124,15 @@ export async function insertOrUpdateCourse(course: Course) {
 }
 
 export async function addOrUpdateStudent(userDetails: User) {
-  const durationPromise = getDurationTotal("id", "students", userDetails.user_metadata.user_name);
-  const countPromise = updateCount("id", "students", userDetails.user_metadata.user_name);
-  const [duration, count] = await Promise.all([durationPromise, countPromise]);
-  const { data, error } = await db.from("students").upsert(
+  if (!userDetails) return;
+  const { data, error } = await db.from("users").upsert(
     {
-      id: userDetails.user_metadata.user_name,
-      avatar: userDetails.user_metadata.avatar_url,
+      id: userDetails.id,
+      github_id: userDetails.user_metadata.user_name,
+      avatar_url: userDetails.user_metadata.avatar_url,
       full_name: userDetails.user_metadata.full_name,
       email: userDetails.user_metadata.email || "",
-      duration: duration,
       date_last_accessed: new Date().toISOString(),
-      count: count
     },
     {
       onConflict: "id"

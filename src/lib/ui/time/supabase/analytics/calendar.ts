@@ -11,7 +11,7 @@ import type { CalendarMap } from "$lib/services/types/supabase-metrics";
 import type { Course } from "$lib/services/models/lo-types";
 import type { Session } from "@supabase/supabase-js";
 import { getGithubAvatarUrl } from "$lib/services/utils/supabase-utils";
-import { generateStudent } from "../../../../../routes/(time)/simulate/generateStudent";
+import { generateStudent, getDefaultAvatar } from "../../../../../routes/(time)/simulate/generateStudent";
 
 echarts.use([TitleComponent, CalendarComponent, TooltipComponent, VisualMapComponent, HeatmapChart, CanvasRenderer, GraphicComponent]);
 
@@ -27,17 +27,15 @@ export class CalendarChart {
   chartDom: any;
   myCharts: { [key: string]: any };
   medianCalendarRendered: boolean;
-  userNamesUseridsMap: Map<string, string>;
-  userAvatarsUseridsMap: Map<string, string>;
+  userAvatarsUseridsMap: Map<string, [string, string]>;
 
-  constructor(userAvatarsUseridsMap: Map<string, string>, userNamesUseridsMap: Map<string, string>) {
+  constructor(userAvatarsUseridsMap: Map<string, [string, string]>) {
     this.chartRendered = false;
     this.myChart = null;
     this.chartDom = null;
     this.myCharts = {};
     this.medianCalendarRendered = false;
     this.userAvatarsUseridsMap = userAvatarsUseridsMap;
-    this.userNamesUseridsMap = userNamesUseridsMap;
   }
 
   createChartContainer(containerId: string) {
@@ -126,9 +124,10 @@ export class CalendarChart {
     }
 
     const chart = echarts.init(chartContainer);
-    const fullName = this.userNamesUseridsMap.get(userId) || userId;
-    const avatarUrl = this.userAvatarsUseridsMap.get(userId) || "";
-    const option = calendarCombined(userId, calendarMap, bgPatternImg, currentRange, avatarUrl, fullName);
+    const [fullname, avatarurl] = this.userAvatarsUseridsMap?.get(userId) || [undefined, undefined];
+    // const fullName = this.userNamesUseridsMap.get(userId) || userId;
+    // const avatarUrl = this.userAvatarsUseridsMap.get(userId) || "";
+    const option = calendarCombined(userId, calendarMap, bgPatternImg, currentRange, avatarurl ?? getDefaultAvatar(), fullname ?? userId);
 
     chart.setOption(option, true);
 

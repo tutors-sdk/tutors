@@ -14,7 +14,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
   };
 
   if (series?.data) {
-    if (series.name === "lab activity for all users" || series.name === "topic activity for all users") {
+    if (series.name === "student engagement for lab" || series.name === "student engagement for topic") {
       gridConfig = {
         left: "15%",
         right: "10%",
@@ -61,9 +61,16 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
         show: true
       },
       axisLabel: {
-        interval: 3,
-        fontSize: 12,
-        margin: 10 // Adjust margin to control spacing
+        interval: function (index, value) {
+          // Define your logic based on label length
+          let maxLabelLength = 10; // Set the max number of characters for default interval
+          return value.length > maxLabelLength ? 3 : 0; // Adjust interval based on label length
+        },
+        formatter: function (value) {
+          // You can also add custom formatting
+          return value.length > 10 ? value.slice(0, 10) + "..." : value;
+        },
+        fontSize: 12
       },
       axisTick: {
         alignWithLabel: true
@@ -74,17 +81,17 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       position: "bottom"
     },
     yAxis: {
-  type: "category",
-  data: yAxisData[0] !== undefined ? yAxisData : [],
-  splitArea: {
-    show: true
-  },
+      type: "category",
+      data: yAxisData[0] !== undefined ? yAxisData : [],
+      splitArea: {
+        show: true
+      },
       axisLabel: {
         interval: 0,
-        fontSize: 15,
+        fontSize: 12,
         padding: [10, 0, 10, 0] // Increase space between rows
       }
-  },
+    },
     visualMap: {
       min: 0,
       max: visualmapValue,
