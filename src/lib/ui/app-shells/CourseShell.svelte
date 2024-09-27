@@ -14,7 +14,7 @@
   import SearchButton from "$lib/ui/navigators/buttons/SearchButton.svelte";
   import TutorsTimeIndicator from "$lib/ui/navigators/buttons/TutorsTimeIndicator.svelte";
   import { currentCourse, onlineStatus, transitionKey } from "$lib/stores";
-  import { analyticsService } from "$lib/services/analytics";
+  import { analyticsService } from "$lib/services/analytics/analytics";
   import { goto } from "$app/navigation";
   import { beforeUpdate } from "svelte";
   import { fade } from "svelte/transition";

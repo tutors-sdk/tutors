@@ -4,7 +4,7 @@ import { BoxplotChart } from "echarts/charts";
 import { CanvasRenderer } from "echarts/renderers";
 import { backgroundPattern } from "../charts/tutors-charts-background-url";
 import { boxplot, combinedBoxplotChart } from "../charts/boxplot-chart";
-import type { Course } from "$lib/services/models/lo-types";
+import type { Course, Lo } from "$lib/services/models/lo-types";
 import { getCompositeValues, getSimpleTypesValues } from "$lib/services/utils/supabase-utils";
 import type { BoxplotData } from "$lib/services/types/supabase-metrics";
 import * as d3 from "d3";
@@ -21,7 +21,7 @@ function calculateBoxplotStats(values: number[]): [number, number, number, numbe
   }
 
   // Sort the array
-  values.sort((a, b) => a - b);
+  // values.sort((a, b) => a - b);
 
   const min = d3.min(values) ?? 0;
   const q1 = d3.quantile(values, 0.25) ?? 0;
@@ -35,9 +35,9 @@ function calculateBoxplotStats(values: number[]): [number, number, number, numbe
 export class TopicBoxPlotChart {
   course: Course;
   userIds: string[];
-  userNamesUseridsMap: Map<string, string>;
+  userNamesUseridsMap: Map<string, [string, string]>;
 
-  constructor(course: Course, userIds: string[], userNamesUseridsMap: Map<string, string>) {
+  constructor(course: Course, userIds: string[], userNamesUseridsMap: Map<string, [string, string]>) {
     this.course = course;
     this.userIds = userIds;
     this.userNamesUseridsMap = userNamesUseridsMap;
@@ -55,26 +55,37 @@ export class TopicBoxPlotChart {
     const allTypes = [...allComposites, ...allSimpleTypes];
     const userActivities = new Map<string, number[]>();
 
+    const getTopTopicParentLo = (lo: Lo): Lo | null => {
+      if (lo.hide) return null;
+      if (lo.type === "topic") return lo;
+      if (lo.parentLo) return getTopTopicParentLo(lo.parentLo);
+      return null;
+    };
+
+    // Group user activities by their parent topic
     allTypes.forEach((lo) => {
-      lo.learningRecords?.forEach((record, userId) => {
-        if (this.userIds.includes(userId)) {
-          if (!userActivities.has(userId)) {
-            userActivities.set(userId, []);
+      const topTopic = getTopTopicParentLo(lo); // Get top-level topic for the LO
+      if (topTopic) {
+        lo.learningRecords?.forEach((record, userId) => {
+          if (this.userIds.includes(userId)) {
+            if (!userActivities.has(userId)) {
+              userActivities.set(userId, []);
+            }
+            userActivities.get(userId)!.push(record.timeActive);
           }
-          userActivities.get(userId)!.push(record.timeActive);
-        }
-      });
+        });
+      }
     });
 
     const userActivitiesPromises = Array.from(userActivities.entries()).map(async ([userId, activities]) => {
       if (activities.length > 0) {
         //const fullname = await this.getName(); //generate fakenames
-        //const fullname = (await getUser(userId)) || userId;
-        const fullname = this.userNamesUseridsMap.get(userId) || userId;
+        //const fullname = this.userNamesUseridsMap.get(userId) || userId;
+        const [fullname] = this.userNamesUseridsMap?.get(userId) || [undefined, undefined];
 
         const [min, q1, median, q3, max] = calculateBoxplotStats(activities);
         boxplotData.push([min, q1, median, q3, max]);
-        userNicknames.push(fullname); // replace with userId when changing back
+        userNicknames.push(fullname ?? userId);
       }
     });
 
@@ -89,16 +100,17 @@ export class TopicBoxPlotChart {
     const allSimpleTypes = getSimpleTypesValues(this.course.los);
     const allTypes = [...allComposites, ...allSimpleTypes];
 
+    const getTopTopicParentLo = (lo: Lo): Lo | null => {
+      if (lo.hide) return null;
+      if (lo.type === "topic") return lo;
+      if (lo.parentLo) return getTopTopicParentLo(lo.parentLo);
+      return null;
+    };
+
     const promises = allTypes.map(async (lo) => {
-      if (lo.learningRecords && lo.learningRecords.size !== 0) {
-        let title = "";
-        if (lo.parentTopic?.type === "topic") {
-          title = lo.parentTopic?.title;
-        } else if (lo.parentLo?.parentTopic?.type === "topic") {
-          title = lo.parentLo?.parentTopic?.title;
-        } else {
-          title = lo.title;
-        }
+      const topTopic = getTopTopicParentLo(lo); // Get top-level topic for the LO
+      if (topTopic && lo.learningRecords && lo.learningRecords.size !== 0) {
+        const title = topTopic.title; // Use top topic's title
 
         if (!topicActivities.has(title)) {
           topicActivities.set(title, []);
@@ -107,12 +119,12 @@ export class TopicBoxPlotChart {
         const recordsPromises = Array.from(lo.learningRecords.entries()).map(async ([userId, record]) => {
           if (this.userIds.includes(userId)) {
             //const nickname = await this.getName(); //generate a fake name
-            //const nickname = (await getUser(userId)) || userId;
-            const nickname = this.userNamesUseridsMap.get(userId) || userId;
+            //const nickname = this.userNamesUseridsMap.get(userId) || userId;
+            const [fullname] = this.userNamesUseridsMap?.get(userId) || [undefined, undefined];
 
             topicActivities.get(title)!.push({
               timeActive: record.timeActive,
-              nickname: nickname // change to userId when changing back
+              nickname: fullname ?? userId // change to userId when changing back
             });
           }
         });

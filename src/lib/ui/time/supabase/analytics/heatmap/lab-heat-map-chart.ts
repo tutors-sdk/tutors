@@ -6,8 +6,8 @@ import type { Session } from "@supabase/supabase-js";
 export class LabHeatMapChart extends BaseHeatMapChart<number> {
   labs: Lo[];
 
-  constructor(course: any, session: Session, userIds: string[], userNamesUseridsMap: Map<string, string>, multipleUsers: boolean) {
-    super(course, session, userIds, userNamesUseridsMap, multipleUsers);
+  constructor(course: any, session: Session, userIds: string[], userAvatarsUseridsMap: Map<string, [string, string]>, multipleUsers: boolean) {
+    super(course, session, userIds, userAvatarsUseridsMap, multipleUsers);
     let labs = filterByType(course.los, "lab");
     let steps = filterByType(course.los, "step");
 
@@ -21,6 +21,16 @@ export class LabHeatMapChart extends BaseHeatMapChart<number> {
     } else {
       await this.populateAndRenderSingleUserData(this.session, this.labs, "lab");
     }
+  }
+
+  getTitleRecursively(lo: Lo) {
+    // Base case: if the lo has a parentLo with type 'topic', return the parent's title
+    if (lo.parentLo?.type === "lab") {
+      return lo.parentLo.title;
+    }
+
+    // Default case: return the current lo's title
+    return lo.title;
   }
 
   renderChart(container: HTMLElement) {

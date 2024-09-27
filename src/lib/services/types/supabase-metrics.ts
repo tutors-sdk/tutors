@@ -21,6 +21,8 @@ export interface LearningInteraction {
   date: Date;
   pageloads: number;
   timeactive: number;
+  fullname?: string;
+  avatarurl?: string;
 }
 
 export interface GridConfig {

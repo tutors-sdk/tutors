@@ -188,6 +188,6 @@ export function generateId() {
     return v.toString(16);
   });
 }
-function getDefaultAvatar(): string {
+export function getDefaultAvatar(): string {
   return "/profile-placeholder.png";
 }

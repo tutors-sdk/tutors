@@ -8,7 +8,7 @@
   export let course: Course;
   export let session: Session;
   export let userIds: string[] = [];
-  export let userNamesUseridsMap: Map<string, string> = new Map();
+  export let userNamesAvatars: Map<string, [string, string]> = new Map();
   export let multipleUsers: boolean = false;
   export let chartType: "LabHeatMap" | "TopicHeatMap";
 
@@ -16,9 +16,9 @@
 
   onMount(() => {
     if (chartType === "LabHeatMap") {
-      chartInstance = new LabHeatMapChart(course, session, userIds, userNamesUseridsMap, multipleUsers);
+      chartInstance = new LabHeatMapChart(course, session, userIds, userNamesAvatars, multipleUsers);
     } else if (chartType === "TopicHeatMap") {
-      chartInstance = new TopicHeatMapChart(course, session, userIds, userNamesUseridsMap, multipleUsers);
+      chartInstance = new TopicHeatMapChart(course, session, userIds, userNamesAvatars, multipleUsers);
     } else {
       throw new Error(`Invalid chart type: ${chartType}`);
     }
@@ -48,11 +48,18 @@
   });
 </script>
 
-<div class="h-screen flex flex-col">
-  {#if multipleUsers}
-    <div id="heatmap-container" class="h-2/3 w-full overflow-y-scroll"></div>
-    <div id="combined-heatmap" class="h-1/3 w-full overflow-y-scroll"></div>
-  {:else}
-    <div id="heatmap-container" class="h-full w-full overflow-y-scroll"></div>
-  {/if}
+<div class="h-full flex flex-row">
+  <!-- Parent container that wraps everything -->
+  <div id="large-container" class="h-screen w-screen">
+    {#if multipleUsers}
+      <!-- For multiple users: two containers stacked on larger screens, change to row on smaller screens -->
+      <div id="heatmap-container" class="h-2/3 w-full md:h-2/3 md:w-full"></div>
+      <!-- 2/3 height on large screens, full height on small screens -->
+      <div id="combined-heatmap" class="h-1/3 w-full md:h-1/3 md:w-full"></div>
+      <!-- 1/3 height on large screens, full height on small screens -->
+    {:else}
+      <!-- For single users: one container with full height -->
+      <div id="heatmap-container" class="h-full w-full"></div>
+    {/if}
+  </div>
 </div>

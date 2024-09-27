@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
-  import { analyticsService } from "$lib/services/analytics";
+  import { analyticsService } from "$lib/services/analytics/analytics";
   import { initFirebase } from "$lib/services/utils/firebase-utils";
   import { getKeys } from "$lib/environment";
   import Composite from "$lib/ui/learning-objects/structure/Composite.svelte";

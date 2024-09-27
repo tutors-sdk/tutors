@@ -4,6 +4,18 @@ import type { Course, LearningRecord } from "../models/lo-types";
 import type { LearningInteraction } from "../types/supabase-metrics";
 import { formatDate, getCalendarDataForAll } from "./supabase-utils";
 
+export async function fetchLearningUserInteractions(course: Course): Promise<LearningInteraction[]> {
+  const { data: metrics, error: studentsError } = await db.rpc("get_all_learner_user_records", {
+    course_base: course.courseId
+  });
+
+  if (studentsError) {
+    console.error(studentsError);
+    return [];
+  }
+  return metrics;
+}
+
 export async function fetchLearningInteractions(course: Course): Promise<LearningInteraction[]> {
   const { data: metrics, error: studentsError } = await db.rpc("get_all_learner_records", {
     course_base: course.courseId
