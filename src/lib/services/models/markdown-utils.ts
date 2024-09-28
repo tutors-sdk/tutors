@@ -82,8 +82,8 @@ function filter(src: string, url: string): string {
   filtered = replaceAll(filtered, "img\\/", `https://${url}/img/`);
   filtered = replaceAll(filtered, "./archives\\/", `archives/`);
   filtered = replaceAll(filtered, "archives\\/", `https://${url}/archives/`);
-  filtered = replaceAll(filtered, "./archive\\/", `archive/`);
-  filtered = replaceAll(filtered, "archive\\/", `https://${url}/archive/`);
+  filtered = replaceAll(filtered, "./archive\\/(?!refs)", `archive/`);
+  filtered = replaceAll(filtered, "archive\\/(?!refs)", `https://${url}/archive/`);
   filtered = replaceAll(filtered, "\\]\\(\\#", `](https://${url}#/`);
   return filtered;
 }
