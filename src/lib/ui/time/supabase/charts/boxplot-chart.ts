@@ -36,7 +36,9 @@ export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[],
       }
     },
     grid: {
-      height: "80%" // Increase the height of the grid to accommodate the y-axis labels
+      height: "80%", // Increase the height of the grid to accommodate the y-axis labels
+      left: "5%",
+      right: "5%"
     },
     yAxis: {
       type: "category", // Category axis for student names (flipped to y-axis)
@@ -90,11 +92,15 @@ export function combinedBoxplotChart(bgPatternImg: HTMLImageElement, boxplotData
         return tipHtml;
       }
     },
+    grid: {
+      left: "5%",
+      right: "10%"
+    },
     xAxis: {
       type: "category",
       data: boxplotData.map((item) => item.name), // topic titles
       boundaryGap: true,
-      nameGap: 30,
+      nameGap: 10,
       splitArea: {
         show: false
       },
