@@ -26,9 +26,9 @@
   });
 
   // Re-render the chart when the tab regains focus
-  // const handleFocus = () => {
-  //   renderChart();
-  // };
+  const handleFocus = () => {
+    renderChart();
+  };
 
   // Function to render the chart
   const renderChart = () => {
@@ -40,7 +40,7 @@
   };
 
   // Listen for window focus event to trigger chart refresh
-  // window.addEventListener("focus", handleFocus);
+  window.addEventListener("focus", handleFocus);
 </script>
 
 <div class="h-screen">

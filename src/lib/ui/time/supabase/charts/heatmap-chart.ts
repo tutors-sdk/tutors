@@ -1,108 +1,130 @@
 import type { ChartType, GridConfig, HeatMapChartConfig, HeatMapSeriesData } from "$lib/services/types/supabase-metrics";
 
 export function heatmap(categories: Set<string>, yAxisData: string[], series: HeatMapSeriesData, bgPatternImg: HTMLImageElement, chartTitleString: string): HeatMapChartConfig {
+  const cellSize = 30;
+  const singleCellSize = 20;
+
+  const numCategories = categories.size;
+  const minWidthPercentage = 3; // Minimum width percentage for small number of categories
+  const maxWidthPercentage = 100; // Maximum width percentage for large number of categories
+  const widthPerCategory = 3;
+
+  // Dynamically calculate the width as a percentage
+  const dynamicWidthPercentage = Math.min(maxWidthPercentage, minWidthPercentage + numCategories * widthPerCategory);
+
+  // Calculate the grid height based on the number of rows (yAxisData)
+  const gridHeight = yAxisData.length * cellSize;
+  const gridWidth = numCategories * cellSize;
+
+  const singleGridHeight = yAxisData.length * singleCellSize;
+  const singleGridWidth = 100 * singleCellSize;
+
   let visualmapValue: number;
   let seriesArray: HeatMapSeriesData[] = [series];
-  let gridConfig: GridConfig = {
-    left: "30%",
-    right: "30%",
-    bottom: "15%",
-    top: "10%",
-    width: "40%", // Fixed width
-    height: "80%", // Fixed height
-    containLabel: false
-  };
 
+  let gridConfig: GridConfig;
   if (series?.data) {
     if (series.name === "student engagement for lab" || series.name === "student engagement for topic") {
       gridConfig = {
-        left: "15%",
-        right: "10%",
-        bottom: "10%",
-        top: "10%",
-        width: "80%", // Fixed width
-        height: "80%", // Fixed height
-        containLabel: false // Prevent resizing based on labels
+        left: "5%",
+        right: gridWidth,
+        containLabel: true,
+        bottom: "4%",
+        top: "4%",
+        width: `${dynamicWidthPercentage}%`,
+        height: `${gridHeight}` // Let height adjust based on the content
       };
     } else {
       gridConfig = {
-        left: "15%",
-        right: "15%",
-        bottom: "15%",
-        top: "15%",
-        width: "80%", // Fixed width
-        height: "80px", // Fixed height
-        containLabel: true // Prevent resizing based on labels
+        left: "5%",
+        right: singleGridWidth,
+        containLabel: true,
+        top: "20%",
+        bottom: "4%",
+        height: "30%", // Fixed height
+        width: `${dynamicWidthPercentage}%`
       };
     }
-    visualmapValue = series.data.length !== 0 ? Math.max(...series.data.map((item) => item[2])) : 0;
-  } else {
-    visualmapValue = 0;
-  }
 
-  return {
-    title: {
-      top: "5%",
-      left: "center",
-      text: chartTitleString
-    },
-    tooltip: {
-      position: "top"
-    },
-    backgroundColor: {
-      image: bgPatternImg,
-      repeat: "repeat"
-    },
-    grid: gridConfig,
-    xAxis: {
-      type: "category",
-      data: Array.from(categories),
-      splitArea: {
-        show: true
+    // Calculate the max visual map value dynamically from series data
+    if (series?.data) {
+      visualmapValue = series.data.length !== 0 ? Math.max(...series.data.map((item) => item[2])) : 0;
+    } else {
+      visualmapValue = 0;
+    }
+
+    return {
+      title: {
+        top: "2%",
+        left: "center",
+        text: chartTitleString
       },
-      axisLabel: {
-        interval: function (index, value) {
-          // Define your logic based on label length
-          let maxLabelLength = 10; // Set the max number of characters for default interval
-          return value.length > maxLabelLength ? 3 : 0; // Adjust interval based on label length
+      tooltip: {
+        position: "top"
+      },
+      backgroundColor: {
+        image: bgPatternImg,
+        repeat: "repeat"
+      },
+      grid: gridConfig,
+      xAxis: {
+        type: "category",
+        data: Array.from(categories),
+        splitArea: { show: true },
+        axisLabel: {
+          interval: 0,
+          fontSize: 15,
+          rotate: 90,
+          align: "right",
+          verticalAlign: "middle",
+          formatter: (value: string) => (value.length > 20 ? value.slice(0, 20) + "..." : value)
         },
-        formatter: function (value) {
-          // You can also add custom formatting
-          return value.length > 10 ? value.slice(0, 10) + "..." : value;
+        axisTick: {
+          alignWithLabel: true
         },
-        fontSize: 12
+        axisPointer: {
+          type: "shadow"
+        },
+        position: "top"
       },
-      axisTick: {
-        alignWithLabel: true
+      yAxis: {
+        type: "category",
+        data: yAxisData.length ? yAxisData : [],
+        splitArea: { show: true },
+        axisLabel: {
+          interval: 0,
+          fontSize: 15,
+          padding: [10, 0, 10, 0],
+          margin: 10
+        }
       },
-      axisPointer: {
-        type: "shadow"
+      visualMap: {
+        min: 0,
+        max: visualmapValue,
+        calculable: true,
+        orient: "horizontal",
+        left: "center",
+        bottom: "1%",
+        inRange: {
+          color: generateColorGradient("#EDEDED", "#004F27", 20),
+          type: "piecewise",
+          splitNumber: 20
+        }
       },
-      position: "bottom"
-    },
-    yAxis: {
-      type: "category",
-      data: yAxisData[0] !== undefined ? yAxisData : [],
-      splitArea: {
-        show: true
-      },
-      axisLabel: {
-        interval: 0,
-        fontSize: 12,
-        padding: [10, 0, 10, 0] // Increase space between rows
-      }
-    },
-    visualMap: {
-      min: 0,
-      max: visualmapValue,
-      calculable: true,
-      orient: "horizontal",
-      left: "center",
-      align: "auto",
-      bottom: 0
-    },
-    series: seriesArray
-  };
+      series: seriesArray.map((serie) => ({
+        ...serie,
+        // Adjusting the heatmap cell size
+        itemStyle: {
+          normal: {
+            borderColor: "#004F27",
+            borderWidth: 1,
+            height: 2,
+            width: 2
+          }
+        }
+      }))
+    };
+  }
 }
 
 export function renderCombinedChart(heatmapActivities: any[], bgPatternImg: HTMLImageElement, chartTitle: string) {
@@ -134,8 +156,9 @@ export function renderCombinedChart(heatmapActivities: any[], bgPatternImg: HTML
       repeat: "repeat"
     },
     grid: {
-      height: "30%",
-      top: "30%"
+      height: "20%",
+      top: "30%",
+      left: "5%"
     },
     xAxis: {
       type: "category",
@@ -147,7 +170,10 @@ export function renderCombinedChart(heatmapActivities: any[], bgPatternImg: HTML
     },
     axisLabel: {
       interval: 0,
-      fontSize: 12
+      fontSize: 15
+    },
+    axisTick: {
+      show: false // Disable ticks to make cells square
     },
     visualMap: {
       min: 0,
@@ -155,7 +181,12 @@ export function renderCombinedChart(heatmapActivities: any[], bgPatternImg: HTML
       calculable: true,
       orient: "horizontal",
       left: "center",
-      bottom: "15%"
+      bottom: "1%",
+      inRange: {
+        color: generateColorGradient("#EDEDED", "#004F27", 20),
+        type: "piecewise",
+        splitNumber: 20
+      }
     },
     series: [
       {
@@ -174,4 +205,44 @@ export function renderCombinedChart(heatmapActivities: any[], bgPatternImg: HTML
       }
     ]
   };
+}
+
+function generateColorGradient(startColor: string, endColor: string, steps: number) {
+  const start = hexToRgb(startColor);
+  const end = hexToRgb(endColor);
+  const colors = [];
+  if (!start || !end) return;
+
+  for (let i = 0; i < steps; i++) {
+    const r = interpolate(start.r, end.r, i, steps);
+    const g = interpolate(start.g, end.g, i, steps);
+    const b = interpolate(start.b, end.b, i, steps);
+    colors.push(rgbToHex(r, g, b));
+  }
+
+  return colors;
+}
+
+function hexToRgb(hex: string) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result
+    ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+      }
+    : null;
+}
+
+function interpolate(start: number, end: number, step: number, steps: number) {
+  return Math.round(start + ((end - start) * step) / (steps - 1));
+}
+
+function componentToHex(c: number) {
+  const hex = c.toString(16);
+  return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r: number, g: number, b: number) {
+  return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
 }

@@ -13,11 +13,16 @@
   export let chartType: "LabHeatMap" | "TopicHeatMap";
 
   let chartInstance: LabHeatMapChart | TopicHeatMapChart | null = null;
-
-  onMount(() => {
+  let numOfCategories: number = 0;
+  onMount(async () => {
+    // Initialise the appropriate heatmap chart based on chartType
     if (chartType === "LabHeatMap") {
+      numOfCategories = course.wallMap?.get("lab")?.length || 0;
+
       chartInstance = new LabHeatMapChart(course, session, userIds, userNamesAvatars, multipleUsers);
     } else if (chartType === "TopicHeatMap") {
+      numOfCategories = course.topicIndex.size;
+
       chartInstance = new TopicHeatMapChart(course, session, userIds, userNamesAvatars, multipleUsers);
     } else {
       throw new Error(`Invalid chart type: ${chartType}`);
@@ -28,9 +33,7 @@
       if (!element) {
         throw new Error("Element with ID 'combined-heatmap' not found");
       }
-      chartInstance.renderChart(element!);
     }
-
     chartInstance.populateAndRenderData();
   });
 
@@ -46,20 +49,79 @@
       chartInstance.renderChart(container!);
     }
   });
+
+  numOfCategories = chartType === "LabHeatMap" 
+  ? course.wallMap?.get("lab")?.length || 0 
+  : Array.from(course.topicIndex.values()).filter(topic => !topic.hide).length;  
+  
+  let innerDivWidth = numOfCategories * 15; // The width for the inner div
+  let innerDivHeight = userIds.length * 45; // The height based on user count
 </script>
 
-<div class="h-full flex flex-row">
-  <!-- Parent container that wraps everything -->
-  <div id="large-container" class="h-screen w-screen">
-    {#if multipleUsers}
-      <!-- For multiple users: two containers stacked on larger screens, change to row on smaller screens -->
-      <div id="heatmap-container" class="h-2/3 w-full md:h-2/3 md:w-full"></div>
-      <!-- 2/3 height on large screens, full height on small screens -->
-      <div id="combined-heatmap" class="h-1/3 w-full md:h-1/3 md:w-full"></div>
-      <!-- 1/3 height on large screens, full height on small screens -->
-    {:else}
-      <!-- For single users: one container with full height -->
-      <div id="heatmap-container" class="h-full w-full"></div>
-    {/if}
+<!-- Scrollable container -->
+{#if multipleUsers}
+  <div class="scrollable-container">
+    <!-- Inner content that exceeds the height of the scrollable container -->
+    <div class="inner-content" style="height: {innerDivHeight}px; width: {innerDivWidth}%;">
+      <!-- Heatmap containers -->
+      <div id="heatmap-container" class="heatmap"></div>
+      <div id="combined-heatmap" class="combined-heatmap"></div>
+    </div>
   </div>
-</div>
+{:else}
+  <div class="large-container">
+    <!-- For single users: one container with full height -->
+    <div id="heatmap-container" class="heatmap-single"></div>
+  </div>
+{/if}
+
+<style>
+  /* Outer scrollable container */
+  .scrollable-container {
+    height: 100%; /* Adjust this value based on the height you want */
+    max-width: 100%; /* Full width */
+    overflow: auto; /* Enable both vertical and horizontal scrolling */
+    border: 1px solid #ccc; 
+    padding: 10px;
+  }
+
+  /* Inner content that may overflow the outer container */
+  .inner-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: auto;
+    height: auto;
+    min-width: 100vw; /* Set a minimum width */
+
+  }
+
+  /* Individual heatmap styling */
+  .heatmap {
+    height: 75%; /* 75% of the inner-content height */
+    width: 100%; /* Full width of the inner-content */
+    min-height: 300px; /* Set a minimum height */
+
+  }
+
+  .combined-heatmap {
+    height: 25%; /* 25% of the inner-content height */
+    width: 100%; /* Full width of the inner-content */
+    min-height: 100px; /* Set a minimum height */
+  }
+
+  /* Single-user view container */
+  .large-container {
+    height: 100vh; /* Full viewport height */
+    width: 100%; /* Full width */
+    border: 1px solid #ccc; 
+    padding: 1px;
+  }
+
+  /* Heatmap for single user */
+  .heatmap-single {
+    height: 100%; /* Full height for single heatmap */
+    width: 100%; /* Full width */
+  }
+</style>

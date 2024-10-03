@@ -35,11 +35,18 @@ export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[],
         show: true // Show grid lines for better readability
       }
     },
+    grid: {
+      height: "80%" // Increase the height of the grid to accommodate the y-axis labels
+    },
     yAxis: {
       type: "category", // Category axis for student names (flipped to y-axis)
       data: userNicknames, // Ensure userNicknames appear on the y-axis
       name: "Students (metrics are based on a global context)", // Label for the student names
-      boundaryGap: true // Gap between categories for better spacing
+      boundaryGap: true, // Gap between categories for better spacing
+      nameTruncate: {
+        maxWidth: "2%",
+        ellipsis: "..."
+      }
     },
     series: [
       {

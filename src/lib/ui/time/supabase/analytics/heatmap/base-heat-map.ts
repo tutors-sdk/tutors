@@ -71,6 +71,7 @@ export class BaseHeatMapChart<T> {
   async populatePerUserSeriesData(allItems: Lo[], userId: string, index: number, learninObjValue: string): Promise<number[][]> {
     const totalTimesMap = new Map<string, number>();
     const titleList: string[] = [];
+    let totalTimeActive = 0; // Variable to store the total time
 
     // Recursive function to find the topmost parentLo of type 'topic', skipping hidden items
     const getTopTopicParentLo = (lo: Lo): Lo | null => {
@@ -85,7 +86,6 @@ export class BaseHeatMapChart<T> {
       let title: string = "";
 
       if (learninObjValue === "lab") {
-        // For labs, ensure that both the item and its parent are not hidden
         if (item.parentLo?.type === "lab") {
           if (item.hide || item.parentLo.hide) return; // Skip if either the item or its parent is hidden
           title = item.parentLo.title;
@@ -93,16 +93,16 @@ export class BaseHeatMapChart<T> {
           title = item.title;
         }
       } else {
-        // For other types (like topic), traverse to the top parent of type 'topic', skipping hidden ones
         const topTopicLo = getTopTopicParentLo(item);
         if (!topTopicLo || topTopicLo.hide) return; // Skip if no topic parent is found or if it's hidden
         title = topTopicLo.title;
       }
 
-      // Get the timeActive for the user from learningRecords
       const timeActive = item.learningRecords?.get(userId)?.timeActive || 0;
 
-      // Aggregate timeActive under the determined title
+      // Accumulate total time for this user
+      totalTimeActive += timeActive;
+
       if (totalTimesMap.has(title)) {
         totalTimesMap.set(title, totalTimesMap.get(title)! + timeActive);
       } else {
@@ -111,14 +111,18 @@ export class BaseHeatMapChart<T> {
       }
     });
 
-    // Create a Set of unique categories from the titles
-    this.categories = new Set(Array.from(totalTimesMap.keys()));
+    // Add "Total" as a category
+    this.categories = new Set(["Total", ...Array.from(totalTimesMap.keys())]);
+
     const categoriesArray = Array.from(this.categories);
 
-    // Construct the seriesData array using the aggregated total times
+    // Construct series data with the total time included
     const seriesData: number[][] = Array.from(totalTimesMap.entries()).map(([title, timeActive]) => {
       return [categoriesArray.indexOf(title), index, Math.floor(timeActive / 2)];
     });
+
+    // Add the total time for this user in the "Total" column
+    seriesData.push([categoriesArray.indexOf("Total"), index, Math.floor(totalTimeActive / 2)]);
 
     return seriesData;
   }
@@ -144,7 +148,7 @@ export class BaseHeatMapChart<T> {
       type: "heatmap",
       data: allSeriesData,
       selectedMode: "single",
-      top: "5%",
+      top: "2%",
       label: {
         show: true
       }
@@ -242,7 +246,7 @@ export class BaseHeatMapChart<T> {
   renderCombinedTopicChart(container: HTMLElement, heatmapData: any[], title: string) {
     const chartInstance = echarts.init(container);
     const option = renderCombinedChart(heatmapData, bgPatternImg, title);
-    chartInstance.setOption(option);
+    chartInstance.setOption(option, true);
     chartInstance.resize();
     this.sortHeatMapValues();
   }
