@@ -29,7 +29,8 @@ export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[],
       min: Math.floor(yMin * 0.9), // Set xAxis minimum slightly lower than the smallest value
       max: Math.ceil(yMax * 1.1), // Set xAxis maximum slightly higher than the largest value
       axisLabel: {
-        formatter: "{value} mins" // Label indicating that the axis represents minutes
+        formatter: "{value} mins",
+        fontSize: 15 // Label indicating that the axis represents minutes
       },
       splitLine: {
         show: true // Show grid lines for better readability
@@ -45,9 +46,8 @@ export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[],
       data: userNicknames, // Ensure userNicknames appear on the y-axis
       name: "Students (metrics are based on a global context)", // Label for the student names
       boundaryGap: true, // Gap between categories for better spacing
-      nameTruncate: {
-        maxWidth: "2%",
-        ellipsis: "..."
+      axisLabel: {
+        fontSize: 15 // Label indicating that the axis represents minutes
       }
     },
     series: [
@@ -101,6 +101,9 @@ export function combinedBoxplotChart(bgPatternImg: HTMLImageElement, boxplotData
       data: boxplotData.map((item) => item.name), // topic titles
       boundaryGap: true,
       nameGap: 10,
+      axisLabel: {
+        fontSize: 15 // Label indicating that the axis represents minutes
+      },
       splitArea: {
         show: false
       },
@@ -113,6 +116,10 @@ export function combinedBoxplotChart(bgPatternImg: HTMLImageElement, boxplotData
       name: "Time (mins)",
       splitArea: {
         show: true
+      },
+      axisLabel: {
+        formatter: "{value} mins",
+        fontSize: 15 // Label indicating that the axis represents minutes
       }
     },
     series: [

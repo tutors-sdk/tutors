@@ -107,7 +107,8 @@ export function calendarCombined(
       left: "center",
       text: userName,
       link: "https://www.github.com/" + userId,
-      target: "self"
+      target: "self",
+      triggerEvent: true // This is required to trigger click events on labels
     },
     backgroundColor: {
       image: bgPatternImg,

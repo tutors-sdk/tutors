@@ -26,7 +26,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
   if (series?.data) {
     if (series.name === "student engagement for lab" || series.name === "student engagement for topic") {
       gridConfig = {
-        left: "5%",
+        left: "6%",
         right: gridWidth,
         containLabel: true,
         bottom: "4%",
@@ -37,7 +37,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
     } else {
       gridConfig = {
         left: "5%",
-        right: singleGridWidth,
+        right: "15%",
         containLabel: true,
         top: "20%",
         bottom: "4%",
@@ -47,11 +47,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
     }
 
     // Calculate the max visual map value dynamically from series data
-    if (series?.data) {
-      visualmapValue = series.data.length !== 0 ? Math.max(...series.data.map((item) => item[2])) : 0;
-    } else {
-      visualmapValue = 0;
-    }
+    visualmapValue = series?.data?.length ? Math.max(...series.data.map((item) => item[2])) : 0;
 
     return {
       title: {
@@ -90,6 +86,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       yAxis: {
         type: "category",
         data: yAxisData.length ? yAxisData : [],
+        triggerEvent: true, // Enable event triggering on yAxis labels
         splitArea: { show: true },
         axisLabel: {
           interval: 0,
@@ -113,13 +110,10 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
       },
       series: seriesArray.map((serie) => ({
         ...serie,
-        // Adjusting the heatmap cell size
         itemStyle: {
           normal: {
             borderColor: "#004F27",
-            borderWidth: 1,
-            height: 2,
-            width: 2
+            borderWidth: 1
           }
         }
       }))

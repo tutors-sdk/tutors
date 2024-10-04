@@ -134,15 +134,21 @@ export class BaseHeatMapChart<T> {
     let allSeriesData: number[][] = [];
     const yAxisData: string[] = [];
 
-    for (const [index, userId] of userIds.entries()) {
+    // Collect all promises for populating user series and full name retrieval
+    const seriesPromises = userIds.map(async (userId, index) => {
+      // Fetch the series data for each user
       const seriesData = await this.populatePerUserSeriesData(allItems, userId, index, learninObjValue);
       allSeriesData = allSeriesData.concat(seriesData);
+
+      // Get the full name for the user (or use userId if undefined)
       const [fullname] = this.userAvatarsUseridsMap?.get(userId) || [undefined, undefined];
+      yAxisData.push(`${fullname ?? userId} (${userId})`);
+    });
 
-      //const fullName = await this.getUserFullName(userId);
-      yAxisData.push(fullname ?? userId);
-    }
+    // Wait for all promises to complete before rendering the chart
+    await Promise.all(seriesPromises);
 
+    // Now that all full names are fetched and series data is populated, render the chart
     this.series = {
       name: `student engagement for ${learninObjValue}`,
       type: "heatmap",
@@ -184,8 +190,8 @@ export class BaseHeatMapChart<T> {
     this.chartInstance = echarts.init(container);
     const option: HeatMapChartConfig = heatmap(this.categories, this.yAxisData, this.series, bgPatternImg, title);
     this.chartInstance.setOption(option);
+    this.sortGithubLabels();
     this.chartInstance.resize();
-    this.sortHeatMapValues();
   }
 
   prepareCombinedTopicData(allTypes: Lo[], userIds: string[], getTitle: (lo: Lo) => string | undefined) {
@@ -247,15 +253,25 @@ export class BaseHeatMapChart<T> {
     const chartInstance = echarts.init(container);
     const option = renderCombinedChart(heatmapData, bgPatternImg, title);
     chartInstance.setOption(option, true);
+
     chartInstance.resize();
-    this.sortHeatMapValues();
   }
 
-  async sortHeatMapValues() {
-    if (this.chartInstance !== null) {
+  async sortGithubLabels() {
+    if (this.chartInstance) {
       this.chartInstance.off("click");
       this.chartInstance.on("click", async (params: { componentType: string; seriesType: string; value: any[] }) => {
-        if (params.componentType === "series" && params.seriesType === "heatmap") {
+        // Check if componentIndex or other properties match the yAxis
+        if (params.componentType === "yAxis") {
+          const clickedLabel = params.value; // The label name (y-axis data value)
+          const extractedLabel = clickedLabel.match(/\(([^)]+)\)/)?.[1]; //
+
+          // Construct the URL
+          const url = `https://www.github.com/${extractedLabel}`;
+
+          // Open the URL in a new tab
+          window.open(url, "self");
+        } else if (params.componentType === "series" && params.seriesType === "heatmap") {
           const colIndex = params.value[0]; // Column index of the clicked cell
           // Extract the data for the clicked column
           let columnData = this.series.data.filter((item: any[]) => item[0] === colIndex);
