@@ -6,8 +6,7 @@
   export let course: Course;
   export let session: Session;
   export let userIds: string[];
-  export let userNamesUseridsMap: Map<string, string>;
   export let multipleUsers: boolean = false;
 </script>
 
-<LabHeatMapChart chartType="LabHeatMap" {course} {session} {userIds} {userNamesUseridsMap} {multipleUsers} />
+<LabHeatMapChart chartType="LabHeatMap" {course} {session} {userIds} {multipleUsers} />

@@ -49,6 +49,7 @@
   .chart-container {
     height: var(--chart-height);
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: hidden;
+    overflow-x: hidden;
   }
 </style>
