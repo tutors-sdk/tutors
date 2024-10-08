@@ -40,7 +40,7 @@
 
 <div class="flex">
   <!-- Side Tabs (Sticky) -->
-  <div class="flex flex-col w-1/8 border-r border-gray-300 sticky top-0 h-screen overflow-auto">
+  <div class="flex flex-col border-r border-gray-300 sticky top-0 h-screen overflow-auto pr-4">
     <!-- Main Tabs -->
     <button type="button" class="p-4 text-left" class:active={$storeTab === "Calendar"} on:click={() => handleTabChange("Calendar")}>Calendar</button>
 
@@ -49,39 +49,35 @@
 
       <!-- Always Show Sub-tabs for Topics -->
 
-      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "InstructorTopicView"} on:click={() => handleTabChange("InstructorTopicView")}
-        >Topic Heat-Map</button
-      >
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "InstructorTopicView"} on:click={() => handleTabChange("InstructorTopicView")}>Heat Map</button>
       <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "InstructorTopicViewPieChart"} on:click={() => handleTabChange("InstructorTopicViewPieChart")}
-        >Topic Pie-Chart</button
+        >Pie Chart</button
       >
       <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "InstructorTopicViewBoxPlot"} on:click={() => handleTabChange("InstructorTopicViewBoxPlot")}
-        >Topic Box-Plot</button
+        >Box Plot</button
       >
     {:else}
       <button type="button" class="p-4 text-left" class:active={$storeTab === "Topics"} on:click={() => handleTabChange("TopicView")}>Topics</button>
-      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "TopicView"} on:click={() => handleTabChange("TopicView")}>Topic Heat-Map</button>
-      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "TopicViewPieChart"} on:click={() => handleTabChange("TopicViewPieChart")}
-        >Topic Pie-Chart</button
-      >
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "TopicView"} on:click={() => handleTabChange("TopicView")}>Heat Map</button>
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "TopicViewPieChart"} on:click={() => handleTabChange("TopicViewPieChart")}>Pie Chart</button>
     {/if}
     {#if instructorMode}
       <button type="button" class="p-4 text-left" class:active={$storeTab === "Labs"} on:click={() => handleTabChange("InstructorLabView")}>Labs</button>
 
       <!-- Always Show Sub-tabs for Labs -->
-      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "InstructorLabView"} on:click={() => handleTabChange("InstructorLabView")}>Lab Heat-Map</button>
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "InstructorLabView"} on:click={() => handleTabChange("InstructorLabView")}>Heat Map</button>
       <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "InstructorLabViewBoxPlot"} on:click={() => handleTabChange("InstructorLabViewBoxPlot")}
-        >Lab Box-Plot</button
+        >Box Plot</button
       >
     {:else}
       <button type="button" class="p-4 text-left" class:active={$storeTab === "Labs"} on:click={() => handleTabChange("LabView")}>Labs</button>
-      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "LabView"} on:click={() => handleTabChange("LabView")}>Lab Heat-Map</button>
-      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "LabViewPieChart"} on:click={() => handleTabChange("LabViewPieChart")}>Lab Pie-Chart</button>
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "LabView"} on:click={() => handleTabChange("LabView")}>Heat Map</button>
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "LabViewPieChart"} on:click={() => handleTabChange("LabViewPieChart")}>Pie Chart</button>
     {/if}
   </div>
 
   <!-- Main Content Area -->
-  <div class="flex-grow p-4 w-5/6">
+  <div class="flex-grow p-4 w-4/6">
     {#if $storeTab === "Calendar"}
       {#if instructorMode}
         <NewInstructorCalendarTime timeActiveMap={data.timeActiveMap} userIds={data.calendarIds} userNamesAvatars={data.userNamesAvatars} />
