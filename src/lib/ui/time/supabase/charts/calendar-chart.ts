@@ -58,7 +58,7 @@ export function calendar(session: Session, calendarMap: CalendarMap[], bgPattern
         { min: 200, max: 225, color: "#0F7C38" },
         { min: 225, max: 250, color: "#006E31" },
         { min: 250, max: 275, color: "#005E2C" },
-        { min: 275, max: 300, color: "#004F27" }
+        { min: 275, max: 999, color: "#004F27" }
       ]
     },
     calendar: {
@@ -107,7 +107,8 @@ export function calendarCombined(
       left: "center",
       text: userName,
       link: "https://www.github.com/" + userId,
-      target: "self"
+      target: "self",
+      triggerEvent: true // This is required to trigger click events on labels
     },
     backgroundColor: {
       image: bgPatternImg,

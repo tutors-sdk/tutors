@@ -15,205 +15,113 @@
 
   export let data: any;
 
+  // Store for main and sub-tabs
   const storeTab: Writable<string> = writable("Calendar");
-  const storeSubTab: Writable<string> = writable("");
   let pinBuffer = "";
   let instructorMode = false;
-  let tabSet = 0;
 
   onMount(async () => {
     window.addEventListener("keydown", keypressInput);
-    if (!data?.course.hasCalendar) {
-      tabSet = 0;
-    }
   });
 
-  // Event handling function
   function keypressInput(e: KeyboardEvent) {
     pinBuffer = pinBuffer.concat(e.key);
     if (pinBuffer === data.course.ignorePin) {
       instructorMode = true;
-      tabSet = 0;
-      if (!data?.course.hasCalendar) {
-        tabSet = 1;
-      }
+      handleTabChange("Calendar");
     }
   }
 
+  // Handle main tab change
   function handleTabChange(tab: string) {
     storeTab.set(tab);
-    // Reset sub-tab based on the selected main tab
-    if (tab === "Topics") {
-      storeSubTab.set(instructorMode ? "InstructorTopicView" : "TopicView");
-    } else if (tab === "Labs") {
-      storeSubTab.set(instructorMode ? "InstructorLabView" : "LabView");
-    } else {
-      storeSubTab.set("");
-    }
-  }
-
-  function handleSubTabChange(subTab: string) {
-    storeSubTab.set(subTab);
   }
 </script>
 
 <div class="flex">
-  <!-- Side Tabs -->
-  <div class="flex flex-col w-1/6 border-r border-gray-300">
-    <button
-      type="button"
-      class="p-4 text-left"
-      class:active={$storeTab === "Calendar"}
-      on:click={() => handleTabChange("Calendar")}
-      on:keydown={(e) => e.key === "Enter" && handleTabChange("Calendar")}>Calendar</button
-    >
-    <button
-      type="button"
-      class="p-4 text-left"
-      class:active={$storeTab === "Topics"}
-      on:click={() => handleTabChange("Topics")}
-      on:keydown={(e) => e.key === "Enter" && handleTabChange("Topics")}>Topics</button
-    >
-    <button
-      type="button"
-      class="p-4 text-left"
-      class:active={$storeTab === "Labs"}
-      on:click={() => handleTabChange("Labs")}
-      on:keydown={(e) => e.key === "Enter" && handleTabChange("Labs")}>Labs</button
-    >
+  <!-- Side Tabs (Sticky) -->
+  <div class="flex flex-col w-1/8 border-r border-gray-300 sticky top-0 h-screen overflow-auto">
+    <!-- Main Tabs -->
+    <button type="button" class="p-4 text-left" class:active={$storeTab === "Calendar"} on:click={() => handleTabChange("Calendar")}>Calendar</button>
+
+    {#if instructorMode}
+      <button type="button" class="p-4 text-left" class:active={$storeTab === "Topics"} on:click={() => handleTabChange("InstructorTopicView")}>Topics</button>
+
+      <!-- Always Show Sub-tabs for Topics -->
+
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "InstructorTopicView"} on:click={() => handleTabChange("InstructorTopicView")}
+        >Topic Heat-Map</button
+      >
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "InstructorTopicViewPieChart"} on:click={() => handleTabChange("InstructorTopicViewPieChart")}
+        >Topic Pie-Chart</button
+      >
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "InstructorTopicViewBoxPlot"} on:click={() => handleTabChange("InstructorTopicViewBoxPlot")}
+        >Topic Box-Plot</button
+      >
+    {:else}
+      <button type="button" class="p-4 text-left" class:active={$storeTab === "Topics"} on:click={() => handleTabChange("TopicView")}>Topics</button>
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "TopicView"} on:click={() => handleTabChange("TopicView")}>Topic Heat-Map</button>
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "TopicViewPieChart"} on:click={() => handleTabChange("TopicViewPieChart")}
+        >Topic Pie-Chart</button
+      >
+    {/if}
+    {#if instructorMode}
+      <button type="button" class="p-4 text-left" class:active={$storeTab === "Labs"} on:click={() => handleTabChange("InstructorLabView")}>Labs</button>
+
+      <!-- Always Show Sub-tabs for Labs -->
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "InstructorLabView"} on:click={() => handleTabChange("InstructorLabView")}>Lab Heat-Map</button>
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "InstructorLabViewBoxPlot"} on:click={() => handleTabChange("InstructorLabViewBoxPlot")}
+        >Lab Box-Plot</button
+      >
+    {:else}
+      <button type="button" class="p-4 text-left" class:active={$storeTab === "Labs"} on:click={() => handleTabChange("LabView")}>Labs</button>
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "LabView"} on:click={() => handleTabChange("LabView")}>Lab Heat-Map</button>
+      <button type="button" class="ml-8 p-2 text-left" class:active={$storeTab === "LabViewPieChart"} on:click={() => handleTabChange("LabViewPieChart")}>Lab Pie-Chart</button>
+    {/if}
   </div>
-  <!-- Content Area -->
-  <div class="flex-grow p-4 w-4/5">
-    <!-- Top Tabs for Sub-items -->
-    <div class="flex border-b border-gray-300 mb-4">
-      {#if $storeTab === "Topics"}
-        {#if instructorMode}
-          <button
-            type="button"
-            class="p-2 text-left"
-            class:active={$storeSubTab === "InstructorTopicView"}
-            on:click={() => handleSubTabChange("InstructorTopicView")}
-            on:keydown={(e) => e.key === "Enter" && handleSubTabChange("InstructorTopicView")}>Instructor Topic Time Heat-Map</button
-          >
-          <button
-            type="button"
-            class="p-2 text-left"
-            class:active={$storeSubTab === "InstructorTopicViewPieChart"}
-            on:click={() => handleSubTabChange("InstructorTopicViewPieChart")}
-            on:keydown={(e) => e.key === "Enter" && handleSubTabChange("InstructorTopicViewPieChart")}>Instructor Topic Time Pie-Chart</button
-          >
-          <button
-            type="button"
-            class="p-2 text-left"
-            class:active={$storeSubTab === "InstructorTopicViewBoxPlot"}
-            on:click={() => handleSubTabChange("InstructorTopicViewBoxPlot")}
-            on:keydown={(e) => e.key === "Enter" && handleSubTabChange("InstructorTopicViewBoxPlot")}>Instructor Topic Box Plot Chart</button
-          >
-        {:else}
-          <button
-            type="button"
-            class="p-2 text-left"
-            class:active={$storeSubTab === "TopicView"}
-            on:click={() => handleSubTabChange("TopicView")}
-            on:keydown={(e) => e.key === "Enter" && handleSubTabChange("TopicView")}>Topic Time Heat-Map</button
-          >
-          <button
-            type="button"
-            class="p-2 text-left"
-            class:active={$storeSubTab === "TopicViewPieChart"}
-            on:click={() => handleSubTabChange("TopicViewPieChart")}
-            on:keydown={(e) => e.key === "Enter" && handleSubTabChange("TopicViewPieChart")}>Topic Time Pie-Chart</button
-          >
-        {/if}
+
+  <!-- Main Content Area -->
+  <div class="flex-grow p-4 w-5/6">
+    {#if $storeTab === "Calendar"}
+      {#if instructorMode}
+        <NewInstructorCalendarTime timeActiveMap={data.timeActiveMap} userIds={data.calendarIds} userNamesAvatars={data.userNamesAvatars} />
+      {:else}
+        <CalendarView timeActiveMap={data.timeActiveMap} session={data.session} medianTime={data.medianTime} />
       {/if}
-      {#if $storeTab === "Labs"}
-        {#if instructorMode}
-          <button
-            type="button"
-            class="p-2 text-left"
-            class:active={$storeSubTab === "InstructorLabView"}
-            on:click={() => handleSubTabChange("InstructorLabView")}
-            on:keydown={(e) => e.key === "Enter" && handleSubTabChange("InstructorLabView")}>Instructor Lab Time Heat-Map</button
-          >
-          <button
-            type="button"
-            class="p-2 text-left"
-            class:active={$storeSubTab === "InstructorLabViewBoxPlot"}
-            on:click={() => handleSubTabChange("InstructorLabViewBoxPlot")}
-            on:keydown={(e) => e.key === "Enter" && handleSubTabChange("InstructorLabViewBoxPlot")}>Instructor Lab Time Box Plot Chart</button
-          >
-        {:else}
-          <button
-            type="button"
-            class="p-2 text-left"
-            class:active={$storeSubTab === "LabView"}
-            on:click={() => handleSubTabChange("LabView")}
-            on:keydown={(e) => e.key === "Enter" && handleSubTabChange("LabView")}>Lab Time Heat-Map</button
-          >
-          <button
-            type="button"
-            class="p-2 text-left"
-            class:active={$storeSubTab === "LabViewPieChart"}
-            on:click={() => handleSubTabChange("LabViewPieChart")}
-            on:keydown={(e) => e.key === "Enter" && handleSubTabChange("LabViewPieChart")}>Lab Time Pie-Chart</button
-          >
-        {/if}
+    {/if}
+    {#if instructorMode}
+      {#if $storeTab === "InstructorTopicView"}
+        <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds} userNamesAvatars={data.userNamesAvatars} />
+      {:else if $storeTab === "InstructorTopicViewPieChart"}
+        <InstructorTopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
+      {:else if $storeTab === "InstructorTopicViewBoxPlot"}
+        <InstructorTopicViewBoxPlot course={data.course} userIds={data.userIds} userNamesAvatars={data.userNamesAvatars} />
+      {:else if $storeTab === "InstructorLabView"}
+        <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} userNamesAvatars={data.userNamesAvatars} />
+      {:else if $storeTab === "InstructorLabViewBoxPlot"}
+        <InstructorLabViewBoxPlot course={data.course} userIds={data.userIds} userNamesAvatars={data.userNamesAvatars} />
       {/if}
-    </div>
-    <!-- Main Content -->
-    <div class="w-full">
-      {#if $storeTab === "Calendar"}
-        {#if instructorMode}
-          <NewInstructorCalendarTime timeActiveMap={data.timeActiveMap} userIds={data.calendarIds} userNamesAvatars={data.userNamesAvatars} />
-        {:else}
-          <CalendarView timeActiveMap={data.timeActiveMap} session={data.session} medianTime={data.medianTime} />
-        {/if}
-      {:else if $storeTab === "Topics"}
-        {#if instructorMode}
-          {#if $storeSubTab === "InstructorTopicView"}
-            <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds} userNamesAvatars={data.userNamesAvatars} />
-          {:else if $storeSubTab === "InstructorTopicViewPieChart"}
-            <InstructorTopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
-          {:else if $storeSubTab === "InstructorTopicViewBoxPlot"}
-            <InstructorTopicViewBoxPlot
-              course={data.course}
-              userIds={data.userIds}
-              userNamesAvatars={data.userNamesAvatars}
-              userNamesUseridsMap={data.userNamesUseridsMap}
-            />
-          {:else}
-            <InstructorTopicView course={data.course} session={data.session} userIds={data.userIds} userAvatarsUseridsMap={data.userAvatarsUseridsMap} />
-          {/if}
-        {:else if $storeSubTab === "TopicView"}
-          <TopicView course={data.course} session={data.session} userIds={data.userIds} userAvatarsUseridsMap={[]} />
-        {:else if $storeSubTab === "TopicViewPieChart"}
-          <TopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
-        {:else}
-          <TopicView course={data.course} session={data.session} userIds={data.userIds} userNamesUseridsMap={data.userNamesUseridsMap} />
-        {/if}
-      {:else if $storeTab === "Labs"}
-        {#if instructorMode}
-          {#if $storeSubTab === "InstructorLabView"}
-            <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} userNamesAvatars={data.userNamesAvatars} />
-          {:else if $storeSubTab === "InstructorLabViewBoxPlot"}
-            <InstructorLabViewBoxPlot course={data.course} userIds={data.userIds} userNamesAvatars={data.userNamesAvatars} />
-          {:else}
-            <InstructorLabView course={data.course} session={data.session} userIds={data.userIds} userNamesAvatars={data.userNamesAvatars} />
-          {/if}
-        {:else if $storeSubTab === "LabView"}
-          <LabView course={data.course} session={data.session} userIds={data.userIds} userNamesUseridsMap={data.userNamesUseridsMap} />
-        {:else if $storeSubTab === "LabViewPieChart"}
-          <LabViewPieChart course={data.course} session={data.session} />
-        {:else}
-          <LabView course={data.course} session={data.session} userIds={data.userIds} userNamesUseridsMap={data.userNamesUseridsMap} />
-        {/if}
-      {/if}
-    </div>
+    {:else if $storeTab === "TopicView"}
+      <TopicView course={data.course} session={data.session} userIds={data.userIds} />
+    {:else if $storeTab === "TopicViewPieChart"}
+      <TopicViewPieChart course={data.course} session={data.session} userIds={data.userIds} />
+    {:else if $storeTab === "LabView"}
+      <LabView course={data.course} session={data.session} userIds={data.userIds} />
+    {:else if $storeTab === "LabViewPieChart"}
+      <LabViewPieChart course={data.course} session={data.session} />
+    {/if}
   </div>
 </div>
 
 <style>
   .active {
     @apply bg-gray-200 font-bold;
+  }
+
+  /* Sticky Sidebar */
+  .sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
   }
 </style>

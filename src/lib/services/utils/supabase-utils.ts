@@ -37,11 +37,8 @@ export async function getMedianTimeActivePerDate(courseId: string) {
 
 export async function updateStudentsStatus(key: string, status: string) {
   const { data, error } = await db.from("users").update({ online_status: status }).eq("id", key);
-
   if (error) {
-    console.error("Error updating status:", error.message);
-  } else {
-    console.log("Status updated successfully:", data);
+    throw error;
   }
 }
 
@@ -54,7 +51,6 @@ export async function getCalendarDataPerStudent(courseId: string, studentId: str
   const { data, error } = await db.from("calendar").select().eq("student_id", studentId).eq("course_id", courseId);
   return data;
 }
-
 
 export async function getStudentData(id: string): Promise<any> {
   const { data, error } = await db.from("users").select().eq("id", id);
@@ -125,21 +121,30 @@ export async function insertOrUpdateCourse(course: Course) {
 
 export async function addOrUpdateStudent(userDetails: User) {
   if (!userDetails) return;
-  const { data, error } = await db.from("users").upsert(
-    {
-      id: userDetails.id,
-      github_id: userDetails.user_metadata.user_name,
-      avatar_url: userDetails.user_metadata.avatar_url,
-      full_name: userDetails.user_metadata.full_name,
-      email: userDetails.user_metadata.email || "",
-      date_last_accessed: new Date().toISOString(),
-    },
-    {
-      onConflict: "id"
-    }
-  );
 
-  if (error) throw error;
+  const { id, user_metadata } = userDetails; // Fetch user from session
+
+  try {
+    const { error } = await db.from("users").upsert(
+      {
+        id: id,
+        github_id: user_metadata.user_name,
+        avatar_url: user_metadata.avatar_url,
+        full_name: user_metadata.full_name,
+        email: user_metadata.email,
+        date_last_accessed: new Date().toISOString()
+      },
+      { onConflict: "id" }
+    );
+
+    if (error) {
+      console.error("Upsert failed:", error);
+      throw error;
+    }
+  } catch (error) {
+    console.error("An error occurred in addOrUpdateUserProfile:", error);
+    throw error;
+  }
 }
 
 export async function updateLastAccess(key: string, id: string, table: any): Promise<any> {
