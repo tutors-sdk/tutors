@@ -263,7 +263,7 @@ export class BaseHeatMapChart<T> {
       this.chartInstance.on("click", async (params: { componentType: string; seriesType: string; value: any[] }) => {
         // Check if componentIndex or other properties match the yAxis
         if (params.componentType === "yAxis") {
-          const clickedLabel = params.value; // The label name (y-axis data value)
+          const clickedLabel: string = params.value; // The label name (y-axis data value)
           const extractedLabel = clickedLabel.match(/\(([^)]+)\)/)?.[1]; //
 
           // Construct the URL

@@ -38,7 +38,7 @@ export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[],
     },
     grid: {
       height: "80%", // Increase the height of the grid to accommodate the y-axis labels
-      left: "5%",
+      left: "4%",
       right: "5%"
     },
     yAxis: {
@@ -47,7 +47,7 @@ export function boxplot(bgPatternImg: HTMLImageElement, userNicknames: string[],
       name: "Students (metrics are based on a global context)", // Label for the student names
       boundaryGap: true, // Gap between categories for better spacing
       axisLabel: {
-        fontSize: 15 // Label indicating that the axis represents minutes
+        fontSize: 13 // Label indicating that the axis represents minutes
       }
     },
     series: [
@@ -93,7 +93,7 @@ export function combinedBoxplotChart(bgPatternImg: HTMLImageElement, boxplotData
       }
     },
     grid: {
-      left: "5%",
+      left: "4%",
       right: "10%"
     },
     xAxis: {
@@ -119,7 +119,7 @@ export function combinedBoxplotChart(bgPatternImg: HTMLImageElement, boxplotData
       },
       axisLabel: {
         formatter: "{value} mins",
-        fontSize: 15 // Label indicating that the axis represents minutes
+        fontSize: 13 // Label indicating that the axis represents minutes
       }
     },
     series: [

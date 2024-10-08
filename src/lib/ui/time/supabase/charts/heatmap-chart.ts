@@ -1,13 +1,12 @@
 import type { ChartType, GridConfig, HeatMapChartConfig, HeatMapSeriesData } from "$lib/services/types/supabase-metrics";
 
 export function heatmap(categories: Set<string>, yAxisData: string[], series: HeatMapSeriesData, bgPatternImg: HTMLImageElement, chartTitleString: string): HeatMapChartConfig {
-  const cellSize = 30;
-  const singleCellSize = 20;
+  const cellSize = 20;
 
   const numCategories = categories.size;
-  const minWidthPercentage = 3; // Minimum width percentage for small number of categories
+  const minWidthPercentage = 10; // Minimum width percentage for small number of categories
   const maxWidthPercentage = 100; // Maximum width percentage for large number of categories
-  const widthPerCategory = 3;
+  const widthPerCategory = numCategories < 10 ? 5 : 2;
 
   // Dynamically calculate the width as a percentage
   const dynamicWidthPercentage = Math.min(maxWidthPercentage, minWidthPercentage + numCategories * widthPerCategory);
@@ -15,9 +14,6 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
   // Calculate the grid height based on the number of rows (yAxisData)
   const gridHeight = yAxisData.length * cellSize;
   const gridWidth = numCategories * cellSize;
-
-  const singleGridHeight = yAxisData.length * singleCellSize;
-  const singleGridWidth = 100 * singleCellSize;
 
   let visualmapValue: number;
   let seriesArray: HeatMapSeriesData[] = [series];
