@@ -94,21 +94,20 @@
     width: auto;
     height: auto;
     min-width: 100vw; /* Set a minimum width */
-
   }
 
   /* Individual heatmap styling */
   .heatmap {
     height: 75%; /* 75% of the inner-content height */
     width: 100%; /* Full width of the inner-content */
-    min-height: 300px; /* Set a minimum height */
+    min-height: 75vh; /* Set a minimum height */
 
   }
 
   .combined-heatmap {
     height: 25%; /* 25% of the inner-content height */
     width: 100%; /* Full width of the inner-content */
-    min-height: 100px; /* Set a minimum height */
+    min-height: 25vh; /* Set a minimum height */
   }
 
   /* Single-user view container */

@@ -1,9 +1,10 @@
 import type { ChartType, GridConfig, HeatMapChartConfig, HeatMapSeriesData } from "$lib/services/types/supabase-metrics";
 
 export function heatmap(categories: Set<string>, yAxisData: string[], series: HeatMapSeriesData, bgPatternImg: HTMLImageElement, chartTitleString: string): HeatMapChartConfig {
-  const cellSize = 20;
-
   const numCategories = categories.size;
+  const numRows = yAxisData.length;
+  
+  const cellSize = numRows <= 5 ? 100 : 20;
   const minWidthPercentage = 10; // Minimum width percentage for small number of categories
   const maxWidthPercentage = 100; // Maximum width percentage for large number of categories
   const widthPerCategory = numCategories < 10 ? 5 : 2;
@@ -19,6 +20,10 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
   let seriesArray: HeatMapSeriesData[] = [series];
 
   let gridConfig: GridConfig;
+  // Adjust top margin and axisLabel padding based on the number of rows
+  const extraTopMargin = numRows < 5 ? "10%" : "4%"; // More margin for fewer rows
+  const extraLabelPadding = numRows < 5 ? 20 : 10; // Increase label padding for fewer rows
+
   if (series?.data) {
     if (series.name === "student engagement for lab" || series.name === "student engagement for topic") {
       gridConfig = {
@@ -26,7 +31,7 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
         right: gridWidth,
         containLabel: true,
         bottom: "4%",
-        top: "4%",
+        top: extraTopMargin, // Adjust dynamically for smaller category counts
         width: `${dynamicWidthPercentage}%`,
         height: `${gridHeight}` // Let height adjust based on the content
       };
@@ -65,10 +70,11 @@ export function heatmap(categories: Set<string>, yAxisData: string[], series: He
         splitArea: { show: true },
         axisLabel: {
           interval: 0,
-          fontSize: 15,
+          fontSize: 13,
           rotate: 90,
           align: "right",
           verticalAlign: "middle",
+          padding: [extraLabelPadding, 0, extraLabelPadding, 0], // Adjust padding for better visibility
           formatter: (value: string) => (value.length > 20 ? value.slice(0, 20) + "..." : value)
         },
         axisTick: {
