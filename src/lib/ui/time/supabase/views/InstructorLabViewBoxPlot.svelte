@@ -78,11 +78,12 @@
   .boxplot {
     height: 50%; /* 75% of the inner-content height */
     width: 100%; /* Full width of the inner-content */
-    /* min-height: 300px; Set a minimum height */
+    min-height: 50vh; /* Set a minimum height */
   }
 
   .combined-boxplot {
     height: 50%; /* 25% of the inner-content height */
     width: 100%; /* Full width of the inner-content */
+    min-height: 50vh; /* Set a minimum height */
   }
 </style>
