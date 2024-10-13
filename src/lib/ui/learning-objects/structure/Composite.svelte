@@ -12,10 +12,10 @@
     <div class="w-full">
       <Panels panels={composite.panels} />
       <Units units={composite.units.units} />
-      <Cards los={composite.units.standardLos} />
+      <Cards los={composite.units.standardLos} /> 
     </div>
-    <div class="block w-full md:w-[30rem] md:ml-2">
-      <Units units={composite.units?.sides} />
+    <div class="block w-full md:w-[30rem] md:ml-2 flex">
+      <Units units={composite.units?.sides} inSidebar={true} />
     </div>
   </div>
 {:else if composite}

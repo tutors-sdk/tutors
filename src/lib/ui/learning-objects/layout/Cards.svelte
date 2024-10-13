@@ -7,6 +7,7 @@
 
   export let los: Lo[] = [];
   export let border: boolean = false;
+  export let inSidebar: boolean = false;
   let bordered = "border-[1px] border-surface-200-700-token";
   let unbordered = "";
 
@@ -35,11 +36,13 @@
 
 {#if los.length > 0}
   <div class="bg-surface-100-800-token mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4 {border ? bordered : unbordered}">
-    <div class="flex flex-wrap justify-center">
+    <div class="{los.length > 5 && !inSidebar ? 'grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5' : 'flex justify-center flex-wrap mx-auto'}">
       {#key refresh}
         {#each los as lo}
           {#if !lo.hide}
-            <Card {lo} />
+            <div class="flex justify-center">
+              <Card {lo} />
+            </div>
           {/if}
         {/each}
       {/key}
