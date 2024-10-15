@@ -3,7 +3,7 @@
   export let lo: Lo;
 </script>
 
-<article class="prose dark:prose-invert max-w-2xl">
+<article class="prose dark:prose-invert max-w-none mr-4">
   {@html lo.contentHtml}
 </article>
 
