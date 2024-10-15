@@ -12,7 +12,7 @@
     <div>
       <Panels panels={composite.panels} />
       <Units units={composite.units.units} inSidebar={true} />
-      <Cards los={composite.units.standardLos} inSidebar={true}/> 
+      <Cards los={composite.units.standardLos} inSidebar={true} />
     </div>
     <div class="block w-full md:w-[20rem] md:ml-2 flex">
       <Units units={composite.units?.sides} inSidebar={true} />

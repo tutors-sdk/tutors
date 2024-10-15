@@ -3,23 +3,23 @@
   import { layout } from "$lib/stores";
   import { onDestroy } from "svelte";
   import Panels from "./Panels.svelte";
-  import Cards from "./Cards.svelte"; 
+  import Cards from "./Cards.svelte";
   import Image from "../../themes/Image.svelte";
   export let units: Composite[];
-  export let inSidebar: boolean = false; 
+  export let inSidebar: boolean = false;
 
   let text = "!text-xl font-semibold";
   const unsubscribe = layout.subscribe((layout) => {
     if (layout === "compacted") {
       text = "!text-xl font-semibold";
     } else {
-      text = "!text-xl font-semibold"; 
+      text = "!text-xl font-semibold";
     }
   });
   onDestroy(unsubscribe);
 </script>
 
-<div class={inSidebar ? 'flex flex-col' : 'grid grid-cols-1'}>
+<div class={inSidebar ? "flex flex-col" : "grid grid-cols-1"}>
   {#each units as unit}
     <div class="bg-surface-100-800-token mx-auto mb-2 w-full place-items-center overflow-hidden rounded-xl p-4 border-[1px] border-surface-200-700-token">
       <div class="flex w-full justify-between pb-2">
@@ -30,7 +30,7 @@
       </div>
       <Panels panels={unit.panels} />
       <div class="flex flex-wrap justify-center">
-        <Cards los={unit.units.standardLos} inSidebar={inSidebar} />
+        <Cards los={unit.units.standardLos} {inSidebar} />
       </div>
     </div>
   {/each}
