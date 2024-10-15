@@ -64,7 +64,10 @@ markdownIt.renderer.rules.link_open = function (tokens: any, idx: any, options: 
     if (tokens[idx]?.attrs.length > 0 && tokens[idx].attrs[0][1] === "header-anchor") {
       // do not set target in anchor tags
     } else {
-      tokens[idx].attrPush(["target", "_blank"]); // add new attribute
+      if (!tokens[idx].attrs[0][1].startsWith("/lab")) {
+        // as long as link it external to this lab, open in a new page
+        tokens[idx].attrPush(["target", "_blank"]); // add new attribute
+      }
     }
   } else {
     tokens[idx].attrs[aIndex][1] = "_blank"; // replace value of existing attr
