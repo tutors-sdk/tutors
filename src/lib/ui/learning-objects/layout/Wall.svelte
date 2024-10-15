@@ -8,21 +8,21 @@
   let talkVideos = los.filter((lo) => lo.type !== "panelvideo");
 </script>
 
-<div class="container mx-auto">
+<div class="flex flex-wrap justify-center">
   {#key los}
     {#if type !== "video"}
       <Cards {los} />
     {:else}
       <div class="flex flex-wrap justify-center">
         {#each panelVideos as lo}
-          <div class="w-2/5 p-2 card m-2">
+          <div class="flex justify-center">
             <Video {lo} />
           </div>
         {/each}
       </div>
       <div class="flex flex-wrap justify-center">
         {#each talkVideos as lo}
-          <div class="w-2/5 p-2 card m-2">
+          <div class="flex justify-center">
             <Video {lo} />
           </div>
         {/each}

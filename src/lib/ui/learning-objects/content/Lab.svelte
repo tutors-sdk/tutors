@@ -43,7 +43,7 @@
   />
 </svelte:head>
 
-<div class="block fixed w-full mx-auto bottom-0 lg:hidden bg-primary-50-900-token z-30">
+<div class="block fixed w-full bottom-0 lg:hidden bg-primary-50-900-token z-30 -ml-10">
   <nav class="flex flex-wrap justify-between p-2">
     {@html lab.horizontalNavbarHtml}
   </nav>
@@ -61,7 +61,7 @@
       </div>
     </div>
     <div id="lab-panel" class="flex-1 min-h-screen">
-      <article class="prose dark:prose-invert max-w-2xl">
+      <article class="prose dark:prose-invert max-w-none mr-4">
         {@html lab.content}
       </article>
     </div>

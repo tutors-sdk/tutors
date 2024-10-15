@@ -8,14 +8,14 @@
 </script>
 
 {#if composite?.units?.sides?.length > 0}
-  <div class="block md:flex w-11/12 mx-auto">
-    <div class="w-full">
+  <div class="block md:flex w-11/12 mx-auto justify-center">
+    <div>
       <Panels panels={composite.panels} />
-      <Units units={composite.units.units} />
-      <Cards los={composite.units.standardLos} />
+      <Units units={composite.units.units} inSidebar={true} />
+      <Cards los={composite.units.standardLos} inSidebar={true} />
     </div>
-    <div class="block w-full md:w-[30rem] md:ml-2">
-      <Units units={composite.units?.sides} />
+    <div class="block w-full md:w-[20rem] md:ml-2 flex">
+      <Units units={composite.units?.sides} inSidebar={true} />
     </div>
   </div>
 {:else if composite}
