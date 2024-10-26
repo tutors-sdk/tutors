@@ -64,10 +64,6 @@ export const supabaseAnalytics: Analytics = {
     try {
       if (session?.user) {
         if (lo.route) updateLearningRecordsDuration(course.courseId, session.user.user_metadata.user_name, this.loRoute);
-        // updateDuration("id", "students", session.user.user_metadata.user_name);
-        // updateLastAccess("id", session.user.user_metadata.user_name, "students");
-        // updateDuration("course_id", "course", course.courseId);
-        // updateLastAccess("course_id", course.courseId, "course");
         updateCalendarDuration(formatDate(new Date()), session.user.user_metadata.user_name, course.courseId);
       }
     } catch (error: any) {

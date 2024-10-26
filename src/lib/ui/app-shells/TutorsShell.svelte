@@ -38,8 +38,6 @@
       <slot name="header" />
       <svelte:fragment slot="trail">
         <span class="divider-vertical h-10 hidden lg:block" />
-        <LayoutMenu />
-        <span class="divider-vertical h-10 hidden lg:block" />
         {#if session}
           <div class="relative">
             <DashboardProfile {session} {handleSignOut} />
