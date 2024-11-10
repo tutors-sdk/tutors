@@ -1,5 +1,6 @@
 import { courseService } from "$lib/services/course";
 import { currentLo } from "$lib/stores";
+import { supabaseProfile } from "./supabaseProfile.svelte.js";
 
 export const ssr = false;
 
@@ -17,6 +18,8 @@ export const load = async ({ params, parent, fetch }) => {
   }
 
   if (data.session) {
+    supabaseProfile.logCourseVisit(course, data.session.user.user_metadata.preferred_username);
+
     const { data: userCourseList } = await data.supabase.from("accessed_courses").select(`course_list`).eq("id", data.session.user.id);
 
     if (!userCourseList || userCourseList.length === 0) {
