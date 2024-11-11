@@ -4,6 +4,7 @@ import { decorateCourseTree } from "./models/lo-tree";
 import { LiveLab } from "./models/live-lab";
 import { presenceService } from "./presence";
 import { PUBLIC_party_kit_main_room } from "$env/static/public";
+import { supabaseProfile } from "./profile/supabaseProfile.svelte";
 
 export const courseService = {
   courses: new Map<string, Course>(),
@@ -40,6 +41,7 @@ export const courseService = {
         course = data as Course;
         decorateCourseTree(course, courseId, courseUrl);
         this.courses.set(courseId, course);
+        supabaseProfile.updateCourseList(course.courseId);
       } catch (error) {
         console.error(`Error fetching from URL: https://${courseUrl}/tutors.json`);
         console.error(error);
