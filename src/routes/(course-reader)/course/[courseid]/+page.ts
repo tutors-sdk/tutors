@@ -1,6 +1,6 @@
 import { courseService } from "$lib/services/course";
 import { currentLo } from "$lib/stores";
-import { supabaseProfile } from "./supabaseProfile.svelte.js";
+import { supabaseProfile } from "$lib/services/profile/supabaseProfile.svelte.js";
 
 export const ssr = false;
 

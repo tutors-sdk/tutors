@@ -12,6 +12,12 @@ export type CourseVisit = {
   visits: number;
 };
 
+interface RowData {
+  course_id: string;
+  last_updated: Date;
+  visits: number;
+}
+
 export interface ProfileStore {
   courseVisits: CourseVisit[];
 
@@ -63,5 +69,34 @@ export const supabaseProfile = {
       this.courseVisits.unshift(courseVisit);
     }
     await this.save(studentId);
+  },
+
+  async updateCourseList(course_id: string): Promise<void> {
+    // Get the current row by key
+    const { data, error } = await supabase.from("tutors-connect-courses").select("visit_count").eq("course_id", course_id).single();
+
+    if (error && error.code !== "PGRST116") {
+      // Handle error if it's not "Row not found"
+      console.error("Error fetching row:", error);
+      return;
+    }
+
+    // Determine new count and current date
+    const newVisits = data ? data.visit_count + 1 : 1;
+    const now = new Date();
+
+    // Upsert the row with the updated count and date
+    const { error: upsertError } = await supabase.from("tutors-connect-courses").upsert(
+      {
+        course_id,
+        visited_at: now,
+        visit_count: newVisits
+      },
+      { onConflict: ["course_id"] }
+    );
+
+    if (upsertError) {
+      console.error("Error upserting row:", upsertError);
+    }
   }
 };
