@@ -73,6 +73,7 @@ export const supabaseProfile = {
 
   async updateCourseList(course: Course): Promise<void> {
     // Get the current row by key
+    if (!isValidCourseName(course.courseId)) return;
     const { data, error } = await supabase.from("tutors-connect-courses").select("visit_count").eq("course_id", course.courseId).single();
 
     if (error && error.code !== "PGRST116") {
@@ -115,4 +116,9 @@ function getCourseRecord(course: Course) {
     courseVisit.image = course.img;
   }
   return courseVisit;
+}
+
+function isValidCourseName(course: string) {
+  const invalidPatterns = /^(main--|master--|deploy-preview--)|-{2}/;
+  return !invalidPatterns.test(course);
 }
