@@ -41,7 +41,7 @@ export const courseService = {
         course = data as Course;
         decorateCourseTree(course, courseId, courseUrl);
         this.courses.set(courseId, course);
-        supabaseProfile.updateCourseList(course.courseId);
+        supabaseProfile.updateCourseList(course);
       } catch (error) {
         console.error(`Error fetching from URL: https://${courseUrl}/tutors.json`);
         console.error(error);
