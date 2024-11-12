@@ -9,7 +9,7 @@ export type CourseVisit = {
   icon?: IconType;
   lastVisit: Date;
   credits: string;
-  visits: number;
+  visits?: number;
 };
 
 interface RowData {
@@ -71,9 +71,9 @@ export const supabaseProfile = {
     await this.save(studentId);
   },
 
-  async updateCourseList(course_id: string): Promise<void> {
+  async updateCourseList(course: Course): Promise<void> {
     // Get the current row by key
-    const { data, error } = await supabase.from("tutors-connect-courses").select("visit_count").eq("course_id", course_id).single();
+    const { data, error } = await supabase.from("tutors-connect-courses").select("visit_count").eq("course_id", course.courseId).single();
 
     if (error && error.code !== "PGRST116") {
       // Handle error if it's not "Row not found"
@@ -88,9 +88,10 @@ export const supabaseProfile = {
     // Upsert the row with the updated count and date
     const { error: upsertError } = await supabase.from("tutors-connect-courses").upsert(
       {
-        course_id,
+        course_id: course.courseId,
         visited_at: now,
-        visit_count: newVisits
+        visit_count: newVisits,
+        course_record: getCourseRecord(course)
       },
       { onConflict: ["course_id"] }
     );
@@ -100,3 +101,18 @@ export const supabaseProfile = {
     }
   }
 };
+
+function getCourseRecord(course: Course) {
+  const courseVisit: CourseVisit = {
+    id: course.courseId,
+    title: course.title,
+    lastVisit: new Date(),
+    credits: course.properties.credits
+  };
+  if (course.properties.icon) {
+    courseVisit.icon = course.properties.icon as unknown as IconType;
+  } else {
+    courseVisit.image = course.img;
+  }
+  return courseVisit;
+}
