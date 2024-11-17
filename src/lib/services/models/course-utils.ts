@@ -114,7 +114,8 @@ export function loadPropertyFlags(course: Course) {
   course.areVideosHidden = (course.properties?.hideVideos as unknown as boolean) === true;
   course.footer = course.properties?.footer as unknown as string;
   course.areLabStepsAutoNumbered = (course.properties?.labStepsAutoNumber as unknown as boolean) === true;
-  course.authLevel = course.properties.auth as unknown as number;
+  // course.authLevel = course.properties.auth as unknown as number;
+  course.authLevel = 0;
   if (course.enrollment) {
     course.hasEnrollment = true;
   }

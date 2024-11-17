@@ -5,11 +5,12 @@ import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY } from "$env/static/publi
 export type CourseVisit = {
   id: string;
   title: string;
-  image?: string;
+  img?: string;
   icon?: IconType;
   lastVisit: Date;
   credits: string;
   visits?: number;
+  private: boolean;
 };
 
 interface RowData {
@@ -108,12 +109,13 @@ function getCourseRecord(course: Course) {
     id: course.courseId,
     title: course.title,
     lastVisit: new Date(),
-    credits: course.properties.credits
+    credits: course.properties.credits,
+    private: course.isPrivate
   };
   if (course.properties.icon) {
     courseVisit.icon = course.properties.icon as unknown as IconType;
   } else {
-    courseVisit.image = course.img;
+    courseVisit.img = course.img;
   }
   return courseVisit;
 }
