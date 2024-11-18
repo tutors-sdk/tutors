@@ -1,16 +1,30 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
-  import { getIcon } from "../styles/icon-lib";
+  import { getIcon } from "../styles/icon-lib.svelte";
 
-  export let type = "";
-  export let icon = "";
-  export let color = "";
-  export let link = "";
-  export let target = "";
-  export let width = "";
-  export let height = "20";
-  export let tip = "";
-  export let text = "";
+  interface Props {
+    type?: string;
+    icon?: string;
+    color?: string;
+    link?: string;
+    target?: string;
+    width?: string;
+    height?: string;
+    tip?: string;
+    text?: string;
+  }
+
+  let {
+    type = "",
+    icon = "",
+    color = "",
+    link = "",
+    target = "",
+    width = "",
+    height = "20",
+    tip = $bindable(""),
+    text = ""
+  }: Props = $props();
 
   if (target === "_blank") {
     tip = `${tip} (opens in a new Window)`;

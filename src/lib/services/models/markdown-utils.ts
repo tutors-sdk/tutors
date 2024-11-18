@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import hljs from "highlight.js";
 import type { Lab, Lo } from "./lo-types";
+// @ts-ignore
 import MarkdownIt from "markdown-it";
 // @ts-ignore
 import latex from "@iktakahiro/markdown-it-katex";
+// @ts-ignore
 import anchor from "markdown-it-anchor";
 // @ts-ignore
 import toc from "markdown-it-table-of-contents";
-
+// @ts-ignore
 import { full as emoji } from "markdown-it-emoji";
 // @ts-ignore
 import sub from "markdown-it-sub";
@@ -28,10 +31,14 @@ const markdownIt: any = new MarkdownIt({
   linkify: false, // Autoconvert URL-like text to links
   typographer: true,
   quotes: "“”‘’",
-  highlight: function (str, lang) {
+  highlight: function (str: string, lang: string) {
     if (lang && hljs.getLanguage(lang)) {
       try {
-        return '<pre class="hljs"><code>' + hljs.highlight(str, { language: lang, ignoreIllegals: true }).value + "</code></pre>";
+        return (
+          '<pre class="hljs"><code>' +
+          hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
+          "</code></pre>"
+        );
       } catch (__) {}
     }
     return '<pre class="hljs"><code>' + markdownIt.utils.escapeHtml(str) + "</code></pre>";
@@ -52,14 +59,16 @@ markdownIt.use(mark);
 markdownIt.use(footnote);
 markdownIt.use(deflist);
 
-var defaultRender =
+// @ts-ignore
+const defaultRender =
   markdownIt.renderer.rules.link_open ||
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function (tokens: any, idx: any, options: any, env: any, self: any) {
     return self.renderToken(tokens, idx, options);
   };
 markdownIt.renderer.rules.link_open = function (tokens: any, idx: any, options: any, env: any, self: any) {
   // If you are sure other plugins can't add `target` - drop check below
-  var aIndex = tokens[idx].attrIndex("target");
+  const aIndex = tokens[idx].attrIndex("target");
   if (aIndex < 0) {
     if (tokens[idx]?.attrs.length > 0 && tokens[idx].attrs[0][1] === "header-anchor") {
       // do not set target in anchor tags

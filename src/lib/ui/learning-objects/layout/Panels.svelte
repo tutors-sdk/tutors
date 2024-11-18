@@ -3,7 +3,11 @@
   import Note from "../content/Note.svelte";
   import Talk from "../content/Talk.svelte";
   import Video from "../content/Video.svelte";
-  export let panels: Panels;
+
+  interface Props {
+    panels: Panels;
+  }
+  let { panels }: Props = $props();
 </script>
 
 {#each panels?.panelVideos as lo}

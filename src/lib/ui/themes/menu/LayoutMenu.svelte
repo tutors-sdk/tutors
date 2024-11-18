@@ -1,22 +1,31 @@
 <script lang="ts">
-  import { popup, setModeCurrent, getModeOsPrefers } from "@skeletonlabs/skeleton";
-  import { layout } from "$lib/stores";
+  import { popup, setModeCurrent, getModeOsPrefers, setInitialClassState } from "@skeletonlabs/skeleton";
+  import { currentTheme, layout } from "$lib/runes";
   import Icon from "$lib/ui/themes/icons/Icon.svelte";
-  import { onMount } from "svelte";
   import DarkModeToggle from "./DarkModeToggle.svelte";
   import LayoutToggle from "./LayoutToggle.svelte";
-  import ThemeButton from "./ThemeButton.svelte";
-  import { themes } from "../styles/icon-lib";
+  import { setIconLibForTheme, themes } from "../styles/icon-lib.svelte";
+  import { onMount } from "svelte";
+
+  function setTheme(theme: string): void {
+    currentTheme.value = theme;
+    document.body.setAttribute("data-theme", currentTheme.value);
+    localStorage.theme = currentTheme.value;
+    setIconLibForTheme();
+  }
 
   onMount(() => {
-    // Sync lightswitch with the theme
+    setInitialClassState();
     if (!("modeCurrent" in localStorage)) {
       setModeCurrent(getModeOsPrefers());
     }
+    if ("theme" in localStorage) {
+      currentTheme.value = localStorage.theme;
+    }
+    setTheme(currentTheme.value);
   });
 
-  // const themes = ["tutors", "dyslexia", "skeleton", "seafoam", "vintage"];
-  layout.set("expanded");
+  layout.value = "expanded";
 </script>
 
 <div class="relative">
@@ -24,7 +33,7 @@
     <Icon type="dark" />
     <span class="hidden text-sm font-bold lg:block">Layout <span class="pl-2 opacity-50">▾</span></span>
   </button>
-  <nav class="list-nav card card-body p-4 w-56 space-y-4 shadow-lg" data-popup="design">
+  <nav class="card-body card list-nav w-56 space-y-4 p-4 shadow-lg" data-popup="design">
     <h6>Toggles</h6>
     <ul>
       <li class="option !p-0">
@@ -39,7 +48,13 @@
     <ul class="list">
       {#each themes as theme}
         <li class="option !p-0">
-          <ThemeButton themeName={theme} />
+          <button
+            class="btn flex w-full justify-between"
+            class:!variant-soft-primary={theme === currentTheme.value}
+            onclick={setTheme(theme)}
+          >
+            <span class="flex-none">{theme}</span>
+          </button>
         </li>
       {/each}
     </ul>

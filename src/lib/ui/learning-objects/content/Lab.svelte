@@ -4,7 +4,11 @@
   import { onDestroy, onMount } from "svelte";
   import { goto, afterNavigate } from "$app/navigation";
   import type { LiveLab } from "$lib/services/models/live-lab";
-  export let lab: LiveLab;
+
+  interface Props {
+    lab: LiveLab;
+  }
+  let { lab }: Props = $props();
 
   onMount(async () => {
     window.addEventListener("keydown", keypressInput);
@@ -14,6 +18,7 @@
     browser ? window.removeEventListener("keydown", keypressInput) : null;
   });
 
+  page.subscribe((path) => {});
   afterNavigate(() => {
     if (!$page.url.hash) {
       const elemPage = document.querySelector("#page");
@@ -43,16 +48,16 @@
   />
 </svelte:head>
 
-<div class="block fixed w-full bottom-0 lg:hidden bg-primary-50-900-token z-30 -ml-10">
+<div class="bg-primary-50-900-token fixed bottom-0 z-30 -ml-10 block w-full lg:hidden">
   <nav class="flex flex-wrap justify-between p-2">
     {@html lab.horizontalNavbarHtml}
   </nav>
 </div>
 
 <div class="w-full">
-  <div class="flex max-w-l">
-    <div class="hidden lg:block h-auto w-72 mr-2">
-      <div class="sticky h-auto card bg-surface-100-800-token py-4 m-2 rounded-xl top-6">
+  <div class="max-w-l flex">
+    <div class="mr-2 hidden h-auto w-72 lg:block">
+      <div class="card bg-surface-100-800-token sticky top-6 m-2 h-auto rounded-xl py-4">
         <nav class="nav-list">
           <ul>
             {@html lab.navbarHtml}
@@ -60,8 +65,8 @@
         </nav>
       </div>
     </div>
-    <div id="lab-panel" class="flex-1 min-h-screen">
-      <article class="prose dark:prose-invert max-w-none mr-4 prose-pre:max-w-[70vw]">
+    <div id="lab-panel" class="min-h-screen flex-1">
+      <article class="prose mr-4 max-w-none dark:prose-invert prose-pre:max-w-[70vw]">
         {@html lab.content}
       </article>
     </div>

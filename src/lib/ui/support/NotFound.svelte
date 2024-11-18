@@ -1,7 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  export let params: Record<string, string> | null;
+  interface Props {
+    params: Record<string, string> | null;
+  }
+  let { params }: Props = $props();
 
   onMount(() => {
     console.log(params);

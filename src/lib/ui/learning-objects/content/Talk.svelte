@@ -1,48 +1,40 @@
 <script lang="ts">
-  import { BROWSER } from "esm-env";
   import Icon from "$lib/ui/themes/icons/Icon.svelte";
   import * as pdfjs from "pdfjs-dist";
   // @ts-ignore
   import FileSaver from "file-saver";
-  import { getContext, onDestroy, setContext, tick, beforeUpdate, afterUpdate, onMount } from "svelte";
+  import { onDestroy, tick, onMount } from "svelte";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
   import { PDFWorker, getDocument } from "pdfjs-dist";
   import type { Talk } from "$lib/services/models/lo-types";
+  import { setupWorker } from "./support/pdf-utils";
 
-  // Ensure the worker is not instantiated before setting the workerSrc
-  pdfjs.GlobalWorkerOptions.workerSrc = '/node_modules/pdfjs-dist/build/pdf.worker.min.mjs';
+  pdfjs.GlobalWorkerOptions.workerSrc = "/node_modules/pdfjs-dist/build/pdf.worker.min.mjs";
 
+  interface Props {
+    lo: Talk;
+  }
+  let { lo }: Props = $props();
+
+  let pageNum = $state(1);
+  let url = "";
+  let canvas: any = $state();
+  let pageCount = 0;
+  let pdfDoc: any = $state(null);
+  let pageRendering = false;
+  let pageNumPending = false;
+  let rotation = 0;
+  let totalPage = 0;
+  let pages: any = [];
+  let loading = $state(true);
   let worker: PDFWorker | undefined;
 
-  // Set the initial context with a placeholder worker
-  setContext("svelte_pdfjs_worker", worker);
-
-  async function setupWorker() {
-    if (BROWSER) {
-      try {
-        const workerSrcUrl = new URL('pdfjs-dist/build/pdf.worker.min.mjs', import.meta.url);
-        const response = await fetch(workerSrcUrl);
-        if (!response.ok) {
-          throw new Error(`Failed to fetch worker script: ${response.statusText}`);
-        }
-        let workerScript = await response.text();
-
-        // Remove any export statements to ensure the script can be executed in the worker context
-        workerScript = workerScript.replace(/export\s+.*;/g, '');
-
-        const blob = new Blob([workerScript], { type: 'application/javascript' });
-        const url = URL.createObjectURL(blob);
-
-        pdfjs.GlobalWorkerOptions.workerSrc = url;
-
-        return new pdfjs.PDFWorker({ port: new Worker(url) });
-      } catch (error) {
-        throw error;
-      }
-    } else {
-      throw new Error("Not in a browser environment.");
-    }
-  }
+  $effect(() => {
+    loading = true;
+    url = lo.pdf;
+    pageNum = 1;
+    loadDoc();
+  });
 
   async function initialLoad() {
     await setupWorker();
@@ -50,87 +42,82 @@
       return;
     }
     window.addEventListener("keydown", keypressInput);
-    let loadingTask = getDocument({ url, worker });
-    loadingTask.promise
-      .then(async function (pdfDoc_) {
-        pdfDoc = pdfDoc_;
-        await tick();
-        pageCount = pdfDoc.numPages;
-        totalPage = pageCount;
-        renderPage(pageNum);
-      })
-      .catch(function (error) {
-        console.error("Error loading document:", error);
-      });
+  }
+
+  function keypressInput(e) {
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      onNextPage();
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      onPrevPage();
+    }
   }
 
   onMount(() => {
     initialLoad();
   });
 
-  export let url = "";
-  export let scale = 1.8;
-  export let pageNum = 1; // must be number
-  export let lo: Talk;
+  onDestroy(() => {
+    window.removeEventListener("keydown", keypressInput);
+    if (worker) {
+      worker.destroy();
+      worker = undefined;
+    }
+  });
 
-  url = lo.pdf;
+  async function loadDoc() {
+    try {
+      const loadingTask = getDocument({ url, worker });
+      pdfDoc = await loadingTask.promise;
+      await tick();
+      pageCount = pdfDoc.numPages;
+      totalPage = pageCount;
+      loading = false;
+      await renderPage(pageNum);
+    } catch (error) {
+      console.error("Error loading document:", error);
+    }
+  }
 
-  let canvas: any;
-  let pageCount = 0;
-  let pdfDoc: any = null;
-  let pageRendering = false;
-  let pageNumPending: any = null;
-  let rotation = 0;
-  let totalPage = 0;
-  let interval: any;
-  let secondInterval: any;
-
-  let pages: any = [];
-
-  function renderPage(num: any) {
+  async function renderPage(num: number) {
     pageRendering = true;
-
-    pdfDoc.getPage(num).then(function (page: any) {
-      let viewport = page.getViewport({ scale: scale, rotation: rotation });
+    try {
+      const page = await pdfDoc.getPage(num);
+      const viewport = page.getViewport({ scale: 1.8, rotation: rotation });
       const canvasContext = canvas?.getContext("2d");
-      if (canvas) {
-        canvas.height = viewport?.height;
-        canvas.width = viewport?.width;
 
-        let renderContext = {
+      if (canvas && viewport) {
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        const renderContext = {
           canvasContext,
           viewport
         };
-        let renderTask = page.render(renderContext);
-
-        // Wait for rendering to finish
-        renderTask.promise.then(function () {
-          pageRendering = false;
-          if (pageNumPending !== null) {
-            // New page rendering is pending
-            if (pageNum < pdfDoc.totalPage) {
-              pages[pageNum] = canvas;
-              pageNum++;
-              pdfDoc.getPage(pageNum).then(renderPage);
-            } else {
-              for (let i = 1; i < pages.length; i++) {
-                canvas.appendChild(pages[i]);
-              }
+        const renderTask = page.render(renderContext);
+        await renderTask.promise;
+        pageRendering = false;
+        if (!pageNumPending) {
+          if (pageNum < pdfDoc.totalPage) {
+            pages[pageNum] = canvas;
+            pageNum++;
+            await renderPage(pageNum);
+          } else {
+            for (let i = 1; i < pages.length; i++) {
+              canvas.appendChild(pages[i]);
             }
-            pageNumPending = null;
           }
-        }).catch(function (error) {
-          console.error(`Error rendering page ${num}`, error);
-        });
+          pageNumPending = false;
+        }
       }
-    }).catch(function (error) {
-      console.error(`Error getting page ${num}`, error);
-    });
+    } catch (error) {
+      console.error(`Error rendering or getting page ${num}`, error);
+    }
   }
 
-  function queueRenderPage(num: any) {
+  function queueRenderPage(num: number) {
     if (pageRendering) {
-      pageNumPending = num;
+      pageNumPending = true;
     } else {
       renderPage(num);
     }
@@ -161,58 +148,36 @@
     let fileName = url.substring(url.lastIndexOf("/") + 1);
     FileSaver.saveAs(url, fileName);
   }
-
-  onDestroy(() => {
-    clearInterval(interval);
-    clearInterval(secondInterval);
-    window.removeEventListener("keydown", keypressInput);
-    if (worker) {
-      worker.destroy();
-      worker = undefined;
-    }
-  });
-
-  function keypressInput(e) {
-    if (e.key === "ArrowRight") {
-      e.preventDefault();
-      onNextPage();
-    } else if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      onPrevPage();
-    }
-  }
 </script>
 
-{#if pdfDoc}
-  <div class="card mr-2 rounded-lg p-2">
-    <div class="mx-2 mb-2 flex items-center justify-between">
-      <div class="text-sm">
-        {pageNum} of {pdfDoc.numPages}
-      </div>
-      <div>
-        <button class="btn btn-sm" on:click={onPrevPage}>
-          <Icon type="left" tip={"Back 1 slide"} />
-        </button>
-        <button class="btn btn-sm" on:click={onNextPage}>
-          <Icon type="right" tip={"Forward 1 slide"} />
-        </button>
-        <button class="btn btn-sm" on:click={clockwiseRotate}>
-          <Icon type="rotate" tip={"Rotate Slide 90 degrees"} />
-        </button>
-        <button class="btn btn-sm" on:click={downloadPdf}>
-          <Icon type="download" tip={"Download"} />
-        </button>
-        <button class="btn btn-sm">
-          <Icon link={lo.pdf} type="fullScreen" target="_blank" tip={"View Full Screen"} />
-        </button>
-      </div>
+<div class="card mr-2 rounded-lg p-2">
+  <div class="mx-2 mb-2 flex items-center justify-between">
+    <div class="text-sm">
+      {pageNum} of {pdfDoc?.numPages}
     </div>
-    <canvas class="mx-auto w-full 2xl:w-4/5" bind:this={canvas} />
+    <div>
+      <button class="btn btn-sm" onclick={onPrevPage}>
+        <Icon type="left" tip={"Back 1 slide"} />
+      </button>
+      <button class="btn btn-sm" onclick={onNextPage}>
+        <Icon type="right" tip={"Forward 1 slide"} />
+      </button>
+      <button class="btn btn-sm" onclick={clockwiseRotate}>
+        <Icon type="rotate" tip={"Rotate Slide 90 degrees"} />
+      </button>
+      <button class="btn btn-sm" onclick={downloadPdf}>
+        <Icon type="download" tip={"Download"} />
+      </button>
+      <button class="btn btn-sm">
+        <Icon link={lo.pdf} type="fullScreen" target="_blank" tip={"View Full Screen"} />
+      </button>
+    </div>
   </div>
-{:else}
-  <div class="mt-28 flex flex-col items-center justify-center">
-    Loading
-    <br />
-    <ProgressRadial stroke={100} meter="stroke-primary-500" track="stroke-primary-500/30" width="w-20" />
-  </div>
-{/if}
+  {#if !loading}
+    <canvas class="mx-auto w-full 2xl:w-4/5" bind:this={canvas}></canvas>
+  {:else}
+    <div class="mt-72 mb-72 flex flex-col items-center justify-center">
+      <ProgressRadial stroke={100} meter="stroke-primary-500" track="stroke-primary-500/30" width="w-20" />
+    </div>
+  {/if}
+</div>

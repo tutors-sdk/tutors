@@ -8,7 +8,7 @@
   };
 </script>
 
-<button class="btn btn-sm" on:click={infoDrawerOpen} title="View course info">
+<button class="btn btn-sm" onclick={infoDrawerOpen} title="View course info">
   <span class="text-sm font-bold inline-flex gap-2">
     <Icon type="info" />
   </span>

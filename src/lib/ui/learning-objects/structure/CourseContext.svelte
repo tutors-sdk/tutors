@@ -10,7 +10,9 @@
   {#each course.los as lo}
     {#if !lo.hide}
       <TreeViewItem>
-        {lo.title}
+        <svelte:fragment slot="lead">
+          {lo.title}
+        </svelte:fragment>
         <svelte:fragment slot="children">
           <LoContext {lo} />
         </svelte:fragment>

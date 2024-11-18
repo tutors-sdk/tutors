@@ -3,7 +3,11 @@
   import Lab from "$lib/ui/learning-objects/content/Lab.svelte";
   import Context from "$lib/ui/learning-objects/structure/Context.svelte";
   import Talk from "$lib/ui/learning-objects/content/Talk.svelte";
-  export let data: PageData;
+
+  interface Props {
+    data: PageData;
+  }
+  let { data }: Props = $props();
 </script>
 
 {#if data.lab.lab.pdf}

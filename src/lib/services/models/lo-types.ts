@@ -193,13 +193,25 @@ export type Course = Composite & {
   hasEnrollment: boolean;
   hasCalendar: boolean;
   hasWhiteList: boolean;
+  defaultPdfReader: string;
   footer: string;
   ignorePin: string;
   companions: IconNavBar;
   wallBar: IconNavBar;
 };
 
-export const simpleTypes = ["note", "archive", "web", "github", "panelnote", "paneltalk", "panelvideo", "talk", "book", "lab"];
+export const simpleTypes = [
+  "note",
+  "archive",
+  "web",
+  "github",
+  "panelnote",
+  "paneltalk",
+  "panelvideo",
+  "talk",
+  "book",
+  "lab"
+];
 export const loCompositeTypes = ["unit", "side", "topic", "course"];
 export const loTypes = simpleTypes.concat(loCompositeTypes);
 export type LoType = (typeof loTypes)[number];

@@ -1,6 +1,9 @@
 <script lang="ts">
-  export let title: string = "";
-  export let subtitle: string = "";
+  interface Props {
+    title?: string;
+    subtitle?: string;
+  }
+  let { title = "", subtitle = "" }: Props = $props();
 </script>
 
 <div class="flex items-center">

@@ -1,32 +1,20 @@
-import { addIcon } from "$lib/ui/themes/styles/icon-lib";
+import { addIcon } from "$lib/ui/themes/styles/icon-lib.svelte";
 import type { Composite, Course, IconNav, Lo, LoType, Topic } from "./lo-types";
 import { filterByType, setShowHide } from "./lo-utils";
-
-function threadToc(lo: Lo, course: Course) {
-  if (lo.type == "topic") {
-    const topic = lo as Topic;
-    topic.toc = [];
-    topic.toc.push(...topic.panels.panelVideos, ...topic.panels.panelTalks, ...topic.panels.panelNotes, ...topic.units.units, ...topic.units.standardLos, ...topic.units.sides);
-
-    topic.toc.forEach((lo) => {
-      lo.parentLo = course;
-      lo.parentTopic = topic;
-      if (lo.type === "unit" || lo.type === "side") {
-        const composite = lo as Composite;
-        composite.los.forEach((subLo) => {
-          subLo.parentTopic = topic;
-        });
-      }
-    });
-  }
-}
 
 export function createToc(course: Course) {
   course.los.forEach((lo) => {
     if (lo.type == "topic") {
       const topic = lo as Topic;
       topic.toc = [];
-      topic.toc.push(...topic.panels.panelVideos, ...topic.panels.panelTalks, ...topic.panels.panelNotes, ...topic.units.units, ...topic.units.standardLos, ...topic.units.sides);
+      topic.toc.push(
+        ...topic.panels.panelVideos,
+        ...topic.panels.panelTalks,
+        ...topic.panels.panelNotes,
+        ...topic.units.units,
+        ...topic.units.standardLos,
+        ...topic.units.sides
+      );
 
       topic.toc.forEach((lo) => {
         lo.parentLo = course;
@@ -114,8 +102,11 @@ export function loadPropertyFlags(course: Course) {
   course.areVideosHidden = (course.properties?.hideVideos as unknown as boolean) === true;
   course.footer = course.properties?.footer as unknown as string;
   course.areLabStepsAutoNumbered = (course.properties?.labStepsAutoNumber as unknown as boolean) === true;
-  // course.authLevel = course.properties.auth as unknown as number;
-  course.authLevel = 0;
+  course.authLevel = course.properties.auth as unknown as number;
+  course.defaultPdfReader = "adobe";
+  if (course.properties.defaultPdfReader) {
+    course.defaultPdfReader = course.properties.defaultPdfReader;
+  }
   if (course.enrollment) {
     course.hasEnrollment = true;
   }
@@ -126,6 +117,7 @@ export function loadPropertyFlags(course: Course) {
   course.hasWhiteList = false;
   course.ignorePin = course.properties?.ignorepin?.toString();
   if (course.properties?.icon) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     course.icon = course.properties.icon;
   }
@@ -145,6 +137,7 @@ export function initCalendar(course: Course) {
     if (course.calendar) {
       const calendarObj = course.calendar;
       calendar.title = calendarObj.title;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       calendar.weeks = calendarObj.weeks.map((weekObj: any) => ({
         date: Object.keys(weekObj)[0],
@@ -154,12 +147,17 @@ export function initCalendar(course: Course) {
       }));
 
       const today = Date.now();
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const currentWeek = calendar.weeks.find((week, i) => today > Date.parse(week.date) && today <= Date.parse(calendar.weeks[i + 1]?.date));
+      const currentWeek = calendar.weeks.find(
+        (week, i) => today > Date.parse(week.date) && today <= Date.parse(calendar.weeks[i + 1]?.date)
+      );
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       course.courseCalendar = {
         title: calendarObj.title,
         weeks: calendar.weeks,
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         currentWeek: currentWeek
       };

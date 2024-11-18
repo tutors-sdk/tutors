@@ -1,9 +1,9 @@
 {
-  "useSpaces": true,
-  "doubleQuote": true,
+  "useTabs": false,
+  "singleQuote": false,
   "trailingComma": "none",
-  "printWidth": 180,
-  "plugins": ["prettier-plugin-svelte"],
+  "printWidth": 120,
+  "plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"],
   "overrides": [
     {
       "files": "*.svelte",

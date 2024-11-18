@@ -1,45 +1,50 @@
-import { createServerClient } from "@supabase/ssr";
-import type { Handle } from "@sveltejs/kit";
-import { sequence } from "@sveltejs/kit/hooks";
-import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from "$env/static/public";
+import { SvelteKitAuth } from "@auth/sveltekit";
+import { PRIVATE_AUTH_GITHUB_SECRET, PRIVATE_AUTH_GITHUB_ID, PRIVATE_AUTH_SECRET } from "$env/static/private";
+import GithubProvider from "@auth/core/providers/github";
 
-const createSupabaseClient: Handle = async ({ event, resolve }) => {
-  event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, {
-    cookies: {
-      get: (key) => event.cookies.get(key),
-      // NOTE: defaulting path to '/' here to support Sveltekit v2 which requires it to be
-      // specified.
-      set: (key, value, options) => {
-        event.cookies.set(key, value, { path: "/", ...options });
-      },
-      remove: (key, options) => {
-        event.cookies.delete(key, { path: "/", ...options });
+const { handle: authInitHandle } = SvelteKitAuth({
+  basePath: "/auth",
+  providers: [
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    GithubProvider({
+      clientId: PRIVATE_AUTH_GITHUB_ID,
+      clientSecret: PRIVATE_AUTH_GITHUB_SECRET,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      profile(profile: any) {
+        return {
+          id: profile.id.toString(),
+          name: profile.name,
+          login: profile.login,
+          email: profile.email,
+          image: profile.avatar_url
+        };
       }
+    })
+  ],
+
+  callbacks: {
+    async session({ session, token }) {
+      session.user.login = token.login;
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.login = user.login;
+      }
+      return token;
     }
-  });
+  },
 
-  /**
-   * a little helper that is written for convenience so that instead
-   * of calling `const { data: { session } } = await supabase.auth.getSession()`
-   * you just call this `await getSession()`
-   */
-  event.locals.getSession = async () => {
-    const {
-      data: { session }
-    } = await event.locals.supabase.auth.getSession();
-    return session;
-  };
+  session: {
+    maxAge: 60 * 60 * 24 * 365, // 1 year
+    // maxAge: 30 * 24 * 60 * 60, // 1 month
 
-  return resolve(event, {
-    filterSerializedResponseHeaders(name) {
-      // supabase needs the content-range header
-      return name === "content-range";
-    }
-  });
-};
+    strategy: "jwt"
+  },
 
-export let handle: Handle;
+  secret: PRIVATE_AUTH_SECRET,
+  trustHost: true
+});
 
-if (PUBLIC_SUPABASE_URL !== "XXX") {
-  handle = sequence(createSupabaseClient);
-}
+export const handle = authInitHandle;

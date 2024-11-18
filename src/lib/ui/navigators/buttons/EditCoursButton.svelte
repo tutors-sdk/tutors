@@ -1,14 +1,15 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { currentCourse, currentLabStepIndex, currentLo } from "$lib/stores";
+  import { currentCourse, currentLabStepIndex, currentLo } from "$lib/runes";
   import Icon from "$lib/ui/themes/icons/Icon.svelte";
 
-  let editRoute = $currentCourse.properties.github;
+  let editRoute = $state(currentCourse?.value?.properties.github);
 
   let currentLabStep = "";
   let loRoute = "";
-  currentLabStepIndex.subscribe((stepIndex) => {
-    currentLabStep = String(stepIndex).padStart(2, "0") + ".";
+
+  $effect(() => {
+    currentLabStep = String(currentLabStepIndex.value).padStart(2, "0") + ".";
   });
 
   function insertSubstringAfterLastSlash(originalString: string, substringToInsert: string) {
@@ -29,19 +30,19 @@
     loRoute = "";
     if (path.params.loid) {
       loRoute = path.params.loid;
-      if ($currentLo.type == "lab") {
+      if (currentLo?.value?.type == "lab") {
         const lastSegment = path.params.loid.substring(path.params.loid.lastIndexOf("/") + 1);
         if (lastSegment.startsWith("book")) {
         } else {
           loRoute = insertSubstringAfterLastSlash(path.params.loid, currentLabStep);
           loRoute = loRoute + ".md?plain=1";
         }
-      } else if ($currentLo.type == "note") {
+      } else if (currentLo?.value?.type == "note") {
         loRoute = loRoute + "/note.md?plain=1";
       }
     }
 
-    editRoute = `${$currentCourse.properties.github}/${loRoute}`;
+    editRoute = `${currentCourse?.value?.properties.github}/${loRoute}`;
   });
 </script>
 

@@ -1,7 +1,17 @@
 import { isCompositeLo, type Course, type Lo, type Composite, type LoType, type Topic } from "./lo-types";
 import { convertLoToHtml } from "./markdown-utils";
-import { allVideoLos, crumbs, flattenLos, loadIcon, getPanels, getUnits, injectCourseUrl, removeUnknownLos, filterByType } from "./lo-utils";
-import { createCompanions, createToc, createWalls, initCalendar, loadPropertyFlags } from "./course-utils";
+import {
+  allVideoLos,
+  crumbs,
+  flattenLos,
+  loadIcon,
+  getPanels,
+  getUnits,
+  injectCourseUrl,
+  removeUnknownLos,
+  filterByType
+} from "./lo-utils";
+import { createCompanions, createWalls, initCalendar, loadPropertyFlags } from "./course-utils";
 
 export function decorateCourseTree(course: Course, courseId: string = "", courseUrl = "") {
   // define course properties
@@ -56,11 +66,17 @@ export function decorateLoTree(course: Course, lo: Lo) {
 
     compositeLo.toc = [];
     compositeLo.toc.push(
+      // eslint-disable-next-line no-unsafe-optional-chaining
       ...compositeLo?.panels?.panelVideos,
+      // eslint-disable-next-line no-unsafe-optional-chaining
       ...compositeLo?.panels?.panelTalks,
+      // eslint-disable-next-line no-unsafe-optional-chaining
       ...compositeLo?.panels?.panelNotes,
+      // eslint-disable-next-line no-unsafe-optional-chaining
       ...compositeLo?.units?.units,
+      // eslint-disable-next-line no-unsafe-optional-chaining
       ...compositeLo?.units?.standardLos,
+      // eslint-disable-next-line no-unsafe-optional-chaining
       ...compositeLo?.units?.sides
     );
 

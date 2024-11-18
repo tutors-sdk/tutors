@@ -1,22 +1,38 @@
-import { join } from "path";
 import forms from "@tailwindcss/forms";
-import type { Config } from "tailwindcss";
 import { skeleton } from "@skeletonlabs/tw-plugin";
+import typography from "@tailwindcss/typography";
 import { tutors } from "./src/lib/ui/themes/styles/tutors";
 import { dyslexia } from "./src/lib/ui/themes/styles/dyslexia";
-import typography from "@tailwindcss/typography";
+import type { Config } from "tailwindcss";
+import { join } from "path";
 
-const config = {
-  mode: "jit",
-  content: ["./src/**/*.{html,js,svelte,ts}", "./src/**/**/*.{html,js,svelte,ts}", join(require.resolve("@skeletonlabs/skeleton"), "../**/*.{html,js,svelte,ts}")],
+export default {
+  content: [
+    "./src/**/*.{html,js,svelte,ts}",
+    "./src/**/**/*.{html,js,svelte,ts}",
+    join(require.resolve("@skeletonlabs/skeleton"), "../**/*.{html,js,svelte,ts}")
+  ],
   safelist: [
     {
       pattern: /border|text/
     }
   ],
+  theme: {
+    extend: {
+      typography: {
+        DEFAULT: {
+          css: {
+            "code::before": { content: '""' },
+            "code::after": { content: '""' }
+          }
+        }
+      }
+    }
+  },
+
   plugins: [
-    forms,
     typography,
+    forms,
     skeleton({
       themes: {
         custom: [tutors, dyslexia],
@@ -30,5 +46,3 @@ const config = {
   ],
   darkMode: "class"
 } satisfies Config;
-
-export default config;
