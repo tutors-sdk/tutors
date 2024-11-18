@@ -1,22 +1,16 @@
 <script lang="ts">
   import type { Composite } from "$lib/services/models/lo-types";
-  import { layout } from "$lib/stores";
-  import { onDestroy } from "svelte";
   import Panels from "./Panels.svelte";
   import Cards from "./Cards.svelte";
   import Image from "../../themes/Image.svelte";
-  export let units: Composite[];
-  export let inSidebar: boolean = false;
+
+  interface Props {
+    units: Composite[];
+    inSidebar?: boolean;
+  }
+  let { units, inSidebar = false }: Props = $props();
 
   let text = "!text-xl font-semibold";
-  const unsubscribe = layout.subscribe((layout) => {
-    if (layout === "compacted") {
-      text = "!text-xl font-semibold";
-    } else {
-      text = "!text-xl font-semibold";
-    }
-  });
-  onDestroy(unsubscribe);
 </script>
 
 <div class={inSidebar ? "flex flex-col" : "grid grid-cols-1"}>

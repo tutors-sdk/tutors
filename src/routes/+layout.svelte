@@ -1,18 +1,22 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
-  import { page } from "$app/stores";
-  import { getKeys } from "$lib/environment";
-  import { initFirebase } from "$lib/services/utils/firebase-utils";
+  import { tutorsConnectService } from "$lib/services/connect.svelte";
+  import "../app.css";
   import { computePosition, autoUpdate, flip, shift, offset, arrow } from "@floating-ui/dom";
   import { initializeStores, storePopup } from "@skeletonlabs/skeleton";
+  import type { PageData } from "./$types";
+
+  interface Props {
+    data: PageData;
+    children: import("svelte").Snippet;
+  }
+  let { data, children }: Props = $props();
 
   initializeStores();
-  const themes: any = ["tutors", "dyslexia", "halloween", "valentines"];
   storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 
-  if ($page.url.hash.startsWith("#/course")) {
-    goto($page.url.hash.slice(2));
+  if (data?.user) {
+    tutorsConnectService.reconnect(data.user);
   }
 </script>
 
-<slot />
+{@render children()}

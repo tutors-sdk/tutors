@@ -1,6 +1,6 @@
 import type { PageLoad } from "./$types";
-import { courseService } from "$lib/services/course";
-import { currentLabStepIndex } from "$lib/stores";
+import { courseService } from "$lib/services/course.svelte";
+import { currentLabStepIndex } from "$lib/runes";
 
 export const ssr = false;
 
@@ -13,7 +13,7 @@ export const load: PageLoad = async ({ url, params, fetch }) => {
   } else {
     liveLab.setActivePage(lastSegment);
   }
-  currentLabStepIndex.set(liveLab.index);
+  currentLabStepIndex.value = liveLab.index;
   return {
     lab: liveLab
   };

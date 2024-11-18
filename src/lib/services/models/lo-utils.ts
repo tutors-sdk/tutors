@@ -21,6 +21,7 @@ export function flattenLos(los: Lo[]): Lo[] {
   los.forEach((lo) => {
     result.push(lo);
     if ("los" in lo) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       result = result.concat(flattenLos(lo.los));
     }
@@ -111,7 +112,14 @@ export function getPanels(los: Lo[]): Panels {
 }
 
 export function getUnits(los: Lo[]): Units {
-  let standardLos = los?.filter((lo) => lo.type !== "unit" && lo.type !== "panelvideo" && lo.type !== "paneltalk" && lo.type !== "panelnote" && lo.type !== "side");
+  let standardLos = los?.filter(
+    (lo) =>
+      lo.type !== "unit" &&
+      lo.type !== "panelvideo" &&
+      lo.type !== "paneltalk" &&
+      lo.type !== "panelnote" &&
+      lo.type !== "side"
+  );
   standardLos = sortLos(standardLos);
   return {
     units: los?.filter((lo) => lo.type === "unit") as Unit[],
@@ -130,8 +138,10 @@ export function sortLos(los: Array<Lo>): Lo[] {
 export function loadIcon(lo: Lo): IconType | undefined {
   if (lo.frontMatter && lo.frontMatter.icon) {
     return {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       type: lo.frontMatter.icon["type"],
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       color: lo.frontMatter.icon["color"]
     };

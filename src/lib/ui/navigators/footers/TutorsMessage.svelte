@@ -1,7 +1,10 @@
 <script lang="ts">
   import { convertMdToHtml } from "$lib/services/models/markdown-utils";
-  export let content =
-    "Why not pitch in to the [Tutors Project](https://tutors.dev)?: see [*Project Readme*](https://github.com/tutors-sdk/tutors/blob/development/README.md), [*Open Issues*](https://github.com/tutors-sdk/tutors/issues) & [*Gallery*](https://tutors.dev/gallery)";
+
+  interface Props {
+    content?: string;
+  }
+  let { content = "An [Open Learning Web Toolkit](https://github.com/tutors-sdk/tutors)" }: Props = $props();
   let contentHtml = convertMdToHtml(content);
 </script>
 

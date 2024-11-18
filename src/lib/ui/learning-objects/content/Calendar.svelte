@@ -2,7 +2,10 @@
   import type { Calendar } from "$lib/services/models/lo-types";
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
-  export let calendar: Calendar;
+  interface Props {
+    calendar: Calendar;
+  }
+  let { calendar }: Props = $props();
 </script>
 
 <h4 class="mb-4 text-center font-semibold">{calendar.title}</h4>

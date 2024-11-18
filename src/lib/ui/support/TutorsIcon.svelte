@@ -1,5 +1,8 @@
 <script lang="ts">
-  export let widthPlease = "40px";
+  interface Props {
+    widthPlease?: string;
+  }
+  let { widthPlease = "40px" }: Props = $props();
 </script>
 
 <svg width={widthPlease} viewBox="0 0 54.5 39.4" xml:space="preserve">

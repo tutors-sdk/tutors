@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { currentCourse, currentLo } from "$lib/stores";
+  import type { Lo } from "$lib/services/models/lo-types";
+  import { currentCourse, currentLo } from "$lib/runes";
   import Icon from "./Icon.svelte";
   let truncated = [true, true, true, true, true, true, true];
 
@@ -17,21 +18,13 @@
     return input;
   }
 
-  interface Crumb {
-    route: string;
-    type: string;
-    title: string;
-  }
-  let breadCrumbs: Crumb[] = [];
+  let breadCrumbs: Lo[] = $derived(currentLo?.value?.breadCrumbs!);
 
-  currentLo.subscribe((lo) => {
-    breadCrumbs = [];
-    lo.breadCrumbs?.forEach((lo) => {
-      let route = lo.route;
-      if (route.endsWith("/")) {
-        route = route.slice(0, -1);
+  $effect(() => {
+    breadCrumbs.forEach((lo) => {
+      if (lo.route.endsWith("/")) {
+        lo.route = lo.route.slice(0, -1);
       }
-      breadCrumbs.push({ route: route, type: lo.type, title: lo.title });
     });
     if (breadCrumbs.length > 2) {
       if (breadCrumbs[1].type === "unit" || breadCrumbs[1].type === "side") {
@@ -41,32 +34,32 @@
   });
 </script>
 
-<div class="my-2 mx-8 overflow-hidden p-1">
+<div class="mx-8 my-2 overflow-hidden p-1">
   <ol class="breadcrumb-nonresponsive text-xs">
-    {#if $currentCourse?.properties?.parent != null}
+    {#if currentCourse?.value?.properties?.parent != null}
       <li class="crumb">
-        <a href="/{$currentCourse.properties?.parent}" class="!space-x-[-1rem] lg:!space-x-0">
+        <a href="/{currentCourse?.value?.properties?.parent}" class="!space-x-[-1rem] lg:!space-x-0">
           <Icon type="programHome" tip={`Go to Course Home`} />
         </a>
       </li>
 
-      <li class="crumb-separator" aria-hidden>&rsaquo;</li>
+      <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
     {/if}
     {#if breadCrumbs}
       {#each breadCrumbs as lo, i}
         {#if i >= 1}
-          <li class="crumb-separator" aria-hidden>&rsaquo;</li>
+          <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
         {/if}
         <li class="crumb">
-          <a href={lo.route} class="!space-x-[-1rem] lg:!space-x-0 inline-flex !text-black dark:!text-white">
+          <a href={lo.route} class="inline-flex !space-x-[-1rem] !text-black dark:!text-white lg:!space-x-0">
             <span><Icon type={lo.type} tip={`Go to ${lo.title}`} /></span>
-            <!-- svelte-ignore a11y-no-static-element-interactions -->
+            <!-- svelte-ignore a11y_no_static_element_interactions -->
             <span
-              class="hidden lg:inline-flex pl-2 items-center"
-              on:mouseenter={() => {
+              class="hidden items-center pl-2 lg:inline-flex"
+              onmouseenter={() => {
                 truncated[i] = false;
               }}
-              on:mouseleave={() => {
+              onmouseleave={() => {
                 truncated[i] = true;
               }}
               >{title(lo.title, truncated[i], i)}

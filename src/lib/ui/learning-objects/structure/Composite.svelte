@@ -4,7 +4,10 @@
   import Units from "../layout/Units.svelte";
   import Cards from "../layout/Cards.svelte";
 
-  export let composite: Composite;
+  interface Props {
+    composite: Composite;
+  }
+  let { composite }: Props = $props();
 </script>
 
 {#if composite?.units?.sides?.length > 0}

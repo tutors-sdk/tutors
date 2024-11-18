@@ -2,8 +2,13 @@
   import type { Lo } from "$lib/services/models/lo-types";
   import Cards from "../layout/Cards.svelte";
   import Video from "../content/Video.svelte";
-  export let los: Lo[];
-  export let type: string;
+
+  interface Props {
+    los: Lo[];
+    type: string;
+  }
+  let { los, type }: Props = $props();
+
   let panelVideos = los.filter((lo) => lo.type === "panelvideo");
   let talkVideos = los.filter((lo) => lo.type !== "panelvideo");
 </script>

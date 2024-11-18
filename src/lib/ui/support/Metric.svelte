@@ -1,6 +1,9 @@
 <script lang="ts">
-  export let value = 0;
-  export let title = "";
+  interface Props {
+    value?: number;
+    title?: string;
+  }
+  let { value = 0, title = "" }: Props = $props();
 </script>
 
 {#if value}

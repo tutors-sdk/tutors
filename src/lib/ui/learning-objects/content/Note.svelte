@@ -1,6 +1,10 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models/lo-types";
-  export let lo: Lo;
+
+  interface Props {
+    lo: Lo;
+  }
+  let { lo }: Props = $props();
 </script>
 
 <article class="prose dark:prose-invert max-w-none mr-4">

@@ -1,10 +1,10 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import type { Lo } from "$lib/services/models/lo-types";
-  import { currentCourse } from "$lib/stores";
-  import { getIcon } from "../../themes/styles/icon-lib";
+  import { currentCourse } from "$lib/runes";
+  import { getIcon } from "../../themes/styles/icon-lib.svelte";
 
-  let firefox = false;
+  let firefox = $state(false);
 
   onMount(async () => {
     if (navigator) {
@@ -12,14 +12,25 @@
     }
   });
 
-  export let lo: Lo;
-  export let autoplay: boolean = false;
-  let heanet = false;
-  let vimp = false;
-  let vimpId = "";
-  let heanetId = "";
-  const parts = lo.video.split("/");
-  let defaultId = parts.pop() || parts.pop();
+  interface Props {
+    lo: Lo;
+    autoplay?: boolean;
+  }
+  let { lo = $bindable(), autoplay = false }: Props = $props();
+
+  let heanet = $state(false);
+  let vimp = $state(false);
+  let vimpId = $state("");
+  let heanetId = $state("");
+  const parts = lo?.video.split("/");
+  let defaultId = $state(parts?.pop() || parts?.pop());
+
+  $effect(() => {
+    if (lo.video) {
+      const parts = lo.video.split("/");
+      defaultId = parts.pop() || parts.pop();
+    }
+  });
 
   if (lo && lo.type === "panelvideo") {
     lo.icon = { type: getIcon("video").type, color: getIcon("video").color };
@@ -37,18 +48,18 @@
     }
   }
 
-  let showVime = false;
+  let showVime = $state(false);
   setTimeout(() => {
     showVime = true;
   }, 500);
 </script>
 
-{#if $currentCourse && !$currentCourse.areVideosHidden}
+{#if !currentCourse?.value?.areVideosHidden}
   <div class="w-full p-8">
     {#if heanet}
       {#if showVime}
         <div class="relative mx-auto aspect-video w-3/4" style="padding-top: 40%;">
-          <iframe title={lo.title} class="absolute inset-0 h-full w-full" src="https://media.heanet.ie/player/{heanetId}" allow="encrypted-media" allowfullscreen />
+          <iframe title={lo.title} class="absolute inset-0 h-full w-full" src="https://media.heanet.ie/player/{heanetId}" allow="encrypted-media" allowfullscreen></iframe>
         </div>
       {/if}
     {:else if vimp}
@@ -61,29 +72,23 @@
         aria-label="media embed code"
         allowtransparency={true}
         allowfullscreen
-      />
-    {:else}
-      {#if firefox}
-        {#if autoplay}
-          <iframe
-            title={lo.title}
-            class="relative mx-auto aspect-video w-3/4"
-            src="https://www.youtube.com/embed/{defaultId}?&autoplay=1"
-            allow="encrypted-media"
-            allowfullscreen
-          />
-        {:else}
-          <iframe title={lo.title} class="relative mx-auto aspect-video w-3/4" src="https://www.youtube.com/embed/{defaultId}" allow="encrypted-media" allowfullscreen />
-        {/if}
-      {:else if autoplay}
-        <div class="relative mx-auto aspect-video w-3/4" style="padding-top: 40%;">
-          <iframe title={lo.title} class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/{defaultId}?&autoplay=1" allow="encrypted-media" allowfullscreen />
-        </div>
+      ></iframe>
+    {:else if firefox}
+      {#if autoplay}
+        <iframe title={lo.title} class="relative mx-auto aspect-video w-3/4" src="https://www.youtube.com/embed/{defaultId}?&autoplay=1" allow="encrypted-media" allowfullscreen
+        ></iframe>
       {:else}
-        <div class="relative mx-auto aspect-video" style="padding-top: 40%;">
-          <iframe title={lo.title} class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/{defaultId}" allow="encrypted-media" allowfullscreen />
-        </div>
+        <iframe title={lo.title} class="relative mx-auto aspect-video w-3/4" src="https://www.youtube.com/embed/{defaultId}" allow="encrypted-media" allowfullscreen></iframe>
       {/if}
+    {:else if autoplay}
+      <div class="relative mx-auto aspect-video w-3/4" style="padding-top: 40%;">
+        <iframe title={lo.title} class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/{defaultId}?&autoplay=1" allow="encrypted-media" allowfullscreen
+        ></iframe>
+      </div>
+    {:else}
+      <div class="relative mx-auto aspect-video" style="padding-top: 40%;">
+        <iframe title={lo.title} class="absolute inset-0 h-full w-full" src="https://www.youtube.com/embed/{defaultId}" allow="encrypted-media" allowfullscreen></iframe>
+      </div>
     {/if}<br />
     <p class="text-center text-lg italic">{lo.title}</p>
   </div>

@@ -1,19 +1,23 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { currentCourse } from "$lib/stores";
+  import { currentCourse } from "$lib/runes";
   import Card from "./Card.svelte";
   import type { Lo } from "$lib/services/models/lo-types";
   import { setShowHide } from "$lib/services/models/lo-utils";
 
-  export let los: Lo[] = [];
-  export let border: boolean = false;
-  export let inSidebar: boolean = false;
+  interface Props {
+    los?: Lo[];
+    border?: boolean;
+    inSidebar?: boolean;
+  }
+  let { los = [], border = false, inSidebar = false }: Props = $props();
+
   let bordered = "border-[1px] border-surface-200-700-token";
   let unbordered = "";
 
   let pinBuffer = "";
   let ignorePin = "";
-  let refresh = true;
+  let refresh = $state(true);
 
   function keypressInput(e: { key: string }) {
     pinBuffer = pinBuffer.concat(e.key);
@@ -27,8 +31,8 @@
   }
 
   onMount(async () => {
-    if ($currentCourse?.properties.ignorepin) {
-      ignorePin = $currentCourse.properties.ignorepin.toString();
+    if (currentCourse?.value?.properties.ignorepin) {
+      ignorePin = currentCourse?.value?.properties.ignorepin.toString();
       window.addEventListener("keydown", keypressInput);
     }
   });
