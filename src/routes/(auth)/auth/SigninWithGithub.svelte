@@ -2,8 +2,8 @@
   import { getIcon } from "$lib/ui/themes/styles/icon-lib.svelte";
   import Icon from "@iconify/svelte";
   import { ProgressRadial } from "@skeletonlabs/skeleton";
-  import Terms from "./Terms.svelte";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
+  import TutorsTerms from "./TutorsTerms.svelte";
 
   let showProgress = $state(false);
   interface Props {
@@ -42,7 +42,7 @@
     <div class="card w-4/5 border-y-8 !bg-surface-50 dark:!bg-surface-700 border-{getIcon('topic').color}-500 m-2">
       <footer class="card-footer mt-4">
         <article class="prose mx-auto w-[80%] max-w-none dark:prose-invert">
-          <Terms />
+          <TutorsTerms />
         </article>
       </footer>
     </div>
