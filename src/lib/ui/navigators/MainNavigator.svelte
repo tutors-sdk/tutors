@@ -10,19 +10,17 @@
   import { tutorsConnectService } from "$lib/services/connect.svelte";
   import AnonProfile from "./tutors-connect/AnonProfile.svelte";
   import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
+  import TutorsTimeIndicator from "./buttons/TutorsTimeIndicator.svelte";
 </script>
 
-<AppBar
-  background="bg-surface-100-800-token"
-  shadow="none"
-  class="h-20 justify-center border-b-[1px] border-surface-200 dark:border-surface-700"
->
+<AppBar background="bg-surface-100-800-token" shadow="none" class="h-20 justify-center border-b-[1px] border-surface-200 dark:border-surface-700">
   {#snippet lead()}
     <InfoButton />
     <CourseTitle />
   {/snippet}
   <CalendarButton />
   {#snippet trail()}
+    <TutorsTimeIndicator />
     {#if !currentCourse?.value?.isPortfolio}
       <SearchButton />
     {/if}
