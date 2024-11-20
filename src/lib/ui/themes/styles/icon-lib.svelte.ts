@@ -4,9 +4,10 @@ import { FluentIconLib } from "../icons/fluent-icons";
 import { HeroIconLib } from "../icons/hero-icons";
 
 let StandardIconLib = FluentIconLib;
-export const themes = ["tutors", "dyslexia", "skeleton", "seafoam", "vintage"];
+export const themes = ["festive", "tutors", "dyslexia", "skeleton", "seafoam", "vintage"];
 
 export const themeIcons = {
+  festive: FluentIconLib,
   tutors: FluentIconLib,
   dyslexia: FluentIconLib,
   skeleton: HeroIconLib,

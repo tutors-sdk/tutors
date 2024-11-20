@@ -3,6 +3,7 @@ import { skeleton } from "@skeletonlabs/tw-plugin";
 import typography from "@tailwindcss/typography";
 import { tutors } from "./src/lib/ui/themes/styles/tutors";
 import { dyslexia } from "./src/lib/ui/themes/styles/dyslexia";
+import { festive } from "./src/lib/ui/themes/styles/festive";
 import type { Config } from "tailwindcss";
 import { join } from "path";
 
@@ -35,7 +36,7 @@ export default {
     forms,
     skeleton({
       themes: {
-        custom: [tutors, dyslexia],
+        custom: [festive, tutors, dyslexia],
         preset: [
           { name: "skeleton", enhancements: true },
           { name: "seafoam", enhancements: true },

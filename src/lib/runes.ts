@@ -8,4 +8,4 @@ export const currentLo = rune<Lo | null>(null);
 export const currentCourse = rune<Course | null>(null);
 export const courseUrl = rune("");
 export const currentLabStepIndex = rune(0);
-export const currentTheme = rune("tutors");
+export const currentTheme = rune("festive");
