@@ -53,7 +53,7 @@
 </script>
 
 <div class="card mr-2 mt-2 px-4 py-2">
-  <div id="adobe-pdf-viewer" class="h-[85dvh] w-full"></div>
+  <div id="adobe-pdf-viewer" class="h-[80dvh] w-full"></div>
 </div>
 
 <svelte:head>
