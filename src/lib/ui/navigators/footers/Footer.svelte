@@ -11,8 +11,8 @@
     <img src="https://{currentCourse?.value?.courseUrl}/{currentCourse?.value?.footer}" alt="sponsors" />
   </div>
 {:else}
-  <div class="bg-surface-100-800-token border-t-[1px] border-surface-200-700-token bottom-0 mt-2">
-    <div class="mx-auto w-11/12 py-4">
+  <div class="w-screen bg-surface-100-800-token border-t-[1px] border-surface-200-700-token bottom-0 mt-2 h-12">
+    <div class="mx-auto w-11/12 py-1">
       <div class="flex grid-flow-col items-center">
         <div class="inline-flex flex-1">
           <TutorsIcon />
