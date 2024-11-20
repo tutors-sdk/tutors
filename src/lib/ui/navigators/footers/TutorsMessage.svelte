@@ -4,7 +4,7 @@
   interface Props {
     content?: string;
   }
-  let { content = "An [Open Learning Web Toolkit](https://github.com/tutors-sdk/tutors)" }: Props = $props();
+  let { content = "An [Open Learning Web Toolkit](/course/tutors-reference-manual)" }: Props = $props();
   let contentHtml = convertMdToHtml(content);
 </script>
 
