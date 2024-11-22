@@ -45,6 +45,7 @@
 
       <li class="crumb-separator" aria-hidden="true">&rsaquo;</li>
     {/if}
+
     {#if breadCrumbs}
       {#each breadCrumbs as lo, i}
         {#if i >= 1}

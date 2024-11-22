@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AppBar } from "@skeletonlabs/skeleton";
+  import { AppBar } from "@skeletonlabs/skeleton-svelte";
   import LayoutMenu from "$lib/ui/themes/menu/LayoutMenu.svelte";
   import TutorsTitle from "$lib/ui/navigators/titles/TutorsTitle.svelte";
   import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
@@ -15,9 +15,8 @@
 </script>
 
 <AppBar
-  background="bg-surface-100-800-token"
   shadow="none"
-  class="h-20 justify-center border-b-[1px] border-surface-200 dark:border-surface-700"
+  classes="bg-surface-100 dark:bg-surface-950 h-14 justify-center border-surface-200 dark:border-surface-700"
 >
   {#snippet lead()}
     <TutorsTitle {title} subtitle={subTitle} />

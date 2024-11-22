@@ -14,11 +14,10 @@
   "devDependencies": {
     "@auth/core": "^0.37.3",
     "@auth/sveltekit": "^1.7.3",
-    "@floating-ui/dom": "^1.6.12",
     "@iconify/svelte": "^4.0.2",
     "@iktakahiro/markdown-it-katex": "^4.0.1",
-    "@skeletonlabs/skeleton": "^2.10.3",
-    "@skeletonlabs/tw-plugin": "^0.4.0",
+    "@skeletonlabs/skeleton": "^3.0.0-next.9",
+    "@skeletonlabs/skeleton-svelte": "^1.0.0-next.13",
     "@supabase/supabase-js": "^2.46.1",
     "@sveltejs/adapter-auto": "^3.0.0",
     "@sveltejs/adapter-netlify": "^4.3.6",

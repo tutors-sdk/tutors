@@ -1,62 +1,58 @@
 <script lang="ts">
-  import { popup, setModeCurrent, getModeOsPrefers, setInitialClassState } from "@skeletonlabs/skeleton";
-  import { currentTheme, layout } from "$lib/runes";
-  import Icon from "$lib/ui/themes/icons/Icon.svelte";
+  import { Popover } from "@skeletonlabs/skeleton-svelte";
+  import { setIconLibForTheme, setTheme, themes } from "../styles/icon-lib.svelte";
+  import Icon from "../icons/Icon.svelte";
+  import { currentTheme } from "$lib/runes";
   import DarkModeToggle from "./DarkModeToggle.svelte";
   import LayoutToggle from "./LayoutToggle.svelte";
-  import { setIconLibForTheme, themes } from "../styles/icon-lib.svelte";
-  import { onMount } from "svelte";
 
-  function setTheme(theme: string): void {
-    currentTheme.value = theme;
-    document.body.setAttribute("data-theme", currentTheme.value);
-    localStorage.theme = currentTheme.value;
-    setIconLibForTheme();
+  let openState = $state(false);
+
+  function popoverClose() {
+    openState = false;
   }
 
-  onMount(() => {
-    setInitialClassState();
-    if (!("modeCurrent" in localStorage)) {
-      setModeCurrent(getModeOsPrefers());
-    }
-    if ("theme" in localStorage) {
-      currentTheme.value = localStorage.theme;
-    }
-    setTheme(currentTheme.value);
-  });
-
-  layout.value = "expanded";
+  function changeTheme(theme: string): void {
+    setTheme(theme);
+  }
 </script>
 
-<div class="relative">
-  <button class="btn btn-sm" use:popup={{ event: "click", target: "design" }}>
+<Popover
+  bind:open={openState}
+  positioning={{ placement: "top" }}
+  triggerBase="btn preset-tonal"
+  contentBase="card bg-surface-50 m-4space-y-4 max-w-[320px] z-[100"
+>
+  {#snippet trigger()}
     <Icon type="dark" />
-    <span class="hidden text-sm font-bold lg:block">Layout <span class="pl-2 opacity-50">▾</span></span>
-  </button>
-  <nav class="card-body card list-nav w-56 space-y-4 p-4 shadow-lg" data-popup="design">
-    <h6>Toggles</h6>
-    <ul>
-      <li class="option !p-0">
-        <DarkModeToggle />
-      </li>
-      <li class="option !p-0">
-        <LayoutToggle />
-      </li>
-    </ul>
-    <hr />
-    <h6>Themes</h6>
-    <ul class="list">
-      {#each themes as theme}
-        <li class="option !p-0">
-          <button
-            class="btn flex w-full justify-between"
-            class:!variant-soft-primary={theme === currentTheme.value}
-            onclick={setTheme(theme)}
-          >
-            <span class="flex-none">{theme}</span>
-          </button>
+    <span class="hidden text-sm font-bold lg:block">Layout <span class="pl-2 opacity-50">▾</span></span>{/snippet}
+  {#snippet content()}
+    <nav class="card-body card list-nav w-56 space-y-4 bg-gray-100 p-4 shadow-lg dark:bg-gray-800" data-popup="design">
+      <h6>Toggles</h6>
+      <ul>
+        <li class="option !p-0v hover:preset-tonal">
+          <DarkModeToggle />
         </li>
-      {/each}
-    </ul>
-  </nav>
-</div>
+        <li class="option hover:preset-tonal !p-0">
+          <LayoutToggle />
+        </li>
+      </ul>
+      <hr />
+      <h6>Themes</h6>
+      <ul class="list">
+        {#each themes as theme}
+          <li class="option !p-0">
+            <button
+              class="btn hover:preset-tonal flex w-full justify-between {theme === currentTheme.value
+                ? 'preset-tonal'
+                : ''}"
+              onclick={() => changeTheme(theme)}
+            >
+              <span class="flex-none">{theme}</span>
+            </button>
+          </li>
+        {/each}
+      </ul>
+    </nav>
+  {/snippet}
+</Popover>

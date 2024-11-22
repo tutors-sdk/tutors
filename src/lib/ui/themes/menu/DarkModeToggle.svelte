@@ -1,17 +1,20 @@
 <script lang="ts">
   import Icon from "$lib/ui/themes/icons/Icon.svelte";
-  import { modeCurrent, setModeCurrent, setModeUserPrefers } from "@skeletonlabs/skeleton";
 
+  let modeCurrent = $state("light");
   function onDarkModeToggleHandler(): void {
-    $modeCurrent = !$modeCurrent;
-    setModeUserPrefers($modeCurrent);
-    setModeCurrent($modeCurrent);
+    document.body.classList.toggle("dark");
+    if (modeCurrent === "light") {
+      localStorage.modeCurrent = modeCurrent = "dark";
+    } else {
+      localStorage.modeCurrent = modeCurrent = "light";
+    }
   }
 </script>
 
-<button class="btn w-full flex justify-between" onclick={onDarkModeToggleHandler}>
-  <span class="flex-none">{$modeCurrent === true ? "Dark" : "Light"} Mode</span>
-  {#if $modeCurrent}
+<button class="btn flex w-full justify-between" onclick={onDarkModeToggleHandler}>
+  <span class="flex-none">{modeCurrent} Mode</span>
+  {#if modeCurrent === "dark"}
     <Icon icon="fluent:weather-moon-48-filled" color="rgba(var(--color-warning-500))" />
   {:else}
     <Icon icon="fluent:weather-sunny-32-filled" color="rgba(var(--color-warning-500))" />

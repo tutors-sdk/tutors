@@ -12,18 +12,18 @@ export const FluentIconLib = {
 
   // LoTypes icons
   course: { type: "fluent:notebook-24-filled", color: "primary" },
-  topic: { type: "fluent:bookmark-24-filled", color: "primary" },
-  unit: { type: "fluent:dual-screen-group-24-filled", color: "success" },
+  topic: { type: "fluent:bookmark-24-filled", color: "secondary" },
+  unit: { type: "fluent:dual-screen-group-24-filled", color: "tertiary" },
   side: { type: "fluent:dual-screen-group-24-filled", color: "success" },
-  talk: { type: "fluent:presenter-24-filled", color: "primary" },
-  reference: { type: "fluent:document-copy-24-filled", color: "warning" },
-  lab: { type: "fluent:beaker-24-filled", color: "success" },
+  talk: { type: "fluent:presenter-24-filled", color: "warning" },
+  reference: { type: "fluent:document-copy-24-filled", color: "surface" },
+  lab: { type: "fluent:beaker-24-filled", color: "error" },
+  note: { type: "fluent:notepad-16-regular", color: "success" },
   archive: { type: "fluent:archive-24-filled", color: "primary" },
   web: { type: "fluent:bookmark-24-regular", color: "error" },
   github: { type: "fluent:code-circle-20-filled", color: "warning" },
   panelvideo: { type: "fluent:video-clip-24-regular", color: "error" },
   paneltalk: { type: "fluent:presenter-24-filled", color: "primary" },
-  note: { type: "fluent:notepad-16-regular", color: "warning" },
   panelnote: { type: "fluent:notepad-16-regular", color: "warning" },
 
   // pdf reader icons

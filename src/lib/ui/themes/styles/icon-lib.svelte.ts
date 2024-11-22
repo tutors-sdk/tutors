@@ -1,36 +1,46 @@
 import { currentTheme } from "$lib/runes";
-import type { IconType } from "$lib/services/models/lo-types";
+
 import { FluentIconLib } from "../icons/fluent-icons";
 import { HeroIconLib } from "../icons/hero-icons";
 
 let StandardIconLib = FluentIconLib;
-export const themes = ["tutors", "dyslexia", "skeleton", "seafoam", "vintage"];
+export const themes = ["tutors", "nouveau", "concord", "nosh", "rose", "fennec", "mona", "cerberus"];
 
 export const themeIcons = {
   tutors: FluentIconLib,
-  dyslexia: FluentIconLib,
-  skeleton: HeroIconLib,
-  seafoam: FluentIconLib,
-  vintage: HeroIconLib
+  nouveau: FluentIconLib,
+  concord: FluentIconLib,
+  rose: FluentIconLib,
+  nosh: FluentIconLib,
+  fennec: FluentIconLib,
+  mona: FluentIconLib,
+  cerberus: HeroIconLib
 };
 
-export function setIconLibForTheme() {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+export function setTheme(theme: string): void {
+  currentTheme.value = theme;
+  document.body.setAttribute("data-theme", currentTheme.value);
+  localStorage.theme = currentTheme.value;
+  setIconLibForTheme(currentTheme.value);
+
+  if (localStorage.modeCurrent === "dark") {
+    document.body.classList.toggle("dark");
+  }
+}
+
+export function setIconLibForTheme(theme: string) {
   StandardIconLib = themeIcons[currentTheme.value];
 }
 
 export function getIcon(type: string): IconType {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   return StandardIconLib[type];
 }
 
 export function addIcon(type: string, icon: IconType) {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   FluentIconLib[type] = icon;
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   HeroIconLib[type] = icon;
+}
+
+export function getTypeColour(type: string): string {
+  return StandardIconLib[type].color;
 }

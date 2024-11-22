@@ -1,24 +1,27 @@
 <script lang="ts">
-  import { AppBar } from "@skeletonlabs/skeleton";
-  import InfoButton from "./buttons/InfoButton.svelte";
+  import { AppBar } from "@skeletonlabs/skeleton-svelte";
+  // import InfoButton from "./buttons/InfoButton.svelte";
   import CourseTitle from "./titles/CourseTitle.svelte";
   import SearchButton from "./buttons/SearchButton.svelte";
-  import CalendarButton from "./buttons/CalendarButton.svelte";
-  import TocButton from "./buttons/TocButton.svelte";
+  // import CalendarButton from "./buttons/CalendarButton.svelte";
+  // import TocButton from "./buttons/TocButton.svelte";
   import { currentCourse } from "$lib/runes";
   import LayoutMenu from "../themes/menu/LayoutMenu.svelte";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
-  import AnonProfile from "./tutors-connect/AnonProfile.svelte";
-  import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
+  // import AnonProfile from "./tutors-connect/AnonProfile.svelte";
+  // import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
   import TutorsTimeIndicator from "./buttons/TutorsTimeIndicator.svelte";
 </script>
 
-<AppBar background="bg-surface-100-800-token" shadow="none" class="h-20 justify-center border-b-[1px] border-surface-200 dark:border-surface-700">
+<AppBar
+  shadow="none"
+  classes="bg-surface-100 dark:bg-surface-950 h-14 justify-center border-surface-200 dark:border-surface-700"
+>
   {#snippet lead()}
-    <InfoButton />
+    <!-- <InfoButton /> -->
     <CourseTitle />
   {/snippet}
-  <CalendarButton />
+  <!-- <CalendarButton /> -->
   {#snippet trail()}
     <TutorsTimeIndicator />
     {#if !currentCourse?.value?.isPortfolio}
@@ -28,16 +31,16 @@
     <LayoutMenu />
     <span class="divider-vertical hidden h-10 lg:block"></span>
     {#if !currentCourse?.value?.isPrivate}
-      <div class="relative">
+      <!-- <div class="relative">
         {#if !tutorsConnectService.tutorsId.value?.login}
           <AnonProfile redirect="/{currentCourse?.value?.courseId}" />
         {:else}
           <ConnectedProfile />
         {/if}
-      </div>
+      </div> -->
     {/if}
     {#if !currentCourse?.value?.isPortfolio}
-      <TocButton />
+      <!-- <TocButton /> -->
     {/if}
   {/snippet}
 </AppBar>

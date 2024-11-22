@@ -1,5 +1,4 @@
 <script lang="ts">
-  import "../../app.css";
   import { currentCourse, currentLo } from "$lib/runes";
   import CourseShell from "$lib/ui/app-shells/CourseShell.svelte";
   import type { Snippet } from "svelte";

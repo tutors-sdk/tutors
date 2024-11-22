@@ -1,28 +1,29 @@
 <script lang="ts">
-  import { popup, type DrawerSettings, getDrawerStore } from "@skeletonlabs/skeleton";
-  import { currentCourse } from "$lib/runes";
-  import Icon from "@iconify/svelte";
-  import { tutorsConnectService } from "$lib/services/connect.svelte";
-  import { Avatar } from "@skeletonlabs/skeleton";
-  import { presenceService } from "$lib/services/presence.svelte";
-  import { onMount } from "svelte";
+  // import { popup, type DrawerSettings, getDrawerStore } from "@skeletonlabs/skeleton";
+  // import { currentCourse } from "$lib/runes";
+  // import Icon from "@iconify/svelte";
+  // import { tutorsConnectService } from "$lib/services/connect.svelte";
+  // import { Avatar } from "@skeletonlabs/skeleton";
+  // import { presenceService } from "$lib/services/presence.svelte";
+  // import { onMount } from "svelte";
 
-  const drawerStore = getDrawerStore();
+  // const drawerStore = getDrawerStore();
 
-  function logout() {
-    tutorsConnectService.disconnect("/");
-  }
+  // function logout() {
+  //   tutorsConnectService.disconnect("/");
+  // }
 
-  function shareStatusChange() {
-    tutorsConnectService.toggleShare();
-  }
+  // function shareStatusChange() {
+  //   tutorsConnectService.toggleShare();
+  // }
 
-  const onLineDrawerOpen: any = () => {
-    const settings: DrawerSettings = { id: "online", position: "right" };
-    drawerStore.open(settings);
-  };
+  // const onLineDrawerOpen: any = () => {
+  //   const settings: DrawerSettings = { id: "online", position: "right" };
+  //   drawerStore.open(settings);
+  // };
 </script>
 
+<!-- 
 <button use:popup={{ event: "click", target: "avatar" }}>
   <div class="btn btn-sm space-x-1">
     <div class="relative inline-block">
@@ -45,8 +46,8 @@
       />
     </div>
   </div>
-</button>
-
+</button> -->
+<!-- 
 <nav class="card-body card list-nav w-56 space-y-4 p-4 shadow-lg" data-popup="avatar">
   <span class="ml-4 mt-2 text-xs">Logged in as:</span><br />
   <span class="ml-4 text-sm">{tutorsConnectService.tutorsId.value?.name}</span>
@@ -59,9 +60,6 @@
     </li>
     <hr />
     <li class="flex">
-      <!-- svelte-ignore a11y_missing_attribute -->
-      <!-- svelte-ignore a11y_click_events_have_key_events -->
-      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <a onclick={shareStatusChange}>
         {#if tutorsConnectService.tutorsId.value?.share === "true"}
           <Icon icon="fluent:presence-available-24-filled" color="rgba(var(--color-success-500))" height="20" />
@@ -85,9 +83,7 @@
         </a>
       </li>
       <li>
-        <!-- svelte-ignore a11y-missing-attribute -->
-        <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <!-- svelte-ignore a11y-no-static-element-interactions -->
+
         <a onclick={onLineDrawerOpen}>
           <Icon icon="fluent:people-list-24-filled" color="rgba(var(--color-primary-500))" height="20" />
           <div class="ml-2">
@@ -110,4 +106,4 @@
       </button>
     </li>
   </ul>
-</nav>
+</nav> -->

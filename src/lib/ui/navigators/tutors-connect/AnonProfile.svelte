@@ -1,16 +1,16 @@
 <script lang="ts">
-  import { popup } from "@skeletonlabs/skeleton";
-  import { Avatar } from "@skeletonlabs/skeleton";
-  import Icon from "@iconify/svelte";
-  import { PUBLIC_ANON_MODE } from "$env/static/public";
+  // import { popup } from "@skeletonlabs/skeleton";
+  // import { Avatar } from "@skeletonlabs/skeleton";
+  // import Icon from "@iconify/svelte";
+  // import { PUBLIC_ANON_MODE } from "$env/static/public";
 
-  interface Props {
-    redirect?: string;
-  }
-  let { redirect = "" }: Props = $props();
+  // interface Props {
+  //   redirect?: string;
+  // }
+  // let { redirect = "" }: Props = $props();
 </script>
 
-<button use:popup={{ event: "click", target: "avatar" }}>
+<!-- <button use:popup={{ event: "click", target: "avatar" }}>
   <div class="relative inline-block">
     <Avatar width="w-10" src="/tutors-profile.png" alt="Anonymous Tutors Profile" />
   </div>
@@ -34,4 +34,4 @@
       </a>
     </li>
   </ul>
-</nav>
+</nav> -->
