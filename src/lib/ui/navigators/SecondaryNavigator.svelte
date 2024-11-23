@@ -16,7 +16,7 @@
         <div class="flex flex-auto"></div>
         {#if currentCourse?.value?.properties.github}
           <div
-            class="bg-primary-50 dark:bg-primary-800 my-2 ml-2 mr-10 hidden rounded-lg bg-opacity-80 lg:flex lg:flex-none"
+            class="bg-primary-200 dark:bg-primary-800 my-2 mr-2 hidden rounded-lg bg-opacity-80 lg:flex lg:flex-none"
           >
             <EditCoursButton />
           </div>
@@ -25,7 +25,7 @@
           <IconBar nav={currentCourse?.value?.companions} />
         </div>
         <div
-          class="bg-primary-200 dark:bg-primary-800 my-2 ml-2 mr-10 flex hidden flex-none rounded-lg bg-opacity-80 sm:block"
+          class="bg-primary-200 dark:bg-primary-800 my-2 ml-2 mr-10 flex hidden rounded-lg bg-opacity-80 sm:flex lg:flex"
         >
           <IconBar nav={currentCourse?.value?.wallBar} />
         </div>

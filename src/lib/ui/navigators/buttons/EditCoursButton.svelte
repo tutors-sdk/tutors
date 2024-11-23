@@ -46,4 +46,6 @@
   });
 </script>
 
-<Icon type="edit" link={editRoute} target="_blank" tip="Edit this course" text="Edit this Page"></Icon>
+<div class="flex items-center">
+  <Icon type="edit" link={editRoute} target="_blank" tip="Edit this course"></Icon>
+</div>

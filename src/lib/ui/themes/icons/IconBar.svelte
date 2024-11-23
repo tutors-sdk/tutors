@@ -8,7 +8,7 @@
   let { nav }: Props = $props();
 </script>
 
-<div class="flex-auto">
+<div class="flex items-center">
   {#each nav?.bar as i}
     <Icon type={i.type} link={i.link} target={i.target} tip={i.tip} />
   {/each}

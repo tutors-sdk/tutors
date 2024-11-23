@@ -1,15 +1,34 @@
 <script lang="ts">
+  import { currentCourse } from "$lib/runes";
   import Icon from "$lib/ui/themes/icons/Icon.svelte";
-  import { getDrawerStore, type DrawerSettings } from "@skeletonlabs/skeleton";
-  const drawerStore = getDrawerStore();
-  const infoDrawerOpen: any = () => {
-    const settings: DrawerSettings = { id: "info", position: "left" };
-    drawerStore.open(settings);
-  };
+  import { Modal } from "@skeletonlabs/skeleton-svelte";
+
+  let drawerState = $state(false);
 </script>
 
-<button class="btn btn-sm" onclick={infoDrawerOpen} title="View course info">
-  <span class="text-sm font-bold inline-flex gap-2">
-    <Icon type="info" />
-  </span>
-</button>
+<Modal
+  bind:open={drawerState}
+  triggerBase="btn preset-tonal"
+  contentBase="bg-surface-100-900 p-4 space-y-4 shadow-xl w-[480px] h-screen"
+  positionerJustify="justify-start"
+  positionerAlign=""
+  positionerPadding=""
+  transitionsPositionerIn={{ x: -480, duration: 200 }}
+  transitionsPositionerOut={{ x: -480, duration: 200 }}
+>
+  {#snippet trigger()}
+    <button title="Open course info">
+      <Icon type="info" />
+    </button>
+  {/snippet}
+  {#snippet content()}
+    <header class="flex justify-between">
+      <h2 class="h2">Course Info</h2>
+    </header>
+    <article>
+      <prose class="prose dark:prose-invert">
+        {@html currentCourse?.value?.contentHtml}
+      </prose>
+    </article>
+  {/snippet}
+</Modal>

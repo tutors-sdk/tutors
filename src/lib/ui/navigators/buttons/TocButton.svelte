@@ -5,10 +5,6 @@
   import { Modal } from "@skeletonlabs/skeleton-svelte";
 
   let drawerState = $state(false);
-
-  function drawerClose() {
-    drawerState = false;
-  }
 </script>
 
 <Modal
@@ -22,11 +18,9 @@
   transitionsPositionerOut={{ x: 480, duration: 200 }}
 >
   {#snippet trigger()}
-    <button class="btn btn-sm" title="Open course table of contents">
-      <span class="inline-flex gap-2 text-sm font-bold">
-        <Icon icon="fluent:line-horizontal-3-20-filled" color="rgba(var(--color-primary-500))" height="20" />
-      </span>
-    </button>
+    <!-- <button title="Open course table of contents"> -->
+    <Icon icon="fluent:line-horizontal-3-20-filled" color="rgba(var(--color-primary-500))" height="20" />
+    <!-- </button> -->
   {/snippet}
   {#snippet content()}
     <header class="flex justify-between">
@@ -35,8 +29,5 @@
     <article>
       <CourseContext />
     </article>
-    <footer>
-      <button type="button" class="btn preset-filled" onclick={drawerClose}>Close</button>
-    </footer>
   {/snippet}
 </Modal>

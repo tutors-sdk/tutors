@@ -1,6 +1,5 @@
 <script lang="ts">
   import { AppBar } from "@skeletonlabs/skeleton-svelte";
-  // import InfoButton from "./buttons/InfoButton.svelte";
   import CourseTitle from "./titles/CourseTitle.svelte";
   import SearchButton from "./buttons/SearchButton.svelte";
   // import CalendarButton from "./buttons/CalendarButton.svelte";
@@ -12,11 +11,18 @@
   // import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
   import TutorsTimeIndicator from "./buttons/TutorsTimeIndicator.svelte";
   import TocButton from "./buttons/TocButton.svelte";
+  import InfoButton from "./buttons/InfoButton.svelte";
 </script>
 
-<AppBar shadow="none" classes="bg-surface-100 dark:bg-surface-950 h-20 justify-center">
+<AppBar
+  shadow="none"
+  classes="bg-surface-100 dark:bg-surface-950 h-20"
+  toolbarClasses="flex items-center"
+  leadClasses="flex items-center"
+  trailClasses="flex items-center"
+>
   {#snippet lead()}
-    <!-- <InfoButton /> -->
+    <InfoButton />
     <CourseTitle />
   {/snippet}
   <!-- <CalendarButton /> -->
@@ -25,9 +31,9 @@
     {#if !currentCourse?.value?.isPortfolio}
       <SearchButton />
     {/if}
-    <span class="divider-vertical hidden h-10 lg:block"></span>
+    <span class="vr border-l-8"></span>
     <LayoutMenu />
-    <span class="divider-vertical hidden h-10 lg:block"></span>
+    <span class="vr border-l-8"></span>
     {#if !currentCourse?.value?.isPrivate}
       <!-- <div class="relative">
         {#if !tutorsConnectService.tutorsId.value?.login}
