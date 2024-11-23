@@ -43,6 +43,18 @@ export class LoRecord {
   }
 }
 
+export interface CardDetails {
+  route: string;
+  title: string;
+  type: string;
+  subtitle1?: string;
+  subtitle2?: string;
+  summary?: string;
+  icon?: IconType;
+  img?: string;
+  student?: LoUser;
+}
+
 export interface CourseService {
   courses: Map<string, Course>;
   labs: Map<string, LiveLab>;

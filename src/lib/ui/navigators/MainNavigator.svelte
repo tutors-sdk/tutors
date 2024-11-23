@@ -11,6 +11,7 @@
   // import AnonProfile from "./tutors-connect/AnonProfile.svelte";
   // import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
   import TutorsTimeIndicator from "./buttons/TutorsTimeIndicator.svelte";
+  import TocButton from "./buttons/TocButton.svelte";
 </script>
 
 <AppBar
@@ -40,7 +41,7 @@
       </div> -->
     {/if}
     {#if !currentCourse?.value?.isPortfolio}
-      <!-- <TocButton /> -->
+      <TocButton />
     {/if}
   {/snippet}
 </AppBar>
