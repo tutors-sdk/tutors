@@ -3,6 +3,7 @@
   import Panels from "./Panels.svelte";
   import Cards from "./Cards.svelte";
   import Image from "../../themes/Image.svelte";
+  import { layout } from "$lib/runes";
 
   interface Props {
     units: Composite[];
@@ -10,7 +11,15 @@
   }
   let { units, inSidebar = false }: Props = $props();
 
-  let text = "!text-xl font-semibold";
+  let text = $state("");
+
+  $effect(() => {
+    if (layout.value === "compacted") {
+      text = "!text-xl font-semibold";
+    } else {
+      text = "!text-xl font-semibold";
+    }
+  });
 </script>
 
 <div class={inSidebar ? "flex flex-col" : "grid grid-cols-1"}>

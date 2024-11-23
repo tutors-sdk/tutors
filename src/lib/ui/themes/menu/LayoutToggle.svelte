@@ -12,6 +12,6 @@
 </script>
 
 <button class="btn flex w-full justify-between" onclick={toggleLayout}>
-  <span class="flex-none">Compact</span>
+  <span class="flex-none">{layout.value === "compacted" ? "Expand" : "Compact"}</span>
   <Icon type={layout.value} />
 </button>

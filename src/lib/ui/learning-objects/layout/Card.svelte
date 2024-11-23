@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models/lo-types";
-  import { currentCourse } from "$lib/runes";
+  import { currentCourse, layout } from "$lib/runes";
   import Image from "../../themes/Image.svelte";
   import { getIcon } from "../../themes/styles/icon-lib.svelte";
   import { cardTransition } from "$lib/ui/animations";
@@ -25,8 +25,18 @@
     }
   }
 
-  let headingText = "!text-lg font-semibold";
-  let cardWidths = "w-60 h-[24rem]";
+  let headingText = $state("");
+  let cardWidths = $state("");
+
+  $effect(() => {
+    if (layout.value === "compacted") {
+      headingText = "!text-md font-medium";
+      cardWidths = "w-36 h-[18rem]";
+    } else {
+      headingText = "!text-lg font-semibold";
+      cardWidths = "w-60 h-[24rem]";
+    }
+  });
 </script>
 
 <a href={lo.route} {target}>

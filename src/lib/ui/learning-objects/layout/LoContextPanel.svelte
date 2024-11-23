@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models/lo-types";
   import Image from "../../themes/Image.svelte";
-  import { currentLo } from "$lib/runes";
+  import { currentLo, layout } from "$lib/runes";
   import LoContext from "../structure/LoContext.svelte";
   import { TreeView } from "@skeletonlabs/skeleton";
 
@@ -10,9 +10,18 @@
   }
   let { loContext }: Props = $props();
 
-  let headingText = "text-md font-semibold";
+  let headingText = $state("");
+  let cardWidths = $state("");
 
-  let cardWidths = "w-72";
+  $effect(() => {
+    if (layout.value === "compacted") {
+      headingText = "text-xs font-semibold";
+      cardWidths = "w-52";
+    } else {
+      headingText = "text-md font-semibold";
+      cardWidths = "w-72";
+    }
+  });
 </script>
 
 <div class="card {cardWidths} px-4 py-2">
