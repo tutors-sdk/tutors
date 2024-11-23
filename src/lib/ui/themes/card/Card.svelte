@@ -1,13 +1,13 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
   import Icon from "$lib/ui/themes/icons/Icon.svelte";
-  import { avatarWidth, cardHeight, cardWidths, headingText, iconHeight, imageWidth, textSize } from "$lib/runes";
+  import { layout, avatarWidth, cardHeight, cardWidths, headingText, iconHeight, imageWidth, textSize } from "$lib/runes";
 
   import { getTypeColour } from "../styles/icon-lib.svelte";
   import type { CardDetails } from "$lib/services/types.svelte";
 
-  export let cardDetails: CardDetails;
-  let target = "";
+  let { cardDetails } = $props<{ cardDetails: CardDetails }>();
+  let target = $state("");
   if (cardDetails.type === "web") {
     if (cardDetails.route.startsWith("http")) {
       target = "_blank";
@@ -19,6 +19,26 @@
       cardDetails.route = cardDetails.video!;
     }
   }
+
+  $effect(() => {
+    if (layout.value === "compacted") {
+      cardHeight.value = "200px";  
+      headingText.value = "!text-sm font-medium";
+      cardWidths.value = "w-36 h-[18rem]";
+      iconHeight.value = "100";
+      imageWidth.value = "w-24";
+      textSize.value = "text-sm";
+      avatarWidth.value = "w-8"; 
+    } else {
+      cardHeight.value = "380px"; 
+      headingText.value = "!text-lg font-semibold"; 
+      cardWidths.value = "w-60 h-[21rem]";
+      iconHeight.value = "140"; 
+      imageWidth.value = "w-36";
+      textSize.value = "text-base";
+      avatarWidth.value = "w-12"; 
+    }
+  });
 </script>
 
 {#snippet header(cardDetails: CardDetails)}
