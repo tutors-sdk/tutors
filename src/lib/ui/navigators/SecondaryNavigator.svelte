@@ -16,7 +16,7 @@
         <div class="flex flex-auto"></div>
         {#if currentCourse?.value?.properties.github}
           <div
-            class="bg-primary-200 dark:bg-primary-800 my-2 ml-2 mr-10 hidden rounded-lg bg-opacity-80 lg:flex lg:flex-none"
+            class="bg-primary-50 dark:bg-primary-800 my-2 ml-2 mr-10 hidden rounded-lg bg-opacity-80 lg:flex lg:flex-none"
           >
             <EditCoursButton />
           </div>

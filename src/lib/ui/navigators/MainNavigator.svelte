@@ -4,7 +4,7 @@
   import CourseTitle from "./titles/CourseTitle.svelte";
   import SearchButton from "./buttons/SearchButton.svelte";
   // import CalendarButton from "./buttons/CalendarButton.svelte";
-  // import TocButton from "./buttons/TocButton.svelte";
+
   import { currentCourse } from "$lib/runes";
   import LayoutMenu from "../themes/menu/LayoutMenu.svelte";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
@@ -14,10 +14,7 @@
   import TocButton from "./buttons/TocButton.svelte";
 </script>
 
-<AppBar
-  shadow="none"
-  classes="bg-surface-100 dark:bg-surface-950 h-14 justify-center border-surface-200 dark:border-surface-700"
->
+<AppBar shadow="none" classes="bg-surface-100 dark:bg-surface-950 h-20 justify-center">
   {#snippet lead()}
     <!-- <InfoButton /> -->
     <CourseTitle />

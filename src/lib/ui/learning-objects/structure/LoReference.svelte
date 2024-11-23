@@ -11,7 +11,7 @@
 
 <a href={lo?.route} class="flex py-1 ml-{indent}">
   <Icon type={lo.type} />
-  <span class="ml-2 mb-1"> {@html lo.title} </span>
+  <span class="mb-1 ml-2"> {@html lo.title} </span>
   {#if lo.video && lo.type != "panelvideo"}
     <a class="flex pl-4" href={lo.video}>
       <Icon type="video" />

@@ -10,7 +10,7 @@ export default {
   content: ["./src/**/*.{html,js,svelte,ts}", contentPath(import.meta.url, "svelte")],
   safelist: [
     {
-      pattern: /border|text/
+      pattern: /border|text|ml|preset-filled-/
     }
   ],
   theme: {

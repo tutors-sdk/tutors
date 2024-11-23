@@ -11,7 +11,7 @@
 </script>
 
 <div class="grid h-screen grid-rows-[auto_1fr_auto]">
-  <header class="bg-surface-100 dark:bg-surface-950 sticky top-0 p-4 backdrop-blur-sm">
+  <header class="bg-surface-100 dark:bg-surface-950 sticky top-0 backdrop-blur-sm">
     <MainNavigator />
     <SecondaryNavigator />
   </header>

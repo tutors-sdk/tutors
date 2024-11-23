@@ -10,7 +10,7 @@
   let lo: Lo;
 </script>
 
-<div class="card {cardWidths} px-4 py-2">
+<div class="card {cardWidths} bg-surface-100 dark:bg-surface-950px-4 p-4">
   <h3 class="px-4 py-2 text-center {headingText}">{loContext?.title}</h3>
   <div class="card-body">
     <figure class="flex justify-center p-2">

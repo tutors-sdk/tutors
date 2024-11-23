@@ -7,6 +7,18 @@
   import type { CardDetails } from "$lib/services/types.svelte";
 
   export let cardDetails: CardDetails;
+  let target = "";
+  if (cardDetails.type === "web") {
+    if (cardDetails.route.startsWith("http")) {
+      target = "_blank";
+    }
+  }
+
+  if (cardDetails) {
+    if (cardDetails.type == "video") {
+      cardDetails.route = cardDetails.video!;
+    }
+  }
 </script>
 
 {#snippet header(cardDetails: CardDetails)}
@@ -56,7 +68,7 @@
   {/if}
 {/snippet}
 
-<a href={cardDetails.route} target="_blank" rel="noreferrer">
+<a href={cardDetails.route} {target}>
   <div
     class="card preset-filled-{getTypeColour(cardDetails.type)}-50-950 border-[1px]
     border-y-8 border-{getTypeColour(

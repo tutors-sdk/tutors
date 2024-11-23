@@ -53,6 +53,7 @@ export interface CardDetails {
   icon?: IconType;
   img?: string;
   student?: LoUser;
+  video?: string;
 }
 
 export interface CourseService {

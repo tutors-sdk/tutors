@@ -52,17 +52,17 @@ const tutors = {
     "--ring-width-default": "1px",
     "--body-background-color": "var(--color-surface-50)",
     "--body-background-color-dark": "var(--color-surface-950)",
-    "--color-primary-50": "143 196 207",
-    "--color-primary-100": "119 173 184",
-    "--color-primary-200": "95 150 160",
-    "--color-primary-300": "70 126 137",
-    "--color-primary-400": "46 103 113",
-    "--color-primary-500": "22 80 90",
-    "--color-primary-600": "18 64 72",
-    "--color-primary-700": "13 48 54",
-    "--color-primary-800": "9 32 36",
-    "--color-primary-900": "4 16 18",
-    "--color-primary-950": "0 0 0",
+    // primary | #37919b
+    "--color-primary-50": "225 239 240", // #e1eff0
+    "--color-primary-100": "215 233 235", // #d7e9eb
+    "--color-primary-200": "205 228 230", // #cde4e6
+    "--color-primary-300": "175 211 215", // #afd3d7
+    "--color-primary-400": "115 178 185", // #73b2b9
+    "--color-primary-500": "55 145 155", // #37919b
+    "--color-primary-600": "50 131 140", // #32838c
+    "--color-primary-700": "41 109 116", // #296d74
+    "--color-primary-800": "33 87 93", // #21575d
+    "--color-primary-900": "27 71 76", // #1b474c
     "--color-primary-contrast-dark": "var(--color-primary-950)",
     "--color-primary-contrast-light": "var(--color-primary-50)",
     "--color-primary-contrast-50": "var(--color-primary-contrast-dark)",
