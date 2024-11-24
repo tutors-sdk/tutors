@@ -13,7 +13,7 @@
 </script>
 
 <button class="btn flex w-full justify-between" onclick={onDarkModeToggleHandler}>
-  <span class="flex-none">{modeCurrent} Mode</span>
+  <span class="flex-none">{modeCurrent === "light" ? "Dark Mode" : "Light Mode"}</span>
   {#if modeCurrent === "dark"}
     <Icon icon="fluent:weather-moon-48-filled" color="rgba(var(--color-warning-500))" />
   {:else}
