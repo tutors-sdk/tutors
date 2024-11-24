@@ -24,7 +24,7 @@
   contentBase="card bg-surface-50 m-4space-y-4 max-w-[320px] z-[100]"
 >
   {#snippet trigger()}
-    <Icon type="dark" />
+    <Icon type="dark" tip="Open Theme Menu" />
     <!-- <span class="hidden text-sm font-bold lg:block">Layout <span class="pl-2 opacity-50">▾</span></span> -->
   {/snippet}
   {#snippet content()}

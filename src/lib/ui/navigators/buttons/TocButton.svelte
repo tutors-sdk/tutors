@@ -17,7 +17,7 @@
   transitionsPositionerOut={{ x: 480, duration: 200 }}
 >
   {#snippet trigger()}
-    <Icon icon="fluent:line-horizontal-3-20-filled" color="rgba(var(--color-primary-500))" height="20" />
+    <Icon type="toc" tip="Open course Table of Contents" />
   {/snippet}
   {#snippet content()}
     <header class="flex justify-between">

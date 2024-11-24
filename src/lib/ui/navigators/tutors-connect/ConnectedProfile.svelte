@@ -20,7 +20,7 @@
   bind:open={openState}
   positioning={{ placement: "top" }}
   triggerBase="btn"
-  contentBase="card bg-surface-50 m-4space-y-4 max-w-[320px] z-[100"
+  contentBase="card bg-surface-50 m-4 space-y-4 max-w-[320px] z-[100"
 >
   {#snippet trigger()}
     <div class="relative">

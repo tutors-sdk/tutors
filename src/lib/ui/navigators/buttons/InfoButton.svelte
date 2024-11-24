@@ -16,7 +16,7 @@
   transitionsPositionerOut={{ x: -480, duration: 200 }}
 >
   {#snippet trigger()}
-    <Icon type="info" />
+    <Icon type="info" tip="Open course info" />
   {/snippet}
   {#snippet content()}
     <header class="flex justify-between">

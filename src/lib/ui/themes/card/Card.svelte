@@ -1,7 +1,16 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
   import Icon from "$lib/ui/themes/icons/Icon.svelte";
-  import { layout, avatarWidth, cardHeight, cardWidths, headingText, iconHeight, imageWidth, textSize } from "$lib/runes";
+  import {
+    layout,
+    avatarWidth,
+    cardHeight,
+    cardWidths,
+    headingText,
+    iconHeight,
+    imageWidth,
+    textSize
+  } from "$lib/runes";
 
   import { getTypeColour } from "../styles/icon-lib.svelte";
   import type { CardDetails } from "$lib/services/types.svelte";
@@ -22,40 +31,42 @@
 
   $effect(() => {
     if (layout.value === "compacted") {
-      cardHeight.value = "200px";  
+      cardHeight.value = "200px";
       headingText.value = "!text-sm font-medium";
       cardWidths.value = "w-36 h-[18rem]";
       iconHeight.value = "100";
       imageWidth.value = "w-24";
       textSize.value = "text-sm";
-      avatarWidth.value = "w-8"; 
+      avatarWidth.value = "w-8";
     } else {
-      cardHeight.value = "380px"; 
-      headingText.value = "!text-lg font-semibold"; 
+      cardHeight.value = "380px";
+      headingText.value = "!text-lg font-semibold";
       cardWidths.value = "w-60 h-[21rem]";
-      iconHeight.value = "140"; 
+      iconHeight.value = "140";
       imageWidth.value = "w-36";
       textSize.value = "text-base";
-      avatarWidth.value = "w-12"; 
+      avatarWidth.value = "w-12";
     }
   });
 </script>
 
 {#snippet header(cardDetails: CardDetails)}
-  <header class="flex flex-row items-center justify-between p-3">
-    {#if cardDetails.student}
-      <img
-        src={cardDetails.student.avatar}
-        alt={cardDetails.student.fullName}
-        class="rounded-3xl {avatarWidth.value}"
-      />
-    {:else}
-      <div class="line-clamp-2 flex-auto !text-lg font-semibold !text-black dark:!text-white {headingText.value}">
-        {cardDetails.title}
-      </div>
-    {/if}
-    <h6 class={textSize.value}>{cardDetails.student?.fullName} &nbsp &nbsp</h6>
-    <div class="flex-none"><Icon type={cardDetails.type} height="30" /></div>
+  <header class="flex w-full items-center justify-between p-3">
+    <div class="flex items-center gap-2">
+      {#if cardDetails.student}
+        <img
+          src={cardDetails.student.avatar}
+          alt={cardDetails.student.fullName}
+          class="rounded-3xl {avatarWidth.value}"
+        />
+        <h6 class={textSize.value}>{cardDetails.student?.fullName}</h6>
+      {:else}
+        <div class="line-clamp-2 !text-lg font-semibold !text-black dark:!text-white {headingText.value}">
+          {cardDetails.title}
+        </div>
+      {/if}
+    </div>
+    <Icon type={cardDetails.type} height="30" />
   </header>
 {/snippet}
 

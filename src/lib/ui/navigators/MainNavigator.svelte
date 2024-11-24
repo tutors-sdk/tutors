@@ -10,18 +10,25 @@
   import InfoButton from "./buttons/InfoButton.svelte";
   import AnonProfile from "./tutors-connect/AnonProfile.svelte";
   import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
+  import TutorsTitle from "./titles/TutorsTitle.svelte";
 </script>
 
 <AppBar
-  shadow="none"
-  classes="bg-surface-100 dark:bg-surface-950 h-20"
+  padding="p-2"
+  spaceY=""
   toolbarClasses="flex items-center"
   leadClasses="flex items-center"
   trailClasses="flex items-center"
 >
   {#snippet lead()}
-    <InfoButton />
-    <CourseTitle />
+    {#if currentCourse?.value}
+      <InfoButton />
+      <CourseTitle />
+    {:else}
+      <span class="ml-12">
+        <TutorsTitle title="Tutors Open Source Project" subtitle="Open Web Learning Components" />
+      </span>
+    {/if}
   {/snippet}
   <!-- <CalendarButton /> -->
   {#snippet trail()}
@@ -41,7 +48,7 @@
         {/if}
       </div>
     {/if}
-    {#if !currentCourse?.value?.isPortfolio}
+    {#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
       <TocButton />
     {/if}
   {/snippet}
