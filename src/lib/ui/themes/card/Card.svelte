@@ -8,7 +8,7 @@
     cardWidths,
     headingText,
     iconHeight,
-    imageWidth,
+    imageHeight,
     textSize
   } from "$lib/runes";
 
@@ -31,28 +31,28 @@
 
   $effect(() => {
     if (layout.value === "compacted") {
-      cardHeight.value = "200px";
-      headingText.value = "!text-sm font-medium";
+      cardHeight.value = "h-48";
+      headingText.value = "!text-xs font-medium";
       cardWidths.value = "w-36 h-[18rem]";
       iconHeight.value = "100";
-      imageWidth.value = "w-24";
-      textSize.value = "text-sm";
+      imageHeight.value = "h-12";
+      textSize.value = "line-clamp-2 text-xs";
       avatarWidth.value = "w-8";
     } else {
-      cardHeight.value = "380px";
+      cardHeight.value = "h-96";
       headingText.value = "!text-lg font-semibold";
       cardWidths.value = "w-60 h-[21rem]";
       iconHeight.value = "140";
-      imageWidth.value = "w-36";
-      textSize.value = "text-base";
+      imageHeight.value = "h-40";
+      textSize.value = "prose mt-4 line-clamp-3 leading-6 dark:prose-invert";
       avatarWidth.value = "w-12";
     }
   });
 </script>
 
 {#snippet header(cardDetails: CardDetails)}
-  <header class="flex w-full items-center justify-between p-3">
-    <div class="flex items-center gap-2">
+  <header class="flex flex-row items-center justify-between p-3">
+    <div class="flex flex-1 items-center gap-2">
       {#if cardDetails.student}
         <img
           src={cardDetails.student.avatar}
@@ -66,7 +66,7 @@
         </div>
       {/if}
     </div>
-    <Icon type={cardDetails.type} height="30" />
+    <div class="ml-auto"><Icon type={cardDetails.type} height="30" /></div>
   </header>
 {/snippet}
 
@@ -75,14 +75,15 @@
     {#if cardDetails.icon}
       <Iconify icon={cardDetails.icon.type} color={cardDetails.icon.color} height={iconHeight.value} />
     {:else}
-      <img src={cardDetails.img} alt={cardDetails.title} class={imageWidth.value} />
+      <img src={cardDetails.img} alt={cardDetails.title} class={imageHeight.value} />
     {/if}
   </figure>
 {/snippet}
 
 {#snippet footer(cardDetails: CardDetails)}
   {#if cardDetails.summary}
-    <div class="prose mt-4 line-clamp-3 text-center leading-6 dark:prose-invert">
+    <!-- <div class="{textSize.value} prose mt-4 line-clamp-3 text-center leading-6 dark:prose-invert"> -->
+    <div class="{textSize.value} text-center">
       {@html cardDetails.summary}
     </div>
   {:else}
@@ -104,7 +105,7 @@
     class="card preset-filled-{getTypeColour(cardDetails.type)}-50-950 border-[1px]
     border-y-8 border-{getTypeColour(
       cardDetails.type
-    )}-500 m-2 {cardWidths.value} transition-all hover:scale-105 h-[{cardHeight.value}]
+    )}-500 m-2 {cardWidths.value} transition-all hover:scale-105 {cardHeight.value}
     flex flex-col"
   >
     <div class="card-header flex">

@@ -38,7 +38,7 @@
       </span>
       <div class="mt-2 flex items-center">
         <Avatar
-          classes="size-10"
+          classes="size-9"
           src={tutorsConnectService.tutorsId.value?.image}
           name={tutorsConnectService.tutorsId.value?.name}
         />
