@@ -7,7 +7,6 @@
 </script>
 
 <Modal
-  bind:open={drawerState}
   triggerBase="btn preset-tonal"
   contentBase="bg-surface-100-900 p-4 space-y-4 shadow-xl w-[480px] h-screen"
   positionerJustify="justify-start"
@@ -17,9 +16,7 @@
   transitionsPositionerOut={{ x: -480, duration: 200 }}
 >
   {#snippet trigger()}
-    <button title="Open course info">
-      <Icon type="info" />
-    </button>
+    <Icon type="info" />
   {/snippet}
   {#snippet content()}
     <header class="flex justify-between">

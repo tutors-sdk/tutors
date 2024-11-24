@@ -2,16 +2,14 @@
   import { AppBar } from "@skeletonlabs/skeleton-svelte";
   import CourseTitle from "./titles/CourseTitle.svelte";
   import SearchButton from "./buttons/SearchButton.svelte";
-  // import CalendarButton from "./buttons/CalendarButton.svelte";
-
   import { currentCourse } from "$lib/runes";
   import LayoutMenu from "../themes/menu/LayoutMenu.svelte";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
-  // import AnonProfile from "./tutors-connect/AnonProfile.svelte";
-  // import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
   import TutorsTimeIndicator from "./buttons/TutorsTimeIndicator.svelte";
   import TocButton from "./buttons/TocButton.svelte";
   import InfoButton from "./buttons/InfoButton.svelte";
+  import AnonProfile from "./tutors-connect/AnonProfile.svelte";
+  import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
 </script>
 
 <AppBar
@@ -35,13 +33,13 @@
     <LayoutMenu />
     <span class="vr border-l-8"></span>
     {#if !currentCourse?.value?.isPrivate}
-      <!-- <div class="relative">
+      <div class="relative">
         {#if !tutorsConnectService.tutorsId.value?.login}
           <AnonProfile redirect="/{currentCourse?.value?.courseId}" />
         {:else}
           <ConnectedProfile />
         {/if}
-      </div> -->
+      </div>
     {/if}
     {#if !currentCourse?.value?.isPortfolio}
       <TocButton />

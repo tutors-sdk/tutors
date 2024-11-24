@@ -4,11 +4,10 @@
 
   import { Modal } from "@skeletonlabs/skeleton-svelte";
 
-  let drawerState = $state(false);
+  // let drawerState = $state(false);
 </script>
 
 <Modal
-  bind:open={drawerState}
   triggerBase="btn preset-tonal"
   contentBase="bg-surface-100-900 p-4 space-y-4 shadow-xl w-[480px] h-screen"
   positionerJustify="justify-end"
@@ -18,9 +17,7 @@
   transitionsPositionerOut={{ x: 480, duration: 200 }}
 >
   {#snippet trigger()}
-    <!-- <button title="Open course table of contents"> -->
     <Icon icon="fluent:line-horizontal-3-20-filled" color="rgba(var(--color-primary-500))" height="20" />
-    <!-- </button> -->
   {/snippet}
   {#snippet content()}
     <header class="flex justify-between">
