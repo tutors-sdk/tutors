@@ -82,7 +82,6 @@
 
 {#snippet footer(cardDetails: CardDetails)}
   {#if cardDetails.summary}
-    <!-- <div class="{textSize.value} prose mt-4 line-clamp-3 text-center leading-6 dark:prose-invert"> -->
     <div class="{textSize.value} text-center">
       {@html cardDetails.summary}
     </div>
