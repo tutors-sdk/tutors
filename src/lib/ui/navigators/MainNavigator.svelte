@@ -29,9 +29,9 @@
     {#if !currentCourse?.value?.isPortfolio}
       <SearchButton />
     {/if}
-    <span class="vr border-l-8"></span>
+    <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
     <LayoutMenu />
-    <span class="vr border-l-8"></span>
+    <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
     {#if !currentCourse?.value?.isPrivate}
       <div class="relative">
         {#if !tutorsConnectService.tutorsId.value?.login}

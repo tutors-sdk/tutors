@@ -15,17 +15,20 @@
 </script>
 
 <AppBar
-  shadow="none"
-  classes="bg-surface-100 dark:bg-surface-950 h-14 justify-center border-surface-200 dark:border-surface-700"
+  classes="bg-surface-100 dark:bg-surface-950"
+  padding=""
+  spaceY=""
+  toolbarClasses="flex items-center"
+  leadClasses="flex items-center "
+  trailClasses="flex items-center"
 >
   {#snippet lead()}
     <TutorsTitle {title} subtitle={subTitle} />
   {/snippet}
   {@render header?.()}
   {#snippet trail()}
-    <span class="divider-vertical hidden h-10 lg:block"></span>
     <LayoutMenu />
-    <span class="divider-vertical hidden h-10 lg:block"></span>
+    <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
     <div class="relative">
       {#if tutorsConnectService.tutorsId.value?.login}
         <ConnectedProfile />

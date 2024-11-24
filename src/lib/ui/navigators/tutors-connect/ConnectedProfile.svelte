@@ -19,7 +19,7 @@
 <Popover
   bind:open={openState}
   positioning={{ placement: "top" }}
-  triggerBase="btn preset-tonal"
+  triggerBase="btn"
   contentBase="card bg-surface-50 m-4space-y-4 max-w-[320px] z-[100"
 >
   {#snippet trigger()}

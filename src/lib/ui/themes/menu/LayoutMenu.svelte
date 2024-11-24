@@ -20,12 +20,13 @@
 <Popover
   bind:open={openState}
   positioning={{ placement: "top" }}
-  triggerBase="btn preset-tonal"
-  contentBase="card bg-surface-50 m-4space-y-4 max-w-[320px] z-[100"
+  triggerBase="btn"
+  contentBase="card bg-surface-50 m-4space-y-4 max-w-[320px] z-[100]"
 >
   {#snippet trigger()}
     <Icon type="dark" />
-    <span class="hidden text-sm font-bold lg:block">Layout <span class="pl-2 opacity-50">▾</span></span>{/snippet}
+    <!-- <span class="hidden text-sm font-bold lg:block">Layout <span class="pl-2 opacity-50">▾</span></span> -->
+  {/snippet}
   {#snippet content()}
     <nav class="card-body card list-nav w-56 space-y-4 bg-gray-100 p-4 shadow-lg dark:bg-gray-800" data-popup="design">
       <h6>Toggles</h6>
