@@ -43,11 +43,11 @@
         <footer class="card-footer p-0">
           <div class="flex w-full">
             <a
-              class="variant-filled-primary btn m-0 w-2/3 rounded-t-none rounded-br-none"
+              class="variant-filled-primary btn m-0 w-2/3 rounded-t-none rounded-br-none hover:preset-tonal"
               href={"/course/" + courseVisit.id}>Visit Course</a
             >
             <button
-              class="variant-filled-error btn m-0 w-1/3 rounded-t-none rounded-bl-none"
+              class="variant-filled-error btn m-0 w-1/3 rounded-t-none rounded-bl-none hover:preset-tonal"
               onclick={() => deleteCourse(courseVisit.id)}>Delete</button
             >
           </div>

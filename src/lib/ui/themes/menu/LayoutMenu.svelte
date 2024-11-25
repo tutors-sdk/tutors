@@ -25,16 +25,15 @@
 >
   {#snippet trigger()}
     <Icon type="dark" tip="Open Theme Menu" />
-    <!-- <span class="hidden text-sm font-bold lg:block">Layout <span class="pl-2 opacity-50">▾</span></span> -->
   {/snippet}
   {#snippet content()}
-    <nav class="card-body card list-nav w-56 space-y-4 bg-gray-100 p-4 shadow-lg dark:bg-gray-800" data-popup="design">
+    <nav class="card-body list-nav card w-56 space-y-4 bg-gray-100 p-4 shadow-lg dark:bg-gray-800">
       <h6>Toggles</h6>
       <ul>
         <li class="option !p-0v hover:preset-tonal">
           <DarkModeToggle />
         </li>
-        <li class="option hover:preset-tonal !p-0">
+        <li class="option !p-0 hover:preset-tonal">
           <LayoutToggle />
         </li>
       </ul>
@@ -44,7 +43,7 @@
         {#each themes as theme}
           <li class="option !p-0">
             <button
-              class="btn hover:preset-tonal flex w-full justify-between {theme === currentTheme.value
+              class="btn flex w-full justify-between hover:preset-tonal {theme === currentTheme.value
                 ? 'preset-tonal'
                 : ''}"
               onclick={() => changeTheme(theme)}

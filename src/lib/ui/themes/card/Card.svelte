@@ -34,7 +34,7 @@
       cardHeight.value = "h-48";
       headingText.value = "!text-xs font-medium";
       cardWidths.value = "w-36 h-[18rem]";
-      iconHeight.value = "100";
+      iconHeight.value = "60";
       imageHeight.value = "h-12";
       textSize.value = "line-clamp-2 text-xs";
       avatarWidth.value = "w-8";
@@ -51,22 +51,24 @@
 </script>
 
 {#snippet header(cardDetails: CardDetails)}
-  <header class="flex flex-row items-center justify-between p-3">
-    <div class="flex flex-1 items-center gap-2">
-      {#if cardDetails.student}
+  <header class="relative w-full p-3">
+    <div class="absolute right-3 top-3">
+      <Icon type={cardDetails.type} height="30" />
+    </div>
+    {#if cardDetails.student}
+      <div class="flex items-center">
         <img
           src={cardDetails.student.avatar}
           alt={cardDetails.student.fullName}
           class="rounded-3xl {avatarWidth.value}"
         />
         <h6 class={textSize.value}>{cardDetails.student?.fullName}</h6>
-      {:else}
-        <div class="line-clamp-2 !text-lg font-semibold !text-black dark:!text-white {headingText.value}">
-          {cardDetails.title}
-        </div>
-      {/if}
-    </div>
-    <div class="ml-auto"><Icon type={cardDetails.type} height="30" /></div>
+      </div>
+    {:else}
+      <div class="line-clamp-2 pr-10 !text-lg font-semibold !text-black dark:!text-white {headingText.value}">
+        {cardDetails.title}
+      </div>
+    {/if}
   </header>
 {/snippet}
 
@@ -82,7 +84,7 @@
 
 {#snippet footer(cardDetails: CardDetails)}
   {#if cardDetails.summary}
-    <div class="{textSize.value} text-center">
+    <div class="{textSize.value} text-center text-black dark:text-white">
       {@html cardDetails.summary}
     </div>
   {:else}
@@ -101,7 +103,7 @@
 
 <a href={cardDetails.route} {target}>
   <div
-    class="card preset-filled-{getTypeColour(cardDetails.type)}-50-950 border-[1px]
+    class="card preset-filled-{getTypeColour(cardDetails.type)}-100-900 border-[1px]
     border-y-8 border-{getTypeColour(
       cardDetails.type
     )}-500 m-2 {cardWidths.value} transition-all hover:scale-105 {cardHeight.value}

@@ -21,7 +21,7 @@ export const FluentIconLib = {
   note: { type: "fluent:notepad-16-regular", color: "success" },
   archive: { type: "fluent:archive-24-filled", color: "primary" },
   web: { type: "fluent:bookmark-24-regular", color: "error" },
-  github: { type: "fluent:code-circle-20-filled", color: "warning" },
+  github: { type: "mdi:github", color: "warning" },
   panelvideo: { type: "fluent:video-clip-24-regular", color: "error" },
   paneltalk: { type: "fluent:presenter-24-filled", color: "primary" },
   panelnote: { type: "fluent:notepad-16-regular", color: "warning" },
