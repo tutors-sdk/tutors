@@ -6,6 +6,7 @@
   import Icon from "$lib/ui/themes/icons/Icon.svelte";
   import Menu from "$lib/ui/support/Menu.svelte";
   import { Avatar } from "@skeletonlabs/skeleton-svelte";
+  import OnlineButton from "../buttons/OnlineButton.svelte";
 
   function logout() {
     tutorsConnectService.disconnect("/");
@@ -64,12 +65,13 @@
       />
 
       <li class="option !p-0 hover:preset-tonal">
-        <button class="btn flex w-full justify-between">
+        <OnlineButton />
+        <!-- <button class="btn flex w-full justify-between">
           <div class="ml-2">
             View <span class="badge bg-error-500 text-white">{presenceService.studentsOnline.value.length}</span> Online
           </div>
           <Icon type="live" />
-        </button>
+        </button> -->
       </li>
 
       <hr />
