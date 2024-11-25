@@ -1,5 +1,5 @@
 <script lang="ts">
-  import CourseShell from "$lib/ui/app-shells/CourseShell.svelte";
+  import CourseShell from "$lib/ui/TutorsShell.svelte";
   import type { Snippet } from "svelte";
   type Props = { children: Snippet };
   import { currentCourse } from "$lib/runes";

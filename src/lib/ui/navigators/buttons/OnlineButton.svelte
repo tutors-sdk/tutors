@@ -1,6 +1,6 @@
 <script lang="ts">
   import { presenceService } from "$lib/services/presence.svelte";
-  import Sidebar from "$lib/ui/support/Sidebar.svelte";
+  import Sidebar from "$lib/ui/utils/Sidebar.svelte";
   import Card from "$lib/ui/themes/card/Card.svelte";
 </script>
 

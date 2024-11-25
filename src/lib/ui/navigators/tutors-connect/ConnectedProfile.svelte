@@ -2,9 +2,9 @@
   import { currentCourse } from "$lib/runes";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
   import { presenceService } from "$lib/services/presence.svelte";
-  import MenuItem from "../../support/MenuItem.svelte";
+  import MenuItem from "../../utils/MenuItem.svelte";
   import Icon from "$lib/ui/themes/icons/Icon.svelte";
-  import Menu from "$lib/ui/support/Menu.svelte";
+  import Menu from "$lib/ui/utils/Menu.svelte";
   import { Avatar } from "@skeletonlabs/skeleton-svelte";
   import OnlineButton from "../buttons/OnlineButton.svelte";
 

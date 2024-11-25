@@ -1,6 +1,6 @@
 <script lang="ts">
   import CourseContext from "$lib/ui/learning-objects/structure/CourseContext.svelte";
-  import Sidebar from "$lib/ui/support/Sidebar.svelte";
+  import Sidebar from "$lib/ui/utils/Sidebar.svelte";
   import Icon from "$lib/ui/themes/icons/Icon.svelte";
 </script>
 

@@ -2,9 +2,9 @@
   import { setDisplayMode, setTheme, themes } from "./styles/icon-lib.svelte";
   import Icon from "./icons/Icon.svelte";
   import { lightMode } from "$lib/runes";
-  import Menu from "$lib/ui/support/Menu.svelte";
+  import Menu from "$lib/ui/utils/Menu.svelte";
   import { layout } from "$lib/runes";
-  import MenuItem from "$lib/ui/support/MenuItem.svelte";
+  import MenuItem from "$lib/ui/utils/MenuItem.svelte";
 
   function changeTheme(theme: string): void {
     setTheme(theme);
@@ -17,6 +17,7 @@
       setDisplayMode("dark");
     }
   }
+
   function toggleLayout() {
     if (layout.value === "compacted") {
       layout.value = "expanded";

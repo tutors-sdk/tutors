@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentCourse, currentLo } from "$lib/runes";
-  import CourseShell from "$lib/ui/app-shells/CourseShell.svelte";
+  import CourseShell from "$lib/ui/TutorsShell.svelte";
   import type { Snippet } from "svelte";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
   import { page } from "$app/stores";
