@@ -33,10 +33,6 @@ export function setTheme(theme: string): void {
   document.body.setAttribute("data-theme", currentTheme.value);
   localStorage.theme = currentTheme.value;
   setIconLibForTheme(currentTheme.value);
-
-  if (localStorage.modeCurrent === "dark") {
-    document.body.classList.toggle("dark");
-  }
 }
 
 export function setIconLibForTheme(theme: string) {
