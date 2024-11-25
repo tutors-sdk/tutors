@@ -1,12 +1,17 @@
 <script lang="ts">
   import { currentCourse, currentLo } from "$lib/runes";
   import Image from "../../themes/Image.svelte";
+  console.log("currentLo", currentLo);
 </script>
 
 {#if currentLo?.value}
   <div class="flex-1">
     <div class="inline-flex">
-      <Image lo={currentLo?.value} miniImage={true} />
+      {#if currentLo?.value?.img}
+        <Image lo={currentLo?.value} miniImage={true} />
+      {:else}
+        <Image lo={currentCourse?.value} miniImage={true} />
+      {/if}
     </div>
   </div>
   <div class="ml-4 flex-nowrap">
