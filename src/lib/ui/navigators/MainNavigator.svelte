@@ -3,7 +3,7 @@
   import CourseTitle from "./titles/CourseTitle.svelte";
   import SearchButton from "./buttons/SearchButton.svelte";
   import { currentCourse } from "$lib/runes";
-  import LayoutMenu from "../themes/menu/LayoutMenu.svelte";
+  import LayoutMenu from "../themes/LayoutMenu.svelte";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
   import TutorsTimeIndicator from "./buttons/TutorsTimeIndicator.svelte";
   import TocButton from "./buttons/TocButton.svelte";

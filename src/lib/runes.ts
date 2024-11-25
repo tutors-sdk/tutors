@@ -3,6 +3,7 @@ import { rune } from "./services/utils/runes.svelte";
 
 export const transitionKey = rune("");
 export const layout = rune("expanded");
+export const lightMode = rune("light");
 
 export const currentLo = rune<Lo | null>(null);
 export const currentCourse = rune<Course | null>(null);

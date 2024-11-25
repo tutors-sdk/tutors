@@ -1,4 +1,5 @@
-import { currentTheme } from "$lib/runes";
+import { currentTheme, lightMode } from "$lib/runes";
+import type { IconType } from "$lib/services/models/lo-types";
 
 import { FluentIconLib } from "../icons/fluent-icons";
 import { HeroIconLib } from "../icons/hero-icons";
@@ -16,6 +17,16 @@ export const themeIcons = {
   mona: FluentIconLib,
   cerberus: HeroIconLib
 };
+
+export function setDisplayMode(mode: string): void {
+  lightMode.value = mode;
+  localStorage.modeCurrent = mode;
+  if (mode === "dark") {
+    document.body.classList.add("dark");
+  } else {
+    document.body.classList.remove("dark");
+  }
+}
 
 export function setTheme(theme: string): void {
   currentTheme.value = theme;
