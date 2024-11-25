@@ -1,7 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { currentCourse } from "$lib/runes";
-  // import Card from "./Card.svelte";
   import type { Lo } from "$lib/services/models/lo-types";
   import { setShowHide } from "$lib/services/models/lo-utils";
   import Card from "$lib/ui/themes/card/Card.svelte";
@@ -41,7 +40,7 @@
 
 {#if los.length > 0}
   <div
-    class="bg-surface-100 dark:bg-surface-950 mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4 {border
+    class="mx-auto mb-2 place-items-center overflow-hidden rounded-xl bg-surface-100 p-4 dark:bg-surface-950 {border
       ? bordered
       : unbordered}"
   >

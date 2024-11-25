@@ -1,7 +1,7 @@
 <script lang="ts">
   import { presenceService } from "$lib/services/presence.svelte";
   import Sidebar from "$lib/ui/support/Sidebar.svelte";
-  import CoursePresence from "../time/CoursePresence.svelte";
+  import Card from "$lib/ui/themes/card/Card.svelte";
 </script>
 
 {#snippet menuSelector()}
@@ -10,7 +10,24 @@
   </div>
 {/snippet}
 {#snippet sidebarContent()}
-  <CoursePresence />
+  <div class="flex flex-wrap justify-center">
+    {#each presenceService.studentsOnline.value as lo}
+      {#if lo?.user?.fullName !== "Anon"}
+        <Card
+          cardDetails={{
+            route: lo?.loRoute,
+            student: lo?.user,
+            type: lo?.type,
+            subtitle1: lo?.courseTitle,
+            title: lo?.courseTitle,
+            subtitle2: lo?.title + " (" + lo?.type + ")",
+            img: lo?.img,
+            icon: lo?.icon
+          }}
+        />
+      {/if}
+    {/each}
+  </div>
 {/snippet}
 
 <Sidebar position="right" {menuSelector} {sidebarContent} />
