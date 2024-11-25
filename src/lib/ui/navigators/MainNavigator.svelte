@@ -11,6 +11,7 @@
   import AnonProfile from "./tutors-connect/AnonProfile.svelte";
   import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
   import TutorsTitle from "./titles/TutorsTitle.svelte";
+  import CalendarButton from "./buttons/CalendarButton.svelte";
 </script>
 
 <AppBar
@@ -30,7 +31,7 @@
       </span>
     {/if}
   {/snippet}
-  <!-- <CalendarButton /> -->
+  <CalendarButton />
   {#snippet trail()}
     <TutorsTimeIndicator />
     {#if !currentCourse?.value?.isPortfolio}
