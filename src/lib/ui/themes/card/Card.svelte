@@ -41,7 +41,7 @@
     } else {
       cardHeight.value = "h-96";
       headingText.value = "!text-lg font-semibold";
-      cardWidths.value = "w-60 h-[21rem]";
+      cardWidths.value = "w-60 h-[23rem]";
       iconHeight.value = "140";
       imageHeight.value = "h-40";
       textSize.value = "prose mt-4 line-clamp-3 leading-6 dark:prose-invert";
