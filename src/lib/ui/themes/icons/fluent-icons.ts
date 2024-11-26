@@ -12,18 +12,18 @@ export const FluentIconLib = {
 
   // LoTypes icons
   course: { type: "fluent:notebook-24-filled", color: "primary" },
-  topic: { type: "fluent:bookmark-24-filled", color: "primary" },
-  unit: { type: "fluent:dual-screen-group-24-filled", color: "success" },
+  topic: { type: "fluent:bookmark-24-filled", color: "secondary" },
+  unit: { type: "fluent:dual-screen-group-24-filled", color: "tertiary" },
   side: { type: "fluent:dual-screen-group-24-filled", color: "success" },
-  talk: { type: "fluent:presenter-24-filled", color: "primary" },
-  reference: { type: "fluent:document-copy-24-filled", color: "warning" },
-  lab: { type: "fluent:beaker-24-filled", color: "success" },
+  talk: { type: "fluent:presenter-24-filled", color: "warning" },
+  reference: { type: "fluent:document-copy-24-filled", color: "surface" },
+  lab: { type: "fluent:beaker-24-filled", color: "error" },
+  note: { type: "fluent:notepad-16-regular", color: "success" },
   archive: { type: "fluent:archive-24-filled", color: "primary" },
   web: { type: "fluent:bookmark-24-regular", color: "error" },
-  github: { type: "fluent:code-circle-20-filled", color: "warning" },
+  github: { type: "mdi:github", color: "warning" },
   panelvideo: { type: "fluent:video-clip-24-regular", color: "error" },
   paneltalk: { type: "fluent:presenter-24-filled", color: "primary" },
-  note: { type: "fluent:notepad-16-regular", color: "warning" },
   panelnote: { type: "fluent:notepad-16-regular", color: "warning" },
 
   // pdf reader icons
@@ -45,7 +45,9 @@ export const FluentIconLib = {
   search: { type: "fluent:search-24-filled", color: "primary" },
   tutors: { type: "fa-solid:chalkboard-teacher", color: "bg-base-content" },
   logout: { type: "fluent:sign-out-24-filled", color: "error" },
-  dark: { type: "fluent:paint-brush-24-filled", color: "warning" },
+  lightMode: { type: "fluent:paint-brush-24-filled", color: "warning" },
+  light: { type: "fluent:weather-sunny-32-filled", color: "warning" },
+  dark: { type: "fluent:weather-moon-48-filled", color: "warning" },
   toc: { type: "fluent:line-horizontal-3-20-filled", color: "bg-base-content" },
   compacted: { type: "fluent:re-order-dots-vertical-24-filled", color: "success" },
   expanded: { type: "fluent:re-order-dots-horizontal-24-filled", color: "success" },
@@ -55,6 +57,7 @@ export const FluentIconLib = {
   listOnline: { type: "fluent:people-list-24-filled", color: "primary" },
   edit: { type: "typcn:edit", color: "primary" },
   info: { type: "fluent:info-28-regular", color: "primary" },
+  close: { type: "fluent:add-square-32-regular", color: "primary" },
 
   default: { type: "fluent:re-order-dots-vertical-24-filled", color: "error" }
 };

@@ -1,12 +1,17 @@
 <script lang="ts">
-  import "../../app.css";
-  import TutorsShell from "$lib/ui/app-shells/TutorsShell.svelte";
+  import CourseShell from "$lib/ui/TutorsShell.svelte";
+  import type { Snippet } from "svelte";
+  type Props = { children: Snippet };
+  import { currentCourse } from "$lib/runes";
+  let { children }: Props = $props();
+
+  currentCourse.value = null;
 </script>
 
 <svelte:head>
   <title>Tutors</title>
 </svelte:head>
 
-<TutorsShell>
-  <slot />
-</TutorsShell>
+<CourseShell>
+  {@render children()}
+</CourseShell>

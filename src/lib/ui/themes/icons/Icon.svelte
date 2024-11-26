@@ -1,6 +1,7 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
   import { getIcon } from "../styles/icon-lib.svelte";
+  import { Tooltip } from "@skeletonlabs/skeleton-svelte";
 
   interface Props {
     type?: string;
@@ -45,19 +46,39 @@
   }
 </script>
 
-{#if type}
-  {#if link}
-    <a class="btn btn-sm" {target} href={link} title={tip}>
+{#snippet displayIcon()}
+  {#if type}
+    {#if link}
+      <a class="btn btn-sm" {target} href={link}>
+        <Icon icon={getIcon(type).type} color={legacyIconColour(getIcon(type).color)} {width} {height} />
+        {text}
+      </a>
+    {:else}
       <Icon icon={getIcon(type).type} color={legacyIconColour(getIcon(type).color)} {width} {height} />
-      {text}
+    {/if}
+  {:else if link}
+    <a {target} href={link}>
+      <Icon {icon} {color} {width} {height} />
     </a>
   {:else}
-    <Icon icon={getIcon(type).type} color={legacyIconColour(getIcon(type).color)} {width} {height} />
-  {/if}
-{:else if link}
-  <a {target} href={link} title={tip}>
     <Icon {icon} {color} {width} {height} />
-  </a>
+  {/if}
+{/snippet}
+
+{#if tip}
+  <Tooltip
+    positioning={{ placement: "top" }}
+    triggerBase="underline"
+    contentBase="card preset-filled p-4 text-sm"
+    openDelay={400}
+  >
+    {#snippet trigger()}
+      {@render displayIcon()}
+    {/snippet}
+    {#snippet content()}
+      {tip}
+    {/snippet}
+  </Tooltip>
 {:else}
-  <Icon {icon} {color} {width} {height} />
+  {@render displayIcon()}
 {/if}

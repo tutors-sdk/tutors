@@ -15,7 +15,9 @@
 
 <div class={inSidebar ? "flex flex-col" : "grid grid-cols-1"}>
   {#each units as unit}
-    <div class="bg-surface-100-800-token mx-auto mb-2 w-full place-items-center overflow-hidden rounded-xl p-4 border-[1px] border-surface-200-700-token">
+    <div
+      class="bg-surface-100 dark:bg-surface-950 border-surface-200-700-token mx-auto mb-2 w-full place-items-center overflow-hidden rounded-xl border-[1px] p-4"
+    >
       <div class="flex w-full justify-between pb-2">
         <h2 id={unit.id} class="p-2 {text}">
           {unit.title}

@@ -1,28 +1,24 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models/lo-types";
   import Image from "../../themes/Image.svelte";
-  import { currentLo } from "$lib/runes";
   import LoContext from "../structure/LoContext.svelte";
-  import { TreeView } from "@skeletonlabs/skeleton";
 
   interface Props {
     loContext: Lo;
   }
+  import { currentLo } from "$lib/runes";
   let { loContext }: Props = $props();
 
   let headingText = "text-md font-semibold";
-
   let cardWidths = "w-72";
 </script>
 
-<div class="card {cardWidths} px-4 py-2">
+<div class="card {cardWidths} p-4 preset-filled-primary-100-900">
   <h3 class="px-4 py-2 text-center {headingText}">{loContext?.title}</h3>
   <div class="card-body">
     <figure class="flex justify-center p-2">
-      <Image lo={currentLo.value} />
+      <Image lo={currentLo?.value} />
     </figure>
-    <TreeView padding="p-1">
-      <LoContext lo={loContext} />
-    </TreeView>
+    <LoContext lo={loContext} />
   </div>
 </div>

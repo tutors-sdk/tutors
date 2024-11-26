@@ -45,7 +45,9 @@ export const HeroIconLib = {
   search: { type: "heroicons-outline:search", color: "primary" },
   tutors: { type: "fa-solid:chalkboard-teacher", color: "bg-base-content" },
   logout: { type: "heroicons-outline:logout", color: "error" },
-  dark: { type: "heroicons-outline:moon", color: "warning" },
+  lightMode: { type: "fluent:paint-brush-24-filled", color: "warning" },
+  light: { type: "fluent:weather-sunny-32-filled", color: "warning" },
+  dark: { type: "fluent:weather-moon-48-filled", color: "warning" },
   toc: { type: "heroicons-outline:menu-alt-2", color: "bg-base-content" },
   compacted: { type: "heroicons-outline:dots-vertical", color: "success" },
   expanded: { type: "heroicons-outline:dots-horizontal", color: "success" },
@@ -55,6 +57,7 @@ export const HeroIconLib = {
   listOnline: { type: "fluent:people-list-24-filled", color: "primary" },
   edit: { type: "typcn:edit", color: "primary" },
   info: { type: "fluent:info-28-regular", color: "primary" },
+  close: { type: "fluent:add-square-32-regular", color: "primary" },
 
   default: { type: "heroicons-outline:dots-vertical", color: "primary" }
 };

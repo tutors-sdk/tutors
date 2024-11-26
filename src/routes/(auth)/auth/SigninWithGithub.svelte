@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getIcon } from "$lib/ui/themes/styles/icon-lib.svelte";
   import Icon from "@iconify/svelte";
-  import { ProgressRadial } from "@skeletonlabs/skeleton";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
   import TutorsTerms from "./TutorsTerms.svelte";
 
@@ -29,7 +29,7 @@
           <div class="flex flex-wrap justify-center">
             <button type="button" class="variant-filled btn w-full" onclick={handleSignInWithProgress}>
               {#if showProgress}
-                <ProgressRadial width="w-8" stroke={100} meter="stroke-primary-500" track="stroke-primary-500/30" />
+                <Progress width="w-8" />
               {:else}
                 <span><Icon icon="mdi:github" /></span>
                 <span>Sign in with GitHub</span>

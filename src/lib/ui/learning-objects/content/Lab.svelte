@@ -57,7 +57,7 @@
 <div class="w-full">
   <div class="max-w-l flex">
     <div class="mr-2 hidden h-auto w-72 lg:block">
-      <div class="card bg-surface-100-800-token sticky top-6 m-2 h-auto rounded-xl py-4">
+      <div class="card sticky top-6 m-2 h-auto rounded-xl bg-surface-100 py-4 dark:bg-surface-950">
         <nav class="nav-list">
           <ul>
             {@html lab.navbarHtml}

@@ -1,15 +1,22 @@
 <script lang="ts">
+  import { currentCourse } from "$lib/runes";
+  import Sidebar from "$lib/ui/utils/Sidebar.svelte";
   import Icon from "$lib/ui/themes/icons/Icon.svelte";
-  import { getDrawerStore, type DrawerSettings } from "@skeletonlabs/skeleton";
-  const drawerStore = getDrawerStore();
-  const infoDrawerOpen: any = () => {
-    const settings: DrawerSettings = { id: "info", position: "left" };
-    drawerStore.open(settings);
-  };
 </script>
 
-<button class="btn btn-sm" onclick={infoDrawerOpen} title="View course info">
-  <span class="text-sm font-bold inline-flex gap-2">
-    <Icon type="info" />
-  </span>
-</button>
+{#snippet menuSelector()}
+  <Icon type="info" tip="Open course info" />
+{/snippet}
+
+{#snippet sidebarContent()}
+  <header class="flex justify-between">
+    <h2 class="h2">Course Info</h2>
+  </header>
+  <article>
+    <prose class="prose dark:prose-invert">
+      {@html currentCourse?.value?.contentHtml}
+    </prose>
+  </article>
+{/snippet}
+
+<Sidebar {menuSelector} {sidebarContent} />

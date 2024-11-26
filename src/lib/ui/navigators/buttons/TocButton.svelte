@@ -1,15 +1,20 @@
 <script lang="ts">
+  import CourseContext from "$lib/ui/learning-objects/structure/CourseContext.svelte";
+  import Sidebar from "$lib/ui/utils/Sidebar.svelte";
   import Icon from "$lib/ui/themes/icons/Icon.svelte";
-  import { getDrawerStore, type DrawerSettings } from "@skeletonlabs/skeleton";
-  const drawerStore = getDrawerStore();
-  const tocDrawerOpen: any = () => {
-    const settings: DrawerSettings = { id: "toc", position: "right" };
-    drawerStore.open(settings);
-  };
 </script>
 
-<button class="btn btn-sm" onclick={tocDrawerOpen} title="Open course table of contents">
-  <span class="text-sm font-bold inline-flex gap-2">
-    <Icon icon="fluent:line-horizontal-3-20-filled" color="rgba(var(--color-primary-500))" height="20" />
-  </span>
-</button>
+{#snippet menuSelector()}
+  <Icon type="toc" tip="Open course Table of Contents" />
+{/snippet}
+
+{#snippet sidebarContent()}
+  <header class="flex justify-between">
+    <h2 class="h2">Table of Contents</h2>
+  </header>
+  <article>
+    <CourseContext />
+  </article>
+{/snippet}
+
+<Sidebar position="right" {menuSelector} {sidebarContent} />

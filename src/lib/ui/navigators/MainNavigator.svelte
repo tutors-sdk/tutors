@@ -1,22 +1,35 @@
 <script lang="ts">
-  import { AppBar } from "@skeletonlabs/skeleton";
-  import InfoButton from "./buttons/InfoButton.svelte";
+  import { AppBar } from "@skeletonlabs/skeleton-svelte";
   import CourseTitle from "./titles/CourseTitle.svelte";
   import SearchButton from "./buttons/SearchButton.svelte";
-  import CalendarButton from "./buttons/CalendarButton.svelte";
-  import TocButton from "./buttons/TocButton.svelte";
   import { currentCourse } from "$lib/runes";
-  import LayoutMenu from "../themes/menu/LayoutMenu.svelte";
+  import LayoutMenu from "../themes/LayoutMenu.svelte";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
+  import TutorsTimeIndicator from "./buttons/TutorsTimeIndicator.svelte";
+  import TocButton from "./buttons/TocButton.svelte";
+  import InfoButton from "./buttons/InfoButton.svelte";
   import AnonProfile from "./tutors-connect/AnonProfile.svelte";
   import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
-  import TutorsTimeIndicator from "./buttons/TutorsTimeIndicator.svelte";
+  import TutorsTitle from "./titles/TutorsTitle.svelte";
+  import CalendarButton from "./buttons/CalendarButton.svelte";
 </script>
 
-<AppBar background="bg-surface-100-800-token" shadow="none" class="h-20 justify-center border-b-[1px] border-surface-200 dark:border-surface-700">
+<AppBar
+  padding="p-2"
+  spaceY=""
+  toolbarClasses="flex items-center"
+  leadClasses="flex items-center"
+  trailClasses="flex items-center"
+>
   {#snippet lead()}
-    <InfoButton />
-    <CourseTitle />
+    {#if currentCourse?.value}
+      <InfoButton />
+      <CourseTitle />
+    {:else}
+      <span class="ml-12">
+        <TutorsTitle title="Tutors Open Source Project" subtitle="Open Web Learning Components" />
+      </span>
+    {/if}
   {/snippet}
   <CalendarButton />
   {#snippet trail()}
@@ -24,9 +37,9 @@
     {#if !currentCourse?.value?.isPortfolio}
       <SearchButton />
     {/if}
-    <span class="divider-vertical hidden h-10 lg:block"></span>
+    <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
     <LayoutMenu />
-    <span class="divider-vertical hidden h-10 lg:block"></span>
+    <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
     {#if !currentCourse?.value?.isPrivate}
       <div class="relative">
         {#if !tutorsConnectService.tutorsId.value?.login}
@@ -36,7 +49,7 @@
         {/if}
       </div>
     {/if}
-    {#if !currentCourse?.value?.isPortfolio}
+    {#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
       <TocButton />
     {/if}
   {/snippet}
