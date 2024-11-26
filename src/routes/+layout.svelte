@@ -4,7 +4,7 @@
   import type { PageData } from "./$types";
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
-  import { setDisplayMode } from "$lib/ui/themes/styles/icon-lib.svelte";
+  import { setDisplayMode, setTheme } from "$lib/ui/themes/styles/icon-lib.svelte";
 
   interface Props {
     data: PageData;
@@ -19,6 +19,7 @@
   onMount(() => {
     if (browser) {
       setDisplayMode(localStorage.modeCurrent);
+      setTheme(localStorage.theme);
     }
   });
 </script>

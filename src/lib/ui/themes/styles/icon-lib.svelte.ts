@@ -33,6 +33,9 @@ export function setDisplayMode(mode: string): void {
 }
 
 export function setTheme(theme: string): void {
+  if (!theme) {
+    theme = "tutors";
+  }
   currentTheme.value = theme;
   document.body.setAttribute("data-theme", currentTheme.value);
   localStorage.theme = currentTheme.value;
