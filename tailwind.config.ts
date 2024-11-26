@@ -42,7 +42,10 @@ export default {
         tutors,
         classic,
         themes.concord,
-        themes.nouveau
+        themes.nouveau,
+        themes.vintage,
+        themes.seafoam,
+        themes.wintry
       ]
     })
   ]
