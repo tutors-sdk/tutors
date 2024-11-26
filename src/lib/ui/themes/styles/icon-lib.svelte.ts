@@ -8,6 +8,7 @@ let StandardIconLib: { [key: string]: IconType } = FluentIconLib;
 export const themes = [
   "tutors",
   "classic",
+  "dyslexia",
   "nouveau",
   "concord",
   "nosh",
@@ -23,6 +24,7 @@ export const themes = [
 export const themeIcons = {
   tutors: FluentIconLib,
   classic: FluentIconLib,
+  dyslexia: FluentIconLib,
   nouveau: FluentIconLib,
   concord: FluentIconLib,
   vintage: FluentIconLib,
