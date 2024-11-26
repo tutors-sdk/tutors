@@ -5,15 +5,29 @@ import { FluentIconLib } from "../icons/fluent-icons";
 import { HeroIconLib } from "../icons/hero-icons";
 
 let StandardIconLib: { [key: string]: IconType } = FluentIconLib;
-export const themes = ["tutors", "classic", "nouveau", "concord", "nosh", "rose", "fennec", "mona", "cerberus"];
+export const themes = [
+  "tutors",
+  "classic",
+  "nouveau",
+  "concord",
+  "nosh",
+  "rose",
+  "vintage",
+  "seafoam",
+  "wintry",
+  "fennec",
+  "mona",
+  "cerberus"
+];
 
 export const themeIcons = {
   tutors: FluentIconLib,
   classic: FluentIconLib,
   nouveau: FluentIconLib,
   concord: FluentIconLib,
-  rose: FluentIconLib,
-  nosh: FluentIconLib,
+  vintage: FluentIconLib,
+  seafoam: FluentIconLib,
+  wintry: FluentIconLib,
   fennec: FluentIconLib,
   mona: FluentIconLib,
   cerberus: HeroIconLib
