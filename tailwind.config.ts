@@ -3,6 +3,7 @@ import typography from "@tailwindcss/typography";
 import { skeleton, contentPath } from "@skeletonlabs/skeleton/plugin";
 import * as themes from "@skeletonlabs/skeleton/themes";
 import tutors from "./src/lib/ui/themes/styles/tutors";
+import classic from "./src/lib/ui/themes/styles/classic";
 import type { Config } from "tailwindcss";
 
 export default {
@@ -39,6 +40,7 @@ export default {
         themes.nosh,
         themes.fennec,
         tutors,
+        classic,
         themes.concord,
         themes.nouveau
       ]
