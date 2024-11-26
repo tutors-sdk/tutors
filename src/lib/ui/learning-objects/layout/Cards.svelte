@@ -40,7 +40,7 @@
 
 {#if los.length > 0}
   <div
-    class="mx-auto mb-2 place-items-center overflow-hidden rounded-xl bg-surface-100 p-4 dark:bg-surface-950 {border
+    class="mx-auto mb-2 place-items-center overflow-hidden rounded-xl bg-surface-100 p-4 dark:bg-surface-900 {border
       ? bordered
       : unbordered}"
   >
