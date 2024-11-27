@@ -45,7 +45,7 @@
   <h6>Themes</h6>
   <ul class="list">
     {#each themes as theme}
-      <MenuItem type="lightMode" text={theme} onClick={() => changeTheme(theme)} />
+      <MenuItem type="lightMode" text={theme.name} onClick={() => changeTheme(theme.name)} />
     {/each}
   </ul>
 {/snippet}
