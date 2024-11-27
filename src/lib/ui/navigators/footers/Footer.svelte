@@ -14,7 +14,7 @@
   <div class="bg-surface-100-800-token border-surface-200-700-token bottom-0 mt-2 h-12 w-screen border-t-[1px]">
     <div class="mx-auto w-11/12 py-1">
       <div class="flex grid-flow-col items-center">
-        <div class="inline-flex flex-1">
+        <div class="flex inline-flex min-h-full flex-1 items-center">
           <TutorsIcon />
           <div>
             <TutorsVersion />

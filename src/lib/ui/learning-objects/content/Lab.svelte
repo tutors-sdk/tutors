@@ -48,16 +48,16 @@
   />
 </svelte:head>
 
-<div class="bg-primary-50-900-token fixed bottom-0 z-30 -ml-10 block w-full lg:hidden">
-  <nav class="flex flex-wrap justify-between p-2">
-    {@html lab.horizontalNavbarHtml}
-  </nav>
-</div>
-
 <div class="w-full">
+  <div class="bg-primary-50 dark:bg-primary-900 sticky top-0 block w-full rounded border lg:hidden">
+    <nav class="flex flex-wrap justify-between p-2">
+      {@html lab.horizontalNavbarHtml}
+    </nav>
+  </div>
+
   <div class="max-w-l flex">
     <div class="mr-2 hidden h-auto w-72 lg:block">
-      <div class="card sticky top-6 m-2 h-auto rounded-xl bg-surface-100 py-4 dark:bg-surface-950">
+      <div class="card bg-surface-100 dark:bg-surface-950 sticky top-6 m-2 h-auto rounded-xl py-4">
         <nav class="nav-list">
           <ul>
             {@html lab.navbarHtml}

@@ -10,7 +10,7 @@
 </script>
 
 <div class="grid h-screen grid-rows-[auto_1fr_auto]">
-  <header class="sticky top-0 bg-surface-100 backdrop-blur-sm dark:bg-surface-950">
+  <header class="bg-surface-100 dark:bg-surface-950 ackdrop-blur-sm sticky top-0">
     <MainNavigator />
     {#if currentCourse?.value}
       <SecondaryNavigator />
@@ -19,7 +19,7 @@
   <main class="mt-2 overflow-y-auto">
     {@render children()}
   </main>
-  <footer>
+  <footer class="hidden lg:block">
     <Footer />
   </footer>
 </div>
