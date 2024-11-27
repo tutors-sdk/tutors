@@ -15,12 +15,12 @@
   }
 </script>
 
-<div class="container card mx-auto my-4 p-8">
+<div class="card container mx-auto my-1 p-4">
   <p class="pb-4 text-2xl">Your previously accessed courses</p>
   <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
     {#each courseVisits as courseVisit}
       <div
-        class="to-accent-50 dark:to-accent-900 card card-hover m-2 border bg-gradient-to-l from-primary-50 p-2 dark:from-primary-900"
+        class="to-accent-50 dark:to-accent-900 card card-hover from-primary-50 dark:from-primary-900 m-2 border bg-gradient-to-l p-2"
       >
         <div class="flex justify-between">
           <section class="p-4">
@@ -43,11 +43,11 @@
         <footer class="card-footer p-0">
           <div class="flex w-full">
             <a
-              class="variant-filled-primary btn m-0 w-2/3 rounded-t-none rounded-br-none hover:preset-tonal"
+              class="variant-filled-primary btn hover:preset-tonal m-0 w-2/3 rounded-t-none rounded-br-none"
               href={"/course/" + courseVisit.id}>Visit Course</a
             >
             <button
-              class="variant-filled-error btn m-0 w-1/3 rounded-t-none rounded-bl-none hover:preset-tonal"
+              class="variant-filled-error btn hover:preset-tonal m-0 w-1/3 rounded-t-none rounded-bl-none"
               onclick={() => deleteCourse(courseVisit.id)}>Delete</button
             >
           </div>
