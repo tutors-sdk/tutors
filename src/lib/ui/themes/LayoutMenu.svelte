@@ -6,8 +6,12 @@
   import { layout } from "$lib/runes";
   import MenuItem from "$lib/ui/utils/MenuItem.svelte";
 
+  let selectedTheme = localStorage.getItem("selectedTheme") || "tutors";
+
   function changeTheme(theme: string): void {
     setTheme(theme);
+    selectedTheme = theme;
+    localStorage.setItem("selectedTheme", theme);
   }
 
   function toggleDisplayMode(): void {
@@ -45,7 +49,7 @@
   <h6>Themes</h6>
   <ul class="list">
     {#each themes as theme}
-      <MenuItem type="lightMode" text={theme.name} onClick={() => changeTheme(theme.name)} />
+      <MenuItem type="lightMode" isActive={selectedTheme === theme.name} text={theme.name} onClick={() => changeTheme(theme.name)}/>
     {/each}
   </ul>
 {/snippet}
