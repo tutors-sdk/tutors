@@ -4,36 +4,21 @@ import type { IconType } from "$lib/services/models/lo-types";
 import { FluentIconLib } from "../icons/fluent-icons";
 import { HeroIconLib } from "../icons/hero-icons";
 
-let StandardIconLib: { [key: string]: IconType } = FluentIconLib;
 export const themes = [
-  "tutors",
-  "classic",
-  "dyslexia",
-  "nouveau",
-  "concord",
-  "nosh",
-  "rose",
-  "vintage",
-  "seafoam",
-  "wintry",
-  "fennec",
-  "mona",
-  "cerberus"
+  { name: "tutors", icons: FluentIconLib },
+  { name: "classic", icons: FluentIconLib },
+  { name: "dyslexia", icons: FluentIconLib },
+  { name: "nouveau", icons: FluentIconLib },
+  { name: "concord", icons: FluentIconLib },
+  { name: "nosh", icons: FluentIconLib },
+  { name: "rose", icons: FluentIconLib },
+  { name: "vintage", icons: FluentIconLib },
+  { name: "seafoam", icons: FluentIconLib },
+  { name: "wintry", icons: FluentIconLib },
+  { name: "fennec", iconExists: FluentIconLib },
+  { name: "mona", icons: FluentIconLib },
+  { name: "cerberus", icons: FluentIconLib }
 ];
-
-export const themeIcons = {
-  tutors: FluentIconLib,
-  classic: FluentIconLib,
-  dyslexia: FluentIconLib,
-  nouveau: FluentIconLib,
-  concord: FluentIconLib,
-  vintage: FluentIconLib,
-  seafoam: FluentIconLib,
-  wintry: FluentIconLib,
-  fennec: FluentIconLib,
-  mona: FluentIconLib,
-  cerberus: HeroIconLib
-};
 
 export function setDisplayMode(mode: string): void {
   if (!mode) {
@@ -52,22 +37,22 @@ export function setTheme(theme: string): void {
   if (!theme) {
     theme = "tutors";
   }
-  currentTheme.value = theme;
+  if (themes.find((theme) => theme.name === currentTheme.value)) {
+    currentTheme.value = theme;
+  } else {
+    currentTheme.value = "tutors";
+  }
   document.body.setAttribute("data-theme", currentTheme.value);
   localStorage.theme = currentTheme.value;
-  setIconLibForTheme(currentTheme.value);
-}
-
-export function setIconLibForTheme(theme: string) {
-  StandardIconLib = themeIcons[currentTheme.value];
 }
 
 export function getIcon(type: string): IconType {
-  if (StandardIconLib[type]) {
-    return StandardIconLib[type];
+  const iconLib = themes.find((theme) => theme.name === currentTheme.value)?.icons;
+  if (iconLib && iconLib[type]) {
+    return iconLib[type];
   } else {
     console.log("No type found for icon", type);
-    return StandardIconLib.tutors;
+    return FluentIconLib.tutors;
   }
 }
 
@@ -77,5 +62,9 @@ export function addIcon(type: string, icon: IconType) {
 }
 
 export function getTypeColour(type: string): string {
-  return StandardIconLib[type].color;
+  const iconLib = themes.find((theme) => theme.name === currentTheme.value)?.icons;
+  if (iconLib && iconLib[type]) {
+    return iconLib[type].color;
+  }
+  return "primary";
 }
