@@ -64,14 +64,8 @@
         targetStr="_blank"
       />
 
-      <li class="option !p-0 hover:preset-tonal">
+      <li class="option hover:preset-tonal !p-0">
         <OnlineButton />
-        <!-- <button class="btn flex w-full justify-between">
-          <div class="ml-2">
-            View <span class="badge bg-error-500 text-white">{presenceService.studentsOnline.value.length}</span> Online
-          </div>
-          <Icon type="live" />
-        </button> -->
       </li>
 
       <hr />

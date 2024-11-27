@@ -69,7 +69,7 @@
   <Tooltip
     positioning={{ placement: "top" }}
     triggerBase="underline"
-    contentBase="card preset-filled p-4 text-sm"
+    contentBase="card preset-filled p-4 text-sm z-20 "
     openDelay={400}
   >
     {#snippet trigger()}

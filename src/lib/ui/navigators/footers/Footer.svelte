@@ -4,6 +4,7 @@
   import TutorsIcon from "$lib/ui/utils/TutorsIcon.svelte";
   import TutorsMessage from "./TutorsMessage.svelte";
   import TutorsVersion from "./TutorsVersion.svelte";
+  import { slide } from "svelte/transition";
 </script>
 
 {#if currentCourse?.value?.footer}
