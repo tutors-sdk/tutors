@@ -1,10 +1,13 @@
 <script>
   import Iconify from "@iconify/svelte";
+  import { cubicIn, cubicOut } from "svelte/easing";
+  import { fade, scale } from "svelte/transition";
 
-  let { courseVisit, deleteCourse, starUnstarCourse } = $props(); // Using prop rune syntax
+  let { courseVisit, deleteCourse, starUnstarCourse } = $props();
 </script>
 
 <div
+  transition:scale|local={{ duration: 300, start: 0.8, easing: cubicOut }}
   class="to-accent-50 dark:to-accent-900 card card-hover from-primary-50 dark:from-primary-900 m-2 border bg-gradient-to-l p-2"
 >
   <div class="flex justify-between">
