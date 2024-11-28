@@ -30,18 +30,19 @@
 <div class="card container mx-auto my-1 p-4">
   <p class="p-4 text-2xl">Favourites</p>
   <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-    {#each courseVisits as courseVisit}
-      {#if courseVisit.favourite}
+    {#each courseVisits.filter((cv) => cv.favourite) as courseVisit (courseVisit.id)}
+      <div animate:flip={{ duration: 300 }}>
         <CourseVisitCard {courseVisit} {deleteCourse} {starUnstarCourse} />
-      {/if}
+      </div>
     {/each}
   </div>
+
   <p class="p-4 text-2xl">Recently accessed</p>
   <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-    {#each courseVisits as courseVisit}
-      {#if !courseVisit.favourite}
+    {#each courseVisits.filter((cv) => !cv.favourite) as courseVisit (courseVisit.id)}
+      <div animate:flip={{ duration: 300 }}>
         <CourseVisitCard {courseVisit} {deleteCourse} {starUnstarCourse} />
-      {/if}
+      </div>
     {/each}
   </div>
 </div>
