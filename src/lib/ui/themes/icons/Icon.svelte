@@ -65,7 +65,7 @@
   {/if}
 {/snippet}
 
-{#if tip}
+<!-- {#if tip}
   <Tooltip
     positioning={{ placement: "top" }}
     triggerBase="underline"
@@ -79,6 +79,6 @@
       {tip}
     {/snippet}
   </Tooltip>
-{:else}
-  {@render displayIcon()}
-{/if}
+{:else} -->
+{@render displayIcon()}
+<!-- {/if} -->
