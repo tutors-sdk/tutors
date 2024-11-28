@@ -18,6 +18,7 @@ export type CourseVisit = {
   credits: string;
   visits?: number;
   private: boolean;
+  favourite: boolean;
 };
 
 export interface LoUser {
@@ -75,6 +76,8 @@ export interface ProfileStore {
   reload(): void;
   save(): void;
   logCourseVisit(course: Course): void;
+  favouriteCourse(courseId: string): void;
+  unfavouriteCourse(courseId: string): void;
   deleteCourseVisit(courseId: string): void;
   getCourseVisits(): Promise<CourseVisit[]>;
 }
@@ -94,6 +97,8 @@ export interface TutorsConnectService {
   courseVisit(course: Course, user: TutorsId): void;
   deleteCourseVisit(courseId: string): void;
   getCourseVisits(): Promise<CourseVisit[]>;
+  favouriteCourse(courseId: string): void;
+  unfavouriteCourse(courseId: string): void;
 
   learningEvent(params: Record<string, string>): void;
   startTimer(): void;

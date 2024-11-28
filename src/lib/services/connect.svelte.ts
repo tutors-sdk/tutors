@@ -74,8 +74,16 @@ export const tutorsConnectService: TutorsConnectService = {
     }
   },
 
-  deleteCourseVisit(courseId: string) {
-    this.profile.deleteCourseVisit(courseId);
+  async favouriteCourse(courseId: string) {
+    await this.profile.favouriteCourse(courseId);
+  },
+
+  async unfavouriteCourse(courseId: string) {
+    await this.profile.unfavouriteCourse(courseId);
+  },
+
+  async deleteCourseVisit(courseId: string) {
+    await this.profile.deleteCourseVisit(courseId);
   },
 
   getCourseVisits(): Promise<CourseVisit[]> {
