@@ -30,11 +30,9 @@
     {@render children()}
   </div>
   {#if loContext && isLoaded}
-    <div in:fly={slideFromRight.in} out:fly={slideFromRight.out}>
-      <div class="mr-2 hidden h-auto w-72 xl:block">
-        <div class="sticky top-6 h-auto">
-          <LoContextPanel {loContext} />
-        </div>
+    <div in:fly={slideFromRight.in} out:fly={slideFromRight.out} class="mr-2 hidden h-auto w-72 xl:block">
+      <div class="sticky top-6 h-auto">
+        <LoContextPanel {loContext} />
       </div>
     </div>
   {/if}
