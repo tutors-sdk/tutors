@@ -5,6 +5,7 @@ import * as themes from "@skeletonlabs/skeleton/themes";
 import tutors from "./src/lib/ui/themes/styles/tutors";
 import classic from "./src/lib/ui/themes/styles/classic";
 import dyslexia from "./src/lib/ui/themes/styles/dyslexia";
+import festive from "./src/lib/ui/themes/styles/festive";
 import type { Config } from "tailwindcss";
 
 export default {
@@ -43,6 +44,7 @@ export default {
         tutors,
         classic,
         dyslexia,
+        festive,
         themes.concord,
         themes.nouveau,
         themes.vintage,

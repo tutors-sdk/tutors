@@ -8,6 +8,7 @@ export const themes = [
   { name: "tutors", icons: FluentIconLib },
   { name: "classic", icons: FluentIconLib },
   { name: "dyslexia", icons: FluentIconLib },
+  { name: "festive", icons: FluentIconLib },
   { name: "nouveau", icons: FluentIconLib },
   { name: "concord", icons: FluentIconLib },
   { name: "nosh", icons: FluentIconLib },
