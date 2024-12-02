@@ -1,27 +1,39 @@
-import { cubicInOut, cubicOut } from "svelte/easing";
+import { animationDelay } from "$lib/runes";
+import { cubicOut, elasticOut, backOut, linear } from "svelte/easing";
 
-export const cardTransition = () => {
-  return {
-    css: (t: string) => {
-      return `transform: scale(${t}); `;
-    },
-    easing: cubicInOut,
-    baseScale: 0.5,
-    duration: 250,
-    delay: 250
-  };
+export const scaleTransition = {
+  duration: animationDelay.value,
+  start: 0.4,
+  easing: cubicOut
 };
 
-export const talkTransition = () => {
-  return {
-    css: (t: string) => {
-      return `transform: scale(${t}); `;
-    },
-    easing: cubicOut,
-    baseScale: 0.5,
-    duration: 200,
-    delay: 200
-  };
+export const slideFromLeft = {
+  in: { x: -200, duration: animationDelay.value, delay: animationDelay.value },
+  out: { x: -200, duration: animationDelay.value }
 };
 
-export const viewDelay = 500;
+export const slideFromRight = {
+  in: { x: 200, duration: animationDelay.value, delay: animationDelay.value },
+  out: { x: 200, duration: animationDelay.value }
+};
+
+// export const popTransition = {
+//   duration: 100,
+//   start: 0.2,
+//   easing: elasticOut,
+//   opacity: 0
+// };
+
+// export const slideTransition = {
+//   duration: 250,
+//   y: 20,
+//   easing: cubicOut,
+//   opacity: 0
+// };
+
+// export const bounceTransition = {
+//   duration: 100,
+//   y: 20,
+//   easing: backOut,
+//   opacity: 0
+// };

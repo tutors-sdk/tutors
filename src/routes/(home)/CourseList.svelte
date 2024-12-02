@@ -27,22 +27,18 @@
   }
 </script>
 
-<div class="card container mx-auto my-1 p-4">
+<div class="container card mx-auto my-1 p-4">
   <p class="p-4 text-2xl">Favourites</p>
   <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
     {#each courseVisits.filter((cv) => cv.favourite) as courseVisit (courseVisit.id)}
-      <div animate:flip={{ duration: 300 }}>
-        <CourseVisitCard {courseVisit} {deleteCourse} {starUnstarCourse} />
-      </div>
+      <CourseVisitCard {courseVisit} {deleteCourse} {starUnstarCourse} />
     {/each}
   </div>
 
   <p class="p-4 text-2xl">Recently accessed</p>
   <div class="mx-auto grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
     {#each courseVisits.filter((cv) => !cv.favourite) as courseVisit (courseVisit.id)}
-      <div animate:flip={{ duration: 300 }}>
-        <CourseVisitCard {courseVisit} {deleteCourse} {starUnstarCourse} />
-      </div>
+      <CourseVisitCard {courseVisit} {deleteCourse} {starUnstarCourse} />
     {/each}
   </div>
 </div>

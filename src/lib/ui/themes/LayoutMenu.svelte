@@ -1,7 +1,7 @@
 <script lang="ts">
   import { setDisplayMode, setTheme, themes } from "./styles/icon-lib.svelte";
   import Icon from "./icons/Icon.svelte";
-  import { lightMode } from "$lib/runes";
+  import { animationDelay, lightMode } from "$lib/runes";
   import Menu from "$lib/ui/utils/Menu.svelte";
   import { layout } from "$lib/runes";
   import MenuItem from "$lib/ui/utils/MenuItem.svelte";
@@ -49,7 +49,12 @@
   <h6>Themes</h6>
   <ul class="list">
     {#each themes as theme}
-      <MenuItem type="lightMode" isActive={selectedTheme === theme.name} text={theme.name} onClick={() => changeTheme(theme.name)}/>
+      <MenuItem
+        type="lightMode"
+        isActive={selectedTheme === theme.name}
+        text={theme.name}
+        onClick={() => changeTheme(theme.name)}
+      />
     {/each}
   </ul>
 {/snippet}
