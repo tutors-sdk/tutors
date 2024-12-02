@@ -4,6 +4,7 @@
   import Breadcrumbs from "../themes/icons/Breadcrumbs.svelte";
   import EditCoursButton from "./buttons/EditCoursButton.svelte";
   import IconBar from "../themes/icons/IconBar.svelte";
+  import { slideFromLeft } from "../animations";
 
   let firstDivClass = $state("");
   let otherDivClass = $state("");
@@ -20,17 +21,13 @@
 </script>
 
 {#if !currentCourse?.value?.isPortfolio}
-  <div in:fly={{ x: -200, duration: 300, delay: 300 }} out:fly={{ x: -200, duration: 300 }}>
-    <div
-      class="border-primary-100 bg-primary-50 dark:border-primary-800 {firstDivClass} z-10 flex h-12 border-b-[1px]"
-    >
+  <div in:fly={slideFromLeft.in} out:fly={slideFromLeft.out}>
+    <div class="border-primary-100 bg-primary-50 dark:border-primary-800 {firstDivClass} z-10 flex h-12 border-b-[1px]">
       <Breadcrumbs />
       {#if currentCourse?.value}
         <div class="flex flex-auto"></div>
         {#if currentCourse?.value?.properties.github}
-          <div
-            class="bg-primary-200 {otherDivClass} my-2 mr-2 hidden rounded-lg bg-opacity-80 lg:flex lg:flex-none"
-          >
+          <div class="bg-primary-200 {otherDivClass} my-2 mr-2 hidden rounded-lg bg-opacity-80 lg:flex lg:flex-none">
             <EditCoursButton />
           </div>
         {/if}
