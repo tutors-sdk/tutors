@@ -4,6 +4,9 @@
   import type { Lo } from "$lib/services/models/lo-types";
   import { setShowHide } from "$lib/services/models/lo-utils";
   import Card from "$lib/ui/themes/card/Card.svelte";
+  import { cubicOut } from "svelte/easing";
+  import { scale } from "svelte/transition";
+  import { scaleTransition } from "$lib/ui/animations";
 
   interface Props {
     los?: Lo[];
@@ -18,6 +21,7 @@
   let pinBuffer = "";
   let ignorePin = "";
   let refresh = $state(true);
+  let isLoaded = $state(false);
 
   function keypressInput(e: { key: string }) {
     pinBuffer = pinBuffer.concat(e.key);
@@ -35,11 +39,13 @@
       ignorePin = currentCourse?.value?.properties.ignorepin.toString();
       window.addEventListener("keydown", keypressInput);
     }
+    isLoaded = true;
   });
 </script>
 
-{#if los.length > 0}
+{#if los.length > 0 && isLoaded}
   <div
+    transition:scale|local={scaleTransition}
     class="mx-auto mb-2 place-items-center overflow-hidden rounded-xl bg-surface-100 p-4 dark:bg-surface-900 {border
       ? bordered
       : unbordered}"
