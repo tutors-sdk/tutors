@@ -3,12 +3,13 @@ import type { IconType } from "$lib/services/models/lo-types";
 
 import { FluentIconLib } from "../icons/fluent-icons";
 import { HeroIconLib } from "../icons/hero-icons";
+import { FestiveIcons } from "../icons/festive-icons";
 
 export const themes = [
   { name: "tutors", icons: FluentIconLib },
   { name: "classic", icons: FluentIconLib },
   { name: "dyslexia", icons: FluentIconLib },
-  { name: "festive", icons: FluentIconLib },
+  { name: "festive", icons: FestiveIcons },
   { name: "nouveau", icons: FluentIconLib },
   { name: "concord", icons: FluentIconLib },
   { name: "nosh", icons: FluentIconLib },
@@ -60,6 +61,7 @@ export function getIcon(type: string): IconType {
 export function addIcon(type: string, icon: IconType) {
   FluentIconLib[type] = icon;
   HeroIconLib[type] = icon;
+  FestiveIcons[type] = icon;
 }
 
 export function getTypeColour(type: string): string {
