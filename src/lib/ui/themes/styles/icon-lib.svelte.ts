@@ -11,14 +11,7 @@ export const themes = [
   { name: "dyslexia", icons: FluentIconLib },
   { name: "festive", icons: FestiveIcons },
   { name: "nouveau", icons: FluentIconLib },
-  { name: "concord", icons: FluentIconLib },
-  { name: "nosh", icons: FluentIconLib },
   { name: "rose", icons: FluentIconLib },
-  { name: "vintage", icons: FluentIconLib },
-  { name: "seafoam", icons: FluentIconLib },
-  { name: "wintry", icons: FluentIconLib },
-  { name: "fennec", iconExists: FluentIconLib },
-  { name: "mona", icons: FluentIconLib },
   { name: "cerberus", icons: FluentIconLib }
 ];
 

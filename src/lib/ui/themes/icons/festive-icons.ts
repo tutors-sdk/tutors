@@ -11,8 +11,8 @@ export const FestiveIcons = {
   teams: { type: "logos:microsoft-teams", color: "bg-base-content" },
 
   // LoTypes icons
-  course: { type: "fluent:notebook-24-filled", color: "primary" },
-  topic: { type: "twemoji:christmas-tree", color: "secondary" }, 
+  course: { type: "fxemoji:present", color: "primary" },
+  topic: { type: "twemoji:christmas-tree", color: "secondary" },
   unit: { type: "fxemoji:fatherchristmas", color: "tertiary" },
   side: { type: "fxemoji:fatherchristmas", color: "success" },
   talk: { type: "fluent:presenter-24-filled", color: "warning" },
@@ -20,7 +20,7 @@ export const FestiveIcons = {
   lab: { type: "fluent:beaker-24-filled", color: "error" },
   note: { type: "fluent:notepad-16-regular", color: "success" },
   archive: { type: "fluent:archive-24-filled", color: "error" },
-  web: { type: "fluent:bookmark-24-regular", color: "primary" },
+  web: { type: "noto:star", color: "primary" },
   github: { type: "mdi:github", color: "warning" },
   panelvideo: { type: "fluent:video-clip-24-regular", color: "error" },
   paneltalk: { type: "fluent:presenter-24-filled", color: "primary" },
