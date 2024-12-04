@@ -10,7 +10,7 @@
 </script>
 
 <div class="grid h-screen grid-rows-[auto_1fr_auto]">
-  <header class="bg-surface-100 dark:bg-surface-950 ackdrop-blur-sm sticky top-0">
+  <header class="sticky top-0 bg-surface-100 dark:bg-surface-950">
     <MainNavigator />
     {#if currentCourse?.value}
       <SecondaryNavigator />
