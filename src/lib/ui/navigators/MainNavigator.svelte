@@ -23,7 +23,9 @@
 >
   {#snippet lead()}
     {#if currentCourse?.value}
-      <InfoButton />
+      <span class="hidden md:block">
+        <InfoButton />
+      </span>
       <CourseTitle />
     {:else}
       <span class="ml-12">
@@ -33,11 +35,13 @@
   {/snippet}
   <CalendarButton />
   {#snippet trail()}
-    <TutorsTimeIndicator />
-    {#if !currentCourse?.value?.isPortfolio}
-      <SearchButton />
-    {/if}
-    <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
+    <span class="hidden md:block">
+      <TutorsTimeIndicator />
+      {#if !currentCourse?.value?.isPortfolio}
+        <SearchButton />
+      {/if}
+      <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
+    </span>
     <LayoutMenu />
     <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
     {#if !currentCourse?.value?.isPrivate}
@@ -49,8 +53,10 @@
         {/if}
       </div>
     {/if}
-    {#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
-      <TocButton />
-    {/if}
+    <span class="hidden md:block">
+      {#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
+        <TocButton />
+      {/if}
+    </span>
   {/snippet}
 </AppBar>
