@@ -70,7 +70,7 @@ export const tutorsConnectService: TutorsConnectService = {
     presenceService.startPresenceListener(course.courseId);
     if (course.authLevel! > 0 && !this.tutorsId.value?.login) {
       localStorage.loginCourse = course.courseId;
-      goto(`/auth`);
+      // goto(`/auth`);
     }
   },
 
