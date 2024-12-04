@@ -12,11 +12,11 @@
 </script>
 
 <Context lo={data.lo}>
-  {#if currentCourse.value?.defaultPdfReader === "mozilla"}
-    <Talk lo={data.lo} />
-  {:else if currentCourse.value?.defaultPdfReader === "adobe"}
+  <!-- {#if currentCourse.value?.defaultPdfReader === "mozilla"} -->
+  <Talk lo={data.lo} />
+  <!-- {:else if currentCourse.value?.defaultPdfReader === "adobe"}
     <TalkAdobe lo={data.lo} />
   {:else}
-    <TalkAdobe lo={data.lo} />
-  {/if}
+    <TalkAdobe lo={data.lo} /> -->
+  <!-- {/if} -->
 </Context>
