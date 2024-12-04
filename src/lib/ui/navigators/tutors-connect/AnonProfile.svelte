@@ -18,7 +18,7 @@
 
 <nav class="card-body card list-nav w-56 space-y-4 p-4 shadow-lg" data-popup="avatar">
   <ul>
-    {#if PUBLIC_ANON_MODE !== "TRUE"}
+    <!-- {#if PUBLIC_ANON_MODE !== "TRUE"}
       <li>
         <a href="/auth{redirect}">
           <Icon icon="mdi:github" height="25" />
@@ -26,7 +26,7 @@
         </a>
       </li>
       <hr />
-    {/if}
+    {/if} -->
     <li>
       <a href="/">
         <Icon icon="fluent:home-24-filled" color="rgba(var(--color-primary-500))" height="20" />

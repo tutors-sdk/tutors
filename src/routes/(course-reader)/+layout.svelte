@@ -9,18 +9,18 @@
   type Props = { children: Snippet };
   let { children }: Props = $props();
 
-  page.subscribe((path) => {
-    tutorsConnectService.learningEvent(path.params);
-  });
-  tutorsConnectService.startTimer();
+  // page.subscribe((path) => {
+  //   tutorsConnectService.learningEvent(path.params);
+  // });
+  // tutorsConnectService.startTimer();
 
-  let lastCourseId = "";
-  $effect(() => {
-    if (currentCourse.value?.courseId !== lastCourseId) {
-      tutorsConnectService.courseVisit(currentCourse?.value!, tutorsConnectService?.tutorsId.value);
-      lastCourseId = currentCourse?.value?.courseId!;
-    }
-  });
+  // let lastCourseId = "";
+  // $effect(() => {
+  //   if (currentCourse.value?.courseId !== lastCourseId) {
+  //     tutorsConnectService.courseVisit(currentCourse?.value!, tutorsConnectService?.tutorsId.value);
+  //     lastCourseId = currentCourse?.value?.courseId!;
+  //   }
+  // });
 </script>
 
 <svelte:head>
