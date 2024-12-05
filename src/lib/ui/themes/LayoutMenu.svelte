@@ -1,10 +1,10 @@
 <script lang="ts">
   import { setDisplayMode, setTheme, themes } from "./styles/icon-lib.svelte";
-  import Icon from "./icons/Icon.svelte";
-  import { animationDelay, lightMode } from "$lib/runes";
-  import Menu from "$lib/ui/utils/Menu.svelte";
+  import { lightMode } from "$lib/runes";
+  import Menu from "$lib/ui/components/Menu.svelte";
   import { layout } from "$lib/runes";
-  import MenuItem from "$lib/ui/utils/MenuItem.svelte";
+  import MenuItem from "$lib/ui/components/MenuItem.svelte";
+  import Icon from "../components/Icon.svelte";
 
   let selectedTheme = localStorage.getItem("selectedTheme") || "tutors";
 

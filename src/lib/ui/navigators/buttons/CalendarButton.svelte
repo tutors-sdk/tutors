@@ -1,8 +1,8 @@
 <script lang="ts">
   import { currentCourse } from "$lib/runes";
   import Calendar from "$lib/ui/learning-objects/content/Calendar.svelte";
-  import Sidebar from "$lib/ui/utils/Sidebar.svelte";
-  import Icon from "$lib/ui/themes/icons/Icon.svelte";
+  import Sidebar from "$lib/ui/components/Sidebar.svelte";
+  import Icon from "$lib/ui/components/Icon.svelte";
 </script>
 
 {#if currentCourse?.value?.courseCalendar?.currentWeek}

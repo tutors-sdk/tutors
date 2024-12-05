@@ -2,7 +2,7 @@
   import type { Composite } from "$lib/services/models/lo-types";
   import Panels from "./Panels.svelte";
   import Cards from "./Cards.svelte";
-  import Image from "../../themes/Image.svelte";
+  import Image from "../../components/Image.svelte";
 
   interface Props {
     units: Composite[];

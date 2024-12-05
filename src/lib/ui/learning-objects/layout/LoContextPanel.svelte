@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models/lo-types";
-  import Image from "../../themes/Image.svelte";
+  import Image from "../../components/Image.svelte";
   import LoContext from "../structure/LoContext.svelte";
 
   interface Props {

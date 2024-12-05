@@ -2,7 +2,7 @@
   import type { Lo } from "$lib/services/models/lo-types";
   import { onMount, type Snippet } from "svelte";
   import LoContextPanel from "../layout/LoContextPanel.svelte";
-  import { slideFromRight } from "$lib/ui/animations";
+  import { slideFromRight } from "$lib/ui/components/animations";
   import { fly } from "svelte/transition";
 
   type Props = {

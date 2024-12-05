@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentCourse, currentLo } from "$lib/runes";
-  import Image from "../../themes/Image.svelte";
+  import Image from "../../components/Image.svelte";
   console.log("currentLo", currentLo);
 </script>
 

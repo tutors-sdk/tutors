@@ -1,5 +1,4 @@
 <script lang="ts">
-  import Icon from "$lib/ui/themes/icons/Icon.svelte";
   import * as pdfjs from "pdfjs-dist";
   // @ts-ignore
   import FileSaver from "file-saver";
@@ -8,6 +7,7 @@
   import { PDFWorker, getDocument } from "pdfjs-dist";
   import type { Talk } from "$lib/services/models/lo-types";
   import { setupWorker } from "./support/pdf-utils";
+  import Icon from "$lib/ui/components/Icon.svelte";
 
   pdfjs.GlobalWorkerOptions.workerSrc = "/node_modules/pdfjs-dist/build/pdf.worker.min.mjs";
 

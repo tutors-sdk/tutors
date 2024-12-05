@@ -6,7 +6,7 @@
   import Card from "$lib/ui/themes/card/Card.svelte";
   import { cubicOut } from "svelte/easing";
   import { scale } from "svelte/transition";
-  import { scaleTransition } from "$lib/ui/animations";
+  import { scaleTransition } from "$lib/ui/components/animations";
 
   interface Props {
     los?: Lo[];

@@ -1,6 +1,6 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
-  import Icon from "$lib/ui/themes/icons/Icon.svelte";
+
   import {
     layout,
     avatarWidth,
@@ -14,6 +14,7 @@
 
   import { getTypeColour } from "../styles/icon-lib.svelte";
   import type { CardDetails } from "$lib/services/types.svelte";
+  import Icon from "$lib/ui/components/Icon.svelte";
 
   let { cardDetails } = $props<{ cardDetails: CardDetails }>();
   let target = $state("");
