@@ -9,7 +9,7 @@
   import { setupWorker } from "./support/pdf-utils";
   import Icon from "$lib/ui/components/Icon.svelte";
 
-  pdfjs.GlobalWorkerOptions.workerSrc = "/node_modules/pdfjs-dist/build/pdf.worker.min.mjs";
+  pdfjs.GlobalWorkerOptions.workerSrc = "./node_modules/pdfjs-dist/build/pdf.worker.min.mjs";
 
   interface Props {
     lo: Talk;
