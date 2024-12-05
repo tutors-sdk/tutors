@@ -1,7 +1,7 @@
 <script lang="ts">
   import { currentCourse } from "$lib/runes";
-  import Sidebar from "$lib/ui/utils/Sidebar.svelte";
-  import Icon from "$lib/ui/themes/icons/Icon.svelte";
+  import Icon from "$lib/ui/components/Icon.svelte";
+  import Sidebar from "$lib/ui/components/Sidebar.svelte";
 </script>
 
 {#snippet menuSelector()}

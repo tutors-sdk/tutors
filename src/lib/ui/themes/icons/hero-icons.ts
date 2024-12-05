@@ -1,4 +1,6 @@
-export const HeroIconLib = {
+import type { IconLib } from "$lib/services/models/lo-types";
+
+export const HeroIconLib: IconLib = {
   // Home Icon
   programHome: { type: "heroicons-outline:home", color: "success" },
 

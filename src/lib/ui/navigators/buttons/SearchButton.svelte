@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Icon from "$lib/ui/themes/icons/Icon.svelte";
   import { goto } from "$app/navigation";
   import { currentCourse } from "$lib/runes";
+  import Icon from "$lib/ui/components/Icon.svelte";
 
   let isSearching = sessionStorage.getItem("isSearching") === "true";
   let previousPage = "";

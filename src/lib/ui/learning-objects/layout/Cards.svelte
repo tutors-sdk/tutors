@@ -3,10 +3,10 @@
   import { currentCourse } from "$lib/runes";
   import type { Lo } from "$lib/services/models/lo-types";
   import { setShowHide } from "$lib/services/models/lo-utils";
-  import Card from "$lib/ui/themes/card/Card.svelte";
+  import Card from "$lib/ui/components/Card.svelte";
   import { cubicOut } from "svelte/easing";
   import { scale } from "svelte/transition";
-  import { scaleTransition } from "$lib/ui/animations";
+  import { scaleTransition } from "$lib/ui/themes/animations";
 
   interface Props {
     los?: Lo[];

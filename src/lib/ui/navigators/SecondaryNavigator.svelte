@@ -1,10 +1,11 @@
 <script lang="ts">
   import { currentCourse, currentTheme } from "$lib/runes";
   import { fly } from "svelte/transition";
-  import Breadcrumbs from "../themes/icons/Breadcrumbs.svelte";
+  import Breadcrumbs from "./buttons/Breadcrumbs.svelte";
   import EditCoursButton from "./buttons/EditCoursButton.svelte";
-  import IconBar from "../themes/icons/IconBar.svelte";
-  import { slideFromLeft } from "../animations";
+
+  import { slideFromLeft } from "../themes/animations";
+  import IconBar from "../components/IconBar.svelte";
 
   let firstDivClass = $state("");
   let otherDivClass = $state("");

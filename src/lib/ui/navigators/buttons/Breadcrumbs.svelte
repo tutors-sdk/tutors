@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models/lo-types";
   import { currentCourse, currentLo } from "$lib/runes";
-  import Icon from "./Icon.svelte";
+  import Icon from "$lib/ui/components/Icon.svelte";
+
   let truncated = [true, true, true, true, true, true, true];
 
   function truncate(input: string) {
@@ -48,7 +49,7 @@
           <li class="opacity-50" aria-hidden="true">&rsaquo;</li>
         {/if}
         <li class="flex items-center hover:underline">
-          <a href={lo.route} class="inline-flex !space-x-[-1rem] text-black dark:text-white lg:!space-x-0">
+          <a href={lo.route} class="inline-flex !space-x-[-1rem] text-black lg:!space-x-0 dark:text-white">
             <Icon type={lo.type} tip={`Go to ${lo.title}`} />
 
             <!-- svelte-ignore a11y_no_static_element_interactions -->

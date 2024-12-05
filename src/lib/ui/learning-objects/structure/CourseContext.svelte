@@ -1,8 +1,8 @@
 <script lang="ts">
   import { currentCourse } from "$lib/runes";
-  import Icon from "$lib/ui/themes/icons/Icon.svelte";
   import { Accordion } from "@skeletonlabs/skeleton-svelte";
   import LoContext from "./LoContext.svelte";
+  import Icon from "$lib/ui/components/Icon.svelte";
 </script>
 
 <Accordion multiple>

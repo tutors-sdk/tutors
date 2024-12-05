@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { currentCourse } from "$lib/runes";
-  import Icon from "$lib/ui/themes/icons/Icon.svelte";
   import { Modal } from "@skeletonlabs/skeleton-svelte";
+  import Icon from "./Icon.svelte";
 
   let { position = "left", menuSelector, sidebarContent } = $props();
 

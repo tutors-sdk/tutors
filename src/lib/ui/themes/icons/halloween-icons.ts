@@ -1,4 +1,6 @@
-export const HalloweenIconLib = {
+import type { IconLib } from "$lib/services/models/lo-types";
+
+export const HalloweenIconLib: IconLib = {
   // Home type
   programHome: { type: "cib:nodemon", color: "warning" },
 

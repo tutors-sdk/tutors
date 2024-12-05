@@ -1,24 +1,20 @@
 <script lang="ts">
-  import { setDisplayMode, setTheme, themes } from "./styles/icon-lib.svelte";
-  import Icon from "./icons/Icon.svelte";
-  import { animationDelay, lightMode } from "$lib/runes";
-  import Menu from "$lib/ui/utils/Menu.svelte";
+  import { currentTheme, lightMode } from "$lib/runes";
+  import Menu from "$lib/ui/components/Menu.svelte";
   import { layout } from "$lib/runes";
-  import MenuItem from "$lib/ui/utils/MenuItem.svelte";
-
-  let selectedTheme = localStorage.getItem("selectedTheme") || "tutors";
+  import MenuItem from "$lib/ui/components/MenuItem.svelte";
+  import Icon from "../components/Icon.svelte";
+  import { themeService } from "./theme-controller.svelte";
 
   function changeTheme(theme: string): void {
-    setTheme(theme);
-    selectedTheme = theme;
-    localStorage.setItem("selectedTheme", theme);
+    themeService.setTheme(theme);
   }
 
   function toggleDisplayMode(): void {
     if (lightMode.value === "dark") {
-      setDisplayMode("light");
+      themeService.setDisplayMode("light");
     } else {
-      setDisplayMode("dark");
+      themeService.setDisplayMode("dark");
     }
   }
 
@@ -48,10 +44,10 @@
   <hr />
   <h6>Themes</h6>
   <ul class="list">
-    {#each themes as theme}
+    {#each themeService.themes as theme}
       <MenuItem
         type="lightMode"
-        isActive={selectedTheme === theme.name}
+        isActive={currentTheme.value === theme.name}
         text={theme.name}
         onClick={() => changeTheme(theme.name)}
       />

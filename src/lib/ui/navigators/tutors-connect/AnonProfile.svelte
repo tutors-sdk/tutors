@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Avatar, Popover } from "@skeletonlabs/skeleton-svelte";
-  import MenuItem from "../../utils/MenuItem.svelte";
+  import { Avatar } from "@skeletonlabs/skeleton-svelte";
+  import MenuItem from "../../components/MenuItem.svelte";
 
   import { PUBLIC_ANON_MODE } from "$env/static/public";
-  import Menu from "$lib/ui/utils/Menu.svelte";
+  import Menu from "$lib/ui/components/Menu.svelte";
 
   interface Props {
     redirect?: string;

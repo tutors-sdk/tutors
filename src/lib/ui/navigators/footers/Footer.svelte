@@ -1,7 +1,7 @@
 <script lang="ts">
   import { currentCourse } from "$lib/runes";
-  import SetuIcon from "$lib/ui/utils/SetuIcon.svelte";
-  import TutorsIcon from "$lib/ui/utils/TutorsIcon.svelte";
+  import SetuIcon from "$lib/ui/components/SetuIcon.svelte";
+  import TutorsIcon from "$lib/ui/components/TutorsIcon.svelte";
   import TutorsMessage from "./TutorsMessage.svelte";
   import TutorsVersion from "./TutorsVersion.svelte";
   import { slide } from "svelte/transition";

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models/lo-types";
-  import Icon from "$lib/ui/themes/icons/Icon.svelte";
+  import Icon from "$lib/ui/components/Icon.svelte";
 
   export let lo: Lo;
   export let indent = 0;

@@ -2,11 +2,11 @@
   import { currentCourse } from "$lib/runes";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
   import { presenceService } from "$lib/services/presence.svelte";
-  import MenuItem from "../../utils/MenuItem.svelte";
-  import Icon from "$lib/ui/themes/icons/Icon.svelte";
-  import Menu from "$lib/ui/utils/Menu.svelte";
+  import MenuItem from "../../components/MenuItem.svelte";
+  import Menu from "$lib/ui/components/Menu.svelte";
   import { Avatar } from "@skeletonlabs/skeleton-svelte";
   import OnlineButton from "../buttons/OnlineButton.svelte";
+  import Icon from "$lib/ui/components/Icon.svelte";
 
   function logout() {
     tutorsConnectService.disconnect("/");
@@ -64,7 +64,7 @@
         targetStr="_blank"
       />
 
-      <li class="option hover:preset-tonal !p-0">
+      <li class="option !p-0 hover:preset-tonal">
         <OnlineButton />
       </li>
 

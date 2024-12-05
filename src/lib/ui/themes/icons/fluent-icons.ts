@@ -1,4 +1,6 @@
-export const FluentIconLib = {
+import type { IconLib } from "$lib/services/models/lo-types";
+
+export const FluentIconLib: IconLib = {
   // Home Icon
   programHome: { type: "fluent:home-24-filled", color: "success" },
 

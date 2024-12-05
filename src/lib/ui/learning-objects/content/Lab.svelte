@@ -5,7 +5,7 @@
   import { goto, afterNavigate } from "$app/navigation";
   import type { LiveLab } from "$lib/services/models/live-lab";
   import { fly } from "svelte/transition";
-  import { slideFromLeft } from "$lib/ui/animations";
+  import { slideFromLeft } from "$lib/ui/themes/animations";
 
   interface Props {
     lab: LiveLab;
