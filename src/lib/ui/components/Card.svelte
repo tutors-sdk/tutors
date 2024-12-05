@@ -12,9 +12,9 @@
     textSize
   } from "$lib/runes";
 
-  import { getTypeColour } from "../themes/theme-controller.svelte";
   import type { CardDetails } from "$lib/services/types.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
+  import { themeService } from "../themes/theme-controller.svelte";
 
   let { cardDetails } = $props<{ cardDetails: CardDetails }>();
   let target = $state("");
@@ -104,8 +104,8 @@
 
 <a href={cardDetails.route} {target}>
   <div
-    class="card preset-filled-{getTypeColour(cardDetails.type)}-100-900 border-[1px]
-    border-y-8 border-{getTypeColour(
+    class="card preset-filled-{themeService.getTypeColour(cardDetails.type)}-100-900 border-[1px]
+    border-y-8 border-{themeService.getTypeColour(
       cardDetails.type
     )}-500 m-2 {cardWidths.value} transition-all hover:scale-105 {cardHeight.value}
     flex flex-col"

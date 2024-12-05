@@ -4,7 +4,7 @@
   import type { PageData } from "./$types";
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
-  import { initDisplay, setTheme } from "$lib/ui/themes/theme-controller.svelte";
+  import { themeService } from "$lib/ui/themes/theme-controller.svelte";
 
   interface Props {
     data: PageData;
@@ -18,7 +18,7 @@
 
   onMount(async () => {
     if (browser) {
-      initDisplay();
+      themeService.initDisplay();
     }
   });
 </script>

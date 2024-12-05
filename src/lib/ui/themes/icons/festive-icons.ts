@@ -1,4 +1,6 @@
-export const FestiveIcons = {
+import type { IconLib } from "$lib/services/models/lo-types";
+
+export const FestiveIcons: IconLib = {
   // Home Icon
   programHome: { type: "tabler:christmas-ball", color: "success" },
 

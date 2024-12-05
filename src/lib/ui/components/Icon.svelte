@@ -2,7 +2,7 @@
   import Icon from "@iconify/svelte";
 
   import { Tooltip } from "@skeletonlabs/skeleton-svelte";
-  import { getIcon } from "../themes/theme-controller.svelte";
+  import { themeService } from "../themes/theme-controller.svelte";
 
   interface Props {
     type?: string;
@@ -51,11 +51,21 @@
   {#if type}
     {#if link}
       <a class="btn btn-sm" {target} href={link}>
-        <Icon icon={getIcon(type).type} color={legacyIconColour(getIcon(type).color)} {width} {height} />
+        <Icon
+          icon={themeService.getIcon(type).type}
+          color={legacyIconColour(themeService.getIcon(type).color)}
+          {width}
+          {height}
+        />
         {text}
       </a>
     {:else}
-      <Icon icon={getIcon(type).type} color={legacyIconColour(getIcon(type).color)} {width} {height} />
+      <Icon
+        icon={themeService.getIcon(type).type}
+        color={legacyIconColour(themeService.getIcon(type).color)}
+        {width}
+        {height}
+      />
     {/if}
   {:else if link}
     <a {target} href={link}>

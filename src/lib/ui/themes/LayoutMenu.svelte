@@ -1,20 +1,20 @@
 <script lang="ts">
-  import { setDisplayMode, setTheme, themes } from "./theme-controller.svelte";
   import { currentTheme, lightMode } from "$lib/runes";
   import Menu from "$lib/ui/components/Menu.svelte";
   import { layout } from "$lib/runes";
   import MenuItem from "$lib/ui/components/MenuItem.svelte";
   import Icon from "../components/Icon.svelte";
+  import { themeService } from "./theme-controller.svelte";
 
   function changeTheme(theme: string): void {
-    setTheme(theme);
+    themeService.setTheme(theme);
   }
 
   function toggleDisplayMode(): void {
     if (lightMode.value === "dark") {
-      setDisplayMode("light");
+      themeService.setDisplayMode("light");
     } else {
-      setDisplayMode("dark");
+      themeService.setDisplayMode("dark");
     }
   }
 
@@ -44,7 +44,7 @@
   <hr />
   <h6>Themes</h6>
   <ul class="list">
-    {#each themes as theme}
+    {#each themeService.themes as theme}
       <MenuItem
         type="lightMode"
         isActive={currentTheme.value === theme.name}

@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
   import type { Lo } from "$lib/services/models/lo-types";
   import { currentCourse } from "$lib/runes";
-  import { getIcon } from "../../themes/theme-controller.svelte";
+  import { themeService } from "$lib/ui/themes/theme-controller.svelte";
 
   let firefox = $state(false);
 
@@ -33,7 +33,7 @@
   });
 
   if (lo && lo.type === "panelvideo") {
-    lo.icon = { type: getIcon("video").type, color: getIcon("video").color };
+    lo.icon = { type: themeService.getIcon("video").type, color: themeService.getIcon("video").color };
   }
 
   if (lo.videoids) {
