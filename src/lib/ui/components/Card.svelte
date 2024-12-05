@@ -12,7 +12,7 @@
     textSize
   } from "$lib/runes";
 
-  import { getTypeColour } from "../styles/icon-lib.svelte";
+  import { getTypeColour } from "../themes/theme-controller";
   import type { CardDetails } from "$lib/services/types.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
 

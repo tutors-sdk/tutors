@@ -4,7 +4,7 @@
   import type { PageData } from "./$types";
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
-  import { setDisplayMode, setTheme } from "$lib/ui/themes/styles/icon-lib.svelte";
+  import { setDisplayMode, setTheme } from "$lib/ui/themes/theme-controller";
   import { currentTheme } from "$lib/runes";
   import { makeItSnow, makeItStopSnowing } from "./snow.ts";
 

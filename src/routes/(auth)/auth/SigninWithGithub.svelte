@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getIcon } from "$lib/ui/themes/styles/icon-lib.svelte";
+  import { getIcon } from "$lib/ui/themes/theme-controller";
   import Icon from "@iconify/svelte";
   import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { tutorsConnectService } from "$lib/services/connect.svelte";

@@ -1,9 +1,9 @@
 import { currentTheme, lightMode } from "$lib/runes";
 import type { IconType } from "$lib/services/models/lo-types";
 
-import { FluentIconLib } from "../icons/fluent-icons";
-import { HeroIconLib } from "../icons/hero-icons";
-import { FestiveIcons } from "../icons/festive-icons";
+import { FluentIconLib } from "./icons/fluent-icons";
+import { HeroIconLib } from "./icons/hero-icons";
+import { FestiveIcons } from "./icons/festive-icons";
 
 export const themes = [
   { name: "tutors", icons: FluentIconLib },

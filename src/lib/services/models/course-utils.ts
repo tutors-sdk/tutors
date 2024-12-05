@@ -1,4 +1,4 @@
-import { addIcon } from "$lib/ui/themes/styles/icon-lib.svelte";
+import { addIcon } from "$lib/ui/themes/theme-controller";
 import type { Composite, Course, IconNav, Lo, LoType, Topic } from "./lo-types";
 import { filterByType, setShowHide } from "./lo-utils";
 

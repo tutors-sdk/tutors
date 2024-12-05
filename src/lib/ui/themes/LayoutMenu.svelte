@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { setDisplayMode, setTheme, themes } from "./styles/icon-lib.svelte";
+  import { setDisplayMode, setTheme, themes } from "./theme-controller";
   import { lightMode } from "$lib/runes";
   import Menu from "$lib/ui/components/Menu.svelte";
   import { layout } from "$lib/runes";

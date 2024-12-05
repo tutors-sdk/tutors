@@ -4,7 +4,7 @@
   import Breadcrumbs from "./buttons/Breadcrumbs.svelte";
   import EditCoursButton from "./buttons/EditCoursButton.svelte";
 
-  import { slideFromLeft } from "../components/animations";
+  import { slideFromLeft } from "../themes/animations";
   import IconBar from "../components/IconBar.svelte";
 
   let firstDivClass = $state("");
