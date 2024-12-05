@@ -1,9 +1,9 @@
 import { currentTheme, lightMode } from "$lib/runes";
 import type { IconType } from "$lib/services/models/lo-types";
-
 import { FluentIconLib } from "./icons/fluent-icons";
 import { HeroIconLib } from "./icons/hero-icons";
 import { FestiveIcons } from "./icons/festive-icons";
+import { makeItSnow, makeItStopSnowing } from "./events/festive.svelte";
 
 export const themes = [
   { name: "tutors", icons: FluentIconLib },
@@ -15,10 +15,17 @@ export const themes = [
   { name: "cerberus", icons: FluentIconLib }
 ];
 
-export function setDisplayMode(mode: string): void {
-  if (!mode) {
-    mode = "light";
+export function initDisplay(): void {
+  if (localStorage.modeCurrent) {
+    lightMode.value = localStorage.modeCurrent;
+  } else {
+    lightMode.value = "light";
   }
+  setDisplayMode(localStorage.modeCurrent);
+  setTheme(localStorage.theme);
+}
+
+export function setDisplayMode(mode: string): void {
   lightMode.value = mode;
   localStorage.modeCurrent = mode;
   if (mode === "dark") {
@@ -39,6 +46,12 @@ export function setTheme(theme: string): void {
   }
   document.body.setAttribute("data-theme", currentTheme.value);
   localStorage.theme = currentTheme.value;
+
+  if (currentTheme.value === "festive") {
+    makeItSnow();
+  } else {
+    makeItStopSnowing();
+  }
 }
 
 export function getIcon(type: string): IconType {

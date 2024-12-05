@@ -1,17 +1,13 @@
 <script lang="ts">
-  import { setDisplayMode, setTheme, themes } from "./theme-controller";
-  import { lightMode } from "$lib/runes";
+  import { setDisplayMode, setTheme, themes } from "./theme-controller.svelte";
+  import { currentTheme, lightMode } from "$lib/runes";
   import Menu from "$lib/ui/components/Menu.svelte";
   import { layout } from "$lib/runes";
   import MenuItem from "$lib/ui/components/MenuItem.svelte";
   import Icon from "../components/Icon.svelte";
 
-  let selectedTheme = localStorage.getItem("selectedTheme") || "tutors";
-
   function changeTheme(theme: string): void {
     setTheme(theme);
-    selectedTheme = theme;
-    localStorage.setItem("selectedTheme", theme);
   }
 
   function toggleDisplayMode(): void {
@@ -51,7 +47,7 @@
     {#each themes as theme}
       <MenuItem
         type="lightMode"
-        isActive={selectedTheme === theme.name}
+        isActive={currentTheme.value === theme.name}
         text={theme.name}
         onClick={() => changeTheme(theme.name)}
       />

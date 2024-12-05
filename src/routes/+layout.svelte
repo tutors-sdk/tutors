@@ -4,9 +4,7 @@
   import type { PageData } from "./$types";
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
-  import { setDisplayMode, setTheme } from "$lib/ui/themes/theme-controller";
-  import { currentTheme } from "$lib/runes";
-  import { makeItSnow, makeItStopSnowing } from "./snow.ts";
+  import { initDisplay, setTheme } from "$lib/ui/themes/theme-controller.svelte";
 
   interface Props {
     data: PageData;
@@ -20,17 +18,7 @@
 
   onMount(async () => {
     if (browser) {
-      setDisplayMode(localStorage.modeCurrent);
-      setTheme(localStorage.theme);
-    }
-  });
-
-  $effect(() => {
-    console.log(currentTheme.value);
-    if (currentTheme.value === "festive") {
-      makeItSnow();
-    } else {
-      makeItStopSnowing();
+      initDisplay();
     }
   });
 </script>
