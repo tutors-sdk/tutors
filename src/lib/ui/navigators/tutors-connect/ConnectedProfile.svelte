@@ -32,10 +32,10 @@
       {/if}
     </span>
     <div class="mt-2 flex items-center">
-      <Avatar
-        classes="size-9"
+      <img
+        class="w-12"
         src={tutorsConnectService.tutorsId.value?.image}
-        name={tutorsConnectService.tutorsId.value?.name}
+        alt={tutorsConnectService.tutorsId.value?.name}
       />
     </div>
   </div>
