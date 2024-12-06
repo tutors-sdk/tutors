@@ -5,8 +5,8 @@
   import Welcome from "./Welcome.svelte";
 </script>
 
-<div class="to-accent-50 dark:to-accent-900 bg-gradient-to-l from-primary-50 dark:from-primary-900">
-  <div class="container mx-auto items-center justify-between lg:flex">
+<div class="card to-accent-50 dark:to-accent-900 from-primary-50 dark:from-primary-900 m-4 border bg-gradient-to-l">
+  <div class="container mx-auto mt-2 items-center justify-between lg:flex">
     <div class="mx-4">
       <Welcome />
     </div>

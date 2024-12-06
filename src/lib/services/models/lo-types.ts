@@ -54,6 +54,13 @@ export type IconNavBar = {
   bar: IconNav[];
 };
 
+export type IconLib = Record<string, IconType>;
+
+export type Theme = {
+  name: string;
+  icons: IconLib;
+};
+
 export interface LearningRecord {
   date: Date;
   pageLoads: number;

@@ -1,15 +1,15 @@
 <script lang="ts">
-  import Icon from "$lib/ui/themes/icons/Icon.svelte";
   import * as pdfjs from "pdfjs-dist";
   // @ts-ignore
   import FileSaver from "file-saver";
   import { onDestroy, tick, onMount } from "svelte";
-  import { ProgressRadial } from "@skeletonlabs/skeleton";
+  import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { PDFWorker, getDocument } from "pdfjs-dist";
   import type { Talk } from "$lib/services/models/lo-types";
   import { setupWorker } from "./support/pdf-utils";
+  import Icon from "$lib/ui/components/Icon.svelte";
 
-  pdfjs.GlobalWorkerOptions.workerSrc = "/node_modules/pdfjs-dist/build/pdf.worker.min.mjs";
+  pdfjs.GlobalWorkerOptions.workerSrc = "./node_modules/pdfjs-dist/build/pdf.worker.min.mjs";
 
   interface Props {
     lo: Talk;
@@ -176,8 +176,8 @@
   {#if !loading}
     <canvas class="mx-auto w-full 2xl:w-4/5" bind:this={canvas}></canvas>
   {:else}
-    <div class="mt-72 mb-72 flex flex-col items-center justify-center">
-      <ProgressRadial stroke={100} meter="stroke-primary-500" track="stroke-primary-500/30" width="w-20" />
+    <div class="mb-72 mt-72 flex flex-col items-center justify-center">
+      <Progress value={null} />
     </div>
   {/if}
 </div>

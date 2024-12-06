@@ -1,20 +1,19 @@
 import forms from "@tailwindcss/forms";
-import { skeleton } from "@skeletonlabs/tw-plugin";
 import typography from "@tailwindcss/typography";
-import { tutors } from "./src/lib/ui/themes/styles/tutors";
-import { dyslexia } from "./src/lib/ui/themes/styles/dyslexia";
+import { skeleton, contentPath } from "@skeletonlabs/skeleton/plugin";
+import { nouveau, rose, cerberus } from "@skeletonlabs/skeleton/themes";
+import tutors from "./src/lib/ui/themes/styles/tutors";
+import classic from "./src/lib/ui/themes/styles/classic";
+import dyslexia from "./src/lib/ui/themes/styles/dyslexia";
+import festive from "./src/lib/ui/themes/events/festive";
 import type { Config } from "tailwindcss";
-import { join } from "path";
 
 export default {
-  content: [
-    "./src/**/*.{html,js,svelte,ts}",
-    "./src/**/**/*.{html,js,svelte,ts}",
-    join(require.resolve("@skeletonlabs/skeleton"), "../**/*.{html,js,svelte,ts}")
-  ],
+  darkMode: "selector",
+  content: ["./src/**/*.{html,js,svelte,ts}", contentPath(import.meta.url, "svelte")],
   safelist: [
     {
-      pattern: /border|text/
+      pattern: /border|text|ml|preset-filled-/
     }
   ],
   theme: {
@@ -34,15 +33,7 @@ export default {
     typography,
     forms,
     skeleton({
-      themes: {
-        custom: [tutors, dyslexia],
-        preset: [
-          { name: "skeleton", enhancements: true },
-          { name: "seafoam", enhancements: true },
-          { name: "vintage", enhancements: true }
-        ]
-      }
+      themes: [tutors, classic, dyslexia, festive, nouveau, rose, cerberus]
     })
-  ],
-  darkMode: "class"
+  ]
 } satisfies Config;

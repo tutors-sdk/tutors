@@ -1,7 +1,7 @@
 <script lang="ts">
-  import Icon from "$lib/ui/themes/icons/Icon.svelte";
   import { goto } from "$app/navigation";
   import { currentCourse } from "$lib/runes";
+  import Icon from "$lib/ui/components/Icon.svelte";
 
   let isSearching = sessionStorage.getItem("isSearching") === "true";
   let previousPage = "";
@@ -46,8 +46,8 @@
 </script>
 
 <button class="btn btn-sm" on:click={toggleSearch}>
-  <span class="inline-flex gap-2 text-sm font-bold">
-    <Icon type="search" />
+  <span class="flex items-center gap-2 text-sm font-bold">
+    <Icon type="search" tip="Search this course" />
     <span class="hidden lg:block"> {isSearching ? "Exit Search" : "Search"}</span>
   </span>
 </button>

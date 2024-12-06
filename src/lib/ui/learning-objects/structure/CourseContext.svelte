@@ -1,22 +1,20 @@
 <script lang="ts">
-  import { type Course } from "$lib/services/models/lo-types";
+  import { currentCourse } from "$lib/runes";
+  import { Accordion } from "@skeletonlabs/skeleton-svelte";
   import LoContext from "./LoContext.svelte";
-  import { TreeView, TreeViewItem } from "@skeletonlabs/skeleton";
-
-  export let course: Course;
+  import Icon from "$lib/ui/components/Icon.svelte";
 </script>
 
-<TreeView padding="p-1">
-  {#each course.los as lo}
+<Accordion multiple>
+  {#each currentCourse?.value?.los ?? [] as lo}
     {#if !lo.hide}
-      <TreeViewItem>
-        <svelte:fragment slot="lead">
-          {lo.title}
-        </svelte:fragment>
-        <svelte:fragment slot="children">
-          <LoContext {lo} />
-        </svelte:fragment>
-      </TreeViewItem>
+      <Accordion.Item value={lo?.id}>
+        {#snippet lead()}<Icon type={lo.type} />{/snippet}
+        {#snippet control()}{lo.title}{/snippet}
+        {#snippet panel()}
+          <LoContext {lo} />{/snippet}
+      </Accordion.Item>
+      <hr class="hr" />
     {/if}
   {/each}
-</TreeView>
+</Accordion>

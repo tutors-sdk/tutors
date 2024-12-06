@@ -1,4 +1,4 @@
-import { addIcon } from "$lib/ui/themes/styles/icon-lib.svelte";
+import { themeService } from "$lib/ui/themes/theme-controller.svelte";
 import type { Composite, Course, IconNav, Lo, LoType, Topic } from "./lo-types";
 import { filterByType, setShowHide } from "./lo-utils";
 
@@ -51,7 +51,7 @@ export function createCompanions(course: Course) {
   if (course.properties.companions) {
     for (const [key, value] of Object.entries(course.properties.companions)) {
       const companion: any = value;
-      addIcon(key, companion.icon);
+      themeService.addIcon(key, companion.icon);
       course.companions.bar.push({
         link: companion.link,
         type: key,

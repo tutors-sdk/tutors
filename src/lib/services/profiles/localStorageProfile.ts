@@ -5,13 +5,17 @@ import type { CourseVisit, ProfileStore } from "../types.svelte";
 export const localStorageProfile: ProfileStore = {
   courseVisits: [] as CourseVisit[],
 
-  reload(): void {},
-  save(): void {},
-
-  logCourseVisit(course: Course) {
+  reload(): void {
     if (browser && localStorage.courseVisits) {
       this.courseVisits = JSON.parse(localStorage.courseVisits);
     }
+  },
+  save(): void {
+    if (browser) localStorage.courseVisits = JSON.stringify(this.courseVisits);
+  },
+
+  logCourseVisit(course: Course) {
+    this.reload();
     const visit = this.courseVisits.find((c) => c.id === course.courseId);
     if (visit) {
       visit.visits++;
@@ -31,18 +35,36 @@ export const localStorageProfile: ProfileStore = {
       }
       this.courseVisits.unshift(courseVisit);
     }
-    if (browser) localStorage.courseVisits = JSON.stringify(this.courseVisits);
+    this.save();
   },
 
   deleteCourseVisit(courseId: string) {
+    this.reload();
     this.courseVisits = this.courseVisits.filter((c) => c.id !== courseId);
     if (browser) localStorage.courseVisits = JSON.stringify(this.courseVisits);
+    this.save();
   },
 
   getCourseVisits(): Promise<CourseVisit[]> {
-    if (browser && localStorage.courseVisits) {
-      this.courseVisits = JSON.parse(localStorage.courseVisits);
-    }
+    this.reload();
     return this.courseVisits;
+  },
+
+  favouriteCourse(courseId: string) {
+    this.reload();
+    const courseVisit = this.courseVisits.find((c) => c.id === courseId);
+    if (courseVisit) {
+      courseVisit.favourite = true;
+    }
+    this.save();
+  },
+
+  unfavouriteCourse(courseId: string) {
+    this.reload();
+    const courseVisit = this.courseVisits.find((c) => c.id === courseId);
+    if (courseVisit) {
+      courseVisit.favourite = false;
+    }
+    this.save();
   }
 };

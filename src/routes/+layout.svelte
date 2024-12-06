@@ -1,9 +1,10 @@
 <script lang="ts">
+  import "../app.postcss";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
-  import "../app.css";
-  import { computePosition, autoUpdate, flip, shift, offset, arrow } from "@floating-ui/dom";
-  import { initializeStores, storePopup } from "@skeletonlabs/skeleton";
   import type { PageData } from "./$types";
+  import { onMount } from "svelte";
+  import { browser } from "$app/environment";
+  import { themeService } from "$lib/ui/themes/theme-controller.svelte";
 
   interface Props {
     data: PageData;
@@ -11,12 +12,15 @@
   }
   let { data, children }: Props = $props();
 
-  initializeStores();
-  storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
-
   if (data?.user) {
     tutorsConnectService.reconnect(data.user);
   }
+
+  onMount(async () => {
+    if (browser) {
+      themeService.initDisplay("festive", "dark");
+    }
+  });
 </script>
 
 {@render children()}

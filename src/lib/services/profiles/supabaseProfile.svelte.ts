@@ -63,5 +63,23 @@ export const supabaseProfile: ProfileStore = {
   async getCourseVisits(): Promise<CourseVisit[]> {
     await this.reload();
     return this.courseVisits;
+  },
+
+  async favouriteCourse(courseId: string) {
+    await this.reload();
+    const course = this.courseVisits.find((c) => c.id === courseId);
+    if (course) {
+      course.favourite = true;
+    }
+    await this.save();
+  },
+
+  async unfavouriteCourse(courseId: string) {
+    await this.reload();
+    const course = this.courseVisits.find((c) => c.id === courseId);
+    if (course) {
+      course.favourite = false;
+    }
+    await this.save();
   }
 };

@@ -9,8 +9,8 @@ function getKeyIndex(map: Map<string, string>, targetKey: string) {
 }
 
 function truncate(input: string) {
-  if (input?.length > 16) {
-    return input.substring(0, 15) + "...";
+  if (input?.length > 24) {
+    return input.substring(0, 20) + "...";
   }
   return input;
 }
@@ -77,7 +77,7 @@ export class LiveLab {
       const prevTitle = prevChapter ? truncate(this.chaptersTitles.get(prevChapter.shortTitle)) : "";
       if (prevTitle) number = this.autoNumber ? prevChapter.shortTitle + ": " : "";
       this.horizontalNavbarHtml = prevChapter
-        ? `<a class="btn btn-sm capitalize" href="${this.url}/${encodeURI(prevChapter.shortTitle)}"> <span aria-hidden="true">&larr;</span>&nbsp; ${number}${prevTitle} </a>`
+        ? `<a class="btn btn-sm text-base capitalize" href="${this.url}/${encodeURI(prevChapter.shortTitle)}"> <span aria-hidden="true">&larr;</span>&nbsp; ${number}${prevTitle} </a>`
         : "";
 
       number = "";
@@ -87,7 +87,7 @@ export class LiveLab {
       // @ts-ignore
       const nextTitle = nextChapter ? truncate(this.chaptersTitles.get(nextChapter.shortTitle)) : "";
       this.horizontalNavbarHtml += nextChapter
-        ? `<a class="ml-auto btn btn-sm capitalize" style="margin-left: auto" href="${this.url}/${encodeURI(
+        ? `<a class="ml-auto btn btn-sm capitalize text-base" style="margin-left: auto" href="${this.url}/${encodeURI(
             nextChapter.shortTitle
           )}"> ${number}${nextTitle} &nbsp;<span aria-hidden="true">&rarr;</span></a>`
         : "";

@@ -4,6 +4,8 @@
   import { onDestroy, onMount } from "svelte";
   import { goto, afterNavigate } from "$app/navigation";
   import type { LiveLab } from "$lib/services/models/live-lab";
+  import { fly } from "svelte/transition";
+  import { slideFromLeft } from "$lib/ui/themes/animations";
 
   interface Props {
     lab: LiveLab;
@@ -37,6 +39,10 @@
       goto(`${lab.url}/${step}`);
     }
   }
+  let isLoaded = $state(false);
+  onMount(() => {
+    isLoaded = true;
+  });
 </script>
 
 <svelte:head>
@@ -48,22 +54,29 @@
   />
 </svelte:head>
 
-<div class="bg-primary-50-900-token fixed bottom-0 z-30 -ml-10 block w-full lg:hidden">
-  <nav class="flex flex-wrap justify-between p-2">
-    {@html lab.horizontalNavbarHtml}
-  </nav>
-</div>
-
 <div class="w-full">
+  <div class="sticky top-0 block w-full rounded border bg-primary-50 lg:hidden dark:bg-primary-900">
+    <nav class="flex flex-wrap justify-between p-2">
+      {@html lab.horizontalNavbarHtml}
+    </nav>
+  </div>
+
   <div class="max-w-l flex">
     <div class="mr-2 hidden h-auto w-72 lg:block">
-      <div class="card bg-surface-100-800-token sticky top-6 m-2 h-auto rounded-xl py-4">
-        <nav class="nav-list">
-          <ul>
-            {@html lab.navbarHtml}
-          </ul>
-        </nav>
-      </div>
+      {#if isLoaded}
+        <div
+          in:fly={slideFromLeft.in}
+          out:fly={slideFromLeft.out}
+          class="card sticky top-6 m-2 h-auto rounded-xl border-[1px] bg-surface-100 py-4 dark:border-primary-500
+          dark:bg-surface-950"
+        >
+          <nav class="nav-list">
+            <ul>
+              {@html lab.navbarHtml}
+            </ul>
+          </nav>
+        </div>
+      {/if}
     </div>
     <div id="lab-panel" class="min-h-screen flex-1">
       <article class="prose mr-4 max-w-none dark:prose-invert prose-pre:max-w-[70vw]">
