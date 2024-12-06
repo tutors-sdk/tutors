@@ -18,7 +18,7 @@
 
   onMount(async () => {
     if (browser) {
-      themeService.initDisplay();
+      themeService.initDisplay("festive", "dark");
     }
   });
 </script>

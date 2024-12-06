@@ -18,14 +18,20 @@ export const themeService = {
 
   isSnowing: false,
 
-  initDisplay(): void {
-    if (localStorage.modeCurrent) {
-      lightMode.value = localStorage.modeCurrent;
+  initDisplay(forceTheme?: string, forceMode?: string): void {
+    if (forceTheme && forceMode && !localStorage.forceTheme) {
+      this.setDisplayMode(forceMode);
+      this.setTheme(forceTheme);
+      localStorage.forceTheme = true;
     } else {
-      lightMode.value = "light";
+      if (localStorage.modeCurrent) {
+        lightMode.value = localStorage.modeCurrent;
+      } else {
+        lightMode.value = "light";
+      }
+      this.setDisplayMode(localStorage.modeCurrent);
+      this.setTheme(localStorage.theme);
     }
-    this.setDisplayMode(localStorage.modeCurrent);
-    this.setTheme(localStorage.theme);
   },
 
   setDisplayMode(mode: string): void {
