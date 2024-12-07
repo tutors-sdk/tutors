@@ -2,11 +2,17 @@
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
   import { currentCourse, transitionKey } from "$lib/runes";
-  import type { Snippet } from "svelte";
+  import { onMount, type Snippet } from "svelte";
   import MainNavigator from "./navigators/MainNavigator.svelte";
+  import { slide } from "svelte/transition";
 
   type Props = { children: Snippet };
   let { children }: Props = $props();
+  let showFooter = $state(false);
+
+  onMount(() => {
+    showFooter = true;
+  });
 </script>
 
 <div class="grid h-screen grid-rows-[auto_1fr_auto]">
@@ -19,7 +25,9 @@
   <main class="mt-2 overflow-y-auto">
     {@render children()}
   </main>
-  <footer class="hidden lg:block">
-    <Footer />
-  </footer>
+  {#if showFooter}
+    <footer transition:slide={{ duration: 800 }} class="hidden lg:block">
+      <Footer />
+    </footer>
+  {/if}
 </div>
