@@ -1,7 +1,9 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { PUBLIC_PDF_KEY } from "$env/static/public";
+  import { adobeLoaded } from "$lib/runes";
   import type { Talk } from "$lib/services/models/lo-types";
+  import { onMount } from "svelte";
 
   interface Props {
     lo: Talk;
@@ -10,12 +12,23 @@
 
   let adobeDCView: any = null;
   let mounted = false;
+  let viewerId = `adobe-pdf-viewer-${Math.random().toString(36).substr(2, 9)}`;
+
+  function loadSDK() {
+    if (!adobeLoaded.value) {
+      const script = document.createElement("script");
+      script.src = "https://acrobatservices.adobe.com/view-sdk/viewer.js";
+      document.head.appendChild(script);
+      adobeLoaded.value = true;
+    }
+  }
 
   function displayPDF() {
     if (!mounted) return;
+    console.log(lo.pdf);
     adobeDCView = new window.AdobeDC.View({
       clientId: PUBLIC_PDF_KEY,
-      divId: "adobe-pdf-viewer"
+      divId: viewerId
     });
 
     adobeDCView.previewFile(
@@ -50,12 +63,16 @@
     mounted = true;
     displayPDF();
   });
+
+  onMount(() => {
+    loadSDK();
+  });
 </script>
 
-<div class="card mr-2 mt-2 px-4 py-2">
-  <div id="adobe-pdf-viewer" class="h-[80dvh] w-full"></div>
+<div class="mr-2 mt-2 px-4 py-2">
+  <div id={viewerId} class="mx-auto h-[80dvh]"></div>
 </div>
 
 <svelte:head>
-  <script type="text/javascript" src="https://acrobatservices.adobe.com/view-sdk/viewer.js"></script>
+  <!-- <script type="text/javascript" src="https://acrobatservices.adobe.com/view-sdk/viewer.js"></script> -->
 </svelte:head>
