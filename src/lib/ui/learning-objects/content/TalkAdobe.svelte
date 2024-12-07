@@ -10,9 +10,30 @@
   }
   let { lo }: Props = $props();
 
+  const pdfContent = {
+    content: {
+      location: {
+        url: lo.pdf
+      }
+    },
+    metaData: {
+      fileName: lo.title
+    }
+  };
+  const viewerConfig = {
+    defaultViewMode: "FIT_WIDTH", // Options are "FIT_WIDTH" or "FIT_PAGE"
+    showAnnotationTools: false, // Hide annotation tools
+    enableAnnotationAPIs: false, // Disable annotations completely
+    showLeftHandPanel: false, // Hide left panel for better focus on the document
+    showDownloadPDF: true, // Optionally disable download button
+    showPrintPDF: true,
+    showFullScreen: true
+  };
+
   let adobeDCView: any = null;
   let mounted = false;
-  let viewerId = `adobe-pdf-viewer-${Math.random().toString(36).substr(2, 9)}`;
+  // let viewerId = `adobe-pdf-viewer-${Math.random().toString(36).substr(2, 9)}`;
+  let viewerId = "adobe-pdf-viewer";
 
   function loadSDK() {
     if (!adobeLoaded.value) {
@@ -31,28 +52,9 @@
       divId: viewerId
     });
 
-    adobeDCView.previewFile(
-      {
-        content: {
-          location: {
-            url: lo.pdf // Replace with your PDF URL
-          }
-        },
-        metaData: {
-          fileName: lo.title
-        }
-      },
-      {
-        defaultViewMode: "FIT_WIDTH", // Options are "FIT_WIDTH" or "FIT_PAGE"
-        showAnnotationTools: false, // Hide annotation tools
-        enableAnnotationAPIs: false, // Disable annotations completely
-        showLeftHandPanel: false, // Hide left panel for better focus on the document
-        showDownloadPDF: true, // Optionally disable download button
-        showPrintPDF: true,
-        showFullScreen: true
-      }
-    );
+    adobeDCView.previewFile(pdfContent, viewerConfig);
   }
+
   page.subscribe((path) => {
     if (path.data.lo && path.data.lo.pdf) {
       displayPDF();
@@ -72,7 +74,3 @@
 <div class="mr-2 mt-2 px-4 py-2">
   <div id={viewerId} class="mx-auto h-[80dvh]"></div>
 </div>
-
-<svelte:head>
-  <!-- <script type="text/javascript" src="https://acrobatservices.adobe.com/view-sdk/viewer.js"></script> -->
-</svelte:head>
