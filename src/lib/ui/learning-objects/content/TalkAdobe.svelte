@@ -45,29 +45,30 @@
   }
 
   function displayPDF() {
-    if (!mounted) return;
-    console.log(lo.pdf);
     adobeDCView = new window.AdobeDC.View({
       clientId: PUBLIC_PDF_KEY,
       divId: viewerId
     });
-
     adobeDCView.previewFile(pdfContent, viewerConfig);
   }
 
   page.subscribe((path) => {
-    if (path.data.lo && path.data.lo.pdf) {
+    if (mounted && path.data.lo && path.data.lo.pdf) {
       displayPDF();
     }
   });
 
-  window.addEventListener("adobe_dc_view_sdk.ready", () => {
-    mounted = true;
-    displayPDF();
-  });
-
   onMount(() => {
     loadSDK();
+    if (window.AdobeDC) {
+      displayPDF();
+      mounted = true;
+    } else {
+      document.addEventListener("adobe_dc_view_sdk.ready", () => {
+        displayPDF();
+        mounted = true;
+      });
+    }
   });
 </script>
 
