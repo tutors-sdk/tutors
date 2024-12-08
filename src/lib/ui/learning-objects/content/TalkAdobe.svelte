@@ -10,24 +10,15 @@
   }
   let { lo }: Props = $props();
 
-  const pdfContent = {
-    content: {
-      location: {
-        url: lo.pdf
-      }
-    },
-    metaData: {
-      fileName: lo.title
-    }
-  };
   const viewerConfig = {
-    defaultViewMode: "FIT_WIDTH", // Options are "FIT_WIDTH" or "FIT_PAGE"
+    defaultViewMode: "FIT_PAGE", // Options are "FIT_WIDTH" or "FIT_PAGE"
     showAnnotationTools: false, // Hide annotation tools
     enableAnnotationAPIs: false, // Disable annotations completely
     showLeftHandPanel: false, // Hide left panel for better focus on the document
     showDownloadPDF: true, // Optionally disable download button
     showPrintPDF: true,
-    showFullScreen: true
+    showFullScreen: true,
+    showSinglePage: true
   };
 
   let adobeDCView: any = null;
@@ -49,6 +40,17 @@
       clientId: PUBLIC_PDF_KEY,
       divId: viewerId
     });
+
+    const pdfContent = {
+      content: {
+        location: {
+          url: lo.pdf
+        }
+      },
+      metaData: {
+        fileName: lo.title
+      }
+    };
     adobeDCView.previewFile(pdfContent, viewerConfig);
   }
 

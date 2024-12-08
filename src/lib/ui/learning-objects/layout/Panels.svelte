@@ -15,9 +15,7 @@
   <Video {lo} />
 {/each}
 {#each panels?.panelTalks as lo}
-  <div class="w-[80dvw]">
-    <TalkAdobe {lo} />
-  </div>
+  <Talk {lo} />
 {/each}
 {#each panels?.panelNotes as lo}
   <Note {lo} />
