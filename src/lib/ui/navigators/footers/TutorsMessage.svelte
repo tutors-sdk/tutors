@@ -18,7 +18,9 @@
 </script>
 
 {#if contentHtml}
-  <p class="prose prose-sm prose-slate dark:prose-invert" transition:slide={{ duration: 2500 }}>
-    {@html contentHtml}
-  </p>
+  <div class="flex w-full justify-center">
+    <p class="prose prose-sm prose-slate min-w-full dark:prose-invert">
+      {@html contentHtml}
+    </p>
+  </div>
 {/if}
