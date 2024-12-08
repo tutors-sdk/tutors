@@ -20,4 +20,6 @@ export const imageHeight = rune("h-32");
 export const textSize = rune("text-base");
 export const avatarWidth = rune("w-12");
 
+export const adobeLoaded = rune(false);
+
 export const animationDelay = rune(200);

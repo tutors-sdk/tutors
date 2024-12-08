@@ -33,7 +33,7 @@
     </span>
     <div class="mt-2 flex items-center">
       <img
-        class="w-12"
+        class="w-12 rounded-full"
         src={tutorsConnectService.tutorsId.value?.image}
         alt={tutorsConnectService.tutorsId.value?.name}
       />

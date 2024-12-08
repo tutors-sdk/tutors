@@ -2,6 +2,7 @@
   import type { Panels } from "$lib/services/models/lo-types";
   import Note from "../content/Note.svelte";
   import Talk from "../content/Talk.svelte";
+  import TalkAdobe from "../content/TalkAdobe.svelte";
   import Video from "../content/Video.svelte";
 
   interface Props {
