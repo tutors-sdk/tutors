@@ -68,6 +68,7 @@ export interface CourseService {
   readLab(courseId: string, labId: string, fetchFunction: typeof fetch): Promise<LiveLab>;
   readWall(courseId: string, type: string, fetchFunction: typeof fetch): Promise<Lo[]>;
   readLo(courseId: string, loId: string, fetchFunction: typeof fetch): Promise<Lo>;
+  refreshAllLabs(codeTheme: string): void;
 }
 
 export interface ProfileStore {

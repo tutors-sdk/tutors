@@ -1,6 +1,7 @@
 import type { Lab } from "./lo-types";
 import type { Course } from "./lo-types";
 import { removeLeadingHashes } from "./lo-utils";
+import { convertLabToHtml } from "./markdown-utils.svelte";
 
 function getKeyIndex(map: Map<string, string>, targetKey: string) {
   const keysArray = [...map.keys()];
@@ -51,6 +52,9 @@ export class LiveLab {
     this.steps = Array.from(this.chaptersHtml.keys());
   }
 
+  refreshStep() {
+    this.content = this.chaptersHtml.get(this.currentChapterShortTitle)!;
+  }
   refreshNav() {
     //const number = this.autoNumber ? this.lab.shortTitle + ": " : "";
 

@@ -1,8 +1,10 @@
-import { courseUrl, currentCourse, currentLo } from "$lib/runes";
+import { courseUrl, currentCodeTheme, currentCourse, currentLo } from "$lib/runes";
 import type { Lo, Course, Lab } from "$lib/services/models/lo-types";
 import { decorateCourseTree } from "./models/lo-tree";
 import { LiveLab } from "./models/live-lab";
 import type { CourseService } from "./types.svelte";
+import { convertLabToHtml } from "./models/markdown-utils.svelte";
+import { themeService } from "$lib/ui/themes/theme-controller.svelte";
 
 export const courseService: CourseService = {
   courses: new Map<string, Course>(),
@@ -14,7 +16,8 @@ export const courseService: CourseService = {
     let courseUrl = courseId;
 
     function isValidURL(url: string) {
-      const urlPattern = /^(https?:\/\/)?([A-Za-z0-9.-]+\.[A-Za-z]{2,})(:[0-9]+)?(\/[A-Za-z0-9_.-]+)*(\/[A-Za-z0-9_.-]+\?[A-Za-z0-9_=-]+)?(#.*)?$/;
+      const urlPattern =
+        /^(https?:\/\/)?([A-Za-z0-9.-]+\.[A-Za-z]{2,})(:[0-9]+)?(\/[A-Za-z0-9_.-]+)*(\/[A-Za-z0-9_.-]+\?[A-Za-z0-9_=-]+)?(#.*)?$/;
       return urlPattern.test(url);
     }
 
@@ -75,6 +78,8 @@ export const courseService: CourseService = {
     let liveLab = this.labs.get(labId);
     if (!liveLab) {
       const lab = course.loIndex.get(labId) as Lab;
+      themeService.initCodeTheme();
+      await convertLabToHtml(course, lab, currentCodeTheme.value);
       liveLab = new LiveLab(course, lab, labId);
       this.labs.set(labId, liveLab);
     }
@@ -93,6 +98,17 @@ export const courseService: CourseService = {
     const course = await this.readCourse(courseId, fetchFunction);
     const lo = course.loIndex.get(loId);
     if (lo) currentLo.value = lo;
+    if (lo?.type === "note") {
+      await convertLabToHtml(course, lo as Lab, currentCodeTheme.value);
+    }
     return lo!;
+  },
+
+  refreshAllLabs(codeTheme: string) {
+    for (const liveLab of this.labs.values()) {
+      convertLabToHtml(liveLab.course, liveLab.lab, codeTheme);
+      liveLab.convertMdToHtml();
+      liveLab.refreshStep();
+    }
   }
 };

@@ -8,7 +8,7 @@
   import type { Course } from "$lib/services/models/lo-types";
   import { currentLo } from "$lib/runes";
   import { filterByType } from "$lib/services/models/lo-utils";
-  import { convertMdToHtml } from "$lib/services/models/markdown-utils";
+  import { convertMdToHtml } from "$lib/services/models/markdown-utils.svelte";
   import type { PageData } from "./$types";
 
   interface Props {
@@ -57,7 +57,7 @@
   });
 </script>
 
-<div class="card container mx-auto p-4">
+<div class="container card mx-auto p-4">
   <label for="search" class="label"
     ><span>Enter search term:</span>
     <input
@@ -72,7 +72,7 @@
   >
   <div class="flex flex-wrap justify-center">
     {#each searchResults as result}
-      <div class="card m-1 w-full p-4 hover:bg-gray-200 dark:hover:bg-gray-900 lg:w-72 2xl:w-96">
+      <div class="card m-1 w-full p-4 hover:bg-gray-200 lg:w-72 2xl:w-96 dark:hover:bg-gray-900">
         <a rel="noopener noreferrer" href={result.link} target="_blank">
           <div>
             <div>

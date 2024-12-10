@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import hljs from "highlight.js";
 import type { Lab, Lo } from "./lo-types";
 // @ts-ignore
 import MarkdownIt from "markdown-it";
@@ -23,6 +22,19 @@ import footnote from "markdown-it-footnote";
 import deflist from "markdown-it-deflist";
 import type { Course } from "./lo-types";
 
+import { bundledLanguages, createHighlighter } from "shiki";
+
+let highlighter: any;
+
+export async function initializeHighlighter() {
+  highlighter = await createHighlighter({
+    themes: ["monokai", "night-owl", "github-dark", "catppuccin-mocha", "solarized-dark", "solarized-light"],
+    langs: Object.keys(bundledLanguages)
+  });
+}
+
+let currentTheme = "monokai";
+
 const markdownIt: any = new MarkdownIt({
   html: true, // Enable HTML tags in source
   xhtmlOut: false, // Use '/' to close single tags (<br />).
@@ -32,16 +44,7 @@ const markdownIt: any = new MarkdownIt({
   typographer: true,
   quotes: "“”‘’",
   highlight: function (str: string, lang: string) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return (
-          '<pre class="hljs"><code>' +
-          hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
-          "</code></pre>"
-        );
-      } catch (__) {}
-    }
-    return '<pre class="hljs"><code>' + markdownIt.utils.escapeHtml(str) + "</code></pre>";
+    return highlighter?.codeToHtml(str, { lang, theme: currentTheme });
   }
 });
 
@@ -103,10 +106,14 @@ function filter(src: string, url: string): string {
   return filtered;
 }
 
-export function convertLabToHtml(course: Course, lab: Lab) {
+export async function convertLabToHtml(course: Course, lab: Lab, theme: string) {
+  if (!highlighter) {
+    await initializeHighlighter();
+  }
+  currentTheme = theme;
   lab.summary = markdownIt.render(lab.summary);
   const url = lab.route.replace(`/lab/${course.courseId}`, course.courseUrl);
-  lab.los.forEach((step) => {
+  lab?.los?.forEach((step) => {
     if (course.courseUrl) {
       step.contentMd = filter(step.contentMd, url);
     }
@@ -116,9 +123,10 @@ export function convertLabToHtml(course: Course, lab: Lab) {
   });
 }
 
-export function convertLoToHtml(course: Course, lo: Lo) {
+export async function convertLoToHtml(course: Course, lo: Lo, theme: string) {
+  currentTheme = theme;
   if (lo.type === "lab") {
-    convertLabToHtml(course, lo as Lab);
+    // convertLabToHtml(course, lo as Lab);
   } else {
     if (lo.summary) lo.summary = markdownIt.render(lo.summary);
     let md = lo.contentMd;

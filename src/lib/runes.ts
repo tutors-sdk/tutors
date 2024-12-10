@@ -6,6 +6,8 @@ export const transitionKey = rune("");
 export const layout = rune("expanded");
 export const lightMode = rune("light");
 export const currentTheme = rune("tutors");
+export const currentCodeTheme = rune("monokai");
+export const refreshCodeTheme = rune(false);
 
 export const currentLo = rune<Lo | null>(null);
 export const currentCourse = rune<Course | null>(null);

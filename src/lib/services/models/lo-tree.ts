@@ -1,5 +1,5 @@
 import { isCompositeLo, type Course, type Lo, type Composite, type LoType, type Topic } from "./lo-types";
-import { convertLoToHtml } from "./markdown-utils";
+import { convertLoToHtml } from "./markdown-utils.svelte";
 import {
   allVideoLos,
   crumbs,

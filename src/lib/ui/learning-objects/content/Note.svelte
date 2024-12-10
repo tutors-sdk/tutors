@@ -7,7 +7,7 @@
   let { lo }: Props = $props();
 </script>
 
-<article class="prose dark:prose-invert max-w-none mr-4">
+<article class="prose mr-4 max-w-none dark:prose-invert">
   {@html lo.contentHtml}
 </article>
 
