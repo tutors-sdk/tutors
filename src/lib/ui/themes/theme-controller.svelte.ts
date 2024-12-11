@@ -4,7 +4,7 @@ import { FluentIconLib } from "./icons/fluent-icons";
 import { HeroIconLib } from "./icons/hero-icons";
 import { FestiveIcons } from "./icons/festive-icons";
 import { makeItSnow, makeItStopSnowing } from "./events/festive.svelte";
-import { courseService } from "$lib/services/course.svelte";
+import { initializeHighlighter } from "$lib/services/models/markdown-utils";
 
 export const themeService = {
   themes: [
@@ -36,6 +36,7 @@ export const themeService = {
       this.setTheme(localStorage.theme);
       this.setCodeTheme(localStorage.codeTheme);
     }
+    initializeHighlighter();
   },
 
   setDisplayMode(mode: string): void {

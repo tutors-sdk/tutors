@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { convertMdToHtml } from "$lib/services/models/markdown-utils.svelte";
+  import { convertMdToHtml } from "$lib/services/models/markdown-utils";
   import { onMount } from "svelte";
   import { slide } from "svelte/transition";
 

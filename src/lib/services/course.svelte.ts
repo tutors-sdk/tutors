@@ -3,7 +3,7 @@ import type { Lo, Course, Lab } from "$lib/services/models/lo-types";
 import { decorateCourseTree } from "./models/lo-tree";
 import { LiveLab } from "./models/live-lab";
 import type { CourseService } from "./types.svelte";
-import { convertLabToHtml } from "./models/markdown-utils.svelte";
+import { convertLabToHtml } from "./models/markdown-utils";
 import { themeService } from "$lib/ui/themes/theme-controller.svelte";
 
 export const courseService: CourseService = {

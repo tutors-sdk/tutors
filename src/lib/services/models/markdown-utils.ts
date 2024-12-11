@@ -123,7 +123,7 @@ export async function convertLabToHtml(course: Course, lab: Lab, theme: string) 
   });
 }
 
-export async function convertLoToHtml(course: Course, lo: Lo, theme: string) {
+export async function convertLoToHtml(course: Course, lo: Lo, theme: string = "monokai") {
   currentTheme = theme;
   if (lo.type === "lab") {
     // convertLabToHtml(course, lo as Lab);

@@ -6,9 +6,6 @@
   import { browser } from "$app/environment";
   import { themeService } from "$lib/ui/themes/theme-controller.svelte";
 
-  import { initializeHighlighter } from "$lib/services/models/markdown-utils.svelte";
-
-  initializeHighlighter();
   interface Props {
     data: PageData;
     children: import("svelte").Snippet;

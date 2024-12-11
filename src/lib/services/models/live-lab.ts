@@ -1,7 +1,7 @@
 import type { Lab } from "./lo-types";
 import type { Course } from "./lo-types";
 import { removeLeadingHashes } from "./lo-utils";
-import { convertLabToHtml } from "./markdown-utils.svelte";
+import { convertLabToHtml } from "./markdown-utils";
 
 function getKeyIndex(map: Map<string, string>, targetKey: string) {
   const keysArray = [...map.keys()];
