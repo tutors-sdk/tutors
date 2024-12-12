@@ -22,9 +22,69 @@ import footnote from "markdown-it-footnote";
 import deflist from "markdown-it-deflist";
 import type { Course } from "./lo-types";
 
+import { createHighlighterCoreSync } from "shiki/core";
+import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
+
+import js from "shiki/langs/javascript.mjs";
+import ts from "shiki/langs/typescript.mjs";
+import css from "shiki/langs/css.mjs";
+import html from "shiki/langs/html.mjs";
+import json from "shiki/langs/json.mjs";
+import yaml from "shiki/langs/yaml.mjs";
+import markdown from "shiki/langs/markdown.mjs";
+import bash from "shiki/langs/bash.mjs";
+import python from "shiki/langs/python.mjs";
+import sql from "shiki/langs/sql.mjs";
+import typescript from "shiki/langs/typescript.mjs";
+import java from "shiki/langs/java.mjs";
+import kotlin from "shiki/langs/kotlin.mjs";
+import csharp from "shiki/langs/csharp.mjs";
+import c from "shiki/langs/c.mjs";
+import cpp from "shiki/langs/cpp.mjs";
+import go from "shiki/langs/go.mjs";
+import rust from "shiki/langs/rust.mjs";
+import php from "shiki/langs/php.mjs";
+import ruby from "shiki/langs/ruby.mjs";
+import swift from "shiki/langs/swift.mjs";
+
+import monokai from "shiki/themes/monokai.mjs";
+import solarizedDark from "shiki/themes/solarized-dark.mjs";
+import solarizedLight from "shiki/themes/solarized-light.mjs";
+import nightOwl from "shiki/themes/night-owl.mjs";
+import githubDark from "shiki/themes/github-dark.mjs";
+import catppuccinMocha from "shiki/themes/catppuccin-mocha.mjs";
+
 import { bundledLanguages, createHighlighter } from "shiki";
 
 let highlighter: any;
+
+const shiki = createHighlighterCoreSync({
+  themes: [monokai, nightOwl, githubDark, catppuccinMocha, solarizedDark, solarizedLight],
+  langs: [
+    js,
+    ts,
+    css,
+    html,
+    json,
+    yaml,
+    markdown,
+    bash,
+    python,
+    sql,
+    typescript,
+    java,
+    kotlin,
+    csharp,
+    c,
+    cpp,
+    go,
+    rust,
+    php,
+    ruby,
+    swift
+  ],
+  engine: createJavaScriptRegexEngine()
+});
 
 export async function initializeHighlighter() {
   highlighter = await createHighlighter({
@@ -44,7 +104,14 @@ const markdownIt: any = new MarkdownIt({
   typographer: true,
   quotes: "“”‘’",
   highlight: function (str: string, lang: string) {
-    return highlighter?.codeToHtml(str, { lang, theme: currentTheme });
+    //return highlighter?.codeToHtml(str, { lang, theme: currentTheme });
+    try {
+      console.log(lang);
+      return shiki?.codeToHtml(str, { lang, theme: currentTheme });
+    } catch (e) {
+      console.log(e);
+      return str;
+    }
   }
 });
 
@@ -107,9 +174,9 @@ function filter(src: string, url: string): string {
 }
 
 export async function convertLabToHtml(course: Course, lab: Lab, theme: string) {
-  if (!highlighter) {
-    await initializeHighlighter();
-  }
+  // if (!highlighter) {
+  //   await initializeHighlighter();
+  // }
   currentTheme = theme;
   lab.summary = markdownIt.render(lab.summary);
   const url = lab.route.replace(`/lab/${course.courseId}`, course.courseUrl);
@@ -125,7 +192,7 @@ export async function convertLabToHtml(course: Course, lab: Lab, theme: string) 
 
 export async function convertLoToHtml(course: Course, lo: Lo, theme: string = "monokai") {
   currentTheme = theme;
-  if (lo.type === "lab") {
+  if (lo.type === "lab" || lo.type == "note") {
     // convertLabToHtml(course, lo as Lab);
   } else {
     if (lo.summary) lo.summary = markdownIt.render(lo.summary);

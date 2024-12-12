@@ -36,7 +36,6 @@ export const themeService = {
       this.setTheme(localStorage.theme);
       this.setCodeTheme(localStorage.codeTheme);
     }
-    initializeHighlighter();
   },
 
   setDisplayMode(mode: string): void {
