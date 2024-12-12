@@ -6,6 +6,7 @@
   import type { LiveLab } from "$lib/services/models/live-lab";
   import { fly } from "svelte/transition";
   import { slideFromLeft } from "$lib/ui/themes/animations";
+  import { currentCodeTheme } from "$lib/runes";
 
   interface Props {
     lab: LiveLab;
@@ -80,7 +81,9 @@
     </div>
     <div id="lab-panel" class="min-h-screen flex-1">
       <article class="prose mr-4 max-w-none dark:prose-invert prose-pre:max-w-[70vw]">
-        {@html lab.content}
+        {#key currentCodeTheme.value}
+          {@html lab.content}
+        {/key}
       </article>
     </div>
   </div>

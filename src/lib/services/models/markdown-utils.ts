@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import hljs from "highlight.js";
-import type { Lab, Lo } from "./lo-types";
 // @ts-ignore
 import MarkdownIt from "markdown-it";
 // @ts-ignore
@@ -21,9 +19,85 @@ import mark from "markdown-it-mark";
 import footnote from "markdown-it-footnote";
 // @ts-ignore
 import deflist from "markdown-it-deflist";
-import type { Course } from "./lo-types";
 
-const markdownIt: any = new MarkdownIt({
+import { createHighlighterCoreSync } from "shiki/core";
+import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
+
+import js from "shiki/langs/javascript.mjs";
+import ts from "shiki/langs/typescript.mjs";
+import css from "shiki/langs/css.mjs";
+import html from "shiki/langs/html.mjs";
+import json from "shiki/langs/json.mjs";
+import yaml from "shiki/langs/yaml.mjs";
+import markdown from "shiki/langs/markdown.mjs";
+import bash from "shiki/langs/bash.mjs";
+import python from "shiki/langs/python.mjs";
+import sql from "shiki/langs/sql.mjs";
+import typescript from "shiki/langs/typescript.mjs";
+import java from "shiki/langs/java.mjs";
+import kotlin from "shiki/langs/kotlin.mjs";
+import csharp from "shiki/langs/csharp.mjs";
+import c from "shiki/langs/c.mjs";
+import cpp from "shiki/langs/cpp.mjs";
+import go from "shiki/langs/go.mjs";
+import rust from "shiki/langs/rust.mjs";
+import php from "shiki/langs/php.mjs";
+import ruby from "shiki/langs/ruby.mjs";
+import swift from "shiki/langs/swift.mjs";
+
+import monokai from "shiki/themes/monokai.mjs";
+import solarizedDark from "shiki/themes/solarized-dark.mjs";
+import solarizedLight from "shiki/themes/solarized-light.mjs";
+import nightOwl from "shiki/themes/night-owl.mjs";
+import githubDark from "shiki/themes/github-dark.mjs";
+import dracula from "shiki/themes/dracula.mjs";
+import snazziLight from "shiki/themes/snazzy-light.mjs";
+import githubLightHighContrast from "shiki/themes/github-light-high-contrast.mjs";
+const languages = [
+  js,
+  ts,
+  css,
+  html,
+  json,
+  yaml,
+  markdown,
+  bash,
+  python,
+  sql,
+  typescript,
+  java,
+  kotlin,
+  csharp,
+  c,
+  cpp,
+  go,
+  rust,
+  php,
+  ruby,
+  swift,
+  html
+];
+
+export const codeThemes = [
+  monokai,
+  solarizedLight,
+  githubDark,
+  githubLightHighContrast,
+  nightOwl,
+  dracula,
+  solarizedDark,
+  snazziLight
+];
+
+const shiki = createHighlighterCoreSync({
+  themes: codeThemes,
+  langs: languages,
+  engine: createJavaScriptRegexEngine()
+});
+
+let currentTheme = "monokai";
+
+export const markdownIt = new MarkdownIt({
   html: true, // Enable HTML tags in source
   xhtmlOut: false, // Use '/' to close single tags (<br />).
   breaks: false, // Convert '\n' in paragraphs into <br>
@@ -32,16 +106,11 @@ const markdownIt: any = new MarkdownIt({
   typographer: true,
   quotes: "“”‘’",
   highlight: function (str: string, lang: string) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return (
-          '<pre class="hljs"><code>' +
-          hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
-          "</code></pre>"
-        );
-      } catch (__) {}
+    try {
+      return shiki?.codeToHtml(str, { lang, theme: currentTheme });
+    } catch (e) {
+      return shiki?.codeToHtml(str, { lang: "yaml", theme: currentTheme });
     }
-    return '<pre class="hljs"><code>' + markdownIt.utils.escapeHtml(str) + "</code></pre>";
   }
 });
 
@@ -85,53 +154,7 @@ markdownIt.renderer.rules.link_open = function (tokens: any, idx: any, options: 
   return defaultRender(tokens, idx, options, env, self);
 };
 
-function replaceAll(str: string, find: string, replace: string) {
-  return str.replace(new RegExp(find, "g"), replace);
-}
-
-function filter(src: string, url: string): string {
-  let filtered = replaceAll(src, "./img\\/", `img/`);
-  filtered = replaceAll(filtered, "img\\/", `https://${url}/img/`);
-  filtered = replaceAll(filtered, "./archives\\/", `archives/`);
-
-  //filtered = replaceAll(filtered, "archives\\/", `https://${url}/archives/`);
-  filtered = replaceAll(filtered, "(?<!/)archives\\/", `https://${url}/archives/`);
-
-  // filtered = replaceAll(filtered, "./archive\\/(?!refs)", `archive/`);
-  filtered = replaceAll(filtered, "(?<!/)archive\\/(?!refs)", `https://${url}/archive/`);
-  filtered = replaceAll(filtered, "\\]\\(\\#", `](https://${url}#/`);
-  return filtered;
-}
-
-export function convertLabToHtml(course: Course, lab: Lab) {
-  lab.summary = markdownIt.render(lab.summary);
-  const url = lab.route.replace(`/lab/${course.courseId}`, course.courseUrl);
-  lab.los.forEach((step) => {
-    if (course.courseUrl) {
-      step.contentMd = filter(step.contentMd, url);
-    }
-    step.contentHtml = markdownIt.render(step.contentMd);
-    step.parentLo = lab;
-    step.type = "step";
-  });
-}
-
-export function convertLoToHtml(course: Course, lo: Lo) {
-  if (lo.type === "lab") {
-    convertLabToHtml(course, lo as Lab);
-  } else {
-    if (lo.summary) lo.summary = markdownIt.render(lo.summary);
-    let md = lo.contentMd;
-    if (md) {
-      if (course.courseUrl) {
-        const url = lo.route.replace(`/${lo.type}/${course.courseId}`, course.courseUrl);
-        md = filter(md, url);
-      }
-      lo.contentHtml = markdownIt.render(md);
-    }
-  }
-}
-
-export function convertMdToHtml(md: string): string {
+export function convertMdToHtml(md: string, codeTheme: string): string {
+  currentTheme = codeTheme;
   return markdownIt.render(md);
 }
