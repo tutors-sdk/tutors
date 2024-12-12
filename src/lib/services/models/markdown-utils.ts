@@ -50,8 +50,9 @@ import solarizedDark from "shiki/themes/solarized-dark.mjs";
 import solarizedLight from "shiki/themes/solarized-light.mjs";
 import nightOwl from "shiki/themes/night-owl.mjs";
 import githubDark from "shiki/themes/github-dark.mjs";
-import catppuccinMocha from "shiki/themes/catppuccin-mocha.mjs";
-
+import dracula from "shiki/themes/dracula.mjs";
+import snazziLight from "shiki/themes/snazzy-light.mjs";
+import githubLightHighContrast from "shiki/themes/github-light-high-contrast.mjs";
 const languages = [
   js,
   ts,
@@ -77,15 +78,26 @@ const languages = [
   html
 ];
 
+export const codeThemes = [
+  monokai,
+  solarizedLight,
+  githubDark,
+  githubLightHighContrast,
+  nightOwl,
+  dracula,
+  solarizedDark,
+  snazziLight
+];
+
 const shiki = createHighlighterCoreSync({
-  themes: [monokai, nightOwl, githubDark, catppuccinMocha, solarizedDark, solarizedLight],
+  themes: codeThemes,
   langs: languages,
   engine: createJavaScriptRegexEngine()
 });
 
 let currentTheme = "monokai";
 
-export const markdownIt: any = new MarkdownIt({
+export const markdownIt = new MarkdownIt({
   html: true, // Enable HTML tags in source
   xhtmlOut: false, // Use '/' to close single tags (<br />).
   breaks: false, // Convert '\n' in paragraphs into <br>

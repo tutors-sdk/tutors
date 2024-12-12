@@ -6,7 +6,7 @@
   import type { LiveLab } from "$lib/services/models/live-lab";
   import { fly } from "svelte/transition";
   import { slideFromLeft } from "$lib/ui/themes/animations";
-  import { currentCodeTheme, refreshCodeTheme } from "$lib/runes";
+  import { currentCodeTheme } from "$lib/runes";
 
   interface Props {
     lab: LiveLab;

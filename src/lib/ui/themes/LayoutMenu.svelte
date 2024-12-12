@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { currentCodeTheme, currentLo, currentTheme, lightMode, refreshCodeTheme } from "$lib/runes";
+  import { currentCodeTheme, currentLo, currentTheme, lightMode } from "$lib/runes";
   import Menu from "$lib/ui/components/Menu.svelte";
   import { layout } from "$lib/runes";
   import MenuItem from "$lib/ui/components/MenuItem.svelte";
   import Icon from "../components/Icon.svelte";
   import { themeService } from "./theme-controller.svelte";
   import { courseService } from "$lib/services/course.svelte";
+  import { codeThemes } from "$lib/services/models/markdown-utils";
 
   function changeTheme(theme: string): void {
     themeService.setTheme(theme);
@@ -14,7 +15,6 @@
   function changeCodeTheme(codeTheme: string): void {
     themeService.setCodeTheme(codeTheme);
     courseService.refreshAllLabs(codeTheme);
-    refreshCodeTheme.value = !refreshCodeTheme.value;
   }
 
   function toggleDisplayMode(): void {
@@ -62,12 +62,12 @@
   </ul>
   <h6>Code Themes</h6>
   <ul class="list">
-    {#each themeService.codeThemes as codeTheme}
+    {#each codeThemes as codeTheme}
       <MenuItem
         type="lightMode"
-        isActive={currentCodeTheme.value === codeTheme}
-        text={codeTheme}
-        onClick={() => changeCodeTheme(codeTheme)}
+        isActive={currentCodeTheme.value === codeTheme.name}
+        text={codeTheme.displayName}
+        onClick={() => changeCodeTheme(codeTheme.name)}
       />
     {/each}
   </ul>

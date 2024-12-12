@@ -4,6 +4,7 @@ import { FluentIconLib } from "./icons/fluent-icons";
 import { HeroIconLib } from "./icons/hero-icons";
 import { FestiveIcons } from "./icons/festive-icons";
 import { makeItSnow, makeItStopSnowing } from "./events/festive.svelte";
+import { codeThemes } from "$lib/services/models/markdown-utils";
 
 export const themeService = {
   themes: [
@@ -15,8 +16,6 @@ export const themeService = {
     { name: "rose", icons: FluentIconLib },
     { name: "cerberus", icons: FluentIconLib }
   ] as Theme[],
-
-  codeThemes: ["monokai", "night-owl", "github-dark", "catppuccin-mocha", "solarized-dark", "solarized-light"],
 
   isSnowing: false,
 
@@ -65,7 +64,7 @@ export const themeService = {
     if (!theme) {
       theme = "monokai";
     }
-    if (themeService.codeThemes.includes(theme)) {
+    if (codeThemes.find((t) => t.name === theme)) {
       currentCodeTheme.value = theme;
     } else {
       currentCodeTheme.value = "monokai";
