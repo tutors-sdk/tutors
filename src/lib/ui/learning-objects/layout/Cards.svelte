@@ -72,10 +72,10 @@
                   type: lo.type,
                   summary: lo.summary,
                   img: lo.img,
-                  icon: lo.icon
+                  icon: lo.icon,
+                  video: lo.video
                 }}
               />
-              <!-- <Card {lo} /> -->
             </div>
           {/if}
         {/each}

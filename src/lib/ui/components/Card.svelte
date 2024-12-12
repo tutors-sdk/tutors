@@ -1,5 +1,6 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
+  import { currentCourse } from "$lib/runes";
 
   import {
     layout,
@@ -30,20 +31,22 @@
     }
   }
 
+  const hideVideoIcon = $derived(currentCourse.value?.areVideosHidden);
+
   $effect(() => {
     if (layout.value === "compacted") {
-      cardHeight.value = "h-48";
+      cardHeight.value = "h-24"; // Reduced from h-12
       headingText.value = "!text-xs font-medium";
-      cardWidths.value = "w-36 h-[18rem]";
+      cardWidths.value = "w-36 h-[14rem]"; // Reduced height
       iconHeight.value = "60";
-      imageHeight.value = "h-12";
+      imageHeight.value = "h-16"; // Reduced from h-12
       textSize.value = "line-clamp-2 text-xs";
       avatarWidth.value = "w-8";
     } else {
       cardHeight.value = "h-96";
       headingText.value = "!text-lg font-semibold";
       cardWidths.value = "w-60 h-[23rem]";
-      iconHeight.value = "140";
+      iconHeight.value = "160";
       imageHeight.value = "h-40";
       textSize.value = "prose mt-4 line-clamp-3 leading-6 dark:prose-invert";
       avatarWidth.value = "w-12";
@@ -53,7 +56,12 @@
 
 {#snippet header(cardDetails: CardDetails)}
   <header class="relative w-full p-3">
-    <div class="absolute right-3 top-3">
+    <div class="absolute right-1 top-3 flex items-center">
+      {#if cardDetails.video && cardDetails.type !== "video" && !hideVideoIcon}
+        <a href={cardDetails.video}>
+          <Icon type="video" height="30" />
+        </a>
+      {/if}
       <Icon type={cardDetails.type} height="30" />
     </div>
     {#if cardDetails.student}
@@ -74,11 +82,11 @@
 {/snippet}
 
 {#snippet figure(cardDetails: CardDetails)}
-  <figure class="object-scale-down p-1">
+  <figure class="flex items-center justify-center overflow-hidden p-2">
     {#if cardDetails.icon}
       <Iconify icon={cardDetails.icon.type} color={cardDetails.icon.color} height={iconHeight.value} />
     {:else}
-      <img src={cardDetails.img} alt={cardDetails.title} class={imageHeight.value} />
+      <img src={cardDetails.img} alt={cardDetails.title} class="{imageHeight.value} object-contain object-center" />
     {/if}
   </figure>
 {/snippet}
