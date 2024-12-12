@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { Lab, Lo } from "./lo-types";
+import type { Lab, Lo, Note } from "./lo-types";
 // @ts-ignore
 import MarkdownIt from "markdown-it";
 // @ts-ignore
@@ -54,44 +54,36 @@ import nightOwl from "shiki/themes/night-owl.mjs";
 import githubDark from "shiki/themes/github-dark.mjs";
 import catppuccinMocha from "shiki/themes/catppuccin-mocha.mjs";
 
-import { bundledLanguages, createHighlighter } from "shiki";
-
-let highlighter: any;
+const languages = [
+  js,
+  ts,
+  css,
+  html,
+  json,
+  yaml,
+  markdown,
+  bash,
+  python,
+  sql,
+  typescript,
+  java,
+  kotlin,
+  csharp,
+  c,
+  cpp,
+  go,
+  rust,
+  php,
+  ruby,
+  swift,
+  html
+];
 
 const shiki = createHighlighterCoreSync({
   themes: [monokai, nightOwl, githubDark, catppuccinMocha, solarizedDark, solarizedLight],
-  langs: [
-    js,
-    ts,
-    css,
-    html,
-    json,
-    yaml,
-    markdown,
-    bash,
-    python,
-    sql,
-    typescript,
-    java,
-    kotlin,
-    csharp,
-    c,
-    cpp,
-    go,
-    rust,
-    php,
-    ruby,
-    swift
-  ],
+  langs: languages,
   engine: createJavaScriptRegexEngine()
 });
-
-export async function initializeHighlighter() {
-  highlighter = await createHighlighter({
-    themes: ["monokai", "night-owl", "github-dark", "catppuccin-mocha", "solarized-dark", "solarized-light"],
-    langs: Object.keys(bundledLanguages)
-  });
-}
 
 let currentTheme = "monokai";
 
@@ -104,13 +96,10 @@ const markdownIt: any = new MarkdownIt({
   typographer: true,
   quotes: "“”‘’",
   highlight: function (str: string, lang: string) {
-    //return highlighter?.codeToHtml(str, { lang, theme: currentTheme });
     try {
-      console.log(lang);
       return shiki?.codeToHtml(str, { lang, theme: currentTheme });
     } catch (e) {
-      console.log(e);
-      return str;
+      return shiki?.codeToHtml(str, { lang: "yaml", theme: currentTheme });
     }
   }
 });
@@ -188,6 +177,11 @@ export async function convertLabToHtml(course: Course, lab: Lab, theme: string) 
     step.parentLo = lab;
     step.type = "step";
   });
+}
+export async function convertNoteToHtml(course: Course, note: Note, theme: string) {
+  currentTheme = theme;
+  note.summary = markdownIt.render(note.summary);
+  note.contentHtml = markdownIt.render(note.contentMd);
 }
 
 export async function convertLoToHtml(course: Course, lo: Lo, theme: string = "monokai") {

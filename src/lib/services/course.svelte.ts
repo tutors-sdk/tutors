@@ -1,9 +1,9 @@
 import { courseUrl, currentCodeTheme, currentCourse, currentLo } from "$lib/runes";
-import type { Lo, Course, Lab } from "$lib/services/models/lo-types";
+import type { Lo, Course, Lab, Note } from "$lib/services/models/lo-types";
 import { decorateCourseTree } from "./models/lo-tree";
 import { LiveLab } from "./models/live-lab";
 import type { CourseService } from "./types.svelte";
-import { convertLabToHtml } from "./models/markdown-utils";
+import { convertLabToHtml, convertNoteToHtml } from "./models/markdown-utils";
 import { themeService } from "$lib/ui/themes/theme-controller.svelte";
 
 export const courseService: CourseService = {
@@ -99,7 +99,7 @@ export const courseService: CourseService = {
     const lo = course.loIndex.get(loId);
     if (lo) currentLo.value = lo;
     if (lo?.type === "note") {
-      await convertLabToHtml(course, lo as Lab, currentCodeTheme.value);
+      await convertNoteToHtml(course, lo as Note, currentCodeTheme.value);
     }
     return lo!;
   },
