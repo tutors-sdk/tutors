@@ -44,6 +44,7 @@ import rust from "shiki/langs/rust.mjs";
 import php from "shiki/langs/php.mjs";
 import ruby from "shiki/langs/ruby.mjs";
 import swift from "shiki/langs/swift.mjs";
+import dockerfile from "shiki/langs/dockerfile.mjs";
 
 import monokai from "shiki/themes/monokai.mjs";
 import solarizedDark from "shiki/themes/solarized-dark.mjs";
@@ -75,6 +76,7 @@ const languages = [
   php,
   ruby,
   swift,
+  dockerfile,
   html
 ];
 
@@ -109,7 +111,7 @@ export const markdownIt = new MarkdownIt({
     try {
       return shiki?.codeToHtml(str, { lang, theme: currentTheme });
     } catch (e) {
-      return shiki?.codeToHtml(str, { lang: "yaml", theme: currentTheme });
+      return shiki?.codeToHtml(str, { lang: "", theme: currentTheme });
     }
   }
 });
