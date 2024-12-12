@@ -1,5 +1,4 @@
 import { isCompositeLo, type Course, type Lo, type Composite, type LoType, type Topic } from "./lo-types";
-import { convertLoToHtml } from "./markdown-utils";
 import {
   allVideoLos,
   crumbs,
@@ -12,6 +11,7 @@ import {
   filterByType
 } from "./lo-utils";
 import { createCompanions, createWalls, initCalendar, loadPropertyFlags } from "./course-utils";
+import { markdownService } from "../markdown";
 
 export function decorateCourseTree(course: Course, courseId: string = "", courseUrl = "") {
   // define course properties
@@ -56,7 +56,7 @@ export function decorateLoTree(course: Course, lo: Lo) {
   lo.breadCrumbs = [];
   crumbs(lo, lo.breadCrumbs);
   // Convert summary and contentMd to html
-  convertLoToHtml(course, lo);
+  markdownService.convertLoToHtml(course, lo);
 
   if (isCompositeLo(lo)) {
     // if Lo is composite, recursively decorate all child los

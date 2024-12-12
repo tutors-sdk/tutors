@@ -3,12 +3,13 @@ import type { Lo, Course, Lab, Note } from "$lib/services/models/lo-types";
 import { decorateCourseTree } from "./models/lo-tree";
 import { LiveLab } from "./models/live-lab";
 import type { CourseService } from "./types.svelte";
-import { convertLabToHtml, convertNoteToHtml } from "./models/markdown-utils";
 import { themeService } from "$lib/ui/themes/theme-controller.svelte";
+import { markdownService } from "./markdown";
 
 export const courseService: CourseService = {
   courses: new Map<string, Course>(),
   labs: new Map<string, LiveLab>(),
+  notes: new Map<string, Note>(),
   courseUrl: "",
 
   async getOrLoadCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course> {
@@ -79,7 +80,7 @@ export const courseService: CourseService = {
     if (!liveLab) {
       const lab = course.loIndex.get(labId) as Lab;
       themeService.initCodeTheme();
-      await convertLabToHtml(course, lab, currentCodeTheme.value);
+      markdownService.convertLabToHtml(course, lab, currentCodeTheme.value);
       liveLab = new LiveLab(course, lab, labId);
       this.labs.set(labId, liveLab);
     }
@@ -99,16 +100,20 @@ export const courseService: CourseService = {
     const lo = course.loIndex.get(loId);
     if (lo) currentLo.value = lo;
     if (lo?.type === "note") {
-      await convertNoteToHtml(course, lo as Note, currentCodeTheme.value);
+      markdownService.convertNoteToHtml(lo as Note, currentCodeTheme.value);
+      this.notes.set(loId, lo as Note);
     }
     return lo!;
   },
 
   refreshAllLabs(codeTheme: string) {
     for (const liveLab of this.labs.values()) {
-      convertLabToHtml(liveLab.course, liveLab.lab, codeTheme);
+      markdownService.convertLabToHtml(liveLab.course, liveLab.lab, codeTheme);
       liveLab.convertMdToHtml();
       liveLab.refreshStep();
+    }
+    for (const note of this.notes.values()) {
+      markdownService.convertNoteToHtml(note, codeTheme);
     }
   }
 };

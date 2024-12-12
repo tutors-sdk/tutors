@@ -1,5 +1,5 @@
 import type { LiveLab } from "./models/live-lab";
-import type { Course, IconType, Lo } from "./models/lo-types";
+import type { Course, IconType, Lo, Note } from "./models/lo-types";
 
 export type TutorsId = {
   name: string;
@@ -60,6 +60,7 @@ export interface CardDetails {
 export interface CourseService {
   courses: Map<string, Course>;
   labs: Map<string, LiveLab>;
+  notes: Map<string, Note>;
   courseUrl: "";
 
   getOrLoadCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course>;

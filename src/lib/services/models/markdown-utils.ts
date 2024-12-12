@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import type { Lab, Lo, Note } from "./lo-types";
 // @ts-ignore
 import MarkdownIt from "markdown-it";
 // @ts-ignore
@@ -20,7 +19,6 @@ import mark from "markdown-it-mark";
 import footnote from "markdown-it-footnote";
 // @ts-ignore
 import deflist from "markdown-it-deflist";
-import type { Course } from "./lo-types";
 
 import { createHighlighterCoreSync } from "shiki/core";
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
@@ -87,7 +85,7 @@ const shiki = createHighlighterCoreSync({
 
 let currentTheme = "monokai";
 
-const markdownIt: any = new MarkdownIt({
+export const markdownIt: any = new MarkdownIt({
   html: true, // Enable HTML tags in source
   xhtmlOut: false, // Use '/' to close single tags (<br />).
   breaks: false, // Convert '\n' in paragraphs into <br>
@@ -144,63 +142,7 @@ markdownIt.renderer.rules.link_open = function (tokens: any, idx: any, options: 
   return defaultRender(tokens, idx, options, env, self);
 };
 
-function replaceAll(str: string, find: string, replace: string) {
-  return str.replace(new RegExp(find, "g"), replace);
-}
-
-function filter(src: string, url: string): string {
-  let filtered = replaceAll(src, "./img\\/", `img/`);
-  filtered = replaceAll(filtered, "img\\/", `https://${url}/img/`);
-  filtered = replaceAll(filtered, "./archives\\/", `archives/`);
-
-  //filtered = replaceAll(filtered, "archives\\/", `https://${url}/archives/`);
-  filtered = replaceAll(filtered, "(?<!/)archives\\/", `https://${url}/archives/`);
-
-  // filtered = replaceAll(filtered, "./archive\\/(?!refs)", `archive/`);
-  filtered = replaceAll(filtered, "(?<!/)archive\\/(?!refs)", `https://${url}/archive/`);
-  filtered = replaceAll(filtered, "\\]\\(\\#", `](https://${url}#/`);
-  return filtered;
-}
-
-export async function convertLabToHtml(course: Course, lab: Lab, theme: string) {
-  // if (!highlighter) {
-  //   await initializeHighlighter();
-  // }
-  currentTheme = theme;
-  lab.summary = markdownIt.render(lab.summary);
-  const url = lab.route.replace(`/lab/${course.courseId}`, course.courseUrl);
-  lab?.los?.forEach((step) => {
-    if (course.courseUrl) {
-      step.contentMd = filter(step.contentMd, url);
-    }
-    step.contentHtml = markdownIt.render(step.contentMd);
-    step.parentLo = lab;
-    step.type = "step";
-  });
-}
-export async function convertNoteToHtml(course: Course, note: Note, theme: string) {
-  currentTheme = theme;
-  note.summary = markdownIt.render(note.summary);
-  note.contentHtml = markdownIt.render(note.contentMd);
-}
-
-export async function convertLoToHtml(course: Course, lo: Lo, theme: string = "monokai") {
-  currentTheme = theme;
-  if (lo.type === "lab" || lo.type == "note") {
-    // convertLabToHtml(course, lo as Lab);
-  } else {
-    if (lo.summary) lo.summary = markdownIt.render(lo.summary);
-    let md = lo.contentMd;
-    if (md) {
-      if (course.courseUrl) {
-        const url = lo.route.replace(`/${lo.type}/${course.courseId}`, course.courseUrl);
-        md = filter(md, url);
-      }
-      lo.contentHtml = markdownIt.render(md);
-    }
-  }
-}
-
-export function convertMdToHtml(md: string): string {
+export function convertMdToHtml(md: string, codeTheme: string): string {
+  currentTheme = codeTheme;
   return markdownIt.render(md);
 }
