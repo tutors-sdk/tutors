@@ -5,6 +5,7 @@
   import { onMount } from "svelte";
   import { browser } from "$app/environment";
   import { themeService } from "$lib/ui/themes/theme-controller.svelte";
+  import { markdownService } from "$lib/services/markdown.svelte";
 
   interface Props {
     data: PageData;
@@ -16,11 +17,9 @@
     tutorsConnectService.reconnect(data.user);
   }
 
-  onMount(async () => {
-    if (browser) {
-      themeService.initDisplay("festive", "dark");
-    }
-  });
+  if (browser) {
+    themeService.initDisplay("festive", "dark");
+  }
 </script>
 
 {@render children()}

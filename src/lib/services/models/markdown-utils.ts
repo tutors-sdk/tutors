@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 import MarkdownIt from "markdown-it";
+import hljs from "highlight.js";
 // @ts-ignore
 import latex from "@iktakahiro/markdown-it-katex";
 // @ts-ignore
@@ -20,93 +21,13 @@ import footnote from "markdown-it-footnote";
 // @ts-ignore
 import deflist from "markdown-it-deflist";
 
-import { createHighlighterCoreSync } from "shiki/core";
-import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
+let currentTheme = "ayu-dark";
 
-import js from "shiki/langs/javascript.mjs";
-import ts from "shiki/langs/typescript.mjs";
-import css from "shiki/langs/css.mjs";
-import html from "shiki/langs/html.mjs";
-import json from "shiki/langs/json.mjs";
-import yaml from "shiki/langs/yaml.mjs";
-import markdown from "shiki/langs/markdown.mjs";
-import bash from "shiki/langs/bash.mjs";
-import python from "shiki/langs/python.mjs";
-import sql from "shiki/langs/sql.mjs";
-import typescript from "shiki/langs/typescript.mjs";
-import java from "shiki/langs/java.mjs";
-import kotlin from "shiki/langs/kotlin.mjs";
-import csharp from "shiki/langs/csharp.mjs";
-import c from "shiki/langs/c.mjs";
-import cpp from "shiki/langs/cpp.mjs";
-import go from "shiki/langs/go.mjs";
-import rust from "shiki/langs/rust.mjs";
-import php from "shiki/langs/php.mjs";
-import ruby from "shiki/langs/ruby.mjs";
-import swift from "shiki/langs/swift.mjs";
-import dockerfile from "shiki/langs/dockerfile.mjs";
-import jsx from "shiki/langs/jsx.mjs";
-import svelte from "shiki/langs/svelte.mjs";
-import haskell from "shiki/langs/haskell.mjs";
-import scala from "shiki/langs/scala.mjs";
-import powershell from "shiki/langs/powershell.mjs";
-import r from "shiki/langs/r.mjs";
-import shell from "shiki/langs/shell.mjs";
-import xml from "shiki/langs/xml.mjs";
-import vue from "shiki/langs/vue.mjs";
+let customHighlighter: any;
 
-import ayuDark from "shiki/themes/ayu-dark.mjs";
-import catppuccin from "shiki/themes/catppuccin-latte.mjs";
-import monokai from "shiki/themes/monokai.mjs";
-import solarizedLight from "shiki/themes/solarized-light.mjs";
-import nightOwl from "shiki/themes/night-owl.mjs";
-import githubDark from "shiki/themes/github-dark.mjs";
-import githubLight from "shiki/themes/github-light.mjs";
-
-const languages = [
-  js,
-  ts,
-  css,
-  html,
-  json,
-  yaml,
-  markdown,
-  bash,
-  python,
-  sql,
-  typescript,
-  java,
-  kotlin,
-  csharp,
-  c,
-  cpp,
-  go,
-  rust,
-  php,
-  ruby,
-  swift,
-  dockerfile,
-  html,
-  jsx,
-  svelte,
-  haskell,
-  scala,
-  powershell,
-  r,
-  shell,
-  vue,
-  xml
-];
-
-export const codeThemes = [ayuDark, monokai, githubDark, nightOwl, solarizedLight, githubLight, catppuccin];
-
-const shiki = createHighlighterCoreSync({
-  themes: codeThemes,
-  langs: languages,
-  engine: createJavaScriptRegexEngine()
-});
-
-let currentTheme = "monokai";
+export function initHighlighter(codeHighlighter: any) {
+  customHighlighter = codeHighlighter;
+}
 
 export const markdownIt = new MarkdownIt({
   html: true, // Enable HTML tags in source
@@ -118,9 +39,9 @@ export const markdownIt = new MarkdownIt({
   quotes: "“”‘’",
   highlight: function (str: string, lang: string) {
     try {
-      return shiki?.codeToHtml(str, { lang, theme: currentTheme });
+      return customHighlighter?.codeToHtml(str, { lang, theme: currentTheme });
     } catch (e) {
-      return shiki?.codeToHtml(str, { lang: "", theme: currentTheme });
+      return customHighlighter?.codeToHtml(str, { lang: "", theme: currentTheme });
     }
   }
 });
