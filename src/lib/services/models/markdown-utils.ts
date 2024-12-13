@@ -46,14 +46,14 @@ import ruby from "shiki/langs/ruby.mjs";
 import swift from "shiki/langs/swift.mjs";
 import dockerfile from "shiki/langs/dockerfile.mjs";
 
+import ayuDark from "shiki/themes/ayu-dark.mjs";
+import catppuccin from "shiki/themes/catppuccin-latte.mjs";
 import monokai from "shiki/themes/monokai.mjs";
-import solarizedDark from "shiki/themes/solarized-dark.mjs";
 import solarizedLight from "shiki/themes/solarized-light.mjs";
 import nightOwl from "shiki/themes/night-owl.mjs";
 import githubDark from "shiki/themes/github-dark.mjs";
-import dracula from "shiki/themes/dracula.mjs";
-import snazziLight from "shiki/themes/snazzy-light.mjs";
-import githubLightHighContrast from "shiki/themes/github-light-high-contrast.mjs";
+import githubLight from "shiki/themes/github-light.mjs";
+
 const languages = [
   js,
   ts,
@@ -80,16 +80,7 @@ const languages = [
   html
 ];
 
-export const codeThemes = [
-  monokai,
-  solarizedLight,
-  githubDark,
-  githubLightHighContrast,
-  nightOwl,
-  dracula,
-  solarizedDark,
-  snazziLight
-];
+export const codeThemes = [ayuDark, monokai, githubDark, nightOwl, solarizedLight, githubLight, catppuccin];
 
 const shiki = createHighlighterCoreSync({
   themes: codeThemes,

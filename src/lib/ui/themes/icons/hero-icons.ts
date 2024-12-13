@@ -60,6 +60,8 @@ export const HeroIconLib: IconLib = {
   edit: { type: "typcn:edit", color: "primary" },
   info: { type: "fluent:info-28-regular", color: "primary" },
   close: { type: "fluent:add-square-32-regular", color: "primary" },
+  theme: { type: "fluent:color-fill-24-regular", color: "success" },
+  codeTheme: { type: "fluent:paint-brush-sparkle-20-regular", color: "primary" },
 
   default: { type: "heroicons-outline:dots-vertical", color: "primary" }
 };
