@@ -47,6 +47,8 @@ export const HalloweenIconLib: IconLib = {
   compacted: { type: "mdi:coffin", color: "warning" },
   expanded: { type: "mdi:coffin", color: "warning" },
   edit: { type: "typcn:edit", color: "primary" },
+  theme: { type: "fluent:color-fill-24-regular", color: "success" },
+  codeTheme: { type: "fluent:paint-brush-sparkle-20-regular", color: "primary" },
 
   default: { type: "mdi:coffin", color: "warning" }
 };

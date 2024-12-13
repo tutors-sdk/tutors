@@ -62,7 +62,7 @@ export const themeService = {
 
   setCodeTheme(theme: string): void {
     if (!theme) {
-      theme = "monokai";
+      theme = "ayu-dark";
     }
     if (codeThemes.find((t) => t.name === theme)) {
       currentCodeTheme.value = theme;

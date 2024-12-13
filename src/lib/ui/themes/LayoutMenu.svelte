@@ -53,7 +53,7 @@
   <ul class="list">
     {#each themeService.themes as theme}
       <MenuItem
-        type="lightMode"
+        type="theme"
         isActive={currentTheme.value === theme.name}
         text={theme.name}
         onClick={() => changeTheme(theme.name)}
@@ -64,7 +64,7 @@
   <ul class="list">
     {#each codeThemes as codeTheme}
       <MenuItem
-        type="lightMode"
+        type="codeTheme"
         isActive={currentCodeTheme.value === codeTheme.name}
         text={codeTheme.displayName}
         onClick={() => changeCodeTheme(codeTheme.name)}
