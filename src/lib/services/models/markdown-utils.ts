@@ -45,6 +45,15 @@ import php from "shiki/langs/php.mjs";
 import ruby from "shiki/langs/ruby.mjs";
 import swift from "shiki/langs/swift.mjs";
 import dockerfile from "shiki/langs/dockerfile.mjs";
+import jsx from "shiki/langs/jsx.mjs";
+import svelte from "shiki/langs/svelte.mjs";
+import haskell from "shiki/langs/haskell.mjs";
+import scala from "shiki/langs/scala.mjs";
+import powershell from "shiki/langs/powershell.mjs";
+import r from "shiki/langs/r.mjs";
+import shell from "shiki/langs/shell.mjs";
+import xml from "shiki/langs/xml.mjs";
+import vue from "shiki/langs/vue.mjs";
 
 import ayuDark from "shiki/themes/ayu-dark.mjs";
 import catppuccin from "shiki/themes/catppuccin-latte.mjs";
@@ -77,7 +86,16 @@ const languages = [
   ruby,
   swift,
   dockerfile,
-  html
+  html,
+  jsx,
+  svelte,
+  haskell,
+  scala,
+  powershell,
+  r,
+  shell,
+  vue,
+  xml
 ];
 
 export const codeThemes = [ayuDark, monokai, githubDark, nightOwl, solarizedLight, githubLight, catppuccin];
@@ -121,7 +139,6 @@ markdownIt.use(mark);
 markdownIt.use(footnote);
 markdownIt.use(deflist);
 
-// @ts-ignore
 const defaultRender =
   markdownIt.renderer.rules.link_open ||
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
