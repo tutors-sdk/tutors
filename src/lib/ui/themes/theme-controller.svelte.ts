@@ -1,10 +1,9 @@
-import { currentCodeTheme, currentTheme, lightMode } from "$lib/runes";
+import { currentTheme, lightMode } from "$lib/runes";
 import type { IconType, Theme } from "$lib/services/models/lo-types";
 import { FluentIconLib } from "./icons/fluent-icons";
 import { HeroIconLib } from "./icons/hero-icons";
 import { FestiveIcons } from "./icons/festive-icons";
 import { makeItSnow, makeItStopSnowing } from "./events/festive.svelte";
-import { codeThemes } from "$lib/services/models/markdown-utils";
 
 export const themeService = {
   themes: [
@@ -32,7 +31,6 @@ export const themeService = {
       }
       this.setDisplayMode(localStorage.modeCurrent);
       this.setTheme(localStorage.theme);
-      this.setCodeTheme(localStorage.codeTheme);
     }
   },
 
@@ -58,22 +56,6 @@ export const themeService = {
     document.body.setAttribute("data-theme", currentTheme.value);
     localStorage.theme = currentTheme.value;
     this.eventTrigger();
-  },
-
-  setCodeTheme(theme: string): void {
-    if (!theme) {
-      theme = "ayu-dark";
-    }
-    if (codeThemes.find((t) => t.name === theme)) {
-      currentCodeTheme.value = theme;
-    } else {
-      currentCodeTheme.value = "monokai";
-    }
-    localStorage.codeTheme = currentCodeTheme.value;
-  },
-
-  initCodeTheme() {
-    this.setCodeTheme(localStorage.codeTheme);
   },
 
   getIcon(type: string): IconType {
