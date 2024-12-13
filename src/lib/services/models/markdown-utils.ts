@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 // @ts-ignore
 import MarkdownIt from "markdown-it";
-import hljs from "highlight.js";
 // @ts-ignore
 import latex from "@iktakahiro/markdown-it-katex";
 // @ts-ignore
