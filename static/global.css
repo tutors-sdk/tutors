@@ -61,3 +61,45 @@
   font-style: italic;
   font-display: swap;
 }
+
+pre:has(code) {
+  position: relative;
+}
+
+pre button.copy {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  height: 28px;
+  width: 28px;
+  padding: 0;
+  display: flex;
+
+  & span {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    color: rgb(128, 128, 128);
+  }
+
+  & .ready {
+    background-image: url(/icons/copy.svg);
+  }
+
+  & .success {
+    display: none;
+    background-image: url(/icons/copy-success.svg);
+  }
+
+  &.copied {
+    & .success {
+      display: block;
+    }
+
+    & .ready {
+      display: none;
+    }
+  }
+}
