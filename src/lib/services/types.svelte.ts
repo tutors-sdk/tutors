@@ -1,5 +1,5 @@
 import type { LiveLab } from "./models/live-lab";
-import type { Course, IconType, Lo, Note } from "./models/lo-types";
+import type { Course, IconType, Lab, Lo, Note } from "./models/lo-types";
 
 export type TutorsId = {
   name: string;
@@ -127,4 +127,14 @@ export interface PresenceService {
   sendLoEvent(course: Course, lo: Lo, student: TutorsId): void;
   connectToAllCourseAccess(): void;
   startPresenceListener(courseId: string): void;
+}
+
+export interface MarkdownService {
+  codeThemes: any;
+  setCodeTheme(theme: string): void;
+  convertLabToHtml(course: Course, lab: Lab, refreshOnly?: boolean): void;
+  convertNoteToHtml(course: Course, note: Note, refreshOnly?: boolean): void;
+  convertLoToHtml(course: Course, lo: Lo): void;
+  replaceAll(str: string, find: string, replace: string): string;
+  filter(src: string, url: string): string;
 }
