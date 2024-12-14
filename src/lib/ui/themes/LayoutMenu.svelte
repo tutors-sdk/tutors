@@ -7,12 +7,16 @@
   import { themeService } from "./theme-controller.svelte";
   import { courseService } from "$lib/services/course.svelte";
   import { markdownService } from "$lib/services/markdown.svelte";
+  import { Segment } from "@skeletonlabs/skeleton-svelte";
+
+  let theme = $state(currentTheme.value);
+  let codeTheme = $state(currentCodeTheme.value);
 
   function changeTheme(theme: string): void {
     themeService.setTheme(theme);
   }
 
-  function changeCodeTheme(codeTheme: string): void {
+  function codeThemeChange(codeTheme: string): void {
     markdownService.setCodeTheme(codeTheme);
     courseService.refreshAllLabs(codeTheme);
   }
@@ -32,6 +36,12 @@
       layout.value = "compacted";
     }
   }
+
+  $effect(() => {
+    markdownService.setCodeTheme(codeTheme);
+    courseService.refreshAllLabs(codeTheme);
+    themeService.setTheme(theme);
+  });
 </script>
 
 {#snippet menuSelector()}
@@ -39,7 +49,7 @@
 {/snippet}
 
 {#snippet menuContent()}
-  <h6>Toggles</h6>
+  <h6>Appearance</h6>
   <ul>
     <MenuItem
       type={lightMode.value}
@@ -51,25 +61,32 @@
   <hr />
   <h6>Themes</h6>
   <ul class="list">
-    {#each themeService.themes as theme}
-      <MenuItem
-        type="theme"
-        isActive={currentTheme.value === theme.name}
-        text={theme.name}
-        onClick={() => changeTheme(theme.name)}
-      />
-    {/each}
+    <Segment name="theme" bind:value={theme} orientation="vertical" classes="flex w-full" indicatorBg="bg-primary-500">
+      {#each themeService.themes as theme}
+        <Segment.Item value={theme.name}>
+          <span class="flex-grow">{theme.name}</span>
+        </Segment.Item>
+      {/each}
+    </Segment>
   </ul>
-  <h6>Code Themes</h6>
+  <hr />
+  <h6>Code Style</h6>
   <ul class="list">
-    {#each markdownService.codeThemes as codeTheme}
-      <MenuItem
-        type="codeTheme"
-        isActive={currentCodeTheme.value === codeTheme.name}
-        text={codeTheme.displayName}
-        onClick={() => changeCodeTheme(codeTheme.name)}
-      />
-    {/each}
+    <Segment
+      name="codeTheme"
+      bind:value={codeTheme}
+      orientation="vertical"
+      indicatorBg="bg-primary-500"
+      classes="flex w-full"
+    >
+      {#each markdownService.codeThemes as codeTheme}
+        <Segment.Item value={codeTheme.name}>
+          <div class="flex w-full justify-between">
+            <span class="text-left">{codeTheme.displayName}</span>
+          </div>
+        </Segment.Item>
+      {/each}
+    </Segment>
   </ul>
 {/snippet}
 

@@ -5,6 +5,8 @@
   import EditCoursButton from "./buttons/EditCoursButton.svelte";
 
   import { slideFromLeft } from "../themes/animations";
+
+  import CapturedIconBar from "../components/CapturedIconBar.svelte";
   import IconBar from "../components/IconBar.svelte";
 
   let firstDivClass = $state("");
@@ -38,7 +40,7 @@
         <div
           class="bg-primary-200 {otherDivClass} my-2 ml-2 mr-10 flex hidden rounded-lg bg-opacity-80 sm:flex lg:flex"
         >
-          <IconBar nav={currentCourse?.value?.wallBar} />
+          <CapturedIconBar nav={currentCourse?.value?.wallBar} />
         </div>
       {/if}
     </div>

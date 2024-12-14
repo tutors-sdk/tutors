@@ -7,6 +7,8 @@ export const layout = rune("expanded");
 export const lightMode = rune("light");
 export const currentTheme = rune("tutors");
 export const currentCodeTheme = rune("ayu-dark");
+export const currentWallType = rune("");
+
 export const currentLo = rune<Lo | null>(null);
 export const currentCourse = rune<Course | null>(null);
 export const courseUrl = rune("");

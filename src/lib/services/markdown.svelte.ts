@@ -44,6 +44,7 @@ import xml from "shiki/langs/xml.mjs";
 import vue from "shiki/langs/vue.mjs";
 import { currentCodeTheme } from "$lib/runes";
 import { browser } from "$app/environment";
+import type { MarkdownService } from "./types.svelte";
 const languages = [
   js,
   ts,
@@ -91,7 +92,7 @@ if (browser && localStorage.codeTheme) {
 }
 initHighlighter(shiki);
 
-export const markdownService = {
+export const markdownService: MarkdownService = {
   codeThemes: codeThemes,
 
   setCodeTheme(theme: string): void {
