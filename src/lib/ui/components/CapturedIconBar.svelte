@@ -16,7 +16,7 @@
 </script>
 
 <div class="flex items-center">
-  <Segment name="align" bind:value={currentWallType.value} border="none" indicatorBg="bg-primary-500">
+  <Segment name="align" bind:value={currentWallType.value} indicatorBg="bg-primary-500">
     {#each nav?.bar as i}
       <Segment.Item value={i.link} classes="w-12">
         <Icon type={i.type} link={i.link} target={i.target} tip={i.tip} />
