@@ -19,6 +19,14 @@ import mark from "markdown-it-mark";
 import footnote from "markdown-it-footnote";
 // @ts-ignore
 import deflist from "markdown-it-deflist";
+// @ts-ignore
+import { addCopyButton } from "shiki-transformer-copy-button";
+
+// optional
+const options = {
+  // delay time from "copied" state back to normal state
+  toggle: 2000
+};
 
 let currentTheme = "ayu-dark";
 
@@ -38,9 +46,13 @@ export const markdownIt = new MarkdownIt({
   quotes: "“”‘’",
   highlight: function (str: string, lang: string) {
     try {
-      return customHighlighter?.codeToHtml(str, { lang, theme: currentTheme });
+      return customHighlighter?.codeToHtml(str, { lang, theme: currentTheme, transformers: [addCopyButton(options)] });
     } catch (e) {
-      return customHighlighter?.codeToHtml(str, { lang: "", theme: currentTheme });
+      return customHighlighter?.codeToHtml(str, {
+        lang: "",
+        theme: currentTheme,
+        transformers: [addCopyButton(options)]
+      });
     }
   }
 });
