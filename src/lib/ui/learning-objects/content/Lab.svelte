@@ -21,11 +21,11 @@
     browser ? window.removeEventListener("keydown", keypressInput) : null;
   });
 
-  page.subscribe((path) => {});
   afterNavigate(() => {
-    if (!$page.url.hash) {
-      const elemPage = document.querySelector("#page");
-      if (elemPage) elemPage.scrollTop = 0;
+    const elemPage = document.querySelector("#lab-panel");
+    if (elemPage) {
+      elemPage.scrollIntoView({ behavior: "smooth", block: "start" });
+      elemPage.querySelector("article")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   });
 
