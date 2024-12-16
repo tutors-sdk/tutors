@@ -40,7 +40,7 @@
         <div
           class="bg-primary-200 {otherDivClass} my-2 ml-2 mr-10 flex hidden rounded-lg bg-opacity-80 sm:flex lg:flex"
         >
-          <CapturedIconBar nav={currentCourse?.value?.wallBar} />
+          <IconBar nav={currentCourse?.value?.wallBar} />
         </div>
       {/if}
     </div>
