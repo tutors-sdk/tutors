@@ -1,9 +1,10 @@
 import { currentTheme, lightMode } from "$lib/runes";
-import type { IconType, Theme } from "$lib/services/models/lo-types";
+import type { CourseTheme, IconType, Theme } from "$lib/services/models/lo-types";
 import { FluentIconLib } from "./icons/fluent-icons";
 import { HeroIconLib } from "./icons/hero-icons";
 import { FestiveIcons } from "./icons/festive-icons";
 import { makeItSnow, makeItStopSnowing } from "./events/festive.svelte";
+import { markdownService } from "$lib/services/markdown.svelte";
 
 export const themeService = {
   themes: [
@@ -56,6 +57,19 @@ export const themeService = {
     document.body.setAttribute("data-theme", currentTheme.value);
     localStorage.theme = currentTheme.value;
     this.eventTrigger();
+  },
+
+  setCourseTheme(theme: CourseTheme): void {
+    // Store settings in localStorage
+    const themeSettings = {
+      theme: currentTheme.value,
+      lightMode: lightMode.value,
+      codeTheme: theme.codeTheme
+    };
+    localStorage.setItem("themeSettings", JSON.stringify(themeSettings));
+    this.setTheme(theme.theme);
+    this.setDisplayMode(theme.lightMode);
+    markdownService.setCodeTheme(theme.codeTheme);
   },
 
   getIcon(type: string): IconType {

@@ -4,6 +4,7 @@ import { decorateCourseTree } from "./models/lo-tree";
 import { LiveLab } from "./models/live-lab";
 import type { CourseService } from "./types.svelte";
 import { markdownService } from "./markdown.svelte";
+import { themeService } from "$lib/ui/themes/theme-controller.svelte";
 
 export const courseService: CourseService = {
   courses: new Map<string, Course>(),
@@ -57,6 +58,9 @@ export const courseService: CourseService = {
     currentCourse.value = course;
     currentLo.value = course;
     courseUrl.value = course.courseUrl;
+    // if (course.courseTheme) {
+    //   themeService.setCourseTheme(course.courseTheme);
+    // }
     return course;
   },
 

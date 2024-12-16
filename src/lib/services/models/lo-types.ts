@@ -61,6 +61,12 @@ export type Theme = {
   icons: IconLib;
 };
 
+export type CourseTheme = {
+  theme: string;
+  codeTheme: string;
+  lightMode: string;
+};
+
 export interface LearningRecord {
   date: Date;
   pageLoads: number;
@@ -195,6 +201,7 @@ export type Course = Composite & {
   authLevel: number;
   isPortfolio: boolean;
   isPrivate: boolean;
+  courseTheme: CourseTheme;
   areVideosHidden: boolean;
   areLabStepsAutoNumbered: boolean;
   hasEnrollment: boolean;

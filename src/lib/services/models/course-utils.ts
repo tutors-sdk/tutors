@@ -1,5 +1,5 @@
 import { themeService } from "$lib/ui/themes/theme-controller.svelte";
-import type { Composite, Course, IconNav, Lo, LoType, Topic } from "./lo-types";
+import type { Composite, Course, CourseTheme, IconNav, Lo, LoType, Topic } from "./lo-types";
 import { filterByType, setShowHide } from "./lo-utils";
 
 export function createToc(course: Course) {
@@ -113,6 +113,7 @@ export function loadPropertyFlags(course: Course) {
   if (course.calendar) {
     course.hasCalendar = true;
   }
+  course.courseTheme = course.properties?.courseTheme as unknown as CourseTheme;
 
   course.hasWhiteList = false;
   course.ignorePin = course.properties?.ignorepin?.toString();
