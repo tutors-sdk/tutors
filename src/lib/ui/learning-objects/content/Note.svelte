@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { currentCodeTheme } from "$lib/runes";
   import type { Lo } from "$lib/services/models/lo-types";
 
   interface Props {
@@ -7,8 +8,10 @@
   let { lo }: Props = $props();
 </script>
 
-<article class="prose dark:prose-invert max-w-none mr-4">
-  {@html lo.contentHtml}
+<article class="prose mr-4 max-w-none dark:prose-invert">
+  {#key currentCodeTheme.value}
+    {@html lo.contentHtml}
+  {/key}
 </article>
 
 <svelte:head>

@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import hljs from "highlight.js";
-import type { Lab, Lo } from "./lo-types";
 // @ts-ignore
 import MarkdownIt from "markdown-it";
 // @ts-ignore
@@ -21,9 +19,24 @@ import mark from "markdown-it-mark";
 import footnote from "markdown-it-footnote";
 // @ts-ignore
 import deflist from "markdown-it-deflist";
-import type { Course } from "./lo-types";
+// @ts-ignore
+import { addCopyButton } from "shiki-transformer-copy-button";
 
-const markdownIt: any = new MarkdownIt({
+// optional
+const options = {
+  // delay time from "copied" state back to normal state
+  toggle: 2000
+};
+
+let currentTheme = "ayu-dark";
+
+let customHighlighter: any;
+
+export function initHighlighter(codeHighlighter: any) {
+  customHighlighter = codeHighlighter;
+}
+
+export const markdownIt = new MarkdownIt({
   html: true, // Enable HTML tags in source
   xhtmlOut: false, // Use '/' to close single tags (<br />).
   breaks: false, // Convert '\n' in paragraphs into <br>
@@ -32,16 +45,15 @@ const markdownIt: any = new MarkdownIt({
   typographer: true,
   quotes: "“”‘’",
   highlight: function (str: string, lang: string) {
-    if (lang && hljs.getLanguage(lang)) {
-      try {
-        return (
-          '<pre class="hljs"><code>' +
-          hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
-          "</code></pre>"
-        );
-      } catch (__) {}
+    try {
+      return customHighlighter?.codeToHtml(str, { lang, theme: currentTheme, transformers: [addCopyButton(options)] });
+    } catch (e) {
+      return customHighlighter?.codeToHtml(str, {
+        lang: "",
+        theme: currentTheme,
+        transformers: [addCopyButton(options)]
+      });
     }
-    return '<pre class="hljs"><code>' + markdownIt.utils.escapeHtml(str) + "</code></pre>";
   }
 });
 
@@ -59,7 +71,6 @@ markdownIt.use(mark);
 markdownIt.use(footnote);
 markdownIt.use(deflist);
 
-// @ts-ignore
 const defaultRender =
   markdownIt.renderer.rules.link_open ||
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -85,53 +96,7 @@ markdownIt.renderer.rules.link_open = function (tokens: any, idx: any, options: 
   return defaultRender(tokens, idx, options, env, self);
 };
 
-function replaceAll(str: string, find: string, replace: string) {
-  return str.replace(new RegExp(find, "g"), replace);
-}
-
-function filter(src: string, url: string): string {
-  let filtered = replaceAll(src, "./img\\/", `img/`);
-  filtered = replaceAll(filtered, "img\\/", `https://${url}/img/`);
-  filtered = replaceAll(filtered, "./archives\\/", `archives/`);
-
-  //filtered = replaceAll(filtered, "archives\\/", `https://${url}/archives/`);
-  filtered = replaceAll(filtered, "(?<!/)archives\\/", `https://${url}/archives/`);
-
-  // filtered = replaceAll(filtered, "./archive\\/(?!refs)", `archive/`);
-  filtered = replaceAll(filtered, "(?<!/)archive\\/(?!refs)", `https://${url}/archive/`);
-  filtered = replaceAll(filtered, "\\]\\(\\#", `](https://${url}#/`);
-  return filtered;
-}
-
-export function convertLabToHtml(course: Course, lab: Lab) {
-  lab.summary = markdownIt.render(lab.summary);
-  const url = lab.route.replace(`/lab/${course.courseId}`, course.courseUrl);
-  lab.los.forEach((step) => {
-    if (course.courseUrl) {
-      step.contentMd = filter(step.contentMd, url);
-    }
-    step.contentHtml = markdownIt.render(step.contentMd);
-    step.parentLo = lab;
-    step.type = "step";
-  });
-}
-
-export function convertLoToHtml(course: Course, lo: Lo) {
-  if (lo.type === "lab") {
-    convertLabToHtml(course, lo as Lab);
-  } else {
-    if (lo.summary) lo.summary = markdownIt.render(lo.summary);
-    let md = lo.contentMd;
-    if (md) {
-      if (course.courseUrl) {
-        const url = lo.route.replace(`/${lo.type}/${course.courseId}`, course.courseUrl);
-        md = filter(md, url);
-      }
-      lo.contentHtml = markdownIt.render(md);
-    }
-  }
-}
-
-export function convertMdToHtml(md: string): string {
+export function convertMdToHtml(md: string, codeTheme: string): string {
+  currentTheme = codeTheme;
   return markdownIt.render(md);
 }

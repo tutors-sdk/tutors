@@ -1,5 +1,5 @@
 import type { LiveLab } from "./models/live-lab";
-import type { Course, IconType, Lo } from "./models/lo-types";
+import type { Course, IconType, Lab, Lo, Note } from "./models/lo-types";
 
 export type TutorsId = {
   name: string;
@@ -60,6 +60,7 @@ export interface CardDetails {
 export interface CourseService {
   courses: Map<string, Course>;
   labs: Map<string, LiveLab>;
+  notes: Map<string, Note>;
   courseUrl: "";
 
   getOrLoadCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course>;
@@ -68,6 +69,7 @@ export interface CourseService {
   readLab(courseId: string, labId: string, fetchFunction: typeof fetch): Promise<LiveLab>;
   readWall(courseId: string, type: string, fetchFunction: typeof fetch): Promise<Lo[]>;
   readLo(courseId: string, loId: string, fetchFunction: typeof fetch): Promise<Lo>;
+  refreshAllLabs(codeTheme: string): void;
 }
 
 export interface ProfileStore {
@@ -125,4 +127,14 @@ export interface PresenceService {
   sendLoEvent(course: Course, lo: Lo, student: TutorsId): void;
   connectToAllCourseAccess(): void;
   startPresenceListener(courseId: string): void;
+}
+
+export interface MarkdownService {
+  codeThemes: any;
+  setCodeTheme(theme: string): void;
+  convertLabToHtml(course: Course, lab: Lab, refreshOnly?: boolean): void;
+  convertNoteToHtml(course: Course, note: Note, refreshOnly?: boolean): void;
+  convertLoToHtml(course: Course, lo: Lo): void;
+  replaceAll(str: string, find: string, replace: string): string;
+  filter(src: string, url: string): string;
 }

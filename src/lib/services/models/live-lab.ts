@@ -51,6 +51,9 @@ export class LiveLab {
     this.steps = Array.from(this.chaptersHtml.keys());
   }
 
+  refreshStep() {
+    this.content = this.chaptersHtml.get(this.currentChapterShortTitle)!;
+  }
   refreshNav() {
     //const number = this.autoNumber ? this.lab.shortTitle + ": " : "";
 
