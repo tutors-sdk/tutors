@@ -8,11 +8,11 @@
 </script>
 
 {#if currentCourse?.value?.footer}
-  <div class="fixed bottom-0 left-0 w-screen">
-    <img src="https://{currentCourse?.value?.courseUrl}/{currentCourse?.value?.footer}" alt="sponsors" />
+  <div class="w-full">
+    <img src="https://{currentCourse?.value?.courseUrl}/{currentCourse?.value?.footer}" alt="sponsors" class="w-full" />
   </div>
 {:else}
-  <div class="bg-surface-100-800-token border-surface-200-700-token bottom-0 mt-2 h-12 w-screen border-t-[1px]">
+  <div class="bg-surface-100-800-token border-surface-200-700-token w-full border-t-[1px] h-12">
     <div class="mx-auto py-1">
       <div class="flex grid-flow-col items-center">
         <div class="flex inline-flex min-h-full flex-1 items-center">
