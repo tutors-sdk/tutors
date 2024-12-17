@@ -15,18 +15,21 @@
   });
 </script>
 
-<div class="grid h-screen grid-rows-[auto_1fr_auto]">
-  <header class="sticky top-0 bg-surface-100 dark:bg-surface-950">
+<style>
+</style>
+
+<div class="flex h-screen flex-col">
+  <header class="sticky top-0 z-10 bg-surface-100 dark:bg-surface-950">
     <MainNavigator />
     {#if currentCourse?.value}
       <SecondaryNavigator />
     {/if}
   </header>
-  <main class="mt-2 overflow-y-auto">
+  <main class="mt-2 flex-1 overflow-y-auto">
     {@render children()}
   </main>
   {#if showFooter}
-    <footer transition:slide={{ duration: 800 }} class="hidden lg:block">
+    <footer transition:slide={{ duration: 800 }} class="mt-auto hidden [@media(min-height:800px)]:lg:block">
       <Footer />
     </footer>
   {/if}
