@@ -18,7 +18,7 @@
   }
 
   if (browser) {
-    themeService.initDisplay("festive", "dark");
+    themeService.initDisplay();
   }
 </script>
 
