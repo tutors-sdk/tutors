@@ -15,7 +15,7 @@
 
 <div class="card {cardWidths} p-4 preset-filled-primary-100-900">
   <h3 class="px-4 py-2 text-center {headingText}">{loContext?.title}</h3>
-  <div class="card-body">
+  <div class="card-body overflow-y-auto">
     <figure class="flex justify-center p-2">
       <Image lo={currentLo?.value} />
     </figure>
