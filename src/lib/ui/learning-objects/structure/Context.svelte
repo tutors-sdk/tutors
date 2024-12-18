@@ -31,7 +31,7 @@
   </div>
   {#if loContext && isLoaded}
     <div in:fly={slideFromRight.in} out:fly={slideFromRight.out} class="mr-2 hidden h-auto w-72 xl:block">
-      <div class="sticky top-6 h-auto">
+      <div class="sticky top-6 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <LoContextPanel {loContext} />
       </div>
     </div>
