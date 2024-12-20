@@ -23,7 +23,7 @@
 
   afterNavigate(() => {
     const elemPage = document.querySelector("#lab-panel");
-    if (elemPage && window.innerWidth >= 800) {
+    if (elemPage && window.innerWidth >= 600) {
       elemPage.scrollIntoView({ behavior: "smooth", block: "start" });
       elemPage.querySelector("article")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
