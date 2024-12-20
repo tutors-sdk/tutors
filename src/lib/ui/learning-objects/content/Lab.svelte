@@ -23,7 +23,7 @@
 
   afterNavigate(() => {
     const elemPage = document.querySelector("#lab-panel");
-    if (elemPage) {
+    if (elemPage && window.innerWidth >= 800) {
       elemPage.scrollIntoView({ behavior: "smooth", block: "start" });
       elemPage.querySelector("article")?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
@@ -55,13 +55,7 @@
   />
 </svelte:head>
 
-<div class="w-full">
-  <div class="sticky top-0 block w-full rounded border bg-primary-50 lg:hidden dark:bg-primary-900">
-    <nav class="flex flex-wrap justify-between p-2">
-      {@html lab.horizontalNavbarHtml}
-    </nav>
-  </div>
-
+<div class="lab-content w-full">
   <div class="max-w-l flex">
     <div class="mr-2 hidden h-auto w-72 lg:block">
       {#if isLoaded}
@@ -80,11 +74,30 @@
       {/if}
     </div>
     <div id="lab-panel" class="min-h-screen flex-1">
-      <article class="prose mr-4 max-w-none dark:prose-invert prose-pre:max-w-[70vw]">
+      <article class="prose max-w-none dark:prose-invert prose-pre:max-w-[70vw] sm:mx-2 md:mx-4">
         {#key currentCodeTheme.value}
           {@html lab.content}
         {/key}
       </article>
     </div>
   </div>
+
+  <div class="fixed bottom-0 left-0 z-50 block w-full rounded border bg-primary-50 lg:hidden dark:bg-primary-900">
+    <nav class="flex flex-wrap justify-between p-2">
+      {@html lab.horizontalNavbarHtml}
+    </nav>
+  </div>
 </div>
+
+<style>
+  :global(.lab-content) {
+    padding-bottom: 3.5rem;
+  }
+
+  :global(.prose) {
+    @media (max-width: 640px) {
+      margin-left: 0.25rem !important;
+      margin-right: 0.25rem !important;
+    }
+  }
+</style>
