@@ -3,6 +3,7 @@ import type { IconType, Theme } from "$lib/services/models/lo-types";
 import { FluentIconLib } from "./icons/fluent-icons";
 import { HeroIconLib } from "./icons/hero-icons";
 import { FestiveIcons } from "./icons/festive-icons";
+import { HackerIcons } from "./icons/hacker-icons";
 import { makeItSnow, makeItStopSnowing } from "./events/festive.svelte";
 
 export const themeService = {
@@ -13,7 +14,8 @@ export const themeService = {
     { name: "festive", icons: FestiveIcons },
     { name: "nouveau", icons: FluentIconLib },
     { name: "rose", icons: FluentIconLib },
-    { name: "cerberus", icons: FluentIconLib }
+    { name: "cerberus", icons: FluentIconLib },
+    { name: "hacker", icons: HackerIcons }
   ] as Theme[],
 
   isSnowing: false,
