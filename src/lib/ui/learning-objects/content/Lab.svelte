@@ -55,7 +55,7 @@
   />
 </svelte:head>
 
-<div class="lab-content w-full">
+<div class="lab-content w-full pb-14">
   <div class="max-w-l flex">
     <div class="mr-2 hidden h-auto w-72 lg:block">
       {#if isLoaded}
@@ -74,7 +74,9 @@
       {/if}
     </div>
     <div id="lab-panel" class="min-h-screen flex-1">
-      <article class="prose max-w-none dark:prose-invert prose-pre:max-w-[70vw] sm:mx-2 md:mx-4">
+      <article
+        class="prose max-w-[65ch] dark:prose-invert prose-pre:overflow-x-auto sm:mx-1 md:mx-4 2xl:max-w-[120ch] 2xl:prose-pre:max-w-[120ch]"
+      >
         {#key currentCodeTheme.value}
           {@html lab.content}
         {/key}
@@ -88,16 +90,3 @@
     </nav>
   </div>
 </div>
-
-<style>
-  :global(.lab-content) {
-    padding-bottom: 3.5rem;
-  }
-
-  :global(.prose) {
-    @media (max-width: 640px) {
-      margin-left: 0.25rem !important;
-      margin-right: 0.25rem !important;
-    }
-  }
-</style>
