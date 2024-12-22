@@ -9,7 +9,11 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "format": "prettier --write .",
-    "lint": "prettier --check . && eslint ."
+    "lint": "prettier --check . && eslint .",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:codegen": "playwright codegen"
   },
   "devDependencies": {
     "@auth/core": "^0.37.4",
@@ -28,6 +32,7 @@
     "@tailwindcss/typography": "^0.5.15",
     "@types/eslint": "^9.6.1",
     "@types/node": "^22.10.0",
+    "@playwright/test": "^1.40.1",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.15.0",
     "eslint-config-prettier": "^9.1.0",
