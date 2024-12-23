@@ -3,7 +3,6 @@
   import CourseShell from "$lib/ui/TutorsShell.svelte";
   import type { Snippet } from "svelte";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
-  //import { page } from "$app/stores";
   import { page } from "$app/state";
 
   type Props = { children: Snippet };
