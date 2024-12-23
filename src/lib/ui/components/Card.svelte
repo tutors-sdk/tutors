@@ -2,17 +2,6 @@
   import Iconify from "@iconify/svelte";
   import { currentCourse, layout } from "$lib/runes";
 
-  // import {
-  //   layout,
-  //   avatarWidth,
-  //   cardHeight,
-  //   cardWidths,
-  //   headingText,
-  //   iconHeight,
-  //   imageHeight,
-  //   textSize
-  // } from "$lib/runes";
-
   import type { CardDetails } from "$lib/services/types.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { themeService } from "../themes/theme-controller.svelte";
