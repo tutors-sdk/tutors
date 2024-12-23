@@ -1,17 +1,6 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
-  import { currentCourse } from "$lib/runes";
-
-  import {
-    layout,
-    avatarWidth,
-    cardHeight,
-    cardWidths,
-    headingText,
-    iconHeight,
-    imageHeight,
-    textSize
-  } from "$lib/runes";
+  import { currentCourse, layout } from "$lib/runes";
 
   import type { CardDetails } from "$lib/services/types.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
@@ -33,25 +22,15 @@
 
   const hideVideoIcon = $derived(currentCourse.value?.areVideosHidden);
 
-  $effect(() => {
-    if (layout.value === "compacted") {
-      cardHeight.value = "h-24"; // Reduced from h-12
-      headingText.value = "!text-xs font-medium";
-      cardWidths.value = "w-36 h-[14rem]"; // Reduced height
-      iconHeight.value = "60";
-      imageHeight.value = "h-16"; // Reduced from h-12
-      textSize.value = "line-clamp-2 text-xs";
-      avatarWidth.value = "w-8";
-    } else {
-      cardHeight.value = "h-96";
-      headingText.value = "!text-lg font-semibold";
-      cardWidths.value = "w-60 h-[23rem]";
-      iconHeight.value = "160";
-      imageHeight.value = "h-40";
-      textSize.value = "prose mt-4 line-clamp-3 leading-6 dark:prose-invert";
-      avatarWidth.value = "w-12";
-    }
-  });
+  const cardHeight = $derived(layout.value === "compacted" ? "h-24" : "h-96");
+  const headingText = $derived(layout.value === "compacted" ? "!text-xs font-medium" : "!text-lg font-semibold");
+  const cardWidths = $derived(layout.value === "compacted" ? "w-36 h-[14rem]" : "w-60 h-[23rem]");
+  const iconHeight = $derived(layout.value === "compacted" ? "60" : "160");
+  const imageHeight = $derived(layout.value === "compacted" ? "h-16" : "h-40");
+  const textSize = $derived(
+    layout.value === "compacted" ? "line-clamp-2 text-xs" : "prose mt-4 line-clamp-3 leading-6 dark:prose-invert"
+  );
+  const avatarWidth = $derived(layout.value === "compacted" ? "w-8" : "w-12");
 </script>
 
 {#snippet header(cardDetails: CardDetails)}
@@ -66,15 +45,11 @@
     </div>
     {#if cardDetails.student}
       <div class="flex items-center">
-        <img
-          src={cardDetails.student.avatar}
-          alt={cardDetails.student.fullName}
-          class="rounded-3xl {avatarWidth.value}"
-        />
-        <h6 class={textSize.value}>{cardDetails.student?.fullName}</h6>
+        <img src={cardDetails.student.avatar} alt={cardDetails.student.fullName} class="rounded-3xl {avatarWidth}" />
+        <h6 class={textSize}>{cardDetails.student?.fullName}</h6>
       </div>
     {:else}
-      <div class="line-clamp-2 pr-10 !text-lg font-semibold !text-black dark:!text-white {headingText.value}">
+      <div class="line-clamp-2 pr-10 !text-lg font-semibold !text-black dark:!text-white {headingText}">
         {cardDetails.title}
       </div>
     {/if}
@@ -84,26 +59,26 @@
 {#snippet figure(cardDetails: CardDetails)}
   <figure class="flex items-center justify-center overflow-hidden p-2">
     {#if cardDetails.icon}
-      <Iconify icon={cardDetails.icon.type} color={cardDetails.icon.color} height={iconHeight.value} />
+      <Iconify icon={cardDetails.icon.type} color={cardDetails.icon.color} height={iconHeight} />
     {:else}
-      <img src={cardDetails.img} alt={cardDetails.title} class="{imageHeight.value} object-contain object-center" />
+      <img src={cardDetails.img} alt={cardDetails.title} class="{imageHeight} object-contain object-center" />
     {/if}
   </figure>
 {/snippet}
 
 {#snippet footer(cardDetails: CardDetails)}
   {#if cardDetails.summary}
-    <div class="{textSize.value} text-center text-black dark:text-white">
+    <div class="{textSize} text-center text-black dark:text-white">
       {@html cardDetails.summary}
     </div>
   {:else}
     <div class="pb-2 text-center">
       <div class="inline-flex w-full items-end justify-center">
-        <div class="{textSize.value} line-clamp-1 flex-auto font-semibold">
+        <div class="{textSize} line-clamp-1 flex-auto font-semibold">
           {cardDetails.subtitle1}
         </div>
       </div>
-      <div class="line-clamp-1 {textSize.value}">
+      <div class="line-clamp-1 {textSize}">
         {cardDetails.subtitle2}
       </div>
     </div>
@@ -115,8 +90,7 @@
     class="card preset-filled-{themeService.getTypeColour(cardDetails.type)}-100-900 border-[1px]
     border-y-8 border-{themeService.getTypeColour(
       cardDetails.type
-    )}-500 m-2 {cardWidths.value} transition-all hover:scale-105 {cardHeight.value}
-    flex flex-col"
+    )}-500 m-2 {cardWidths} transition-all hover:scale-105 {cardHeight}"
   >
     <div class="card-header flex">
       {@render header(cardDetails)}
