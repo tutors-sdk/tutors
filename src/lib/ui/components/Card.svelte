@@ -4,7 +4,7 @@
 
   import type { CardDetails } from "$lib/services/types.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
-  import { themeService } from "../themes/theme-controller.svelte";
+  import { themeService } from "../../services/themes.svelte";
 
   let { cardDetails } = $props<{ cardDetails: CardDetails }>();
   let target = $state("");

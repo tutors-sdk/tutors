@@ -4,7 +4,7 @@
   import { layout } from "$lib/runes";
   import MenuItem from "$lib/ui/components/MenuItem.svelte";
   import Icon from "../components/Icon.svelte";
-  import { themeService } from "./theme-controller.svelte";
+  import { themeService } from "../../services/themes.svelte";
   import { courseService } from "$lib/services/course.svelte";
   import { markdownService } from "$lib/services/markdown.svelte";
   import { Combobox } from "@skeletonlabs/skeleton-svelte";
