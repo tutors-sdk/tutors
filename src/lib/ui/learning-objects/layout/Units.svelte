@@ -26,7 +26,7 @@
       </div>
       <Panels panels={unit.panels} />
       <div class="flex flex-wrap justify-center">
-        <Cards los={unit.units.standardLos} {inSidebar} />
+        <Cards los={unit.units.standardLos} />
       </div>
     </div>
   {/each}

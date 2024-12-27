@@ -22,9 +22,8 @@
 
   const hideVideoIcon = $derived(currentCourse.value?.areVideosHidden);
 
-  const cardHeight = $derived(layout.value === "compacted" ? "h-24" : "h-96");
   const headingText = $derived(layout.value === "compacted" ? "!text-xs font-medium" : "!text-lg font-semibold");
-  const cardWidths = $derived(layout.value === "compacted" ? "w-36 h-[14rem]" : "w-60 h-[23rem]");
+  const cardSize = $derived(layout.value === "compacted" ? "w-36 h-[14rem]" : "w-60 h-[23rem]");
   const iconHeight = $derived(layout.value === "compacted" ? "60" : "160");
   const imageHeight = $derived(layout.value === "compacted" ? "h-16" : "h-40");
   const textSize = $derived(
@@ -88,9 +87,7 @@
 <a href={cardDetails.route} {target}>
   <div
     class="card preset-filled-{themeService.getTypeColour(cardDetails.type)}-100-900 border-[1px]
-    border-y-8 border-{themeService.getTypeColour(
-      cardDetails.type
-    )}-500 m-2 {cardWidths} transition-all hover:scale-105 {cardHeight}"
+    border-y-8 border-{themeService.getTypeColour(cardDetails.type)}-500 m-2 {cardSize} transition-all hover:scale-105"
   >
     <div class="card-header flex">
       {@render header(cardDetails)}

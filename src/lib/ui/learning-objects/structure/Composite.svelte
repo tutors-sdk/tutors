@@ -11,18 +11,18 @@
 </script>
 
 {#if composite?.units?.sides?.length > 0}
-  <div class="block md:flex w-11/12 mx-auto justify-center">
+  <div class="mx-auto block w-11/12 justify-center md:flex">
     <div>
       <Panels panels={composite.panels} />
-      <Units units={composite.units.units} inSidebar={true} />
-      <Cards los={composite.units.standardLos} inSidebar={true} />
+      <Units units={composite.units.units} />
+      <Cards los={composite.units.standardLos} />
     </div>
-    <div class="block w-full md:w-[20rem] md:ml-2 flex">
-      <Units units={composite.units?.sides} inSidebar={true} />
+    <div class="block flex w-full md:ml-2 md:w-[28rem]">
+      <Units units={composite.units?.sides} />
     </div>
   </div>
 {:else if composite}
-  <div class="flex flex-wrap justify-center w-11/12 mx-auto">
+  <div class="mx-auto flex w-11/12 flex-wrap justify-center">
     <Panels panels={composite?.panels} />
     <Units units={composite?.units.units} />
     <Cards los={composite?.units.standardLos} />
