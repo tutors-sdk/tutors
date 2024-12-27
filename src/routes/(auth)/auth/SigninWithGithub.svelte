@@ -3,7 +3,7 @@
   import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
   import TutorsTerms from "./TutorsTerms.svelte";
-  import { themeService } from "$lib/ui/themes/theme-controller.svelte";
+  import { themeService } from "$lib/services/themes.svelte";
 
   let showProgress = $state(false);
   interface Props {

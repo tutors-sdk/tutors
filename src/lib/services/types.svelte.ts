@@ -4,7 +4,7 @@
  */
 
 import type { LiveLab } from "./models/live-lab";
-import type { Course, IconType, Lab, Lo, Note } from "./models/lo-types";
+import type { Course, IconType, Lab, Lo, Note, Theme } from "./models/lo-types";
 
 /**
  * User identity information from authentication provider
@@ -189,4 +189,22 @@ export interface MarkdownService {
   convertLoToHtml(course: Course, lo: Lo): void;
   replaceAll(str: string, find: string, replace: string): string;
   filter(src: string, url: string): string;
+}
+
+/**
+ * Service for theme management and icon customization
+ */
+export interface ThemeService {
+  /** Available themes with their icon libraries */
+  themes: Theme[];
+  /** Tracks if festive snow animation is active */
+  isSnowing: boolean;
+
+  initDisplay(forceTheme?: string, forceMode?: string): void;
+  setDisplayMode(mode: string): void;
+  setTheme(theme: string): void;
+  getIcon(type: string): IconType;
+  addIcon(type: string, icon: IconType): void;
+  getTypeColour(type: string): string;
+  eventTrigger(): void;
 }

@@ -2,7 +2,7 @@
   import Icon from "@iconify/svelte";
 
   import { Tooltip } from "@skeletonlabs/skeleton-svelte";
-  import { themeService } from "../themes/theme-controller.svelte";
+  import { themeService } from "../../services/themes.svelte";
 
   interface Props {
     type?: string;
