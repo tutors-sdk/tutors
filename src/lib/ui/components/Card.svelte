@@ -1,6 +1,6 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
-  import { currentCourse, layout } from "$lib/runes";
+  import { currentCourse } from "$lib/runes";
 
   import type { CardDetails } from "$lib/services/types.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
@@ -22,14 +22,18 @@
 
   const hideVideoIcon = $derived(currentCourse.value?.areVideosHidden);
 
-  const headingText = $derived(layout.value === "compacted" ? "!text-xs font-medium" : "!text-lg font-semibold");
-  const cardSize = $derived(layout.value === "compacted" ? "w-36 h-[14rem]" : "w-60 h-[23rem]");
-  const iconHeight = $derived(layout.value === "compacted" ? "60" : "160");
-  const imageHeight = $derived(layout.value === "compacted" ? "h-16" : "h-40");
-  const textSize = $derived(
-    layout.value === "compacted" ? "line-clamp-2 text-xs" : "prose mt-4 line-clamp-3 leading-6 dark:prose-invert"
+  const headingText = $derived(
+    themeService.layout.value === "compacted" ? "!text-xs font-medium" : "!text-lg font-semibold"
   );
-  const avatarWidth = $derived(layout.value === "compacted" ? "w-8" : "w-12");
+  const cardSize = $derived(themeService.layout.value === "compacted" ? "w-36 h-[14rem]" : "w-60 h-[23rem]");
+  const iconHeight = $derived(themeService.layout.value === "compacted" ? "60" : "160");
+  const imageHeight = $derived(themeService.layout.value === "compacted" ? "h-16" : "h-40");
+  const textSize = $derived(
+    themeService.layout.value === "compacted"
+      ? "line-clamp-2 text-xs"
+      : "prose mt-4 line-clamp-3 leading-6 dark:prose-invert"
+  );
+  const avatarWidth = $derived(themeService.layout.value === "compacted" ? "w-8" : "w-12");
 </script>
 
 {#snippet header(cardDetails: CardDetails)}

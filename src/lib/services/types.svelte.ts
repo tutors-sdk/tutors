@@ -197,12 +197,15 @@ export interface MarkdownService {
 export interface ThemeService {
   /** Available themes with their icon libraries */
   themes: Theme[];
+  /** Current display layout */
+  layout: any;
   /** Tracks if festive snow animation is active */
   isSnowing: boolean;
 
   initDisplay(forceTheme?: string, forceMode?: string): void;
   setDisplayMode(mode: string): void;
   setTheme(theme: string): void;
+  setLayout(layout: string): void;
   getIcon(type: string): IconType;
   addIcon(type: string, icon: IconType): void;
   getTypeColour(type: string): string;

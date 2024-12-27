@@ -11,6 +11,7 @@ import { HeroIconLib } from "../ui/themes/icons/hero-icons";
 import { FestiveIcons } from "../ui/themes/icons/festive-icons";
 import { makeItSnow, makeItStopSnowing } from "../ui/themes/events/festive.svelte";
 import type { ThemeService } from "$lib/services/types.svelte";
+import { rune } from "./utils/runes.svelte";
 
 /**
  * Implementation of the ThemeService interface.
@@ -27,6 +28,9 @@ export const themeService: ThemeService = {
     { name: "rose", icons: FluentIconLib },
     { name: "cerberus", icons: FluentIconLib }
   ] as Theme[],
+
+  /** Current display layout */
+  layout: rune<string>("expanded"),
 
   /** State tracker for festive theme snow animation */
   isSnowing: false,
@@ -50,6 +54,7 @@ export const themeService: ThemeService = {
       }
       this.setDisplayMode(localStorage.modeCurrent);
       this.setTheme(localStorage.theme);
+      this.setLayout(localStorage.layout);
     }
   },
 
@@ -85,6 +90,18 @@ export const themeService: ThemeService = {
     document.body.setAttribute("data-theme", currentTheme.value);
     localStorage.theme = currentTheme.value;
     this.eventTrigger();
+  },
+
+  /**
+   * Sets and persists the current display layout
+   * @param layout - Layout name to set
+   */
+  setLayout(layout: string): void {
+    if (!layout) {
+      layout = "expanded";
+    }
+    this.layout.value = layout;
+    localStorage.layout = layout;
   },
 
   /**

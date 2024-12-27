@@ -1,7 +1,6 @@
 <script lang="ts">
   import { currentCodeTheme, currentTheme, lightMode } from "$lib/runes";
   import Menu from "$lib/ui/components/Menu.svelte";
-  import { layout } from "$lib/runes";
   import MenuItem from "$lib/ui/components/MenuItem.svelte";
   import Icon from "../components/Icon.svelte";
   import { themeService } from "../../services/themes.svelte";
@@ -35,10 +34,10 @@
   }
 
   function toggleLayout() {
-    if (layout.value === "compacted") {
-      layout.value = "expanded";
+    if (themeService.layout.value === "compacted") {
+      themeService.setLayout("expanded");
     } else {
-      layout.value = "compacted";
+      themeService.setLayout("compacted");
     }
   }
 
@@ -62,7 +61,11 @@
       text={lightMode.value === "light" ? "Dark Mode" : "Light Mode"}
       onClick={toggleDisplayMode}
     />
-    <MenuItem type={layout.value} text={layout.value === "compacted" ? "Expand" : "Compact"} onClick={toggleLayout} />
+    <MenuItem
+      type={themeService.layout.value}
+      text={themeService.layout.value === "compacted" ? "Expand" : "Compact"}
+      onClick={toggleLayout}
+    />
   </ul>
   <hr />
   <h6>Theme:</h6>
