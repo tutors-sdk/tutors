@@ -1,3 +1,8 @@
+/**
+ * Real-time presence service using PartyKit for user activity tracking.
+ * Manages WebSocket connections for both global and course-specific events.
+ */
+
 import PartySocket from "partysocket";
 import { PUBLIC_party_kit_main_room } from "$env/static/public";
 import { rune } from "./utils/runes.svelte";
@@ -5,15 +10,26 @@ import { LoRecord, type LoUser, type PresenceService, type TutorsId } from "./ty
 import type { Course, Lo } from "./models/lo-types";
 import { tutorsConnectService } from "./connect.svelte";
 
+/** PartyKit server URL from environment */
 const partyKitServer = PUBLIC_party_kit_main_room;
 
 export const presenceService: PresenceService = {
+  /** Global PartyKit connection for all course events */
   partyKitAll: <PartySocket>{},
+  /** Course-specific PartyKit connection */
   partyKitCourse: <PartySocket>{},
+  /** Currently monitored course ID */
   listeningTo: "",
+  /** Reactive array of currently online students */
   studentsOnline: rune<LoRecord[]>([]),
+  /** Map of student events keyed by user ID */
   studentEventMap: new Map<string, LoRecord>(),
 
+  /**
+   * Handles incoming student activity events
+   * Updates presence data for the current course
+   * @param event - WebSocket message event containing student activity
+   */
   studentListener(event: any) {
     const nextCourseEvent = JSON.parse(event.data);
     if (
@@ -31,6 +47,9 @@ export const presenceService: PresenceService = {
     }
   },
 
+  /**
+   * Establishes connection to global course activity room
+   */
   connectToAllCourseAccess(): void {
     this.partyKitAll = new PartySocket({
       host: partyKitServer,
@@ -38,6 +57,11 @@ export const presenceService: PresenceService = {
     });
   },
 
+  /**
+   * Starts monitoring presence for a specific course
+   * Clears previous state and establishes new WebSocket connection
+   * @param courseId - Course to monitor
+   */
   startPresenceListener(courseId: string) {
     this.studentsOnline.value = [];
     this.studentEventMap.clear();
@@ -49,6 +73,13 @@ export const presenceService: PresenceService = {
     this.partyKitCourse.addEventListener("message", this.studentListener.bind(this));
   },
 
+  /**
+   * Broadcasts a learning object interaction event
+   * Sends to both global and course-specific channels
+   * @param course - Current course
+   * @param lo - Learning object being interacted with
+   * @param student - Student performing the interaction
+   */
   sendLoEvent(course: Course, lo: Lo, student: TutorsId) {
     const loRecord: LoRecord = {
       courseId: course.courseId,
@@ -73,6 +104,11 @@ export const presenceService: PresenceService = {
   }
 };
 
+/**
+ * Updates an existing LoRecord with new event data
+ * @param loEvent - Existing record to update
+ * @param nextLoEvent - New event data
+ */
 export function refreshLoRecord(loEvent: LoRecord, nextLoEvent: LoRecord) {
   loEvent.loRoute = `https://tutors.dev${nextLoEvent.loRoute}`;
   loEvent.title = nextLoEvent.title;
@@ -86,6 +122,12 @@ export function refreshLoRecord(loEvent: LoRecord, nextLoEvent: LoRecord) {
   }
 }
 
+/**
+ * Creates a user object for presence tracking
+ * Handles both authenticated and anonymous users
+ * @param tutorsId - User identity information
+ * @returns LoUser object for presence tracking
+ */
 function getUser(tutorsId: TutorsId): LoUser {
   const user: LoUser = {
     fullName: "Anon",
@@ -100,6 +142,10 @@ function getUser(tutorsId: TutorsId): LoUser {
   return user;
 }
 
+/**
+ * Generates a unique identifier for anonymous users
+ * @returns UUID v4 string
+ */
 function generateTutorsTimeId() {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
     const r = (Math.random() * 16) | 0;
@@ -108,6 +154,10 @@ function generateTutorsTimeId() {
   });
 }
 
+/**
+ * Gets or creates a persistent anonymous user identifier
+ * @returns Stored or new UUID
+ */
 function getTutorsTimeId() {
   if (!window.localStorage.tutorsTimeId) {
     window.localStorage.tutorsTimeId = generateTutorsTimeId();
