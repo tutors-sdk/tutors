@@ -3,12 +3,13 @@
  * Handles course loading, caching, and content transformation.
  */
 
-import { courseUrl, currentCourse, currentLo } from "$lib/runes";
+import { courseUrl, currentCourse } from "$lib/runes";
 import type { Lo, Course, Lab, Note } from "$lib/services/models/lo-types";
 import { decorateCourseTree } from "./models/lo-tree";
 import { LiveLab } from "./models/live-lab";
 import type { CourseService } from "./types.svelte";
 import { markdownService } from "./markdown.svelte";
+import { rune } from "./utils/runes.svelte";
 
 export const courseService: CourseService = {
   /** Cache of loaded courses indexed by courseId */
@@ -19,6 +20,8 @@ export const courseService: CourseService = {
   notes: new Map<string, Note>(),
   /** Current course URL */
   courseUrl: "",
+  /** Currently loaded Lo (Learning Object) */
+  currentLo: rune<Lo | null>,
 
   /**
    * Fetches and caches a course by ID. Handles both direct URLs and Netlify domains.
@@ -76,7 +79,7 @@ export const courseService: CourseService = {
   async readCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course> {
     const course = await this.getOrLoadCourse(courseId, fetchFunction);
     currentCourse.value = course;
-    currentLo.value = course;
+    this.currentLo.value = course;
     courseUrl.value = course.courseUrl;
     return course;
   },
@@ -91,7 +94,7 @@ export const courseService: CourseService = {
   async readTopic(courseId: string, topicId: string, fetchFunction: typeof fetch): Promise<Lo> {
     const course = await this.readCourse(courseId, fetchFunction);
     const topic = course.topicIndex.get(topicId);
-    if (topic) currentLo.value = topic;
+    if (topic) this.currentLo.value = topic;
     return topic!;
   },
 
@@ -118,7 +121,7 @@ export const courseService: CourseService = {
       this.labs.set(labId, liveLab);
     }
 
-    currentLo.value = liveLab.lab;
+    this.currentLo.value = liveLab.lab;
     return liveLab;
   },
 
@@ -145,7 +148,7 @@ export const courseService: CourseService = {
   async readLo(courseId: string, loId: string, fetchFunction: typeof fetch): Promise<Lo> {
     const course = await this.readCourse(courseId, fetchFunction);
     const lo = course.loIndex.get(loId);
-    if (lo) currentLo.value = lo;
+    if (lo) this.currentLo.value = lo;
     if (lo?.type === "note") {
       markdownService.convertNoteToHtml(course, lo as Note);
       this.notes.set(loId, lo as Note);

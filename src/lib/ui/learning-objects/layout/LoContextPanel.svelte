@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { courseService } from "$lib/services/course.svelte";
   import type { Lo } from "$lib/services/models/lo-types";
   import Image from "../../components/Image.svelte";
   import LoContext from "../structure/LoContext.svelte";
@@ -6,7 +7,6 @@
   interface Props {
     loContext: Lo;
   }
-  import { currentLo } from "$lib/runes";
   let { loContext }: Props = $props();
 
   let headingText = "text-md font-semibold";
@@ -17,7 +17,7 @@
   <h3 class="px-4 py-2 text-center {headingText}">{loContext?.title}</h3>
   <div class="card-body overflow-y-auto">
     <figure class="flex justify-center p-2">
-      <Image lo={currentLo?.value} />
+      <Image lo={courseService.currentLo?.value} />
     </figure>
     <LoContext lo={loContext} />
   </div>

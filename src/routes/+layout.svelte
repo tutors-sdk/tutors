@@ -2,10 +2,8 @@
   import "../app.postcss";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
   import type { PageData } from "./$types";
-  import { onMount } from "svelte";
   import { browser } from "$app/environment";
   import { themeService } from "$lib/services/themes.svelte";
-  import { markdownService } from "$lib/services/markdown.svelte";
 
   interface Props {
     data: PageData;

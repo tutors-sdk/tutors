@@ -91,6 +91,9 @@ export interface CourseService {
   /** Current course URL */
   courseUrl: "";
 
+  /** Currently loaded Lo (Learning Object) */
+  currentLo: any;
+
   getOrLoadCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course>;
   readCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course>;
   readTopic(courseId: string, topicId: string, fetchFunction: typeof fetch): Promise<Lo>;

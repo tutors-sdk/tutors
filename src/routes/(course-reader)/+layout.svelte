@@ -1,9 +1,10 @@
 <script lang="ts">
-  import { currentCourse, currentLo } from "$lib/runes";
+  import { currentCourse } from "$lib/runes";
   import CourseShell from "$lib/ui/TutorsShell.svelte";
   import type { Snippet } from "svelte";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
   import { page } from "$app/state";
+  import { courseService } from "$lib/services/course.svelte";
 
   type Props = { children: Snippet };
   let { children }: Props = $props();
@@ -22,7 +23,7 @@
 </script>
 
 <svelte:head>
-  <title>{currentLo?.value?.title}</title>
+  <title>{courseService.currentLo?.value?.title}</title>
 </svelte:head>
 
 <CourseShell>

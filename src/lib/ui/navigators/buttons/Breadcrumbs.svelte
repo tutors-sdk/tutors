@@ -1,7 +1,8 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models/lo-types";
-  import { currentCourse, currentLo } from "$lib/runes";
+  import { currentCourse } from "$lib/runes";
   import Icon from "$lib/ui/components/Icon.svelte";
+  import { courseService } from "$lib/services/course.svelte";
 
   let truncated = [true, true, true, true, true, true, true];
 
@@ -19,7 +20,7 @@
     return input;
   }
 
-  let breadCrumbs: Lo[] = $derived(currentLo?.value?.breadCrumbs!);
+  let breadCrumbs: Lo[] = $derived(courseService.currentLo?.value?.breadCrumbs!);
 
   $effect(() => {
     breadCrumbs.forEach((lo) => {
