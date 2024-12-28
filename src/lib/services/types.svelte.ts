@@ -89,7 +89,11 @@ export interface CourseService {
   /** Cache of processed notes */
   notes: Map<string, Note>;
   /** Current course URL */
-  courseUrl: "";
+  courseUrl: any;
+  /** Currently loaded Lo (Learning Object) */
+  currentLo: any;
+  /** Currently loaded course */
+  currentCourse: any;
 
   getOrLoadCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course>;
   readCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course>;
@@ -197,12 +201,20 @@ export interface MarkdownService {
 export interface ThemeService {
   /** Available themes with their icon libraries */
   themes: Theme[];
+  /** current theme */
+  currentTheme: any;
+  /** display modes */
+  layout: any;
+  lightMode: any;
   /** Tracks if festive snow animation is active */
   isSnowing: boolean;
 
   initDisplay(forceTheme?: string, forceMode?: string): void;
   setDisplayMode(mode: string): void;
+  toggleDisplayMode(): void;
   setTheme(theme: string): void;
+  setLayout(layout: string): void;
+  toggleLayout(): void;
   getIcon(type: string): IconType;
   addIcon(type: string, icon: IconType): void;
   getTypeColour(type: string): string;

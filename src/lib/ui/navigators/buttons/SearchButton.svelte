@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { currentCourse } from "$lib/runes";
+  import { courseService } from "$lib/services/course.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
 
   let isSearching = sessionStorage.getItem("isSearching") === "true";
@@ -14,11 +14,11 @@
 
   const toggleSearch = () => {
     if (isSearching) {
-      goto(previousPage || "/course/" + currentCourse?.value?.courseId);
+      goto(previousPage || "/course/" + courseService.currentCourse?.value?.courseId);
       sessionStorage.removeItem("isSearching");
     } else {
       previousPage = window.location.pathname;
-      goto("/search/" + currentCourse?.value?.courseId);
+      goto("/search/" + courseService.currentCourse?.value?.courseId);
       sessionStorage.setItem("isSearching", "true");
     }
     isSearching = !isSearching;

@@ -4,13 +4,13 @@
  * Supports multiple icon sets and persists user preferences.
  */
 
-import { currentTheme, lightMode } from "$lib/runes";
 import type { IconType, Theme } from "$lib/services/models/lo-types";
 import { FluentIconLib } from "../ui/themes/icons/fluent-icons";
 import { HeroIconLib } from "../ui/themes/icons/hero-icons";
 import { FestiveIcons } from "../ui/themes/icons/festive-icons";
 import { makeItSnow, makeItStopSnowing } from "../ui/themes/events/festive.svelte";
 import type { ThemeService } from "$lib/services/types.svelte";
+import { rune } from "./utils/runes.svelte";
 
 /**
  * Implementation of the ThemeService interface.
@@ -28,6 +28,15 @@ export const themeService: ThemeService = {
     { name: "cerberus", icons: FluentIconLib }
   ] as Theme[],
 
+  /** Current display layout */
+  layout: rune<string>("expanded"),
+
+  /** Current light move layout */
+  lightMode: rune<string>("light"),
+
+  /** Current theme */
+  currentTheme: rune<string>("tutors"),
+
   /** State tracker for festive theme snow animation */
   isSnowing: false,
 
@@ -43,13 +52,9 @@ export const themeService: ThemeService = {
       this.setTheme(forceTheme);
       localStorage.forceTheme = true;
     } else {
-      if (localStorage.modeCurrent) {
-        lightMode.value = localStorage.modeCurrent;
-      } else {
-        lightMode.value = "light";
-      }
       this.setDisplayMode(localStorage.modeCurrent);
       this.setTheme(localStorage.theme);
+      this.setLayout(localStorage.layout);
     }
   },
 
@@ -59,12 +64,26 @@ export const themeService: ThemeService = {
    * @param mode - Display mode to set
    */
   setDisplayMode(mode: string): void {
-    lightMode.value = mode;
+    if (!mode) {
+      mode = "light";
+    }
+    this.lightMode.value = mode;
     localStorage.modeCurrent = mode;
     if (mode === "dark") {
       document.body.classList.add("dark");
     } else {
       document.body.classList.remove("dark");
+    }
+  },
+
+  /**
+   * Toggles the display mode between light and dark
+   */
+  toggleDisplayMode(): void {
+    if (this.lightMode.value === "dark") {
+      this.setDisplayMode("light");
+    } else {
+      this.setDisplayMode("dark");
     }
   },
 
@@ -77,14 +96,37 @@ export const themeService: ThemeService = {
     if (!theme) {
       theme = "tutors";
     }
-    if (themeService.themes.find((theme) => theme.name === currentTheme.value)) {
-      currentTheme.value = theme;
+    if (themeService.themes.find((theme) => theme.name === this.currentTheme.value)) {
+      this.currentTheme.value = theme;
     } else {
-      currentTheme.value = "tutors";
+      this.currentTheme.value = "tutors";
     }
-    document.body.setAttribute("data-theme", currentTheme.value);
-    localStorage.theme = currentTheme.value;
+    document.body.setAttribute("data-theme", this.currentTheme.value);
+    localStorage.theme = this.currentTheme.value;
     this.eventTrigger();
+  },
+
+  /**
+   * Sets and persists the current display layout
+   * @param layout - Layout name to set
+   */
+  setLayout(layout: string): void {
+    if (!layout) {
+      layout = "expanded";
+    }
+    this.layout.value = layout;
+    localStorage.layout = layout;
+  },
+
+  /**
+   * Toggles the layout between expanded & compact
+   */
+  toggleLayout(): void {
+    if (this.layout.value === "expanded") {
+      this.setLayout("compacted");
+    } else {
+      this.setLayout("expanded");
+    }
   },
 
   /**
@@ -94,7 +136,7 @@ export const themeService: ThemeService = {
    * @returns IconType definition for requested type
    */
   getIcon(type: string): IconType {
-    const iconLib = themeService.themes.find((theme) => theme.name === currentTheme.value)?.icons;
+    const iconLib = themeService.themes.find((theme) => theme.name === this.currentTheme.value)?.icons;
     if (iconLib && iconLib[type]) {
       return iconLib[type];
     } else {
@@ -120,7 +162,7 @@ export const themeService: ThemeService = {
    * @returns Color string or 'primary' if not found
    */
   getTypeColour(type: string): string {
-    const iconLib = themeService.themes.find((theme) => theme.name === currentTheme.value)?.icons;
+    const iconLib = themeService.themes.find((theme) => theme.name === this.currentTheme.value)?.icons;
     if (iconLib && iconLib[type]) {
       return iconLib[type].color;
     }
@@ -132,7 +174,7 @@ export const themeService: ThemeService = {
    * Currently handles festive theme snow animation
    */
   eventTrigger(): void {
-    if (currentTheme.value === "festive") {
+    if (this.currentTheme.value === "festive") {
       makeItSnow();
       this.isSnowing = true;
     } else {

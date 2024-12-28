@@ -1,10 +1,10 @@
 <script lang="ts">
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
-  import { currentCourse, transitionKey } from "$lib/runes";
   import { onMount, type Snippet } from "svelte";
   import MainNavigator from "./navigators/MainNavigator.svelte";
   import { slide } from "svelte/transition";
+  import { courseService } from "$lib/services/course.svelte";
 
   type Props = { children: Snippet };
   let { children }: Props = $props();
@@ -15,13 +15,10 @@
   });
 </script>
 
-<style>
-</style>
-
 <div class="flex h-screen flex-col">
   <header class="sticky top-0 z-10 bg-surface-100 dark:bg-surface-950">
     <MainNavigator />
-    {#if currentCourse?.value}
+    {#if courseService.currentCourse?.value}
       <SecondaryNavigator />
     {/if}
   </header>
@@ -34,3 +31,6 @@
     </footer>
   {/if}
 </div>
+
+<style>
+</style>

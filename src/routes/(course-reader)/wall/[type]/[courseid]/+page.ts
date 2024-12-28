@@ -1,6 +1,5 @@
 import type { PageLoad } from "./$types";
 import { courseService } from "$lib/services/course.svelte";
-import { currentLo } from "$lib/runes";
 
 export const ssr = false;
 
@@ -10,7 +9,7 @@ export const load: PageLoad = async ({ params, fetch }) => {
   const type = params.type;
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-expect-error
-  currentLo.value = {
+  courseService.currentLo.value = {
     breadCrumbs: [course],
     title: `All ${params.type}s in Module`,
     type: type,

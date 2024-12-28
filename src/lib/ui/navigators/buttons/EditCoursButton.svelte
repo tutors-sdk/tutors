@@ -1,9 +1,10 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { currentCourse, currentLabStepIndex, currentLo } from "$lib/runes";
+  import { currentLabStepIndex } from "$lib/runes";
+  import { courseService } from "$lib/services/course.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
 
-  let editRoute = $state(currentCourse?.value?.properties.github);
+  let editRoute = $state(courseService.currentCourse?.value?.properties.github);
 
   let currentLabStep = "";
   let loRoute = "";
@@ -30,19 +31,19 @@
     loRoute = "";
     if (path.params.loid) {
       loRoute = path.params.loid;
-      if (currentLo?.value?.type == "lab") {
+      if (courseService.currentLo?.value?.type == "lab") {
         const lastSegment = path.params.loid.substring(path.params.loid.lastIndexOf("/") + 1);
         if (lastSegment.startsWith("book")) {
         } else {
           loRoute = insertSubstringAfterLastSlash(path.params.loid, currentLabStep);
           loRoute = loRoute + ".md?plain=1";
         }
-      } else if (currentLo?.value?.type == "note") {
+      } else if (courseService.currentLo?.value?.type == "note") {
         loRoute = loRoute + "/note.md?plain=1";
       }
     }
 
-    editRoute = `${currentCourse?.value?.properties.github}/${loRoute}`;
+    editRoute = `${courseService.currentCourse?.value?.properties.github}/${loRoute}`;
   });
 </script>
 
