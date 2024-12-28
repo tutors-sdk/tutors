@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentCodeTheme, currentTheme, lightMode } from "$lib/runes";
+  import { currentCodeTheme, currentTheme } from "$lib/runes";
   import Menu from "$lib/ui/components/Menu.svelte";
   import MenuItem from "$lib/ui/components/MenuItem.svelte";
   import Icon from "../components/Icon.svelte";
@@ -26,19 +26,11 @@
   let codeTheme = $state([currentCodeTheme.value]);
 
   function toggleDisplayMode(): void {
-    if (lightMode.value === "dark") {
-      themeService.setDisplayMode("light");
-    } else {
-      themeService.setDisplayMode("dark");
-    }
+    themeService.toggleDisplayMode();
   }
 
   function toggleLayout() {
-    if (themeService.layout.value === "compacted") {
-      themeService.setLayout("expanded");
-    } else {
-      themeService.setLayout("compacted");
-    }
+    themeService.toggleLayout();
   }
 
   $effect(() => {
@@ -57,8 +49,8 @@
 
   <ul>
     <MenuItem
-      type={lightMode.value}
-      text={lightMode.value === "light" ? "Dark Mode" : "Light Mode"}
+      type={themeService.lightMode.value}
+      text={themeService.lightMode.value === "light" ? "Dark Mode" : "Light Mode"}
       onClick={toggleDisplayMode}
     />
     <MenuItem

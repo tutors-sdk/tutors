@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { lightMode } from "$lib/runes";
+import { themeService } from "$lib/services/themes.svelte";
 import { snow } from "./snow";
 
 export async function makeItSnow() {
-  if (lightMode.value === "light") {
+  if (themeService.lightMode.value === "light") {
     snow.background.color = "#ffffff"; // White background for light mode
     snow.particles.color.value = "#e8d1d2"; // Red snowflakes in light mode
   } else {

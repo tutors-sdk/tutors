@@ -4,7 +4,7 @@
  * Supports multiple icon sets and persists user preferences.
  */
 
-import { currentTheme, lightMode } from "$lib/runes";
+import { currentTheme } from "$lib/runes";
 import type { IconType, Theme } from "$lib/services/models/lo-types";
 import { FluentIconLib } from "../ui/themes/icons/fluent-icons";
 import { HeroIconLib } from "../ui/themes/icons/hero-icons";
@@ -32,6 +32,9 @@ export const themeService: ThemeService = {
   /** Current display layout */
   layout: rune<string>("expanded"),
 
+  /** Current light move layout */
+  lightMode: rune<string>("light"),
+
   /** State tracker for festive theme snow animation */
   isSnowing: false,
 
@@ -47,11 +50,6 @@ export const themeService: ThemeService = {
       this.setTheme(forceTheme);
       localStorage.forceTheme = true;
     } else {
-      if (localStorage.modeCurrent) {
-        lightMode.value = localStorage.modeCurrent;
-      } else {
-        lightMode.value = "light";
-      }
       this.setDisplayMode(localStorage.modeCurrent);
       this.setTheme(localStorage.theme);
       this.setLayout(localStorage.layout);
@@ -64,12 +62,26 @@ export const themeService: ThemeService = {
    * @param mode - Display mode to set
    */
   setDisplayMode(mode: string): void {
-    lightMode.value = mode;
+    if (!mode) {
+      mode = "light";
+    }
+    this.lightMode.value = mode;
     localStorage.modeCurrent = mode;
     if (mode === "dark") {
       document.body.classList.add("dark");
     } else {
       document.body.classList.remove("dark");
+    }
+  },
+
+  /**
+   * Toggles the display mode between light and dark
+   */
+  toggleDisplayMode(): void {
+    if (this.lightMode.value === "dark") {
+      this.setDisplayMode("light");
+    } else {
+      this.setDisplayMode("dark");
     }
   },
 
@@ -102,6 +114,17 @@ export const themeService: ThemeService = {
     }
     this.layout.value = layout;
     localStorage.layout = layout;
+  },
+
+  /**
+   * Toggles the layout between expanded & compact
+   */
+  toggleLayout(): void {
+    if (this.layout.value === "expanded") {
+      this.setLayout("compacted");
+    } else {
+      this.setLayout("expanded");
+    }
   },
 
   /**
