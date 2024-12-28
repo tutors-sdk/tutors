@@ -1,9 +1,6 @@
 import type { Lo, Course } from "$lib/services/models/lo-types";
 import { rune } from "./services/utils/runes.svelte";
 
-export const transitionKey = rune("");
-
-export const currentTheme = rune("tutors");
 export const currentCodeTheme = rune("ayu-dark");
 export const currentWallType = rune("");
 

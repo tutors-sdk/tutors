@@ -1,7 +1,7 @@
 <script lang="ts">
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
-  import { currentCourse, transitionKey } from "$lib/runes";
+  import { currentCourse } from "$lib/runes";
   import { onMount, type Snippet } from "svelte";
   import MainNavigator from "./navigators/MainNavigator.svelte";
   import { slide } from "svelte/transition";
@@ -14,9 +14,6 @@
     showFooter = true;
   });
 </script>
-
-<style>
-</style>
 
 <div class="flex h-screen flex-col">
   <header class="sticky top-0 z-10 bg-surface-100 dark:bg-surface-950">
@@ -34,3 +31,6 @@
     </footer>
   {/if}
 </div>
+
+<style>
+</style>

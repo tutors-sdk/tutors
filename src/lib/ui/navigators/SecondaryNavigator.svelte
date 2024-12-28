@@ -1,13 +1,14 @@
 <script lang="ts">
-  import { currentCourse, currentTheme } from "$lib/runes";
+  import { currentCourse } from "$lib/runes";
   import { fly } from "svelte/transition";
   import Breadcrumbs from "./buttons/Breadcrumbs.svelte";
   import EditCoursButton from "./buttons/EditCoursButton.svelte";
   import { slideFromLeft } from "../themes/animations";
   import IconBar from "../components/IconBar.svelte";
+  import { themeService } from "$lib/services/themes.svelte";
 
   const themeClasses = $derived({
-    firstDiv: currentTheme.value === "classic" ? "dark:bg-tertiary-900" : "dark:bg-primary-900",
+    firstDiv: themeService.currentTheme.value === "classic" ? "dark:bg-tertiary-900" : "dark:bg-primary-900",
     otherDiv: "dark:bg-primary-800"
   });
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentCodeTheme, currentTheme } from "$lib/runes";
+  import { currentCodeTheme } from "$lib/runes";
   import Menu from "$lib/ui/components/Menu.svelte";
   import MenuItem from "$lib/ui/components/MenuItem.svelte";
   import Icon from "../components/Icon.svelte";
@@ -17,7 +17,7 @@
   themeService.themes.forEach((element) => {
     themeCombo.push({ label: element.name, value: element.name });
   });
-  let theme = $state([currentTheme.value]);
+  let theme = $state([themeService.currentTheme.value]);
 
   const codeThemeCombo: ComboxData[] = [];
   markdownService.codeThemes.forEach((element: { displayName: string; name: string }) => {

@@ -197,6 +197,8 @@ export interface MarkdownService {
 export interface ThemeService {
   /** Available themes with their icon libraries */
   themes: Theme[];
+  /** current theme */
+  currentTheme: any;
   /** display modes */
   layout: any;
   lightMode: any;
