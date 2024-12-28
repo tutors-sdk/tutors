@@ -170,8 +170,17 @@ export const tutorsConnectService: TutorsConnectService = {
   startTimer() {
     if (anonMode) return;
     this.intervalId = setInterval(() => {
-      if (!document.hidden && currentCourse.value && courseService.currentLo.value && this.tutorsId.value) {
-        analyticsService.updatePageCount(currentCourse.value, courseService.currentLo.value, this.tutorsId.value);
+      if (
+        !document.hidden &&
+        courseService.currentCourse.value &&
+        courseService.currentLo.value &&
+        this.tutorsId.value
+      ) {
+        analyticsService.updatePageCount(
+          courseService.currentCourse.value,
+          courseService.currentLo.value,
+          this.tutorsId.value
+        );
       }
     }, 30 * 1000);
   },
