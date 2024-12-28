@@ -50,9 +50,9 @@ import r from "shiki/langs/r.mjs";
 import shell from "shiki/langs/shell.mjs";
 import xml from "shiki/langs/xml.mjs";
 import vue from "shiki/langs/vue.mjs";
-import { currentCodeTheme } from "$lib/runes";
 import { browser } from "$app/environment";
 import type { MarkdownService } from "./types.svelte";
+import { rune } from "./utils/runes.svelte";
 
 /** Supported programming languages for syntax highlighting */
 const languages = [
@@ -92,6 +92,9 @@ const languages = [
 
 /** Available syntax highlighting themes */
 const codeThemes = [ayuDark, monokai, githubDark, nightOwl, solarizedLight, githubLight, catppuccin];
+
+/** Currently selected code theme */
+export const currentCodeTheme = rune("ayu-dark");
 
 /** Initialize Shiki highlighter with supported languages and themes */
 const shiki = createHighlighterCoreSync({

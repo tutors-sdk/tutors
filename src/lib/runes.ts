@@ -1,7 +1,6 @@
 import type { Lo, Course } from "$lib/services/models/lo-types";
 import { rune } from "./services/utils/runes.svelte";
 
-export const currentCodeTheme = rune("ayu-dark");
 export const currentWallType = rune("");
 
 export const currentLo = rune<Lo | null>(null);
