@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import type { Lo } from "$lib/services/models/lo-types";
-  import { currentCourse } from "$lib/runes";
   import { themeService } from "$lib/services/themes.svelte";
+  import { courseService } from "$lib/services/course.svelte";
 
   let firefox = $state(false);
 
@@ -54,7 +54,7 @@
   }, 500);
 </script>
 
-{#if !currentCourse?.value?.areVideosHidden}
+{#if !courseService.currentCourse?.value?.areVideosHidden}
   <div class="w-full p-8">
     {#if heanet}
       {#if showVime}

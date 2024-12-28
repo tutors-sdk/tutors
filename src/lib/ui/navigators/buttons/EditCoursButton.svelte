@@ -1,10 +1,10 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { currentCourse, currentLabStepIndex } from "$lib/runes";
+  import { currentLabStepIndex } from "$lib/runes";
   import { courseService } from "$lib/services/course.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
 
-  let editRoute = $state(currentCourse?.value?.properties.github);
+  let editRoute = $state(courseService.currentCourse?.value?.properties.github);
 
   let currentLabStep = "";
   let loRoute = "";
@@ -43,7 +43,7 @@
       }
     }
 
-    editRoute = `${currentCourse?.value?.properties.github}/${loRoute}`;
+    editRoute = `${courseService.currentCourse?.value?.properties.github}/${loRoute}`;
   });
 </script>
 

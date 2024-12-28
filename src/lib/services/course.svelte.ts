@@ -3,7 +3,6 @@
  * Handles course loading, caching, and content transformation.
  */
 
-import { courseUrl, currentCourse } from "$lib/runes";
 import type { Lo, Course, Lab, Note } from "$lib/services/models/lo-types";
 import { decorateCourseTree } from "./models/lo-tree";
 import { LiveLab } from "./models/live-lab";
@@ -19,9 +18,11 @@ export const courseService: CourseService = {
   /** Cache of processed notes indexed by noteId */
   notes: new Map<string, Note>(),
   /** Current course URL */
-  courseUrl: "",
+  courseUrl: rune(""),
   /** Currently loaded Lo (Learning Object) */
   currentLo: rune<Lo | null>,
+  /** Current course */
+  currentCourse: rune<null | Course>(null),
 
   /**
    * Fetches and caches a course by ID. Handles both direct URLs and Netlify domains.
@@ -78,9 +79,9 @@ export const courseService: CourseService = {
    */
   async readCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course> {
     const course = await this.getOrLoadCourse(courseId, fetchFunction);
-    currentCourse.value = course;
+    this.currentCourse.value = course;
     this.currentLo.value = course;
-    courseUrl.value = course.courseUrl;
+    this.courseUrl.value = course.courseUrl;
     return course;
   },
 
@@ -166,7 +167,7 @@ export const courseService: CourseService = {
       liveLab.refreshStep();
     }
     for (const note of this.notes.values()) {
-      markdownService.convertNoteToHtml(currentCourse.value!, note, true);
+      markdownService.convertNoteToHtml(this.currentCourse.value!, note, true);
     }
   }
 };

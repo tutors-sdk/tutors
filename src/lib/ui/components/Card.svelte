@@ -1,10 +1,9 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
-  import { currentCourse } from "$lib/runes";
-
   import type { CardDetails } from "$lib/services/types.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { themeService } from "../../services/themes.svelte";
+  import { courseService } from "$lib/services/course.svelte";
 
   let { cardDetails } = $props<{ cardDetails: CardDetails }>();
   let target = $state("");
@@ -20,7 +19,7 @@
     }
   }
 
-  const hideVideoIcon = $derived(currentCourse.value?.areVideosHidden);
+  const hideVideoIcon = $derived(courseService.currentCourse.value?.areVideosHidden);
 
   const headingText = $derived(
     themeService.layout.value === "compacted" ? "!text-xs font-medium" : "!text-lg font-semibold"

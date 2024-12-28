@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { currentCourse } from "$lib/runes";
   import CourseShell from "$lib/ui/TutorsShell.svelte";
   import type { Snippet } from "svelte";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
@@ -15,9 +14,9 @@
   $effect(() => {
     tutorsConnectService.learningEvent(page.params);
 
-    if (currentCourse.value?.courseId !== lastCourseId) {
-      tutorsConnectService.courseVisit(currentCourse?.value!, tutorsConnectService?.tutorsId.value);
-      lastCourseId = currentCourse?.value?.courseId!;
+    if (courseService.currentCourse.value?.courseId !== lastCourseId) {
+      tutorsConnectService.courseVisit(courseService.currentCourse?.value!, tutorsConnectService?.tutorsId.value);
+      lastCourseId = courseService.currentCourse?.value?.courseId!;
     }
   });
 </script>

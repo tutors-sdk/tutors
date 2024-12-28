@@ -13,7 +13,6 @@ import { goto } from "$app/navigation";
 import type { Course } from "./models/lo-types";
 import { localStorageProfile } from "./profiles/localStorageProfile";
 import { supabaseProfile } from "./profiles/supabaseProfile.svelte";
-import { currentCourse } from "$lib/runes";
 import { analyticsService } from "./analytics.svelte";
 import { presenceService } from "./presence.svelte";
 import { PUBLIC_ANON_MODE } from "$env/static/public";
@@ -147,10 +146,19 @@ export const tutorsConnectService: TutorsConnectService = {
    */
   learningEvent(params: Record<string, string>): void {
     if (anonMode) return;
-    if (currentCourse.value && courseService.currentLo.value && this.tutorsId.value) {
-      analyticsService.learningEvent(currentCourse.value, params, courseService.currentLo.value, this.tutorsId.value);
-      if (this.tutorsId.value.share === "true" && !currentCourse.value.isPrivate) {
-        presenceService.sendLoEvent(currentCourse.value, courseService.currentLo.value, this.tutorsId.value);
+    if (courseService.currentCourse.value && courseService.currentLo.value && this.tutorsId.value) {
+      analyticsService.learningEvent(
+        courseService.currentCourse.value,
+        params,
+        courseService.currentLo.value,
+        this.tutorsId.value
+      );
+      if (this.tutorsId.value.share === "true" && !courseService.currentCourse.value.isPrivate) {
+        presenceService.sendLoEvent(
+          courseService.currentCourse.value,
+          courseService.currentLo.value,
+          this.tutorsId.value
+        );
       }
     }
   },

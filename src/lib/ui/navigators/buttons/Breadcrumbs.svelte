@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models/lo-types";
-  import { currentCourse } from "$lib/runes";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { courseService } from "$lib/services/course.svelte";
 
@@ -39,7 +38,7 @@
 <div class="mx-8 my-2 overflow-hidden p-1">
   <ol class="flex items-center gap-4">
     <li>
-      <a class="hover:underline" href="/{currentCourse?.value?.properties?.parent}">
+      <a class="hover:underline" href="/{courseService.currentCourse?.value?.properties?.parent}">
         <Icon type="programHome" tip={`Go to Course Home`} /></a
       >
     </li>

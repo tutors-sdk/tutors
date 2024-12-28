@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { currentCourse } from "$lib/runes";
   import { courseService } from "$lib/services/course.svelte";
   import Image from "../../components/Image.svelte";
 </script>
@@ -10,7 +9,7 @@
       {#if courseService.currentLo?.value?.img}
         <Image lo={courseService.currentLo?.value} miniImage={true} />
       {:else}
-        <Image lo={currentCourse?.value} miniImage={true} />
+        <Image lo={courseService.currentCourse?.value} miniImage={true} />
       {/if}
     </div>
   </div>
@@ -21,10 +20,10 @@
       </h2>
     </div>
     <div class="hidden md:block">
-      {#if courseService.currentLo?.value?.title != currentCourse?.value?.title}
-        <p class="text-sm font-bold">{currentCourse?.value?.title}</p>
+      {#if courseService.currentLo?.value?.title != courseService.currentCourse?.value?.title}
+        <p class="text-sm font-bold">{courseService.currentCourse?.value?.title}</p>
       {:else}
-        <p class="text-sm font-bold">{currentCourse?.value?.properties?.credits}</p>
+        <p class="text-sm font-bold">{courseService.currentCourse?.value?.properties?.credits}</p>
       {/if}
     </div>
   </div>

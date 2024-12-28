@@ -1,12 +1,13 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import { currentCourse } from "$lib/runes";
+
   import type { Lo } from "$lib/services/models/lo-types";
   import { setShowHide } from "$lib/services/models/lo-utils";
   import Card from "$lib/ui/components/Card.svelte";
   import { cubicOut } from "svelte/easing";
   import { scale } from "svelte/transition";
   import { scaleTransition } from "$lib/ui/themes/animations";
+  import { courseService } from "$lib/services/course.svelte";
 
   interface Props {
     los?: Lo[];
@@ -30,8 +31,8 @@
   }
 
   onMount(async () => {
-    if (currentCourse?.value?.properties.ignorepin) {
-      ignorePin = currentCourse?.value?.properties.ignorepin.toString();
+    if (courseService.currentCourse?.value?.properties.ignorepin) {
+      ignorePin = courseService.currentCourse?.value?.properties.ignorepin.toString();
       window.addEventListener("keydown", keypressInput);
     }
     isLoaded = true;
