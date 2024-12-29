@@ -1,6 +1,13 @@
+/**
+ * Markdown processing service with syntax highlighting support.
+ * Uses Shiki for code highlighting and supports multiple languages and themes.
+ * Handles markdown conversion for labs, notes, and learning objects.
+ */
+
 import type { Course, Lab, Note, Lo } from "./models/lo-types";
 import { convertMdToHtml, initHighlighter } from "./models/markdown-utils";
 
+// Import Shiki themes
 import ayuDark from "shiki/themes/ayu-dark.mjs";
 import catppuccin from "shiki/themes/catppuccin-latte.mjs";
 import monokai from "shiki/themes/monokai.mjs";
@@ -11,6 +18,7 @@ import githubLight from "shiki/themes/github-light.mjs";
 import { createHighlighterCoreSync } from "shiki/core";
 import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 
+// Import language definitions
 import js from "shiki/langs/javascript.mjs";
 import ts from "shiki/langs/typescript.mjs";
 import css from "shiki/langs/css.mjs";
@@ -42,9 +50,11 @@ import r from "shiki/langs/r.mjs";
 import shell from "shiki/langs/shell.mjs";
 import xml from "shiki/langs/xml.mjs";
 import vue from "shiki/langs/vue.mjs";
-import { currentCodeTheme } from "$lib/runes";
 import { browser } from "$app/environment";
 import type { MarkdownService } from "./types.svelte";
+import { rune } from "./utils/runes.svelte";
+
+/** Supported programming languages for syntax highlighting */
 const languages = [
   js,
   ts,
@@ -80,21 +90,33 @@ const languages = [
   xml
 ];
 
+/** Available syntax highlighting themes */
 const codeThemes = [ayuDark, monokai, githubDark, nightOwl, solarizedLight, githubLight, catppuccin];
 
+/** Currently selected code theme */
+export const currentCodeTheme = rune("ayu-dark");
+
+/** Initialize Shiki highlighter with supported languages and themes */
 const shiki = createHighlighterCoreSync({
   themes: codeThemes,
   langs: languages,
   engine: createJavaScriptRegexEngine()
 });
+
+// Restore user's preferred code theme
 if (browser && localStorage.codeTheme) {
   currentCodeTheme.value = localStorage.codeTheme;
 }
 initHighlighter(shiki);
 
 export const markdownService: MarkdownService = {
+  /** Available syntax highlighting themes */
   codeThemes: codeThemes,
 
+  /**
+   * Sets and persists the syntax highlighting theme
+   * @param theme - Theme name to set
+   */
   setCodeTheme(theme: string): void {
     if (codeThemes.find((t) => t.name === theme)) {
       currentCodeTheme.value = theme;
@@ -104,6 +126,13 @@ export const markdownService: MarkdownService = {
     localStorage.codeTheme = currentCodeTheme.value;
   },
 
+  /**
+   * Converts lab markdown content to HTML
+   * Processes both lab summary and individual steps
+   * @param course - Course containing the lab
+   * @param lab - Lab to convert
+   * @param refreshOnly - If true, skips URL processing
+   */
   convertLabToHtml(course: Course, lab: Lab, refreshOnly: boolean = false) {
     lab.summary = convertMdToHtml(lab.summary, currentCodeTheme.value);
     const url = lab.route.replace(`/lab/${course.courseId}`, course.courseUrl);
@@ -117,6 +146,12 @@ export const markdownService: MarkdownService = {
     });
   },
 
+  /**
+   * Converts note markdown content to HTML
+   * @param course - Course containing the note
+   * @param note - Note to convert
+   * @param refreshOnly - If true, skips URL processing
+   */
   convertNoteToHtml(course: Course, note: Note, refreshOnly: boolean = false) {
     note.summary = convertMdToHtml(note.summary, currentCodeTheme.value);
     const url = note.route.replace(`/note/${course.courseId}`, course.courseUrl);
@@ -126,6 +161,12 @@ export const markdownService: MarkdownService = {
     note.contentHtml = convertMdToHtml(note.contentMd, currentCodeTheme.value);
   },
 
+  /**
+   * Converts learning object markdown content to HTML
+   * Handles different learning object types appropriately
+   * @param course - Course containing the learning object
+   * @param lo - Learning object to convert
+   */
   convertLoToHtml(course: Course, lo: Lo) {
     if (lo.type === "lab" || lo.type == "note") {
       // convertLabToHtml(course, lo as Lab);
@@ -142,19 +183,29 @@ export const markdownService: MarkdownService = {
     }
   },
 
+  /**
+   * Replaces all occurrences of a string pattern
+   * @param str - Source string
+   * @param find - Pattern to find
+   * @param replace - Replacement string
+   * @returns Updated string
+   */
   replaceAll(str: string, find: string, replace: string) {
     return str.replace(new RegExp(find, "g"), replace);
   },
 
+  /**
+   * Processes markdown content to fix relative URLs
+   * Handles images, archives, and internal links
+   * @param src - Source markdown content
+   * @param url - Base URL for converting relative paths
+   * @returns Processed markdown content
+   */
   filter(src: string, url: string): string {
     let filtered = this.replaceAll(src, "./img\\/", `img/`);
     filtered = this.replaceAll(filtered, "img\\/", `https://${url}/img/`);
     filtered = this.replaceAll(filtered, "./archives\\/", `archives/`);
-
-    //filtered = replaceAll(filtered, "archives\\/", `https://${url}/archives/`);
     filtered = this.replaceAll(filtered, "(?<!/)archives\\/", `https://${url}/archives/`);
-
-    // filtered = replaceAll(filtered, "./archive\\/(?!refs)", `archive/`);
     filtered = this.replaceAll(filtered, "(?<!/)archive\\/(?!refs)", `https://${url}/archive/`);
     filtered = this.replaceAll(filtered, "\\]\\(\\#", `](https://${url}#/`);
     return filtered;

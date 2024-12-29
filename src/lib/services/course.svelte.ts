@@ -1,16 +1,35 @@
-import { courseUrl, currentCourse, currentLo } from "$lib/runes";
+/**
+ * Core service for managing course content and navigation.
+ * Handles course loading, caching, and content transformation.
+ */
+
 import type { Lo, Course, Lab, Note } from "$lib/services/models/lo-types";
 import { decorateCourseTree } from "./models/lo-tree";
 import { LiveLab } from "./models/live-lab";
 import type { CourseService } from "./types.svelte";
 import { markdownService } from "./markdown.svelte";
+import { rune } from "./utils/runes.svelte";
 
 export const courseService: CourseService = {
+  /** Cache of loaded courses indexed by courseId */
   courses: new Map<string, Course>(),
+  /** Cache of live lab instances indexed by labId */
   labs: new Map<string, LiveLab>(),
+  /** Cache of processed notes indexed by noteId */
   notes: new Map<string, Note>(),
-  courseUrl: "",
+  /** Current course URL */
+  courseUrl: rune(""),
+  /** Currently loaded Lo (Learning Object) */
+  currentLo: rune<Lo | null>,
+  /** Current course */
+  currentCourse: rune<null | Course>(null),
 
+  /**
+   * Fetches and caches a course by ID. Handles both direct URLs and Netlify domains.
+   * @param courseId - Course identifier
+   * @param fetchFunction - Fetch implementation for HTTP requests
+   * @returns Promise resolving to the loaded Course
+   */
   async getOrLoadCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course> {
     let course = this.courses.get(courseId);
     let courseUrl = courseId;
@@ -52,21 +71,41 @@ export const courseService: CourseService = {
     return course;
   },
 
+  /**
+   * Loads a course and updates global state
+   * @param courseId - Course identifier
+   * @param fetchFunction - Fetch implementation
+   * @returns Promise resolving to the loaded Course
+   */
   async readCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course> {
     const course = await this.getOrLoadCourse(courseId, fetchFunction);
-    currentCourse.value = course;
-    currentLo.value = course;
-    courseUrl.value = course.courseUrl;
+    this.currentCourse.value = course;
+    this.currentLo.value = course;
+    this.courseUrl.value = course.courseUrl;
     return course;
   },
 
+  /**
+   * Loads a topic from a course and updates current learning object
+   * @param courseId - Course identifier
+   * @param topicId - Topic identifier
+   * @param fetchFunction - Fetch implementation
+   * @returns Promise resolving to the topic
+   */
   async readTopic(courseId: string, topicId: string, fetchFunction: typeof fetch): Promise<Lo> {
     const course = await this.readCourse(courseId, fetchFunction);
     const topic = course.topicIndex.get(topicId);
-    if (topic) currentLo.value = topic;
+    if (topic) this.currentLo.value = topic;
     return topic!;
   },
 
+  /**
+   * Creates or retrieves a LiveLab instance for a lab
+   * @param courseId - Course identifier
+   * @param labId - Lab identifier
+   * @param fetchFunction - Fetch implementation
+   * @returns Promise resolving to LiveLab instance
+   */
   async readLab(courseId: string, labId: string, fetchFunction: typeof fetch): Promise<LiveLab> {
     const course = await this.readCourse(courseId, fetchFunction);
 
@@ -83,20 +122,34 @@ export const courseService: CourseService = {
       this.labs.set(labId, liveLab);
     }
 
-    currentLo.value = liveLab.lab;
+    this.currentLo.value = liveLab.lab;
     return liveLab;
   },
 
+  /**
+   * Retrieves all learning objects of a specific type from a course
+   * @param courseId - Course identifier
+   * @param type - Type of learning objects to retrieve
+   * @param fetchFunction - Fetch implementation
+   * @returns Promise resolving to array of learning objects
+   */
   async readWall(courseId: string, type: string, fetchFunction: typeof fetch): Promise<Lo[]> {
     const course = await this.readCourse(courseId, fetchFunction);
     const wall = course.wallMap?.get(type);
     return wall!;
   },
 
+  /**
+   * Loads a specific learning object and processes it if needed
+   * @param courseId - Course identifier
+   * @param loId - Learning object identifier
+   * @param fetchFunction - Fetch implementation
+   * @returns Promise resolving to the learning object
+   */
   async readLo(courseId: string, loId: string, fetchFunction: typeof fetch): Promise<Lo> {
     const course = await this.readCourse(courseId, fetchFunction);
     const lo = course.loIndex.get(loId);
-    if (lo) currentLo.value = lo;
+    if (lo) this.currentLo.value = lo;
     if (lo?.type === "note") {
       markdownService.convertNoteToHtml(course, lo as Note);
       this.notes.set(loId, lo as Note);
@@ -104,6 +157,9 @@ export const courseService: CourseService = {
     return lo!;
   },
 
+  /**
+   * Refreshes all cached labs and notes, forcing markdown to HTML reconversion
+   */
   refreshAllLabs() {
     for (const liveLab of this.labs.values()) {
       markdownService.convertLabToHtml(liveLab.course, liveLab.lab, true);
@@ -111,7 +167,7 @@ export const courseService: CourseService = {
       liveLab.refreshStep();
     }
     for (const note of this.notes.values()) {
-      markdownService.convertNoteToHtml(currentCourse.value!, note, true);
+      markdownService.convertNoteToHtml(this.currentCourse.value!, note, true);
     }
   }
 };

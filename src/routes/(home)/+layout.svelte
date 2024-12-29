@@ -1,11 +1,11 @@
 <script lang="ts">
+  import { courseService } from "$lib/services/course.svelte";
   import CourseShell from "$lib/ui/TutorsShell.svelte";
   import type { Snippet } from "svelte";
   type Props = { children: Snippet };
-  import { currentCourse } from "$lib/runes";
   let { children }: Props = $props();
 
-  currentCourse.value = null;
+  courseService.currentCourse.value = null;
 </script>
 
 <svelte:head>

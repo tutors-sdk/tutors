@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { currentCourse } from "$lib/runes";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
   import { presenceService } from "$lib/services/presence.svelte";
   import MenuItem from "../../components/MenuItem.svelte";
   import Menu from "$lib/ui/components/Menu.svelte";
-  import { Avatar } from "@skeletonlabs/skeleton-svelte";
   import OnlineButton from "../buttons/OnlineButton.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
+  import { courseService } from "$lib/services/course.svelte";
 
   function logout() {
     tutorsConnectService.disconnect("/");
@@ -52,13 +51,13 @@
     {/if}
     {#if tutorsConnectService.tutorsId.value?.share === "true"}
       <MenuItem
-        link="https://time.tutors.dev/{currentCourse.value?.courseId}"
+        link="https://time.tutors.dev/{courseService.currentCourse.value?.courseId}"
         text="Tutors Time"
         type="tutorsTime"
         targetStr="_blank"
       />
       <MenuItem
-        link="https://live.tutors.dev/course/{currentCourse.value?.courseId}"
+        link="https://live.tutors.dev/course/{courseService.currentCourse.value?.courseId}"
         text="Tutors Live"
         type="live"
         targetStr="_blank"

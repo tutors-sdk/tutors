@@ -1,15 +1,14 @@
 <script lang="ts">
-  import { run } from "svelte/legacy";
-
   import { onMount } from "svelte";
   import type { ResultType } from "$lib/services/utils/search";
   import { isValid, searchHits } from "$lib/services/utils/search";
   import type { Lo } from "$lib/services/models/lo-types";
   import type { Course } from "$lib/services/models/lo-types";
-  import { currentLo } from "$lib/runes";
   import { filterByType } from "$lib/services/models/lo-utils";
   import { convertMdToHtml } from "$lib/services/models/markdown-utils";
   import type { PageData } from "./$types";
+  import { courseService } from "$lib/services/course.svelte";
+  import { currentCodeTheme, markdownService } from "$lib/services/markdown.svelte";
 
   interface Props {
     data: PageData;
@@ -25,8 +24,13 @@
 
   onMount(async () => {
     course = data.course;
-    currentLo.value = data.course;
+    courseService.currentLo.value = data.course;
     const labs = filterByType(data.course.los, "lab");
+    labs.forEach((lab) => {
+      lab?.los?.forEach((step) => {
+        step.parentLo = lab;
+      });
+    });
     const steps = filterByType(data.course.los, "step");
     const notes = filterByType(data.course.los, "note");
     const panelNotes = filterByType(data.course.los, "panelnote");
@@ -44,13 +48,15 @@
       if (result.fenced) {
         resultStrs.push("~~~");
       }
-      result.html = convertMdToHtml(resultStrs.join("\n"));
+      result.html = convertMdToHtml(resultStrs.join("\n"), currentCodeTheme.value);
       result.link = `https://tutors.dev/${result.link}`;
     });
   }
 
-  run(() => {
-    if (isValid(searchTerm)) {
+  let lastSearchTerm = "";
+  $effect(() => {
+    if (isValid(searchTerm) && searchTerm !== lastSearchTerm) {
+      lastSearchTerm = searchTerm;
       searchResults = searchHits(searchLos, searchTerm);
       transformResults(searchResults);
     }
@@ -72,7 +78,7 @@
   >
   <div class="flex flex-wrap justify-center">
     {#each searchResults as result}
-      <div class="card m-1 w-full p-4 hover:bg-gray-200 lg:w-72 2xl:w-96 dark:hover:bg-gray-900">
+      <div class="card card m-1 w-full p-4 hover:bg-gray-200 lg:w-[32rem] dark:hover:bg-gray-900">
         <a rel="noopener noreferrer" href={result.link} target="_blank">
           <div>
             <div>

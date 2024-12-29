@@ -3,7 +3,7 @@
   import Context from "$lib/ui/learning-objects/structure/Context.svelte";
   import Talk from "$lib/ui/learning-objects/content/Talk.svelte";
   import TalkAdobe from "$lib/ui/learning-objects/content/TalkAdobe.svelte";
-  import { currentCourse } from "$lib/runes";
+  import { courseService } from "$lib/services/course.svelte";
 
   interface Props {
     data: PageData;
@@ -12,9 +12,9 @@
 </script>
 
 <Context lo={data.lo}>
-  {#if currentCourse.value?.defaultPdfReader === "mozilla"}
+  {#if courseService.currentCourse.value?.defaultPdfReader === "mozilla"}
     <Talk lo={data.lo} />
-  {:else if currentCourse.value?.defaultPdfReader === "adobe"}
+  {:else if courseService.currentCourse.value?.defaultPdfReader === "adobe"}
     <TalkAdobe lo={data.lo} />
   {:else}
     <TalkAdobe lo={data.lo} />

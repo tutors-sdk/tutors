@@ -1,6 +1,14 @@
-import type { LiveLab } from "./models/live-lab";
-import type { Course, IconType, Lab, Lo, Note } from "./models/lo-types";
+/**
+ * Core type definitions for the Tutors application.
+ * Defines interfaces for services, data models, and user interactions.
+ */
 
+import type { LiveLab } from "./models/live-lab";
+import type { Course, IconType, Lab, Lo, Note, Theme } from "./models/lo-types";
+
+/**
+ * User identity information from authentication provider
+ */
 export type TutorsId = {
   name: string;
   login: string;
@@ -9,6 +17,9 @@ export type TutorsId = {
   share: string;
 };
 
+/**
+ * Record of a user's interaction with a course
+ */
 export type CourseVisit = {
   id: string;
   title: string;
@@ -21,12 +32,19 @@ export type CourseVisit = {
   favourite: boolean;
 };
 
+/**
+ * Minimal user information for learning object interactions
+ */
 export interface LoUser {
   fullName: string;
   avatar: string;
   id: string;
 }
 
+/**
+ * Record of user interaction with a learning object
+ * Uses Svelte's state management for reactivity
+ */
 export class LoRecord {
   courseId: string = $state("");
   courseUrl: string = $state("");
@@ -44,6 +62,9 @@ export class LoRecord {
   }
 }
 
+/**
+ * Display information for course/topic/lab cards
+ */
 export interface CardDetails {
   route: string;
   title: string;
@@ -57,11 +78,22 @@ export interface CardDetails {
   video?: string;
 }
 
+/**
+ * Service for managing course content and navigation
+ */
 export interface CourseService {
+  /** Cache of loaded courses */
   courses: Map<string, Course>;
+  /** Cache of live lab instances */
   labs: Map<string, LiveLab>;
+  /** Cache of processed notes */
   notes: Map<string, Note>;
-  courseUrl: "";
+  /** Current course URL */
+  courseUrl: any;
+  /** Currently loaded Lo (Learning Object) */
+  currentLo: any;
+  /** Currently loaded course */
+  currentCourse: any;
 
   getOrLoadCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course>;
   readCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course>;
@@ -72,7 +104,11 @@ export interface CourseService {
   refreshAllLabs(codeTheme: string): void;
 }
 
+/**
+ * Service for managing user profile data and course interactions
+ */
 export interface ProfileStore {
+  /** List of courses visited by user */
   courseVisits: CourseVisit[];
 
   reload(): void;
@@ -84,6 +120,9 @@ export interface ProfileStore {
   getCourseVisits(): Promise<CourseVisit[]>;
 }
 
+/**
+ * Service for managing user authentication and course access
+ */
 export interface TutorsConnectService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   tutorsId: any;
@@ -107,7 +146,11 @@ export interface TutorsConnectService {
   stopTimer(): void;
 }
 
+/**
+ * Service for tracking user interactions and learning analytics
+ */
 export interface AnalyticsService {
+  /** Current learning object route being tracked */
   loRoute: string;
 
   learningEvent(course: Course, params: Record<string, unknown>, lo: Lo, student: TutorsId): void;
@@ -116,11 +159,19 @@ export interface AnalyticsService {
   updateLogin(courseId: string, session: any): void;
 }
 
+/**
+ * Service for managing real-time user presence and interactions
+ */
 export interface PresenceService {
+  /** Currently online students */
   studentsOnline: any;
+  /** Global PartyKit connection */
   partyKitAll: any;
+  /** Course-specific PartyKit connection */
   partyKitCourse: any;
+  /** Map of student events */
   studentEventMap: Map<string, LoRecord>;
+  /** Currently monitored course ID */
   listeningTo: string;
 
   studentListener(event: any): void;
@@ -129,12 +180,43 @@ export interface PresenceService {
   startPresenceListener(courseId: string): void;
 }
 
+/**
+ * Service for processing and rendering markdown content
+ */
 export interface MarkdownService {
+  /** Available syntax highlighting themes */
   codeThemes: any;
+
   setCodeTheme(theme: string): void;
   convertLabToHtml(course: Course, lab: Lab, refreshOnly?: boolean): void;
   convertNoteToHtml(course: Course, note: Note, refreshOnly?: boolean): void;
   convertLoToHtml(course: Course, lo: Lo): void;
   replaceAll(str: string, find: string, replace: string): string;
   filter(src: string, url: string): string;
+}
+
+/**
+ * Service for theme management and icon customization
+ */
+export interface ThemeService {
+  /** Available themes with their icon libraries */
+  themes: Theme[];
+  /** current theme */
+  currentTheme: any;
+  /** display modes */
+  layout: any;
+  lightMode: any;
+  /** Tracks if festive snow animation is active */
+  isSnowing: boolean;
+
+  initDisplay(forceTheme?: string, forceMode?: string): void;
+  setDisplayMode(mode: string): void;
+  toggleDisplayMode(): void;
+  setTheme(theme: string): void;
+  setLayout(layout: string): void;
+  toggleLayout(): void;
+  getIcon(type: string): IconType;
+  addIcon(type: string, icon: IconType): void;
+  getTypeColour(type: string): string;
+  eventTrigger(): void;
 }

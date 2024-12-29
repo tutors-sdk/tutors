@@ -6,7 +6,7 @@ const fenceTick = "```";
 const fenceTilde = "~~~";
 
 type ContentType = {
-  content: string;
+  content: string[];
   style: string; //fenced, unfenced
   language: string;
   fence: string; //  ``` or ~~~
@@ -51,7 +51,7 @@ export function searchHits(los: Lo[], searchTerm: string): ResultType[] {
         const result = {
           fenced: content.style !== "unfenced",
           language: content.language,
-          contentMd: content.content,
+          contentMd: content.content[0],
           lab: lo,
           title: `${lo.parentLo?.title}/${removeLeadingHashes(lo.title)}`,
           link: lo?.route,
@@ -86,7 +86,7 @@ function arrayLinesSearchTermHits(content: string, searchTerm: string): ContentT
       language = getLanguage(content, arIndx[i]);
     }
     const fence = getFenceType(content, arIndx[i]);
-    arStrings.push({ content: str, style, fence, language });
+    arStrings.push({ content: [str], style, fence, language });
   }
   return arStrings;
 }

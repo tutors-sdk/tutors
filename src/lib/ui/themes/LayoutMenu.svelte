@@ -1,12 +1,10 @@
 <script lang="ts">
-  import { currentCodeTheme, currentTheme, lightMode } from "$lib/runes";
   import Menu from "$lib/ui/components/Menu.svelte";
-  import { layout } from "$lib/runes";
   import MenuItem from "$lib/ui/components/MenuItem.svelte";
   import Icon from "../components/Icon.svelte";
-  import { themeService } from "./theme-controller.svelte";
+  import { themeService } from "../../services/themes.svelte";
   import { courseService } from "$lib/services/course.svelte";
-  import { markdownService } from "$lib/services/markdown.svelte";
+  import { currentCodeTheme, markdownService } from "$lib/services/markdown.svelte";
   import { Combobox } from "@skeletonlabs/skeleton-svelte";
 
   interface ComboxData {
@@ -18,7 +16,7 @@
   themeService.themes.forEach((element) => {
     themeCombo.push({ label: element.name, value: element.name });
   });
-  let theme = $state([currentTheme.value]);
+  let theme = $state([themeService.currentTheme.value]);
 
   const codeThemeCombo: ComboxData[] = [];
   markdownService.codeThemes.forEach((element: { displayName: string; name: string }) => {
@@ -27,19 +25,11 @@
   let codeTheme = $state([currentCodeTheme.value]);
 
   function toggleDisplayMode(): void {
-    if (lightMode.value === "dark") {
-      themeService.setDisplayMode("light");
-    } else {
-      themeService.setDisplayMode("dark");
-    }
+    themeService.toggleDisplayMode();
   }
 
   function toggleLayout() {
-    if (layout.value === "compacted") {
-      layout.value = "expanded";
-    } else {
-      layout.value = "compacted";
-    }
+    themeService.toggleLayout();
   }
 
   $effect(() => {
@@ -58,11 +48,15 @@
 
   <ul>
     <MenuItem
-      type={lightMode.value}
-      text={lightMode.value === "light" ? "Dark Mode" : "Light Mode"}
+      type={themeService.lightMode.value}
+      text={themeService.lightMode.value === "light" ? "Dark Mode" : "Light Mode"}
       onClick={toggleDisplayMode}
     />
-    <MenuItem type={layout.value} text={layout.value === "compacted" ? "Expand" : "Compact"} onClick={toggleLayout} />
+    <MenuItem
+      type={themeService.layout.value}
+      text={themeService.layout.value === "compacted" ? "Expand" : "Compact"}
+      onClick={toggleLayout}
+    />
   </ul>
   <hr />
   <h6>Theme:</h6>
