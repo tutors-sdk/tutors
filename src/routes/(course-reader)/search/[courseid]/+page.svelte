@@ -49,7 +49,6 @@
         resultStrs.push("~~~");
       }
       result.html = convertMdToHtml(resultStrs.join("\n"), currentCodeTheme.value);
-      result.html += "<hr>";
       result.link = `https://tutors.dev/${result.link}`;
     });
   }
@@ -64,7 +63,7 @@
   });
 </script>
 
-<div class="container card mx-auto p-4">
+<div class="container card mx-auto mb-4 p-4">
   <label for="search" class="label"
     ><span>Enter search term:</span>
     <input
@@ -77,14 +76,14 @@
       placeholder="..."
     /></label
   >
-  <div class="flex flex-wrap justify-center">
+  <div class="mt-2 flex flex-wrap justify-center">
     {#each searchResults as result}
-      <div class="card m-1 w-full p-4">
+      <div class="card m-1 w-full border p-4">
         <div>
           <div class="prose dark:prose-invert">
             {@html result.html}
           </div>
-          <div class="pt-4 text-left text-sm">
+          <div class="pt-4 text-right text-sm">
             <a
               rel="noopener noreferrer"
               href={result.link}
