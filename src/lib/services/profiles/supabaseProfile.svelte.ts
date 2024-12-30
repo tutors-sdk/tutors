@@ -1,3 +1,10 @@
+/**
+ * @service SupabaseProfile
+ * Service for managing user course visit history and preferences in Supabase
+ * Implements the ProfileStore interface for server-side persistence
+ * Requires authenticated user context from tutorsConnectService
+ */
+
 import type { Course, IconType } from "../models/lo-types";
 import { tutorsConnectService } from "$lib/services/connect.svelte.js";
 import type { CourseVisit, ProfileStore } from "../types.svelte";
@@ -6,6 +13,11 @@ import { supabase } from "./supabase-client";
 export const supabaseProfile: ProfileStore = {
   courseVisits: [] as CourseVisit[],
 
+  /**
+   * Loads user's course visit data from Supabase
+   * Only retrieves data if user is authenticated
+   * @async
+   */
   async reload() {
     if (tutorsConnectService.tutorsId.value?.login) {
       const { data: profile } = await supabase
@@ -18,6 +30,11 @@ export const supabaseProfile: ProfileStore = {
     }
   },
 
+  /**
+   * Persists current course visit data to Supabase
+   * Only saves if user is authenticated
+   * @async
+   */
   async save() {
     const id = tutorsConnectService.tutorsId.value?.login;
     if (id) {
@@ -30,6 +47,13 @@ export const supabaseProfile: ProfileStore = {
     }
   },
 
+  /**
+   * Records or updates a course visit in Supabase
+   * Creates new visit record if course not previously visited
+   * Updates visit count and timestamp if course already exists
+   * @async
+   * @param course - The course being visited
+   */
   async logCourseVisit(course: Course) {
     await this.reload();
     const visit = this.courseVisits.find((c) => c.id === course.courseId);
@@ -54,17 +78,32 @@ export const supabaseProfile: ProfileStore = {
     await this.save();
   },
 
+  /**
+   * Removes a course visit record from Supabase
+   * @async
+   * @param courseId - Identifier of course to remove
+   */
   async deleteCourseVisit(courseId: string) {
     await this.reload();
     this.courseVisits = this.courseVisits.filter((c) => c.id !== courseId);
     await this.save();
   },
 
+  /**
+   * Retrieves all course visit records from Supabase
+   * @async
+   * @returns Promise resolving to array of course visits
+   */
   async getCourseVisits(): Promise<CourseVisit[]> {
     await this.reload();
     return this.courseVisits;
   },
 
+  /**
+   * Marks a course as favorite in Supabase
+   * @async
+   * @param courseId - Identifier of course to favorite
+   */
   async favouriteCourse(courseId: string) {
     await this.reload();
     const course = this.courseVisits.find((c) => c.id === courseId);
@@ -74,6 +113,11 @@ export const supabaseProfile: ProfileStore = {
     await this.save();
   },
 
+  /**
+   * Removes favorite status from a course in Supabase
+   * @async
+   * @param courseId - Identifier of course to unfavorite
+   */
   async unfavouriteCourse(courseId: string) {
     await this.reload();
     const course = this.courseVisits.find((c) => c.id === courseId);

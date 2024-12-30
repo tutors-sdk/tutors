@@ -1,7 +1,17 @@
+/**
+ * @service AllCourseAccess
+ * Service for tracking and managing course access statistics across all users
+ */
+
 import type { Course, IconType } from "$lib/services/models/lo-types";
 import type { CourseVisit } from "../types.svelte";
 import { supabase } from "./supabase-client";
 
+/**
+ * Updates the course access statistics in the database
+ * Increments visit count and updates last visit timestamp
+ * @param course - The course being accessed
+ */
 export async function updateCourseList(course: Course): Promise<void> {
   if (!isValidCourseName(course.courseId)) return;
   const { data, error } = await supabase
@@ -34,6 +44,11 @@ export async function updateCourseList(course: Course): Promise<void> {
   }
 }
 
+/**
+ * Creates a CourseVisit record from a Course object
+ * @param course - The course to create a visit record for
+ * @returns CourseVisit object with course metadata
+ */
 function getCourseRecord(course: Course) {
   const courseVisit: CourseVisit = {
     id: course.courseId,
@@ -50,6 +65,11 @@ function getCourseRecord(course: Course) {
   return courseVisit;
 }
 
+/**
+ * Validates if a course name is appropriate for tracking
+ * @param course - Course identifier to validate
+ * @returns boolean indicating if course name is valid
+ */
 function isValidCourseName(course: string) {
   const invalidPatterns = /^(main--|master--|deploy-preview--)|-{2}/;
   return !invalidPatterns.test(course);
