@@ -24,6 +24,12 @@
   });
   let codeTheme = $state([currentCodeTheme.value]);
 
+  const cardStyleCombo: ComboxData[] = [
+    { label: "Portrait", value: "portrait" },
+    { label: "Landscape", value: "landscape" }
+  ];
+  let cardStyle = $state([themeService.cardStyle.value]);
+
   function toggleDisplayMode(): void {
     themeService.toggleDisplayMode();
   }
@@ -35,6 +41,7 @@
   $effect(() => {
     themeService.setTheme(theme[0]);
     markdownService.setCodeTheme(codeTheme[0]);
+    themeService.setCardStyle(cardStyle[0]);
     courseService.refreshAllLabs(codeTheme[0]);
   });
 </script>
@@ -64,6 +71,9 @@
   <hr />
   <h6>Code Style</h6>
   <Combobox data={codeThemeCombo} bind:value={codeTheme} />
+  <hr />
+  <h6>Card Style</h6>
+  <Combobox data={cardStyleCombo} bind:value={cardStyle} />
   <ul class="list"></ul>
 {/snippet}
 
