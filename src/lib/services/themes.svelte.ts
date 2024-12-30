@@ -31,6 +31,9 @@ export const themeService: ThemeService = {
   /** Current display layout */
   layout: rune<string>("expanded"),
 
+  /** Current card style */
+  cardStyle: rune<string>("portrait"),
+
   /** Current light move layout */
   lightMode: rune<string>("light"),
 
@@ -55,6 +58,7 @@ export const themeService: ThemeService = {
       this.setDisplayMode(localStorage.modeCurrent);
       this.setTheme(localStorage.theme);
       this.setLayout(localStorage.layout);
+      this.setCardStyle(localStorage.cardStyle);
     }
   },
 
@@ -119,6 +123,18 @@ export const themeService: ThemeService = {
   },
 
   /**
+   * Sets and persists the current card style
+   * @param style - Card style to set (portrait/landscape)
+   */
+  setCardStyle(style: string): void {
+    if (!style) {
+      style = "portrait";
+    }
+    this.cardStyle.value = style;
+    localStorage.cardStyle = style;
+  },
+
+  /**
    * Toggles the layout between expanded & compact
    */
   toggleLayout(): void {
@@ -126,6 +142,17 @@ export const themeService: ThemeService = {
       this.setLayout("compacted");
     } else {
       this.setLayout("expanded");
+    }
+  },
+
+  /**
+   * Toggles the card style between portrait and landscape
+   */
+  toggleCardStyle(): void {
+    if (this.cardStyle.value === "portrait") {
+      this.setCardStyle("landscape");
+    } else {
+      this.setCardStyle("portrait");
     }
   },
 
