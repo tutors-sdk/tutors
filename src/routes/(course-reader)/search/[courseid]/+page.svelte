@@ -49,6 +49,7 @@
         resultStrs.push("~~~");
       }
       result.html = convertMdToHtml(resultStrs.join("\n"), currentCodeTheme.value);
+      result.html += "<hr>";
       result.link = `https://tutors.dev/${result.link}`;
     });
   }
@@ -78,24 +79,23 @@
   >
   <div class="flex flex-wrap justify-center">
     {#each searchResults as result}
-      <div class="card card m-1 w-full p-4 hover:bg-gray-200 lg:w-[32rem] dark:hover:bg-gray-900">
-        <a rel="noopener noreferrer" href={result.link} target="_blank">
-          <div>
-            <div>
-              {@html result.html}
-            </div>
-            <div class="pt-4 text-right text-sm">
-              {result.title}
-            </div>
+      <div class="card m-1 w-full p-4">
+        <div>
+          <div class="prose dark:prose-invert">
+            {@html result.html}
           </div>
-        </a>
+          <div class="pt-4 text-left text-sm">
+            <a
+              rel="noopener noreferrer"
+              href={result.link}
+              target="_blank"
+              class="text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+            >
+              {result.title}
+            </a>
+          </div>
+        </div>
       </div>
     {/each}
   </div>
 </div>
-
-<style>
-  :global(.labsearchresult pre) {
-    color: white;
-  }
-</style>
