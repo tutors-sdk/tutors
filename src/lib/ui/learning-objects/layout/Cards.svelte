@@ -8,8 +8,6 @@
   import { scale } from "svelte/transition";
   import { scaleTransition } from "$lib/ui/themes/animations";
   import { courseService } from "$lib/services/course.svelte";
-  import { themeService } from "$lib/services/themes.svelte";
-  import LandscapeCard from "$lib/ui/components/LandscapeCard.svelte";
 
   interface Props {
     los?: Lo[];
@@ -51,35 +49,17 @@
         {#each los as lo}
           {#if !lo.hide}
             <div class="flex justify-center">
-              {#if themeService.cardStyle.value === "landscape"}
-                <LandscapeCard
-                  cardDetails={{
-                    route: lo.route,
-                    title: lo.title,
-                    type: lo.type,
-                    subtitle1: lo.credits,
-                    subtitle2: lo.summary,
-                    summary: lo.summary,
-                    icon: lo.icon,
-                    img: lo.img,
-                    video: lo.video
-                  }}
-                />
-              {:else}
-                <Card
-                  cardDetails={{
-                    route: lo.route,
-                    title: lo.title,
-                    type: lo.type,
-                    subtitle1: lo.credits,
-                    subtitle2: lo.summary,
-                    summary: lo.summary,
-                    icon: lo.icon,
-                    img: lo.img,
-                    video: lo.video
-                  }}
-                />
-              {/if}
+              <Card
+                cardDetails={{
+                  route: lo.route,
+                  title: lo.title,
+                  type: lo.type,
+                  summary: lo.summary,
+                  img: lo.img,
+                  icon: lo.icon,
+                  video: lo.video
+                }}
+              />
             </div>
           {/if}
         {/each}

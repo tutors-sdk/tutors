@@ -20,18 +20,38 @@
   }
 
   const hideVideoIcon = $derived(courseService.currentCourse.value?.areVideosHidden);
+  const isLandscape = $derived(themeService.cardStyle.value === "landscape");
 
   const headingText = $derived(
-    themeService.layout.value === "compacted" ? "!text-xs font-medium" : "!text-lg font-semibold"
+    themeService.layout.value === "compacted" 
+      ? isLandscape ? "!text-sm font-medium" : "!text-xs font-medium"
+      : isLandscape ? "!text-xl font-semibold" : "!text-lg font-semibold"
   );
-  const cardSize = $derived(themeService.layout.value === "compacted" ? "w-36 h-[14rem]" : "w-60 h-[23rem]");
-  const iconHeight = $derived(themeService.layout.value === "compacted" ? "60" : "160");
-  const imageHeight = $derived(themeService.layout.value === "compacted" ? "h-16" : "h-40");
+
+  const cardDimensions = $derived(
+    themeService.layout.value === "compacted"
+      ? isLandscape ? "w-[28rem] h-32" : "w-36 h-[14rem]"
+      : isLandscape ? "w-[36rem] h-48" : "w-60 h-[23rem]"
+  );
+
+  const iconHeight = $derived(
+    themeService.layout.value === "compacted"
+      ? "60"
+      : isLandscape ? "120" : "160"
+  );
+
+  const imageSize = $derived(
+    themeService.layout.value === "compacted"
+      ? isLandscape ? "w-32" : "h-16"
+      : isLandscape ? "w-48" : "h-40"
+  );
+
   const textSize = $derived(
     themeService.layout.value === "compacted"
       ? "line-clamp-2 text-xs"
-      : "prose mt-4 line-clamp-3 leading-6 dark:prose-invert"
+      : "prose line-clamp-3 leading-6 dark:prose-invert"
   );
+
   const avatarWidth = $derived(themeService.layout.value === "compacted" ? "w-8" : "w-12");
 </script>
 
@@ -51,7 +71,7 @@
         <h6 class={textSize}>{cardDetails.student?.fullName}</h6>
       </div>
     {:else}
-      <div class="line-clamp-2 pr-10 !text-lg font-semibold !text-black dark:!text-white {headingText}">
+      <div class="line-clamp-2 pr-10 !text-black dark:!text-white {headingText}">
         {cardDetails.title}
       </div>
     {/if}
@@ -59,47 +79,81 @@
 {/snippet}
 
 {#snippet figure(cardDetails: CardDetails)}
-  <figure class="flex items-center justify-center overflow-hidden p-2">
+  <figure class="flex h-full items-center justify-center overflow-hidden p-2">
     {#if cardDetails.icon}
       <Iconify icon={cardDetails.icon.type} color={cardDetails.icon.color} height={iconHeight} />
     {:else}
-      <img src={cardDetails.img} alt={cardDetails.title} class="{imageHeight} object-contain object-center" />
+      <img 
+        src={cardDetails.img} 
+        alt={cardDetails.title} 
+        class="{imageSize} object-contain object-center" 
+      />
     {/if}
   </figure>
 {/snippet}
 
-{#snippet footer(cardDetails: CardDetails)}
-  {#if cardDetails.summary}
-    <div class="{textSize} text-center text-black dark:text-white">
-      {@html cardDetails.summary}
+{#snippet content(cardDetails: CardDetails)}
+  {#if isLandscape}
+    <div class="flex flex-col justify-between p-4">
+      {@render header(cardDetails)}
+      {#if cardDetails.summary}
+        <div class="{textSize} text-black dark:text-white">
+          {@html cardDetails.summary}
+        </div>
+      {:else}
+        <div class="flex flex-col">
+          <div class="{textSize} font-semibold">
+            {cardDetails.subtitle1}
+          </div>
+          <div class="{textSize}">
+            {cardDetails.subtitle2}
+          </div>
+        </div>
+      {/if}
     </div>
   {:else}
-    <div class="pb-2 text-center">
-      <div class="inline-flex w-full items-end justify-center">
-        <div class="{textSize} line-clamp-1 flex-auto font-semibold">
-          {cardDetails.subtitle1}
+    {#if cardDetails.summary}
+      <div class="{textSize} text-center text-black dark:text-white">
+        {@html cardDetails.summary}
+      </div>
+    {:else}
+      <div class="pb-2 text-center">
+        <div class="inline-flex w-full items-end justify-center">
+          <div class="{textSize} line-clamp-1 flex-auto font-semibold">
+            {cardDetails.subtitle1}
+          </div>
+        </div>
+        <div class="line-clamp-1 {textSize}">
+          {cardDetails.subtitle2}
         </div>
       </div>
-      <div class="line-clamp-1 {textSize}">
-        {cardDetails.subtitle2}
-      </div>
-    </div>
+    {/if}
   {/if}
 {/snippet}
 
 <a href={cardDetails.route} {target}>
   <div
     class="card preset-filled-{themeService.getTypeColour(cardDetails.type)}-100-900 border-[1px]
-    border-y-8 border-{themeService.getTypeColour(cardDetails.type)}-500 m-2 {cardSize} transition-all hover:scale-105"
+    {isLandscape ? 'border-l-8' : 'border-y-8'} border-{themeService.getTypeColour(cardDetails.type)}-500 
+    m-2 {cardDimensions} {isLandscape ? 'flex' : 'flex flex-col'} transition-all hover:scale-[1.02]"
   >
-    <div class="card-header flex">
-      {@render header(cardDetails)}
-    </div>
-    <div class="card-body flex flex-1 items-center justify-center">
-      {@render figure(cardDetails)}
-    </div>
-    <footer class="card-footer p-2">
-      {@render footer(cardDetails)}
-    </footer>
+    {#if isLandscape}
+      <div class="w-1/3">
+        {@render figure(cardDetails)}
+      </div>
+      <div class="w-2/3">
+        {@render content(cardDetails)}
+      </div>
+    {:else}
+      <div class="card-header flex">
+        {@render header(cardDetails)}
+      </div>
+      <div class="card-body flex flex-1 items-center justify-center">
+        {@render figure(cardDetails)}
+      </div>
+      <div class="card-footer">
+        {@render content(cardDetails)}
+      </div>
+    {/if}
   </div>
 </a>

@@ -135,17 +135,6 @@ export const themeService: ThemeService = {
   },
 
   /**
-   * Toggles the layout between expanded & compact
-   */
-  toggleLayout(): void {
-    if (this.layout.value === "expanded") {
-      this.setLayout("compacted");
-    } else {
-      this.setLayout("expanded");
-    }
-  },
-
-  /**
    * Toggles the card style between portrait and landscape
    */
   toggleCardStyle(): void {
@@ -153,6 +142,17 @@ export const themeService: ThemeService = {
       this.setCardStyle("landscape");
     } else {
       this.setCardStyle("portrait");
+    }
+  },
+
+  /**
+   * Toggles the layout between expanded & compact
+   */
+  toggleLayout(): void {
+    if (this.layout.value === "expanded") {
+      this.setLayout("compacted");
+    } else {
+      this.setLayout("expanded");
     }
   },
 

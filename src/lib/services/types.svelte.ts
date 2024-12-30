@@ -206,7 +206,7 @@ export interface ThemeService {
   /** display modes */
   layout: any;
   lightMode: any;
-  cardStyle: any;
+  /** Tracks if festive snow animation is active */
   isSnowing: boolean;
 
   initDisplay(forceTheme?: string, forceMode?: string): void;
@@ -215,8 +215,6 @@ export interface ThemeService {
   setTheme(theme: string): void;
   setLayout(layout: string): void;
   toggleLayout(): void;
-  setCardStyle(style: string): void;
-  toggleCardStyle(): void;
   getIcon(type: string): IconType;
   addIcon(type: string, icon: IconType): void;
   getTypeColour(type: string): string;
