@@ -1,11 +1,12 @@
 <script lang="ts">
   import Menu from "$lib/ui/components/Menu.svelte";
   import MenuItem from "$lib/ui/components/MenuItem.svelte";
-  import Icon from "../components/Icon.svelte";
+  import Icon from "$lib/ui/components/Icon.svelte";
+  import IconifyIcon from "@iconify/svelte";
   import { themeService } from "../../services/themes.svelte";
   import { courseService } from "$lib/services/course.svelte";
   import { currentCodeTheme, markdownService } from "$lib/services/markdown.svelte";
-  import { Combobox } from "@skeletonlabs/skeleton-svelte";
+  import { Combobox, Segment } from "@skeletonlabs/skeleton-svelte";
 
   interface ComboxData {
     label: string;
@@ -24,12 +25,7 @@
   });
   let codeTheme = $state([currentCodeTheme.value]);
 
-  const cardStyleCombo: ComboxData[] = [
-    { label: "Portrait", value: "portrait" },
-    { label: "Landscape", value: "landscape" },
-    { label: "Circular", value: "circular" }
-  ];
-  let cardStyle = $state([themeService.cardStyle.value]);
+  let cStyle = $state(themeService.cardStyle.value);
 
   function toggleDisplayMode(): void {
     themeService.toggleDisplayMode();
@@ -42,7 +38,7 @@
   $effect(() => {
     themeService.setTheme(theme[0]);
     markdownService.setCodeTheme(codeTheme[0]);
-    themeService.setCardStyle(cardStyle[0]);
+    themeService.setCardStyle(cStyle);
     courseService.refreshAllLabs(codeTheme[0]);
   });
 </script>
@@ -74,8 +70,14 @@
   <Combobox data={codeThemeCombo} bind:value={codeTheme} />
   <hr />
   <h6>Card Style</h6>
-  <Combobox data={cardStyleCombo} bind:value={cardStyle} />
-  <ul class="list"></ul>
+
+  <Segment name="align" bind:value={cStyle}>
+    <Segment.Item value="portrait"
+      ><IconifyIcon icon="fluent:rectangle-portrait-location-target-20-regular" /></Segment.Item
+    >
+    <Segment.Item value="circular"><IconifyIcon icon="fluent:circle-sparkle-28-regular" /></Segment.Item>
+    <Segment.Item value="landscape"><IconifyIcon icon="fluent:rectangle-landscape-sparkle-48-regular" /></Segment.Item>
+  </Segment>
 {/snippet}
 
 <Menu {menuSelector} {menuContent} />
