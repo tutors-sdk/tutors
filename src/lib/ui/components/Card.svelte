@@ -21,6 +21,7 @@
 
   const hideVideoIcon = $derived(courseService.currentCourse.value?.areVideosHidden);
   const isLandscape = $derived(themeService.cardStyle.value === "landscape");
+  const isCircular = $derived(themeService.cardStyle.value === "circular");
 
   const headingText = $derived(
     themeService.layout.value === "compacted"
@@ -36,16 +37,32 @@
     themeService.layout.value === "compacted"
       ? isLandscape
         ? "w-[20rem] h-32"
-        : "w-36 h-[14rem]"
+        : isCircular
+          ? "w-48 h-48"
+          : "w-36 h-[14rem]"
       : isLandscape
         ? "w-[28rem] h-48"
-        : "w-60 h-[23rem]"
+        : isCircular
+          ? "w-64 h-64"
+          : "w-60 h-[23rem]"
   );
 
-  const iconHeight = $derived(themeService.layout.value === "compacted" ? "80" : isLandscape ? "160" : "160");
+  const iconHeight = $derived(
+    themeService.layout.value === "compacted" ? (isCircular ? "48" : "80") : isLandscape ? "160" : "160"
+  );
 
   const imageSize = $derived(
-    themeService.layout.value === "compacted" ? (isLandscape ? "w-32" : "h-16") : isLandscape ? "w-48" : "h-40"
+    themeService.layout.value === "compacted"
+      ? isLandscape
+        ? "w-32"
+        : isCircular
+          ? "w-24 h-24"
+          : "h-16"
+      : isLandscape
+        ? "w-48"
+        : isCircular
+          ? "w-32 h-32"
+          : "h-40"
   );
 
   const textSize = $derived(
@@ -130,7 +147,11 @@
 <a href={cardDetails.route} {target}>
   <div
     class="card preset-filled-{themeService.getTypeColour(cardDetails.type)}-100-900 border-[1px]
-    {isLandscape ? 'border-l-8' : 'border-y-8'} border-{themeService.getTypeColour(cardDetails.type)}-500
+    {isLandscape
+      ? 'border-l-8'
+      : isCircular
+        ? 'rounded-full border-4'
+        : 'border-y-8'} border-{themeService.getTypeColour(cardDetails.type)}-500
     m-2 {cardDimensions} {isLandscape ? 'flex' : 'flex flex-col'} transition-all hover:scale-[1.02]"
   >
     {#if isLandscape}
@@ -139,6 +160,20 @@
       </div>
       <div class="w-2/3">
         {@render content(cardDetails)}
+      </div>
+    {:else if isCircular}
+      <div class="relative flex h-full flex-col items-center justify-between p-4 text-center">
+        {@render figure(cardDetails)}
+        <div class="text-l absolute left-0 right-0 top-8 line-clamp-1 px-2 font-semibold">
+          {cardDetails.title}
+        </div>
+        <div class="mb-2">
+          <Iconify
+            icon={themeService.getIcon(cardDetails.type).type}
+            color="rgb(var(--color-{themeService.getTypeColour(cardDetails.type)}-500))"
+            height="30"
+          />
+        </div>
       </div>
     {:else}
       <div class="card-header flex">

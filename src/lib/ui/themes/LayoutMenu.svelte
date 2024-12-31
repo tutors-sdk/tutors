@@ -26,7 +26,8 @@
 
   const cardStyleCombo: ComboxData[] = [
     { label: "Portrait", value: "portrait" },
-    { label: "Landscape", value: "landscape" }
+    { label: "Landscape", value: "landscape" },
+    { label: "Circular", value: "circular" }
   ];
   let cardStyle = $state([themeService.cardStyle.value]);
 

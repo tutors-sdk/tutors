@@ -135,14 +135,13 @@ export const themeService: ThemeService = {
   },
 
   /**
-   * Toggles the card style between portrait and landscape
+   * Toggles between portrait, landscape, and circular card styles
    */
   toggleCardStyle(): void {
-    if (this.cardStyle.value === "portrait") {
-      this.setCardStyle("landscape");
-    } else {
-      this.setCardStyle("portrait");
-    }
+    const styles = ["portrait", "landscape", "circular"];
+    const currentIndex = styles.indexOf(this.cardStyle.value);
+    const nextIndex = (currentIndex + 1) % styles.length;
+    this.setCardStyle(styles[nextIndex]);
   },
 
   /**
