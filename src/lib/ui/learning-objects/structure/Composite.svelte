@@ -9,16 +9,18 @@
     composite: Composite;
   }
   let { composite }: Props = $props();
+
+  const sideWidth = $derived(themeService.cardStyle.value === "landscape" ? "w-[48rem]" : "w-[40rem]");
 </script>
 
 {#if composite?.units?.sides?.length > 0}
-  <div class="mx-auto block justify-center md:flex">
+  <div class="m-4 block justify-center md:flex">
     <div>
       <Panels panels={composite.panels} />
       <Units units={composite.units.units} />
       <Cards los={composite.units.standardLos} />
     </div>
-    <div class="block w-[48rem] md:ml-2">
+    <div class="block md:ml-2 md:{sideWidth}">
       <Units units={composite.units?.sides} />
     </div>
   </div>
