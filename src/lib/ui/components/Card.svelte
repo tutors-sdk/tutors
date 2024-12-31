@@ -98,11 +98,15 @@
 {/snippet}
 
 {#snippet figure(cardDetails: CardDetails)}
-  <figure class="flex h-full items-center justify-center overflow-hidden p-2">
+  <figure class="flex items-center justify-center">
     {#if cardDetails.icon}
       <Iconify icon={cardDetails.icon.type} color={cardDetails.icon.color} height={iconHeight} />
     {:else}
-      <img src={cardDetails.img} alt={cardDetails.title} class="{imageSize} object-contain object-center" />
+      <img
+        src={cardDetails.img}
+        alt={cardDetails.title}
+        class="{imageSize} object-contain object-center {isCircular ? 'rounded-full' : ''}"
+      />
     {/if}
   </figure>
 {/snippet}
@@ -152,7 +156,7 @@
       : isCircular
         ? 'rounded-full border-4'
         : 'border-y-8'} border-{themeService.getTypeColour(cardDetails.type)}-500
-    m-2 {cardDimensions} {isLandscape ? 'flex' : 'flex flex-col'} transition-all hover:scale-[1.02]"
+    m-2 {cardDimensions} {isLandscape ? 'flex' : 'flex flex-col'} transition-all hover:scale-[1.15]"
   >
     {#if isLandscape}
       <div class="w-1/3">
@@ -162,8 +166,10 @@
         {@render content(cardDetails)}
       </div>
     {:else if isCircular}
-      <div class="relative flex h-full flex-col items-center justify-between p-4 text-center">
-        {@render figure(cardDetails)}
+      <div class="relative flex h-full flex-col items-center justify-center p-4 text-center">
+        <div class="mt-8 flex flex-1 items-center justify-center">
+          {@render figure(cardDetails)}
+        </div>
         <div class="text-l absolute left-0 right-0 top-8 line-clamp-1 px-2 font-semibold">
           {cardDetails.title}
         </div>
