@@ -23,27 +23,29 @@
   const isLandscape = $derived(themeService.cardStyle.value === "landscape");
 
   const headingText = $derived(
-    themeService.layout.value === "compacted" 
-      ? isLandscape ? "!text-sm font-medium" : "!text-xs font-medium"
-      : isLandscape ? "!text-xl font-semibold" : "!text-lg font-semibold"
+    themeService.layout.value === "compacted"
+      ? isLandscape
+        ? "!text-sm font-medium"
+        : "!text-xs font-medium"
+      : isLandscape
+        ? "!text-xl font-semibold"
+        : "!text-lg font-semibold"
   );
 
   const cardDimensions = $derived(
     themeService.layout.value === "compacted"
-      ? isLandscape ? "w-[28rem] h-32" : "w-36 h-[14rem]"
-      : isLandscape ? "w-[36rem] h-48" : "w-60 h-[23rem]"
+      ? isLandscape
+        ? "w-[20rem] h-32"
+        : "w-36 h-[14rem]"
+      : isLandscape
+        ? "w-[28rem] h-48"
+        : "w-60 h-[23rem]"
   );
 
-  const iconHeight = $derived(
-    themeService.layout.value === "compacted"
-      ? "60"
-      : isLandscape ? "120" : "160"
-  );
+  const iconHeight = $derived(themeService.layout.value === "compacted" ? "80" : isLandscape ? "160" : "160");
 
   const imageSize = $derived(
-    themeService.layout.value === "compacted"
-      ? isLandscape ? "w-32" : "h-16"
-      : isLandscape ? "w-48" : "h-40"
+    themeService.layout.value === "compacted" ? (isLandscape ? "w-32" : "h-16") : isLandscape ? "w-48" : "h-40"
   );
 
   const textSize = $derived(
@@ -83,11 +85,7 @@
     {#if cardDetails.icon}
       <Iconify icon={cardDetails.icon.type} color={cardDetails.icon.color} height={iconHeight} />
     {:else}
-      <img 
-        src={cardDetails.img} 
-        alt={cardDetails.title} 
-        class="{imageSize} object-contain object-center" 
-      />
+      <img src={cardDetails.img} alt={cardDetails.title} class="{imageSize} object-contain object-center" />
     {/if}
   </figure>
 {/snippet}
@@ -105,36 +103,34 @@
           <div class="{textSize} font-semibold">
             {cardDetails.subtitle1}
           </div>
-          <div class="{textSize}">
+          <div class={textSize}>
             {cardDetails.subtitle2}
           </div>
         </div>
       {/if}
     </div>
+  {:else if cardDetails.summary}
+    <div class="{textSize} text-center text-black dark:text-white">
+      {@html cardDetails.summary}
+    </div>
   {:else}
-    {#if cardDetails.summary}
-      <div class="{textSize} text-center text-black dark:text-white">
-        {@html cardDetails.summary}
-      </div>
-    {:else}
-      <div class="pb-2 text-center">
-        <div class="inline-flex w-full items-end justify-center">
-          <div class="{textSize} line-clamp-1 flex-auto font-semibold">
-            {cardDetails.subtitle1}
-          </div>
-        </div>
-        <div class="line-clamp-1 {textSize}">
-          {cardDetails.subtitle2}
+    <div class="pb-2 text-center">
+      <div class="inline-flex w-full items-end justify-center">
+        <div class="{textSize} line-clamp-1 flex-auto font-semibold">
+          {cardDetails.subtitle1}
         </div>
       </div>
-    {/if}
+      <div class="line-clamp-1 {textSize}">
+        {cardDetails.subtitle2}
+      </div>
+    </div>
   {/if}
 {/snippet}
 
 <a href={cardDetails.route} {target}>
   <div
     class="card preset-filled-{themeService.getTypeColour(cardDetails.type)}-100-900 border-[1px]
-    {isLandscape ? 'border-l-8' : 'border-y-8'} border-{themeService.getTypeColour(cardDetails.type)}-500 
+    {isLandscape ? 'border-l-8' : 'border-y-8'} border-{themeService.getTypeColour(cardDetails.type)}-500
     m-2 {cardDimensions} {isLandscape ? 'flex' : 'flex flex-col'} transition-all hover:scale-[1.02]"
   >
     {#if isLandscape}
