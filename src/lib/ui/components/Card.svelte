@@ -156,7 +156,7 @@
       : isCircular
         ? 'rounded-full border-4'
         : 'border-y-8'} border-{themeService.getTypeColour(cardDetails.type)}-500
-    m-2 {cardDimensions} {isLandscape ? 'flex' : 'flex flex-col'} transition-all hover:scale-[1.15]"
+    m-2 {cardDimensions} {isLandscape ? 'flex' : 'flex flex-col'} transition-all hover:scale-[1.10]"
   >
     {#if isLandscape}
       <div class="w-1/3">
