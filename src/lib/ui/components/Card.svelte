@@ -112,41 +112,19 @@
 {/snippet}
 
 {#snippet content(cardDetails: CardDetails)}
-  {#if isLandscape}
-    <div class="flex flex-col justify-between p-4">
-      {@render header(cardDetails)}
-      {#if cardDetails.summary}
-        <div class="{textSize} text-black dark:text-white">
-          {@html cardDetails.summary}
-        </div>
-      {:else}
-        <div class="flex flex-col">
-          <div class="{textSize} font-semibold">
-            {cardDetails.subtitle1}
-          </div>
-          <div class={textSize}>
-            {cardDetails.subtitle2}
-          </div>
-        </div>
-      {/if}
-    </div>
-  {:else if cardDetails.summary}
-    <div class="{textSize} text-center text-black dark:text-white">
+  <div class="flex flex-col justify-between p-4 {!isLandscape ? 'text-center' : ''}">
+    <div class="{textSize} text-black dark:text-white">
       {@html cardDetails.summary}
+      {cardDetails.summaryEx}
     </div>
-  {:else}
-    <div class="pb-2 text-center">
-      <div class="inline-flex w-full items-end justify-center">
-        <div class="{textSize} line-clamp-1 flex-auto font-semibold">
-          {cardDetails.subtitle1}
-        </div>
-      </div>
-      <div class="line-clamp-1 {textSize}">
-        {cardDetails.subtitle2}
-      </div>
-    </div>
-  {/if}
+  </div>
 {/snippet}
+
+{#snippet portrait(cardDetails: CardDetails)}{/snippet}
+
+{#snippet circular(cardDetails: CardDetails)}{/snippet}
+
+{#snippet landscape(cardDetails: CardDetails)}{/snippet}
 
 <a href={cardDetails.route} {target}>
   <div
@@ -163,15 +141,16 @@
         {@render figure(cardDetails)}
       </div>
       <div class="w-2/3">
+        {@render header(cardDetails)}
         {@render content(cardDetails)}
       </div>
     {:else if isCircular}
       <div class="relative flex h-full flex-col items-center justify-center p-4 text-center">
-        <div class="mt-8 flex flex-1 items-center justify-center">
-          {@render figure(cardDetails)}
-        </div>
         <div class="text-l absolute left-0 right-0 top-8 line-clamp-1 px-2 font-semibold">
           {cardDetails.title}
+        </div>
+        <div class="mt-8 flex flex-1 items-center justify-center">
+          {@render figure(cardDetails)}
         </div>
         <div class="mb-2">
           <Iconify

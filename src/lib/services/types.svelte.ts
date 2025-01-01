@@ -69,9 +69,8 @@ export interface CardDetails {
   route: string;
   title: string;
   type: string;
-  subtitle1?: string;
-  subtitle2?: string;
   summary?: string;
+  summaryEx?: string;
   icon?: IconType;
   img?: string;
   student?: LoUser;
