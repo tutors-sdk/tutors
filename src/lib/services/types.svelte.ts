@@ -69,9 +69,8 @@ export interface CardDetails {
   route: string;
   title: string;
   type: string;
-  subtitle1?: string;
-  subtitle2?: string;
   summary?: string;
+  summaryEx?: string;
   icon?: IconType;
   img?: string;
   student?: LoUser;
@@ -206,6 +205,7 @@ export interface ThemeService {
   /** display modes */
   layout: any;
   lightMode: any;
+  cardStyle: any;
   /** Tracks if festive snow animation is active */
   isSnowing: boolean;
 
@@ -215,6 +215,7 @@ export interface ThemeService {
   setTheme(theme: string): void;
   setLayout(layout: string): void;
   toggleLayout(): void;
+  setCardStyle(style: string): void;
   getIcon(type: string): IconType;
   addIcon(type: string, icon: IconType): void;
   getTypeColour(type: string): string;

@@ -18,9 +18,9 @@
             route: lo?.loRoute,
             student: lo?.user,
             type: lo?.type,
-            subtitle1: lo?.courseTitle,
-            title: lo?.courseTitle,
-            subtitle2: lo?.title + " (" + lo?.type + ")",
+            summary: lo?.courseTitle,
+            // title: lo?.courseTitle,
+            summaryEx: lo?.title + " (" + lo?.type + ")",
             img: lo?.img,
             icon: lo?.icon
           }}
