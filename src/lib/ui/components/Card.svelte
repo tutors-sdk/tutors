@@ -120,11 +120,45 @@
   </div>
 {/snippet}
 
-{#snippet portrait(cardDetails: CardDetails)}{/snippet}
+{#snippet portrait(cardDetails: CardDetails)}
+  <div class="card-header flex">
+    {@render header(cardDetails)}
+  </div>
+  <div class="card-body flex flex-1 items-center justify-center">
+    {@render figure(cardDetails)}
+  </div>
+  <div class="card-footer">
+    {@render content(cardDetails)}
+  </div>
+{/snippet}
 
-{#snippet circular(cardDetails: CardDetails)}{/snippet}
+{#snippet circular(cardDetails: CardDetails)}
+  <div class="relative flex h-full flex-col items-center justify-center p-4 text-center">
+    <div class="text-l absolute left-0 right-0 top-8 line-clamp-1 px-2 font-semibold">
+      {cardDetails.title}
+    </div>
+    <div class="mt-8 flex flex-1 items-center justify-center">
+      {@render figure(cardDetails)}
+    </div>
+    <div class="mb-2">
+      <Iconify
+        icon={themeService.getIcon(cardDetails.type).type}
+        color="rgb(var(--color-{themeService.getTypeColour(cardDetails.type)}-500))"
+        height="30"
+      />
+    </div>
+  </div>
+{/snippet}
 
-{#snippet landscape(cardDetails: CardDetails)}{/snippet}
+{#snippet landscape(cardDetails: CardDetails)}
+  <div class="w-1/3">
+    {@render figure(cardDetails)}
+  </div>
+  <div class="w-2/3">
+    {@render header(cardDetails)}
+    {@render content(cardDetails)}
+  </div>
+{/snippet}
 
 <a href={cardDetails.route} {target}>
   <div
@@ -137,39 +171,11 @@
     m-2 {cardDimensions} {isLandscape ? 'flex' : 'flex flex-col'} transition-all hover:scale-[1.10]"
   >
     {#if isLandscape}
-      <div class="w-1/3">
-        {@render figure(cardDetails)}
-      </div>
-      <div class="w-2/3">
-        {@render header(cardDetails)}
-        {@render content(cardDetails)}
-      </div>
+      {@render landscape(cardDetails)}
     {:else if isCircular}
-      <div class="relative flex h-full flex-col items-center justify-center p-4 text-center">
-        <div class="text-l absolute left-0 right-0 top-8 line-clamp-1 px-2 font-semibold">
-          {cardDetails.title}
-        </div>
-        <div class="mt-8 flex flex-1 items-center justify-center">
-          {@render figure(cardDetails)}
-        </div>
-        <div class="mb-2">
-          <Iconify
-            icon={themeService.getIcon(cardDetails.type).type}
-            color="rgb(var(--color-{themeService.getTypeColour(cardDetails.type)}-500))"
-            height="30"
-          />
-        </div>
-      </div>
+      {@render circular(cardDetails)}
     {:else}
-      <div class="card-header flex">
-        {@render header(cardDetails)}
-      </div>
-      <div class="card-body flex flex-1 items-center justify-center">
-        {@render figure(cardDetails)}
-      </div>
-      <div class="card-footer">
-        {@render content(cardDetails)}
-      </div>
+      {@render portrait(cardDetails)}
     {/if}
   </div>
 </a>
