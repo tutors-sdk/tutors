@@ -45,7 +45,7 @@
     </Segment>
   </div>
   <hr />
-  <h6>Layout</h6>
+  <div class="mt-2">Layout</div>
   <div class="mt-8 flex justify-center">
     <Segment name="layout" bind:value={themeService.layout.value}>
       <Segment.Item value="expanded"><Icon type="expanded" /></Segment.Item>
@@ -53,20 +53,17 @@
     </Segment>
   </div>
   <hr />
-  <h6>Card Style</h6>
+  <div class="mt-2">Card Style</div>
   <Segment name="cardStyle" bind:value={themeService.cardStyle.value}>
-    <Segment.Item value="portrait"
-      ><IconifyIcon icon="fluent:rectangle-portrait-location-target-20-regular" /></Segment.Item
-    >
-    <Segment.Item value="circular"><IconifyIcon icon="fluent:circle-sparkle-28-regular" /></Segment.Item>
-    <Segment.Item value="landscape"><IconifyIcon icon="fluent:rectangle-landscape-sparkle-48-regular" /></Segment.Item>
+    <Segment.Item value="portrait"><Icon type="portrait" tip="Change cards to Portrait" /></Segment.Item>
+    <Segment.Item value="circular"><Icon type="circular" tip="Change cards to Circular" /></Segment.Item>
+    <Segment.Item value="landscape"><Icon type="landscape" tip="Change cards to Landscape" /></Segment.Item>
   </Segment>
-
   <hr />
-  <h6>Theme</h6>
+  <div class="mb-2">Theme</div>
   <Combobox data={themeCombo} bind:value={theme} />
   <hr />
-  <h6>Code Style</h6>
+  <div class="mb-2">Code Style</div>
   <Combobox data={codeThemeCombo} bind:value={codeTheme} />
 {/snippet}
 
