@@ -1,11 +1,12 @@
 <script lang="ts">
   import Menu from "$lib/ui/components/Menu.svelte";
   import MenuItem from "$lib/ui/components/MenuItem.svelte";
-  import Icon from "../components/Icon.svelte";
+  import Icon from "$lib/ui/components/Icon.svelte";
+  import IconifyIcon from "@iconify/svelte";
   import { themeService } from "../../services/themes.svelte";
   import { courseService } from "$lib/services/course.svelte";
   import { currentCodeTheme, markdownService } from "$lib/services/markdown.svelte";
-  import { Combobox } from "@skeletonlabs/skeleton-svelte";
+  import { Combobox, Segment } from "@skeletonlabs/skeleton-svelte";
 
   interface ComboxData {
     label: string;
@@ -24,17 +25,10 @@
   });
   let codeTheme = $state([currentCodeTheme.value]);
 
-  function toggleDisplayMode(): void {
-    themeService.toggleDisplayMode();
-  }
-
-  function toggleLayout() {
-    themeService.toggleLayout();
-  }
-
   $effect(() => {
     themeService.setTheme(theme[0]);
     markdownService.setCodeTheme(codeTheme[0]);
+    themeService.setDisplayMode(themeService.lightMode.value);
     courseService.refreshAllLabs(codeTheme[0]);
   });
 </script>
@@ -44,27 +38,33 @@
 {/snippet}
 
 {#snippet menuContent()}
-  <h6>Appearance</h6>
-
-  <ul>
-    <MenuItem
-      type={themeService.lightMode.value}
-      text={themeService.lightMode.value === "light" ? "Dark Mode" : "Light Mode"}
-      onClick={toggleDisplayMode}
-    />
-    <MenuItem
-      type={themeService.layout.value}
-      text={themeService.layout.value === "compacted" ? "Expand" : "Compact"}
-      onClick={toggleLayout}
-    />
-  </ul>
+  <div class="mt-8 flex justify-center">
+    <Segment name="cardStyle" bind:value={themeService.lightMode.value}>
+      <Segment.Item value="dark"><Icon type="dark" /></Segment.Item>
+      <Segment.Item value="light"><Icon type="light" /></Segment.Item>
+    </Segment>
+  </div>
   <hr />
-  <h6>Theme:</h6>
+  <div class="mt-2">Layout</div>
+  <div class="mt-8 flex justify-center">
+    <Segment name="layout" bind:value={themeService.layout.value}>
+      <Segment.Item value="expanded"><Icon type="expanded" /></Segment.Item>
+      <Segment.Item value="compacted"><Icon type="compacted" /></Segment.Item>
+    </Segment>
+  </div>
+  <hr />
+  <div class="mt-2">Card Style</div>
+  <Segment name="cardStyle" bind:value={themeService.cardStyle.value}>
+    <Segment.Item value="portrait"><Icon type="portrait" tip="Change cards to Portrait" /></Segment.Item>
+    <Segment.Item value="circular"><Icon type="circular" tip="Change cards to Circular" /></Segment.Item>
+    <Segment.Item value="landscape"><Icon type="landscape" tip="Change cards to Landscape" /></Segment.Item>
+  </Segment>
+  <hr />
+  <div class="mb-2">Theme</div>
   <Combobox data={themeCombo} bind:value={theme} />
   <hr />
-  <h6>Code Style</h6>
+  <div class="mb-2">Code Style</div>
   <Combobox data={codeThemeCombo} bind:value={codeTheme} />
-  <ul class="list"></ul>
 {/snippet}
 
 <Menu {menuSelector} {menuContent} />

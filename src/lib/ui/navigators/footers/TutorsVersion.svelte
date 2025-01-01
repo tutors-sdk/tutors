@@ -11,7 +11,7 @@
     // id = data[0].sha.slice(0, 7);
     // sha = data[0].sha;
   });
-  const version = "11.2.0";
+  const version = "11.3.0";
 </script>
 
 <a href="https://tutors.dev" target="_blank" rel="noopener noreferrer">

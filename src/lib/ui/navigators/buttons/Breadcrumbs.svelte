@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/models/lo-types";
   import Icon from "$lib/ui/components/Icon.svelte";
-  import { courseService } from "$lib/services/course.svelte";
+  import { currentCourse, currentLo } from "$lib/runes";
 
   let truncated = [true, true, true, true, true, true, true];
 
@@ -19,9 +19,10 @@
     return input;
   }
 
-  let breadCrumbs: Lo[] = $derived(courseService.currentLo?.value?.breadCrumbs!);
+  let breadCrumbs: Lo[] = $derived(currentLo?.value?.breadCrumbs!);
 
   $effect(() => {
+    console.log(breadCrumbs);
     breadCrumbs.forEach((lo) => {
       if (lo.route.endsWith("/")) {
         lo.route = lo.route.slice(0, -1);
@@ -38,7 +39,7 @@
 <div class="mx-8 my-2 overflow-hidden p-1">
   <ol class="flex items-center gap-4">
     <li>
-      <a class="hover:underline" href="/{courseService.currentCourse?.value?.properties?.parent}">
+      <a class="hover:underline" href="/{currentCourse?.value?.properties?.parent}">
         <Icon type="programHome" tip={`Go to Course Home`} /></a
       >
     </li>

@@ -1,3 +1,10 @@
+/**
+ * @service SupabaseClient
+ * Service for managing Supabase database connections and operations
+ * Handles learning analytics, user interactions, and calendar data
+ * Provides low-level database operations for the Tutors platform
+ */
+
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, PUBLIC_ANON_MODE } from "$env/static/public";
 
@@ -7,6 +14,15 @@ if (PUBLIC_ANON_MODE !== "TRUE") {
   supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
 }
 
+/**
+ * Retrieves the number of learning record increments for a specific field
+ * @async
+ * @param fieldName - Name of the field to count increments for
+ * @param courseId - Identifier of the course
+ * @param studentId - Identifier of the student
+ * @param loId - Identifier of the learning object
+ * @returns Promise resolving to the number of increments
+ */
 export async function getNumOfLearningRecordsIncrements(
   fieldName: string,
   courseId: string,
@@ -29,6 +45,15 @@ export async function getNumOfLearningRecordsIncrements(
   return student ? student[0].increment + 1 : 1;
 }
 
+/**
+ * Manages student interaction data with a course learning object
+ * Updates both duration and count metrics
+ * @async
+ * @param courseId - Identifier of the course
+ * @param studentId - Identifier of the student
+ * @param loId - Identifier of the learning object
+ * @param lo - Learning object data
+ */
 export async function manageStudentCourseLo(courseId: string, studentId: string, loId: string, lo: Lo) {
   const durationPromise = getNumOfLearningRecordsIncrements("duration", courseId, studentId, loId);
   const countPromise = getNumOfLearningRecordsIncrements("count", courseId, studentId, loId);
@@ -54,6 +79,11 @@ export async function manageStudentCourseLo(courseId: string, studentId: string,
   }
 }
 
+/**
+ * Formats a date into a standardized string format
+ * @param date - Date to format
+ * @returns Formatted date string
+ */
 export function formatDate(date: Date): string {
   const d = new Date(date);
   const year = d.getFullYear().toString();
@@ -64,6 +94,13 @@ export function formatDate(date: Date): string {
   return [year, month, day].join("-");
 }
 
+/**
+ * Updates the duration of a calendar entry
+ * @async
+ * @param id - Calendar entry identifier
+ * @param studentId - Identifier of the student
+ * @param courseId - Identifier of the course
+ */
 export const updateCalendarDuration = async (id: string, studentId: string, courseId: string) => {
   if (!id || !studentId || !courseId) return;
   await supabase.rpc("increment_calendar", {
@@ -74,6 +111,14 @@ export const updateCalendarDuration = async (id: string, studentId: string, cour
   });
 };
 
+/**
+ * Retrieves the duration from a calendar entry
+ * @async
+ * @param id - Calendar entry identifier
+ * @param studentId - Identifier of the student
+ * @param courseId - Identifier of the course
+ * @returns Promise resolving to the duration value
+ */
 export async function getCalendarDuration(id: string, studentId: string, courseId: string): Promise<number> {
   const { data } = await supabase
     .from("calendar")
@@ -85,6 +130,14 @@ export async function getCalendarDuration(id: string, studentId: string, courseI
   return data?.timeactive ? data.timeactive + 1 : 1;
 }
 
+/**
+ * Retrieves the count from a calendar entry
+ * @async
+ * @param id - Calendar entry identifier
+ * @param studentId - Identifier of the student
+ * @param courseId - Identifier of the course
+ * @returns Promise resolving to the count value
+ */
 export async function getCalendarCount(id: string, studentId: string, courseId: string): Promise<number> {
   const { data } = await supabase
     .from("calendar")
@@ -96,11 +149,25 @@ export async function getCalendarCount(id: string, studentId: string, courseId: 
   return data?.pageloads ? data.pageloads + 1 : 1;
 }
 
+/**
+ * Calculates the total duration for a specific metric
+ * @async
+ * @param key - Metric key to total
+ * @param table - Database table name
+ * @param id - Identifier for the record
+ * @returns Promise resolving to the total duration
+ */
 export async function getDurationTotal(key: string, table: string, id: string): Promise<number> {
   const { data } = await supabase.from(table).select("duration").eq(key, id).single();
   return data?.duration || 1;
 }
 
+/**
+ * Creates or updates a calendar entry for a student's course interaction
+ * @async
+ * @param studentId - Identifier of the student
+ * @param courseId - Identifier of the course
+ */
 export async function insertOrUpdateCalendar(studentId: string, courseId: string) {
   if (!studentId || !courseId) return;
   const durationPromise = getCalendarDuration(formatDate(new Date()), studentId, courseId);
@@ -120,11 +187,27 @@ export async function insertOrUpdateCalendar(studentId: string, courseId: string
   );
 }
 
+/**
+ * Processes student interaction data with learning objects
+ * @async
+ * @param courseId - Identifier of the course
+ * @param studentId - Identifier of the student
+ * @param loId - Identifier of the learning object
+ * @param lo - Learning object data
+ */
 export async function handleInteractionData(courseId: string, studentId: string, loId: string, lo: Lo) {
   if (!courseId || !studentId || !loId) return;
   await manageStudentCourseLo(courseId, studentId, loId, lo);
 }
 
+/**
+ * Stores student's interaction with a course learning object in Supabase
+ * @async
+ * @param course - Course data
+ * @param loid - Learning object identifier
+ * @param lo - Learning object data
+ * @param student - Student data
+ */
 export async function storeStudentCourseLearningObjectInSupabase(
   course: Course,
   loid: string,
@@ -140,6 +223,13 @@ export async function storeStudentCourseLearningObjectInSupabase(
   await insertOrUpdateCalendar(student.login, course.courseId);
 }
 
+/**
+ * Updates the duration metric for learning records
+ * @async
+ * @param courseId - Identifier of the course
+ * @param studentId - Identifier of the student
+ * @param loId - Identifier of the learning object
+ */
 export async function updateLearningRecordsDuration(courseId: string, studentId: string, loId: string) {
   const numOfDuration = await getNumOfLearningRecordsIncrements("duration", courseId, studentId, loId);
   await supabase
@@ -150,6 +240,11 @@ export async function updateLearningRecordsDuration(courseId: string, studentId:
     .eq("lo_id", loId);
 }
 
+/**
+ * Creates or updates a student record in the database
+ * @async
+ * @param student - Student data to store
+ */
 export async function addOrUpdateStudent(student: TutorsId) {
   if (!student) return;
 
