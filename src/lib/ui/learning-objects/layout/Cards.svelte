@@ -7,7 +7,7 @@
   import { cubicOut } from "svelte/easing";
   import { scale } from "svelte/transition";
   import { scaleTransition } from "$lib/ui/themes/animations";
-  import { courseService } from "$lib/services/course.svelte";
+  import { currentCourse } from "$lib/runes";
 
   interface Props {
     los?: Lo[];
@@ -31,8 +31,8 @@
   }
 
   onMount(async () => {
-    if (courseService.currentCourse?.value?.properties.ignorepin) {
-      ignorePin = courseService.currentCourse?.value?.properties.ignorepin.toString();
+    if (currentCourse?.value?.properties.ignorepin) {
+      ignorePin = currentCourse?.value?.properties.ignorepin.toString();
       window.addEventListener("keydown", keypressInput);
     }
     isLoaded = true;

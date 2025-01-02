@@ -9,6 +9,7 @@
   import type { PageData } from "./$types";
   import { courseService } from "$lib/services/course.svelte";
   import { currentCodeTheme, markdownService } from "$lib/services/markdown.svelte";
+  import { currentLo } from "$lib/runes";
 
   interface Props {
     data: PageData;
@@ -24,7 +25,7 @@
 
   onMount(async () => {
     course = data.course;
-    courseService.currentLo.value = data.course;
+    currentLo.value = data.course;
     const labs = filterByType(data.course.los, "lab");
     labs.forEach((lab) => {
       lab?.los?.forEach((step) => {

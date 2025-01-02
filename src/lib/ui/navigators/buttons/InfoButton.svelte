@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { courseService } from "$lib/services/course.svelte";
+  import { currentCourse } from "$lib/runes";
   import Icon from "$lib/ui/components/Icon.svelte";
   import Sidebar from "$lib/ui/components/Sidebar.svelte";
 </script>
@@ -14,7 +14,7 @@
   </header>
   <article>
     <prose class="prose dark:prose-invert">
-      {@html courseService.currentCourse?.value?.contentHtml}
+      {@html currentCourse?.value?.contentHtml}
     </prose>
   </article>
 {/snippet}

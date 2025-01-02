@@ -89,10 +89,6 @@ export interface CourseService {
   notes: Map<string, Note>;
   /** Current course URL */
   courseUrl: any;
-  /** Currently loaded Lo (Learning Object) */
-  currentLo: any;
-  /** Currently loaded course */
-  currentCourse: any;
 
   getOrLoadCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course>;
   readCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course>;

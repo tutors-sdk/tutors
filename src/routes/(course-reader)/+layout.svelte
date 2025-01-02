@@ -3,7 +3,7 @@
   import type { Snippet } from "svelte";
   import { tutorsConnectService } from "$lib/services/connect.svelte";
   import { page } from "$app/state";
-  import { courseService } from "$lib/services/course.svelte";
+  import { currentCourse } from "$lib/runes";
 
   type Props = { children: Snippet };
   let { children }: Props = $props();
@@ -14,15 +14,15 @@
   $effect(() => {
     tutorsConnectService.learningEvent(page.params);
 
-    if (courseService.currentCourse.value?.courseId !== lastCourseId) {
-      tutorsConnectService.courseVisit(courseService.currentCourse?.value!, tutorsConnectService?.tutorsId.value);
-      lastCourseId = courseService.currentCourse?.value?.courseId!;
+    if (currentCourse.value?.courseId !== lastCourseId) {
+      tutorsConnectService.courseVisit(currentCourse.value!, tutorsConnectService?.tutorsId.value);
+      lastCourseId = currentCourse.value?.courseId!;
     }
   });
 </script>
 
 <svelte:head>
-  <title>{courseService.currentLo?.value?.title}</title>
+  <title>{currentCourse?.value?.title}</title>
 </svelte:head>
 
 <CourseShell>
