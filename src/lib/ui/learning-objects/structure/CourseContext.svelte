@@ -2,11 +2,11 @@
   import { Accordion } from "@skeletonlabs/skeleton-svelte";
   import LoContext from "./LoContext.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
-  import { courseService } from "$lib/services/course.svelte";
+  import { currentCourse } from "$lib/runes";
 </script>
 
 <Accordion multiple>
-  {#each courseService.currentCourse?.value?.los ?? [] as lo}
+  {#each currentCourse?.value?.los ?? [] as lo}
     {#if !lo.hide}
       <Accordion.Item value={lo?.id}>
         {#snippet lead()}<Icon type={lo.type} />{/snippet}

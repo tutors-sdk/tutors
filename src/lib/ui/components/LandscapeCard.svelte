@@ -3,7 +3,7 @@
   import type { CardDetails } from "$lib/services/types.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { themeService } from "../../services/themes.svelte";
-  import { courseService } from "$lib/services/course.svelte";
+  import { currentCourse } from "$lib/runes";
 
   let { cardDetails } = $props<{ cardDetails: CardDetails }>();
   let target = $state("");
@@ -19,7 +19,7 @@
     }
   }
 
-  const hideVideoIcon = $derived(courseService.currentCourse.value?.areVideosHidden);
+  const hideVideoIcon = $derived(currentCourse.value?.areVideosHidden);
 
   const headingText = $derived(
     themeService.layout.value === "compacted" ? "!text-sm font-medium" : "!text-xl font-semibold"
@@ -81,7 +81,7 @@
         <div class="{textSize} font-semibold">
           {cardDetails.subtitle1}
         </div>
-        <div class="{textSize}">
+        <div class={textSize}>
           {cardDetails.subtitle2}
         </div>
       </div>
@@ -92,7 +92,9 @@
 <a href={cardDetails.route} {target}>
   <div
     class="card preset-filled-{themeService.getTypeColour(cardDetails.type)}-100-900 border-[1px]
-    border-l-8 border-{themeService.getTypeColour(cardDetails.type)}-500 m-2 {cardWidth} {cardHeight} flex transition-all hover:scale-[1.02]"
+    border-l-8 border-{themeService.getTypeColour(
+      cardDetails.type
+    )}-500 m-2 {cardWidth} {cardHeight} flex transition-all hover:scale-[1.02]"
   >
     <div class="w-1/3">
       {@render figure(cardDetails)}

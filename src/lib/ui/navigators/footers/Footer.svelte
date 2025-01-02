@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { courseService } from "$lib/services/course.svelte";
+  import { currentCourse } from "$lib/runes";
   import SetuIcon from "$lib/ui/components/SetuIcon.svelte";
   import TutorsIcon from "$lib/ui/components/TutorsIcon.svelte";
   import TutorsMessage from "./TutorsMessage.svelte";
@@ -7,13 +7,9 @@
   import { slide } from "svelte/transition";
 </script>
 
-{#if courseService.currentCourse?.value?.footer}
+{#if currentCourse?.value?.footer}
   <div class="w-full">
-    <img
-      src="https://{courseService.currentCourse?.value?.courseUrl}/{courseService.currentCourse?.value?.footer}"
-      alt="sponsors"
-      class="w-full"
-    />
+    <img src="https://{currentCourse?.value?.courseUrl}/{currentCourse?.value?.footer}" alt="sponsors" class="w-full" />
   </div>
 {:else}
   <div class="bg-surface-100-800-token border-surface-200-700-token h-12 w-full border-t-[1px]">

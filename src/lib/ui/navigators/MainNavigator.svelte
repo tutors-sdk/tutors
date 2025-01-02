@@ -11,7 +11,7 @@
   import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
   import TutorsTitle from "./titles/TutorsTitle.svelte";
   import CalendarButton from "./buttons/CalendarButton.svelte";
-  import { courseService } from "$lib/services/course.svelte";
+  import { currentCourse } from "$lib/runes";
 </script>
 
 <AppBar
@@ -22,7 +22,7 @@
   trailClasses="flex items-center"
 >
   {#snippet lead()}
-    {#if courseService.currentCourse?.value}
+    {#if currentCourse?.value}
       <span class="hidden md:block">
         <InfoButton />
       </span>
@@ -37,24 +37,24 @@
   {#snippet trail()}
     <span class="hidden md:block">
       <TutorsTimeIndicator />
-      {#if !courseService.currentCourse?.value?.isPortfolio}
+      {#if !currentCourse?.value?.isPortfolio}
         <SearchButton />
       {/if}
       <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
     </span>
     <LayoutMenu />
     <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
-    {#if !courseService.currentCourse?.value?.isPrivate}
+    {#if !currentCourse?.value?.isPrivate}
       <div class="relative">
         {#if !tutorsConnectService.tutorsId.value?.login}
-          <AnonProfile redirect="/{courseService.currentCourse?.value?.courseId}" />
+          <AnonProfile redirect="/{currentCourse?.value?.courseId}" />
         {:else}
           <ConnectedProfile />
         {/if}
       </div>
     {/if}
     <span class="hidden md:block">
-      {#if courseService.currentCourse?.value && !courseService.currentCourse?.value?.isPortfolio}
+      {#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
         <TocButton />
       {/if}
     </span>

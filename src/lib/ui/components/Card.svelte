@@ -3,7 +3,7 @@
   import type { CardDetails } from "$lib/services/types.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { themeService } from "../../services/themes.svelte";
-  import { courseService } from "$lib/services/course.svelte";
+  import { currentCourse } from "$lib/runes";
 
   let { cardDetails } = $props<{ cardDetails: CardDetails }>();
   let target = $state("");
@@ -19,7 +19,7 @@
     }
   }
 
-  const hideVideoIcon = $derived(courseService.currentCourse.value?.areVideosHidden);
+  const hideVideoIcon = $derived(currentCourse.value?.areVideosHidden);
   const isLandscape = $derived(themeService.cardStyle.value === "landscape");
   const isCircular = $derived(themeService.cardStyle.value === "circular");
 

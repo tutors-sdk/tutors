@@ -4,7 +4,7 @@
   import { onMount, type Snippet } from "svelte";
   import MainNavigator from "./navigators/MainNavigator.svelte";
   import { slide } from "svelte/transition";
-  import { courseService } from "$lib/services/course.svelte";
+  import { currentCourse } from "$lib/runes";
 
   type Props = { children: Snippet };
   let { children }: Props = $props();
@@ -18,7 +18,7 @@
 <div class="flex h-screen flex-col">
   <header class="sticky top-0 z-10 bg-surface-100 dark:bg-surface-950">
     <MainNavigator />
-    {#if courseService.currentCourse?.value}
+    {#if currentCourse.value}
       <SecondaryNavigator />
     {/if}
   </header>

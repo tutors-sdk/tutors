@@ -22,7 +22,6 @@
   let breadCrumbs: Lo[] = $derived(currentLo?.value?.breadCrumbs!);
 
   $effect(() => {
-    console.log(breadCrumbs);
     breadCrumbs.forEach((lo) => {
       if (lo.route.endsWith("/")) {
         lo.route = lo.route.slice(0, -1);

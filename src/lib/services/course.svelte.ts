@@ -20,10 +20,6 @@ export const courseService: CourseService = {
   notes: new Map<string, Note>(),
   /** Current course URL */
   courseUrl: rune(""),
-  /** Currently loaded Lo (Learning Object) */
-  currentLo: rune<Lo | null>,
-  /** Current course */
-  currentCourse: rune<null | Course>(null),
 
   /**
    * Fetches and caches a course by ID. Handles both direct URLs and Netlify domains.
@@ -80,8 +76,6 @@ export const courseService: CourseService = {
    */
   async readCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course> {
     const course = await this.getOrLoadCourse(courseId, fetchFunction);
-    this.currentCourse.value = course;
-    this.currentLo.value = course;
     this.courseUrl.value = course.courseUrl;
     currentCourse.value = course;
     currentLo.value = course;
@@ -99,7 +93,6 @@ export const courseService: CourseService = {
     const course = await this.readCourse(courseId, fetchFunction);
     const topic = course.topicIndex.get(topicId);
     if (topic) {
-      this.currentLo.value = topic;
       currentLo.value = topic;
     }
     return topic!;
@@ -128,7 +121,6 @@ export const courseService: CourseService = {
       this.labs.set(labId, liveLab);
     }
 
-    this.currentLo.value = liveLab.lab;
     currentLo.value = liveLab.lab;
     return liveLab;
   },
@@ -157,7 +149,6 @@ export const courseService: CourseService = {
     const course = await this.readCourse(courseId, fetchFunction);
     const lo = course.loIndex.get(loId);
     if (lo) {
-      this.currentLo.value = lo;
       currentLo.value = lo;
     }
     if (lo?.type === "note") {
@@ -177,7 +168,7 @@ export const courseService: CourseService = {
       liveLab.refreshStep();
     }
     for (const note of this.notes.values()) {
-      markdownService.convertNoteToHtml(this.currentCourse.value!, note, true);
+      markdownService.convertNoteToHtml(currentCourse.value!, note, true);
     }
   }
 };

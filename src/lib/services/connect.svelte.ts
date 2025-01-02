@@ -17,7 +17,7 @@ import { analyticsService } from "./analytics.svelte";
 import { presenceService } from "./presence.svelte";
 import { PUBLIC_ANON_MODE } from "$env/static/public";
 import { updateCourseList } from "./profiles/allCourseAccess";
-import { courseService } from "./course.svelte";
+import { currentCourse, currentLo } from "$lib/runes";
 
 /** Global anonymous mode flag, controlled by environment variable */
 let anonMode = false;
@@ -146,19 +146,10 @@ export const tutorsConnectService: TutorsConnectService = {
    */
   learningEvent(params: Record<string, string>): void {
     if (anonMode) return;
-    if (courseService.currentCourse.value && courseService.currentLo.value && this.tutorsId.value) {
-      analyticsService.learningEvent(
-        courseService.currentCourse.value,
-        params,
-        courseService.currentLo.value,
-        this.tutorsId.value
-      );
-      if (this.tutorsId.value.share === "true" && !courseService.currentCourse.value.isPrivate) {
-        presenceService.sendLoEvent(
-          courseService.currentCourse.value,
-          courseService.currentLo.value,
-          this.tutorsId.value
-        );
+    if (currentCourse.value && currentLo.value && this.tutorsId.value) {
+      analyticsService.learningEvent(currentCourse.value, params, currentLo.value, this.tutorsId.value);
+      if (this.tutorsId.value.share === "true" && !currentCourse.value.isPrivate) {
+        presenceService.sendLoEvent(currentCourse.value, currentLo.value, this.tutorsId.value);
       }
     }
   },
@@ -170,17 +161,8 @@ export const tutorsConnectService: TutorsConnectService = {
   startTimer() {
     if (anonMode) return;
     this.intervalId = setInterval(() => {
-      if (
-        !document.hidden &&
-        courseService.currentCourse.value &&
-        courseService.currentLo.value &&
-        this.tutorsId.value
-      ) {
-        analyticsService.updatePageCount(
-          courseService.currentCourse.value,
-          courseService.currentLo.value,
-          this.tutorsId.value
-        );
+      if (!document.hidden && currentCourse.value && currentLo.value && this.tutorsId.value) {
+        analyticsService.updatePageCount(currentCourse.value, currentLo.value, this.tutorsId.value);
       }
     }, 30 * 1000);
   },

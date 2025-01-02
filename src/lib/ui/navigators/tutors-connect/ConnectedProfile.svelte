@@ -5,7 +5,7 @@
   import Menu from "$lib/ui/components/Menu.svelte";
   import OnlineButton from "../buttons/OnlineButton.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
-  import { courseService } from "$lib/services/course.svelte";
+  import { currentCourse } from "$lib/runes";
 
   function logout() {
     tutorsConnectService.disconnect("/");
@@ -51,13 +51,13 @@
     {/if}
     {#if tutorsConnectService.tutorsId.value?.share === "true"}
       <MenuItem
-        link="https://time.tutors.dev/{courseService.currentCourse.value?.courseId}"
+        link="https://time.tutors.dev/{currentCourse.value?.courseId}"
         text="Tutors Time"
         type="tutorsTime"
         targetStr="_blank"
       />
       <MenuItem
-        link="https://live.tutors.dev/course/{courseService.currentCourse.value?.courseId}"
+        link="https://live.tutors.dev/course/{currentCourse.value?.courseId}"
         text="Tutors Live"
         type="live"
         targetStr="_blank"
