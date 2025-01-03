@@ -128,7 +128,7 @@ export interface TutorsConnectService {
   disconnect(redirectStr: string): void;
   toggleShare(): void;
 
-  courseVisit(course: Course, user: TutorsId): void;
+  courseVisit(course: Course): void;
   deleteCourseVisit(courseId: string): void;
   getCourseVisits(): Promise<CourseVisit[]>;
   favouriteCourse(courseId: string): void;

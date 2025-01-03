@@ -15,7 +15,7 @@
     tutorsConnectService.learningEvent(page.params);
 
     if (currentCourse.value?.courseId !== lastCourseId) {
-      tutorsConnectService.courseVisit(currentCourse.value!, tutorsConnectService?.tutorsId.value);
+      tutorsConnectService.courseVisit(currentCourse.value!);
       lastCourseId = currentCourse.value?.courseId!;
     }
   });
