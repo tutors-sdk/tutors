@@ -119,8 +119,6 @@ export interface ProfileStore {
  * Service for managing user authentication and course access
  */
 export interface TutorsConnectService {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  tutorsId: any;
   profile: ProfileStore;
   intervalId: any;
   anonMode: boolean;

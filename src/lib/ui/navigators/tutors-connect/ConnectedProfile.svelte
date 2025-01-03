@@ -5,7 +5,7 @@
   import Menu from "$lib/ui/components/Menu.svelte";
   import OnlineButton from "../buttons/OnlineButton.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
-  import { currentCourse } from "$lib/runes";
+  import { currentCourse, tutorsId } from "$lib/runes";
 
   function logout() {
     tutorsConnectService.disconnect("/");
@@ -18,38 +18,32 @@
 
 {#snippet menuSelector()}
   <div class="relative">
-    {#if presenceService.studentsOnline.value.length && tutorsConnectService.tutorsId.value?.share}
+    {#if presenceService.studentsOnline.value.length && tutorsId.value?.share}
       <span class="variant-filled-error badge-icon absolute -right-2 -top-2 z-10 text-white">
         {presenceService.studentsOnline.value.length}
       </span>
     {/if}
     <span class="badge-icon absolute -bottom-2 -right-2 z-10 text-white">
-      {#if tutorsConnectService.tutorsId.value?.share === "true"}
+      {#if tutorsId.value?.share === "true"}
         <Icon icon="fluent:presence-available-24-filled" color="rgba(var(--color-success-500))" height="20" />
       {:else}
         <Icon icon="fluent:presence-available-24-regular" color="rgba(var(--color-error-500))" height="20" />
       {/if}
     </span>
     <div class="mt-2 flex items-center">
-      <img
-        class="w-12 rounded-full"
-        src={tutorsConnectService.tutorsId.value?.image}
-        alt={tutorsConnectService.tutorsId.value?.name}
-      />
+      <img class="w-12 rounded-full" src={tutorsId.value?.image} alt={tutorsId.value?.name} />
     </div>
   </div>
 {/snippet}
 
 {#snippet menuContent()}
-  <ul class="space-y-3">
-    <MenuItem link="/" text="Home" type="tutors" />
-    <hr />
-    {#if tutorsConnectService.tutorsId.value?.share === "true"}
+  <ul class="mt-12 space-y-2">
+    {#if tutorsId.value?.share === "true"}
       <MenuItem text="Share Presence" type="online" onClick={shareStatusChange} />
     {:else}
       <MenuItem text="Share Presence" type="offline" onClick={shareStatusChange} />
     {/if}
-    {#if tutorsConnectService.tutorsId.value?.share === "true"}
+    {#if tutorsId.value?.share === "true"}
       <MenuItem
         link="https://time.tutors.dev/{currentCourse.value?.courseId}"
         text="Tutors Time"
@@ -69,8 +63,9 @@
 
       <hr />
     {/if}
+    <MenuItem link="/" text="Dashboard" type="tutors" />
     <MenuItem
-      link="https://github.com/{tutorsConnectService.tutorsId.value?.login}"
+      link="https://github.com/{tutorsId.value?.login}"
       text="Github Profile"
       type="github"
       targetStr="_blank"

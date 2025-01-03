@@ -22,7 +22,6 @@ export const themeService: ThemeService = {
     { name: "tutors", icons: FluentIconLib },
     { name: "classic", icons: FluentIconLib },
     { name: "dyslexia", icons: FluentIconLib },
-    { name: "festive", icons: FestiveIcons },
     { name: "nouveau", icons: FluentIconLib },
     { name: "rose", icons: FluentIconLib },
     { name: "cerberus", icons: FluentIconLib }

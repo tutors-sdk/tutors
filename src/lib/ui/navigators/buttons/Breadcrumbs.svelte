@@ -35,8 +35,8 @@
   });
 </script>
 
-<div class="mx-8 my-2 overflow-hidden p-1">
-  <ol class="flex items-center gap-4">
+<div class="mx-8 my-2 overflow-hidden p-1 flex items-center">
+  <ol class="flex items-center gap-4 w-full">
     <li>
       <a class="hover:underline" href="/{currentCourse?.value?.properties?.parent}">
         <Icon type="programHome" tip={`Go to Course Home`} /></a
