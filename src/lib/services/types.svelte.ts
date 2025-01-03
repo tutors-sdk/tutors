@@ -119,8 +119,6 @@ export interface ProfileStore {
  * Service for managing user authentication and course access
  */
 export interface TutorsConnectService {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  tutorsId: any;
   profile: ProfileStore;
   intervalId: any;
   anonMode: boolean;
@@ -130,7 +128,7 @@ export interface TutorsConnectService {
   disconnect(redirectStr: string): void;
   toggleShare(): void;
 
-  courseVisit(course: Course, user: TutorsId): void;
+  courseVisit(course: Course): void;
   deleteCourseVisit(courseId: string): void;
   getCourseVisits(): Promise<CourseVisit[]>;
   favouriteCourse(courseId: string): void;

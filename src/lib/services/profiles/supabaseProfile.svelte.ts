@@ -9,6 +9,7 @@ import type { Course, IconType } from "../models/lo-types";
 import { tutorsConnectService } from "$lib/services/connect.svelte.js";
 import type { CourseVisit, ProfileStore } from "../types.svelte";
 import { supabase } from "./supabase-client";
+import { tutorsId } from "$lib/runes";
 
 export const supabaseProfile: ProfileStore = {
   courseVisits: [] as CourseVisit[],
@@ -19,11 +20,11 @@ export const supabaseProfile: ProfileStore = {
    * @async
    */
   async reload() {
-    if (tutorsConnectService.tutorsId.value?.login) {
+    if (tutorsId.value?.login) {
       const { data: profile } = await supabase
         .from("tutors-connect-profiles")
         .select("profile")
-        .eq("tutorId", tutorsConnectService.tutorsId.value?.login);
+        .eq("tutorId", tutorsId.value?.login);
       if (profile.length > 0) {
         this.courseVisits = profile[0].profile as unknown as CourseVisit[];
       }
@@ -36,11 +37,11 @@ export const supabaseProfile: ProfileStore = {
    * @async
    */
   async save() {
-    const id = tutorsConnectService.tutorsId.value?.login;
+    const id = tutorsId.value?.login;
     if (id) {
       const { error } = await supabase
         .from("tutors-connect-profiles")
-        .upsert({ tutorId: tutorsConnectService.tutorsId.value?.login, profile: this.courseVisits });
+        .upsert({ tutorId: tutorsId.value?.login, profile: this.courseVisits });
       if (error) {
         console.log(error);
       }

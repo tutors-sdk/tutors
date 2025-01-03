@@ -17,7 +17,7 @@ import { analyticsService } from "./analytics.svelte";
 import { presenceService } from "./presence.svelte";
 import { PUBLIC_ANON_MODE } from "$env/static/public";
 import { updateCourseList } from "./profiles/allCourseAccess";
-import { currentCourse, currentLo } from "$lib/runes";
+import { currentCourse, currentLo, tutorsId } from "$lib/runes";
 
 /** Global anonymous mode flag, controlled by environment variable */
 let anonMode = false;
@@ -27,8 +27,6 @@ if (PUBLIC_ANON_MODE === "TRUE") {
 }
 
 export const tutorsConnectService: TutorsConnectService = {
-  /** Current user's Tutors identity */
-  tutorsId: rune<TutorsId | null>(null),
   /** Active user profile implementation */
   profile: localStorageProfile,
   /** Timer ID for analytics updates */
@@ -54,13 +52,13 @@ export const tutorsConnectService: TutorsConnectService = {
     if (anonMode) return;
     presenceService.connectToAllCourseAccess();
     if (user) {
-      this.tutorsId.value = user;
+      tutorsId.value = user;
       this.profile = supabaseProfile;
       if (browser) {
         if (!localStorage.share) {
           localStorage.share = true;
         }
-        this.tutorsId.value.share = localStorage.share;
+        tutorsId.value.share = localStorage.share;
         if (localStorage.loginCourse) {
           const courseId = localStorage.loginCourse;
           localStorage.removeItem("loginCourse");
@@ -83,11 +81,11 @@ export const tutorsConnectService: TutorsConnectService = {
    * Updates both local storage and current session
    */
   toggleShare() {
-    if (this.tutorsId.value && browser) {
-      if (this.tutorsId.value.share === "true") {
-        localStorage.share = this.tutorsId.value.share = "false";
+    if (tutorsId.value && browser) {
+      if (tutorsId.value.share === "true") {
+        localStorage.share = tutorsId.value.share = "false";
       } else {
-        localStorage.share = this.tutorsId.value.share = "true";
+        localStorage.share = tutorsId.value.share = "true";
       }
     }
   },
@@ -102,7 +100,7 @@ export const tutorsConnectService: TutorsConnectService = {
     updateCourseList(course);
     this.profile.logCourseVisit(course);
     presenceService.startPresenceListener(course.courseId);
-    if (course.authLevel! > 0 && !this.tutorsId.value?.login) {
+    if (course.authLevel! > 0 && !tutorsId.value?.login) {
       localStorage.loginCourse = course.courseId;
       goto(`/auth`);
     }
@@ -146,10 +144,10 @@ export const tutorsConnectService: TutorsConnectService = {
    */
   learningEvent(params: Record<string, string>): void {
     if (anonMode) return;
-    if (currentCourse.value && currentLo.value && this.tutorsId.value) {
-      analyticsService.learningEvent(currentCourse.value, params, currentLo.value, this.tutorsId.value);
-      if (this.tutorsId.value.share === "true" && !currentCourse.value.isPrivate) {
-        presenceService.sendLoEvent(currentCourse.value, currentLo.value, this.tutorsId.value);
+    if (currentCourse.value && currentLo.value && tutorsId.value) {
+      analyticsService.learningEvent(currentCourse.value, params, currentLo.value, tutorsId.value);
+      if (tutorsId.value.share === "true" && !currentCourse.value.isPrivate) {
+        presenceService.sendLoEvent(currentCourse.value, currentLo.value, tutorsId.value);
       }
     }
   },
@@ -161,8 +159,8 @@ export const tutorsConnectService: TutorsConnectService = {
   startTimer() {
     if (anonMode) return;
     this.intervalId = setInterval(() => {
-      if (!document.hidden && currentCourse.value && currentLo.value && this.tutorsId.value) {
-        analyticsService.updatePageCount(currentCourse.value, currentLo.value, this.tutorsId.value);
+      if (!document.hidden && currentCourse.value && currentLo.value && tutorsId.value) {
+        analyticsService.updatePageCount(currentCourse.value, currentLo.value, tutorsId.value);
       }
     }, 30 * 1000);
   },

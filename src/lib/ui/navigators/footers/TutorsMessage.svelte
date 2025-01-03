@@ -4,14 +4,9 @@
   let contentHtml = "";
 
   onMount(async () => {
-    try {
-      const response = await fetch("https://msg.tutors.dev/msg.json");
-      const data = await response.json();
-      contentHtml = convertMdToHtml(data.footerMessage, "monokai");
-    } catch (error) {
-      console.error("Failed to fetch message:", error);
-      contentHtml = convertMdToHtml("An [Open Learning Web Toolkit](/course/tutors-reference-manual)");
-    }
+    contentHtml = convertMdToHtml(
+      "An [Open Learning Web Toolkit](/course/tutors-reference-manual): Check out the new Card Styles in the layout menu"
+    );
   });
 </script>
 

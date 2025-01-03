@@ -11,7 +11,7 @@
   import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
   import TutorsTitle from "./titles/TutorsTitle.svelte";
   import CalendarButton from "./buttons/CalendarButton.svelte";
-  import { currentCourse } from "$lib/runes";
+  import { currentCourse, tutorsId } from "$lib/runes";
 </script>
 
 <AppBar
@@ -46,7 +46,7 @@
     <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
     {#if !currentCourse?.value?.isPrivate}
       <div class="relative">
-        {#if !tutorsConnectService.tutorsId.value?.login}
+        {#if !tutorsId.value?.login}
           <AnonProfile redirect="/{currentCourse?.value?.courseId}" />
         {:else}
           <ConnectedProfile />

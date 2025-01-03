@@ -96,7 +96,7 @@ markdownIt.renderer.rules.link_open = function (tokens: any, idx: any, options: 
   return defaultRender(tokens, idx, options, env, self);
 };
 
-export function convertMdToHtml(md: string, codeTheme: string): string {
+export function convertMdToHtml(md: string, codeTheme: string = "ayu-dark"): string {
   currentTheme = codeTheme;
   return markdownIt.render(md);
 }
