@@ -151,7 +151,7 @@
 {/snippet}
 
 {#snippet landscape(cardDetails: CardDetails)}
-  <div class="w-1/3">
+  <div class="flex h-full w-1/3 items-center">
     {@render figure(cardDetails)}
   </div>
   <div class="w-2/3">

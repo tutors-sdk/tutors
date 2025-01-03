@@ -26,6 +26,8 @@
   let codeTheme = $state([currentCodeTheme.value]);
 
   $effect(() => {
+    themeService.setLayout(themeService.layout.value);
+    themeService.setCardStyle(themeService.cardStyle.value);
     themeService.setTheme(theme[0]);
     markdownService.setCodeTheme(codeTheme[0]);
     themeService.setDisplayMode(themeService.lightMode.value);
