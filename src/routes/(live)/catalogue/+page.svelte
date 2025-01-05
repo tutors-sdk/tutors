@@ -17,8 +17,9 @@
 
 <div class="w-full">
   <div class="flex justify-end gap-2">
-    <div class="bg-gray-100 p-1 text-right text-xs dark:bg-gray-800">Total Module: {totalModules}</div>
-    <div class="bg-gray-100 p-1 text-right text-xs dark:bg-gray-800">Total Students: {totalStudents}</div>
+    <div class="bg-gray-100 p-1 text-right text-xs dark:bg-gray-800">
+      Totals: modules-{totalModules}:students-{totalStudents}
+    </div>
   </div>
   <Catalogue courseRecords={data.courseRecords} />
 </div>
