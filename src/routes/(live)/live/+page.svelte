@@ -12,10 +12,11 @@
 
 <Tabs bind:value={group} listJustify="justify-center">
   {#snippet list()}
-    <Tabs.Control value="courses">Courses</Tabs.Control>
-    <Tabs.Control value="students">Students</Tabs.Control>
+    <Tabs.Control value="courses">Courses ({liveService.coursesOnline.value.length})</Tabs.Control>
+    <Tabs.Control value="students">Students ({liveService.studentsOnline.value.length})</Tabs.Control>
     <Tabs.Control value="groups">Groups</Tabs.Control>
   {/snippet}
+
   {#snippet content()}
     <Tabs.Panel value="courses"><Courses /></Tabs.Panel>
     <Tabs.Panel value="students"><Students /></Tabs.Panel>

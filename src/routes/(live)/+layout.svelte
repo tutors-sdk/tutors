@@ -1,13 +1,19 @@
 <script lang="ts">
-  import { browser } from "$app/environment";
   import { currentCourse } from "$lib/runes";
-  import { themeService } from "$lib/services/themes.svelte";
+  import { catalogueService } from "$lib/services/catalogue";
+  import { liveService } from "$lib/services/live.svelte";
   import CourseShell from "$lib/ui/TutorsShell.svelte";
-  import type { Snippet } from "svelte";
+  import { onMount, type Snippet } from "svelte";
   type Props = { children: Snippet };
   let { children }: Props = $props();
 
   currentCourse.value = null;
+  let totalModules = $state(0);
+  let totalStudents = $state(0);
+  onMount(async () => {
+    totalModules = await catalogueService.getCatalogueCount();
+    totalStudents = await catalogueService.getStudentCount();
+  });
 </script>
 
 <svelte:head>
