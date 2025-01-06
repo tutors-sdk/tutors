@@ -8,7 +8,6 @@ import { PUBLIC_party_kit_main_room } from "$env/static/public";
 import { rune } from "./utils/runes.svelte";
 import { LoRecord, type LoUser, type PresenceService, type TutorsId } from "./types.svelte";
 import type { Course, Lo } from "./models/lo-types";
-import { tutorsConnectService } from "./connect.svelte";
 import { tutorsId } from "$lib/runes";
 
 /** PartyKit server URL from environment */
@@ -33,10 +32,7 @@ export const presenceService: PresenceService = {
    */
   studentListener(event: any) {
     const nextCourseEvent = JSON.parse(event.data);
-    if (
-      nextCourseEvent.courseId === this.listeningTo &&
-      nextCourseEvent.user.id !== tutorsId.value?.login
-    ) {
+    if (nextCourseEvent.courseId === this.listeningTo && nextCourseEvent.user.id !== tutorsId.value?.login) {
       const studentEvent = this.studentEventMap.get(nextCourseEvent.user.id);
       if (!studentEvent) {
         const latestLo = new LoRecord(nextCourseEvent);

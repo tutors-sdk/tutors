@@ -20,16 +20,14 @@
   </a>
   <a
     class="darkbg-primary-700 btn w-2/3 rounded bg-primary-800 text-white hover:scale-110 hover:bg-primary-600 md:w-48 dark:bg-primary-400 dark:text-black"
-    href="https://live.tutors.dev/catalogue"
-    target="_blank"
+    href="/catalogue"
     rel="noreferrer"
   >
     <Icon type="live" /> Catalogue
   </a>
   <a
     class="darkbg-primary-700 btn w-2/3 rounded bg-primary-800 text-white hover:scale-110 hover:bg-primary-600 md:w-48 dark:bg-primary-400 dark:text-black"
-    href="https://live.tutors.dev"
-    target="_blank"
+    href="/live"
     rel="noreferrer"
   >
     <Icon type="time" /> Live

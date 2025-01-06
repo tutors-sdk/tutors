@@ -22,6 +22,7 @@
   const hideVideoIcon = $derived(currentCourse.value?.areVideosHidden);
   const isLandscape = $derived(themeService.cardStyle.value === "landscape");
   const isCircular = $derived(themeService.cardStyle.value === "circular");
+  const hasFullName = $derived(cardDetails?.student?.fullName);
 
   const headingText = $derived(
     themeService.layout.value === "compacted"
@@ -87,7 +88,7 @@
     {#if cardDetails.student}
       <div class="flex items-center">
         <img src={cardDetails.student.avatar} alt={cardDetails.student.fullName} class="rounded-3xl {avatarWidth}" />
-        <h6 class={textSize}>{cardDetails.student?.fullName}</h6>
+        <h6 class={textSize}>&nbsp;{hasFullName ? cardDetails.student?.fullName : cardDetails.student?.id}</h6>
       </div>
     {:else}
       <div class="line-clamp-2 pr-10 !text-black dark:!text-white {headingText}">

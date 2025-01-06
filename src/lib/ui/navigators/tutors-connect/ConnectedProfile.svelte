@@ -38,30 +38,27 @@
 
 {#snippet menuContent()}
   <ul class="mt-12 space-y-2">
-    {#if tutorsId.value?.share === "true"}
-      <MenuItem text="Share Presence" type="online" onClick={shareStatusChange} />
-    {:else}
-      <MenuItem text="Share Presence" type="offline" onClick={shareStatusChange} />
-    {/if}
-    {#if tutorsId.value?.share === "true"}
-      <MenuItem
-        link="https://time.tutors.dev/{currentCourse.value?.courseId}"
-        text="Tutors Time"
-        type="tutorsTime"
-        targetStr="_blank"
-      />
-      <MenuItem
-        link="https://live.tutors.dev/course/{currentCourse.value?.courseId}"
-        text="Tutors Live"
-        type="live"
-        targetStr="_blank"
-      />
+    {#if currentCourse.value}
+      {#if tutorsId.value?.share === "true"}
+        <MenuItem text="Share Presence" type="online" onClick={shareStatusChange} />
+      {:else}
+        <MenuItem text="Share Presence" type="offline" onClick={shareStatusChange} />
+      {/if}
+      {#if tutorsId.value?.share === "true"}
+        <MenuItem
+          link="https://time.tutors.dev/{currentCourse.value?.courseId}"
+          text="Tutors Time"
+          type="tutorsTime"
+          targetStr="_blank"
+        />
+        <MenuItem link="/live/{currentCourse.value?.courseId}" text="Tutors Live" type="live" />
 
-      <li class="option !p-0 hover:preset-tonal">
-        <OnlineButton />
-      </li>
+        <li class="option !p-0 hover:preset-tonal">
+          <OnlineButton />
+        </li>
 
-      <hr />
+        <hr />
+      {/if}
     {/if}
     <MenuItem link="/" text="Dashboard" type="tutors" />
     <MenuItem
