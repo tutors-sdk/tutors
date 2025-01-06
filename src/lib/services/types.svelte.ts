@@ -74,7 +74,7 @@ export class LoRecord {
  */
 export interface CardDetails {
   route: string;
-  title: string;
+  title?: string;
   type: string;
   summary?: string;
   summaryEx?: string;
