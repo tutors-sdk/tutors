@@ -120,33 +120,32 @@
     }
   };
 
-  const headingText = $derived(
-    headdingTextStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType]
-  );
+  const cardContainerStyles: CardStyles = {
+    expanded: {
+      portrait: "border-y-8 flex flex-col",
+      landscape: "border-l-8 flex",
+      circular: "rounded-full border-4 flex flex-col"
+    },
+    compacted: {
+      portrait: "border-y-8 flex flex-col",
+      landscape: "border-l-8 flex",
+      circular: "rounded-full border-4 flex flex-col"
+    }
+  };
 
-  const cardDimensions = $derived(
-    cardDimensionStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType]
-  );
-
-  const imageSize = $derived(
-    imageSizeStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType]
-  );
-
-  const iconSize = $derived(
-    iconSizeStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType]
-  );
-
-  const iconHeight = $derived(
-    iconHeightStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType]
-  );
-
-  const textSize = $derived(
-    textSizeStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType]
-  );
-
-  const avatarWidth = $derived(
-    avatarWidthStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType]
-  );
+  const styles = $derived({
+    heading: headdingTextStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
+    dimensions:
+      cardDimensionStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
+    image: imageSizeStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
+    icon: iconSizeStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
+    iconHeight:
+      iconHeightStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
+    text: textSizeStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
+    avatar: avatarWidthStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
+    container:
+      cardContainerStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType]
+  });
 </script>
 
 {#snippet header(cardDetails: CardDetails)}
@@ -157,15 +156,15 @@
           <Icon type="video" height="30" />
         </a>
       {/if}
-      <Icon type={cardDetails.type} height={iconHeight} />
+      <Icon type={cardDetails.type} height={styles.iconHeight} />
     </div>
     {#if cardDetails.student}
       <div class="flex items-center">
-        <img src={cardDetails.student.avatar} alt={cardDetails.student.fullName} class="rounded-3xl {avatarWidth}" />
-        <h6 class={textSize}>&nbsp;{hasFullName ? cardDetails.student?.fullName : cardDetails.student?.id}</h6>
+        <img src={cardDetails.student.avatar} alt={cardDetails.student.fullName} class="rounded-3xl {styles.avatar}" />
+        <h6 class={styles.text}>&nbsp;{hasFullName ? cardDetails.student?.fullName : cardDetails.student?.id}</h6>
       </div>
     {:else}
-      <div class="line-clamp-2 pr-10 {headingText}">
+      <div class="line-clamp-2 pr-10 {styles.heading}">
         {cardDetails.title}
       </div>
     {/if}
@@ -175,12 +174,12 @@
 {#snippet figure(cardDetails: CardDetails)}
   <figure class="flex items-center justify-center">
     {#if cardDetails.icon}
-      <Iconify icon={cardDetails.icon.type} color={cardDetails.icon.color} height={iconSize} />
+      <Iconify icon={cardDetails.icon.type} color={cardDetails.icon.color} height={styles.icon} />
     {:else}
       <img
         src={cardDetails.img}
         alt={cardDetails.title}
-        class="{imageSize} object-contain object-center {isCircular ? 'rounded-full' : ''}"
+        class="{styles.image} object-contain object-center {isCircular ? 'rounded-full' : ''}"
       />
     {/if}
   </figure>
@@ -188,7 +187,7 @@
 
 {#snippet content(cardDetails: CardDetails)}
   <div class="flex flex-col justify-between p-4 {!isLandscape ? 'text-center' : ''}">
-    <div class="{textSize} ">
+    <div class="{styles.text} ">
       {@html cardDetails.summary}
       {cardDetails.summaryEx}
     </div>
@@ -209,14 +208,14 @@
 
 {#snippet circular(cardDetails: CardDetails)}
   <div class="relative flex h-full flex-col items-center justify-center p-4 text-center">
-    <div class="text-l absolute left-0 right-0 top-8 line-clamp-1 px-2 {headingText}">
+    <div class="text-l absolute left-0 right-0 top-8 line-clamp-1 px-2 {styles.heading}">
       {cardDetails.title}
     </div>
     <div class="mt-8 flex flex-1 items-center justify-center">
       {@render figure(cardDetails)}
     </div>
     <div class="mb-2">
-      <Icon type={cardDetails.type} height={iconHeight} />
+      <Icon type={cardDetails.type} height={styles.iconHeight} />
     </div>
   </div>
 {/snippet}
@@ -234,18 +233,14 @@
 <a href={cardDetails.route} {target}>
   <div
     class="card preset-filled-{themeService.getTypeColour(cardDetails.type)}-100-900 border-[1px]
-    {isLandscape
-      ? 'border-l-8'
-      : isCircular
-        ? 'rounded-full border-4'
-        : 'border-y-8'} border-{themeService.getTypeColour(cardDetails.type)}-500
-    m-2 {cardDimensions} {isLandscape ? 'flex' : 'flex flex-col'} transition-all hover:scale-[1.10]"
+    {styles.container} border-{themeService.getTypeColour(cardDetails.type)}-500
+    m-2 {styles.dimensions} transition-all hover:scale-[1.10]"
   >
     {#if isLandscape}
       {@render landscape(cardDetails)}
     {:else if isCircular}
       {@render circular(cardDetails)}
-    {:else}
+    {:else if isPortrait}
       {@render portrait(cardDetails)}
     {/if}
   </div>
