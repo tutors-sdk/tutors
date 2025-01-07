@@ -1,6 +1,6 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
-  import type { CardDetails } from "$lib/services/types.svelte";
+  import type { CardDetails, CardStyleType, LayoutType } from "$lib/services/types.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { currentCourse } from "$lib/runes";
   import { themeService } from "$lib/services/themes.svelte";
@@ -25,8 +25,6 @@
   const isCircular = $derived(themeService.cardStyle.value === "circular");
   const hasFullName = $derived(cardDetails?.student?.fullName);
 
-  type LayoutType = "expanded" | "compacted";
-  type CardStyleType = "portrait" | "landscape" | "circular";
   type CardStyles = Record<LayoutType, Record<CardStyleType, string>>;
 
   const headdingTextStyles: CardStyles = {
@@ -134,17 +132,14 @@
   };
 
   const styles = $derived({
-    heading: headdingTextStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
-    dimensions:
-      cardDimensionStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
-    image: imageSizeStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
-    icon: iconSizeStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
-    iconHeight:
-      iconHeightStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
-    text: textSizeStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
-    avatar: avatarWidthStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
-    container:
-      cardContainerStyles[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType]
+    heading: headdingTextStyles[themeService.layout.value][themeService.cardStyle.value],
+    dimensions: cardDimensionStyles[themeService.layout.value][themeService.cardStyle.value],
+    image: imageSizeStyles[themeService.layout.value][themeService.cardStyle.value],
+    icon: iconSizeStyles[themeService.layout.value][themeService.cardStyle.value],
+    iconHeight: iconHeightStyles[themeService.layout.value][themeService.cardStyle.value],
+    text: textSizeStyles[themeService.layout.value][themeService.cardStyle.value],
+    avatar: avatarWidthStyles[themeService.layout.value][themeService.cardStyle.value],
+    container: cardContainerStyles[themeService.layout.value][themeService.cardStyle.value]
   });
 </script>
 

@@ -69,6 +69,12 @@ export class LoRecord {
   }
 }
 
+/** Layout type for card display */
+export type LayoutType = "expanded" | "compacted";
+
+/** Card style type for display options */
+export type CardStyleType = "portrait" | "landscape" | "circular";
+
 /**
  * Display information for course/topic/lab cards
  */
@@ -203,10 +209,9 @@ export interface ThemeService {
   themes: Theme[];
   /** current theme */
   currentTheme: any;
-  /** display modes */
-  layout: any;
+  layout: { value: LayoutType };
   lightMode: any;
-  cardStyle: any;
+  cardStyle: { value: CardStyleType };
   /** Tracks if festive snow animation is active */
   isSnowing: boolean;
 
