@@ -1,6 +1,6 @@
 <script lang="ts">
   import { LoRecord } from "$lib/services/types.svelte";
-  import Card from "../components/Card.svelte";
+  import Card from "../learning-objects/layout/Card.svelte";
   export let los: LoRecord[];
 </script>
 

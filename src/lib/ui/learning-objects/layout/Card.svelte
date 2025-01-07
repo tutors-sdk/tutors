@@ -2,7 +2,7 @@
   import Iconify from "@iconify/svelte";
   import type { CardDetails } from "$lib/services/types.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
-  import { themeService } from "../../services/themes.svelte";
+  import { themeService } from "$lib/services/themes.svelte";
   import { currentCourse } from "$lib/runes";
 
   let { cardDetails } = $props<{ cardDetails: CardDetails }>();
@@ -19,51 +19,73 @@
     }
   }
 
+  type CardType = "landscape" | "circular" | "portrait";
+  const cardType = $derived(themeService.cardStyle.value as CardType);
   const hideVideoIcon = $derived(currentCourse.value?.areVideosHidden);
-  const isLandscape = $derived(themeService.cardStyle.value === "landscape");
-  const isCircular = $derived(themeService.cardStyle.value === "circular");
   const hasFullName = $derived(cardDetails?.student?.fullName);
 
+  const compactHeadingStyles = {
+    landscape: "text-sm font-medium",
+    circular: "text-xs font-medium",
+    portrait: "text-xs font-medium"
+  };
+
+  const expandedHeadingStyles = {
+    landscape: "text-xl font-semibold",
+    circular: "text-lg font-semibold",
+    portrait: "text-lg font-semibold"
+  };
+
   const headingText = $derived(
-    themeService.layout.value === "compacted"
-      ? isLandscape
-        ? "!text-sm font-medium"
-        : "!text-xs font-medium"
-      : isLandscape
-        ? "!text-xl font-semibold"
-        : "!text-lg font-semibold"
+    themeService.layout.value === "compacted" ? compactHeadingStyles[cardType] : expandedHeadingStyles[cardType]
   );
 
   const cardDimensions = $derived(
     themeService.layout.value === "compacted"
-      ? isLandscape
-        ? "w-[20rem] h-32"
-        : isCircular
-          ? "w-48 h-48"
-          : "w-36 h-[14rem]"
-      : isLandscape
-        ? "w-[28rem] h-48"
-        : isCircular
-          ? "w-64 h-64"
-          : "w-60 h-[23rem]"
+      ? {
+          landscape: "w-[20rem] h-32",
+          circular: "w-48 h-48",
+          portrait: "w-36 h-[14rem]"
+        }[cardType]
+      : {
+          landscape: "w-[28rem] h-48",
+          circular: "w-64 h-64",
+          portrait: "w-60 h-[23rem]"
+        }[cardType]
   );
 
+  type IconHeightMap = Record<CardType, string>;
+  const iconHeightMap: IconHeightMap = {
+    landscape: "80",
+    circular: "48",
+    portrait: "80"
+  };
+
   const iconHeight = $derived(
-    themeService.layout.value === "compacted" ? (isCircular ? "48" : "80") : isLandscape ? "160" : "160"
+    themeService.layout.value === "compacted"
+      ? iconHeightMap[cardType]
+      : {
+          landscape: "160",
+          circular: "160",
+          portrait: "160"
+        }[cardType]
   );
+
+  type ImageSizeMap = Record<CardType, string>;
+  const imageSizeMap: ImageSizeMap = {
+    landscape: "w-32",
+    circular: "w-24 h-24",
+    portrait: "h-16"
+  };
 
   const imageSize = $derived(
     themeService.layout.value === "compacted"
-      ? isLandscape
-        ? "w-32"
-        : isCircular
-          ? "w-24 h-24"
-          : "h-16"
-      : isLandscape
-        ? "w-48"
-        : isCircular
-          ? "w-32 h-32"
-          : "h-40"
+      ? imageSizeMap[cardType]
+      : {
+          landscape: "w-48",
+          circular: "w-32 h-32",
+          portrait: "h-40"
+        }[cardType]
   );
 
   const textSize = $derived(
@@ -91,7 +113,7 @@
         <h6 class={textSize}>&nbsp;{hasFullName ? cardDetails.student?.fullName : cardDetails.student?.id}</h6>
       </div>
     {:else}
-      <div class="line-clamp-2 pr-10 !text-black dark:!text-white {headingText}">
+      <div class="line-clamp-2 pr-10 {headingText}">
         {cardDetails.title}
       </div>
     {/if}
@@ -106,14 +128,14 @@
       <img
         src={cardDetails.img}
         alt={cardDetails.title}
-        class="{imageSize} object-contain object-center {isCircular ? 'rounded-full' : ''}"
+        class="{imageSize} object-contain object-center {cardType === 'circular' ? 'rounded-full' : ''}"
       />
     {/if}
   </figure>
 {/snippet}
 
 {#snippet content(cardDetails: CardDetails)}
-  <div class="flex flex-col justify-between p-4 {!isLandscape ? 'text-center' : ''}">
+  <div class="flex flex-col justify-between p-4 {cardType !== 'landscape' ? 'text-center' : ''}">
     <div class="{textSize} text-black dark:text-white">
       {@html cardDetails.summary}
       {cardDetails.summaryEx}
@@ -164,16 +186,16 @@
 <a href={cardDetails.route} {target}>
   <div
     class="card preset-filled-{themeService.getTypeColour(cardDetails.type)}-100-900 border-[1px]
-    {isLandscape
+    {cardType === 'landscape'
       ? 'border-l-8'
-      : isCircular
+      : cardType === 'circular'
         ? 'rounded-full border-4'
         : 'border-y-8'} border-{themeService.getTypeColour(cardDetails.type)}-500
-    m-2 {cardDimensions} {isLandscape ? 'flex' : 'flex flex-col'} transition-all hover:scale-[1.10]"
+    m-2 {cardDimensions} {cardType === 'landscape' ? 'flex' : 'flex flex-col'} transition-all hover:scale-[1.10]"
   >
-    {#if isLandscape}
+    {#if cardType === "landscape"}
       {@render landscape(cardDetails)}
-    {:else if isCircular}
+    {:else if cardType === "circular"}
       {@render circular(cardDetails)}
     {:else}
       {@render portrait(cardDetails)}

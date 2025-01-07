@@ -3,7 +3,7 @@
 
   import type { Lo } from "$lib/services/models/lo-types";
   import { setShowHide } from "$lib/services/models/lo-utils";
-  import Card from "$lib/ui/components/Card.svelte";
+  import Card from "$lib/ui/learning-objects/layout/Card.svelte";
   import { cubicOut } from "svelte/easing";
   import { scale } from "svelte/transition";
   import { scaleTransition } from "$lib/ui/themes/animations";
