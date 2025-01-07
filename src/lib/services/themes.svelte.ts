@@ -9,13 +9,14 @@ import { FluentIconLib } from "../ui/themes/icons/fluent-icons";
 import { HeroIconLib } from "../ui/themes/icons/hero-icons";
 import { FestiveIcons } from "../ui/themes/icons/festive-icons";
 import { makeItSnow, makeItStopSnowing } from "../ui/themes/events/festive.svelte";
-import type { ThemeService } from "$lib/services/types.svelte";
+import type { CardStyleType, LayoutType, ThemeService } from "$lib/services/types.svelte";
 import { rune } from "./utils/runes.svelte";
 
 /**
  * Implementation of the ThemeService interface.
  * Manages application theming, icon sets, and theme-specific effects.
  */
+
 export const themeService: ThemeService = {
   /** Available themes with their associated icon libraries */
   themes: [
@@ -28,10 +29,10 @@ export const themeService: ThemeService = {
   ] as Theme[],
 
   /** Current display layout */
-  layout: rune<string>("expanded"),
+  layout: rune<LayoutType>("expanded"),
 
   /** Current card style */
-  cardStyle: rune<string>("portrait"),
+  cardStyle: rune<CardStyleType>("portrait"),
 
   /** Current light move layout */
   lightMode: rune<string>("light"),
@@ -113,7 +114,7 @@ export const themeService: ThemeService = {
    * Sets and persists the current display layout
    * @param layout - Layout name to set
    */
-  setLayout(layout: string): void {
+  setLayout(layout: LayoutType): void {
     if (!layout) {
       layout = "expanded";
     }
@@ -125,22 +126,12 @@ export const themeService: ThemeService = {
    * Sets and persists the current card style
    * @param style - Card style to set (portrait/landscape)
    */
-  setCardStyle(style: string): void {
+  setCardStyle(style: CardStyleType): void {
     if (!style) {
       style = "portrait";
     }
     this.cardStyle.value = style;
     localStorage.cardStyle = style;
-  },
-
-  /**
-   * Toggles between portrait, landscape, and circular card styles
-   */
-  toggleCardStyle(): void {
-    const styles = ["portrait", "landscape", "circular"];
-    const currentIndex = styles.indexOf(this.cardStyle.value);
-    const nextIndex = (currentIndex + 1) % styles.length;
-    this.setCardStyle(styles[nextIndex]);
   },
 
   /**

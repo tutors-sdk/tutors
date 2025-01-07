@@ -1,6 +1,6 @@
 <script lang="ts">
   import { presenceService } from "$lib/services/presence.svelte";
-  import Card from "../components/Card.svelte";
+  import Card from "../learning-objects/layout/Card.svelte";
 </script>
 
 <div class="flex flex-wrap justify-center">

@@ -7,6 +7,7 @@
   import { courseService } from "$lib/services/course.svelte";
   import { currentCodeTheme, markdownService } from "$lib/services/markdown.svelte";
   import { Combobox, Segment } from "@skeletonlabs/skeleton-svelte";
+  import { currentCourse } from "$lib/runes";
 
   interface ComboxData {
     label: string;
@@ -31,7 +32,9 @@
     themeService.setTheme(theme[0]);
     markdownService.setCodeTheme(codeTheme[0]);
     themeService.setDisplayMode(themeService.lightMode.value);
-    courseService.refreshAllLabs(codeTheme[0]);
+    if (currentCourse.value) {
+      courseService.refreshAllLabs(theme[0]);
+    }
   });
 </script>
 
