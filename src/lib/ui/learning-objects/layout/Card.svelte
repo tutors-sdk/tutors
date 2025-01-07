@@ -16,19 +16,9 @@
   } from "./card-styles";
 
   let { cardDetails } = $props<{ cardDetails: CardDetails }>();
-  let target = $state("");
-  if (cardDetails.type === "web") {
-    if (cardDetails.route.startsWith("http")) {
-      target = "_blank";
-    }
-  }
 
-  if (cardDetails) {
-    if (cardDetails.type == "video") {
-      cardDetails.route = cardDetails.video!;
-    }
-  }
-
+  const target = $derived(cardDetails.type === "web" && cardDetails.route.startsWith("http") ? "_blank" : "");
+  const route = $derived(cardDetails.type === "video" ? cardDetails.video! : cardDetails.route);
   const hideVideoIcon = $derived(currentCourse.value?.areVideosHidden);
   const isPortrait = $derived(themeService.cardStyle.value === "portrait");
   const isLandscape = $derived(themeService.cardStyle.value === "landscape");
@@ -129,7 +119,7 @@
   </div>
 {/snippet}
 
-<a href={cardDetails.route} {target}>
+<a href={route} {target}>
   <div
     class="card preset-filled-{themeService.getTypeColour(cardDetails.type)}-100-900 border-[1px]
     {styles.container} border-{themeService.getTypeColour(cardDetails.type)}-500
