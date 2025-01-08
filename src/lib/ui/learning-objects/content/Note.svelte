@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentCodeTheme } from "$lib/services/markdown.svelte";
-  import type { Lo } from "$lib/services/models/lo-types";
+  import type { Lo } from "$lib/services/course/models/lo-types";
 
   interface Props {
     lo: Lo;

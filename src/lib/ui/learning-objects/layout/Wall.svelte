@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Lo } from "$lib/services/models/lo-types";
+  import type { Lo } from "$lib/services/course/models/lo-types";
   import Cards from "../layout/Cards.svelte";
   import Video from "../content/Video.svelte";
 

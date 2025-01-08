@@ -9,9 +9,9 @@ import {
   injectCourseUrl,
   removeUnknownLos,
   filterByType
-} from "./lo-utils";
-import { createCompanions, createWalls, initCalendar, loadPropertyFlags } from "./course-utils";
-import { markdownService } from "../markdown.svelte";
+} from "../utils/lo-utils";
+import { createCompanions, createWalls, initCalendar, loadPropertyFlags } from "../utils/course-utils";
+import { markdownService } from "../../markdown.svelte";
 
 export function decorateCourseTree(course: Course, courseId: string = "", courseUrl = "") {
   // define course properties

@@ -4,7 +4,7 @@
  * Handles learning events, page loads, and duration tracking.
  */
 
-import type { Course, Lo } from "$lib/services/models/lo-types";
+import type { Course, Lo } from "$lib/services/course/models/lo-types";
 import type { AnalyticsService, TutorsId } from "./types.svelte";
 
 import {
@@ -13,7 +13,7 @@ import {
   updateCalendarDuration,
   addOrUpdateStudent,
   formatDate
-} from "./profiles/supabase-client";
+} from "./auth/profiles/supabase-client";
 
 export const analyticsService: AnalyticsService = {
   /** Current learning object route being tracked */

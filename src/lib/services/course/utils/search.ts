@@ -1,5 +1,5 @@
-import type { Lo } from "$lib/services/models/lo-types";
-import { removeLeadingHashes } from "$lib/services/models/lo-utils";
+import type { Lo } from "$lib/services/course/models/lo-types";
+import { removeLeadingHashes } from "./lo-utils";
 
 const maxNumberHits = 100;
 const fenceTick = "```";

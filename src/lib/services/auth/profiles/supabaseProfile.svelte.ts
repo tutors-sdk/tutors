@@ -5,11 +5,10 @@
  * Requires authenticated user context from tutorsConnectService
  */
 
-import type { Course, IconType } from "../models/lo-types";
-import { tutorsConnectService } from "$lib/services/connect.svelte.js";
-import type { CourseVisit, ProfileStore } from "../types.svelte";
 import { supabase } from "./supabase-client";
 import { tutorsId } from "$lib/runes";
+import type { CourseVisit, ProfileStore } from "../types/profile";
+import type { Course, IconType } from "$lib/services/course/models/lo-types";
 
 export const supabaseProfile: ProfileStore = {
   courseVisits: [] as CourseVisit[],

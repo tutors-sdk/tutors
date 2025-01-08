@@ -1,4 +1,4 @@
-import { catalogueService } from "$lib/services/catalogue";
+import { catalogueService } from "$lib/services/course/services/catalogue";
 
 export const load = async ({ fetch }) => {
   let catalogueEntries = await catalogueService.getCatalogue();

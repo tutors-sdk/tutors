@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { convertMdToHtml } from "$lib/services/models/markdown-utils";
+  import { convertMdToHtml } from "$lib/services/content/utils/markdown-utils";
 
   const terms = `You are about to be authenticated via your Github credentials to Tutors. **For most courses,
 you do not need to log in at all, so if you prefer you can go back to the course page and proceed through 

@@ -3,8 +3,9 @@
  * Service for tracking and managing course access statistics across all users
  */
 
-import type { Course, IconType } from "$lib/services/models/lo-types";
-import type { CourseVisit } from "../types.svelte";
+import type { Course, IconType } from "$lib/services/course/models/lo-types";
+import type { CourseVisit } from "../types/profile";
+
 import { supabase } from "./supabase-client";
 
 /**

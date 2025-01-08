@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentCourse } from "$lib/runes";
-  import { catalogueService } from "$lib/services/catalogue";
+  import { catalogueService } from "$lib/services/course/services/catalogue";
   import { liveService } from "$lib/services/live.svelte";
   import CourseShell from "$lib/ui/TutorsShell.svelte";
   import { onMount, type Snippet } from "svelte";

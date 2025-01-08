@@ -6,18 +6,21 @@
 
 import { signOut } from "@auth/sveltekit/client";
 import { signIn } from "@auth/sveltekit/client";
-import { rune } from "./utils/runes.svelte";
 import { browser } from "$app/environment";
-import type { CourseVisit, TutorsConnectService, TutorsId } from "./types.svelte";
 import { goto } from "$app/navigation";
-import type { Course } from "./models/lo-types";
-import { localStorageProfile } from "./profiles/localStorageProfile";
-import { supabaseProfile } from "./profiles/supabaseProfile.svelte";
-import { analyticsService } from "./analytics.svelte";
-import { presenceService } from "./presence.svelte";
+import type { Course } from "../../course/models/lo-types";
+
+import { analyticsService } from "../../analytics.svelte";
+import { presenceService } from "../../community/services/presence.svelte";
 import { PUBLIC_ANON_MODE } from "$env/static/public";
-import { updateCourseList } from "./profiles/allCourseAccess";
+
 import { currentCourse, currentLo, tutorsId } from "$lib/runes";
+import type { TutorsConnectService } from "../types/tutors-connect";
+import type { TutorsId } from "$lib/services/types.svelte";
+import type { CourseVisit } from "../types/profile";
+import { localStorageProfile } from "../profiles/localStorageProfile";
+import { supabaseProfile } from "../profiles/supabaseProfile.svelte";
+import { updateCourseList } from "../profiles/allCourseAccess";
 
 /** Global anonymous mode flag, controlled by environment variable */
 let anonMode = false;

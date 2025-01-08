@@ -1,4 +1,4 @@
-import type { IconLib } from "$lib/services/models/lo-types";
+import type { IconLib } from "$lib/services/course/models/lo-types";
 
 export const HeroIconLib: IconLib = {
   // Home Icon

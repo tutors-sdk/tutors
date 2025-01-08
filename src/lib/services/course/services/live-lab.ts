@@ -1,6 +1,6 @@
-import type { Lab } from "./lo-types";
-import type { Course } from "./lo-types";
-import { removeLeadingHashes } from "./lo-utils";
+import type { Lab } from "../models/lo-types";
+import type { Course } from "../models/lo-types";
+import { removeLeadingHashes } from "../utils/lo-utils";
 
 function getKeyIndex(map: Map<string, string>, targetKey: string) {
   const keysArray = [...map.keys()];

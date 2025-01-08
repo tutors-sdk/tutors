@@ -1,5 +1,5 @@
 import { themeService } from "$lib/services/themes.svelte";
-import type { Composite, Course, IconNav, Lo, LoType, Topic } from "./lo-types";
+import type { Composite, Course, IconNav, Lo, LoType, Topic } from "../models/lo-types";
 import { filterByType, setShowHide } from "./lo-utils";
 
 export function createToc(course: Course) {

@@ -3,7 +3,7 @@ import PartySocket from "partysocket";
 import { PUBLIC_party_kit_main_room } from "$env/static/public";
 import { rune } from "./utils/runes.svelte";
 import { LoRecord } from "./types.svelte";
-import { refreshLoRecord } from "./presence.svelte";
+import { refreshLoRecord } from "./community/services/presence.svelte";
 
 /** PartyKit server URL from environment */
 const partyKitServer = PUBLIC_party_kit_main_room;

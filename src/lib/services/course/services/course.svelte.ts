@@ -3,13 +3,14 @@
  * Handles course loading, caching, and content transformation.
  */
 
-import type { Lo, Course, Lab, Note } from "$lib/services/models/lo-types";
-import { decorateCourseTree } from "./models/lo-tree";
-import { LiveLab } from "./models/live-lab";
-import type { CourseService } from "./types.svelte";
-import { markdownService } from "./markdown.svelte";
-import { rune } from "./utils/runes.svelte";
+import type { Lo, Course, Lab, Note } from "$lib/services/course/models/lo-types";
+import { decorateCourseTree } from "../models/lo-tree";
+import { LiveLab } from "./live-lab";
+
+import { markdownService } from "../../markdown.svelte";
+import { rune } from "../../utils/runes.svelte";
 import { currentCourse, currentLo } from "$lib/runes";
+import type { CourseService } from "../types/course-service";
 
 export const courseService: CourseService = {
   /** Cache of loaded courses indexed by courseId */

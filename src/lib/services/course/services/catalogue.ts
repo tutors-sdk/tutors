@@ -1,5 +1,5 @@
-import { supabase } from "./profiles/supabase-client";
-import type { CatalogueEntry, CatalogueService } from "./types.svelte";
+import { supabase } from "../../auth/profiles/supabase-client";
+import type { CatalogueEntry, CatalogueService } from "../types/catalogue-service";
 
 export const catalogueService: CatalogueService = {
   async getCatalogue() {

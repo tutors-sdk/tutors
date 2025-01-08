@@ -4,7 +4,7 @@
  * Supports multiple icon sets and persists user preferences.
  */
 
-import type { IconType, Theme } from "$lib/services/models/lo-types";
+import type { IconType, Theme } from "$lib/services/course/models/lo-types";
 import { FluentIconLib } from "../ui/themes/icons/fluent-icons";
 import { HeroIconLib } from "../ui/themes/icons/hero-icons";
 import { FestiveIcons } from "../ui/themes/icons/festive-icons";

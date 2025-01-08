@@ -5,10 +5,11 @@
 
 import PartySocket from "partysocket";
 import { PUBLIC_party_kit_main_room } from "$env/static/public";
-import { rune } from "./utils/runes.svelte";
-import { LoRecord, type LoUser, type PresenceService, type TutorsId } from "./types.svelte";
-import type { Course, Lo } from "./models/lo-types";
+import { rune } from "../../utils/runes.svelte";
+import type { Course, Lo } from "../../course/models/lo-types";
 import { tutorsId } from "$lib/runes";
+import { LoRecord, type LoUser, type PresenceService } from "../types/presence";
+import type { TutorsId } from "$lib/services/auth/types/tutors-id";
 
 /** PartyKit server URL from environment */
 const partyKitServer = PUBLIC_party_kit_main_room;

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentLo } from "$lib/runes";
-  import type { Lo } from "$lib/services/models/lo-types";
+  import type { Lo } from "$lib/services/course/models/lo-types";
   import Image from "../../components/Image.svelte";
   import LoContext from "../structure/LoContext.svelte";
 

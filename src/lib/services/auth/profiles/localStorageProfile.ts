@@ -5,8 +5,8 @@
  */
 
 import { browser } from "$app/environment";
-import type { Course, IconType } from "../models/lo-types";
-import type { CourseVisit, ProfileStore } from "../types.svelte";
+import type { Course, IconType } from "$lib/services/course/models/lo-types";
+import type { CourseVisit, ProfileStore } from "../types/profile";
 
 export const localStorageProfile: ProfileStore = {
   courseVisits: [] as CourseVisit[],

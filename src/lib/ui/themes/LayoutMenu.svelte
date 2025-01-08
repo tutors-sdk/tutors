@@ -4,7 +4,7 @@
   import Icon from "$lib/ui/components/Icon.svelte";
   import IconifyIcon from "@iconify/svelte";
   import { themeService } from "../../services/themes.svelte";
-  import { courseService } from "$lib/services/course.svelte";
+  import { courseService } from "$lib/services/course/services/course.svelte";
   import { currentCodeTheme, markdownService } from "$lib/services/markdown.svelte";
   import { Combobox, Segment } from "@skeletonlabs/skeleton-svelte";
   import { currentCourse } from "$lib/runes";

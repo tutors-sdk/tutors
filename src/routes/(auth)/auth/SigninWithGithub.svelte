@@ -1,7 +1,7 @@
 <script lang="ts">
   import Icon from "@iconify/svelte";
   import { Progress } from "@skeletonlabs/skeleton-svelte";
-  import { tutorsConnectService } from "$lib/services/connect.svelte";
+  import { tutorsConnectService } from "$lib/services/auth/services/connect.svelte";
   import TutorsTerms from "./TutorsTerms.svelte";
   import { themeService } from "$lib/services/themes.svelte";
 

@@ -3,71 +3,7 @@
  * Defines interfaces for services, data models, and user interactions.
  */
 
-import type { LiveLab } from "./models/live-lab";
-import type { Course, IconType, Lab, Lo, Note, Theme } from "./models/lo-types";
-
-/**
- * User identity information from authentication provider
- */
-export type TutorsId = {
-  name: string;
-  login: string;
-  email: string;
-  image: string;
-  share: string;
-};
-
-/**
- * Record of a user's interaction with a course
- */
-export type CourseVisit = {
-  id: string;
-  title: string;
-  img?: string;
-  icon?: IconType;
-  lastVisit: Date;
-  credits: string;
-  visits?: number;
-  private: boolean;
-  favourite: boolean;
-};
-
-export interface CatalogueEntry {
-  course_id: string;
-  visited_at: Date;
-  visit_count: number;
-  course_record: any;
-}
-
-/**
- * Minimal user information for learning object interactions
- */
-export interface LoUser {
-  fullName: string;
-  avatar: string;
-  id: string;
-}
-
-/**
- * Record of user interaction with a learning object
- * Uses Svelte's state management for reactivity
- */
-export class LoRecord {
-  courseId: string = $state("");
-  courseUrl: string = $state("");
-  courseTitle: string = $state("");
-  loRoute: string = $state("");
-  title: string = $state("");
-  img?: string = $state("");
-  icon?: IconType = $state();
-  isPrivate: boolean = $state(false);
-  user?: LoUser = $state<LoUser | undefined>();
-  type: string = $state("");
-
-  constructor(data: any) {
-    Object.assign(this, data);
-  }
-}
+import type { Course, IconType, Lab, Lo, Note, Theme } from "./course/models/lo-types";
 
 /** Layout type for card display */
 export type LayoutType = "expanded" | "compacted";
@@ -91,68 +27,6 @@ export interface CardDetails {
 }
 
 /**
- * Service for managing course content and navigation
- */
-export interface CourseService {
-  /** Cache of loaded courses */
-  courses: Map<string, Course>;
-  /** Cache of live lab instances */
-  labs: Map<string, LiveLab>;
-  /** Cache of processed notes */
-  notes: Map<string, Note>;
-  /** Current course URL */
-  courseUrl: any;
-
-  getOrLoadCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course>;
-  readCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course>;
-  readTopic(courseId: string, topicId: string, fetchFunction: typeof fetch): Promise<Lo>;
-  readLab(courseId: string, labId: string, fetchFunction: typeof fetch): Promise<LiveLab>;
-  readWall(courseId: string, type: string, fetchFunction: typeof fetch): Promise<Lo[]>;
-  readLo(courseId: string, loId: string, fetchFunction: typeof fetch): Promise<Lo>;
-  refreshAllLabs(codeTheme: string): void;
-}
-
-/**
- * Service for managing user profile data and course interactions
- */
-export interface ProfileStore {
-  /** List of courses visited by user */
-  courseVisits: CourseVisit[];
-
-  reload(): void;
-  save(): void;
-  logCourseVisit(course: Course): void;
-  favouriteCourse(courseId: string): void;
-  unfavouriteCourse(courseId: string): void;
-  deleteCourseVisit(courseId: string): void;
-  getCourseVisits(): Promise<CourseVisit[]>;
-}
-
-/**
- * Service for managing user authentication and course access
- */
-export interface TutorsConnectService {
-  profile: ProfileStore;
-  intervalId: any;
-  anonMode: boolean;
-
-  connect(redirectStr: string): void;
-  reconnect(user: TutorsId): void;
-  disconnect(redirectStr: string): void;
-  toggleShare(): void;
-
-  courseVisit(course: Course): void;
-  deleteCourseVisit(courseId: string): void;
-  getCourseVisits(): Promise<CourseVisit[]>;
-  favouriteCourse(courseId: string): void;
-  unfavouriteCourse(courseId: string): void;
-
-  learningEvent(params: Record<string, string>): void;
-  startTimer(): void;
-  stopTimer(): void;
-}
-
-/**
  * Service for tracking user interactions and learning analytics
  */
 export interface AnalyticsService {
@@ -163,27 +37,6 @@ export interface AnalyticsService {
   reportPageLoad(course: Course, lo: Lo, student: TutorsId): void;
   updatePageCount(course: Course, lo: Lo, student: TutorsId): void;
   updateLogin(courseId: string, session: any): void;
-}
-
-/**
- * Service for managing real-time user presence and interactions
- */
-export interface PresenceService {
-  /** Currently online students */
-  studentsOnline: any;
-  /** Global PartyKit connection */
-  partyKitAll: any;
-  /** Course-specific PartyKit connection */
-  partyKitCourse: any;
-  /** Map of student events */
-  studentEventMap: Map<string, LoRecord>;
-  /** Currently monitored course ID */
-  listeningTo: string;
-
-  studentListener(event: any): void;
-  sendLoEvent(course: Course, lo: Lo, student: TutorsId): void;
-  connectToAllCourseAccess(): void;
-  startPresenceListener(courseId: string): void;
 }
 
 /**
@@ -226,13 +79,4 @@ export interface ThemeService {
   addIcon(type: string, icon: IconType): void;
   getTypeColour(type: string): string;
   eventTrigger(): void;
-}
-
-/**
- * Service for managing course catalogue data
- */
-export interface CatalogueService {
-  getCatalogue(): Promise<CatalogueEntry[]>;
-  getCatalogueCount(): Promise<number>;
-  getStudentCount(): Promise<number>;
 }

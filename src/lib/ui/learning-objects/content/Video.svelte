@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { Lo } from "$lib/services/models/lo-types";
+  import type { Lo } from "$lib/services/course/models/lo-types";
   import { themeService } from "$lib/services/themes.svelte";
   import { currentCourse } from "$lib/runes";
 

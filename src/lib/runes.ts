@@ -1,4 +1,4 @@
-import type { Course, Lo } from "./services/models/lo-types";
+import type { Course, Lo } from "./services/course/models/lo-types";
 import type { TutorsId } from "./services/types.svelte";
 import { rune } from "./services/utils/runes.svelte";
 
