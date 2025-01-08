@@ -2,8 +2,8 @@
   import { AppBar } from "@skeletonlabs/skeleton-svelte";
   import CourseTitle from "./titles/CourseTitle.svelte";
   import SearchButton from "./buttons/SearchButton.svelte";
-  import LayoutMenu from "../themes/LayoutMenu.svelte";
-  import { tutorsConnectService } from "$lib/services/auth/services/connect.svelte";
+  import LayoutMenu from "./LayoutMenu.svelte";
+  import { tutorsConnectService } from "$lib/services/connect/services/connect.svelte";
   import TutorsTimeIndicator from "./buttons/TutorsTimeIndicator.svelte";
   import TocButton from "./buttons/TocButton.svelte";
   import InfoButton from "./buttons/InfoButton.svelte";
@@ -11,7 +11,7 @@
   import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
   import TutorsTitle from "./titles/TutorsTitle.svelte";
   import CalendarButton from "./buttons/CalendarButton.svelte";
-  import { currentCourse, tutorsId } from "$lib/runes";
+  import { currentCourse, tutorsId } from "$lib/runes.svelte";
 </script>
 
 <AppBar

@@ -3,14 +3,13 @@
  * Handles course loading, caching, and content transformation.
  */
 
-import type { Lo, Course, Lab, Note } from "$lib/services/course/models/lo-types";
-import { decorateCourseTree } from "../models/lo-tree";
+import type { Lo, Course, Lab, Note } from "$lib/services/base/lo-types";
+import { decorateCourseTree } from "../utils/lo-tree";
 import { LiveLab } from "./live-lab";
 
-import { markdownService } from "../../markdown.svelte";
-import { rune } from "../../utils/runes.svelte";
-import { currentCourse, currentLo } from "$lib/runes";
-import type { CourseService } from "../types/course-service";
+import { markdownService } from "$lib/services/markdown/services/markdown.svelte";
+import { currentCourse, currentLo, rune } from "$lib/runes.svelte";
+import type { CourseService, LabService } from "../types";
 
 export const courseService: CourseService = {
   /** Cache of loaded courses indexed by courseId */
@@ -106,7 +105,7 @@ export const courseService: CourseService = {
    * @param fetchFunction - Fetch implementation
    * @returns Promise resolving to LiveLab instance
    */
-  async readLab(courseId: string, labId: string, fetchFunction: typeof fetch): Promise<LiveLab> {
+  async readLab(courseId: string, labId: string, fetchFunction: typeof fetch): Promise<LabService> {
     const course = await this.readCourse(courseId, fetchFunction);
 
     const lastSegment = labId.substring(labId.lastIndexOf("/") + 1);

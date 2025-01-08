@@ -1,8 +1,8 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { PUBLIC_PDF_KEY } from "$env/static/public";
-  import { adobeLoaded } from "$lib/runes";
-  import type { Talk } from "$lib/services/course/models/lo-types";
+  import { adobeLoaded } from "$lib/runes.svelte";
+  import type { Talk } from "$lib/services/base/lo-types";
   import { onMount } from "svelte";
 
   interface Props {

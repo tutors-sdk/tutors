@@ -1,4 +1,4 @@
-import type { CardStyleType, LayoutType } from "$lib/services/types.svelte";
+import type { CardStyleType, LayoutType } from "$lib/services/themes/types/themes";
 
 type CardStyles = Record<LayoutType, Record<CardStyleType, string>>;
 

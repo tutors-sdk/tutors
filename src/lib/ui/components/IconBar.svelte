@@ -1,6 +1,6 @@
 <script lang="ts">
   import Icon from "./Icon.svelte";
-  import type { IconNavBar } from "$lib/services/course/models/lo-types";
+  import type { IconNavBar } from "$lib/services/base/lo-types";
 
   interface Props {
     nav: IconNavBar;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Calendar } from "$lib/services/course/models/lo-types";
+  import type { Calendar } from "$lib/services/base/lo-types";
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   interface Props {

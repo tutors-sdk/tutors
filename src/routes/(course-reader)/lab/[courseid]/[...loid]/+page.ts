@@ -1,6 +1,6 @@
 import type { PageLoad } from "./$types";
 import { courseService } from "$lib/services/course/services/course.svelte";
-import { currentLabStepIndex } from "$lib/runes";
+import { currentLabStepIndex } from "$lib/runes.svelte";
 
 export const ssr = false;
 

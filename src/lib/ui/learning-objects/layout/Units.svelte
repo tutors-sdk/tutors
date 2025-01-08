@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Composite } from "$lib/services/course/models/lo-types";
+  import type { Composite } from "$lib/services/base/lo-types";
   import Panels from "./Panels.svelte";
   import Cards from "./Cards.svelte";
   import Image from "../../components/Image.svelte";

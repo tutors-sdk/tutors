@@ -1,4 +1,4 @@
-import type { Lo } from "$lib/services/course/models/lo-types";
+import type { Lo } from "$lib/services/base/lo-types";
 import { removeLeadingHashes } from "./lo-utils";
 
 const maxNumberHits = 100;

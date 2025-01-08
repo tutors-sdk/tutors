@@ -14,7 +14,7 @@ import {
   type PanelVideo,
   type PanelNote,
   type Lab
-} from "../models/lo-types";
+} from "$lib/services/base/lo-types";
 
 export function flattenLos(los: Lo[]): Lo[] {
   let result: Lo[] = [];

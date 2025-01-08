@@ -2,14 +2,14 @@
   import { onMount } from "svelte";
   import type { ResultType } from "$lib/services/course/utils/search";
   import { isValid, searchHits } from "$lib/services/course/utils/search";
-  import type { Lo } from "$lib/services/course/models/lo-types";
-  import type { Course } from "$lib/services/course/models/lo-types";
+  import type { Lo } from "$lib/services/base/lo-types";
+  import type { Course } from "$lib/services/base/lo-types";
   import { filterByType } from "$lib/services/course/utils/lo-utils";
-  import { convertMdToHtml } from "$lib/services/content/utils/markdown-utils";
+  import { convertMdToHtml } from "$lib/services/markdown/utils/markdown-utils";
   import type { PageData } from "./$types";
   import { courseService } from "$lib/services/course/services/course.svelte";
-  import { currentCodeTheme, markdownService } from "$lib/services/markdown.svelte";
-  import { currentLo } from "$lib/runes";
+  import { currentCodeTheme, markdownService } from "$lib/services/markdown/services/markdown.svelte";
+  import { currentLo } from "$lib/runes.svelte";
 
   interface Props {
     data: PageData;

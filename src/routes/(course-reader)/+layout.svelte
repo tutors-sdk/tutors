@@ -1,9 +1,9 @@
 <script lang="ts">
   import CourseShell from "$lib/ui/TutorsShell.svelte";
   import type { Snippet } from "svelte";
-  import { tutorsConnectService } from "$lib/services/auth/services/connect.svelte";
+  import { tutorsConnectService } from "$lib/services/connect/services/connect.svelte";
   import { page } from "$app/state";
-  import { currentCourse } from "$lib/runes";
+  import { currentCourse } from "$lib/runes.svelte";
 
   type Props = { children: Snippet };
   let { children }: Props = $props();

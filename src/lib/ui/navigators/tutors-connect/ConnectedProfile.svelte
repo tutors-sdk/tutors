@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { tutorsConnectService } from "$lib/services/auth/services/connect.svelte";
+  import { tutorsConnectService } from "$lib/services/connect/services/connect.svelte";
   import { presenceService } from "$lib/services/community/services/presence.svelte";
   import MenuItem from "../../components/MenuItem.svelte";
   import Menu from "$lib/ui/components/Menu.svelte";
   import OnlineButton from "../buttons/OnlineButton.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
-  import { currentCourse, tutorsId } from "$lib/runes";
+  import { currentCourse, tutorsId } from "$lib/runes.svelte";
 
   function logout() {
     tutorsConnectService.disconnect("/");

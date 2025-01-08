@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { Composite } from "$lib/services/course/models/lo-types";
+  import type { Composite } from "$lib/services/base/lo-types";
   import Panels from "../layout/Panels.svelte";
   import Units from "../layout/Units.svelte";
   import Cards from "../layout/Cards.svelte";
-  import { themeService } from "$lib/services/themes.svelte";
+  import { themeService } from "$lib/services/themes/services/themes.svelte";
 
   interface Props {
     composite: Composite;

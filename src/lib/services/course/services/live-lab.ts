@@ -1,5 +1,6 @@
-import type { Lab } from "../models/lo-types";
-import type { Course } from "../models/lo-types";
+import type { Lab } from "$lib/services/base/lo-types";
+import type { Course } from "$lib/services/base/lo-types";
+import type { LabService } from "../types";
 import { removeLeadingHashes } from "../utils/lo-utils";
 
 function getKeyIndex(map: Map<string, string>, targetKey: string) {
@@ -15,7 +16,7 @@ function truncate(input: string) {
   return input;
 }
 
-export class LiveLab {
+export class LiveLab implements LabService {
   course: Course;
   lab: Lab;
   url = "";
