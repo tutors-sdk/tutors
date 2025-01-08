@@ -10,8 +10,7 @@ import { browser } from "$app/environment";
 import { goto } from "$app/navigation";
 import type { Course } from "$lib/services/base/lo-types";
 
-import { analyticsService } from "$lib/services/community/services/analytics.svelte";
-import { presenceService } from "$lib/services/community/services/presence.svelte";
+import { analyticsService, presenceService } from "$lib/services/community";
 import { PUBLIC_ANON_MODE } from "$env/static/public";
 
 import { currentCourse, currentLo, tutorsId } from "$lib/runes.svelte";

@@ -4,7 +4,7 @@
  * Defines the structure and relationships between different types of learning objects (Los)
  */
 
-import type { IconNavBar } from "$lib/services/themes/types";
+import type { IconNavBar } from "$lib/services/themes";
 
 /**
  * Supported image file extensions for learning objects

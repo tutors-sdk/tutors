@@ -11,7 +11,7 @@ import {
   filterByType
 } from "./lo-utils";
 import { createCompanions, createWalls, initCalendar, loadPropertyFlags } from "./course-utils";
-import { markdownService } from "$lib/services/markdown/services/markdown.svelte";
+import { markdownService } from "$lib/services/markdown";
 
 export function decorateCourseTree(course: Course, courseId: string = "", courseUrl = "") {
   // define course properties

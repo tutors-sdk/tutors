@@ -3,10 +3,10 @@
   import { browser } from "$app/environment";
   import { onDestroy, onMount } from "svelte";
   import { goto, afterNavigate } from "$app/navigation";
-  import type { LiveLab } from "$lib/services/course/services/live-lab";
+  import type { LiveLab } from "$lib/services/course";
   import { fly } from "svelte/transition";
   import { slideFromLeft } from "$lib/ui/themes/animations";
-  import { currentCodeTheme } from "$lib/services/markdown/services/markdown.svelte";
+  import { currentCodeTheme } from "$lib/services/markdown";
 
   interface Props {
     lab: LiveLab;

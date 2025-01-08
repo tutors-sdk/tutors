@@ -1,4 +1,4 @@
-import type { TutorsId } from "./services/connect/types";
+import type { TutorsId } from "$lib/services/connect";
 import type { Course, Lo } from "./services/base/lo-types";
 
 export const rune = <T>(initialValue: T) => {

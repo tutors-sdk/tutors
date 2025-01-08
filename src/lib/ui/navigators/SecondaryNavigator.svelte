@@ -4,7 +4,7 @@
   import EditCoursButton from "./buttons/EditCoursButton.svelte";
   import { slideFromLeft } from "../themes/animations";
   import IconBar from "../components/IconBar.svelte";
-  import { themeService } from "$lib/services/themes/services/themes.svelte";
+  import { themeService } from "$lib/services/themes";
   import { currentCourse } from "$lib/runes.svelte";
 
   const themeClasses = $derived({

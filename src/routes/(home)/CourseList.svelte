@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { tutorsConnectService } from "$lib/services/connect/services/connect.svelte";
+  import { tutorsConnectService } from "$lib/services/connect";
   import type { CourseVisit } from "$lib/services/themes/types";
   import { onMount } from "svelte";
   import CourseVisitCard from "./CourseVisitCard.svelte";

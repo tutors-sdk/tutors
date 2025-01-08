@@ -1,9 +1,9 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
-  import type { CardDetails } from "$lib/services/themes/types";
+  import type { CardDetails } from "$lib/services/themes";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { currentCourse } from "$lib/runes.svelte";
-  import { themeService } from "$lib/services/themes/services/themes.svelte";
+  import { themeService } from "$lib/services/themes";
   import { cardStyles } from "./card-styles";
 
   let { cardDetails } = $props<{ cardDetails: CardDetails }>();

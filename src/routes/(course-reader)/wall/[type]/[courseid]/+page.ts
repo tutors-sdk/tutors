@@ -1,5 +1,5 @@
 import type { PageLoad } from "./$types";
-import { courseService } from "$lib/services/course/services/course.svelte";
+import { courseService } from "$lib/services/course";
 import { currentLo } from "$lib/runes.svelte";
 export const ssr = false;
 

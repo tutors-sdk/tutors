@@ -7,7 +7,7 @@ import type { Lo, Course, Lab, Note } from "$lib/services/base/lo-types";
 import { decorateCourseTree } from "../utils/lo-tree";
 import { LiveLab } from "./live-lab";
 
-import { markdownService } from "$lib/services/markdown/services/markdown.svelte";
+import { markdownService } from "$lib/services/markdown";
 import { currentCourse, currentLo, rune } from "$lib/runes.svelte";
 import type { CourseService, LabService } from "../types";
 

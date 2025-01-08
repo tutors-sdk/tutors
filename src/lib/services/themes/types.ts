@@ -4,7 +4,7 @@
  */
 
 import type { IconType } from "$lib/services/base/lo-types";
-import type { LoUser } from "$lib/services/community/types.svelte";
+import type { LoUser } from "$lib/services/community";
 
 /**
  * Navigation icon with link and tooltip

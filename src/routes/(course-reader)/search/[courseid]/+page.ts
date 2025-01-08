@@ -1,5 +1,5 @@
 import type { PageLoad } from "./$types";
-import { courseService } from "$lib/services/course/services/course.svelte";
+import { courseService } from "$lib/services/course";
 import type { Course } from "$lib/services/base/lo-types";
 import { currentLo } from "$lib/runes.svelte";
 

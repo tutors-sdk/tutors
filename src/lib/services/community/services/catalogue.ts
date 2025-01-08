@@ -1,4 +1,4 @@
-import type { CatalogueEntry, CatalogueService } from "$lib/services/community/types.svelte";
+import type { CatalogueEntry, CatalogueService } from "$lib/services/community";
 import { supabase } from "$lib/services/base/utils/supabase-client";
 
 export const catalogueService: CatalogueService = {

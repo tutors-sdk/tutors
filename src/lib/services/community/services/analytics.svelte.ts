@@ -4,7 +4,7 @@
  * Handles learning events, page loads, and duration tracking.
  */
 
-import type { TutorsId } from "$lib/services/connect/types";
+import type { TutorsId } from "$lib/services/connect";
 import type { Course, Lo } from "$lib/services/base/lo-types";
 
 import {

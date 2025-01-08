@@ -9,7 +9,7 @@ import { PUBLIC_party_kit_main_room } from "$env/static/public";
 import type { Course, Lo } from "$lib/services/base/lo-types";
 import { rune, tutorsId } from "$lib/runes.svelte";
 import { LoRecord, type LoUser, type PresenceService } from "../types.svelte";
-import type { TutorsId } from "$lib/services/connect/types";
+import type { TutorsId } from "$lib/services/connect";
 
 /** PartyKit server URL from environment */
 const partyKitServer = PUBLIC_party_kit_main_room;

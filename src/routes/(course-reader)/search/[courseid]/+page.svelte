@@ -1,14 +1,11 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { ResultType } from "$lib/services/course/utils/search";
-  import { isValid, searchHits } from "$lib/services/course/utils/search";
+  import type { ResultType } from "$lib/services/course";
+  import { isValid, searchHits, filterByType, courseService } from "$lib/services/course";
   import type { Lo } from "$lib/services/base/lo-types";
   import type { Course } from "$lib/services/base/lo-types";
-  import { filterByType } from "$lib/services/course/utils/lo-utils";
-  import { convertMdToHtml } from "$lib/services/markdown/utils/markdown-utils";
+  import { convertMdToHtml, currentCodeTheme, markdownService } from "$lib/services/markdown";
   import type { PageData } from "./$types";
-  import { courseService } from "$lib/services/course/services/course.svelte";
-  import { currentCodeTheme, markdownService } from "$lib/services/markdown/services/markdown.svelte";
   import { currentLo } from "$lib/runes.svelte";
 
   interface Props {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { catalogueService } from "$lib/services/community/services/catalogue";
+  import { catalogueService } from "$lib/services/community";
   import Catalogue from "$lib/ui/time/Catalogue.svelte";
   import { onMount } from "svelte";
 

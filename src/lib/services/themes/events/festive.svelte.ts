@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { themeService } from "$lib/services/themes/services/themes.svelte";
+import { browser } from "$app/environment";
+import { themeService } from "$lib/services/themes";
 import { snow } from "./snow";
 
 export async function makeItSnow() {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentCodeTheme } from "$lib/services/markdown/services/markdown.svelte";
+  import { currentCodeTheme } from "$lib/services/markdown";
   import type { Lo } from "$lib/services/base/lo-types";
 
   interface Props {

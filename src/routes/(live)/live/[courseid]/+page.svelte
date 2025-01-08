@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { presenceService } from "$lib/services/community/services/presence.svelte";
+  import { presenceService } from "$lib/services/community";
   import Course from "$lib/ui/time/Course.svelte";
 
   interface Props {

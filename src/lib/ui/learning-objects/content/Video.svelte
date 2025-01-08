@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import type { Lo } from "$lib/services/base/lo-types";
-  import { themeService } from "$lib/services/themes/services/themes.svelte";
+  import { themeService } from "$lib/services/themes";
   import { currentCourse } from "$lib/runes.svelte";
 
   let firefox = $state(false);
