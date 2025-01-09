@@ -1,5 +1,5 @@
 import type { CatalogueEntry, CatalogueService } from "$lib/services/community";
-import { supabase } from "$lib/services/base/utils/supabase-client";
+import { supabase } from "$lib/services/base";
 
 export const catalogueService: CatalogueService = {
   async getCatalogue() {

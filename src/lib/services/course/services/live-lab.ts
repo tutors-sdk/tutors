@@ -1,5 +1,4 @@
-import type { Lab } from "$lib/services/base/lo-types";
-import type { Course } from "$lib/services/base/lo-types";
+import type { Lab, Course } from "$lib/services/base";
 import type { LabService } from "../types";
 import { removeLeadingHashes } from "../utils/lo-utils";
 

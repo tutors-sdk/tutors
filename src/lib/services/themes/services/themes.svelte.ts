@@ -4,14 +4,13 @@
  * Supports multiple icon sets and persists user preferences.
  */
 
-import type { IconType } from "$lib/services/base/lo-types";
+import type { IconType, CardStyleType, LayoutType, Theme, ThemeService } from "$lib/services/base";
 import { FluentIconLib } from "../icons/fluent-icons";
 import { HeroIconLib } from "../icons/hero-icons";
 import { FestiveIcons } from "../icons/festive-icons";
 import { makeItSnow, makeItStopSnowing } from "../events/festive.svelte";
 
 import { rune } from "$lib/runes.svelte";
-import type { CardStyleType, LayoutType, Theme, ThemeService } from "../types";
 
 /**
  * Implementation of the ThemeService interface.

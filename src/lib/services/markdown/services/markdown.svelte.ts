@@ -4,7 +4,7 @@
  * Handles markdown conversion for labs, notes, and learning objects.
  */
 
-import type { Course, Lab, Note, Lo } from "../../base/lo-types";
+import type { Course, Lab, Note, Lo } from "$lib/services/base";
 import { convertMdToHtml, initHighlighter } from "../utils/markdown-utils";
 
 // Import Shiki themes

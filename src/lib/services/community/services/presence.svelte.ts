@@ -6,7 +6,7 @@
 import PartySocket from "partysocket";
 import { PUBLIC_party_kit_main_room } from "$env/static/public";
 
-import type { Course, Lo } from "$lib/services/base/lo-types";
+import type { Course, Lo } from "$lib/services/base";
 import { rune, tutorsId } from "$lib/runes.svelte";
 import { LoRecord, type LoUser, type PresenceService } from "../types.svelte";
 import type { TutorsId } from "$lib/services/connect";

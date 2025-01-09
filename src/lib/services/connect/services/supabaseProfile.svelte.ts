@@ -5,10 +5,10 @@
  * Requires authenticated user context from tutorsConnectService
  */
 
-import { supabase } from "$lib/services/base/utils/supabase-client";
+import { supabase } from "$lib/services/base";
 import { tutorsId } from "$lib/runes.svelte";
 
-import type { Course, IconType } from "$lib/services/base/lo-types";
+import type { Course, IconType } from "$lib/services/base";
 import type { CourseVisit, ProfileStore } from "../types";
 
 export const supabaseProfile: ProfileStore = {

@@ -3,7 +3,7 @@
  * Handles course loading, caching, and content transformation.
  */
 
-import type { Lo, Course, Lab, Note } from "$lib/services/base/lo-types";
+import type { Lo, Course, Lab, Note } from "$lib/services/base";
 import { decorateCourseTree } from "../utils/lo-tree";
 import { LiveLab } from "./live-lab";
 

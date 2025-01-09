@@ -5,7 +5,7 @@
  */
 
 import { browser } from "$app/environment";
-import type { Course, IconType } from "$lib/services/base/lo-types";
+import type { Course, IconType } from "$lib/services/base";
 import type { CourseVisit, ProfileStore } from "../types";
 
 export const localStorageProfile: ProfileStore = {
