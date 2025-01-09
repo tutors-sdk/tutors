@@ -1,9 +1,9 @@
 <script lang="ts">
   import "../app.postcss";
-  import { tutorsConnectService } from "$lib/services/connect.svelte";
+  import { tutorsConnectService } from "$lib/services/connect";
   import type { PageData } from "./$types";
   import { browser } from "$app/environment";
-  import { themeService } from "$lib/services/themes.svelte";
+  import { themeService } from "$lib/services/themes";
 
   interface Props {
     data: PageData;

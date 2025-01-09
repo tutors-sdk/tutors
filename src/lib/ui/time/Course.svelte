@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { presenceService } from "$lib/services/presence.svelte";
+  import { presenceService } from "$lib/services/community";
   import Card from "../learning-objects/layout/Card.svelte";
 </script>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { liveService } from "$lib/services/live.svelte";
+  import { liveService } from "$lib/services/community";
   import Courses from "$lib/ui/time/Courses.svelte";
   import CoursesGroup from "$lib/ui/time/CoursesGroup.svelte";
   import Students from "$lib/ui/time/Students.svelte";

@@ -2,9 +2,9 @@ import forms from "@tailwindcss/forms";
 import typography from "@tailwindcss/typography";
 import { skeleton, contentPath } from "@skeletonlabs/skeleton/plugin";
 import { nouveau, rose, cerberus } from "@skeletonlabs/skeleton/themes";
-import tutors from "./src/lib/ui/themes/styles/tutors";
-import classic from "./src/lib/ui/themes/styles/classic";
-import dyslexia from "./src/lib/ui/themes/styles/dyslexia";
+import tutors from "./src/lib/services/themes/styles/tutors";
+import classic from "./src/lib/services/themes/styles/classic";
+import dyslexia from "./src/lib/services/themes/styles/dyslexia";
 import type { Config } from "tailwindcss";
 
 export default {

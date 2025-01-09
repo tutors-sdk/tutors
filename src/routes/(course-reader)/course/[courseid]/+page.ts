@@ -1,5 +1,5 @@
-import { currentCourse } from "$lib/runes";
-import { courseService } from "$lib/services/course.svelte";
+import { currentCourse } from "$lib/runes.svelte";
+import { courseService } from "$lib/services/course";
 
 export const ssr = false;
 

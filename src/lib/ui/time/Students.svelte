@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { liveService } from "$lib/services/live.svelte";
+  import { liveService } from "$lib/services/community";
   import Card from "../learning-objects/layout/Card.svelte";
 </script>
 
