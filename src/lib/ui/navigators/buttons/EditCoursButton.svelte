@@ -1,6 +1,6 @@
 <script lang="ts">
   import { page } from "$app/stores";
-  import { currentCourse, currentLabStepIndex, currentLo } from "$lib/runes";
+  import { currentCourse, currentLabStepIndex, currentLo } from "$lib/runes.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
 
   let editRoute = $state(currentCourse?.value?.properties.github);

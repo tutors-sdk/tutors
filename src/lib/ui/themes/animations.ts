@@ -1,4 +1,4 @@
-import { animationDelay } from "$lib/runes";
+import { animationDelay } from "$lib/runes.svelte";
 import { cubicOut, elasticOut, backOut, linear } from "svelte/easing";
 
 export const scaleTransition = {

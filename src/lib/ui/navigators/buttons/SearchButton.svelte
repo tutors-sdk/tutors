@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { currentCourse } from "$lib/runes";
+  import { currentCourse } from "$lib/runes.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
 
   let isSearching = sessionStorage.getItem("isSearching") === "true";

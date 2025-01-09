@@ -4,7 +4,7 @@
   import { onMount, type Snippet } from "svelte";
   import MainNavigator from "./navigators/MainNavigator.svelte";
   import { slide } from "svelte/transition";
-  import { currentCourse } from "$lib/runes";
+  import { currentCourse } from "$lib/runes.svelte";
 
   type Props = { children: Snippet };
   let { children }: Props = $props();

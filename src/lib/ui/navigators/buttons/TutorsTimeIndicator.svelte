@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { currentCourse } from "$lib/runes";
-  import { tutorsConnectService } from "$lib/services/connect.svelte";
+  import { currentCourse } from "$lib/runes.svelte";
+  import { tutorsConnectService } from "$lib/services/connect";
   import Icon from "$lib/ui/components/Icon.svelte";
 </script>
 

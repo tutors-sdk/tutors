@@ -5,7 +5,7 @@
   import { onDestroy, tick, onMount } from "svelte";
   import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { PDFWorker, getDocument } from "pdfjs-dist";
-  import type { Talk } from "$lib/services/models/lo-types";
+  import type { Talk } from "$lib/services/base/lo-types";
   import { setupWorker } from "./support/pdf-utils";
   import Icon from "$lib/ui/components/Icon.svelte";
 

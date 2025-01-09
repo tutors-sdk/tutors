@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentCourse } from "$lib/runes";
+  import { currentCourse } from "$lib/runes.svelte";
   import SetuIcon from "$lib/ui/components/SetuIcon.svelte";
   import TutorsIcon from "$lib/ui/components/TutorsIcon.svelte";
   import TutorsMessage from "./TutorsMessage.svelte";

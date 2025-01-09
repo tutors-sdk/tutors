@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { Lo } from "$lib/services/models/lo-types";
+  import type { Lo } from "$lib/services/base/lo-types";
   import Icon from "$lib/ui/components/Icon.svelte";
-  import { currentCourse, currentLo } from "$lib/runes";
+  import { currentCourse, currentLo } from "$lib/runes.svelte";
 
   let truncated = [true, true, true, true, true, true, true];
 
@@ -35,8 +35,8 @@
   });
 </script>
 
-<div class="mx-8 my-2 overflow-hidden p-1 flex items-center">
-  <ol class="flex items-center gap-4 w-full">
+<div class="mx-8 my-2 flex items-center overflow-hidden p-1">
+  <ol class="flex w-full items-center gap-4">
     <li>
       <a class="hover:underline" href="/{currentCourse?.value?.properties?.parent}">
         <Icon type="programHome" tip={`Go to Course Home`} /></a

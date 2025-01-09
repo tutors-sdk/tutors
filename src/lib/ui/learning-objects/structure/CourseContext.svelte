@@ -2,7 +2,7 @@
   import { Accordion } from "@skeletonlabs/skeleton-svelte";
   import LoContext from "./LoContext.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
-  import { currentCourse } from "$lib/runes";
+  import { currentCourse } from "$lib/runes.svelte";
 </script>
 
 <Accordion multiple>

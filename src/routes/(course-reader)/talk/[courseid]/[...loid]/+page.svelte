@@ -3,8 +3,8 @@
   import Context from "$lib/ui/learning-objects/structure/Context.svelte";
   import Talk from "$lib/ui/learning-objects/content/Talk.svelte";
   import TalkAdobe from "$lib/ui/learning-objects/content/TalkAdobe.svelte";
-  import { courseService } from "$lib/services/course.svelte";
-  import { currentCourse } from "$lib/runes";
+  import { courseService } from "$lib/services/course";
+  import { currentCourse } from "$lib/runes.svelte";
 
   interface Props {
     data: PageData;

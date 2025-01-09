@@ -1,6 +1,6 @@
 import type { PageLoad } from "./$types";
-import { courseService } from "$lib/services/course.svelte";
- import { currentLo } from "$lib/runes";
+import { courseService } from "$lib/services/course";
+import { currentLo } from "$lib/runes.svelte";
 export const ssr = false;
 
 export const load: PageLoad = async ({ params, fetch }) => {

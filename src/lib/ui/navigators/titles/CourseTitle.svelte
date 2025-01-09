@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentCourse, currentLo } from "$lib/runes";
+  import { currentCourse, currentLo } from "$lib/runes.svelte";
   import Image from "../../components/Image.svelte";
 </script>
 

@@ -1,13 +1,13 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import type { Lo } from "$lib/services/models/lo-types";
-  import { setShowHide } from "$lib/services/models/lo-utils";
+  import type { Lo } from "$lib/services/base/lo-types";
+  import { setShowHide } from "$lib/services/course";
   import Card from "$lib/ui/learning-objects/layout/Card.svelte";
   import { cubicOut } from "svelte/easing";
   import { scale } from "svelte/transition";
   import { scaleTransition } from "$lib/ui/themes/animations";
-  import { currentCourse } from "$lib/runes";
+  import { currentCourse } from "$lib/runes.svelte";
 
   interface Props {
     los?: Lo[];

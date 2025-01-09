@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { tutorsId } from "$lib/runes";
+  import { tutorsId } from "$lib/runes.svelte";
 </script>
 
 {#if tutorsId.value?.name}

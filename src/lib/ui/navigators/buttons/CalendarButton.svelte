@@ -2,7 +2,7 @@
   import Calendar from "$lib/ui/learning-objects/content/Calendar.svelte";
   import Sidebar from "$lib/ui/components/Sidebar.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
-  import { currentCourse } from "$lib/runes";
+  import { currentCourse } from "$lib/runes.svelte";
 </script>
 
 {#if currentCourse?.value?.courseCalendar?.currentWeek}
