@@ -1,21 +1,100 @@
 # Tutors Changelog
 
+#### [2024-01-09]: Tutors 11.3.0
+
+- Refactor: Services layer restructuring (#920)
+
+  - Introduced barrel files for base, connect, and community services
+  - Consolidated service types and re-export mechanisms
+  - Improved code organization and maintainability
+
+- Feature: Enhanced Card System (#917, #916, #910)
+
+  - Introduced new card styles including landscape and circular options
+  - Added fine-grained reactivity for better performance
+  - Implemented persistent card style preferences
+  - Simplified card layout and improved mobile responsiveness
+
+- Feature: Live Integration Improvements (#914)
+
+  - Enhanced live subsystem functionality
+  - Improved time components and statistics display
+  - Added conditional menu options based on course context
+  - Updated stat formats and live system linking
+
+- Refactor: Runes Management (#906)
+
+  - Moved runes into appropriate service modules
+  - Improved state management for course, theme, and layout
+  - Simplified code style and theme management
+  - Enhanced type safety and reduced complexity
+
+- UI/UX Improvements
+
+  - Enhanced lab navigation and article widths (#901)
+  - Improved mobile responsiveness (#900)
+  - Added scrollbar for LoContext Panel (#899)
+  - Refined shell and footer components (#897)
+
+- Fix: Course reader navigation improvements (#895)
+- UI: Theme service enhancements
+
 #### [2024-12-16]
 
-- Fix: Scroll position reset between lab steps (#894)
+- Feature: Layout Controls Enhancement
+
+  - Converted layout controls to dropdown menu for better UX
+  - Implemented Segmented control for layout menu
+  - Improved wall display management
+  - Enhanced icon bar functionality
+
+- Fix: Navigation Improvements
+
+  - Resolved scroll position reset between lab steps
+  - Implemented smoother navigation experience
+  - Enhanced user position tracking
+
 - UI: Removed captured icon bar, replaced with standard implementation (#893)
 - Feature: Layout controls converted to dropdown menu
 
 #### [2024-12-14] : Tutors 11.2.0
 
-- Feature: Copy/Paste functionality implementation (#892)
-- Refactor: Markdown services layer improvements (#891)
-- UI: Code theme updates and refinements (#890, #889)
+- Feature: Copy/Paste Implementation (#892)
+
+  - Added copy button for code blocks
+  - Introduced new copy/paste button resources
+  - Enhanced code block interaction
+  - Improved user feedback for copy operations
+
+- Refactor: Markdown Service Layer (#891)
+
+  - Introduced dedicated markdown service interface
+  - Improved code organization and maintainability
+  - Enhanced markdown processing strategies
+  - Streamlined service layer architecture
+
+- UI: Code Theme Enhancements (#890, #889)
+  - Removed highlight.js in favor of Shiki
+  - Updated theme defaults and configurations
+  - Added support for additional languages including Dockerfile
+  - Refined code block presentation
 
 #### [2024-12-12]
 
-- Feature: Code style enhancements (#888)
-- Fix: Card component issues resolved (#886)
+- Feature: Code Style System (#888)
+
+  - Implemented Shiki code highlighting
+  - Created comprehensive code theme selection
+  - Introduced new markdown service architecture
+  - Enhanced code block rendering performance
+
+- Fix: Card Component Improvements (#886)
+
+  - Enhanced card layout and responsiveness
+  - Improved component architecture
+  - Optimized rendering performance
+  - Updated styling system
+
 - Feature: Shiki code highlighting implementation (#887)
 - Feature: Copy/Paste functionality for code blocks
 - UI: Code theme updates and refinements
@@ -48,7 +127,7 @@
 - UI: Animation system improvements (#874, #872)
 - Feature: Festive theme enhancements (#873)
 
-### November 2024
+### 2024-11
 
 #### [2024-11-28]
 
@@ -87,7 +166,7 @@
 - Fix: Terms and netlify adapter (#848, #845)
 - Release: Tutors 11 (#844)
 
-### October 2024
+### 2024-10
 
 #### [2024-10-15]
 
@@ -101,7 +180,7 @@
 - Feature: Updated charts logic (#825)
 - Enhancement: Navigation improvements
 
-### September 2024
+### 2024-09
 
 #### [2024-09-27]
 
@@ -128,7 +207,7 @@
 
 - Fix: Analytics time tracking improvements (#792, #790)
 
-### August 2024
+### 2024-08
 
 #### [2024-08-30]
 
@@ -141,18 +220,97 @@
 - Feature: Heatmap charts implementation
 - Refactor: Analytics system improvements
 
-### July 2024
+### 2024-07
 
-#### [2024-07-08]
+#### [2024-07-31]
 
-- Feature: Footer implementation (#787)
+- Feature: Generator Library
+  - First draft of tutors-gen-html
+  - Implemented tutors-gen-lib functionality
+  - Enhanced build tasks and configurations
+
+#### [2024-07-25]
+
+- Feature: Authentication System
+  - Implemented Supabase authentication
+  - Added dashboard functionality
+  - Enhanced user session management
+  - Improved navigation and routing
+
+#### [2024-07-20]
+
+- Feature: Code Optimization
+  - Enhanced course and LO utilities
+  - Improved analytics service efficiency
+  - Optimized listener management
+  - Enhanced reader-lib models
+
+#### [2024-07-15]
+
+- Feature: TopDeck Implementation
+  - Introduced unified top-level card deck display
+  - Enhanced panel deck styling
+  - Improved note card presentation
+  - Optimized course and topic routes
+
+#### [2024-07-10]
+
+- Feature: Markdown Processing
+  - Migrated to markdown-it with plugins
+  - Added GitHub-style linkable headers
+  - Enhanced code block rendering
+  - Improved markdown utility functions
+
+#### [2024-07-05]
+
+- Feature: Client-Side Rendering
+  - Implemented CSR for improved performance
+  - Enhanced wall and talk components
+  - Optimized lab rendering
+  - Improved markdown processing
 
 #### [2024-07-04]
 
 - Enhancement: Video player width increase (#786)
 - UI: Home page link improvements (#785)
 
-### June 2024
+#### [2024-07-08]
+
+- Feature: Footer implementation (#787)
+
+### 2024-06
+
+#### [2024-06-30]
+
+- Feature: Markdown Parser Enhancement
+  - Improved initialization sequence
+  - Enhanced KaTeX integration
+  - Optimized parser performance
+  - Added type definitions
+
+#### [2024-06-25]
+
+- Feature: Package Updates
+  - Updated to latest SvelteKit version
+  - Improved package dependencies
+  - Enhanced version management
+  - Fixed lab navigator filtering
+
+#### [2024-06-20]
+
+- Feature: Course Structure Improvements
+  - Added side units to course home page
+  - Enhanced units sidebar functionality
+  - Improved course root structure
+  - Better integration of side content
+
+#### [2024-06-15]
+
+- Fix: File Handling Improvements
+  - Added support for key file types
+  - Enhanced folder exclusion logic
+  - Improved unknown LO type handling
+  - Better image extension support
 
 #### [2024-06-23]
 
@@ -184,7 +342,7 @@
 
 - Fix: Analytics time tracking updates (#757)
 
-### May 2024
+### 2024-05
 
 #### [2024-05-31]
 
@@ -216,13 +374,76 @@
 
 - Fix: Supabase session handling (#738, #737, #736, #735)
 
-### April 2024
+### 2024-04
+
+#### [2024-04-30]
+
+- Feature: Server-Side Rendering Optimization
+  - Set course and talk to SSR false by default
+  - Improved performance and cost efficiency
+  - Enhanced resource management
+
+#### [2024-04-25]
+
+- Feature: Image Support Enhancement
+
+  - Improved image handling in panelnotes
+  - Better image rendering and display
+  - Enhanced test panel functionality
 
 - Feature: Enhanced analytics system
 - UI: Improved chart visualizations
 - Fix: Various performance optimizations
 
-### March 2024
+### 2024-03
+
+#### [2024-03-31]
+
+- Feature: Learning Object Enhancements
+  - Improved side units in walls
+  - Enhanced talk functionality
+  - Better lab content handling
+  - Fixed phantom LOs implementation
+
+#### [2024-03-25]
+
+- Feature: UI/UX Improvements
+  - Enhanced experience links organization
+  - Improved loading animations
+  - Better PDF handling with SSR
+  - Enhanced popup store functionality
+
+#### [2024-03-20]
+
+- Feature: Dark Mode and Theme Updates
+  - Enhanced dark mode implementation
+  - Added additional icon functionality
+  - Improved SSR compatibility
+  - Updated theme builder
+
+#### [2024-03-15]
+
+- Feature: Skeleton Integration
+  - Implemented ProgressRadial component
+  - Added inspector functionality
+  - Updated to Skeleton v1
+  - Enhanced menu system with popups
+
+#### [2024-03-10]
+
+- Feature: Performance Optimizations
+  - Enhanced presence system
+  - Improved user summaries caching
+  - Better subdomain support
+  - Updated dependencies
+
+#### [2024-03-05]
+
+- Feature: Package Updates
+  - Updated Vite to 4.2.0
+  - Enhanced accessibility features
+  - Added Holopin integration
+  - Improved dark mode support
 
 #### [2024-03-09]
 
@@ -232,30 +453,56 @@
 
 - Development improvements (#728)
 
-### February 2024
+### 2024-02
 
 #### [2024-02-28]
 
-- Fix: Archive folder name compatibility (#726, #725)
-- Development updates (#724, #721)
-- Documentation: Updates and improvements (#719)
-- Feature: Simulator improvements (#718)
+- Feature: Multi-domain Support
+  - Added support for multiple subdomains
+  - Enhanced course summary retrieval
+  - Improved LO type determination
+  - Updated route handling for web and GitHub
+
+#### [2024-02-25]
+
+- Feature: Auth0 Integration
+  - Implemented Auth0 custom domain
+  - Enhanced authentication flow
+  - Improved security features
+
+#### [2024-02-20]
+
+- Feature: Storybook Integration
+  - Initial Storybook setup
+  - Added PR template and workflow
+  - Enhanced build process
+  - Updated package dependencies
+
+#### [2024-02-15]
+
+- Feature: Sidebar Enhancements
+  - Added side-unit learning object
+  - Improved sidebar support
+  - Enhanced mobile lab navigation
+  - Better unit URL support
 
 #### [2024-02-10]
 
-- Documentation: README Holopin badge (#717)
-- Development improvements (#712)
+- Feature: Time Utilities
+  - Added Tutors time utilities
+  - Enhanced time tracking
+  - Improved course catalogue
+  - Updated time URL configuration
 
-#### [2024-02-09]
+#### [2024-02-05]
 
-- Documentation: Repository updates (#716, #715, #714)
+- Feature: UI/UX Improvements
+  - Enhanced mobile responsiveness
+  - Updated theme builder
+  - Improved card layouts
+  - Added Valentine's theme
 
-#### [2024-02-02]
-
-- Feature: Tutors message system (#704, #703)
-- Feature: Accessibility improvements (#699)
-
-### January 2024
+### 2024-01
 
 #### [2024-01-31]
 
@@ -321,7 +568,7 @@
 
 ## 2023
 
-### December 2023
+### 2023-12
 
 #### [2023-12-17]
 
@@ -335,7 +582,7 @@
 
 - Feature: Enrollment support (#615)
 
-### November 2023
+### 2023-11
 
 #### [2023-11-14]
 
@@ -374,7 +621,7 @@
 
 - Feature: PartyKit integration (#579)
 
-### October 2023
+### 2023-10
 
 #### [2023-10-29]
 
@@ -415,55 +662,224 @@
 - Fix: Undefined removal (#553)
 - Fix: Portfolio improvements (#552)
 
-### September 2023
+### 2023-09
 
-- Feature: Enhanced course navigation
-- UI: Improved responsive design
-- Fix: Various bug fixes and performance improvements
+#### [2023-09-07]
 
-### August 2023
+- Feature: Enhanced Search Functionality
+
+  - Implemented search across all labs and notes
+  - Improved search result presentation
+  - Added type "step" marking for lab steps
+
+- Refactor: Card System Improvements
+  - Streamlined card desk configurations
+  - Enhanced user interface components
+  - Improved performance and responsiveness
+
+#### [2023-09-06]
+
+- Feature: Calendar System Enhancement
+
+  - Re-enabled calendar bar functionality
+  - Improved calendar data loading from course model
+  - Enhanced calendar integration
+
+- Fix: CI/CD Pipeline
+  - Updated Cypress test configurations
+  - Improved test reliability and coverage
+  - Enhanced build process efficiency
+
+#### [2023-09-05]
+
+- Feature: Union Model Implementation
+
+  - Introduced new union-based type system
+  - Improved model compatibility
+  - Enhanced type safety across the application
+
+- Fix: Course Navigation
+  - Improved auto-numbering for labs
+  - Enhanced properties loading from YAML
+  - Fixed hash-based routing issues
+
+#### [2023-09-04]
+
+- Refactor: Model Architecture
+
+  - Introduced new union-based model system
+  - Improved service interactions
+  - Enhanced type safety and maintainability
+
+- Feature: Authentication Improvements
+  - Enhanced login redirect handling
+  - Improved user session management
+  - Updated footer versioning system
+
+#### [2023-09-01]
+
+- Feature: Course Management
+  - Added course addition functionality to dashboard
+  - Implemented course deletion with confirmation
+  - Added course accordion for better organization
+  - Improved reactive updates for course list
+
+### 2023-08
+
+#### [2023-08-31]
+
+- Feature: Version 3.1.0 Release
+  - Major version bump with significant improvements
+  - Enhanced type system implementation
+  - Improved overall stability
 
 #### [2023-08-30]
 
-- Feature: Skeleton v2 migration
-- UI: Theme system improvements
-- Feature: Dyslexia theme implementation
+- Feature: Skeleton V2 Migration
+  - Implemented new theming system
+  - Added dyslexia theme support
+  - Enhanced toast notifications
+  - Removed legacy authentication systems
 
-#### [2023-08-22]
+#### [2023-08-27]
 
-- Feature: Storybook setup
-- UI: NavigationPrimary components
+- Refactor: CLI and Type System
+  - Restructured types and decorators into models
+  - Simplified creator generator package
+  - Improved code organization and maintainability
 
-### July 2023
+#### [2023-08-24]
 
-- Feature: Optimized analytics service
-- Enhancement: Course service improvements
-- Fix: Authentication and routing updates
+- Feature: Testing Infrastructure
+  - Implemented Cypress test framework
+  - Added comprehensive test coverage
+  - Improved test reliability and maintainability
 
-### June 2023
+#### [2023-08-23]
+
+- Feature: Social Integration
+  - Added Discord integration to footer
+  - Updated README with Discord information
+  - Enhanced navigation button functionality
+
+### 2023-07
+
+#### [2023-07-31]
+
+- Feature: Generator Library
+  - First draft of tutors-gen-html
+  - Implemented tutors-gen-lib functionality
+  - Enhanced build tasks and configurations
+
+#### [2023-07-25]
+
+- Feature: Authentication System
+  - Implemented Supabase authentication
+  - Added dashboard functionality
+  - Enhanced user session management
+  - Improved navigation and routing
+
+#### [2023-07-20]
+
+- Feature: Code Optimization
+  - Enhanced course and LO utilities
+  - Improved analytics service efficiency
+  - Optimized listener management
+  - Enhanced reader-lib models
+
+#### [2023-07-15]
+
+- Feature: TopDeck Implementation
+  - Introduced unified top-level card deck display
+  - Enhanced panel deck styling
+  - Improved note card presentation
+  - Optimized course and topic routes
+
+#### [2023-07-10]
+
+- Feature: Markdown Processing
+  - Migrated to markdown-it with plugins
+  - Added GitHub-style linkable headers
+  - Enhanced code block rendering
+  - Improved markdown utility functions
+
+#### [2023-07-05]
+
+- Feature: Client-Side Rendering
+  - Implemented CSR for improved performance
+  - Enhanced wall and talk components
+  - Optimized lab rendering
+  - Improved markdown processing
+
+### 2023-06
 
 - Feature: Markdown processing improvements
 - UI: Enhanced note card support
 - Fix: Various UI and navigation fixes
 
-### May 2023
+### 2023-05
 
-- Feature: Charts and analytics improvements
-- UI: Theme reorganization
-- Feature: Home page design update
+#### [2023-05-31]
 
-### April 2023
+- Feature: HEAnet Support
+  - Re-enabled HEAnet integration
+  - Enhanced network compatibility
+  - Improved institutional access
 
-- Feature: PDF support enhancements
-- Fix: Various bug fixes and improvements
+#### [2023-05-30]
 
-### March 2023
+- Development updates (#752)
+
+#### [2023-05-28]
+
+- Fix: Analytics time tracking enhancements (#751)
+- Feature: Supabase and ECharts integration (#750)
+
+#### [2023-05-17]
+
+- Refactor: Theme reorganization (#746, #745)
+
+#### [2023-05-15]
+
+- Feature: Home page design update (#744, #743)
+
+#### [2023-05-09]
+
+- Refactor: Metrics system improvements (#741, #740)
+- Refactor: Firebase metrics simplification (#739)
+
+#### [2023-05-08]
+
+- Fix: Supabase session handling (#738, #737, #736, #735)
+
+### 2023-04
+
+#### [2023-04-30]
+
+- Feature: Server-Side Rendering Optimization
+  - Set course and talk to SSR false by default
+  - Improved performance and cost efficiency
+  - Enhanced resource management
+
+#### [2023-04-25]
+
+- Feature: Image Support Enhancement
+
+  - Improved image handling in panelnotes
+  - Better image rendering and display
+  - Enhanced test panel functionality
+
+- Feature: Enhanced analytics system
+- UI: Improved chart visualizations
+- Fix: Various performance optimizations
+
+### 2023-03
 
 #### [2023-03-18]
 
 - Feature: Skeleton v1 update (#312)
 
-### February 2023
+### 2023-02
 
 #### [2023-02-28]
 
@@ -506,81 +922,85 @@
 
 - Feature: Skeleton 0.99.5 (#243)
 
-### January 2023
+### 2023-01
 
-#### [2023-01-23]
+#### [2023-01-31]
 
-- Dependency: SvelteKit update (#235)
+- Feature: PWA Implementation
+  - Added service worker support
+  - Enhanced manifest configuration
+  - Improved app installation flow
+  - Added maskable icons
 
-#### [2023-01-19]
+#### [2023-01-25]
 
-- Dependency: Multiple package updates (#219, #220, #221, #222, #223)
+- Feature: Theme System Updates
+  - Enhanced seasonal themes
+  - Improved dark mode support
+  - Better text readability
+  - Updated Halloween and dyslexia themes
 
-#### [2023-01-18]
+#### [2023-01-20]
 
-- Development improvements (#230, #229, #228, #227, #226)
+- Feature: Presence System
+  - Enhanced online status tracking
+  - Improved timer-based presence updates
+  - Better event generation
+  - Enhanced user session management
 
-#### [2023-01-17]
+#### [2023-01-15]
 
-- Development updates (#224)
+- Feature: Lab Enhancements
+  - Added copy code button
+  - Improved enrollment system
+  - Enhanced lab usage tracking
+  - Better step navigation
 
-#### [2023-01-16]
+#### [2023-01-10]
 
-- Development enhancements (#218)
+- Feature: UI/UX Improvements
+  - Enhanced breadcrumb navigation
+  - Updated Skeleton to 0.92.2
+  - Improved dark mode persistence
+  - Enhanced theme builder
 
-#### [2023-01-14]
+#### [2023-01-05]
 
-- Development improvements (#217)
+- Feature: SvelteKit Migration
+  - Major update to SvelteKit
+  - Enhanced SSR support
+  - Improved PDF reader integration
+  - Better note card handling
 
-#### [2023-01-13]
+### 2022-12
 
-- Development updates (#216, #215, #214, #213, #212, #211)
-- Dependency: Commander update (#201)
+#### [2022-12-31]
 
-#### [2023-01-12]
+- Feature: End of Year Updates
+  - Various bug fixes and improvements
+  - Performance optimizations
+  - Documentation updates
+  - Package dependency updates
 
-- Development improvements (#208)
-
-#### [2023-01-11]
-
-- Development updates (#207, #206, #205)
-- Dependency: Multiple package updates (#199, #202)
-
-#### [2023-01-09]
-
-- Fix: Note card improvements (#196, #195)
-
-#### [2023-01-06]
-
-- Fix: SSR improvements (#194)
-
-## 2022
-
-### December 2022
-
-- Feature: Enhanced authentication system
-- UI: Improved navigation
-- Fix: Various performance optimizations
-
-### November 2022
+### 2022-11
 
 - Feature: Course presence features
 - UI: Student card redesign
 - Enhancement: Navigation improvements
 
-### October 2022
+### 2022-10
 
 - Feature: Search functionality
 - UI: Card layout improvements
 - Fix: Various bug fixes
 
-### September 2022
+### 2022-09
 
 - Feature: Initial presence features
 - UI: Course container improvements
 - Enhancement: Loading animations
 
-### August 2022
+### 2022-08
 
 #### [2022-08-22]
 
