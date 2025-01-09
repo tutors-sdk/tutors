@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { Composite } from "$lib/services/base/lo-types";
+  import type { Composite } from "$lib/services/base";
   import Panels from "./Panels.svelte";
   import Cards from "./Cards.svelte";
-  import Image from "../../components/Image.svelte";
+  import Image from "$lib/ui/components/Image.svelte";
 
   interface Props {
     units: Composite[];

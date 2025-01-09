@@ -2,7 +2,7 @@
   import { fly } from "svelte/transition";
   import Breadcrumbs from "./buttons/Breadcrumbs.svelte";
   import EditCoursButton from "./buttons/EditCoursButton.svelte";
-  import { slideFromLeft } from "../themes/animations";
+  import { slideFromLeft } from "./animations";
   import IconBar from "../components/IconBar.svelte";
   import { themeService } from "$lib/services/themes";
   import { currentCourse } from "$lib/runes.svelte";

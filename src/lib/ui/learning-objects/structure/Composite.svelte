@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Composite } from "$lib/services/base/lo-types";
+  import type { Composite } from "$lib/services/base";
   import Panels from "../layout/Panels.svelte";
   import Units from "../layout/Units.svelte";
   import Cards from "../layout/Cards.svelte";

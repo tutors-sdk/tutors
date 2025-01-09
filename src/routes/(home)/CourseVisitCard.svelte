@@ -1,5 +1,5 @@
 <script>
-  import { scaleTransition } from "$lib/ui/themes/animations";
+  import { scaleTransition } from "$lib/ui/navigators/animations";
   import Iconify from "@iconify/svelte";
   import { scale } from "svelte/transition";
 

@@ -2,7 +2,7 @@
   import { page } from "$app/stores";
   import { PUBLIC_PDF_KEY } from "$env/static/public";
   import { adobeLoaded } from "$lib/runes.svelte";
-  import type { Talk } from "$lib/services/base/lo-types";
+  import type { Talk } from "$lib/services/base";
   import { onMount } from "svelte";
 
   interface Props {

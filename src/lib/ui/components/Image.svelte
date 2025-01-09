@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Lo } from "$lib/services/base/lo-types";
+  import type { Lo } from "$lib/services/base";
   import Iconify from "@iconify/svelte";
 
   interface Props {

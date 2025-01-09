@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentLo } from "$lib/runes.svelte";
-  import type { Lo } from "$lib/services/base/lo-types";
+  import type { Lo } from "$lib/services/base";
   import Image from "../../components/Image.svelte";
   import LoContext from "../structure/LoContext.svelte";
 
