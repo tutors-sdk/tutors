@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { Lo } from "$lib/services/base/lo-types";
+  import type { Lo } from "$lib/services/base";
   import { onMount, type Snippet } from "svelte";
   import LoContextPanel from "../layout/LoContextPanel.svelte";
-  import { slideFromRight } from "$lib/ui/themes/animations";
+  import { slideFromRight } from "$lib/ui/navigators/animations";
   import { fly } from "svelte/transition";
 
   type Props = {

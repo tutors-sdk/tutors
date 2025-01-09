@@ -1,7 +1,7 @@
 <script lang="ts">
   import { tutorsConnectService } from "$lib/services/connect";
   import { presenceService } from "$lib/services/community";
-  import MenuItem from "../../components/MenuItem.svelte";
+  import MenuItem from "$lib/ui/components/MenuItem.svelte";
   import Menu from "$lib/ui/components/Menu.svelte";
   import OnlineButton from "../buttons/OnlineButton.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";

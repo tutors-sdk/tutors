@@ -1,6 +1,6 @@
 <script lang="ts">
   import { currentCodeTheme } from "$lib/services/markdown";
-  import type { Lo } from "$lib/services/base/lo-types";
+  import type { Lo } from "$lib/services/base";
 
   interface Props {
     lo: Lo;
