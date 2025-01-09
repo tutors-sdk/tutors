@@ -1,6 +1,6 @@
 /**
- * Real-time presence service using PartyKit for user activity tracking.
- * Manages WebSocket connections for both global and course-specific events.
+ * PartyKit-based implementation of the presence service
+ * Uses WebSocket connections to track and broadcast user activity
  */
 
 import PartySocket from "partysocket";
@@ -11,74 +11,61 @@ import { rune, tutorsId } from "$lib/runes.svelte";
 import { LoRecord, type LoUser, type PresenceService } from "../types.svelte";
 import type { TutorsId } from "$lib/services/connect";
 
-/** PartyKit server URL from environment */
+// Server URL from environment variables
 const partyKitServer = PUBLIC_party_kit_main_room;
 
 export const presenceService: PresenceService = {
-  /** Global PartyKit connection for all course events */
+  // Initialize empty WebSocket connections - will be established on demand
   partyKitAll: <PartySocket>{},
-  /** Course-specific PartyKit connection */
   partyKitCourse: <PartySocket>{},
-  /** Currently monitored course ID */
   listeningTo: "",
-  /** Reactive array of currently online students */
+  // Use Svelte's rune for reactive state management
   studentsOnline: rune<LoRecord[]>([]),
-  /** Map of student events keyed by user ID */
   studentEventMap: new Map<string, LoRecord>(),
 
-  /**
-   * Handles incoming student activity events
-   * Updates presence data for the current course
-   * @param event - WebSocket message event containing student activity
-   */
-  studentListener(event: any) {
+  studentListener(event: MessageEvent) {
+    // Parse JSON data from WebSocket message
     const nextCourseEvent = JSON.parse(event.data);
+    // Only process events for current course and from other users
     if (nextCourseEvent.courseId === this.listeningTo && nextCourseEvent.user.id !== tutorsId.value?.login) {
       const studentEvent = this.studentEventMap.get(nextCourseEvent.user.id);
       if (!studentEvent) {
+        // First time seeing this student - add to online list
         const latestLo = new LoRecord(nextCourseEvent);
         this.studentsOnline.value.push(latestLo);
         this.studentEventMap.set(nextCourseEvent.user.id, latestLo);
       } else {
+        // Update existing student's activity
         refreshLoRecord(studentEvent, nextCourseEvent);
       }
     }
   },
 
-  /**
-   * Establishes connection to global course activity room
-   */
   connectToAllCourseAccess(): void {
+    // Create WebSocket connection to global activity room
     this.partyKitAll = new PartySocket({
       host: partyKitServer,
       room: "tutors-all-course-access"
     });
   },
 
-  /**
-   * Starts monitoring presence for a specific course
-   * Clears previous state and establishes new WebSocket connection
-   * @param courseId - Course to monitor
-   */
   startPresenceListener(courseId: string) {
+    // Reset state before starting new listener
     this.studentsOnline.value = [];
     this.studentEventMap.clear();
     this.listeningTo = courseId;
+
+    // Create course-specific WebSocket connection
     this.partyKitCourse = new PartySocket({
       host: partyKitServer,
       room: courseId
     });
+    // Bind event handler with correct 'this' context
     this.partyKitCourse.addEventListener("message", this.studentListener.bind(this));
   },
 
-  /**
-   * Broadcasts a learning object interaction event
-   * Sends to both global and course-specific channels
-   * @param course - Current course
-   * @param lo - Learning object being interacted with
-   * @param student - Student performing the interaction
-   */
   sendLoEvent(course: Course, lo: Lo, student: TutorsId) {
+    // Construct event data
     const loRecord: LoRecord = {
       courseId: course.courseId,
       courseUrl: course.courseUrl,

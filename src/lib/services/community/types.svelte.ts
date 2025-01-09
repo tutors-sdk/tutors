@@ -1,6 +1,6 @@
 import type { TutorsId } from "$lib/services/connect";
 import type { Course, IconType, Lo } from "$lib/services/base/lo-types";
-
+import PartySocket from "partysocket";
 /**
  * Minimal user information for learning object interactions
  */
@@ -33,43 +33,101 @@ export class LoRecord {
 
 /**
  * Service for managing real-time user presence and interactions
+ * Tracks student activity and broadcasts learning object interactions
  */
 export interface PresenceService {
-  /** Currently online students */
-  studentsOnline: any;
-  /** Global PartyKit connection */
-  partyKitAll: any;
-  /** Course-specific PartyKit connection */
-  partyKitCourse: any;
-  /** Map of student events */
+  /** Currently online students in the active course */
+  studentsOnline: { value: LoRecord[] };
+  /** Connection for all course events across the platform */
+  partyKitAll: PartySocket;
+  /** Connection for events specific to the current course */
+  partyKitCourse: PartySocket;
+  /** Lookup table for quick access to student events */
   studentEventMap: Map<string, LoRecord>;
-  /** Currently monitored course ID */
+  /** ID of the course currently being monitored */
   listeningTo: string;
 
-  studentListener(event: any): void;
+  /**
+   * Process incoming student activity messages
+   * @param event - WebSocket message with student activity data
+   */
+  studentListener(event: MessageEvent): void;
+
+  /**
+   * Notify other users about learning object interaction
+   * @param course - Course being accessed
+   * @param lo - Learning object being viewed
+   * @param student - Student viewing the content
+   */
   sendLoEvent(course: Course, lo: Lo, student: TutorsId): void;
+
+  /**
+   * Begin monitoring platform-wide course activity
+   */
   connectToAllCourseAccess(): void;
+
+  /**
+   * Begin monitoring activity in a specific course
+   * @param courseId - Identifier of course to monitor
+   */
   startPresenceListener(courseId: string): void;
 }
 
 /**
  * Service for managing real-time course interactions and student presence
+ * Provides course-wide and platform-wide activity monitoring
  */
 export interface LiveService {
+  /** Currently monitored course identifier */
   listeningForCourse: { value: string };
+  /** List of courses with active users */
   coursesOnline: { value: LoRecord[] };
+  /** List of all active students in current course */
   studentsOnline: { value: LoRecord[] };
+  /** Active students grouped by their courses */
   studentsOnlineByCourse: { value: LoRecord[][] };
+  /** Quick lookup for student activity by ID */
   studentEventMap: Map<string, LoRecord>;
+  /** Quick lookup for course activity by ID */
   courseEventMap: Map<string, LoRecord>;
-  partyKitCourse: any;
+  /** Connection for course-specific events */
+  partyKitCourse: PartySocket;
+  /** Flag indicating if global monitoring is active */
   listeningAll: boolean;
 
-  groupedStudentListener(event: any): void;
-  studentListener(event: any): void;
-  courseListener(event: any): void;
-  partyKitListener(event: any): void;
+  /**
+   * Process student activity for course grouping
+   * @param event - WebSocket message containing student activity
+   */
+  groupedStudentListener(event: MessageEvent): void;
+
+  /**
+   * Process individual student activity
+   * @param event - WebSocket message containing student update
+   */
+  studentListener(event: MessageEvent): void;
+
+  /**
+   * Process course-level activity
+   * @param event - WebSocket message containing course update
+   */
+  courseListener(event: MessageEvent): void;
+
+  /**
+   * Handle incoming WebSocket messages
+   * @param event - WebSocket message to process
+   */
+  partyKitListener(event: MessageEvent): void;
+
+  /**
+   * Begin monitoring platform-wide activity
+   */
   startGlobalPresenceService(): void;
+
+  /**
+   * Begin monitoring activity in a specific course
+   * @param courseId - Course to monitor
+   */
   startCoursePresenceListener(courseId: string): void;
 }
 
