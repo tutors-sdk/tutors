@@ -1,10 +1,9 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
-  import type { CardDetails } from "$lib/services/themes";
+  import type { LayoutType, CardStyleType, CardDetails } from "$lib/services/themes";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { currentCourse } from "$lib/runes.svelte";
-  import { themeService } from "$lib/services/themes";
-  import { cardStyles } from "./card-styles";
+  import { cardStyles, themeService } from "$lib/services/themes";
 
   let { cardDetails } = $props<{ cardDetails: CardDetails }>();
 
@@ -17,14 +16,17 @@
   const hasFullName = $derived(cardDetails?.student?.fullName);
 
   const styles = $derived({
-    heading: cardStyles.heading[themeService.layout.value][themeService.cardStyle.value],
-    dimensions: cardStyles.dimensions[themeService.layout.value][themeService.cardStyle.value],
-    image: cardStyles.image[themeService.layout.value][themeService.cardStyle.value],
-    icon: cardStyles.icon[themeService.layout.value][themeService.cardStyle.value],
-    iconHeight: cardStyles.iconHeight[themeService.layout.value][themeService.cardStyle.value],
-    text: cardStyles.text[themeService.layout.value][themeService.cardStyle.value],
-    avatar: cardStyles.avatar[themeService.layout.value][themeService.cardStyle.value],
-    container: cardStyles.container[themeService.layout.value][themeService.cardStyle.value]
+    heading: cardStyles.heading[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
+    dimensions:
+      cardStyles.dimensions[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
+    image: cardStyles.image[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
+    icon: cardStyles.icon[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
+    iconHeight:
+      cardStyles.iconHeight[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
+    text: cardStyles.text[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
+    avatar: cardStyles.avatar[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
+    container:
+      cardStyles.container[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType]
   });
 </script>
 

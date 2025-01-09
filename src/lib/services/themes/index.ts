@@ -14,3 +14,5 @@ export type {
   CardStyleType,
   CardDetails
 } from "./types";
+
+export { cardStyles } from "./styles/card-styles";
