@@ -35,14 +35,17 @@
   {/snippet}
   <CalendarButton />
   {#snippet trail()}
-    <span class="hidden md:block">
+    <div class="items-center md:flex">
       <TutorsTimeIndicator />
-      {#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
-        <SearchButton />
-      {/if}
-      <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
-    </span>
-    <LayoutMenu />
+      <div class="flex items-center">
+        {#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
+          <SearchButton />
+        {/if}
+      </div>
+    </div>
+    <div class="flex items-center">
+      <LayoutMenu />
+    </div>
     <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
     {#if !currentCourse?.value?.isPrivate}
       <div class="relative">

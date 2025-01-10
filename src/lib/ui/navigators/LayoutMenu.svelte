@@ -37,7 +37,10 @@
 </script>
 
 {#snippet menuSelector()}
-  <Icon type="lightMode" tip="Open Theme Menu" />
+  <div class="flex items-center">
+    <Icon type="lightMode" tip="Open Theme Menu" />
+    <span class="ml-2 hidden text-sm font-bold md:block">Layout</span>
+  </div>
 {/snippet}
 
 {#snippet menuContent()}
