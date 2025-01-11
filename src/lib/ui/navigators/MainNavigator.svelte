@@ -36,7 +36,9 @@
   <CalendarButton />
   {#snippet trail()}
     <div class="items-center md:flex">
-      <TutorsTimeIndicator />
+      <div class="hidden md:flex">
+        <TutorsTimeIndicator />
+      </div>
       <div class="flex items-center">
         {#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
           <SearchButton />

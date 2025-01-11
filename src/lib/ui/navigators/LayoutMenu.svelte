@@ -51,14 +51,6 @@
     </Segment>
   </div>
   <hr />
-  <div class="ml-2 mt-2">Layout</div>
-  <div class="flex justify-center">
-    <Segment name="layout" bind:value={themeService.layout.value}>
-      <Segment.Item value="expanded"><Icon type="expanded" /></Segment.Item>
-      <Segment.Item value="compacted"><Icon type="compacted" /></Segment.Item>
-    </Segment>
-  </div>
-  <hr />
   <div class="ml-2">Card Style</div>
   <div class="flex justify-center">
     <Segment name="cardStyle" bind:value={themeService.cardStyle.value}>
@@ -69,13 +61,21 @@
   </div>
   <hr />
   <div class="mb-2 ml-2">Theme</div>
-  <div class="m-4">
+  <div class="relative z-50 m-4">
     <Combobox data={themeCombo} bind:value={theme} />
   </div>
   <hr />
   <div class="mb-4 ml-2">Code Style</div>
-  <div class="m-4">
+  <div class="relative z-10 m-4">
     <Combobox data={codeThemeCombo} bind:value={codeTheme} />
+  </div>
+  <hr />
+  <div class="ml-2 mt-2">Layout</div>
+  <div class="flex justify-center">
+    <Segment name="layout" bind:value={themeService.layout.value}>
+      <Segment.Item value="expanded"><Icon type="expanded" /></Segment.Item>
+      <Segment.Item value="compacted"><Icon type="compacted" /></Segment.Item>
+    </Segment>
   </div>
 {/snippet}
 
