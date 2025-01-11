@@ -4,8 +4,6 @@
   import type { Snippet } from "svelte";
   type Props = { children: Snippet };
   let { children }: Props = $props();
-
-  currentCourse.value = null;
 </script>
 
 <svelte:head>
