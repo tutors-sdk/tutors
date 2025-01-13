@@ -123,6 +123,10 @@ export function removeLeadingHashes(str: string): string {
   return hashIndex >= 0 ? str.substring(hashIndex + 1) : str;
 }
 
+export function removeFirstLine(str: string): string {
+  return str.split("\n").slice(1).join("\n");
+}
+
 export function fixRoutePaths(lo: Lo) {
   if (lo.route && lo.route[0] === "#") {
     lo.route = "/" + lo.route.slice(1);

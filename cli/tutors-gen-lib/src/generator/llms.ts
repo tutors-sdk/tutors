@@ -1,11 +1,17 @@
 import { Lo, Course, Composite } from "../models/lo-types";
-import { flattenLos } from "../models/lo-utils";
+import { flattenLos, removeFirstLine, removeLeadingHashes } from "../models/lo-utils";
 import { writeFile } from "./file-utils";
 
 let header = "";
 
+function printLo (lo: Lo, level: number) {
+  const title = removeLeadingHashes(lo.title);
+  const contentMd = removeFirstLine(lo.contentMd);
+  return `${'#'.repeat(level)} ${lo.type.charAt(0).toUpperCase() + lo.type.slice(1)} : ${title}\n\n ${contentMd}`;
+}
+
 function generateLo(lo: Lo, llmsTxt: string[], level: number) {
-  llmsTxt.push(`${lo.title}\n\n${lo.contentMd}`);
+  llmsTxt.push(printLo(lo, level));
   if (lo.hasOwnProperty("los")) {
     const compositeLo = lo as Composite;
     compositeLo.los?.forEach((childLo: Lo) => {
@@ -27,7 +33,7 @@ function generateNotes(notes: Lo[]): string[] {
   notesTxt.push(header);
   notesTxt.push("# All Notes in the course");
   notes.forEach((note) => {
-    notesTxt.push(`${note.title}\n\n${note.contentMd}`);
+    notesTxt.push(printLo(note, 2));
   });
   return notesTxt;
 }
@@ -36,12 +42,12 @@ function generateLabs(labs: Lo[]): string[] {
   const labsTxt = [];
   labsTxt.push(header);
   labsTxt.push("# All Labs in the course");
-  labs.forEach((lab) => {
-    labsTxt.push(`${lab.title}\n\n${lab.contentMd}`);
+  labs.forEach((lab, index) => {
+    labsTxt.push(printLo(lab, 2));
     if (lab.hasOwnProperty("los")) {
       const compositeLo = lab as Composite;
       compositeLo.los?.forEach((step) => {
-        labsTxt.push(`${step.title}\n\n${step.contentMd}`);
+        labsTxt.push(printLo(step, 3));
       });
     }
   });
