@@ -278,6 +278,7 @@ export type Course = Composite & {
   authLevel: number; // Access control level
   isPortfolio: boolean; // Portfolio flag
   isPrivate: boolean; // Privacy flag
+  llms: boolean; // LLM flag
   areVideosHidden: boolean; // Video visibility flag
   areLabStepsAutoNumbered: boolean; // Lab step numbering flag
   hasEnrollment: boolean; // Enrollment flag
