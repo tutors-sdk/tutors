@@ -7,8 +7,7 @@
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "node",
-      // "cwd": "${workspaceFolder}/../../docs/tutors-reference-course",
-      "cwd": "/Users/edeleastar/repos/modules/hdip/2023/sem-3/full-stack-1",
+      "cwd": "${workspaceFolder}/../../docs/tutors-reference-course",
       "console": "integratedTerminal"
     },
     {
