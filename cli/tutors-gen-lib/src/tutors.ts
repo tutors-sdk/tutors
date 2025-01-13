@@ -4,6 +4,7 @@ import { Course, Lo } from "./models/lo-types";
 import { resourceBuilder } from "./generator/resource-builder";
 import { writeFile } from "./generator/file-utils";
 import { generateNetlifyToml } from "./generator/netlify";
+import { generateLlms } from "./generator/llms";
 
 export const version = "3.3.1";
 
@@ -17,6 +18,7 @@ export function generateCourse(lo: Lo, folder: string) {
   resourceBuilder.copyAssets(folder);
   writeFile(folder, "tutors.json", JSON.stringify(lo));
   generateNetlifyToml(folder);
+  generateLlms(lo as Course, folder);
 }
 
 export function decorateCourse(course: Course) {

@@ -7,7 +7,7 @@
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "node",
-      "cwd": "${workspaceFolder}/../tutors-reference-course",
+      "cwd": "${workspaceFolder}/../../docs/tutors-reference-course",
       "console": "integratedTerminal"
     },
     {

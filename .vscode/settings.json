@@ -1,6 +1,9 @@
 {
   "task.allowAutomaticTasks": "on",
   "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.requireConfig": true,
+  "prettier.useEditorConfig": false,
   "files.exclude": {
     "**/*.js": {
       "when": "$(basename).ts"
