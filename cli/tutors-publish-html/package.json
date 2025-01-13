@@ -24,7 +24,7 @@
     "nunjucks": "^3.2.3",
     "path": "^0.12.7",
     "shelljs": "^0.8.5",
-    "tutors-gen-lib": "^3.4.0"
+    "tutors-gen-lib": "^3.4.1"
   },
   "devDependencies": {
     "prettier": "2.8.4",
