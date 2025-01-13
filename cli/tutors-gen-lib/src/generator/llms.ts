@@ -1,4 +1,4 @@
-import { Lo, Lab, Course, isCompositeLo, Composite } from "../models/lo-types";
+import { Lo, Course, Composite } from "../models/lo-types";
 import { flattenLos } from "../models/lo-utils";
 import { writeFile } from "./file-utils";
 
