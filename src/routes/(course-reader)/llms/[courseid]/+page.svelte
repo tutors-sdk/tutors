@@ -1,6 +1,5 @@
 <script lang="ts">
   import { convertMdToHtml } from "$lib/services/markdown";
-  import Composite from "$lib/ui/learning-objects/structure/Composite.svelte";
 
   interface Props {
     data: any;
@@ -15,7 +14,7 @@ Currently, we have the following files...
 
 - [llms-full.txt](https://${data.course.courseUrl}/llms-full.txt) — the complete course
 - [llms-labs.txt](https://${data.course.courseUrl}/llms-labs.txt) — just the labs
-- [llms-notes.txt](https://${data.course.courseUrl}/llms-labs.txt) — just the notes
+- [llms-notes.txt](https://${data.course.courseUrl}/llms-notes.txt) — just the notes
 `;
   let textmd = convertMdToHtml(text);
 </script>
