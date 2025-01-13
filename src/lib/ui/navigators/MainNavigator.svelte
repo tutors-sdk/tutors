@@ -3,7 +3,7 @@
   import CourseTitle from "./titles/CourseTitle.svelte";
   import SearchButton from "./buttons/SearchButton.svelte";
   import LayoutMenu from "./LayoutMenu.svelte";
-  import { tutorsConnectService } from "$lib/services/connect";
+  import LlmsIndicator from "./buttons/LlmsIndicator.svelte";
   import TutorsTimeIndicator from "./buttons/TutorsTimeIndicator.svelte";
   import TocButton from "./buttons/TocButton.svelte";
   import InfoButton from "./buttons/InfoButton.svelte";
@@ -36,6 +36,9 @@
   <CalendarButton />
   {#snippet trail()}
     <div class="items-center md:flex">
+      <div class="hidden md:flex">
+        <LlmsIndicator />
+      </div>
       <div class="hidden md:flex">
         <TutorsTimeIndicator />
       </div>
