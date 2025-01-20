@@ -1,4 +1,4 @@
-import { themeService } from "$lib/services/themes";
+import { themeService } from "$lib/services/themes/services/themes.svelte";
 import type { IconNav } from "$lib/services/themes";
 import type { Composite, Course, Lo, LoType, Topic } from "$lib/services/base/lo-types";
 import { filterByType, setShowHide } from "./lo-utils";

@@ -4,8 +4,8 @@
   import EditCoursButton from "./buttons/EditCoursButton.svelte";
   import { slideFromLeft } from "./animations";
   import IconBar from "../components/IconBar.svelte";
-  import { themeService } from "$lib/services/themes";
   import { currentCourse } from "$lib/runes.svelte";
+  import { themeService } from "$lib/services/themes/services/themes.svelte";
 
   const themeClasses = $derived({
     firstDiv: themeService.currentTheme.value === "classic" ? "dark:bg-tertiary-900" : "dark:bg-primary-900",

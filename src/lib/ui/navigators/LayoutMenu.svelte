@@ -1,7 +1,7 @@
 <script lang="ts">
   import Menu from "$lib/ui/components/Menu.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
-  import { themeService } from "$lib/services/themes";
+  import { themeService } from "$lib/services/themes/services/themes.svelte";
   import { courseService } from "$lib/services/course";
   import { currentCodeTheme, markdownService } from "$lib/services/markdown";
   import { Combobox, Segment } from "@skeletonlabs/skeleton-svelte";
