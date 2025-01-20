@@ -5,6 +5,12 @@
     data: any;
   }
   let { data }: Props = $props();
+
+  let videosTxt: string[] = [];
+
+  data.videos.forEach((video) => {
+    videosTxt.push(`- [${video.title}](https://${video.route})`);
+  });
   let text = `
 # Docs for LLMs
 
@@ -15,7 +21,11 @@ Currently, we have the following files...
 - [llms-full.txt](https://${data.course.courseUrl}/llms-full.txt) — the complete course
 - [llms-labs.txt](https://${data.course.courseUrl}/llms-labs.txt) — just the labs
 - [llms-notes.txt](https://${data.course.courseUrl}/llms-notes.txt) — just the notes
+- [llms-pdf.zip](https://${data.course.courseUrl}/llms-pdfs.zip) — a zip of all talks
+
+  ## Videos
 `;
+  text += videosTxt.join("\n");
   let textmd = convertMdToHtml(text);
 </script>
 
