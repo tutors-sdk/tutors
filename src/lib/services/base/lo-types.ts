@@ -51,6 +51,12 @@ export type VideoIdentifiers = {
   videoIds: VideoIdentifier[]; // All video sources
 };
 
+// Types for video services
+type VideoService = "youtube" | "heanet" | "vimp";
+export interface VideoConfig {
+  service: VideoService;
+  id: string;
+}
 /**
  * Base structure for learning resources
  */
