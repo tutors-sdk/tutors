@@ -3,48 +3,21 @@
   import type { Lo } from "$lib/services/base";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
   import { currentCourse } from "$lib/runes.svelte";
-  import type { VideoIdentifier } from "$lib/services/base/lo-types";
+  import { getVideoConfig } from "$lib/services/course/utils/lo-utils";
 
   interface Props {
     lo: Lo;
     autoplay?: boolean;
   }
-  let { lo = $bindable(), autoplay = false }: Props = $props();
+  let { lo = $bindable() }: Props = $props();
 
-  let firefox = $state(false);
   let showVime = $state(false);
 
-  // Detect Firefox on mount
   onMount(() => {
-    firefox = navigator?.userAgent.indexOf("Firefox") != -1;
     setTimeout(() => {
       showVime = true;
     }, 500);
   });
-
-  // Extract video configuration
-  function getVideoConfig(lo: Lo): VideoIdentifier {
-    let config: VideoIdentifier = { service: "youtube", id: "" };
-    if (lo.videoids?.videoIds?.length > 0) {
-      const lastVideo = lo.videoids.videoIds[lo.videoids.videoIds.length - 1];
-      if (lastVideo.service === "heanet" || lastVideo.service === "vimp") {
-        config.service = lastVideo.service;
-        config.id = lastVideo.id;
-      } else {
-        const parts = lo.video?.split("/") || [];
-        const id = parts.pop() || parts.pop() || "";
-        config.id = id;
-      }
-    }
-    if (config.service === "heanet") {
-      config.url = `https://media.heanet.ie/player/${config.id}`;
-    } else if (config.service === "vimp") {
-      config.url = `https://vimp.oth-regensburg.de/media/embed?key=${config.id}&autoplay=false&controls=true`;
-    } else if (config.service === "youtube") {
-      config.url = `https://www.youtube.com/embed/${config.id}${autoplay ? "?&autoplay=1" : ""}`;
-    }
-    return config;
-  }
 
   // Set icon for panel videos
   if (lo && lo.type === "panelvideo") {
