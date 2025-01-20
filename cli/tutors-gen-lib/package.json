@@ -14,11 +14,13 @@
   },
   "dependencies": {
     "@iktakahiro/markdown-it-katex": "^4.0.1",
+    "@types/archiver": "^6.0.3",
     "@types/js-yaml": "^4.0.5",
     "@types/markdown-it-emoji": "^2.0.2",
     "@types/markdown-it-footnote": "^3.0.0",
     "@types/node": "^20.2.6",
     "@types/shelljs": "^0.8.12",
+    "archiver": "^7.0.1",
     "commander": "^10.0.1",
     "front-matter": "^4.0.2",
     "glob": "^10.2.7",
