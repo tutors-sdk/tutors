@@ -3,7 +3,7 @@
   import type { Lo } from "$lib/services/base";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
   import { currentCourse } from "$lib/runes.svelte";
-  import type { VideoConfig } from "$lib/services/base/lo-types";
+  import type { VideoIdentifier } from "$lib/services/base/lo-types";
 
   interface Props {
     lo: Lo;
@@ -23,28 +23,27 @@
   });
 
   // Extract video configuration
-  function getVideoConfig(lo: Lo): VideoConfig {
+  function getVideoConfig(lo: Lo): VideoIdentifier {
+    let config: VideoIdentifier = { service: "youtube", id: "" };
     if (lo.videoids?.videoIds?.length > 0) {
       const lastVideo = lo.videoids.videoIds[lo.videoids.videoIds.length - 1];
       if (lastVideo.service === "heanet" || lastVideo.service === "vimp") {
-        return { service: lastVideo.service, id: lastVideo.id };
+        config.service = lastVideo.service;
+        config.id = lastVideo.id;
+      } else {
+        const parts = lo.video?.split("/") || [];
+        const id = parts.pop() || parts.pop() || "";
+        config.id = id;
       }
     }
-
-    // Default to YouTube
-    const parts = lo.video?.split("/") || [];
-    const id = parts.pop() || parts.pop() || "";
-    return { service: "youtube", id };
-  }
-
-  // Get video source URL based on configuration
-  function getVideoSrc(config: VideoConfig): string {
-    const urls = {
-      heanet: `https://media.heanet.ie/player/${config.id}`,
-      vimp: `https://vimp.oth-regensburg.de/media/embed?key=${config.id}&autoplay=false&controls=true`,
-      youtube: `https://www.youtube.com/embed/${config.id}${autoplay ? "?&autoplay=1" : ""}`
-    };
-    return urls[config.service];
+    if (config.service === "heanet") {
+      config.url = `https://media.heanet.ie/player/${config.id}`;
+    } else if (config.service === "vimp") {
+      config.url = `https://vimp.oth-regensburg.de/media/embed?key=${config.id}&autoplay=false&controls=true`;
+    } else if (config.service === "youtube") {
+      config.url = `https://www.youtube.com/embed/${config.id}${autoplay ? "?&autoplay=1" : ""}`;
+    }
+    return config;
   }
 
   // Set icon for panel videos
@@ -53,7 +52,7 @@
   }
 
   let videoConfig = $state(getVideoConfig(lo));
-  let videoSrc = $derived(getVideoSrc(videoConfig));
+
   $effect(() => {
     videoConfig = getVideoConfig(lo);
   });
@@ -66,7 +65,7 @@
         <iframe
           title={lo.title}
           class="absolute inset-0 h-full w-full"
-          src={videoSrc}
+          src={videoConfig.url}
           allow="encrypted-media"
           allowfullscreen
         ></iframe>
@@ -74,7 +73,7 @@
     {:else if videoConfig.service === "vimp"}
       <iframe
         title={lo.title}
-        src={videoSrc}
+        src={videoConfig.url}
         class="iframeLoaded"
         width="720"
         height="405"
@@ -87,7 +86,7 @@
         <iframe
           title={lo.title}
           class="absolute inset-0 h-full w-full"
-          src={videoSrc}
+          src={videoConfig.url}
           allow="encrypted-media"
           allowfullscreen
         ></iframe>

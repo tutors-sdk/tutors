@@ -41,6 +41,7 @@ export type Calendar = {
 export type VideoIdentifier = {
   service: string; // Video platform (e.g., "youtube", "vimeo")
   id: string; // Video ID on the platform
+  url?: string; // Video URL
 };
 
 /**
@@ -51,12 +52,6 @@ export type VideoIdentifiers = {
   videoIds: VideoIdentifier[]; // All video sources
 };
 
-// Types for video services
-type VideoService = "youtube" | "heanet" | "vimp";
-export interface VideoConfig {
-  service: VideoService;
-  id: string;
-}
 /**
  * Base structure for learning resources
  */
