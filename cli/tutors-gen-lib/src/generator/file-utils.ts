@@ -1,6 +1,8 @@
 import * as fs from "fs";
 import * as sh from "shelljs";
 import * as yaml from "js-yaml";
+import archiver from "archiver";
+import * as path from "path";
 
 export function writeFile(folder: string, filename: string, contents: string): void {
   if (!fs.existsSync(folder)) {
@@ -125,4 +127,18 @@ export function readYamlFile(yamlFilePath: string): any {
     sh.exit(1);
   }
   return yamlData;
+}
+
+export async function compressToZip(files: string[], outputPath: string) {
+  const output = fs.createWriteStream(outputPath);
+  const archive = archiver("zip", {
+    zlib: { level: 9 }, // Maximum compression level
+  });
+  archive.pipe(output);
+  for (const file of files) {
+    if (fs.existsSync(file)) {
+      archive.file(file, { name: path.basename(file) });
+    }
+  }
+  archive.finalize();
 }
