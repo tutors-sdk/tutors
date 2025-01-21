@@ -70,9 +70,12 @@ function generatePdfs(pdfs: Talk[], folder: string): string[] {
 }
 
 export function generateLlmsByTopic (course: Course, folder: string) {
+
   course.los.forEach((lo: Lo, index) => {
     if (lo.type === "topic") {
       let allTxt : string[] = []
+      header = `<SYSTEM> This is the Tutors course ${course.title} topic ${lo.title} by ${course.properties.credits}</SYSTEM>\n\n`;
+      allTxt.push(header);
       generateLo(lo, allTxt, 1);
       const paddedIndex = index.toString().padStart(2, '0');
       writeFile(folder, `${paddedIndex}-llms-full.txt`, allTxt.join("\n"));
