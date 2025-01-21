@@ -135,9 +135,10 @@ export async function compressToZip(files: string[], outputPath: string) {
     zlib: { level: 9 }, // Maximum compression level
   });
   archive.pipe(output);
-  for (const file of files) {
+  for (const [index, file] of files.entries()) {
     if (fs.existsSync(file)) {
-      archive.file(file, { name: path.basename(file) });
+      const numberedName = `${index.toString().padStart(2, '0')}-${path.basename(file)}`;
+      archive.file(file, { name: numberedName });
     }
   }
   archive.finalize();
