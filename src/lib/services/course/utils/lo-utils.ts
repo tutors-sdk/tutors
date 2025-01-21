@@ -13,7 +13,8 @@ import {
   type PanelTalk,
   type PanelVideo,
   type PanelNote,
-  type Lab
+  type Lab,
+  type VideoIdentifier
 } from "$lib/services/base/lo-types";
 
 export function flattenLos(los: Lo[]): Lo[] {
@@ -166,4 +167,27 @@ export function setShowHide(lo: Lo, status: boolean) {
       // }
     }
   }
+}
+
+export function getVideoConfig(lo: Lo): VideoIdentifier {
+  const config: VideoIdentifier = { service: "youtube", id: "" };
+  if (lo.videoids?.videoIds?.length > 0) {
+    const lastVideo = lo.videoids.videoIds[lo.videoids.videoIds.length - 1];
+    if (lastVideo.service === "heanet" || lastVideo.service === "vimp") {
+      config.service = lastVideo.service;
+      config.id = lastVideo.id;
+    } else {
+      const parts = lo.video?.split("/") || [];
+      const id = parts.pop() || parts.pop() || "";
+      config.id = id;
+    }
+  }
+  if (config.service === "heanet") {
+    config.url = `https://media.heanet.ie/player/${config.id}`;
+  } else if (config.service === "vimp") {
+    config.url = `https://vimp.oth-regensburg.de/media/embed?key=${config.id}&autoplay=false&controls=true`;
+  } else if (config.service === "youtube") {
+    config.url = `https://www.youtube.com/embed/${config.id}`;
+  }
+  return config;
 }

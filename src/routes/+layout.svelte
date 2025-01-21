@@ -3,7 +3,7 @@
   import { tutorsConnectService } from "$lib/services/connect";
   import type { PageData } from "./$types";
   import { browser } from "$app/environment";
-  import { themeService } from "$lib/services/themes";
+  import { themeService } from "$lib/services/themes/services/themes.svelte";
 
   interface Props {
     data: PageData;
