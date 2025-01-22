@@ -43,7 +43,7 @@ function generatePdfs(pdfs: Talk[], folder: string) {
 
 export function generateLlmsByTopic(course: Course, folder: string) {
   course.los.forEach((lo: Lo, index) => {
-    if (lo.type === "topic") {
+    if (lo.type === "topic" && lo.hide !== true) {
       const topic = lo as Topic;
       let allTxt: string[] = [];
       header = `<SYSTEM> This is the Tutors course ${course.title} topic ${topic.title} by ${course.properties.credits}</SYSTEM>\n\n`;
