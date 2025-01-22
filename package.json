@@ -1,6 +1,6 @@
 {
   "name": "tutors",
-  "version": "11.3.0",
+  "version": "11.4.0",
   "type": "module",
   "scripts": {
     "dev": "vite dev",
