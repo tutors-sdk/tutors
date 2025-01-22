@@ -26,7 +26,7 @@ export function generateLlms(course: Course) : string {
   let text = getSummary(course);
   let topicStr: string[] = [];
   course.los.forEach((lo: Lo, index: number) => {
-    if (lo.type === "topic") {
+    if (lo.type === "topic" && lo.hide !== true) {
       const topic = lo as Topic;
       const paddedIndex = index.toString().padStart(2, "0");
       const title = `${paddedIndex}-${toSnakeCase(topic.title)}`;
