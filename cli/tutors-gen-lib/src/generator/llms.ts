@@ -65,20 +65,24 @@ function generatePdfs(pdfs: Talk[], folder: string): string[] {
     pdfsTxt.push(descriptor);
   }
 
-  compressToZip(pdfFiles, `${folder}/llms-pdfs.zip`);
+  compressToZip(pdfFiles, folder);
   return pdfsTxt;
 }
 
-export function generateLlmsByTopic (course: Course, folder: string) {
-
+export function generateLlmsByTopic(course: Course, folder: string) {
   course.los.forEach((lo: Lo, index) => {
     if (lo.type === "topic") {
-      let allTxt : string[] = []
-      header = `<SYSTEM> This is the Tutors course ${course.title} topic ${lo.title} by ${course.properties.credits}</SYSTEM>\n\n`;
+      const topic = lo as Topic;
+      let allTxt: string[] = [];
+      header = `<SYSTEM> This is the Tutors course ${course.title} topic ${topic.title} by ${course.properties.credits}</SYSTEM>\n\n`;
       allTxt.push(header);
-      generateLo(lo, allTxt, 1);
-      const paddedIndex = index.toString().padStart(2, '0');
+      generateLo(topic, allTxt, 1);
+      const paddedIndex = index.toString().padStart(2, "0");
       writeFile(folder, `${paddedIndex}-llms-full.txt`, allTxt.join("\n"));
+
+      const allLos = flattenLos(topic.los);
+      const talks = allLos.filter((lo) => lo.type === "talk");
+      generatePdfs(talks as Talk[], `${folder}/${paddedIndex}-pdfs.zip`);
     }
   });
 }
@@ -91,12 +95,11 @@ export function generateLlms(course: Course, folder: string) {
   const labs = allLos.filter((lo) => lo.type === "lab");
   const notes = allLos.filter((lo) => lo.type === "note");
   const pdfs = allLos.filter((lo) => lo.type === "talk");
-  const videos = allLos.filter((lo) => lo.type === "video" || lo.type === "panelvideo");
 
   const allTxt = generateAll(course, llmFolder);
   const notesTxt = generateNotes(notes);
   const labsTxt = generateLabs(labs);
-  const pdfsTxt = generatePdfs(pdfs as Talk[], llmFolder);
+  const pdfsTxt = generatePdfs(pdfs as Talk[], `${llmFolder}/pdfs.zip`);
 
   writeFile(llmFolder, "llms-full.txt", allTxt.join("\n"));
   writeFile(llmFolder, "llms-labs.txt", labsTxt.join("\n"));
