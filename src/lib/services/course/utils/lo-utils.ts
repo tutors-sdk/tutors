@@ -188,6 +188,7 @@ export function getVideoConfig(lo: Lo): VideoIdentifier {
     config.url = `https://vimp.oth-regensburg.de/media/embed?key=${config.id}&autoplay=false&controls=true`;
   } else if (config.service === "youtube") {
     config.url = `https://www.youtube.com/embed/${config.id}`;
+    config.externalUrl = `https://www.youtube.com/watch?v=${config.id}`;
   }
   return config;
 }

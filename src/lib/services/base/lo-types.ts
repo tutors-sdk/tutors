@@ -42,6 +42,7 @@ export type VideoIdentifier = {
   service: string; // Video platform (e.g., "youtube", "vimeo")
   id: string; // Video ID on the platform
   url?: string; // Video URL
+  externalUrl?: string; // External video URL
 };
 
 /**
