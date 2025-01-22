@@ -51,7 +51,7 @@
           type="tutorsTime"
           targetStr="_blank"
         />
-        <MenuItem link="/live/{currentCourse.value?.courseId}" text="Tutors Live" type="live" />
+        <MenuItem link="/live/{currentCourse.value?.courseId}" text="Tutors Live" type="live" targetStr="_blank" />
 
         <li class="option !p-0 hover:preset-tonal">
           <OnlineButton />
