@@ -9,7 +9,7 @@
 >
   <div class="flex w-full justify-between pb-2">
     <h2 class="p-2">
-      {los[0].courseTitle}
+      {los[0]?.courseTitle}
     </h2>
   </div>
   <div class="flex flex-wrap justify-center">

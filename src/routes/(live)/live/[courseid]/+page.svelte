@@ -1,6 +1,7 @@
 <script lang="ts">
   import { presenceService } from "$lib/services/community";
   import Course from "$lib/ui/time/Course.svelte";
+  import CourseGroup from "$lib/ui/time/CourseGroup.svelte";
 
   interface Props {
     data: any;
@@ -12,4 +13,4 @@
   }
 </script>
 
-<Course />
+<CourseGroup los={presenceService.studentsOnline.value} />
