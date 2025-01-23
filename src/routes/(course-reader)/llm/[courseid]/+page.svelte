@@ -7,9 +7,7 @@
   }
   let { data }: Props = $props();
 
-  console.log(data.course.llm);
   if (data.course.llm === 0) {
-    console.log("redirecting to course");
     goto(`/course/${data.course.courseId}`);
   }
 </script>
