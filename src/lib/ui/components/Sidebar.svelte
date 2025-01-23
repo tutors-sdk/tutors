@@ -30,11 +30,13 @@
     {@render menuSelector()}
   {/snippet}
   {#snippet content()}
-    <div class="relative">
-      <button class="btn-icon absolute right-0 top-0 hover:preset-tonal" onclick={popoverClose}>
+    <div class="relative h-full">
+      <button class="btn-icon absolute right-0 top-0 z-10 hover:preset-tonal" onclick={popoverClose}>
         <Icon type="close" />
       </button>
-      {@render sidebarContent()}
+      <div class="h-full overflow-y-auto">
+        {@render sidebarContent()}
+      </div>
     </div>
   {/snippet}
 </Modal>
