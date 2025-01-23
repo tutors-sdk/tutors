@@ -58,7 +58,7 @@ export const FluentIconLib: IconLib = {
   landscape: { type: "fluent:rectangle-landscape-sparkle-48-regular", color: "error" },
 
   courseinfo: { type: "fluent:info-28-regular", color: "bg-base-content" },
-  llms: { type: "hugeicons:ai-innovation-01", color: "bg-base-content" },
+  llm: { type: "hugeicons:ai-innovation-01", color: "bg-base-content" },
   calendar: { type: "fluent:calendar-ltr-12-regular", color: "bg-base-content" },
   appSettings: { type: "fluent:settings-24-filled", color: "primary" },
   listOnline: { type: "fluent:people-list-24-filled", color: "primary" },

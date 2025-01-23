@@ -1,8 +1,17 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
+  import { currentCourse } from "$lib/runes.svelte";
+
   interface Props {
     data: any;
   }
   let { data }: Props = $props();
+
+  console.log(data.course.llm);
+  if (data.course.llm === 0) {
+    console.log("redirecting to course");
+    goto(`/course/${data.course.courseId}`);
+  }
 </script>
 
 <div class="container mx-auto mt-2 items-center justify-between lg:flex">
