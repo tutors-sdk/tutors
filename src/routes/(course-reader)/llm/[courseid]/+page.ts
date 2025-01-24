@@ -7,9 +7,9 @@ export const ssr = false;
 export const load = async ({ params, fetch }) => {
   const course = await courseService.readCourse(params.courseid, fetch);
   currentCourse.value = course;
-  const page = generateLlms(course);
+  const llmsLinks = generateLlms(course);
   return {
     course,
-    page
+    llmsLinks
   };
 };

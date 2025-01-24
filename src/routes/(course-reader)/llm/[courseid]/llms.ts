@@ -1,5 +1,5 @@
 import type { Course, Lo, Topic } from "$lib/services/base";
-import { flattenLos, getVideoConfig } from "$lib/services/course/utils/lo-utils";
+import { filterByType, flattenLos, getVideoConfig } from "$lib/services/course/utils/lo-utils";
 import { convertMdToHtml } from "$lib/services/markdown";
 
 export function toSnakeCase(str: string): string {
@@ -9,26 +9,23 @@ export function toSnakeCase(str: string): string {
     .replace(/\s+/g, "-");
 }
 
-function getSummary(course: Course): string {
+const llmsText = "text in markdown";
+const pdfsZip = "archive of pdfs";
+const videoTxt = "video";
+
+function courseSummary(course: Course): string {
   const fileName = toSnakeCase(course.title);
-  const text = `
-## Docs for LLMs
-
-Tutors supports the [llms.txt](https://llmstxt.org/) convention for making documentation available to large language models and the applications that make use of them.
-
-### Complete Course Content
-
-- [${fileName}-complete-llms.txt](https://${course.courseUrl}/llms/${fileName}-complete-llms.txt) — the complete course text
-- [${fileName}-complete-pdf.zip](https://${course.courseUrl}/llms/${fileName}-complete-pdfs.zip) — archive of all Talks
-
-Form some LLMs it make sense to provide individual topic content, which can be found below:
-`;
-  return text;
+  let links:string[] = [];
+  links.push(`- [${fileName}-complete-llms.txt](https://${course.courseUrl}/llms/${fileName}-complete-llms.txt) — ${llmsText}`);
+  const talks = filterByType(course.los, "talk");
+  if (talks.length > 0) {
+    links.push(`- [${fileName}-complete-pdfs.zip](https://${course.courseUrl}/llms/${fileName}-complete-pdfs.zip) — ${pdfsZip}`);
+  }
+  return links.join("\n");
 }
 
-export function generateLlms(course: Course): string {
-  const text = getSummary(course);
-  const topicStr: string[] = [];
+function topics(course: Course): string {
+  let topicStr:string[] = [];
   course.los.forEach((lo: Lo, index: number) => {
     if (lo.type === "topic" && lo.hide !== true) {
       const topic = lo as Topic;
@@ -36,10 +33,10 @@ export function generateLlms(course: Course): string {
       const title = `${paddedIndex}-${toSnakeCase(topic.title)}`;
       topicStr.push(`### ${topic.title}`);
       topicStr.push(
-        `- Complete text: [${toSnakeCase(topic.title)}-llms.txt](https://${course.courseUrl}/llms/topics/${title}-llms.txt)`
+        `- [${toSnakeCase(topic.title)}-llms.txt](https://${course.courseUrl}/llms/topics/${title}-llms.txt) — ${llmsText}`
       );
       topicStr.push(
-        `- Zip of talks: [${toSnakeCase(topic.title)}-pdfs.zip](https://${course.courseUrl}/llms/topics/${title}-pdfs.zip)`
+        `- [${toSnakeCase(topic.title)}-pdfs.zip](https://${course.courseUrl}/llms/topics/${title}-pdfs.zip) — ${pdfsZip}`
       );
 
       const allLos = flattenLos(topic.los);
@@ -47,10 +44,20 @@ export function generateLlms(course: Course): string {
       videos.forEach((video: Lo) => {
         const videoConfig = getVideoConfig(video);
         if (videoConfig.externalUrl) {
-          topicStr.push(`- Video: [${video.title}](${videoConfig.externalUrl})`);
+          topicStr.push(`- [${video.title}](${videoConfig.externalUrl}) — ${videoTxt}`);
         }
       });
     }
   });
-  return convertMdToHtml(text + topicStr.join("\n"));
+  let str = "";
+  if (topicStr.length > 0) {
+    str = "\n\nFor some LLMs it may make sense to provide individual topic content, which can be found below:\n" + topicStr.join("\n");
+  }
+  return str;
+}
+
+export function generateLlms(course: Course): string {
+  const summary = courseSummary(course);
+  const topicStr = topics(course);
+  return convertMdToHtml(summary + topicStr);
 }
