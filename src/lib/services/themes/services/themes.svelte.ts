@@ -4,7 +4,8 @@
  * Supports multiple icon sets and persists user preferences.
  */
 
-import type { IconType, CardStyleType, LayoutType, Theme, ThemeService } from "$lib/services/base";
+import type { IconType } from "$lib/services/base";
+import type { CardStyleType, LayoutType, Theme, ThemeService } from "../types";
 import { FluentIconLib } from "../icons/fluent-icons";
 import { HeroIconLib } from "../icons/hero-icons";
 import { FestiveIcons } from "../icons/festive-icons";
