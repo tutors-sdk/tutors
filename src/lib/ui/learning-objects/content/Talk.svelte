@@ -174,7 +174,7 @@
     </div>
   </div>
   {#if !loading}
-    <canvas class="mx-auto w-full 2xl:w-4/5" bind:this={canvas}></canvas>
+    <canvas class="mx-auto w-full" bind:this={canvas}></canvas>
   {:else}
     <div class="mb-72 mt-72 flex flex-col items-center justify-center">
       <Progress value={null} />
