@@ -24,6 +24,10 @@
             img: lo?.img,
             icon: lo?.icon
           }}
+          cardLayout={{
+            layout: "compacted",
+            style: "landscape"
+          }}
         />
       {/if}
     {/each}
