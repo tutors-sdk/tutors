@@ -12,6 +12,7 @@ export type {
   Theme,
   LayoutType,
   CardStyleType,
+  CardConfig,
   CardDetails
 } from "./types";
 
