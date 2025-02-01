@@ -10,23 +10,22 @@
   const target = $derived(cardDetails.type === "web" && cardDetails.route.startsWith("http") ? "_blank" : "");
   const route = $derived(cardDetails.type === "video" ? cardDetails.video! : cardDetails.route);
   const hideVideoIcon = $derived(currentCourse.value?.areVideosHidden);
-  const isPortrait = $derived(themeService.cardStyle.value === "portrait");
-  const isLandscape = $derived(themeService.cardStyle.value === "landscape");
-  const isCircular = $derived(themeService.cardStyle.value === "circular");
+  const layout = $derived(themeService.layout.value);
+  const style = $derived(themeService.cardStyle.value);
+  const isPortrait = $derived(style === "portrait");
+  const isLandscape = $derived(style === "landscape");
+  const isCircular = $derived(style === "circular");
   const hasFullName = $derived(cardDetails?.student?.fullName);
 
   const styles = $derived({
-    heading: cardStyles.heading[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
-    dimensions:
-      cardStyles.dimensions[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
-    image: cardStyles.image[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
-    icon: cardStyles.icon[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
-    iconHeight:
-      cardStyles.iconHeight[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
-    text: cardStyles.text[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
-    avatar: cardStyles.avatar[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType],
-    container:
-      cardStyles.container[themeService.layout.value as LayoutType][themeService.cardStyle.value as CardStyleType]
+    heading: cardStyles.heading[layout][style],
+    dimensions: cardStyles.dimensions[layout][style],
+    image: cardStyles.image[layout][style],
+    icon: cardStyles.icon[layout][style],
+    iconHeight: cardStyles.iconHeight[layout][style],
+    text: cardStyles.text[layout][style],
+    avatar: cardStyles.avatar[layout][style],
+    container: cardStyles.container[layout][style]
   });
 </script>
 
