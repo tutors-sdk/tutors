@@ -1,6 +1,7 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
   import { cardStyles, type CardConfig, type CardDetails } from "$lib/services/themes";
+  import type { CardStyleConfig } from "$lib/services/themes/styles/card-styles";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { currentCourse } from "$lib/runes.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
