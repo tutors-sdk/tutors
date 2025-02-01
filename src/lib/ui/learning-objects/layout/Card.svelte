@@ -1,17 +1,17 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
-  import { cardStyles, type CardDetails, type CardStyleType, type LayoutType } from "$lib/services/themes";
+  import { cardStyles, type CardConfig, type CardDetails } from "$lib/services/themes";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { currentCourse } from "$lib/runes.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
 
-  let { cardDetails } = $props<{ cardDetails: CardDetails }>();
+  let { cardDetails, cardLayout } = $props<{ cardDetails: CardDetails; cardLayout?: CardConfig }>();
 
   const target = $derived(cardDetails.type === "web" && cardDetails.route.startsWith("http") ? "_blank" : "");
   const route = $derived(cardDetails.type === "video" ? cardDetails.video! : cardDetails.route);
   const hideVideoIcon = $derived(currentCourse.value?.areVideosHidden);
-  const layout = $derived(themeService.layout.value);
-  const style = $derived(themeService.cardStyle.value);
+  const layout = $derived(cardLayout?.layout ?? themeService.layout.value);
+  const style = $derived(cardLayout?.style ?? themeService.cardStyle.value);
   const isPortrait = $derived(style === "portrait");
   const isLandscape = $derived(style === "landscape");
   const isCircular = $derived(style === "circular");
