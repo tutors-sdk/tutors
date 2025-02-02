@@ -62,6 +62,7 @@ export interface CardDetails {
   img?: string;
   student?: LoUser;
   video?: string;
+  metric?: string;
 }
 
 /**

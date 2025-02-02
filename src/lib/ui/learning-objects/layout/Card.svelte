@@ -1,7 +1,6 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
   import { cardStyles, type CardConfig, type CardDetails } from "$lib/services/themes";
-  import type { CardStyleConfig } from "$lib/services/themes/styles/card-styles";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { currentCourse } from "$lib/runes.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
@@ -16,7 +15,6 @@
   const isPortrait = $derived(style === "portrait");
   const isLandscape = $derived(style === "landscape");
   const isCircular = $derived(style === "circular");
-  const hasFullName = $derived(cardDetails?.student?.fullName);
 
   const styles = $derived({
     heading: cardStyles.heading[layout][style],
@@ -40,27 +38,37 @@
       {/if}
       <Icon type={cardDetails.type} height={styles.iconHeight} />
     </div>
-    {#if cardDetails.student}
-      <div class="flex items-center">
-        <img src={cardDetails.student.avatar} alt={cardDetails.student.fullName} class="rounded-3xl {styles.avatar}" />
-        <h6 class={styles.text}>&nbsp;{hasFullName ? cardDetails.student?.fullName : cardDetails.student?.id}</h6>
-      </div>
-    {:else}
-      <div class="line-clamp-2 pr-10 {styles.heading}">
+    <div class="line-clamp-2 pr-10 {styles.heading}">
+      {#if cardDetails.student}
+        <div class="flex items-center justify-between">
+          <span>
+            <img src={cardDetails.img} alt="" class="rounded-xl {styles.avatar}" />
+          </span>
+          <span>
+            <h6 class={styles.text}>&nbsp;{cardDetails.student.fullName ?? cardDetails.student.id}</h6>
+          </span>
+        </div>
+      {:else}
         {cardDetails.title}
-      </div>
-    {/if}
+      {/if}
+    </div>
   </header>
 {/snippet}
 
 {#snippet figure(cardDetails: CardDetails)}
   <figure class="flex items-center justify-center">
-    {#if cardDetails.icon}
+    {#if cardDetails.student}
+      <img
+        src={cardDetails.student.avatar}
+        alt={cardDetails.student.fullName}
+        class="{styles.image} object-contain object-center {isCircular ? 'rounded-full' : 'rounded-xl'}"
+      />
+    {:else if cardDetails.icon}
       <Iconify icon={cardDetails.icon.type} color={cardDetails.icon.color} height={styles.icon} />
     {:else}
       <img
         src={cardDetails.img}
-        alt={cardDetails.title}
+        alt=""
         class="{styles.image} object-contain object-center {isCircular ? 'rounded-full' : ''}"
       />
     {/if}
@@ -71,6 +79,8 @@
   <div class="flex flex-col justify-between p-4 {!isLandscape ? 'text-center' : ''}">
     <div class="{styles.text} ">
       {@html cardDetails.summary}
+    </div>
+    <div class="{styles.text} ">
       {cardDetails.summaryEx}
     </div>
   </div>
@@ -106,9 +116,10 @@
   <div class="flex h-full w-1/3 items-center">
     {@render figure(cardDetails)}
   </div>
-  <div class="w-2/3">
+  <div class="relative w-2/3">
     {@render header(cardDetails)}
     {@render content(cardDetails)}
+    <div class="absolute bottom-1 right-2 text-xs text-gray-400">{cardDetails.metric}</div>
   </div>
 {/snippet}
 
