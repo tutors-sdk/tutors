@@ -11,7 +11,6 @@
         title: lo.courseTitle,
         type: lo.type,
         summary: lo.title,
-        summaryEx: "(" + lo.type + ")",
         img: lo.img,
         icon: lo.icon
       }}

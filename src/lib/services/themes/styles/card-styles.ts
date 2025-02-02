@@ -2,7 +2,7 @@ import type { CardStyleType, LayoutType } from "$lib/services/themes";
 
 type CardStyles = Record<LayoutType, Record<CardStyleType, string>>;
 
-interface CardStyleConfig {
+export interface CardStyleConfig {
   heading: CardStyles;
   dimensions: CardStyles;
   image: CardStyles;

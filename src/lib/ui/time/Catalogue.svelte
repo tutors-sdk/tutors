@@ -17,8 +17,13 @@
         title: courseRecord?.title,
         type: "course",
         summary: courseRecord?.credits,
+        metric: courseRecord?.visits?.toString(),
         img: courseRecord?.img,
         icon: courseRecord?.icon
+      }}
+      cardLayout={{
+        layout: "compacted",
+        style: "landscape"
       }}
     />
   {/each}

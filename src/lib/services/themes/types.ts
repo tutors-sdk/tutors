@@ -43,6 +43,12 @@ export type LayoutType = "expanded" | "compacted";
 /** Card style type for display options */
 export type CardStyleType = "portrait" | "landscape" | "circular";
 
+/** Card configuration - to be able to override the ambient settings */
+export type CardConfig = {
+  style: CardStyleType;
+  layout: LayoutType;
+};
+
 /**
  * Display information for course/topic/lab cards
  */
@@ -56,6 +62,7 @@ export interface CardDetails {
   img?: string;
   student?: LoUser;
   video?: string;
+  metric?: string;
 }
 
 /**
