@@ -10,7 +10,7 @@
   let totalModules = $state(0);
   let totalStudents = $state(0);
   onMount(async () => {
-    totalModules = await catalogueService.getCatalogueCount();
+    totalModules = await data.courseRecords.length;
     totalStudents = await catalogueService.getStudentCount();
   });
 </script>

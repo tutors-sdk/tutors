@@ -12,7 +12,7 @@
         type: lo?.type,
         summary: lo?.courseTitle,
         title: lo?.courseTitle,
-        summaryEx: lo?.title + " (" + lo?.type + ")",
+        summaryEx: lo?.title,
         img: lo?.img,
         icon: lo?.icon
       }}
