@@ -12,6 +12,7 @@ import { FestiveIcons } from "../icons/festive-icons";
 import { makeItSnow, makeItStopSnowing } from "../events/festive.svelte";
 
 import { rune } from "$lib/runes.svelte";
+import { ValentineIcons } from "../icons/valentine-icons";
 
 /**
  * Implementation of the ThemeService interface.
@@ -22,6 +23,7 @@ export const themeService: ThemeService = {
   /** Available themes with their associated icon libraries */
   themes: [
     { name: "tutors", icons: FluentIconLib },
+    { name: "valentines", icons: ValentineIcons },
     { name: "classic", icons: FluentIconLib },
     { name: "dyslexia", icons: FluentIconLib },
     { name: "nouveau", icons: FluentIconLib },
