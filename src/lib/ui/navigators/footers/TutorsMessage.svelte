@@ -5,7 +5,7 @@
 
   onMount(async () => {
     contentHtml = convertMdToHtml(
-      "An [Open Learning Web Toolkit](/course/tutors-reference-manual): Check out the new Card Styles in the layout menu"
+      "An [Open Learning Web Toolkit](/course/tutors-reference-manual): Explore the [Tutors Catalogue](/catalogue)"
     );
   });
 </script>
