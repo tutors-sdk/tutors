@@ -11,6 +11,7 @@
   // !AI add functionality to switch between models!
   // Add Like and dislike 
   // Fork tutors => create tutors AI => create project and layout tasks. Add Eamonn, let him know and he will make a deploy of that
+  // testing commit and push
   export let tutorsAI: string = '/icons/tutorsAI.png';
   let elemChat: HTMLElement;
 
@@ -88,10 +89,6 @@
     setTimeout(() => scrollChatBottom('smooth'), 0);
   }
 
-  // // When DOM is mounted, scroll to bottom
-  // onMount(() => {
-  //   scrollChatBottom();
-  // });
 </script>
 
 {#snippet menuSelector()}
