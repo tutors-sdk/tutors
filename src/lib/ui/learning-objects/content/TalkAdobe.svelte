@@ -1,7 +1,7 @@
 <script lang="ts">
   import { page } from "$app/stores";
   import { PUBLIC_PDF_KEY } from "$env/static/public";
-  import { adobeLoaded } from "$lib/runes.svelte";
+  import { adobeLoaded, currentCourse } from "$lib/runes.svelte";
   import type { Talk } from "$lib/services/base";
   import { onMount } from "svelte";
 
@@ -10,15 +10,19 @@
   }
   let { lo }: Props = $props();
 
+  const embedOption = currentCourse.value?.lightboxpdf ? "" : "SIZED_CONTAINER";
   const viewerConfig = {
+    embedMode: embedOption,
     defaultViewMode: "FIT_PAGE", // Options are "FIT_WIDTH" or "FIT_PAGE"
+    showThumbnails: true,
     showAnnotationTools: false, // Hide annotation tools
     enableAnnotationAPIs: false, // Disable annotations completely
-    showLeftHandPanel: false, // Hide left panel for better focus on the document
+    showLeftHandPanel: true, // Hide left panel for better focus on the document
     showDownloadPDF: true, // Optionally disable download button
     showPrintPDF: true,
     showFullScreen: true,
-    showSinglePage: true
+    showSinglePage: true,
+    showZoomControl: true
   };
 
   let adobeDCView: any = null;
@@ -74,6 +78,6 @@
   });
 </script>
 
-<div class="mr-2 mt-2 px-4 py-2">
-  <div id={viewerId} class="mx-auto h-[80dvh]"></div>
+<div class="relative mr-2 h-[calc(100vh-12rem)] rounded-xl border-[1px] border-primary-500 p-2">
+  <div id={viewerId} class="mx-auto h-full"></div>
 </div>
