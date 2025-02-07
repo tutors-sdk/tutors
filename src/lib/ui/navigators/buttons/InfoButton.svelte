@@ -3,16 +3,17 @@
   import { currentCourse, currentLo, currentLabStepIndex } from "$lib/runes.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
   import Sidebar from "$lib/ui/components/Sidebar.svelte";
-  // import Context from "$lib/ui/learning-objects/structure/Context.svelte";
   import { marked } from 'marked';
   import { Avatar } from '@skeletonlabs/skeleton-svelte';
-  import { onMount } from 'svelte';
 
   // !AI add functionality to switch between models!
   // Add Like and dislike 
-  // Fork tutors => create tutors AI => create project and layout tasks. Add Eamonn, let him know and he will make a deploy of that
-  // testing commit and push
   export let tutorsAI: string = '/icons/tutorsAI.png';
+
+    let topic: string = currentCourse?.value?.contentHtml;
+    let topicDescription: string = currentLo?.value?.contentMd;
+    let pageContent:string = currentLo?.value?.los[currentLabStepIndex?.value].contentMd;
+
   let elemChat: HTMLElement;
 
   interface Message {
@@ -24,16 +25,11 @@
     role: 'system',
     content: `you are assisting Computer Science Higher Diploma students to understand content. \
      Always explain like they are five years old. \
-     For the context here is the full text of the topic that student is currently studdies: \
-     The basic model of Tutors\
-     Tutors is a collection of open source components and services supporting the creation of transformative learning experiences using open web standards. It consists of two key components:\
-     - *Generator:*  transforms a [folder of learning content](https://github.com/tutors-sdk/tutors-reference-course)  into a Tutors course\
-    - *Reader*: presents a Tutors course as an intuitive, discoverable and attractive [Web experience](https://tutors.dev/course/reference-course)\
-`
+     At this stage student explores ${topic}. that student is currently studdies: \
+     Particularly student focused on: ${topicDescription}\
+     The full text of the page student currently explores is ${pageContent}`
   }
   let messages: Message[] = [systemMessage];
-  
-  //need to see why we need vatiables bellow
   let inputMessage: string = '';
   let isLoading: boolean = false;
 
@@ -103,8 +99,8 @@
   <article>
     <prose class="prose dark:prose-invert">
       {@html currentCourse?.value?.contentHtml}
-      <!-- {@html currentLo?.value?.contentMd}
-      {@html currentLabStepIndex?.value}
+      <!-- {@html currentLo?.value?.contentMd} -->
+      <!-- {@html currentLabStepIndex?.value}
       {@html currentLo?.value?.los[currentLabStepIndex?.value].contentMd} -->
     </prose>
   </article>
