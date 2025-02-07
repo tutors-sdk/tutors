@@ -99,6 +99,7 @@ function addWall(course: Course, type: LoType) {
 
 export function loadPropertyFlags(course: Course) {
   course.isPortfolio = (course.properties?.portfolio as unknown as boolean) === true;
+  course.lightboxpdf = (course.properties?.lightboxpdf as unknown as boolean) === true;
   course.llm = course.properties.llm as unknown as number;
   course.isPrivate = (course.properties?.private as unknown as number) === 1;
   course.areVideosHidden = (course.properties?.hideVideos as unknown as boolean) === true;
