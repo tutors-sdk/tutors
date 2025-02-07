@@ -21,10 +21,13 @@
     content: string;
   }
 
+  const availableModels: string[] = ['granite3.1-dense:2b', 'granite-code:3b'];
+  let selectedModel: string = availableModels[0];
+
   let systemMessage:Message = {
     role: 'system',
     content: `you are assisting Computer Science Higher Diploma students to understand content. \
-     Always explain like they are five years old. \
+     Always explain like they are five years old.\
      At this stage student explores ${topic}. that student is currently studdies: \
      Particularly student focused on: ${topicDescription}\
      The full text of the page student currently explores is ${pageContent}`
@@ -52,7 +55,7 @@
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          model: 'granite3.1-dense:2b',
+          model: selectedModel,
           messages: messages,
           stream: false,
           options: {
@@ -111,6 +114,12 @@
     <h3 class="h2">Tutors AI Chat</h3>
   </header>
 
+           <select bind:value={selectedModel} >
+  {#each availableModels as model}
+    <option value={model}>{model}</option>
+  {/each}
+</select>
+
   <!-- Messages -->
 <section bind:this={elemChat} class="max-h-[450px] p-4 overflow-y-auto space-y-4">
   {#if messages.length < 2}
@@ -128,7 +137,7 @@
       {:else}
         <div class="grid grid-cols-[auto_1fr] gap-2">
           <Avatar src={tutorsAI} name="TutorsAI" size="size-8" />
-          <div class="card p-4 preset-tonal rounded-xl space-y-2">
+          <div class="card p-4">
             <p>{@html marked(message.content)}</p>
           </div>
         </div>
@@ -149,7 +158,6 @@
         placeholder="Message Tutors AI" rows={3} 
       />
     </section>
-
 {/snippet}
 
 <Sidebar {menuSelector} {sidebarContent} />
