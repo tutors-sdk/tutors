@@ -6,7 +6,6 @@
   import { marked } from 'marked';
   import { Avatar } from '@skeletonlabs/skeleton-svelte';
 
-  // !AI add functionality to switch between models!
   // Add Like and dislike 
   export let tutorsAI: string = '/icons/tutorsAI.png';
 
@@ -113,15 +112,14 @@
   <header class="p-4 border-b border-surface-500/30">
     <h3 class="h2">Tutors AI Chat</h3>
   </header>
-
-           <select bind:value={selectedModel} >
-  {#each availableModels as model}
-    <option value={model}>{model}</option>
-  {/each}
-</select>
+  <select bind:value={selectedModel} class="chip preset-filled-surface-500" >
+    {#each availableModels as model}
+      <option value={model}>{model}</option>
+    {/each}
+  </select>
 
   <!-- Messages -->
-<section bind:this={elemChat} class="max-h-[450px] p-4 overflow-y-auto space-y-4">
+<section bind:this={elemChat} class="max-h-[430px] p-4 overflow-y-auto space-y-4">
   {#if messages.length < 2}
   <div class="flex justify-center items-center h-full">
     <h1 class="text-center text-2xl font-bold">What can I help with?</h1>
@@ -153,7 +151,7 @@
   <!-- Prompt -->
     <section class="fixed bottom-0 left-0 w-[485px] p-4 border-surface-200-800 z-10">
       <!-- svelte-ignore element_invalid_self_closing_tag -->
-      <textarea class="textarea" 
+      <textarea class="textarea preset-tonal" 
         bind:value={inputMessage} on:keydown={handleKeyDown} 
         placeholder="Message Tutors AI" rows={3} 
       />
