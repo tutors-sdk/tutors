@@ -6,18 +6,22 @@
   import { marked } from 'marked';
   import { Avatar } from '@skeletonlabs/skeleton-svelte';
 
-  // Add Like and dislike 
   export let tutorsAI: string = '/icons/tutorsAI.png';
 
-    let topic: string = currentCourse?.value?.contentHtml;
-    let topicDescription: string = currentLo?.value?.contentMd;
-    let pageContent:string = currentLo?.value?.los[currentLabStepIndex?.value].contentMd;
+    let topic = currentCourse?.value?.contentHtml;
+    let topicDescription= currentLo?.value?.contentMd;
+    let pageContent = currentLo?.value?.los[currentLabStepIndex?.value].contentMd;
 
   let elemChat: HTMLElement;
 
   interface Message {
     role: 'user' | 'assistant' | 'system';
     content: string;
+    responseId?: number;
+    responseDate?: string;
+    contentUrl?: string;
+    llmUsed?: string;
+    helpful?: boolean;
   }
 
   const availableModels: string[] = ['granite3.1-dense:2b', 'granite-code:3b'];
@@ -66,7 +70,18 @@
       });
 
     const data = await response.json();
-    messages = [...messages, { role: 'assistant', content: data.message.content }];
+
+    const llmMessage: Message = {
+      role: 'assistant',
+      content:data.message.content,
+      responseId: Date.now(),
+      responseDate: new Date().toISOString(),
+      contentUrl: window.location.href,
+      llmUsed: selectedModel,
+      helpful: false,
+    };
+
+    messages = [...messages, llmMessage];
     } catch (error) {
       console.error('Error:', error);
       messages = [...messages, { 
@@ -77,6 +92,7 @@
       isLoading = false;
     }
     // setTimeout(() => scrollChatBottom('smooth'), 0);
+    console.log(messages);
   }
 
   function handleKeyDown(event: KeyboardEvent): void {
@@ -86,6 +102,8 @@
     }
     setTimeout(() => scrollChatBottom('smooth'), 0);
   }
+
+ // Add Like and dislike, and copy text
 
 </script>
 
