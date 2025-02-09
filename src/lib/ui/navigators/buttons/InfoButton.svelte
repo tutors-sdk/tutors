@@ -1,7 +1,9 @@
 <script lang="ts">
-  // References: https://next.skeleton.dev/docs/guides/cookbook/chat/
-  // https://stackoverflow.com/questions/62097466/how-to-use-font-awesome-5-with-svelte-sappe
-  // https://usehooks-ts.com/react-hook/use-copy-to-clipboard
+  /* References: 
+    https://next.skeleton.dev/docs/guides/cookbook/chat/
+    https://stackoverflow.com/questions/62097466/how-to-use-font-awesome-5-with-svelte-sappe
+    https://usehooks-ts.com/react-hook/use-copy-to-clipboard
+  */
   import { currentCourse, currentLo, currentLabStepIndex } from "$lib/runes.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
   import Sidebar from "$lib/ui/components/Sidebar.svelte";
