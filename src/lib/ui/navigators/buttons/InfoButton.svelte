@@ -7,7 +7,7 @@
   import Sidebar from "$lib/ui/components/Sidebar.svelte";
   import { marked } from 'marked';
   import { Avatar } from '@skeletonlabs/skeleton-svelte';
-  import '@fortawesome/fontawesome-free/css/all.min.css'
+  import '@fortawesome/fontawesome-free/css/all.min.css';
 
   export let tutorsAI: string = '/icons/tutorsAI.png';
 
@@ -106,6 +106,14 @@
     setTimeout(() => scrollChatBottom('smooth'), 0);
   }
 
+//Copy text function:
+async function copyText(textToCopy: any) {
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+    } catch (err) {
+      console.error('Failed to copy text:', err);
+    }
+  }
 </script>
 
 {#snippet menuSelector()}
@@ -158,6 +166,7 @@
             <p>{@html marked(message.content)}</p>
             <button on:click={() => message.helpful = true}><i class="fa-solid fa-thumbs-up"></i></button>
             <button on:click={() => message.helpful = false}><i class="fa-solid fa-thumbs-down"></i></button>
+            <button on:click={copyText(message.content)}><i class="fa-solid fa-copy"></i></button>
           </div>
         </div>
       {/if}
