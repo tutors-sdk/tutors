@@ -1,10 +1,13 @@
 <script lang="ts">
   // References: https://next.skeleton.dev/docs/guides/cookbook/chat/
+  // https://stackoverflow.com/questions/62097466/how-to-use-font-awesome-5-with-svelte-sappe
+  // https://usehooks-ts.com/react-hook/use-copy-to-clipboard
   import { currentCourse, currentLo, currentLabStepIndex } from "$lib/runes.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
   import Sidebar from "$lib/ui/components/Sidebar.svelte";
   import { marked } from 'marked';
   import { Avatar } from '@skeletonlabs/skeleton-svelte';
+  import '@fortawesome/fontawesome-free/css/all.min.css'
 
   export let tutorsAI: string = '/icons/tutorsAI.png';
 
@@ -103,8 +106,6 @@
     setTimeout(() => scrollChatBottom('smooth'), 0);
   }
 
- // Add Like and dislike, and copy text
-
 </script>
 
 {#snippet menuSelector()}
@@ -155,6 +156,8 @@
           <Avatar src={tutorsAI} name="TutorsAI" size="size-8" />
           <div class="card p-4">
             <p>{@html marked(message.content)}</p>
+            <button on:click={() => message.helpful = true}><i class="fa-solid fa-thumbs-up"></i></button>
+            <button on:click={() => message.helpful = false}><i class="fa-solid fa-thumbs-down"></i></button>
           </div>
         </div>
       {/if}
