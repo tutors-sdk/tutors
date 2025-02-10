@@ -1,8 +1,8 @@
 import type { IconLib } from "../types";
 
-export const FluentIconLib: IconLib = {
+export const ValentineIcons: IconLib = {
   // Home Icon
-  programHome: { type: "fluent:home-24-filled", color: "success" },
+  programHome: { type: "fluent:home-heart-32-filled", color: "success" },
 
   // companion Icons
   slack: { type: "logos:slack-icon", color: "error" },
@@ -13,16 +13,16 @@ export const FluentIconLib: IconLib = {
   teams: { type: "logos:microsoft-teams", color: "bg-base-content" },
 
   // LoTypes icons
-  course: { type: "fluent:notebook-24-filled", color: "primary" },
-  topic: { type: "fluent:bookmark-24-filled", color: "secondary" },
-  unit: { type: "fluent:dual-screen-group-24-filled", color: "tertiary" },
-  side: { type: "fluent:dual-screen-group-24-filled", color: "success" },
+  course: { type: "fluent:board-heart-24-filled", color: "primary" },
+  topic: { type: "line-md:heart-twotone", color: "secondary" },
+  unit: { type: "mdi:puzzle-heart", color: "tertiary" },
+  side: { type: "mdi:puzzle-heart", color: "success" },
   talk: { type: "fluent:presenter-24-filled", color: "warning" },
   reference: { type: "fluent:document-copy-24-filled", color: "surface" },
   lab: { type: "fluent:beaker-24-filled", color: "error" },
   note: { type: "fluent:notepad-16-regular", color: "success" },
-  archive: { type: "fluent:archive-24-filled", color: "error" },
-  web: { type: "fluent:bookmark-24-regular", color: "primary" },
+  archive: { type: "mdi:folder-heart", color: "error" },
+  web: { type: "tabler:world-heart", color: "primary" },
   github: { type: "mdi:github", color: "warning" },
   panelvideo: { type: "fluent:video-clip-24-regular", color: "error" },
   paneltalk: { type: "fluent:presenter-24-filled", color: "primary" },
@@ -44,7 +44,7 @@ export const FluentIconLib: IconLib = {
   live: { type: "fluent:people-community-24-filled", color: "success" },
 
   // app icons
-  search: { type: "fluent:search-24-filled", color: "primary" },
+  search: { type: "bi:search-heart", color: "primary" }, 
   tutors: { type: "fa-solid:chalkboard-teacher", color: "bg-base-content" },
   logout: { type: "fluent:sign-out-24-filled", color: "error" },
   lightMode: { type: "fluent:paint-brush-24-filled", color: "warning" },
@@ -59,10 +59,10 @@ export const FluentIconLib: IconLib = {
 
   courseinfo: { type: "fluent:info-28-regular", color: "bg-base-content" },
   llm: { type: "hugeicons:ai-innovation-01", color: "bg-base-content" },
-  calendar: { type: "fluent:calendar-ltr-12-regular", color: "bg-base-content" },
+  calendar: { type: "hugeicons:calendar-love-02", color: "bg-base-content" },
   appSettings: { type: "fluent:settings-24-filled", color: "primary" },
   listOnline: { type: "fluent:people-list-24-filled", color: "primary" },
-  edit: { type: "typcn:edit", color: "primary" },
+  edit: { type: "tabler:pencil-heart", color: "primary" },
   info: { type: "fluent:info-28-regular", color: "primary" },
   close: { type: "carbon:close-outline", color: "primary" },
   theme: { type: "fluent:color-fill-24-regular", color: "success" },
