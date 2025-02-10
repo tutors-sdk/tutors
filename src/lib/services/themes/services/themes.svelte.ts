@@ -53,16 +53,16 @@ export const themeService: ThemeService = {
    * @param forceMode - Optional display mode to enforce
    */
   initDisplay(forceTheme?: string, forceMode?: string): void {
-    if (forceTheme && forceMode && !localStorage.forceTheme) {
+    if (forceTheme && forceMode && !localStorage[forceTheme]) {
       this.setDisplayMode(forceMode);
       this.setTheme(forceTheme);
-      localStorage.forceTheme = true;
+      localStorage[forceTheme] = true;
     } else {
       this.setDisplayMode(localStorage.modeCurrent);
       this.setTheme(localStorage.theme);
-      this.setLayout(localStorage.layout);
-      this.setCardStyle(localStorage.cardStyle);
     }
+    this.setLayout(localStorage.layout);
+    this.setCardStyle(localStorage.cardStyle);
   },
 
   /**

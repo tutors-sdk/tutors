@@ -16,7 +16,7 @@
   }
 
   if (browser) {
-    themeService.initDisplay();
+    themeService.initDisplay("valentines", "dark");
   }
 </script>
 
