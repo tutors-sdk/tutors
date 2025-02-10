@@ -12,6 +12,7 @@ import { FestiveIcons } from "../icons/festive-icons";
 import { makeItSnow, makeItStopSnowing } from "../events/festive.svelte";
 
 import { rune } from "$lib/runes.svelte";
+import { ValentineIcons } from "../icons/valentine-icons";
 
 /**
  * Implementation of the ThemeService interface.
@@ -22,6 +23,7 @@ export const themeService: ThemeService = {
   /** Available themes with their associated icon libraries */
   themes: [
     { name: "tutors", icons: FluentIconLib },
+    { name: "valentines", icons: ValentineIcons },
     { name: "classic", icons: FluentIconLib },
     { name: "dyslexia", icons: FluentIconLib },
     { name: "nouveau", icons: FluentIconLib },
@@ -51,16 +53,16 @@ export const themeService: ThemeService = {
    * @param forceMode - Optional display mode to enforce
    */
   initDisplay(forceTheme?: string, forceMode?: string): void {
-    if (forceTheme && forceMode && !localStorage.forceTheme) {
+    if (forceTheme && forceMode && !localStorage[forceTheme]) {
       this.setDisplayMode(forceMode);
       this.setTheme(forceTheme);
-      localStorage.forceTheme = true;
+      localStorage[forceTheme] = true;
     } else {
       this.setDisplayMode(localStorage.modeCurrent);
       this.setTheme(localStorage.theme);
-      this.setLayout(localStorage.layout);
-      this.setCardStyle(localStorage.cardStyle);
     }
+    this.setLayout(localStorage.layout);
+    this.setCardStyle(localStorage.cardStyle);
   },
 
   /**
