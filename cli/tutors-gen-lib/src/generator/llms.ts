@@ -5,7 +5,10 @@ import { compressToZip, writeFile } from "./file-utils";
 let header = "";
 
 export function toSnakeCase(str: string): string {
-  return str.toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, '-');
+  return str
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, "")
+    .replace(/\s+/g, "-");
 }
 
 function printLo(lo: Lo, level: number) {
@@ -53,7 +56,6 @@ export function generateLlmsByTopic(course: Course, folder: string) {
       const paddedIndex = index.toString().padStart(2, "0");
       const title = `${paddedIndex}-${toSnakeCase(topic.title)}`;
 
-
       writeFile(folder, `${title}-llms.txt`, allTxt.join("\n"));
 
       const allLos = flattenLos(topic.los);
@@ -64,6 +66,9 @@ export function generateLlmsByTopic(course: Course, folder: string) {
 }
 
 export function generateLlms(course: Course, folder: string) {
+  const llm = course.properties.llm as unknown as number;
+  if (llm === 0 || llm === undefined) return;
+
   const llmFolder = `${folder}/llms`;
   header = `<SYSTEM> This is the Tutors course ${course.title} by ${course.properties.credits}</SYSTEM>\n\n`;
 
