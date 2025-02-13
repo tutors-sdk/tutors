@@ -71,6 +71,15 @@ markdownIt.use(mark);
 markdownIt.use(footnote);
 markdownIt.use(deflist);
 
+// Custom renderer for blockquote
+markdownIt.renderer.rules.blockquote_open = () => {
+  return '<div class="custom-blockquote" style="border-left: 3px solid #ccc; padding-left: 10px; font-style: italic;">';
+};
+
+markdownIt.renderer.rules.blockquote_close = () => {
+  return '</div>';
+};
+
 const defaultRender =
   markdownIt.renderer.rules.link_open ||
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
