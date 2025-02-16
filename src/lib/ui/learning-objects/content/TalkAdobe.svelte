@@ -78,6 +78,6 @@
   });
 </script>
 
-<div class="relative mr-2 h-[calc(100vh-12rem)] rounded-xl border-[1px] border-primary-500 p-2">
-  <div id={viewerId} class="mx-auto h-full"></div>
+<div class="relative mr-2 w-full rounded-xl border-[1px] border-primary-500 p-2" style="aspect-ratio: 16/11;">
+  <div id={viewerId} class="mx-auto h-full w-full"></div>
 </div>
