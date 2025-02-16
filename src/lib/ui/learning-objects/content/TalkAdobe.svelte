@@ -59,7 +59,7 @@
   }
 
   $effect(() => {
-    console.log(page.data.lo);
+    console.log(page.data.lo.pdf);
     if (mounted && page.data.lo && page.data.lo.pdf) {
       displayPDF();
     }

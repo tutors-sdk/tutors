@@ -8,6 +8,9 @@
       if (lo?.route.endsWith("/")) {
         lo.route = lo?.route.slice(0, -1);
       }
+      if ((lo?.type === "unit" || lo?.type === "side") && lo?.parentLo?.type === "course") {
+        lo.route = lo.route.replace("topic", "course");
+      }
     });
   }
   export let indent = 0;
