@@ -15,7 +15,7 @@
   <Video {lo} />
 {/each}
 {#each panels?.panelTalks as lo}
-  <Talk {lo} />
+  <TalkAdobe {lo} />
 {/each}
 {#each panels?.panelNotes as lo}
   <Note {lo} />
