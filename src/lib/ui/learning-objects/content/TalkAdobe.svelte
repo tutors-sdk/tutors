@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from "$app/stores";
+  import { page } from "$app/state";
   import { PUBLIC_PDF_KEY } from "$env/static/public";
   import { adobeLoaded, currentCourse } from "$lib/runes.svelte";
   import type { Talk } from "$lib/services/base";
@@ -27,8 +27,8 @@
 
   let adobeDCView: any = null;
   let mounted = false;
-  // let viewerId = `adobe-pdf-viewer-${Math.random().toString(36).substr(2, 9)}`;
-  let viewerId = "adobe-pdf-viewer";
+  let viewerId = `adobe-pdf-viewer-${Math.random().toString(36).substr(2, 9)}`;
+  // let viewerId = "adobe-pdf-viewer";
 
   function loadSDK() {
     if (!adobeLoaded.value) {
@@ -58,8 +58,9 @@
     adobeDCView.previewFile(pdfContent, viewerConfig);
   }
 
-  page.subscribe((path) => {
-    if (mounted && path.data.lo && path.data.lo.pdf) {
+  $effect(() => {
+    console.log(page.data.lo);
+    if (mounted && page.data.lo && page.data.lo.pdf) {
       displayPDF();
     }
   });
