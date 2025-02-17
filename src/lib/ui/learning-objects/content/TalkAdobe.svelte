@@ -79,6 +79,6 @@
   });
 </script>
 
-<div class="relative mr-2 w-full rounded-xl border-[1px] border-primary-500 p-2" style="aspect-ratio: 16/11;">
+<div class="relative w-full p-2" style="aspect-ratio: 16/11;">
   <div id={viewerId} class="mx-auto h-full w-full"></div>
 </div>
