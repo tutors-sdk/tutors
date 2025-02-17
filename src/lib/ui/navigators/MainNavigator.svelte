@@ -46,9 +46,13 @@
       <div class="flex items-center">
         {#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
           <SearchButton />
-          <AiPoweredSearchButton />
         {/if}
       </div>
+      <div class="flex items-center">
+        {#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
+          <AiPoweredSearchButton />
+        {/if}
+      </div>       
     </div>
     <div class="flex items-center">
       <LayoutMenu />

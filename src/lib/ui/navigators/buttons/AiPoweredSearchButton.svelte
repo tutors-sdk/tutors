@@ -8,7 +8,7 @@
 
   const updateSearchState = () => {
     const currentPath = window.location.pathname;
-    isSearching = currentPath.includes("/search/");
+    isSearching = currentPath.includes("/aisearch/");
     sessionStorage.setItem("isSearching", isSearching.toString());
   };
 
@@ -18,7 +18,7 @@
       sessionStorage.removeItem("isSearching");
     } else {
       previousPage = window.location.pathname;
-      goto("/search/" + currentCourse?.value?.courseId);
+      goto("/aisearch/" + currentCourse?.value?.courseId);
       sessionStorage.setItem("isSearching", "true");
     }
     isSearching = !isSearching;
@@ -26,10 +26,10 @@
 
   const checkForNavigation = () => {
     const currentPath = window.location.pathname;
-    if (!currentPath.includes("/search/") && isSearching) {
+    if (!currentPath.includes("/aisearch/") && isSearching) {
       isSearching = false;
       sessionStorage.removeItem("isSearching");
-    } else if (currentPath.includes("/search/")) {
+    } else if (currentPath.includes("/aisearch/")) {
       isSearching = true;
       sessionStorage.setItem("isSearching", "true");
     }
@@ -48,6 +48,6 @@
 <button class="btn btn-sm" on:click={toggleSearch}>
   <span class="flex items-center gap-2 text-sm font-bold">
     <Icon type="search" tip="Search this course" />
-    <span class="hidden lg:block"> {isSearching ? "Exit Search" : "Search"}</span>
+    <span class="hidden lg:block"> {isSearching ? "Exit AI Search" : "AI Search"}</span>
   </span>
 </button>
