@@ -55,7 +55,8 @@
         allowfullscreen
       ></iframe>
     {:else}
-      <div class="relative mx-auto aspect-video w-3/4" style="padding-top: 40%;">
+      <!-- <div class="relative mx-auto aspect-video w-3/4" style="padding-top: 40%;"> -->
+      <div class="relative mr-2 w-full" style="aspect-ratio: 16/9;">
         <iframe
           title={lo.title}
           class="absolute inset-0 h-full w-full"
