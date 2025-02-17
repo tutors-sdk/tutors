@@ -40,7 +40,9 @@
      Particularly student focused on: ${topicDescription}\
      The full text of the page student currently explores is ${pageContent}`
   }
+
   let messages: Message[] = [systemMessage];
+
   let inputMessage: string = '';
   let isLoading: boolean = false;
 
@@ -57,6 +59,7 @@
     isLoading = true;
 
     try {
+
       const response = await fetch('http://localhost:11434/api/chat', {
         method: 'POST',
         headers: {
@@ -74,7 +77,8 @@
         }),
       });
 
-    const data = await response.json();
+    const data = await response.json(); 
+    console.log("API Response:", data);
 
     const llmMessage: Message = {
       role: 'assistant',
