@@ -36,29 +36,29 @@
     searchInputElement.focus();
   });
 
-  function transformResults(results: ResultType[]) {
-    results.forEach((result) => {
-      let resultStrs: string[] = [];
-      if (result.fenced) {
-        resultStrs.push(`~~~${result.language}`);
-      }
-      resultStrs.push(result.contentMd);
-      if (result.fenced) {
-        resultStrs.push("~~~");
-      }
-      result.html = convertMdToHtml(resultStrs.join("\n"), currentCodeTheme.value);
-      result.link = `https://tutors.dev/${result.link}`;
-    });
-  }
+      // add Google API search
+  async function googleSearch(): Promise<void> {
+      const apiKey = import.meta.env.VITE_Custom_Search_API_KEY;
+      const cx = import.meta.env.VITE_Search_engine_id;
+      const query = 'what is svelte';
+      const url = `https://customsearch.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${query}`;
+    try {
+      const response = await fetch(url, {
+            method: 'GET'
+        });
 
-  let lastSearchTerm = "";
-  $effect(() => {
-    if (isValid(searchTerm) && searchTerm !== lastSearchTerm) {
-      lastSearchTerm = searchTerm;
-      searchResults = searchHits(searchLos, searchTerm);
-      transformResults(searchResults);
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        //displayLink, link, title, snippet
+        console.log(data);
+    } catch (error) {
+        console.error('Error fetching data:', error);
     }
-  });
+  };
+
+
 </script>
 
 <div class="container card mx-auto mb-4 p-4">
@@ -74,25 +74,13 @@
       placeholder="..."
     /></label
   >
-  <div class="mt-2 flex flex-wrap justify-center">
-    {#each searchResults as result}
-      <div class="card m-1 w-full border p-4">
-        <div>
-          <div class="prose dark:prose-invert">
-            {@html result.html}
-          </div>
-          <div class="pt-4 text-right text-sm">
-            <a
-              rel="noopener noreferrer"
-              href={result.link}
-              target="_blank"
-              class="text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
-            >
-              {result.title}
-            </a>
-          </div>
-        </div>
-      </div>
-    {/each}
-  </div>
 </div>
+
+
+  <div> 
+    <button 
+      on:click={googleSearch} 
+    >
+      Google Search
+    </button> 
+  </div>
