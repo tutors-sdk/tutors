@@ -36,6 +36,12 @@
     searchInputElement.focus();
   });
 
+    interface SearchResult {
+      displayLink: string;
+      link: string;
+      title: string;
+      snippet: string;
+    }
       // add Google API search
   async function googleSearch(): Promise<void> {
       const apiKey = import.meta.env.VITE_Custom_Search_API_KEY;
@@ -53,6 +59,17 @@
         const data = await response.json();
         //displayLink, link, title, snippet
         console.log(data);
+        // const titles = data.items.map((item: { title: any; }) => item.title);
+        // console.log("titles:", titles);
+
+      const filteredItems: SearchResult[] = data.items?.map((item: SearchResult) => ({
+            displayLink: item.displayLink,
+            link: item.link,
+            title: item.title,
+            snippet: item.snippet,
+          })) || [];
+
+          console.log(filteredItems);
     } catch (error) {
         console.error('Error fetching data:', error);
     }
