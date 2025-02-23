@@ -7,7 +7,8 @@
   import { convertMdToHtml, currentCodeTheme } from "$lib/services/markdown";
   import type { PageData } from "./$types";
   import { currentLo } from "$lib/runes.svelte";
-    import type { promises } from "dns";
+  import type { promises } from "dns";
+   import { marked } from 'marked';
 
   interface Props {
     data: PageData;
@@ -20,35 +21,11 @@
 
   let searchResults: ResultType[] = $state([]);
   let searchInputElement = $state();
-  let isLoading: boolean = false;
-
-    //AI variables 
-  interface Message {
-    role: 'user' | 'assistant' | 'system' | 'search results';
-    content: string;
-    responseId?: number;
-    responseDate?: string;
-    contentUrl?: string;
-    llmUsed?: string;
-    helpful?: boolean;
-  }
-
+  let isLoading = $state(false);
+  // AI variables
   // svelte-ignore non_reactive_update
-  let searchTerm:string;
-  
-  let systemMessage:Message = {
-      role: 'system',
-      content: `Your role is to provide a concise and accurate answer to the user's question\
-      using the provided search results: ${searchResults}.\
-      Ensure your answer is derived from the most relevant search snippets\
-      and include links to sources with a brief description for additional context.\
-      Instructions:\
-      1. Go through Search results ${searchResults}\
-      2. Use only knowledge received from search results to build your answer. Build your answer based on title and snippet\
-      3. Provide links to resources by combining displayLink and link. Important: do not include any other links`
-    }
-  let messages: Message[] = [systemMessage];
-
+  let searchTerm: string = 'what is Vite?';
+  let llmOutput: string = "";
     interface SearchResult {
       displayLink: string;
       link: string;
@@ -56,12 +33,12 @@
       snippet: string;
     }
     
-      // add Google API search
+
+      // Google API search
   async function googleSearch(): Promise<string> {
       const apiKey = import.meta.env.VITE_Custom_Search_API_KEY;
       const cx = import.meta.env.VITE_Search_engine_id;
-      const query = 'what is sveltekit';
-      const url = `https://customsearch.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${query}`;
+      const url = `https://customsearch.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${searchTerm}`;
     try {
       const response = await fetch(url, {
             method: 'GET'
@@ -71,10 +48,6 @@
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        //displayLink, link, title, snippet
-        console.log(data);
-        // const titles = data.items.map((item: { title: any; }) => item.title);
-        // console.log("titles:", titles);
 
       const filteredItems: SearchResult[] = data.items?.map((item: SearchResult) => ({
             displayLink: item.displayLink,
@@ -83,9 +56,7 @@
             snippet: item.snippet,
           })) || [];
 
-          console.log(filteredItems);
         const jsonOutput = JSON.stringify(filteredItems, null, 2);
-        console.log(jsonOutput);
 
         return jsonOutput;
     } catch (error) {
@@ -94,19 +65,14 @@
     }
 };
 
-  //Add LLM analysis
+  // LLM call
   async function sendMessage(): Promise<void> {
-    let searchTerm = 'what is sveltekit';
     const userMessage = searchTerm.trim();
+    isLoading = true;
+
     let searchResults: string = await googleSearch();
     
-    let searchResultMessage:Message = {
-      role: 'search results',
-      content: `Search results: ${searchResults}`
-    }
-    messages = [...messages, searchResultMessage, {role: 'user', content: userMessage}];
     try {
-
       const response = await fetch('http://localhost:11434/api/generate', {
         method: 'POST',
         headers: {
@@ -121,7 +87,8 @@
 
                 Task:  
                 1. Carefully analyze these search results and select the 5 most relevant ones for the user's query:"${searchTerm}".  
-                2. Use the snippets from the search results to generate a concise and informative summary that directly answers the user's query. If the snippets contain numerical data, key facts, or insights, incorporate them into the summary.  
+                2. Use the snippets from the search results to generate a concise and informative summary that directly answers the user's query.
+                If the snippets contain numerical data, key facts, or insights, incorporate them into the summary.  
                 3. Do not generate new links or modify the provided links — copy them exactly as they appear.  
                 4. Prioritize official sources, well-known websites, and content that directly addresses the query.  
 
@@ -144,58 +111,69 @@
         }),
       });
 
-    const data = await response.json(); 
-    console.log("API Response:", data);
-
+  
+    const result = await response.json(); 
+    console.log("API Response:", result);
+    llmOutput = result.response; 
   } catch (error) {
       console.error('Error:', error);
-      messages = [...messages, { 
-        role: 'assistant', 
-        content: 'Sorry, I encountered an error. Please make sure Ollama is running locally' 
-      }];
+      llmOutput = "An error occurred while fetching data.";
     } finally {
       isLoading = false;
     }
-}
+};
+
+ function handleKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      sendMessage();
+    }
+  }
 
 
-  onMount(async () => {
+  onMount(() => {
     course = data.course;
     currentLo.value = data.course;
-    const labs = filterByType(data.course.los, "lab");
-    labs.forEach((lab) => {
-      lab?.los?.forEach((step) => {
-        step.parentLo = lab;
-      });
-    });
-    const steps = filterByType(data.course.los, "step");
-    const notes = filterByType(data.course.los, "note");
-    const panelNotes = filterByType(data.course.los, "panelnote");
-    searchLos.push(...labs, ...steps, ...notes, ...panelNotes);
-    searchInputElement.focus();
+    searchLos.push(...filterByType(data.course.los, "lab"), ...filterByType(data.course.los, "step"));
+    searchInputElement?.focus();
   });
 </script>
 
-<div class="container card mx-auto mb-4 p-4">
-  <label for="aisearch" class="label"
-    ><span>Enter search term:</span>
-    <input
-      bind:value={searchTerm}
-      bind:this={searchInputElement}
-      type="text"
-      name="aisearch"
-      id="aisearch"
-      class="input m-2 p-2"
-      placeholder="..."
-    /></label
-  >
-</div>
 
+<section>
+  <div class="container card mx-auto mb-4 p-4">
+    <label for="aisearch" class="label">
+      <span>Enter search term:</span>
+      <input
+        bind:value={searchTerm}
+        bind:this={searchInputElement}
+        on:keydown={handleKeyDown}
+        type="text"
+        name="aisearch"
+        id="aisearch"
+        class="input m-2 p-2 border rounded"
+        placeholder="..."
+      />
+    </label>
+  </div>
 
-  <div> 
+  <div class="flex justify-center">
     <button 
       on:click={sendMessage} 
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
+      disabled={isLoading}
     >
-      Google Search
+      {isLoading ? "Searching..." : "Tutors AI Search"}
     </button> 
   </div>
+</section>
+
+<section class="mt-4">
+  {#if isLoading}
+    <p class="text-center italic text-secondary">Searching...</p>
+  {:else if !llmOutput}
+    <h1 class="text-center text-2xl font-bold">What can I help with? Type your search term and hit Enter</h1>
+  {:else}
+    <p>{@html marked(llmOutput)}</p>
+  {/if}
+</section>
