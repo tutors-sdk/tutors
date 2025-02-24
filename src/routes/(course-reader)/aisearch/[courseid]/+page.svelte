@@ -1,39 +1,40 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { ResultType } from "$lib/services/course";
-  import { isValid, searchHits, filterByType } from "$lib/services/course";
+  import {filterByType } from "$lib/services/course";
   import type { Lo } from "$lib/services/base";
   import type { Course } from "$lib/services/base";
-  import { convertMdToHtml, currentCodeTheme } from "$lib/services/markdown";
   import type { PageData } from "./$types";
   import { currentLo } from "$lib/runes.svelte";
-  import type { promises } from "dns";
-   import { marked } from 'marked';
+  import { marked } from 'marked';
 
   interface Props {
     data: PageData;
-  }
+  };
 
   let { data }: Props = $props();
 
   let course: Course;
   let searchLos: Lo[] = [];
 
-  let searchResults: ResultType[] = $state([]);
+  
   let searchInputElement = $state();
   let isLoading = $state(false);
   // AI variables
   // svelte-ignore non_reactive_update
   let searchTerm: string = 'what is Vite?';
   let llmOutput: string = "";
+
     interface SearchResult {
       displayLink: string;
       link: string;
       title: string;
       snippet: string;
-    }
-    
+    };
 
+    interface SearchResults {
+      summary: string;
+      results: SearchResult[]
+    };
       // Google API search
   async function googleSearch(): Promise<string> {
       const apiKey = import.meta.env.VITE_Custom_Search_API_KEY;
@@ -160,20 +161,22 @@
   <div class="flex justify-center">
     <button 
       on:click={sendMessage} 
-      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 disabled:opacity-50"
+      class="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900 disabled:opacity-50"
       disabled={isLoading}
     >
-      {isLoading ? "Searching..." : "Tutors AI Search"}
+      {isLoading ? "Searching" : "Tutors AI Search"}
     </button> 
   </div>
 </section>
 
 <section class="mt-4">
   {#if isLoading}
-    <p class="text-center italic text-secondary">Searching...</p>
+    <p class="text-center italic text-secondary">...</p>
   {:else if !llmOutput}
     <h1 class="text-center text-2xl font-bold">What can I help with? Type your search term and hit Enter</h1>
   {:else}
+   <div class="px-6 py-4 my-4">
     <p>{@html marked(llmOutput)}</p>
+    </div>
   {/if}
 </section>
