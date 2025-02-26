@@ -10,7 +10,11 @@
   }
   let { lo }: Props = $props();
 
-  const embedOption = currentCourse.value?.lightboxpdf ? "" : "SIZED_CONTAINER";
+  let embedOption = "SIZED_CONTAINER";
+  if (currentCourse.value?.pdfOrientation === "portrait") {
+    embedOption = "FULL_WINDOW";
+  }
+
   const viewerConfig = {
     embedMode: embedOption,
     defaultViewMode: "FIT_PAGE", // Options are "FIT_WIDTH" or "FIT_PAGE"
@@ -79,6 +83,12 @@
   });
 </script>
 
-<div class="relative w-full p-2" style="aspect-ratio: 16/11;">
-  <div id={viewerId} class="mx-auto h-full w-full"></div>
-</div>
+{#if currentCourse?.value?.pdfOrientation === "landscape"}
+  <div class="relative w-full p-2" style="aspect-ratio: 16/11;">
+    <div id={viewerId} class="mx-auto h-full w-full"></div>
+  </div>
+{:else}
+  <div class="mr-2 mt-2 px-4 py-2">
+    <div id={viewerId} class="mx-auto h-[85dvh]"></div>
+  </div>
+{/if}
