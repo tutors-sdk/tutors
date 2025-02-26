@@ -281,7 +281,7 @@ export type Course = Composite & {
   isPortfolio: boolean; // Portfolio flag
   isPrivate: boolean; // Privacy flag
   llm: number; // LLM level
-  lightboxpdf: boolean;
+  pdfOrientation: string;
   areVideosHidden: boolean; // Video visibility flag
   areLabStepsAutoNumbered: boolean; // Lab step numbering flag
   hasEnrollment: boolean; // Enrollment flag
