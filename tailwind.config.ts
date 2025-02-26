@@ -1,11 +1,7 @@
 import forms from "@tailwindcss/forms";
 import typography from "@tailwindcss/typography";
-import { skeleton, contentPath } from "@skeletonlabs/skeleton/plugin";
-import { nouveau, rose, cerberus } from "@skeletonlabs/skeleton/themes";
-import tutors from "./src/lib/services/themes/styles/tutors";
-import valentines from "./src/lib/services/themes/styles/valentines";
-import classic from "./src/lib/services/themes/styles/classic";
-import dyslexia from "./src/lib/services/themes/styles/dyslexia";
+import { contentPath } from "@skeletonlabs/skeleton/plugin";
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -29,11 +25,5 @@ export default {
     }
   },
 
-  plugins: [
-    typography,
-    forms,
-    skeleton({
-      themes: [tutors, valentines, classic, dyslexia, nouveau, rose, cerberus]
-    })
-  ]
+  plugins: [typography, forms]
 } satisfies Config;
