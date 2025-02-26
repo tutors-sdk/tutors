@@ -99,7 +99,6 @@ function addWall(course: Course, type: LoType) {
 
 export function loadPropertyFlags(course: Course) {
   course.isPortfolio = (course.properties?.portfolio as unknown as boolean) === true;
-  course.lightboxpdf = (course.properties?.lightboxpdf as unknown as boolean) === true;
   course.llm = course.properties.llm as unknown as number;
   course.isPrivate = (course.properties?.private as unknown as number) === 1;
   course.areVideosHidden = (course.properties?.hideVideos as unknown as boolean) === true;
@@ -109,6 +108,10 @@ export function loadPropertyFlags(course: Course) {
   course.defaultPdfReader = "adobe";
   if (course.properties.defaultPdfReader) {
     course.defaultPdfReader = course.properties.defaultPdfReader;
+  }
+  course.pdfOrientation = "landscape";
+  if (course.properties.pdfOrientation) {
+    course.pdfOrientation = course.properties.pdfOrientation;
   }
   if (course.enrollment) {
     course.hasEnrollment = true;
