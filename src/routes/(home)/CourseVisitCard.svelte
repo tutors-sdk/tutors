@@ -8,7 +8,7 @@
 
 <div
   transition:scale|local={scaleTransition}
-  class="to-accent-50 dark:to-accent-900 card card-hover m-2 border bg-gradient-to-l from-primary-50 p-2 dark:from-primary-900"
+  class="to-accent-50 dark:to-accent-900 card card-hover m-2 border bg-linear-to-l from-primary-50 p-2 dark:from-primary-900"
 >
   <div class="flex justify-between">
     <section class="p-4">
