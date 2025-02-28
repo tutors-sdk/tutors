@@ -1,14 +1,14 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@tailwind variants;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/forms";
+@source '../node_modules/@skeletonlabs/skeleton-svelte';
 
-html,
-body {
-  @apply h-full overflow-hidden;
-}
+@import "@skeletonlabs/skeleton";
+@import "@skeletonlabs/skeleton/optional/presets";
+@import "@skeletonlabs/skeleton/themes/cerberus";
+@import "@skeletonlabs/skeleton/themes/nouveau";
+@import "@skeletonlabs/skeleton/themes/rose";
+@import "./lib/services/themes/styles/tutors.css";
+@import "./lib/services/themes/styles/mona.css";
 
-code,
-pre {
-  @apply rounded-md border dark:border-primary-500;
-}
+@custom-variant dark (&:where(.dark, .dark *));

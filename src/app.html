@@ -1,25 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="cerberus">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/png" sizes="512x512" href="%sveltekit.assets%/icons/icon.png" />
-    <link rel="mask-icon" href="%sveltekit.assets%/safari-pinned-tab.svg" color="#37919b" />
-    <meta name="msapplication-TileColor" content="#ffffff" />
-    <meta name="theme-color" content="#ffffff" />
-    <link rel="stylesheet" href="%sveltekit.assets%/global.css" />
-    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="icon" href="%sveltekit.assets%/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="%sveltekit.assets%/global.css" />
     %sveltekit.head%
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/preset-snow@3/tsparticles.preset.snow.bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   </head>
-
-  <body data-theme="tutors">
-    <div class="contents h-full overflow-hidden">%sveltekit.body%</div>
+  <body data-sveltekit-preload-data="tap">
+    <div style="display: contents">%sveltekit.body%</div>
+    <div class="preset-filled-success-100-900"></div>
+    <div class="preset-filled-warning-100-900"></div>
+    <div class="preset-filled-error-100-900"></div>
+    <div class="order-warning-500"></div>
   </body>
 </html>
