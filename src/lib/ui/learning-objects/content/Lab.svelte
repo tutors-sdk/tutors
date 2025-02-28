@@ -84,7 +84,7 @@
     </div>
   </div>
 
-  <div class="fixed bottom-0 left-0 z-50 block w-full rounded border bg-primary-50 lg:hidden dark:bg-primary-900">
+  <div class="fixed bottom-0 left-0 z-50 block w-full rounded-sm border bg-primary-50 lg:hidden dark:bg-primary-900">
     <nav class="flex flex-wrap justify-between p-2">
       {@html lab.horizontalNavbarHtml}
     </nav>

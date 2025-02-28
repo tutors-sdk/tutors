@@ -46,7 +46,7 @@
 {#snippet menuContent()}
   <div class="ml-2 font-bold">Layout Options</div>
   <div class="mt-5">
-    <div class="mb-1 ml-2 mt-4">Appearance</div>
+    <div class="mt-4 mb-1 ml-2">Appearance</div>
     <div class="mb-2 flex justify-center">
       <Segment name="cardStyle" bind:value={themeService.lightMode.value}>
         <Segment.Item value="dark"><Icon type="dark" /></Segment.Item>
@@ -54,8 +54,8 @@
       </Segment>
     </div>
     <hr />
-    <div class="mb-1 ml-2 mt-1">Card Style</div>
-    <div class="flex justify-center mb-2">
+    <div class="mt-1 mb-1 ml-2">Card Style</div>
+    <div class="mb-2 flex justify-center">
       <Segment name="cardStyle" bind:value={themeService.cardStyle.value}>
         <Segment.Item value="portrait"><Icon type="portrait" tip="Change cards to Portrait" /></Segment.Item>
         <Segment.Item value="circular"><Icon type="circular" tip="Change cards to Circular" /></Segment.Item>
@@ -63,18 +63,18 @@
       </Segment>
     </div>
     <hr />
-    <div class="mb-1 ml-2 mt-1">Theme</div>
+    <div class="mt-1 mb-1 ml-2">Theme</div>
     <div class="relative z-50 mx-4 mb-2">
       <Combobox data={themeCombo} bind:value={theme} />
     </div>
     <hr />
-    <div class="mb-1 ml-2 mt-1">Code Style</div>
+    <div class="mt-1 mb-1 ml-2">Code Style</div>
     <div class="relative z-10 mx-4 mb-2">
       <Combobox data={codeThemeCombo} bind:value={codeTheme} />
     </div>
     <hr />
-    <div class="mb-1 ml-2 mt-1">Layout</div>
-    <div class="flex justify-center mb-2">
+    <div class="mt-1 mb-1 ml-2">Layout</div>
+    <div class="mb-2 flex justify-center">
       <Segment name="layout" bind:value={themeService.layout.value}>
         <Segment.Item value="expanded"><Icon type="expanded" /></Segment.Item>
         <Segment.Item value="compacted"><Icon type="compacted" /></Segment.Item>

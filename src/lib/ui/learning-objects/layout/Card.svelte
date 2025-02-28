@@ -30,7 +30,7 @@
 
 {#snippet header(cardDetails: CardDetails)}
   <header class="relative w-full p-3">
-    <div class="absolute right-1 top-3 flex items-center">
+    <div class="absolute top-3 right-1 flex items-center">
       {#if cardDetails.video && cardDetails.type !== "video" && !hideVideoIcon}
         <a href={cardDetails.video}>
           <Icon type="video" height="30" />
@@ -58,19 +58,11 @@
 {#snippet figure(cardDetails: CardDetails)}
   <figure class="flex items-center justify-center">
     {#if cardDetails.student}
-      <img
-        src={cardDetails.student.avatar}
-        alt={cardDetails.student.fullName}
-        class="{styles.image} object-contain object-center {isCircular ? 'rounded-full' : 'rounded-xl'}"
-      />
+      <img src={cardDetails.student.avatar} alt={cardDetails.student.fullName} class="{styles.image} object-contain object-center {isCircular ? 'rounded-full' : 'rounded-xl'}" />
     {:else if cardDetails.icon}
       <Iconify icon={cardDetails.icon.type} color={cardDetails.icon.color} height={styles.icon} />
     {:else}
-      <img
-        src={cardDetails.img}
-        alt=""
-        class="{styles.image} object-contain object-center {isCircular ? 'rounded-full' : ''}"
-      />
+      <img src={cardDetails.img} alt="" class="{styles.image} object-contain object-center {isCircular ? 'rounded-full' : ''}" />
     {/if}
   </figure>
 {/snippet}
@@ -100,7 +92,7 @@
 
 {#snippet circular(cardDetails: CardDetails)}
   <div class="relative flex h-full flex-col items-center justify-center p-4 text-center">
-    <div class="text-l absolute left-0 right-0 top-8 line-clamp-1 px-2 {styles.heading}">
+    <div class="text-l absolute top-8 right-0 left-0 line-clamp-1 px-2 {styles.heading}">
       {cardDetails.title}
     </div>
     <div class="mt-8 flex flex-1 items-center justify-center">
@@ -119,7 +111,7 @@
   <div class="relative w-2/3">
     {@render header(cardDetails)}
     {@render content(cardDetails)}
-    <div class="absolute bottom-1 right-2 text-xs text-gray-400">{cardDetails.metric}</div>
+    <div class="absolute right-2 bottom-1 text-xs text-gray-400">{cardDetails.metric}</div>
   </div>
 {/snippet}
 
