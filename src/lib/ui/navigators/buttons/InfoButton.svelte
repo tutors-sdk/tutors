@@ -50,106 +50,59 @@
     elemChat.scrollTo({ top: elemChat.scrollHeight, behavior });
   }
 
-  async function getToken(): Promise<string | null> {
-    const key = import.meta.env.VITE_IAM_API_KEY;
-
-    if (!key) {
-        console.error("API Key is missing");
-        return null;
-    }
-
-    try {
-        const response = await fetch('https://iam.cloud.ibm.com/identity/token', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `grant_type=urn:ibm:params:oauth:grant-type:apikey&apikey=${key}`
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        return data.access_token;
-    } catch (error) {
-        console.error('Error:', error);
-        return null;
-    }
-}
-
-  let token: string = "eyJraWQiOiIyMDI1MDEzMDA4NDQiLCJhbGciOiJSUzI1NiJ9.eyJpYW1faWQiOiJJQk1pZC02OTUwMDBRUEpSIiwiaWQiOiJJQk1pZC02OTUwMDBRUEpSIiwicmVhbG1pZCI6IklCTWlkIiwianRpIjoiNWU4ODQ4MWItYjExZC00ZjMwLTk2MjEtMTJiOTdmNjU2MWRkIiwiaWRlbnRpZmllciI6IjY5NTAwMFFQSlIiLCJnaXZlbl9uYW1lIjoiUnVzbGFuIiwiZmFtaWx5X25hbWUiOiJaaGFic2t5aSIsIm5hbWUiOiJSdXNsYW4gWmhhYnNreWkiLCJlbWFpbCI6IjIwMTA0MTA1QG1haWwud2l0LmllIiwic3ViIjoiMjAxMDQxMDVAbWFpbC53aXQuaWUiLCJhdXRobiI6eyJzdWIiOiIyMDEwNDEwNUBtYWlsLndpdC5pZSIsImlhbV9pZCI6IklCTWlkLTY5NTAwMFFQSlIiLCJuYW1lIjoiUnVzbGFuIFpoYWJza3lpIiwiZ2l2ZW5fbmFtZSI6IlJ1c2xhbiIsImZhbWlseV9uYW1lIjoiWmhhYnNreWkiLCJlbWFpbCI6IjIwMTA0MTA1QG1haWwud2l0LmllIn0sImFjY291bnQiOnsidmFsaWQiOnRydWUsImJzcyI6IjhiZWQyYjkzMDdjMTRlYTY5NzA1OTlhZTY3NGNmYTJiIiwiZnJvemVuIjp0cnVlfSwiaWF0IjoxNzQwODU4NTkyLCJleHAiOjE3NDA4NjIxOTIsImlzcyI6Imh0dHBzOi8vaWFtLmNsb3VkLmlibS5jb20vaWRlbnRpdHkiLCJncmFudF90eXBlIjoidXJuOmlibTpwYXJhbXM6b2F1dGg6Z3JhbnQtdHlwZTphcGlrZXkiLCJzY29wZSI6ImlibSBvcGVuaWQiLCJjbGllbnRfaWQiOiJkZWZhdWx0IiwiYWNyIjoxLCJhbXIiOlsicHdkIl19.iw5rOMDcxeSfo7zJjt46UR6wbFhgjxC06p_GAJzasMDVsDiyTeIzD8d4t_EEte4SfsEQUJyt54BNb2lKJKb9rLWHEoqKMONaBMkTdnoHBuvUpJVHbIgI6Lfe2ug6-_eIC_I7RPPBrtTpPtNwnykUU8ZfMue5g5l42B5AGmNKdYqrIv86j05160fwup-x6CAeeTH8s4zRj1XSZDgbqT86n1oMiAvPZ4vnfO_tOuam4VXYa-Bip3GL6IXgq1oEibhTTEbBVbErtEadjPuvlYp2xZjxI0McWNRjeaQgDFFc6DhF6Od-jn86iaeKtraBUx2iYB5DKxGPdiWCfxxrxot8sw";
-  
   async function sendMessage(): Promise<void> {
     if (!inputMessage.trim()) return;
-    
-    // const token = await getToken(); // Ensure we wait for the token
-    // if (!token) {
-    //     console.error("Failed to retrieve token.");
-    //     messages = [...messages, { role: 'assistant', content: 'Authentication error. Please try again later.' }];
-    //     return;
-    // }
 
     const userMessage = inputMessage.trim();
-    messages = [...messages, { role: 'user', content: userMessage }];
+    messages = [...messages, {role: 'user', content: userMessage}];
     inputMessage = '';
     isLoading = true;
 
     try {
-        const response = await fetch('https://eu-gb.ml.cloud.ibm.com/ml/v1/text/generation?version=2023-05-29', {
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${token}`
-            },
-            method: "POST",
-            mode: 'cors',
-            body: JSON.stringify({
-                "input": messages,
-                "parameters": {
-                    "decoding_method": "greedy",
-                    "max_new_tokens": 900,
-                    "min_new_tokens": 0,
-                    "stop_sequences": [],
-                    "repetition_penalty": 1
-                },
-                "model_id": "ibm/granite-3-8b-instruct",
-                "project_id": "68f58c24-1633-429d-bb39-cb0947f86d02"
-            }),
-        });
 
-        if (!response.ok) {
-            throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
+      const response = await fetch('http://localhost:11434/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: selectedModel,
+          messages: messages,
+          stream: false,
+          options: {
+              "temperature": 0.8, //Increasing the temperature will make the model answer more creatively
+              "num_ctx": 8000, //Sets the size of the context window used to generate the next token.
+              "mirostat_eta": 0.9 //Influences how quickly the algorithm responds to feedback from the generated text
+          },          
+        }),
+      });
 
-        const data = await response.json();
-        console.log("API Response:", data);
+    const data = await response.json(); 
+    console.log("API Response:", data);
 
-        const llmMessage: Message = {
-            role: 'assistant',
-            content: data.generated_text || 'No content available',
-            responseId: Date.now(),
-            responseDate: new Date().toISOString(),
-            contentUrl: window.location.href,
-            llmUsed: selectedModel, // Ensure selectedModel is defined
-            helpful: false,
-        };
+    const llmMessage: Message = {
+      role: 'assistant',
+      content:data.message.content,
+      responseId: Date.now(),
+      responseDate: new Date().toISOString(),
+      contentUrl: window.location.href,
+      llmUsed: selectedModel,
+      helpful: false,
+    };
 
-        messages = [...messages, llmMessage];
-
+    messages = [...messages, llmMessage];
     } catch (error) {
-        console.error('Error:', error);
-        messages = [...messages, {
-            role: 'assistant',
-            content: 'Sorry, I encountered an error. Please check your network connection or API settings.'
-        }];
+      console.error('Error:', error);
+      messages = [...messages, { 
+        role: 'assistant', 
+        content: 'Sorry, I encountered an error. Please make sure Ollama is running locally' 
+      }];
     } finally {
-        isLoading = false;
+      isLoading = false;
     }
-
+    // setTimeout(() => scrollChatBottom('smooth'), 0);
     console.log(messages);
-}
+  }
 
   function handleKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Enter' && !event.shiftKey) {
