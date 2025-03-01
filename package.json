@@ -57,5 +57,11 @@
     "typescript": "^5.7.2",
     "typescript-eslint": "^8.18.1",
     "vite": "^5.4.11"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.7.2",
+    "lucide-svelte": "^0.474.0",
+    "marked": "^15.0.6",
+    "zod": "^3.24.2"
   }
 }
