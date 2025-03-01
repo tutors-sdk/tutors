@@ -116,6 +116,7 @@
     const result = await response.json(); 
     console.log("API Response:", result);
     llmOutput = result.response; 
+    // llmOutput = convertMdToHtml(llmOutput);
   } catch (error) {
       console.error('Error:', error);
       llmOutput = "An error occurred while fetching data.";
@@ -175,7 +176,7 @@
   {:else if !llmOutput}
     <h1 class="text-center text-2xl font-bold">What can I help with? Type your search term and hit Enter</h1>
   {:else}
-   <div class="px-6 py-4 my-4">
+   <div class="px-6 py-4 my-4 prose">
     <p>{@html marked(llmOutput)}</p>
     </div>
   {/if}
