@@ -74,7 +74,7 @@
     let searchResults: string = await googleSearch();
     
     try {
-      const response = await fetch('/api/summarise-search', {
+      const response = await fetch('/api/summarise-search-background', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
