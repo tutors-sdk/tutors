@@ -29,7 +29,7 @@
     helpful?: boolean;
   }
 
-  const availableModels: string[] = ['granite3.1-dense:2b', 'granite-code:3b'];
+  const availableModels: string[] = ['ibm/granite-3-8b-instruct', 'granite-13b-instruct-v2'];
   let selectedModel: string = availableModels[0];
 
   let systemMessage:Message = {
@@ -64,7 +64,7 @@ async function sendMessage(): Promise<void> {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 messages,
-                model_id: 'ibm/granite-3-8b-instruct',
+                model_id: selectedModel,
                 project_id: project_id
             })
         });
