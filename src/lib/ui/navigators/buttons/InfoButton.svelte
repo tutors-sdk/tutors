@@ -45,64 +45,53 @@
 
   let inputMessage: string = '';
   let isLoading: boolean = false;
-
+  let project_id: string = '68f58c24-1633-429d-bb39-cb0947f86d02'
   function scrollChatBottom(behavior?: 'auto' | 'instant' | 'smooth') {
     elemChat.scrollTo({ top: elemChat.scrollHeight, behavior });
   }
 
-  async function sendMessage(): Promise<void> {
+async function sendMessage(): Promise<void> {
     if (!inputMessage.trim()) return;
 
     const userMessage = inputMessage.trim();
-    messages = [...messages, {role: 'user', content: userMessage}];
+    messages = [...messages, { role: 'user', content: userMessage }];
     inputMessage = '';
     isLoading = true;
 
     try {
+        const response = await fetch('/api/generate-text', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                messages,
+                model_id: 'ibm/granite-3-8b-instruct',
+                project_id: project_id
+            })
+        });
 
-      const response = await fetch('http://localhost:11434/api/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: selectedModel,
-          messages: messages,
-          stream: false,
-          options: {
-              "temperature": 0.8, //Increasing the temperature will make the model answer more creatively
-              "num_ctx": 8000, //Sets the size of the context window used to generate the next token.
-              "mirostat_eta": 0.9 //Influences how quickly the algorithm responds to feedback from the generated text
-          },          
-        }),
-      });
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status}`);
+        }
 
-    const data = await response.json(); 
-    console.log("API Response:", data);
+        const data = await response.json();
+        console.log('API Response:', data);
 
-    const llmMessage: Message = {
-      role: 'assistant',
-      content:data.message.content,
-      responseId: Date.now(),
-      responseDate: new Date().toISOString(),
-      contentUrl: window.location.href,
-      llmUsed: selectedModel,
-      helpful: false,
-    };
+        const rawText = data.results[0]?.generated_text || 'No content available';
+        console.log('API rawText:', rawText);
+        const assistantResponse = rawText.split('\nrole: user')[0]?.trim(); // Clean response
 
-    messages = [...messages, llmMessage];
+        messages = [...messages, { role: 'assistant', content: assistantResponse }]; // Store response
     } catch (error) {
-      console.error('Error:', error);
-      messages = [...messages, { 
-        role: 'assistant', 
-        content: 'Sorry, I encountered an error. Please make sure Ollama is running locally' 
-      }];
+        console.error('Error:', error);
+        messages = [...messages, { role: 'assistant', content: 'Something went wrong!' }];
     } finally {
-      isLoading = false;
+        isLoading = false;
     }
-    // setTimeout(() => scrollChatBottom('smooth'), 0);
+
     console.log(messages);
-  }
+}
+
+
 
   function handleKeyDown(event: KeyboardEvent): void {
     if (event.key === 'Enter' && !event.shiftKey) {
