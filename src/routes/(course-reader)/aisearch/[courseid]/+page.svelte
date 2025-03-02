@@ -91,19 +91,21 @@
                 If the snippets contain numerical data, key facts, or insights, incorporate them into the summary.  
                 3. Do not generate new links or modify the provided links — copy them exactly as they appear.  
                 4. Prioritize official sources, well-known websites, and content that directly addresses the query.  
+                5. Include only one summary
+                6. Include list of links only once
+                7. Do not add Notes
+                8. **Strictly include only one summary and one list of links.**  
+                9. **Do not generate duplicate sections (Summary or List of links).**  
+                10. **Do not include "Summary: {Concise summary...}", "List of links:", or repeated lists.**  
 
-                
-              **Output Format (Strictly Follow This JSON Format):**
-              {
-                "summary": "{A short, well-structured response based on the snippet details}",
-                "links": [
-                  {"title": "{Title}", "url": "{Exact Link}"},
-                  {"title": "{Title}", "url": "{Exact Link}"},
-                  {"title": "{Title}", "url": "{Exact Link}"},
-                  {"title": "{Title}", "url": "{Exact Link}"},
-                  {"title": "{Title}", "url": "{Exact Link}"}
-                ]
-              }
+                Output Format (Strictly Follow This Format):  
+                **Summary:** {A short, well-structured response based on the snippet details}  
+
+                1. **{Title}** - {Exact Link}  
+                2. **{Title}** - {Exact Link}  
+                3. **{Title}** - {Exact Link}  
+                4. **{Title}** - {Exact Link}  
+                5. **{Title}** - {Exact Link}  
                 `,
           stream: false,
           options: {
@@ -119,8 +121,9 @@
     const result = await response.json(); 
     console.log("API Response:", result);
     let generatedText = result.results[0].generated_text || "No results found.";
-    const cleanedText = generatedText.split("**Summary:**").slice(1).join("**Summary:**").trim();
-    llmOutput = await marked.parse(cleanedText);
+    let cleanedText = generatedText.split("**Output:**").pop()?.trim() || "No results found.";
+    cleanedText = cleanedText.replace(/^\*\*Note:\*\*.*?\n\n/i, "").trim();
+    llmOutput = cleanedText;
     // llmOutput = convertMdToHtml(llmOutput);
   } catch (error) {
       console.error('Error:', error);
