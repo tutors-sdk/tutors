@@ -29,7 +29,7 @@
     helpful?: boolean;
   }
 
-  const availableModels: string[] = ['ibm/granite-3-8b-instruct', 'granite-13b-instruct-v2'];
+  const availableModels: string[] = ['ibm/granite-3-8b-instruct', 'ibm/granite-13b-instruct-v2'];
   let selectedModel: string = availableModels[0];
 
   let systemMessage:Message = {
