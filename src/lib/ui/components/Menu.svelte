@@ -8,6 +8,7 @@
 
 <Popover
   bind:open={openState}
+  onOpenChange={(e) => (openState = e.open)}
   positioning={{ placement: "top" }}
   triggerBase="btn"
   class="z-9999"
