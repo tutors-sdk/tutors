@@ -1,8 +1,10 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/base";
   import Icon from "$lib/ui/components/Icon.svelte";
-  import { currentCourse, currentLo } from "$lib/runes.svelte";
 
+  let { lo, course } = $props();
+
+  let breadCrumbs: Lo[] = lo?.breadCrumbs!;
   let truncated = [true, true, true, true, true, true, true];
 
   function truncate(input: string) {
@@ -19,28 +21,22 @@
     return input;
   }
 
-  let breadCrumbs: Lo[] = $derived(currentLo?.value?.breadCrumbs!);
-
-  $effect(() => {
-    breadCrumbs.forEach((lo) => {
-      if (lo.route.endsWith("/")) {
-        lo.route = lo.route.slice(0, -1);
-      }
-    });
-    if (breadCrumbs.length > 2) {
-      if (breadCrumbs[1].type === "unit" || breadCrumbs[1].type === "side") {
-        breadCrumbs[1].route = breadCrumbs[1].route.replace("topic", "course");
-      }
+  breadCrumbs?.forEach((lo) => {
+    if (lo.route.endsWith("/")) {
+      lo.route = lo.route.slice(0, -1);
     }
   });
+  if (breadCrumbs?.length > 2) {
+    if (breadCrumbs[1].type === "unit" || breadCrumbs[1].type === "side") {
+      breadCrumbs[1].route = breadCrumbs[1].route.replace("topic", "course");
+    }
+  }
 </script>
 
 <div class="mx-8 my-2 flex items-center overflow-hidden p-1">
   <ol class="flex w-full items-center gap-4">
     <li>
-      <a class="hover:underline" href="/{currentCourse?.value?.properties?.parent}">
-        <Icon type="programHome" tip={`Go to Course Home`} /></a
-      >
+      <a data-sveltekit-reload class="hover:underline" href="/{course?.properties?.parent}"> <Icon type="programHome" tip={`Go to Course Home`} /></a>
     </li>
     <li aria-hidden="true">&rsaquo;</li>
     {#if breadCrumbs}
