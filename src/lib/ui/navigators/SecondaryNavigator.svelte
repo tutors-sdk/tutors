@@ -16,7 +16,7 @@
 
 {#if !currentCourse?.value?.isPortfolio}
   <div in:fly={slideFromLeft.in} out:fly={slideFromLeft.out}>
-    <div class="border-primary-100 bg-primary-50 dark:border-primary-800 z-10 {themeClasses.firstDiv} flex h-12 border-b-[1px]">
+    <div class="border-primary-100 bg-primary-50 dark:border-primary-800 z-10 mb-2 {themeClasses.firstDiv} flex h-12 border-b-[1px]">
       <Breadcrumbs {lo} {course} />
       {#if currentCourse?.value}
         <div class="flex flex-auto"></div>
