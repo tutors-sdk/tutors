@@ -1,23 +1,19 @@
 <script lang="ts">
-  import { fly } from "svelte/transition";
   import Breadcrumbs from "./buttons/Breadcrumbs.svelte";
   import EditCoursButton from "./buttons/EditCoursButton.svelte";
-  import { slideFromLeft } from "./animations";
   import IconBar from "../components/IconBar.svelte";
   import { currentCourse } from "$lib/runes.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
 
-  let { lo, course } = $props();
+  let { lo, parentCourse = null } = $props();
   const themeClasses = $derived({
     firstDiv: themeService.currentTheme.value === "classic" ? "dark:bg-tertiary-900" : "dark:bg-primary-900",
     otherDiv: "dark:bg-primary-800"
   });
 </script>
 
-<!-- {#if !currentCourse?.value?.isPortfolio} -->
-<!-- <div in:fly={slideFromLeft.in} out:fly={slideFromLeft.out}> -->
-<div class="border-primary-100 bg-primary-50 dark:border-primary-800 z-10 mb-2 {themeClasses.firstDiv} flex h-12 border-b-[1px]">
-  <Breadcrumbs {lo} {course} />
+<div class="border-primary-100 bg-primary-50 dark:border-primary-800 z-10 mb-2 {themeClasses.firstDiv} sticky top-0 flex h-12 border-b-[1px]">
+  <Breadcrumbs {lo} {parentCourse} />
   {#if currentCourse?.value}
     <div class="flex flex-auto"></div>
     {#if currentCourse?.value?.properties.github}
@@ -33,5 +29,6 @@
     </div>
   {/if}
 </div>
-<!-- </div> -->
-<!-- {/if} -->
+
+<style>
+</style>
