@@ -36,7 +36,7 @@
 <div class="mx-8 my-2 flex items-center overflow-hidden p-1">
   <ol class="flex w-full items-center gap-4">
     <li>
-      <a data-sveltekit-reload class="hover:underline" href="/{course?.properties?.parent}"> <Icon type="programHome" tip={`Go to Course Home`} /></a>
+      <a class="hover:underline" href="/{course?.properties?.parent}"> <Icon type="programHome" tip={`Go to Course Home`} /></a>
     </li>
     <li aria-hidden="true">&rsaquo;</li>
     {#if breadCrumbs}
