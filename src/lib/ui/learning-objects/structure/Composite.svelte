@@ -16,7 +16,7 @@
   const mainWidth = $derived(themeService.cardStyle.value === "landscape" ? "w-[64rem]" : "md:w-[64rem]");
 </script>
 
-<SecondaryNavigator lo={composite} course={composite.parentCourse} />
+<SecondaryNavigator lo={composite} parentCourse={composite?.parentCourse?.properties?.parent} />
 {#if composite?.units?.sides?.length > 0}
   <div class="m-4 block justify-center md:flex">
     <div class={mainWidth}>

@@ -27,14 +27,14 @@
   });
 </script>
 
-<SecondaryNavigator {lo} course={lo.parentCourse} />
+<SecondaryNavigator {lo} parentCourse={lo?.parentCourse?.properties?.parent} />
 <div class="mr-10 ml-10 flex justify-between">
   <div class="w-full">
     {@render children()}
   </div>
   {#if loContext && isLoaded}
     <div in:fly={slideFromRight.in} out:fly={slideFromRight.out} class="mr-2 hidden h-auto w-72 xl:block">
-      <div class="sticky top-6 max-h-[calc(100vh-4rem)] overflow-y-auto">
+      <div class="sticky top-14 max-h-[calc(100vh-4rem)] overflow-y-auto">
         <LoContextPanel {loContext} />
       </div>
     </div>
