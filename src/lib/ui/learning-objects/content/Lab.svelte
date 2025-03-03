@@ -21,13 +21,13 @@
     browser ? window.removeEventListener("keydown", keypressInput) : null;
   });
 
-  afterNavigate(() => {
-    const elemPage = document.querySelector("#lab-panel");
-    if (elemPage && window.innerWidth >= 600) {
-      elemPage.scrollIntoView({ behavior: "smooth", block: "start" });
-      elemPage.querySelector("article")?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  });
+  // afterNavigate(() => {
+  //   const elemPage = document.querySelector("#lab-panel");
+  //   if (elemPage && window.innerWidth >= 600) {
+  //     elemPage.scrollIntoView({ behavior: "smooth", block: "start" });
+  //     window.scrollBy(0, 100); // Adjust scroll position to leave a larger space above
+  //   }
+  // });
 
   async function keypressInput(e: KeyboardEvent) {
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {
@@ -62,8 +62,8 @@
         <div
           in:fly={slideFromLeft.in}
           out:fly={slideFromLeft.out}
-          class="card sticky top-6 m-2 h-auto rounded-xl border-[1px] bg-surface-100 py-4 dark:border-primary-500
-          dark:bg-surface-950"
+          class="card bg-surface-100 dark:border-primary-500 dark:bg-surface-950 sticky top-14 m-2 h-auto rounded-xl border-[1px]
+          py-4"
         >
           <nav class="nav-list">
             <ul>
@@ -74,9 +74,7 @@
       {/if}
     </div>
     <div id="lab-panel" class="min-h-screen flex-1">
-      <article
-        class="prose max-w-[65ch] dark:prose-invert prose-pre:overflow-x-auto sm:mx-1 md:mx-4 2xl:max-w-[120ch] 2xl:prose-pre:max-w-[120ch]"
-      >
+      <article class="prose dark:prose-invert prose-pre:overflow-x-auto 2xl:prose-pre:max-w-[120ch] max-w-[65ch] sm:mx-1 md:mx-4 2xl:max-w-[120ch]">
         {#key currentCodeTheme.value}
           {@html lab.content}
         {/key}
@@ -84,7 +82,7 @@
     </div>
   </div>
 
-  <div class="fixed bottom-0 left-0 z-50 block w-full rounded-sm border bg-primary-50 lg:hidden dark:bg-primary-900">
+  <div class="bg-primary-50 dark:bg-primary-900 fixed bottom-0 left-0 z-50 block w-full rounded-sm border lg:hidden">
     <nav class="flex flex-wrap justify-between p-2">
       {@html lab.horizontalNavbarHtml}
     </nav>
