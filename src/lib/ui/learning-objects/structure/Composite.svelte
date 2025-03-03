@@ -4,6 +4,8 @@
   import Units from "../layout/Units.svelte";
   import Cards from "../layout/Cards.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
+  import Breadcrumbs from "$lib/ui/navigators/buttons/Breadcrumbs.svelte";
+  import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
 
   interface Props {
     composite: Composite;
@@ -14,6 +16,7 @@
   const mainWidth = $derived(themeService.cardStyle.value === "landscape" ? "w-[64rem]" : "md:w-[64rem]");
 </script>
 
+<SecondaryNavigator lo={composite} course={composite.parentCourse} />
 {#if composite?.units?.sides?.length > 0}
   <div class="m-4 block justify-center md:flex">
     <div class={mainWidth}>

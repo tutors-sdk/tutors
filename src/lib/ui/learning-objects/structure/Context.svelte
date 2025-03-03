@@ -4,6 +4,8 @@
   import LoContextPanel from "../layout/LoContextPanel.svelte";
   import { slideFromRight } from "$lib/ui/navigators/animations";
   import { fly } from "svelte/transition";
+  import Breadcrumbs from "$lib/ui/navigators/buttons/Breadcrumbs.svelte";
+  import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
 
   type Props = {
     children: Snippet;
@@ -25,7 +27,8 @@
   });
 </script>
 
-<div class="ml-10 mr-10 flex justify-between">
+<SecondaryNavigator {lo} course={lo.parentCourse} />
+<div class="mr-10 ml-10 flex justify-between">
   <div class="w-full">
     {@render children()}
   </div>
