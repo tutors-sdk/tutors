@@ -24,16 +24,16 @@
   });
   let codeTheme = $state([currentCodeTheme.value]);
 
-  $effect(() => {
-    themeService.setLayout(themeService.layout.value);
-    themeService.setCardStyle(themeService.cardStyle.value);
+  function changeTheme(theme: string[]) {
     themeService.setTheme(theme[0]);
+  }
+
+  function changeCodeTheme() {
     markdownService.setCodeTheme(codeTheme[0]);
-    themeService.setDisplayMode(themeService.lightMode.value);
     if (currentCourse.value) {
       courseService.refreshAllLabs(theme[0]);
     }
-  });
+  }
 </script>
 
 {#snippet menuSelector()}
@@ -48,7 +48,7 @@
   <div class="mt-5">
     <div class="mt-4 mb-1 ml-2">Appearance</div>
     <div class="mb-2 flex justify-center">
-      <Segment name="cardStyle" bind:value={themeService.lightMode.value}>
+      <Segment name="lightMode" value={themeService.lightMode.value} onValueChange={(e) => themeService.setDisplayMode(e.value!)}>
         <Segment.Item value="dark"><Icon type="dark" /></Segment.Item>
         <Segment.Item value="light"><Icon type="light" /></Segment.Item>
       </Segment>
@@ -56,7 +56,7 @@
     <hr />
     <div class="mt-1 mb-1 ml-2">Card Style</div>
     <div class="mb-2 flex justify-center">
-      <Segment name="cardStyle" bind:value={themeService.cardStyle.value}>
+      <Segment name="cardStyle" value={themeService.cardStyle.value} onValueChange={(e) => themeService.setCardStyle(e.value!)}>
         <Segment.Item value="portrait"><Icon type="portrait" tip="Change cards to Portrait" /></Segment.Item>
         <Segment.Item value="circular"><Icon type="circular" tip="Change cards to Circular" /></Segment.Item>
         <Segment.Item value="landscape"><Icon type="landscape" tip="Change cards to Landscape" /></Segment.Item>
@@ -65,17 +65,17 @@
     <hr />
     <div class="mt-1 mb-1 ml-2">Theme</div>
     <div class="relative z-50 mx-4 mb-2">
-      <Combobox data={themeCombo} bind:value={theme} />
+      <Combobox data={themeCombo} placeholder={[themeService.currentTheme.value]} onValueChange={(e) => ((theme = e.value), changeTheme(e.value!))} />
     </div>
     <hr />
     <div class="mt-1 mb-1 ml-2">Code Style</div>
     <div class="relative z-10 mx-4 mb-2">
-      <Combobox data={codeThemeCombo} bind:value={codeTheme} />
+      <Combobox data={codeThemeCombo} placeholder={codeTheme} onValueChange={(e) => ((codeTheme = e.value), changeCodeTheme())} />
     </div>
     <hr />
     <div class="mt-1 mb-1 ml-2">Layout</div>
     <div class="mb-2 flex justify-center">
-      <Segment name="layout" bind:value={themeService.layout.value}>
+      <Segment name="layout" value={themeService.layout.value} onValueChange={(e) => themeService.setLayout(e.value!)}>
         <Segment.Item value="expanded"><Icon type="expanded" /></Segment.Item>
         <Segment.Item value="compacted"><Icon type="compacted" /></Segment.Item>
       </Segment>
