@@ -17,7 +17,7 @@
 </script>
 
 <Modal
-  bind:open={openState}
+  open={openState}
   onOpenChange={(e) => (openState = e.open)}
   triggerBase="btn"
   contentBase="bg-surface-100-900 p-4 space-y-4 shadow-xl w-[480px] h-screen"
