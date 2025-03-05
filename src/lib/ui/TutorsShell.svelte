@@ -1,10 +1,8 @@
 <script lang="ts">
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
-  import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
   import { onMount, type Snippet } from "svelte";
   import MainNavigator from "./navigators/MainNavigator.svelte";
   import { slide } from "svelte/transition";
-  import { currentCourse } from "$lib/runes.svelte";
 
   type Props = { children: Snippet };
   let { children }: Props = $props();
@@ -16,13 +14,10 @@
 </script>
 
 <div class="flex h-screen flex-col">
-  <header class="sticky top-0 z-10 bg-surface-100 dark:bg-surface-950">
+  <header class="bg-surface-100 dark:bg-surface-950 sticky top-0 z-10">
     <MainNavigator />
-    {#if currentCourse.value}
-      <SecondaryNavigator />
-    {/if}
   </header>
-  <main class="mt-2 flex-1 overflow-y-auto">
+  <main class="flex-1 overflow-y-auto">
     {@render children()}
   </main>
   {#if showFooter}

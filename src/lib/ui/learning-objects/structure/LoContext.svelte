@@ -19,6 +19,6 @@
 {#each lo?.toc as lo}
   <LoReference {lo} indent={indent + 4} />
   {#if lo.toc}
-    <svelte:self {lo} indent={indent + 4} />
+    <svelte:self {lo} indent={indent + 8} />
   {/if}
 {/each}

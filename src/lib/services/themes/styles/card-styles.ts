@@ -16,14 +16,14 @@ export interface CardStyleConfig {
 export const cardStyles: CardStyleConfig = {
   heading: {
     expanded: {
-      portrait: "!text-lg font-medium",
-      landscape: "!text-lg font-semibold",
-      circular: "!text-md font-semibold"
+      portrait: "text-lg! font-medium",
+      landscape: "text-lg! font-semibold",
+      circular: "text-md! font-semibold"
     },
     compacted: {
-      portrait: "!text-xs font-medium",
-      landscape: "!text-md font-medium",
-      circular: "!text-sm font-medium"
+      portrait: "text-xs! font-medium",
+      landscape: "text-md! font-medium",
+      circular: "text-sm! font-medium"
     }
   },
   dimensions: {

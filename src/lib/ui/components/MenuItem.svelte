@@ -12,7 +12,7 @@
   let { type, link, text, targetStr, onClick, isActive = false }: Props = $props();
 </script>
 
-<li class="option !p-0">
+<li class="option p-0!">
   {#if link}
     <a
       href={link}

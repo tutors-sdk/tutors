@@ -1,5 +1,5 @@
 <script lang="ts">
-  import "../app.postcss";
+  import "../app.css";
   import { tutorsConnectService } from "$lib/services/connect";
   import type { PageData } from "./$types";
   import { browser } from "$app/environment";

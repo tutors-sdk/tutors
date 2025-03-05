@@ -55,6 +55,12 @@ export function decorateLoTree(course: Course, lo: Lo) {
   // define breadcrump - path to all parent Los
   lo.breadCrumbs = [];
   crumbs(lo, lo.breadCrumbs);
+  if (lo.breadCrumbs?.length > 2) {
+    if (lo.breadCrumbs[1].type === "unit" || lo.breadCrumbs[1].type === "side") {
+      lo.breadCrumbs[1].route = lo.breadCrumbs[1].route.replace("topic", "course");
+    }
+  }
+
   // Convert summary and contentMd to html
   markdownService.convertLoToHtml(course, lo);
 
