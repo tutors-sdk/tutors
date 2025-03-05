@@ -62,7 +62,7 @@
         <div
           in:fly={slideFromLeft.in}
           out:fly={slideFromLeft.out}
-          class="card bg-surface-100 dark:border-primary-500 dark:bg-surface-950 sticky top-14 m-2 h-auto rounded-xl border-[1px]
+          class="card bg-surface-100 border-primary-100 dark:border-primary-500 dark:bg-surface-950 sticky top-14 m-2 h-auto rounded-xl border-[1px]
           py-4"
         >
           <nav class="nav-list">

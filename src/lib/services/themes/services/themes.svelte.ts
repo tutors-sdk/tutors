@@ -25,7 +25,7 @@ export const themeService: ThemeService = {
     { name: "tutors", icons: FluentIconLib },
     { name: "classic", icons: FluentIconLib },
     { name: "dyslexia", icons: FluentIconLib },
-    { name: "nouveau", icons: FluentIconLib },
+    { name: "terminus", icons: FluentIconLib },
     { name: "rose", icons: FluentIconLib },
     { name: "cerberus", icons: FluentIconLib }
   ] as Theme[],
