@@ -19,15 +19,15 @@
 {#snippet menuSelector()}
   <div class="relative">
     {#if presenceService.studentsOnline.value.length && tutorsId.value?.share}
-      <span class="variant-filled-error badge-icon absolute -right-2 -top-2 z-10 text-white">
+      <span class="variant-filled-error badge-icon text-error-500 font-bold absolute -top-1 -right-2 z-10">
         {presenceService.studentsOnline.value.length}
       </span>
     {/if}
-    <span class="badge-icon absolute -bottom-2 -right-2 z-10 text-white">
+    <span class="badge-icon absolute -right-2 -bottom-2 z-10 text-white">
       {#if tutorsId.value?.share === "true"}
-        <Icon icon="fluent:presence-available-24-filled" color="rgba(var(--color-success-500))" height="20" />
+        <Icon icon="fluent:presence-available-24-filled" color="var(--color-primary-500)" height="20" />
       {:else}
-        <Icon icon="fluent:presence-available-24-regular" color="rgba(var(--color-error-500))" height="20" />
+        <Icon icon="fluent:presence-available-24-regular" color="var(--color-error-500)" height="20" />
       {/if}
     </span>
     <div class="mt-2 flex items-center">
@@ -45,15 +45,10 @@
         <MenuItem text="Share Presence" type="offline" onClick={shareStatusChange} />
       {/if}
       {#if tutorsId.value?.share === "true"}
-        <MenuItem
-          link="https://time.tutors.dev/{currentCourse.value?.courseId}"
-          text="Tutors Time"
-          type="tutorsTime"
-          targetStr="_blank"
-        />
+        <MenuItem link="https://time.tutors.dev/{currentCourse.value?.courseId}" text="Tutors Time" type="tutorsTime" targetStr="_blank" />
         <MenuItem link="/live/{currentCourse.value?.courseId}" text="Tutors Live" type="live" targetStr="_blank" />
 
-        <li class="option p-0! hover:preset-tonal">
+        <li class="option hover:preset-tonal p-0!">
           <OnlineButton />
         </li>
 
@@ -61,12 +56,7 @@
       {/if}
     {/if}
     <MenuItem link="/" text="Dashboard" type="tutors" />
-    <MenuItem
-      link="https://github.com/{tutorsId.value?.login}"
-      text="Github Profile"
-      type="github"
-      targetStr="_blank"
-    />
+    <MenuItem link="https://github.com/{tutorsId.value?.login}" text="Github Profile" type="github" targetStr="_blank" />
     <MenuItem text="Disconnect" type="logout" onClick={logout} />
   </ul>
 {/snippet}
