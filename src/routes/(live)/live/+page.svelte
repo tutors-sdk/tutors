@@ -10,7 +10,7 @@
   liveService.startGlobalPresenceService();
 </script>
 
-<Tabs bind:value={group} listJustify="justify-center">
+<Tabs value={group} onValueChange={(e) => (group = e.value)} listJustify="justify-center">
   {#snippet list()}
     <Tabs.Control value="courses">Courses ({liveService.coursesOnline.value.length})</Tabs.Control>
     <Tabs.Control value="students">Students ({liveService.studentsOnline.value.length})</Tabs.Control>
