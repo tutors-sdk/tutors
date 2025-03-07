@@ -152,10 +152,14 @@ export function loadIcon(lo: Lo): IconType | undefined {
 
 export function crumbs(lo: Lo | undefined, los: Lo[]) {
   if (lo) {
+    if (lo.route.endsWith("/")) {
+      lo.route = lo.route.slice(0, -1);
+    }
     crumbs(lo.parentLo, los);
     los.push(lo);
   }
 }
+
 
 export function setShowHide(lo: Lo, status: boolean) {
   lo.hide = status;

@@ -2,6 +2,8 @@
   import type { Lo } from "$lib/services/base";
   import Cards from "../layout/Cards.svelte";
   import Video from "../content/Video.svelte";
+  import { currentCourse } from "$lib/runes.svelte";
+  import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
 
   interface Props {
     los: Lo[];
@@ -13,6 +15,7 @@
   let talkVideos = los.filter((lo) => lo.type !== "panelvideo");
 </script>
 
+<SecondaryNavigator lo={currentCourse.value} parentCourse={currentCourse.value?.properties?.parent} />
 <div class="flex flex-wrap justify-center">
   {#key los}
     {#if type !== "video"}

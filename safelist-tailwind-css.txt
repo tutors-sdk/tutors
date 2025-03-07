@@ -1,0 +1,10 @@
+preset-filled-secondary-100-900
+preset-filled-success-100-900
+preset-filled-warning-100-900
+preset-filled-error-100-900
+preset-filled-info-100-900
+border-secondary-500
+border-success-500
+border-warning-500
+border-error-500
+border-info-500

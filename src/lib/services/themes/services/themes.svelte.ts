@@ -23,10 +23,9 @@ export const themeService: ThemeService = {
   /** Available themes with their associated icon libraries */
   themes: [
     { name: "tutors", icons: FluentIconLib },
-    { name: "valentines", icons: ValentineIcons },
     { name: "classic", icons: FluentIconLib },
     { name: "dyslexia", icons: FluentIconLib },
-    { name: "nouveau", icons: FluentIconLib },
+    { name: "terminus", icons: FluentIconLib },
     { name: "rose", icons: FluentIconLib },
     { name: "cerberus", icons: FluentIconLib }
   ] as Theme[],
@@ -77,9 +76,9 @@ export const themeService: ThemeService = {
     this.lightMode.value = mode;
     localStorage.modeCurrent = mode;
     if (mode === "dark") {
-      document.body.classList.add("dark");
+      document.documentElement.classList.add("dark");
     } else {
-      document.body.classList.remove("dark");
+      document.documentElement.classList.remove("dark");
     }
   },
 
@@ -108,7 +107,7 @@ export const themeService: ThemeService = {
     } else {
       this.currentTheme.value = "tutors";
     }
-    document.body.setAttribute("data-theme", this.currentTheme.value);
+    document.documentElement.setAttribute("data-theme", this.currentTheme.value);
     localStorage.theme = this.currentTheme.value;
     this.eventTrigger();
   },

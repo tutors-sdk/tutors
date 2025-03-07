@@ -15,7 +15,7 @@
   </div>
   <div class="ml-4 flex-nowrap">
     <div class="flex">
-      <h2 class="mr-4 hidden !text-sm font-bold sm:!text-lg md:inline-block">
+      <h2 class="mr-4 hidden text-sm! font-bold sm:text-lg! md:inline-block">
         {currentLo?.value?.title}
       </h2>
     </div>
@@ -29,6 +29,6 @@
   </div>
 {:else}
   <div class="ml-4 flex-nowrap">
-    <h2 class="mr-4 hidden !text-sm font-bold sm:!text-lg md:inline-block">Tutors</h2>
+    <h2 class="mr-4 hidden text-sm! font-bold sm:text-lg! md:inline-block">Tutors</h2>
   </div>
 {/if}

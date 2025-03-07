@@ -1,8 +1,11 @@
 <script lang="ts">
   import type { Lo } from "$lib/services/base";
   import Icon from "$lib/ui/components/Icon.svelte";
-  import { currentCourse, currentLo } from "$lib/runes.svelte";
+  import TutorsIcon from "$lib/ui/components/TutorsIcon.svelte";
 
+  let { lo, parentCourse = null } = $props();
+
+  let breadCrumbs: Lo[] = $derived(lo?.breadCrumbs!);
   let truncated = [true, true, true, true, true, true, true];
 
   function truncate(input: string) {
@@ -18,38 +21,28 @@
     }
     return input;
   }
-
-  let breadCrumbs: Lo[] = $derived(currentLo?.value?.breadCrumbs!);
-
-  $effect(() => {
-    breadCrumbs.forEach((lo) => {
-      if (lo.route.endsWith("/")) {
-        lo.route = lo.route.slice(0, -1);
-      }
-    });
-    if (breadCrumbs.length > 2) {
-      if (breadCrumbs[1].type === "unit" || breadCrumbs[1].type === "side") {
-        breadCrumbs[1].route = breadCrumbs[1].route.replace("topic", "course");
-      }
-    }
-  });
 </script>
 
 <div class="mx-8 my-2 flex items-center overflow-hidden p-1">
   <ol class="flex w-full items-center gap-4">
-    <li>
-      <a class="hover:underline" href="/{currentCourse?.value?.properties?.parent}">
-        <Icon type="programHome" tip={`Go to Course Home`} /></a
-      >
+    <li class="mb-1">
+      <a class="hover:underline" href="/"> <TutorsIcon widthPlease="25px" /></a>
     </li>
-    <li aria-hidden="true">&rsaquo;</li>
+    <li class="mb-1 opacity-50" aria-hidden="true">&rsaquo;</li>
+    {#if parentCourse}
+      <li>
+        <a class="hover:underline" href="/{parentCourse}"> <Icon type="programHome" tip={`Go to Course Home`} /></a>
+      </li>
+      <li class="mb-1 opacity-50" aria-hidden="true">&rsaquo;</li>
+    {/if}
+
     {#if breadCrumbs}
       {#each breadCrumbs as lo, i}
         {#if i >= 1}
-          <li class="opacity-50" aria-hidden="true">&rsaquo;</li>
+          <li class="mb-1 opacity-50" aria-hidden="true">&rsaquo;</li>
         {/if}
         <li class="flex items-center hover:underline">
-          <a href={lo.route} class="inline-flex !space-x-[-1rem] text-black lg:!space-x-0 dark:text-white">
+          <a href={lo.route} class="inline-flex space-x-[-1rem]! text-black lg:space-x-0! dark:text-white">
             <Icon type={lo.type} tip={`Go to ${lo.title}`} />
 
             <!-- svelte-ignore a11y_no_static_element_interactions -->

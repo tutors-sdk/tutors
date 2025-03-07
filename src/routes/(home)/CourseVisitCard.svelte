@@ -8,7 +8,7 @@
 
 <div
   transition:scale|local={scaleTransition}
-  class="to-accent-50 dark:to-accent-900 card card-hover m-2 border bg-gradient-to-l from-primary-50 p-2 dark:from-primary-900"
+  class="to-accent-50 dark:to-accent-900 card card-hover border-surface-200 dark:border-surface-400 from-primary-50 dark:from-primary-900 m-2 border bg-linear-to-l p-2"
 >
   <div class="flex justify-between">
     <section class="p-4">
@@ -30,18 +30,9 @@
   </div>
   <footer class="card-footer p-0">
     <div class="flex w-full">
-      <a
-        class="variant-filled-primary btn m-0 w-2/3 rounded-t-none rounded-br-none hover:preset-tonal"
-        href={"/course/" + courseVisit.id}>Visit Course</a
-      >
-      <button
-        class="variant-filled-error btn m-0 w-1/3 rounded-t-none rounded-bl-none hover:preset-tonal"
-        onclick={() => deleteCourse(courseVisit.id)}>Delete</button
-      >
-      <button
-        class="variant-filled-error btn m-0 w-1/3 rounded-t-none rounded-bl-none hover:preset-tonal"
-        onclick={() => starUnstarCourse(courseVisit.id)}
-      >
+      <a class="variant-filled-primary btn hover:preset-tonal m-0 w-2/3 rounded-t-none rounded-br-none" href={"/course/" + courseVisit.id}>Visit Course</a>
+      <button class="variant-filled-error btn hover:preset-tonal m-0 w-1/3 rounded-t-none rounded-bl-none" onclick={() => deleteCourse(courseVisit.id)}>Delete</button>
+      <button class="variant-filled-error btn hover:preset-tonal m-0 w-1/3 rounded-t-none rounded-bl-none" onclick={() => starUnstarCourse(courseVisit.id)}>
         <Iconify icon={courseVisit.favourite ? "openmoji:star" : "openmoji:black-star"} width="36" height="36" />
       </button>
     </div>
