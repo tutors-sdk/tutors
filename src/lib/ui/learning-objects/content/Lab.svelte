@@ -21,13 +21,12 @@
     browser ? window.removeEventListener("keydown", keypressInput) : null;
   });
 
-  // afterNavigate(() => {
-  //   const elemPage = document.querySelector("#lab-panel");
-  //   if (elemPage && window.innerWidth >= 600) {
-  //     elemPage.scrollIntoView({ behavior: "smooth", block: "start" });
-  //     window.scrollBy(0, 100); // Adjust scroll position to leave a larger space above
-  //   }
-  // });
+  afterNavigate(() => {
+    const elemPage = document.querySelector("#lab-panel");
+    if (elemPage && window.innerWidth >= 600) {
+      elemPage.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
 
   async function keypressInput(e: KeyboardEvent) {
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {
@@ -40,10 +39,6 @@
       goto(`${lab.url}/${step}`);
     }
   }
-  let isLoaded = $state(false);
-  onMount(() => {
-    isLoaded = true;
-  });
 </script>
 
 <svelte:head>
@@ -58,25 +53,23 @@
 <div class="lab-content w-full pb-14">
   <div class="max-w-l flex">
     <div class="mr-2 hidden h-auto w-72 lg:block">
-      {#if isLoaded}
-        <div
-          in:fly={slideFromLeft.in}
-          out:fly={slideFromLeft.out}
-          class="card bg-surface-100 border-primary-100 dark:border-primary-500 dark:bg-surface-950 sticky top-14 m-2 h-auto rounded-xl border-[1px]
+      <div
+        class="card bg-surface-100 border-primary-100 dark:border-primary-500 dark:bg-surface-950 sticky top-14 m-2 h-auto rounded-xl border-[1px]
           py-4"
-        >
-          <nav class="nav-list">
-            <ul>
-              {@html lab.navbarHtml}
-            </ul>
-          </nav>
-        </div>
-      {/if}
+      >
+        <nav class="nav-list">
+          <ul>
+            {@html lab.navbarHtml}
+          </ul>
+        </nav>
+      </div>
     </div>
-    <div id="lab-panel" class="min-h-screen flex-1">
+    <div class="min-h-screen flex-1">
       <article class="prose dark:prose-invert prose-pre:overflow-x-auto 2xl:prose-pre:max-w-[120ch] max-w-[65ch] sm:mx-1 md:mx-4 2xl:max-w-[120ch]">
         {#key currentCodeTheme.value}
-          {@html lab.content}
+          <span id="lab-panel" class="mt-[-60px] block pt-[60px]">
+            {@html lab.content}
+          </span>
         {/key}
       </article>
     </div>
