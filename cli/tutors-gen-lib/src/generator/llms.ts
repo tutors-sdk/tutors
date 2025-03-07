@@ -1,5 +1,5 @@
 import { Lo, Course, Composite, Talk, Topic } from "../models/lo-types";
-import { flattenLos, removeFirstLine, removeLeadingHashes } from "../models/lo-utils";
+import { filterByType, flattenLos, removeFirstLine, removeLeadingHashes } from "../models/lo-utils";
 import { compressToZip, writeFile } from "./file-utils";
 
 let header = "";
@@ -45,7 +45,8 @@ function generatePdfs(pdfs: Talk[], folder: string) {
 }
 
 export function generateLlmsByTopic(course: Course, folder: string) {
-  course.los.forEach((lo: Lo, index) => {
+  const topicLos = filterByType(course.los, "topic");
+  topicLos.forEach((lo: Lo, index) => {
     if (lo.type === "topic" && lo.hide !== true) {
       const topic = lo as Topic;
       let allTxt: string[] = [];
