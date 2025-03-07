@@ -26,7 +26,8 @@ function courseSummary(course: Course): string {
 
 function topics(course: Course): string {
   let topicStr:string[] = [];
-  course.los.forEach((lo: Lo, index: number) => {
+  const topicLos = filterByType(course.los, "topic");
+  topicLos.forEach((lo: Lo, index: number) => {
     if (lo.type === "topic" && lo.hide !== true) {
       const topic = lo as Topic;
       const paddedIndex = index.toString().padStart(2, "0");
