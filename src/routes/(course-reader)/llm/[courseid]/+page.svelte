@@ -1,6 +1,8 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
+  import { currentCourse } from "$lib/runes.svelte";
   import { convertMdToHtml } from "$lib/services/markdown";
+  import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
 
   interface Props {
     data: any;
@@ -21,6 +23,7 @@ Tutors supports the [llms.txt](https://llmstxt.org/) convention for making docum
   const headdingHtml = convertMdToHtml(headding);
 </script>
 
+<SecondaryNavigator lo={currentCourse.value} parentCourse={currentCourse.value?.properties?.parent} />
 <div class="container mx-auto mt-2 items-center justify-between lg:flex">
   <div class="mx-4">
     <div class="prose dark:prose-invert">
