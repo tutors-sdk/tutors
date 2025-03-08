@@ -18,7 +18,7 @@
 </script>
 
 {#if lo?.icon}
-  <Iconify icon={lo?.icon.type} color={lo.icon.color} height={iconHeight} />
+  <Iconify icon={lo?.icon.type} color={lo?.icon?.color} height={iconHeight} />
 {:else}
   <img src={lo?.img} alt={lo?.title} class={imageHeight} />
 {/if}
