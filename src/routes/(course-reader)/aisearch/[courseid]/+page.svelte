@@ -58,7 +58,7 @@
           })) || [];
 
         const jsonOutput = JSON.stringify(filteredItems, null, 2);
-
+        console.log("Search Results:", jsonOutput);  
         return jsonOutput;
     } catch (error) {
         console.error('Error fetching data:', error);

@@ -7,18 +7,27 @@
   import { fly } from "svelte/transition";
   import { slideFromLeft } from "$lib/ui/navigators/animations";
   import { currentCodeTheme } from "$lib/services/markdown";
+  import { writable } from "svelte/store";
 
   interface Props {
     lab: LiveLab;
   }
   let { lab }: Props = $props();
 
-  onMount(async () => {
+  let isLoaded = writable(false);
+  let selectedText = writable("");
+  let showEli5Button = writable(false);
+  let buttonPosition = writable({ top: 0, left: 0 });
+
+  onMount(() => {
     window.addEventListener("keydown", keypressInput);
+    document.addEventListener("mouseup", handleTextSelection);
+    isLoaded.set(true);
   });
 
   onDestroy(() => {
     browser ? window.removeEventListener("keydown", keypressInput) : null;
+    document.removeEventListener("mouseup", handleTextSelection);
   });
 
   afterNavigate(() => {
@@ -40,10 +49,23 @@
       goto(`${lab.url}/${step}`);
     }
   }
-  let isLoaded = $state(false);
-  onMount(() => {
-    isLoaded = true;
-  });
+
+  function handleTextSelection() {
+    const selection = window.getSelection();
+    if (selection && selection.toString().trim() !== "") {
+      const range = selection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+      selectedText.set(selection.toString());
+      buttonPosition.set({ top: rect.top + window.scrollY, left: rect.left + window.scrollX });
+      showEli5Button.set(true);
+    } else {
+      showEli5Button.set(false);
+    }
+  }
+
+  function showPopup() {
+    alert($selectedText);
+  }
 </script>
 
 <svelte:head>
@@ -58,7 +80,7 @@
 <div class="lab-content w-full pb-14">
   <div class="max-w-l flex">
     <div class="mr-2 hidden h-auto w-72 lg:block">
-      {#if isLoaded}
+      {#if $isLoaded}
         <div
           in:fly={slideFromLeft.in}
           out:fly={slideFromLeft.out}
@@ -90,3 +112,14 @@
     </nav>
   </div>
 </div>
+
+{#if $showEli5Button}
+<button 
+  type="button" 
+  class="btn px-4 py-2 bg-gray-500 text-white rounded"
+  on:click={showPopup}
+  style="position: absolute; top: {$buttonPosition.top}px; left: {$buttonPosition.left}px;"
+>
+  eli5
+</button>
+{/if}
