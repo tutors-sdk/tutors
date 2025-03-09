@@ -4,8 +4,9 @@
   import LoContextPanel from "../layout/LoContextPanel.svelte";
   import { slideFromRight } from "$lib/ui/navigators/animations";
   import { fly } from "svelte/transition";
-  import Breadcrumbs from "$lib/ui/navigators/buttons/Breadcrumbs.svelte";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
+  import Image from "../../components/Image.svelte";
+  import { currentLo } from "$lib/runes.svelte";
 
   type Props = {
     children: Snippet;
@@ -34,8 +35,10 @@
   </div>
   {#if loContext && isLoaded}
     <div in:fly={slideFromRight.in} out:fly={slideFromRight.out} class="mr-2 hidden h-auto w-72 xl:block">
-      <div class="sticky top-14 max-h-[calc(100vh-4rem)] overflow-y-auto">
-        <LoContextPanel {loContext} />
+      <div class="sticky top-14 flex flex-col overflow-y-auto">
+        <div class="my-auto">
+          <LoContextPanel {loContext} />
+        </div>
       </div>
     </div>
   {/if}
