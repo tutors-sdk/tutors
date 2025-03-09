@@ -8,17 +8,16 @@
   import { slideFromLeft } from "$lib/ui/navigators/animations";
   import { currentCodeTheme } from "$lib/services/markdown";
   import { writable } from "svelte/store";
-
+  
   interface Props {
     lab: LiveLab;
   }
   let { lab }: Props = $props();
-
+  let project_id: string = '68f58c24-1633-429d-bb39-cb0947f86d02'
   let isLoaded = writable(false);
   let selectedText = writable("");
   let showEli5Button = writable(false);
   let buttonPosition = writable({ top: 0, left: 0 });
-
   onMount(() => {
     window.addEventListener("keydown", keypressInput);
     document.addEventListener("mouseup", handleTextSelection);
@@ -63,9 +62,58 @@
     }
   }
 
-  function showPopup() {
-    alert($selectedText);
-  }
+async function showPopup() {
+  const llmResponse = await sendMessage(); 
+  alert(llmResponse);  
+  console.log(llmResponse); 
+}
+
+  // AI variables
+  // svelte-ignore non_reactive_update
+  let llmOutput: string = "";
+  let isLoading = $state(false);
+// LLM call
+  async function sendMessage(): Promise<string> {
+    const userMessage = $selectedText.trim();
+    isLoading = true;
+
+    
+    try {
+      const response = await fetch('/api/summarise-search-background', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model_id: 'ibm/granite-3-8b-instruct',
+          project_id: project_id,
+          prompt: `You need to explain like I am five: "${userMessage}"
+                `,
+          stream: false,
+          options: {
+              "temperature": 0.8, //Increasing the temperature will make the model answer more creatively
+              "num_ctx": 8000, //Sets the size of the context window used to generate the next token.
+              "top_k": 1,
+              "top_p": 0.1,
+          },          
+        }),
+      });
+
+  
+    const result = await response.json(); 
+    
+    const llmOutput = result?.results?.[0]?.generated_text || "No results found.";
+    return llmOutput;  
+    // Log the result to the console
+    console.log("API Response:", llmOutput);
+
+  } catch (error) {
+      console.error('Error:', error);
+      llmOutput = "An error occurred while fetching data.";
+    } finally {
+      isLoading = false;
+    }
+};
+
+
 </script>
 
 <svelte:head>
