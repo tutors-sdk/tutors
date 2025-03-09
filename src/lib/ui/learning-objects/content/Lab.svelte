@@ -8,7 +8,7 @@
   import { slideFromLeft } from "$lib/ui/navigators/animations";
   import { currentCodeTheme } from "$lib/services/markdown";
   import { writable } from "svelte/store";
-  
+
   interface Props {
     lab: LiveLab;
   }
@@ -18,6 +18,9 @@
   let selectedText = writable("");
   let showEli5Button = writable(false);
   let buttonPosition = writable({ top: 0, left: 0 });
+  let modalOpen = writable(false);
+  let modalContent = writable("");
+  let isLoading = writable(false);
   onMount(() => {
     window.addEventListener("keydown", keypressInput);
     document.addEventListener("mouseup", handleTextSelection);
@@ -62,58 +65,58 @@
     }
   }
 
-async function showPopup() {
-  const llmResponse = await sendMessage(); 
-  alert(llmResponse);  
-  console.log(llmResponse); 
-}
+  async function openModal() {
+    const llmResponse = await sendMessage();
+    modalContent.set(llmResponse);
+    modalOpen.set(true);
+    showEli5Button.set(false);
+  }
+
+  function closeModal() {
+    modalOpen.set(false);
+  }
 
   // AI variables
   // svelte-ignore non_reactive_update
   let llmOutput: string = "";
-  let isLoading = $state(false);
-// LLM call
+
+  // LLM call
   async function sendMessage(): Promise<string> {
     const userMessage = $selectedText.trim();
-    isLoading = true;
+    isLoading.set(true);
 
-    
     try {
       const response = await fetch('/api/summarise-search-background', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model_id: 'ibm/granite-3-8b-instruct',
           project_id: project_id,
-          prompt: `You need to explain like I am five: "${userMessage}"
-                `,
+          prompt: `You need to explain like I am five: "${userMessage}"`,
           stream: false,
           options: {
-              "temperature": 0.8, //Increasing the temperature will make the model answer more creatively
-              "num_ctx": 8000, //Sets the size of the context window used to generate the next token.
-              "top_k": 1,
-              "top_p": 0.1,
-          },          
+            "temperature": 0.8, //Increasing the temperature will make the model answer more creatively
+            "num_ctx": 8000, //Sets the size of the context window used to generate the next token.
+            "top_k": 1,
+            "top_p": 0.1,
+          },
         }),
       });
 
-  
-    const result = await response.json(); 
-    
-    const llmOutput = result?.results?.[0]?.generated_text || "No results found.";
-    return llmOutput;  
-    // Log the result to the console
-    console.log("API Response:", llmOutput);
+      const result = await response.json();
+      const llmOutput = result?.results?.[0]?.generated_text || "No results found.";
 
-  } catch (error) {
+      // Log the result to the console
+      console.log("API Response:", llmOutput);
+      return llmOutput;
+
+    } catch (error) {
       console.error('Error:', error);
-      llmOutput = "An error occurred while fetching data.";
+      return "An error occurred while fetching data.";
     } finally {
-      isLoading = false;
+      isLoading.set(false);
     }
-};
-
-
+  }
 </script>
 
 <svelte:head>
@@ -165,9 +168,22 @@ async function showPopup() {
 <button 
   type="button" 
   class="btn px-4 py-2 bg-gray-500 text-white rounded"
-  on:click={showPopup}
+  on:click={openModal}
   style="position: absolute; top: {$buttonPosition.top}px; left: {$buttonPosition.left}px;"
 >
-  eli5
+  {#if $isLoading}
+        Loading...
+      {:else}
+        Explain like I am five
+  {/if}
 </button>
+{/if}
+
+{#if $modalOpen}
+  <div class="modal modal-open fixed inset-0 flex items-center justify-start bg-black bg-opacity-50" on:click={closeModal}>
+    <div class="modal-box bg-white p-4 rounded shadow-lg w-2/3" on:click|stopPropagation>
+      <h3 class="font-bold text-lg">Tutors AI Explanation</h3>
+      <p class="py-4">{$modalContent}</p>
+    </div>
+  </div>
 {/if}
