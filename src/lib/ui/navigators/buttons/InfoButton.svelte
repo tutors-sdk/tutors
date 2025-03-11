@@ -79,8 +79,18 @@ async function sendMessage(): Promise<void> {
         const rawText = data.results[0]?.generated_text || 'No content available';
         console.log('API rawText:', rawText);
         const assistantResponse = rawText.split('\nrole: user')[0]?.trim(); // Clean response
+        
+        const llmMessage: Message = {
+          role: 'assistant',
+          content:assistantResponse,
+          responseId: Date.now(),
+          responseDate: new Date().toISOString(),
+          contentUrl: window.location.href,
+          llmUsed: selectedModel,
+          helpful: false,
+        };
 
-        messages = [...messages, { role: 'assistant', content: assistantResponse }]; // Store response
+      messages = [...messages, llmMessage];
     } catch (error) {
         console.error('Error:', error);
         messages = [...messages, { role: 'assistant', content: 'Something went wrong!' }];

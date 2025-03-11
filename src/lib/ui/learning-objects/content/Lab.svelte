@@ -12,6 +12,17 @@
   interface Props {
     lab: LiveLab;
   }
+
+    interface Message {
+    role: 'user' | 'assistant' | 'system';
+    content: string;
+    responseId?: number;
+    responseDate?: string;
+    contentUrl?: string;
+    llmUsed?: string;
+    helpful?: boolean;
+  }
+
   let { lab }: Props = $props();
   let project_id: string = '68f58c24-1633-429d-bb39-cb0947f86d02'
   let isLoaded = writable(false);
@@ -108,13 +119,33 @@
 
       // Log the result to the console
       console.log("API Response:", llmOutput);
-      return llmOutput;
+
+      const llmMessage: Message = {
+          role: 'assistant',
+          content:llmOutput,
+          responseId: Date.now(),
+          responseDate: new Date().toISOString(),
+          contentUrl: window.location.href,
+          llmUsed: 'ibm/granite-3-8b-instruct',
+          helpful: false,
+        };
+      
+      console.log("llmMessage:", llmMessage);  
+      return llmMessage.content;
 
     } catch (error) {
       console.error('Error:', error);
       return "An error occurred while fetching data.";
     } finally {
       isLoading.set(false);
+    }
+  }
+
+  async function copyText(textToCopy: any) {
+    try {
+      await navigator.clipboard.writeText(textToCopy);
+    } catch (err) {
+      console.error('Failed to copy text:', err);
     }
   }
 </script>
