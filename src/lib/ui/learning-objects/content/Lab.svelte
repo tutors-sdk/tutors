@@ -30,7 +30,16 @@
   let showEli5Button = writable(false);
   let buttonPosition = writable({ top: 0, left: 0 });
   let modalOpen = writable(false);
-  let modalContent = writable("");
+  let modalContent = writable(""); // see if I can remove this
+  let llmResponse = writable<Message>({
+    role: 'assistant',
+    content: '',
+    responseId: undefined,
+    responseDate: undefined,
+    contentUrl: undefined,
+    llmUsed: undefined,
+    helpful: undefined
+  });
   let isLoading = writable(false);
   onMount(() => {
     window.addEventListener("keydown", keypressInput);
@@ -77,8 +86,11 @@
   }
 
   async function openModal() {
-    const llmResponse = await sendMessage();
-    modalContent.set(llmResponse);
+    isLoading.set(true);
+    const response = await sendMessage();
+    llmResponse.set(response);
+    modalContent.set(response.content);
+    isLoading.set(false);
     modalOpen.set(true);
     showEli5Button.set(false);
   }
@@ -92,7 +104,7 @@
   let llmOutput: string = "";
 
   // LLM call
-  async function sendMessage(): Promise<string> {
+  async function sendMessage(): Promise<Message> {
     const userMessage = $selectedText.trim();
     isLoading.set(true);
 
@@ -131,11 +143,19 @@
         };
       
       console.log("llmMessage:", llmMessage);  
-      return llmMessage.content;
+      return llmMessage;
 
     } catch (error) {
       console.error('Error:', error);
-      return "An error occurred while fetching data.";
+          return {
+        role: 'assistant',
+        content: "An error occurred while fetching data.",
+        responseId: Date.now(),
+        responseDate: new Date().toISOString(),
+        contentUrl: window.location.href,
+        llmUsed: 'ibm/granite-3-8b-instruct',
+        helpful: false,
+      };
     } finally {
       isLoading.set(false);
     }
@@ -147,6 +167,11 @@
     } catch (err) {
       console.error('Failed to copy text:', err);
     }
+    showEli5Button.set(false);
+  }
+
+  async function updateMessageHelpful(helpful: boolean) {
+    llmResponse.update(content => ({ ...content, helpful }));
   }
 </script>
 
@@ -215,6 +240,11 @@
     <div class="modal-box bg-white p-4 rounded shadow-lg w-2/3" on:click|stopPropagation>
       <h3 class="font-bold text-lg">Tutors AI Explanation</h3>
       <p class="py-4">{$modalContent}</p>
+        <div class="flex justify-end space-x-2">
+        <button on:click={() => copyText($modalContent)}><i class="fa-solid fa-copy"></i></button>
+        <button on:click={() => updateMessageHelpful(false)}><i class="fa-solid fa-thumbs-down"></i></button>
+        <button on:click={() => updateMessageHelpful(true)}><i class="fa-solid fa-thumbs-up"></i></button>
+      </div>
     </div>
   </div>
 {/if}
