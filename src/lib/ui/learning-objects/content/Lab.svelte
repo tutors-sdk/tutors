@@ -24,7 +24,8 @@
   }
 
   let { lab }: Props = $props();
-  let project_id: string = '68f58c24-1633-429d-bb39-cb0947f86d02'
+  let project_id: string = '68f58c24-1633-429d-bb39-cb0947f86d02';
+  let model_id: string = 'ibm/granite-3-8b-instruct';
   let isLoaded = writable(false);
   let selectedText = writable("");
   let showEli5Button = writable(false);
@@ -113,7 +114,7 @@
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model_id: 'ibm/granite-3-8b-instruct',
+          model_id: model_id,
           project_id: project_id,
           prompt: `You need to explain like I am five: "${userMessage}"`,
         }),
@@ -131,7 +132,7 @@
           responseId: Date.now(),
           responseDate: new Date().toISOString(),
           contentUrl: window.location.href,
-          llmUsed: 'ibm/granite-3-8b-instruct',
+          llmUsed: model_id,
           helpful: false,
         };
       
@@ -146,7 +147,7 @@
         responseId: Date.now(),
         responseDate: new Date().toISOString(),
         contentUrl: window.location.href,
-        llmUsed: 'ibm/granite-3-8b-instruct',
+        llmUsed: model_id,
         helpful: false,
       };
     } finally {

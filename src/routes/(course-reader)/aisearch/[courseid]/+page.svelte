@@ -6,7 +6,7 @@
   import type { PageData } from "./$types";
   import { currentLo } from "$lib/runes.svelte";
   import { marked } from 'marked';
-
+  import { writable } from "svelte/store";
   interface Props {
     data: PageData;
   };
@@ -21,8 +21,27 @@
   let isLoading = $state(false);
   // AI variables
   // svelte-ignore non_reactive_update
-  let searchTerm: string = 'what is Vite?';
-  let llmOutput: string = "";
+  let searchTerm: string = '';
+  // let llmOutput: string = "";
+  let model_id: string = 'ibm/granite-3-8b-instruct'; 
+
+  let llmSearchResponse = writable<AISearchSummary>({
+      searchId: undefined,
+      searchDate: undefined,
+      searchPhrase: '',
+      searchResult: '',
+      llmUsed: model_id,
+      helpful: undefined,
+  });
+
+    interface AISearchSummary {
+      searchId?: number;
+      searchDate?: string;
+      searchPhrase: string;
+      searchResult: string;
+      llmUsed: string;
+      helpful?: boolean;
+    };
 
     interface SearchResult {
       displayLink: string;
@@ -78,7 +97,7 @@
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model_id: 'ibm/granite-3-8b-instruct',
+          model_id: model_id,
           project_id: project_id,
           prompt: `You are an AI-powered search engine that provides users with the most relevant and accurate resources based on 
           student's search query: "${searchTerm}"
@@ -116,11 +135,28 @@
     let generatedText = result.results[0].generated_text || "No results found.";
     let cleanedText = generatedText.split("**Output:**").pop()?.trim() || "No results found.";
     cleanedText = cleanedText.replace(/^\*\*Note:\*\*.*?\n\n/i, "").trim();
-    llmOutput = cleanedText;
-    // llmOutput = convertMdToHtml(llmOutput);
+    
+    const llmSearchResponseData: AISearchSummary = {
+          searchId: Date.now(),
+          searchDate: new Date().toISOString(),
+          searchPhrase: searchTerm,
+          searchResult: cleanedText,
+          llmUsed: model_id,
+          helpful: false
+        };
+
+      console.log("llmSearchResponse:", llmSearchResponseData);  
+      llmSearchResponse.set(llmSearchResponseData);
   } catch (error) {
       console.error('Error:', error);
-      llmOutput = "An error occurred while fetching data.";
+      llmSearchResponse.set({
+        searchId: Date.now(),
+        searchDate: new Date().toISOString(),
+        searchPhrase: searchTerm,
+        searchResult: "An error occurred while fetching data.",
+        llmUsed: model_id,
+        helpful: false
+      });
     } finally {
       isLoading = false;
     }
@@ -174,11 +210,11 @@
 <section class="mt-4">
   {#if isLoading}
     <p class="text-center italic text-secondary">...</p>
-  {:else if !llmOutput}
+  {:else if !$llmSearchResponse.searchResult}
     <h1 class="text-center text-2xl font-bold">What can I help with? Type your search term and hit Enter</h1>
   {:else}
    <div class="px-6 py-4 my-4">
-    <p>{@html marked(llmOutput)}</p>
+    <p>{@html marked($llmSearchResponse.searchResult)}</p>
     </div>
   {/if}
 </section>
