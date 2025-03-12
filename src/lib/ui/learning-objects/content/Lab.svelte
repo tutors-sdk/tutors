@@ -116,13 +116,6 @@
           model_id: 'ibm/granite-3-8b-instruct',
           project_id: project_id,
           prompt: `You need to explain like I am five: "${userMessage}"`,
-          stream: false,
-          options: {
-            "temperature": 0.8, //Increasing the temperature will make the model answer more creatively
-            "num_ctx": 8000, //Sets the size of the context window used to generate the next token.
-            "top_k": 1,
-            "top_p": 0.1,
-          },
         }),
       });
 

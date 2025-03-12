@@ -106,14 +106,7 @@
                 3. **{Title}** - {Exact Link}  
                 4. **{Title}** - {Exact Link}  
                 5. **{Title}** - {Exact Link}  
-                `,
-          stream: false,
-          options: {
-              "temperature": 0.1, //Increasing the temperature will make the model answer more creatively
-              "num_ctx": 8000, //Sets the size of the context window used to generate the next token.
-              "top_k": 1,
-              "top_p": 0.1,
-          },          
+                `,         
         }),
       });
 
