@@ -45,9 +45,9 @@
   updateSearchState();
 </script>
 
-<button class="btn btn-sm" on:click={toggleSearch}>
-  <span class="flex items-center gap-2 text-sm font-bold">
+<button on:click={toggleSearch}>
+  <div class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary flex items-center gap-2 rounded-lg p-3 text-sm font-bold">
     <Icon type="search" tip="Search this course" />
     <span class="hidden lg:block"> {isSearching ? "Exit Search" : "Search"}</span>
-  </span>
+  </div>
 </button>

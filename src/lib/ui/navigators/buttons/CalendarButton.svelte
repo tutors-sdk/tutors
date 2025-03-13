@@ -8,8 +8,8 @@
 {#if currentCourse?.value?.courseCalendar?.currentWeek}
   {#snippet menuSelector()}
     <div class="hidden w-full lg:flex">
-      <button class="mx-auto inline-flex rounded-lg p-2 hover:preset-tonal">
-        <span class="my-auto pl-2 pr-4">
+      <button class="hover:preset-tonal mx-auto inline-flex rounded-lg p-2">
+        <span class="my-auto pr-4 pl-2">
           <Icon tip={"View Calendar for this course"} type="calendar" />
         </span>
         <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>

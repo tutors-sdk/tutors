@@ -12,7 +12,7 @@
   });
 </script>
 
-<div class="border-primary-100 bg-primary-50 dark:border-primary-800 z-10 mb-2 {themeClasses.firstDiv} sticky top-0 flex h-12 border-b-[1px]">
+<div class="border-primary-100 bg-primary-50 dark:border-primary-800 z-5 mb-2 {themeClasses.firstDiv} sticky top-0 flex h-12 border-b-[1px]">
   <Breadcrumbs {lo} {parentCourse} />
   {#if currentCourse?.value}
     <div class="flex flex-auto"></div>

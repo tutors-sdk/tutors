@@ -37,7 +37,7 @@
 </script>
 
 {#snippet menuSelector()}
-  <div class="flex items-center">
+  <div class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary flex items-center rounded-lg p-4">
     <Icon type="lightMode" tip="Open Theme Menu" />
     <span class="ml-2 hidden text-sm font-bold md:block">Layout</span>
   </div>

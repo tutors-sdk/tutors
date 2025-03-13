@@ -5,7 +5,9 @@
 </script>
 
 {#snippet menuSelector()}
-  <Icon type="info" tip="Open course info" />
+  <div class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary rounded-lg p-2">
+    <Icon type="info" tip="Open course info" />
+  </div>
 {/snippet}
 
 {#snippet sidebarContent()}

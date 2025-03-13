@@ -59,7 +59,7 @@
 {/snippet}
 
 {#if tip}
-  <Tooltip positioning={{ placement: "top" }} triggerBase="underline" contentBase="card preset-filled p-4 text-sm z-20 " openDelay={2000}>
+  <Tooltip positioning={{ placement: "top" }} triggerBase="underline" contentBase="card preset-filled p-4 text-sm z-10 " openDelay={2000}>
     {#snippet trigger()}
       {@render displayIcon()}
     {/snippet}
