@@ -44,6 +44,8 @@ export const FestiveIcons: IconLib = {
   live: { type: "fluent:people-community-24-filled", color: "success" },
 
   // app icons
+  aisearch: { type: "hugeicons:ai-network", color: "primary" },
+  aichat: { type: "eos-icons:ai-operator", color: "primary" },
   search: { type: "fluent:search-24-filled", color: "primary" },
   tutors: { type: "fa-solid:chalkboard-teacher", color: "bg-base-content" },
   logout: { type: "fluent:sign-out-24-filled", color: "error" },

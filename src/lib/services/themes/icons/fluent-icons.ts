@@ -45,6 +45,8 @@ export const FluentIconLib: IconLib = {
 
   // app icons
   search: { type: "fluent:search-24-filled", color: "primary" },
+  aisearch: { type: "hugeicons:ai-network", color: "primary" },
+  aichat: { type: "eos-icons:ai-operator", color: "primary" },
   tutors: { type: "fa-solid:chalkboard-teacher", color: "bg-base-content" },
   logout: { type: "fluent:sign-out-24-filled", color: "error" },
   lightMode: { type: "fluent:paint-brush-24-filled", color: "warning" },

@@ -39,6 +39,8 @@ export const HalloweenIconLib: IconLib = {
   live: { type: "fluent:people-community-24-filled", color: "warning" },
 
   // app types
+  aisearch: { type: "hugeicons:ai-network", color: "primary" },
+  aichat: { type: "eos-icons:ai-operator", color: "primary" },
   search: { type: "uil:hunting", color: "warning" },
   tutors: { type: "fa-solid:chalkboard-teacher", color: "warning" },
   logout: { type: "fluent:sign-out-24-filled", color: "warning" },
