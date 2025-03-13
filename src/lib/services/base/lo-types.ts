@@ -292,6 +292,7 @@ export type Course = Composite & {
   ignorePin: string; // Ignore pin
   companions: IconNavBar; // Companion navigation
   wallBar: IconNavBar; // Wall navigation
+  aiEnabled: boolean; // AI enabled flag
 };
 
 /**
