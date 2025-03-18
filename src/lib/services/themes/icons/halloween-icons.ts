@@ -39,6 +39,8 @@ export const HalloweenIconLib: IconLib = {
   live: { type: "fluent:people-community-24-filled", color: "warning" },
 
   // app types
+  aisearch: { type: "hugeicons:ai-network", color: "primary" },
+  aichat: { type: "eos-icons:ai-operator", color: "primary" },
   search: { type: "uil:hunting", color: "warning" },
   tutors: { type: "fa-solid:chalkboard-teacher", color: "warning" },
   logout: { type: "fluent:sign-out-24-filled", color: "warning" },
@@ -52,6 +54,11 @@ export const HalloweenIconLib: IconLib = {
   edit: { type: "typcn:edit", color: "primary" },
   theme: { type: "fluent:color-fill-24-regular", color: "success" },
   codeTheme: { type: "fluent:paint-brush-sparkle-20-regular", color: "primary" },
+  aiChat: { type: "mingcute:ai-line", color: "success" },
+  aiSearch: { type: "hugeicons:ai-search-02", color: "error" },
+  thumbsUp: { type: "fluent:thumb-like-20-regular", color: "success" },
+  thumbsDown: { type: "fluent:thumb-dislike-24-regular", color: "error" },
+  copy: { type: "fluent:copy-add-20-regular", color: "success" },
 
   default: { type: "mdi:coffin", color: "warning" }
 };

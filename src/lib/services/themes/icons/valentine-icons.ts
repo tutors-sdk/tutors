@@ -44,6 +44,8 @@ export const ValentineIcons: IconLib = {
   live: { type: "fluent:people-community-24-filled", color: "success" },
 
   // app icons
+  aisearch: { type: "hugeicons:ai-network", color: "primary" },
+  aichat: { type: "eos-icons:ai-operator", color: "primary" },  
   search: { type: "bi:search-heart", color: "primary" }, 
   tutors: { type: "fa-solid:chalkboard-teacher", color: "bg-base-content" },
   logout: { type: "fluent:sign-out-24-filled", color: "error" },
@@ -56,6 +58,11 @@ export const ValentineIcons: IconLib = {
   portrait: { type: "fluent:rectangle-portrait-location-target-20-regular", color: "primary" },
   circular: { type: "fluent:circle-sparkle-28-regular", color: "warning" },
   landscape: { type: "fluent:rectangle-landscape-sparkle-48-regular", color: "error" },
+  aiChat: { type: "mingcute:ai-line", color: "success" },
+  aiSearch: { type: "hugeicons:ai-search-02", color: "error" },
+  thumbsUp: { type: "fluent:thumb-like-20-regular", color: "success" },
+  thumbsDown: { type: "fluent:thumb-dislike-24-regular", color: "error" },
+  copy: { type: "fluent:copy-add-20-regular", color: "success" },
 
   courseinfo: { type: "fluent:info-28-regular", color: "bg-base-content" },
   llm: { type: "hugeicons:ai-innovation-01", color: "bg-base-content" },

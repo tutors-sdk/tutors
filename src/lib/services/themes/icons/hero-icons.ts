@@ -44,6 +44,8 @@ export const HeroIconLib: IconLib = {
   live: { type: "heroicons-outline:users", color: "success" },
 
   // app icons
+  aisearch: { type: "hugeicons:ai-network", color: "primary" },
+  aichat: { type: "eos-icons:ai-operator", color: "primary" },  
   search: { type: "heroicons-outline:search", color: "primary" },
   tutors: { type: "fa-solid:chalkboard-teacher", color: "bg-base-content" },
   logout: { type: "heroicons-outline:logout", color: "error" },
@@ -56,7 +58,12 @@ export const HeroIconLib: IconLib = {
   portrait: { type: "fluent:rectangle-portrait-location-target-20-regular", color: "primary" },
   circular: { type: "fluent:circle-sparkle-28-regular", color: "warning" },
   landscape: { type: "fluent:rectangle-landscape-sparkle-48-regular", color: "error" },
-
+  aiChat: { type: "mingcute:ai-line", color: "success" },
+  aiSearch: { type: "hugeicons:ai-search-02", color: "error" },
+  thumbsUp: { type: "fluent:thumb-like-20-regular", color: "success" },
+  thumbsDown: { type: "fluent:thumb-dislike-24-regular", color: "error" },
+  copy: { type: "fluent:copy-add-20-regular", color: "success" },
+  
   courseinfo: { type: "heroicons-outline:information-circle", color: "bg-base-content" },
   llm: { type: "hugeicons:ai-innovation-01", color: "bg-base-content" },
   calendar: { type: "fluent:calendar-ltr-12-regular", color: "bg-base-content" },
