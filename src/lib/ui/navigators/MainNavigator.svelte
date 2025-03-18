@@ -11,13 +11,13 @@
   import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
   import TutorsTitle from "./titles/TutorsTitle.svelte";
   import CalendarButton from "./buttons/CalendarButton.svelte";
-  import { currentCourse, tutorsId } from "$lib/runes.svelte";
+  import { currentCourse, currentLo, tutorsId } from "$lib/runes.svelte";
   import AIChatButton from "./buttons/AIChatButton.svelte";
 </script>
 
 <AppBar padding="p-2" spaceY="" toolbarClasses="flex items-center" leadClasses="flex items-center" trailClasses="flex items-center">
   {#snippet lead()}
-    {#if currentCourse?.value}
+    {#if currentLo?.value?.type == "lab"}
       <span class="hidden md:block">
         <AIChatButton />
       </span>
