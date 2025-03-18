@@ -8,7 +8,9 @@
   import type { Talk } from "$lib/services/base";
   import Icon from "$lib/ui/components/Icon.svelte";
 
-  pdfjs.GlobalWorkerOptions.workerSrc = "/node_modules/pdfjs-dist/build/pdf.worker.min.mjs";
+  pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+
+  // pdfjs.GlobalWorkerOptions.workerSrc = "/node_modules/pdfjs-dist/build/pdf.worker.min.mjs";
 
   interface Props {
     lo: Talk;
@@ -55,10 +57,10 @@
 
   onDestroy(() => {
     window.removeEventListener("keydown", keypressInput);
-    if (worker) {
-      worker.destroy();
-      worker = undefined;
-    }
+    // if (worker) {
+    //   worker.destroy();
+    //   worker = undefined;
+    // }
   });
 
   async function loadDoc() {
