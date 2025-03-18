@@ -9,10 +9,6 @@
   import Sidebar from "$lib/ui/components/Sidebar.svelte";
   import { convertMdToHtml } from "$lib/services/markdown";
 
-  let topic = currentCourse?.value?.contentHtml;
-  let topicDescription = currentLo?.value?.contentMd;
-  let pageContent = currentLo?.value?.los[currentLabStepIndex?.value].contentMd;
-
   let elemChat: HTMLElement;
 
   interface Message {
@@ -28,16 +24,21 @@
   const availableModels: string[] = ["ibm/granite-3-8b-instruct", "ibm/granite-13b-instruct-v2"];
   let selectedModel: string = availableModels[0];
 
-  let systemMessage: Message = {
-    role: "system",
-    content: `you are assisting Computer Science Higher Diploma students to understand content. \
+  function composeSystemMessage(): Message {
+    let topic = currentCourse?.value?.contentHtml;
+    let topicDescription = currentLo?.value?.contentMd;
+    let pageContent = currentLo?.value?.los.map((lo) => lo.contentMd).join(" ");
+    let systemMessage: Message = {
+      role: "system",
+      content: `you are assisting Computer Science Higher Diploma students to understand content. \
      Always explain like they are five years old.\
      At this stage student explores ${topic}. that student is currently studdies: \
      Particularly student focused on: ${topicDescription}\
      The full text of the page student currently explores is ${pageContent}`
-  };
+    };
 
-  let messages: Message[] = [systemMessage];
+    return systemMessage;
+  }
 
   let inputMessage: string = "";
   let isLoading: boolean = false;
@@ -47,8 +48,10 @@
     elemChat.scrollTo({ top: elemChat.scrollHeight, behavior });
   }
 
+  let messages: Message[] = [];
   async function sendMessage(): Promise<void> {
     if (!inputMessage.trim()) return;
+    messages = [composeSystemMessage()];
 
     const userMessage = inputMessage.trim();
     messages = [...messages, { role: "user", content: userMessage }];
@@ -71,10 +74,7 @@
       }
 
       const data = await response.json();
-      console.log("API Response:", data);
-
       const rawText = data.results[0]?.generated_text || "No content available";
-      console.log("API rawText:", rawText);
       const assistantResponse = rawText.split("\nrole: user")[0]?.trim(); // Clean response
 
       const llmMessage: Message = {
@@ -94,9 +94,6 @@
     } finally {
       isLoading = false;
     }
-
-    console.log(messages);
-    scrollChatBottom("smooth");
   }
 
   function handleKeyDown(event: KeyboardEvent): void {
@@ -152,7 +149,7 @@
           {:else}
             <div class="grid grid-cols-[auto_1fr] gap-2">
               <Icon type="aiChat" />
-              <div class="card p-4">
+              <div class="card prose p-4">
                 <p>{@html convertMdToHtml(message.content)}</p>
 
                 <button onclick={() => (message.helpful = true)} class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary rounded-lg p-2">
