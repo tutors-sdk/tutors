@@ -6,7 +6,6 @@
   import { Progress } from "@skeletonlabs/skeleton-svelte";
   import { PDFWorker, getDocument } from "pdfjs-dist";
   import type { Talk } from "$lib/services/base";
-  import { setupWorker } from "./support/pdf-utils";
   import Icon from "$lib/ui/components/Icon.svelte";
 
   pdfjs.GlobalWorkerOptions.workerSrc = "/node_modules/pdfjs-dist/build/pdf.worker.min.mjs";
@@ -37,10 +36,6 @@
   });
 
   async function initialLoad() {
-    await setupWorker();
-    if (!pdfjs.GlobalWorkerOptions.workerSrc) {
-      return;
-    }
     window.addEventListener("keydown", keypressInput);
   }
 
@@ -68,7 +63,7 @@
 
   async function loadDoc() {
     try {
-      const loadingTask = getDocument({ url, worker });
+      const loadingTask = await getDocument({ url, worker });
       pdfDoc = await loadingTask.promise;
       await tick();
       pageCount = pdfDoc.numPages;
@@ -150,7 +145,7 @@
   }
 </script>
 
-<div class="card mr-2 rounded-lg p-2">
+<div class="card mr-2 rounded-lg border p-2">
   <div class="mx-2 mb-2 flex items-center justify-between">
     <div class="text-sm">
       {pageNum} of {pdfDoc?.numPages}
@@ -176,7 +171,7 @@
   {#if !loading}
     <canvas class="mx-auto w-full" bind:this={canvas}></canvas>
   {:else}
-    <div class="mb-72 mt-72 flex flex-col items-center justify-center">
+    <div class="mt-72 mb-72 flex flex-col items-center justify-center">
       <Progress value={null} />
     </div>
   {/if}
