@@ -49,9 +49,10 @@
   }
 
   let messages: Message[] = [];
+
   async function sendMessage(): Promise<void> {
     if (!inputMessage.trim()) return;
-    messages = [composeSystemMessage()];
+    messages.push(composeSystemMessage());
 
     const userMessage = inputMessage.trim();
     messages = [...messages, { role: "user", content: userMessage }];
@@ -115,8 +116,9 @@
 </script>
 
 {#snippet menuSelector()}
-  <div class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary rounded-lg p-2">
-    <Icon type="aiChat" tip="Open course info" /> <span class="pt-1 text-sm">AI Chat</span>
+  <div class="flex items-center justify-center">
+    <Icon type="aiChat" tip="Talk to this Lab" />
+    <div class="text-sm">AI Chat</div>
   </div>
 {/snippet}
 
@@ -149,18 +151,8 @@
           {:else}
             <div class="grid grid-cols-[auto_1fr] gap-2">
               <Icon type="aiChat" />
-              <div class="card prose p-4">
+              <div class="card prose dark:prose-invert p-4">
                 <p>{@html convertMdToHtml(message.content)}</p>
-
-                <button onclick={() => (message.helpful = true)} class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary rounded-lg p-2">
-                  <Icon type="thumbsUp" />
-                </button>
-                <button onclick={() => (message.helpful = false)} class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary rounded-lg p-2"
-                  ><Icon width="32" type="thumbsDown" /></button
-                >
-                <button onclick={() => copyText(message.content)} class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary rounded-lg p-2"
-                  ><Icon width="32" type="copy" /></button
-                >
               </div>
             </div>
           {/if}
@@ -173,10 +165,10 @@
     </section>
   </div>
   <!-- Prompt -->
-  <section class="border-surface-200-800 fixed bottom-0 left-0 z-10 w-[485px] p-4">
+  <section class="border-surface-200-800 fixed right-0 bottom-0 z-10 w-[485px] p-4">
     <!-- svelte-ignore element_invalid_self_closing_tag -->
     <textarea class="textarea preset-tonal" bind:value={inputMessage} onkeydown={handleKeyDown} placeholder="Message Tutors AI" rows={3} />
   </section>
 {/snippet}
 
-<Sidebar {menuSelector} {sidebarContent} />
+<Sidebar position="right" {menuSelector} {sidebarContent} />

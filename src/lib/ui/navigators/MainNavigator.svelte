@@ -17,9 +17,9 @@
 
 <AppBar padding="p-2" spaceY="" toolbarClasses="flex items-center" leadClasses="flex items-center" trailClasses="flex items-center">
   {#snippet lead()}
-    {#if currentLo?.value?.type == "lab"}
+    {#if currentCourse?.value}
       <span class="hidden md:block">
-        <AIChatButton />
+        <InfoButton />
       </span>
       <CourseTitle />
     {:else}
@@ -57,7 +57,6 @@
       </div>
     {/if}
     <span class="hidden md:block">
-      <InfoButton />
       {#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
         <TocButton />
       {/if}
