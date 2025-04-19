@@ -11,5 +11,6 @@
 @import "./lib/services/themes/styles/tutors.css";
 @import "./lib/services/themes/styles/classic.css";
 @import "./lib/services/themes/styles/dyslexia.css";
+@import "./lib/services/themes/styles/easter.css";
 
 @custom-variant dark (&:where(.dark, .dark *));

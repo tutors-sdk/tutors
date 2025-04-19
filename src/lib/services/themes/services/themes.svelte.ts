@@ -8,6 +8,7 @@ import type { IconType } from "$lib/services/base";
 import type { CardStyleType, LayoutType, Theme, ThemeService } from "../types";
 import { FluentIconLib } from "../icons/fluent-icons";
 import { HeroIconLib } from "../icons/hero-icons";
+import { EasterIcons } from "../icons/easter-icons";
 import { FestiveIcons } from "../icons/festive-icons";
 import { makeItSnow, makeItStopSnowing } from "../events/festive.svelte";
 
@@ -23,6 +24,7 @@ export const themeService: ThemeService = {
   /** Available themes with their associated icon libraries */
   themes: [
     { name: "tutors", icons: FluentIconLib },
+    { name: "easter", icons: EasterIcons },
     { name: "classic", icons: FluentIconLib },
     { name: "dyslexia", icons: FluentIconLib },
     { name: "terminus", icons: FluentIconLib },
