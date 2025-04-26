@@ -16,7 +16,7 @@
   }
 
   if (browser) {
-    themeService.initDisplay("tutors");
+    themeService.initDisplay("tutors", "light");
   }
 </script>
 
