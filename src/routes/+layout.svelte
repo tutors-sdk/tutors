@@ -16,7 +16,7 @@
   }
 
   if (browser) {
-    themeService.initDisplay("easter", "light");
+    themeService.initDisplay("tutors");
   }
 </script>
 
