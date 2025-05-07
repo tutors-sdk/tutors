@@ -24,7 +24,6 @@ export const themeService: ThemeService = {
   /** Available themes with their associated icon libraries */
   themes: [
     { name: "tutors", icons: FluentIconLib },
-    { name: "easter", icons: EasterIcons },
     { name: "classic", icons: FluentIconLib },
     { name: "dyslexia", icons: FluentIconLib },
     { name: "terminus", icons: FluentIconLib },
