@@ -46,6 +46,7 @@ export const HeroIconLib: IconLib = {
   // app icons
   search: { type: "heroicons-outline:search", color: "primary" },
   tutors: { type: "fa-solid:chalkboard-teacher", color: "bg-base-content" },
+  aiChat: { type: "mingcute:ai-line", color: "success" },
   logout: { type: "heroicons-outline:logout", color: "error" },
   lightMode: { type: "fluent:paint-brush-24-filled", color: "warning" },
   light: { type: "fluent:weather-sunny-32-filled", color: "warning" },

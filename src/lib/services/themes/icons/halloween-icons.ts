@@ -41,6 +41,7 @@ export const HalloweenIconLib: IconLib = {
   // app types
   search: { type: "uil:hunting", color: "warning" },
   tutors: { type: "fa-solid:chalkboard-teacher", color: "warning" },
+  aiChat: { type: "mingcute:ai-line", color: "success" },
   logout: { type: "fluent:sign-out-24-filled", color: "warning" },
   dark: { type: "uil:thunderstorm-moon", color: "warning" },
   toc: { type: "fluent:line-horizontal-3-20-filled", color: "warning" },

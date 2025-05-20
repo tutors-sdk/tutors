@@ -46,6 +46,7 @@ export const FestiveIcons: IconLib = {
   // app icons
   search: { type: "fluent:search-24-filled", color: "primary" },
   tutors: { type: "fa-solid:chalkboard-teacher", color: "bg-base-content" },
+  aiChat: { type: "mingcute:ai-line", color: "success" },
   logout: { type: "fluent:sign-out-24-filled", color: "error" },
   lightMode: { type: "fluent:paint-brush-24-filled", color: "warning" },
   light: { type: "fluent:weather-sunny-32-filled", color: "warning" },

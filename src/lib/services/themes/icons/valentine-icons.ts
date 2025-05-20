@@ -44,8 +44,9 @@ export const ValentineIcons: IconLib = {
   live: { type: "fluent:people-community-24-filled", color: "success" },
 
   // app icons
-  search: { type: "bi:search-heart", color: "primary" }, 
+  search: { type: "bi:search-heart", color: "primary" },
   tutors: { type: "fa-solid:chalkboard-teacher", color: "bg-base-content" },
+  aiChat: { type: "mingcute:ai-line", color: "success" },
   logout: { type: "fluent:sign-out-24-filled", color: "error" },
   lightMode: { type: "fluent:paint-brush-24-filled", color: "warning" },
   light: { type: "fluent:weather-sunny-32-filled", color: "warning" },
