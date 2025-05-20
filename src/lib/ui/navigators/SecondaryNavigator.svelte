@@ -2,8 +2,9 @@
   import Breadcrumbs from "./buttons/Breadcrumbs.svelte";
   import EditCoursButton from "./buttons/EditCoursButton.svelte";
   import IconBar from "../components/IconBar.svelte";
-  import { currentCourse } from "$lib/runes.svelte";
+  import { currentCourse, currentLo } from "$lib/runes.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
+  import AIChatButton from "./buttons/AIChatButton.svelte";
 
   let { lo, parentCourse = null } = $props();
   const themeClasses = $derived({
@@ -16,6 +17,11 @@
   <Breadcrumbs {lo} {parentCourse} />
   {#if currentCourse?.value}
     <div class="flex flex-auto"></div>
+    {#if currentLo?.value?.type == "lab"}
+      <div class="bg-primary-200 {themeClasses.otherDiv} bg-opacity-80 my-2 mr-2 hidden rounded-lg lg:flex">
+        <AIChatButton />
+      </div>
+    {/if}
     {#if currentCourse?.value?.properties.github}
       <div class="bg-primary-200 {themeClasses.otherDiv} bg-opacity-80 my-2 mr-2 hidden rounded-lg lg:flex lg:flex-none">
         <EditCoursButton />
