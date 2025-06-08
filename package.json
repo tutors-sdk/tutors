@@ -1,7 +1,7 @@
 {
   "name": "tutors",
   "private": true,
-  "version": "12.2.0",
+  "version": "12.2.1",
   "type": "module",
   "scripts": {
     "dev": "vite dev",
