@@ -1,5 +1,5 @@
 export const imageTypes = ["png", "jpg", "jpeg", "gif", "PNG", "JPG", "JPEG", "GIF"];
-export const assetTypes = imageTypes.concat(["pdf", "zip", "html", "htm", "yaml", "xls", "xlsx", "xlsm", "csv", "pkt", "css", "kt", "json", "java", "py"]);
+export const assetTypes = imageTypes.concat(["pdf", "zip", "html", "htm", "yaml", "xls", "xlsx", "xlsm", "csv", "pkt", "css", "kt", "json", "java", "py", "js"]);
 
 export type WeekType = {
   title: string;

@@ -31,7 +31,7 @@ export function decorateLoTree(course: Course, lo: Lo) {
   lo.parentCourse = course;
   lo.breadCrumbs = [];
   crumbs(lo, lo.breadCrumbs);
-  convertLoToHtml(course, lo);
+  // convertLoToHtml(course, lo);
   if (isCompositeLo(lo)) {
     const compositeLo = lo as Composite;
     compositeLo.panels = getPanels(compositeLo.los);
@@ -49,7 +49,7 @@ function getPanels(los: Lo[]): Panels {
   return {
     panelVideos: los?.filter((lo) => lo.type === "panelvideo"),
     panelTalks: los?.filter((lo) => lo.type === "paneltalk"),
-    panelNotes: los?.filter((lo) => lo.type === "panelnote")
+    panelNotes: los?.filter((lo) => lo.type === "panelnote"),
   };
 }
 
@@ -59,7 +59,7 @@ function getUnits(los: Lo[]): Units {
   return {
     units: los?.filter((lo) => lo.type === "unit") as Unit[],
     sides: los?.filter((lo) => lo.type === "side") as Side[],
-    standardLos: standardLos
+    standardLos: standardLos,
   };
 }
 
@@ -76,7 +76,7 @@ function getIcon(lo: Lo): IconType | undefined {
       // @ts-ignore
       type: lo.frontMatter.icon["type"],
       // @ts-ignore
-      color: lo.frontMatter.icon["color"]
+      color: lo.frontMatter.icon["color"],
     };
   }
   return undefined;
