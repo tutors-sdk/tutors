@@ -30,7 +30,7 @@ export const imageTypes = ["png", "jpg", "jpeg", "gif", "PNG", "JPG", "JPEG", "G
 /**
  * Supported asset file types, including images and documents
  */
-export const assetTypes = imageTypes.concat(["pdf", "zip", "html", "htm", "yaml", "xls", "xlsx", "xlsm", "csv"]);
+export const assetTypes = imageTypes.concat(["pdf", "zip", "html", "htm", "yaml", "xls", "xlsx", "xlsm", "csv", "pkt", "css", "kt", "json", "java", "py", "js"]);
 
 /**
  * Represents a week in the course calendar
