@@ -1,6 +1,5 @@
 import { themeService } from "$lib/services/themes/services/themes.svelte";
-import type { IconNav } from "$lib/services/themes";
-import type { Composite, Course, Lo, LoType, Topic } from "$lib/services/base/lo-types";
+import type { IconNav, Composite, Course, Lo, LoType, Topic } from "$lib/services/base/lo-types";
 import { filterByType, setShowHide } from "./lo-utils";
 
 export function createToc(course: Course) {
@@ -8,14 +7,7 @@ export function createToc(course: Course) {
     if (lo.type == "topic") {
       const topic = lo as Topic;
       topic.toc = [];
-      topic.toc.push(
-        ...topic.panels.panelVideos,
-        ...topic.panels.panelTalks,
-        ...topic.panels.panelNotes,
-        ...topic.units.units,
-        ...topic.units.standardLos,
-        ...topic.units.sides
-      );
+      topic.toc.push(...topic.panels.panelVideos, ...topic.panels.panelTalks, ...topic.panels.panelNotes, ...topic.units.units, ...topic.units.standardLos, ...topic.units.sides);
 
       topic.toc.forEach((lo) => {
         lo.parentLo = course;
@@ -155,9 +147,7 @@ export function initCalendar(course: Course) {
       const today = Date.now();
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const currentWeek = calendar.weeks.find(
-        (week, i) => today > Date.parse(week.date) && today <= Date.parse(calendar.weeks[i + 1]?.date)
-      );
+      const currentWeek = calendar.weeks.find((week, i) => today > Date.parse(week.date) && today <= Date.parse(calendar.weeks[i + 1]?.date));
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       course.courseCalendar = {

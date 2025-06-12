@@ -4,7 +4,23 @@
  * Defines the structure and relationships between different types of learning objects (Los)
  */
 
-import type { IconNavBar } from "$lib/services/themes";
+/**
+ * Navigation icon with link and tooltip
+ */
+export type IconNav = {
+  link: string; // Target URL
+  type: string; // Icon type
+  tip: string; // Tooltip text
+  target: string; // Link target
+};
+
+/**
+ * Collection of navigation icons
+ */
+export type IconNavBar = {
+  show: boolean; // Visibility flag
+  bar: IconNav[]; // Navigation items
+};
 
 /**
  * Supported image file extensions for learning objects
@@ -298,18 +314,7 @@ export type Course = Composite & {
  * Simple learning object types
  * Used for type checking and filtering
  */
-export const simpleTypes = [
-  "note",
-  "archive",
-  "web",
-  "github",
-  "panelnote",
-  "paneltalk",
-  "panelvideo",
-  "talk",
-  "book",
-  "lab"
-];
+export const simpleTypes = ["note", "archive", "web", "github", "panelnote", "paneltalk", "panelvideo", "talk", "book", "lab"];
 
 /**
  * Composite learning object types

@@ -13,7 +13,6 @@ import { FestiveIcons } from "../icons/festive-icons";
 import { makeItSnow, makeItStopSnowing } from "../events/festive.svelte";
 
 import { rune } from "$lib/runes.svelte";
-import { ValentineIcons } from "../icons/valentine-icons";
 
 /**
  * Implementation of the ThemeService interface.
