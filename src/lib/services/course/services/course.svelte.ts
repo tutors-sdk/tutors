@@ -3,7 +3,7 @@
  * Handles course loading, caching, and content transformation.
  */
 
-import type { Lo, Course, Lab, Note } from "$lib/services/base";
+import type { Lo, Course, Lab, Note } from "@tutors/tutors-gen-lib";
 import { decorateCourseTree } from "../utils/lo-tree";
 import { LiveLab } from "./live-lab";
 
@@ -32,8 +32,7 @@ export const courseService: CourseService = {
     let courseUrl = courseId;
 
     function isValidURL(url: string) {
-      const urlPattern =
-        /^(https?:\/\/)?([A-Za-z0-9.-]+\.[A-Za-z]{2,})(:[0-9]+)?(\/[A-Za-z0-9_.-]+)*(\/[A-Za-z0-9_.-]+\?[A-Za-z0-9_=-]+)?(#.*)?$/;
+      const urlPattern = /^(https?:\/\/)?([A-Za-z0-9.-]+\.[A-Za-z]{2,})(:[0-9]+)?(\/[A-Za-z0-9_.-]+)*(\/[A-Za-z0-9_.-]+\?[A-Za-z0-9_=-]+)?(#.*)?$/;
       return urlPattern.test(url);
     }
 
