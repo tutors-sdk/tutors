@@ -4,8 +4,7 @@
  * Handles markdown conversion for labs, notes, and learning objects.
  */
 
-import type { Course, Lab, Note, Lo } from "$lib/services/base";
-import { convertMdToHtml, initHighlighter } from "../utils/markdown-utils";
+import { type Course, type Lab, type Note, type Lo, convertMdToHtml, initHighlighter, filter } from "@tutors/tutors-model-lib";
 
 // Import Shiki themes
 import ayuDark from "shiki/themes/ayu-dark.mjs";
@@ -138,7 +137,7 @@ export const markdownService: MarkdownService = {
     const url = lab.route.replace(`/lab/${course.courseId}`, course.courseUrl);
     lab?.los?.forEach((step) => {
       if (course.courseUrl && !refreshOnly) {
-        step.contentMd = this.filter(step.contentMd, url);
+        step.contentMd = filter(step.contentMd, url);
       }
       step.contentHtml = convertMdToHtml(step.contentMd, currentCodeTheme.value);
       step.parentLo = lab;
@@ -156,58 +155,8 @@ export const markdownService: MarkdownService = {
     note.summary = convertMdToHtml(note.summary, currentCodeTheme.value);
     const url = note.route.replace(`/note/${course.courseId}`, course.courseUrl);
     if (!refreshOnly) {
-      note.contentMd = this.filter(note.contentMd, url);
+      note.contentMd = filter(note.contentMd, url);
     }
     note.contentHtml = convertMdToHtml(note.contentMd, currentCodeTheme.value);
-  },
-
-  /**
-   * Converts learning object markdown content to HTML
-   * Handles different learning object types appropriately
-   * @param course - Course containing the learning object
-   * @param lo - Learning object to convert
-   */
-  convertLoToHtml(course: Course, lo: Lo) {
-    if (lo.type === "lab" || lo.type == "note") {
-      // convertLabToHtml(course, lo as Lab);
-    } else {
-      if (lo.summary) lo.summary = convertMdToHtml(lo.summary, currentCodeTheme.value);
-      let md = lo.contentMd;
-      if (md) {
-        if (course.courseUrl) {
-          const url = lo.route.replace(`/${lo.type}/${course.courseId}`, course.courseUrl);
-          md = this.filter(md, url);
-        }
-        lo.contentHtml = convertMdToHtml(md, currentCodeTheme.value);
-      }
-    }
-  },
-
-  /**
-   * Replaces all occurrences of a string pattern
-   * @param str - Source string
-   * @param find - Pattern to find
-   * @param replace - Replacement string
-   * @returns Updated string
-   */
-  replaceAll(str: string, find: string, replace: string) {
-    return str.replace(new RegExp(find, "g"), replace);
-  },
-
-  /**
-   * Processes markdown content to fix relative URLs
-   * Handles images, archives, and internal links
-   * @param src - Source markdown content
-   * @param url - Base URL for converting relative paths
-   * @returns Processed markdown content
-   */
-  filter(src: string, url: string): string {
-    let filtered = this.replaceAll(src, "./img\\/", `img/`);
-    filtered = this.replaceAll(filtered, "img\\/", `https://${url}/img/`);
-    filtered = this.replaceAll(filtered, "./archives\\/", `archives/`);
-    filtered = this.replaceAll(filtered, "(?<!/)archives\\/", `https://${url}/archives/`);
-    filtered = this.replaceAll(filtered, "(?<!/)archive\\/(?!refs)", `https://${url}/archive/`);
-    filtered = this.replaceAll(filtered, "\\]\\(\\#", `](https://${url}#/`);
-    return filtered;
   }
 };

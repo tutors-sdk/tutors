@@ -7,6 +7,8 @@
 
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, PUBLIC_ANON_MODE } from "$env/static/public";
+import type { Course, Lo } from "@tutors/tutors-model-lib";
+import type { TutorsId } from "$lib/services/connect";
 
 export let supabase: SupabaseClient;
 
@@ -23,12 +25,7 @@ if (PUBLIC_ANON_MODE !== "TRUE") {
  * @param loId - Identifier of the learning object
  * @returns Promise resolving to the number of increments
  */
-export async function getNumOfLearningRecordsIncrements(
-  fieldName: string,
-  courseId: string,
-  studentId: string,
-  loId: string
-) {
+export async function getNumOfLearningRecordsIncrements(fieldName: string, courseId: string, studentId: string, loId: string) {
   if (!courseId || !studentId || !loId) return 0;
 
   const { data: student, error } = await supabase.rpc("get_count_learning_records", {
@@ -120,13 +117,7 @@ export const updateCalendarDuration = async (id: string, studentId: string, cour
  * @returns Promise resolving to the duration value
  */
 export async function getCalendarDuration(id: string, studentId: string, courseId: string): Promise<number> {
-  const { data } = await supabase
-    .from("calendar")
-    .select("timeactive")
-    .eq("id", id)
-    .eq("studentid", studentId)
-    .eq("courseid", courseId)
-    .maybeSingle();
+  const { data } = await supabase.from("calendar").select("timeactive").eq("id", id).eq("studentid", studentId).eq("courseid", courseId).maybeSingle();
   return data?.timeactive ? data.timeactive + 1 : 1;
 }
 
@@ -139,13 +130,7 @@ export async function getCalendarDuration(id: string, studentId: string, courseI
  * @returns Promise resolving to the count value
  */
 export async function getCalendarCount(id: string, studentId: string, courseId: string): Promise<number> {
-  const { data } = await supabase
-    .from("calendar")
-    .select("pageloads")
-    .eq("id", id)
-    .eq("studentid", studentId)
-    .eq("courseid", courseId)
-    .maybeSingle();
+  const { data } = await supabase.from("calendar").select("pageloads").eq("id", id).eq("studentid", studentId).eq("courseid", courseId).maybeSingle();
   return data?.pageloads ? data.pageloads + 1 : 1;
 }
 
@@ -208,12 +193,7 @@ export async function handleInteractionData(courseId: string, studentId: string,
  * @param lo - Learning object data
  * @param student - Student data
  */
-export async function storeStudentCourseLearningObjectInSupabase(
-  course: Course,
-  loid: string,
-  lo: Lo,
-  student: TutorsId
-) {
+export async function storeStudentCourseLearningObjectInSupabase(course: Course, loid: string, lo: Lo, student: TutorsId) {
   //   const loTitle = getLoTitle(params)
   //if (userDetails?.user_metadata?.full_name === "Anon") return;
   // await insertOrUpdateCourse(course);
@@ -232,12 +212,7 @@ export async function storeStudentCourseLearningObjectInSupabase(
  */
 export async function updateLearningRecordsDuration(courseId: string, studentId: string, loId: string) {
   const numOfDuration = await getNumOfLearningRecordsIncrements("duration", courseId, studentId, loId);
-  await supabase
-    .from("learning_records")
-    .update({ duration: numOfDuration })
-    .eq("student_id", studentId)
-    .eq("course_id", courseId)
-    .eq("lo_id", loId);
+  await supabase.from("learning_records").update({ duration: numOfDuration }).eq("student_id", studentId).eq("course_id", courseId).eq("lo_id", loId);
 }
 
 /**

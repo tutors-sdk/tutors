@@ -5,14 +5,9 @@
  */
 
 import type { TutorsId } from "$lib/services/connect";
-import type { Course, Lo } from "$lib/services/base";
-import {
-  storeStudentCourseLearningObjectInSupabase,
-  updateLearningRecordsDuration,
-  updateCalendarDuration,
-  addOrUpdateStudent,
-  formatDate
-} from "$lib/services/base";
+import type { Course, Lo } from "@tutors/tutors-model-lib";
+import { storeStudentCourseLearningObjectInSupabase, updateLearningRecordsDuration, updateCalendarDuration, addOrUpdateStudent, formatDate } from "$lib/services/base";
+import type { AnalyticsService } from "../types.svelte";
 
 export const analyticsService: AnalyticsService = {
   /** Current learning object route being tracked */

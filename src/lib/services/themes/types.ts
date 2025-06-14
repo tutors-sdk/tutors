@@ -3,8 +3,8 @@
  * Defines interfaces for services, data models, and user interactions.
  */
 
-import type { IconType } from "$lib/services/base/lo-types";
-import type { LoUser } from "$lib/services/community";
+import type { IconType } from "@tutors/tutors-model-lib";
+import type { LoUser } from "../community";
 
 /**
  * Collection of icon definitions

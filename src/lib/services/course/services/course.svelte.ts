@@ -3,8 +3,8 @@
  * Handles course loading, caching, and content transformation.
  */
 
-import type { Lo, Course, Lab, Note } from "@tutors/tutors-gen-lib";
-import { decorateCourseTree } from "../utils/lo-tree";
+import { type Lo, type Course, type Lab, type Note, decorateCourseTree } from "@tutors/tutors-model-lib";
+
 import { LiveLab } from "./live-lab";
 
 import { markdownService } from "$lib/services/markdown";

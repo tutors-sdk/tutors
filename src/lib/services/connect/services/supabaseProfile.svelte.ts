@@ -8,7 +8,7 @@
 import { supabase } from "$lib/services/base";
 import { tutorsId } from "$lib/runes.svelte";
 
-import type { Course, IconType } from "$lib/services/base";
+import type { Course, IconType } from "@tutors/tutors-model-lib";
 import type { CourseVisit, ProfileStore } from "../types";
 
 export const supabaseProfile: ProfileStore = {
@@ -21,10 +21,7 @@ export const supabaseProfile: ProfileStore = {
    */
   async reload() {
     if (tutorsId.value?.login) {
-      const { data: profile } = await supabase
-        .from("tutors-connect-profiles")
-        .select("profile")
-        .eq("tutorId", tutorsId.value?.login);
+      const { data: profile } = await supabase.from("tutors-connect-profiles").select("profile").eq("tutorId", tutorsId.value?.login);
       if (profile.length > 0) {
         this.courseVisits = profile[0].profile as unknown as CourseVisit[];
       }
@@ -39,9 +36,7 @@ export const supabaseProfile: ProfileStore = {
   async save() {
     const id = tutorsId.value?.login;
     if (id) {
-      const { error } = await supabase
-        .from("tutors-connect-profiles")
-        .upsert({ tutorId: tutorsId.value?.login, profile: this.courseVisits });
+      const { error } = await supabase.from("tutors-connect-profiles").upsert({ tutorId: tutorsId.value?.login, profile: this.courseVisits });
       if (error) {
         console.log(error);
       }

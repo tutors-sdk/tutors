@@ -1,6 +1,6 @@
-import type { Lab, Course } from "$lib/services/base";
+import type { Lab, Course } from "@tutors/tutors-model-lib";
 import type { LabService } from "../types";
-import { removeLeadingHashes } from "../utils/lo-utils";
+import { removeLeadingHashes } from "@tutors/tutors-model-lib";
 
 function getKeyIndex(map: Map<string, string>, targetKey: string) {
   const keysArray = [...map.keys()];
@@ -45,9 +45,7 @@ export class LiveLab implements LabService {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     this.chaptersHtml = new Map(this.lab.los.map((chapter) => [encodeURI(chapter.shortTitle), chapter.contentHtml]));
-    this.chaptersTitles = new Map(
-      this.lab.los.map((chapter) => [chapter.shortTitle, removeLeadingHashes(chapter.title)])
-    );
+    this.chaptersTitles = new Map(this.lab.los.map((chapter) => [chapter.shortTitle, removeLeadingHashes(chapter.title)]));
     this.steps = Array.from(this.chaptersHtml.keys());
   }
 
@@ -60,18 +58,13 @@ export class LiveLab implements LabService {
     this.navbarHtml = this.lab.los
       .map((chapter) => {
         const number = this.autoNumber ? chapter.shortTitle + ": " : "";
-        const active =
-          encodeURI(chapter.shortTitle) === this.currentChapterShortTitle
-            ? "font-bold bg-surface-200 dark:bg-surface-600 pl-4"
-            : "";
+        const active = encodeURI(chapter.shortTitle) === this.currentChapterShortTitle ? "font-bold bg-surface-200 dark:bg-surface-600 pl-4" : "";
         const title = this.chaptersTitles.get(chapter.shortTitle);
         return `<a href="${this.url}/${encodeURI(chapter.shortTitle)}"><li class="py-2 px-4 ${active} text-black! dark:text-white!">${number}${title}</li></a>`;
       })
       .join("");
 
-    const currentChapterIndex = this.lab.los.findIndex(
-      (chapter) => encodeURI(chapter.shortTitle) === this.currentChapterShortTitle
-    );
+    const currentChapterIndex = this.lab.los.findIndex((chapter) => encodeURI(chapter.shortTitle) === this.currentChapterShortTitle);
     if (currentChapterIndex !== -1) {
       let number = "";
       const prevChapter = this.lab.los[currentChapterIndex - 1];

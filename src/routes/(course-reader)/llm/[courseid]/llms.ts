@@ -1,6 +1,6 @@
-import type { Course, Lo, Topic } from "$lib/services/base";
-import { filterByType, flattenLos, getVideoConfig } from "$lib/services/course/utils/lo-utils";
-import { convertMdToHtml } from "$lib/services/markdown";
+import type { Course, Lo, Topic } from "@tutors/tutors-model-lib";
+import { filterByType, flattenLos, getVideoConfig } from "@tutors/tutors-model-lib";
+import { convertMdToHtml } from "@tutors/tutors-model-lib";
 
 export function toSnakeCase(str: string): string {
   return str
@@ -15,7 +15,7 @@ const videoTxt = "video";
 
 function courseSummary(course: Course): string {
   const fileName = toSnakeCase(course.title);
-  let links:string[] = [];
+  let links: string[] = [];
   links.push(`- [${fileName}-complete-llms.txt](https://${course.courseUrl}/llms/${fileName}-complete-llms.txt) — ${llmsText}`);
   const talks = filterByType(course.los, "talk");
   if (talks.length > 0) {
@@ -25,7 +25,7 @@ function courseSummary(course: Course): string {
 }
 
 function topics(course: Course): string {
-  let topicStr:string[] = [];
+  let topicStr: string[] = [];
   const topicLos = filterByType(course.los, "topic");
   topicLos.forEach((lo: Lo, index: number) => {
     if (lo.type === "topic" && lo.hide !== true) {
@@ -33,12 +33,8 @@ function topics(course: Course): string {
       const paddedIndex = index.toString().padStart(2, "0");
       const title = `${paddedIndex}-${toSnakeCase(topic.title)}`;
       topicStr.push(`### ${topic.title}`);
-      topicStr.push(
-        `- [${toSnakeCase(topic.title)}-llms.txt](https://${course.courseUrl}/llms/topics/${title}-llms.txt) — ${llmsText}`
-      );
-      topicStr.push(
-        `- [${toSnakeCase(topic.title)}-pdfs.zip](https://${course.courseUrl}/llms/topics/${title}-pdfs.zip) — ${pdfsZip}`
-      );
+      topicStr.push(`- [${toSnakeCase(topic.title)}-llms.txt](https://${course.courseUrl}/llms/topics/${title}-llms.txt) — ${llmsText}`);
+      topicStr.push(`- [${toSnakeCase(topic.title)}-pdfs.zip](https://${course.courseUrl}/llms/topics/${title}-pdfs.zip) — ${pdfsZip}`);
 
       const allLos = flattenLos(topic.los);
       const videos = allLos.filter((lo) => lo.type === "panelvideo");
