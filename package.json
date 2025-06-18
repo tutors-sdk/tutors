@@ -52,6 +52,6 @@
     "vite": "^6.3.5"
   },
   "dependencies": {
-    "@tutors/tutors-model-lib": "npm:@jsr/tutors__tutors-model-lib@^0.0.15"
+    "@tutors/tutors-model-lib": "npm:@jsr/tutors__tutors-model-lib@^0.0.18"
   }
 }

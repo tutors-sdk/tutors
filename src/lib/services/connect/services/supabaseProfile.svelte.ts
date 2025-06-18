@@ -5,7 +5,7 @@
  * Requires authenticated user context from tutorsConnectService
  */
 
-import { supabase } from "$lib/services/base";
+import { supabase } from "$lib/services/community";
 import { tutorsId } from "$lib/runes.svelte";
 
 import type { Course, IconType } from "@tutors/tutors-model-lib";

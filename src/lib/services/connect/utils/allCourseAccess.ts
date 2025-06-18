@@ -4,7 +4,7 @@
  */
 
 import type { Course, IconType } from "@tutors/tutors-model-lib";
-import { supabase } from "$lib/services/base/utils/supabase-client";
+import { supabase } from "$lib/services/community/utils/supabase-client";
 import type { CourseVisit } from "../types";
 
 /**

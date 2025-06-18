@@ -6,7 +6,7 @@
 
 import type { TutorsId } from "$lib/services/connect";
 import type { Course, Lo } from "@tutors/tutors-model-lib";
-import { storeStudentCourseLearningObjectInSupabase, updateLearningRecordsDuration, updateCalendarDuration, addOrUpdateStudent, formatDate } from "$lib/services/base";
+import { storeStudentCourseLearningObjectInSupabase, updateLearningRecordsDuration, updateCalendarDuration, addOrUpdateStudent, formatDate } from "../utils/supabase-client";
 import type { AnalyticsService } from "../types.svelte";
 
 export const analyticsService: AnalyticsService = {
