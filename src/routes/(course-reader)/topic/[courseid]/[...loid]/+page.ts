@@ -1,6 +1,6 @@
 import type { PageLoad } from "./$types";
 import { courseService } from "$lib/services/course";
-import type { Topic } from "$lib/services/base";
+import type { Topic } from "@tutors/tutors-model-lib";
 
 export const ssr = false;
 

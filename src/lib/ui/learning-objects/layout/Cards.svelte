@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import type { Lo } from "$lib/services/base";
+  import type { Lo } from "@tutors/tutors-model-lib";
 
   import Card from "$lib/ui/learning-objects/layout/Card.svelte";
   import { cubicOut } from "svelte/easing";

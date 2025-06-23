@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Panels } from "$lib/services/base";
+  import type { Panels } from "@tutors/tutors-model-lib";
   import Note from "../content/Note.svelte";
   import Talk from "../content/Talk.svelte";
   import TalkAdobe from "../content/TalkAdobe.svelte";

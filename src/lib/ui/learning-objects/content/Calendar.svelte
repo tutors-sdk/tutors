@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Calendar } from "$lib/services/base";
+  import type { Calendar } from "@tutors/tutors-model-lib";
   const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
   interface Props {
@@ -19,8 +19,8 @@
   </thead>
   <tbody class="text-center">
     {#each calendar.weeks as week}
-      {#if calendar.currentWeek.title == week.title}
-        <tr class="my-2 bg-success-300 dark:bg-success-700">
+      {#if calendar?.currentWeek?.title == week.title}
+        <tr class="bg-success-300 dark:bg-success-700 my-2">
           <td>{week.title}</td>
           <td>{week.type}</td>
           <td>{monthNames[week.dateObj.getMonth()]} {week.dateObj.getDate()}</td>

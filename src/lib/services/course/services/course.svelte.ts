@@ -115,7 +115,7 @@ export const courseService: CourseService = {
     let liveLab = this.labs.get(labId);
     if (!liveLab) {
       const lab = course.loIndex.get(labId) as Lab;
-      markdownService.convertLabToHtml(course, lab);
+      // markdownService.convertLabToHtml(course, lab);
       liveLab = new LiveLab(course, lab, labId);
       this.labs.set(labId, liveLab);
     }
@@ -151,7 +151,7 @@ export const courseService: CourseService = {
       currentLo.value = lo;
     }
     if (lo?.type === "note") {
-      markdownService.convertNoteToHtml(course, lo as Note);
+      // markdownService.convertNoteToHtml(course, lo as Note);
       this.notes.set(loId, lo as Note);
     }
     return lo!;

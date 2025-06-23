@@ -1,6 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { Lo } from "$lib/services/base";
+  import type { Lo } from "@tutors/tutors-model-lib";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
   import { currentCourse } from "$lib/runes.svelte";
   import { getVideoConfig } from "@tutors/tutors-model-lib";
