@@ -1,0 +1,14 @@
+{
+  "name": "@tutors/tutors-gen-lib",
+  "version": "4.1.0",
+  "exports": "./src/tutors.ts",
+  "license": "MIT",
+  "imports": {
+    "@tutors/tutors-model-lib": "jsr:@tutors/tutors-model-lib@^4",
+    "front-matter": "npm:front-matter@^4.0.2",
+    "js-yaml": "npm:js-yaml@^4.1.0",
+    "archiver": "npm:archiver@^7.0.1",
+    "@vento/vento": "jsr:@vento/vento@^1.14.0",
+    "shelljs": "npm:shelljs@^0.8.5"
+  }
+}

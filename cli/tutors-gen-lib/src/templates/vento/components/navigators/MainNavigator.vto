@@ -1,0 +1,15 @@
+{{ import { titleCard }   from "/components/navigators/support/TitleCard.vto"}}
+{{ import { breadcrumbs } from "/components/navigators/support/Breadcrumbs.vto"}}
+{{ import { companions } from "/components/navigators/support/Companions.vto"}}
+{{ import { walls } from "/components/navigators/support/Walls.vto"}}
+
+{{ export function mainNavigator (lo, isWall) }}
+  <div class="p-3 shadow-lg bg-[rgb(245,245,245)] text-base-content rounded-box nav-corner mb-1 justify-start z-40 flex mt-2">
+    {{ titleCard(lo) }}
+  </div>
+  <div class="flex flex-wrap lg:flex-nowrap mb-2">
+   {{ breadcrumbs(lo, isWall) }}
+   {{ companions(lo.parentCourse.properties) }}
+   {{ walls(lo) }}  
+  </div>
+{{ /export }}
