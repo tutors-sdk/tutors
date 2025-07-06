@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Lo } from "$lib/services/base";
+  import type { Lo } from "@tutors/tutors-model-lib";
   import Icon from "$lib/ui/components/Icon.svelte";
 
   export let lo: Lo;

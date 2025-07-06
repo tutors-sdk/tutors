@@ -3,26 +3,8 @@
  * Defines interfaces for services, data models, and user interactions.
  */
 
-import type { IconType } from "$lib/services/base/lo-types";
-import type { LoUser } from "$lib/services/community";
-
-/**
- * Navigation icon with link and tooltip
- */
-export type IconNav = {
-  link: string; // Target URL
-  type: string; // Icon type
-  tip: string; // Tooltip text
-  target: string; // Link target
-};
-
-/**
- * Collection of navigation icons
- */
-export type IconNavBar = {
-  show: boolean; // Visibility flag
-  bar: IconNav[]; // Navigation items
-};
+import type { IconType } from "@tutors/tutors-model-lib";
+import type { LoUser } from "../community";
 
 /**
  * Collection of icon definitions

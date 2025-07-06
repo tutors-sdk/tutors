@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { currentCourse } from "$lib/runes.svelte";
-  import { convertMdToHtml } from "$lib/services/markdown";
+  import { convertMdToHtml } from "@tutors/tutors-model-lib";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
 
   interface Props {

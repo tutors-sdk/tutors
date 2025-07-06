@@ -4,16 +4,6 @@
  */
 
 export { themeService } from "./services/themes.svelte";
-export type {
-  ThemeService,
-  IconNav,
-  IconNavBar,
-  IconLib,
-  Theme,
-  LayoutType,
-  CardStyleType,
-  CardConfig,
-  CardDetails
-} from "./types";
+export type { ThemeService, IconLib, Theme, LayoutType, CardStyleType, CardConfig, CardDetails } from "./types";
 
 export { cardStyles } from "./styles/card-styles";

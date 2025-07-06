@@ -1,13 +1,10 @@
 import type { CatalogueEntry, CatalogueService } from "$lib/services/community";
-import { supabase } from "$lib/services/base";
+import { supabase } from "../utils/supabase-client";
 
 export const catalogueService: CatalogueService = {
   async getCatalogue() {
     try {
-      const { data, error } = await supabase
-        .from("tutors-connect-courses")
-        .select("*")
-        .order("visited_at", { ascending: false });
+      const { data, error } = await supabase.from("tutors-connect-courses").select("*").order("visited_at", { ascending: false });
 
       if (error) {
         throw error;
@@ -23,9 +20,7 @@ export const catalogueService: CatalogueService = {
 
   async getCatalogueCount() {
     try {
-      const { count, error } = await supabase
-        .from("tutors-connect-courses")
-        .select("*", { count: "exact", head: true });
+      const { count, error } = await supabase.from("tutors-connect-courses").select("*", { count: "exact", head: true });
 
       if (error) {
         throw error;
@@ -40,9 +35,7 @@ export const catalogueService: CatalogueService = {
 
   async getStudentCount() {
     try {
-      const { count, error } = await supabase
-        .from("tutors-connect-profiles")
-        .select("*", { count: "exact", head: true });
+      const { count, error } = await supabase.from("tutors-connect-profiles").select("*", { count: "exact", head: true });
 
       if (error) {
         throw error;

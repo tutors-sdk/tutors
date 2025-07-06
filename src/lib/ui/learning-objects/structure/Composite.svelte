@@ -1,10 +1,9 @@
 <script lang="ts">
-  import type { Composite } from "$lib/services/base";
+  import type { Composite } from "@tutors/tutors-model-lib";
   import Panels from "../layout/Panels.svelte";
   import Units from "../layout/Units.svelte";
   import Cards from "../layout/Cards.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
-  import Breadcrumbs from "$lib/ui/navigators/buttons/Breadcrumbs.svelte";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
 
   interface Props {

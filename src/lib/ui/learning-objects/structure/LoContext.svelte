@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Lo } from "$lib/services/base";
+  import type { Lo } from "@tutors/tutors-model-lib";
   import LoReference from "./LoReference.svelte";
 
   export let lo: Lo;

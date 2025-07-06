@@ -1,5 +1,5 @@
 import type { TutorsId } from "$lib/services/connect";
-import type { Course, IconType, Lo } from "$lib/services/base/lo-types";
+import type { Course, IconType, Lo } from "@tutors/tutors-model-lib";
 import PartySocket from "partysocket";
 /**
  * Minimal user information for learning object interactions

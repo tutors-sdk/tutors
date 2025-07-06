@@ -10,10 +10,6 @@ export { presenceService } from "./services/presence.svelte";
 export { analyticsService } from "./services/analytics.svelte";
 
 // Type exports
-export type { 
-  LoUser,
-  PresenceService,
-  CatalogueService,
-  CatalogueEntry 
-} from "./types.svelte";
+export type { LoUser, PresenceService, CatalogueService, CatalogueEntry } from "./types.svelte";
 export { LoRecord } from "./types.svelte";
+export { supabase } from "./utils/supabase-client";

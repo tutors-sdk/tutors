@@ -1,4 +1,4 @@
-import type { CardStyleType, LayoutType } from "$lib/services/themes";
+import type { CardStyleType, LayoutType } from "../types";
 
 type CardStyles = Record<LayoutType, Record<CardStyleType, string>>;
 

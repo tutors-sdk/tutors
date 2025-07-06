@@ -5,7 +5,7 @@
  */
 
 import { browser } from "$app/environment";
-import type { Course, IconType } from "$lib/services/base";
+import type { Course, IconType } from "@tutors/tutors-model-lib";
 import type { CourseVisit, ProfileStore } from "../types";
 
 export const localStorageProfile: ProfileStore = {
