@@ -1,23 +1,54 @@
 {
-  "version": "0.1.0",
+  "version": "0.2.0",
   "configurations": [
     {
-      "name": "tutors-publish",
-      "program": "${workspaceFolder}//cli/tutors-publish/src/tutors-publish.js",
+      "name": "tutors-publish-npm",
+      "program": "${workspaceFolder}/cli/tutors-publish-npm/dist/index.js",
+      "cwd": "/Users/edeleastar/repos/tutor-sdk/docs/tutors-reference-course",
       "request": "launch",
-      "skipFiles": ["<node_internals>/**"],
-      "type": "node",
-      "cwd": "${workspaceFolder}/../../docs/tutors-reference-course",
-      "console": "integratedTerminal"
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
     },
     {
-      "name": "tutors-publish-html",
-      "program": "${workspaceFolder}//cli/tutors-publish-html/src/tutors-publish-html.js",
       "request": "launch",
-      "skipFiles": ["<node_internals>/**"],
+      "name": "tutors-publish",
       "type": "node",
-      "cwd": "${workspaceFolder}/../tutors-reference-course",
-      "console": "integratedTerminal"
+      "program": "${workspaceFolder}/cli/tutors-publish/main.ts",
+      // "cwd": "${workspaceFolder}",
+      "cwd": "/Users/edeleastar/repos/tutor-sdk/docs/tutors-reference-course",
+      //"cwd": "/Users/edeleastar/repos/hdip/2024/sem-3/full-stack-1",
+      "env": {},
+      "runtimeExecutable": "/Users/edeleastar/.deno/bin/deno",
+      "runtimeArgs": [
+        "run",
+        "--config",
+        "${workspaceFolder}/cli/deno.json",
+        "--inspect-wait",
+        "--allow-all"
+      ],
+      "attachSimplePort": 9229
+    },
+    {
+      "request": "launch",
+      "name": "tutors-publish-html",
+      "type": "node",
+      "program": "${workspaceFolder}/cli/tutors-publish-html/main.ts",
+      // "cwd": "${workspaceFolder}",
+      "cwd": "/Users/edeleastar/repos/tutor-sdk/docs/tutors-reference-course",
+      //"cwd": "/Users/edeleastar/repos/tutor-sdk/docs/layout-reference-course",
+      //"cwd": "/Users/edeleastar/repos/hdip/2024/sem-3/full-stack-1",
+      "env": {},
+      "runtimeExecutable": "/Users/edeleastar/.deno/bin/deno",
+      "runtimeArgs": [
+        "run",
+        "--config",
+        "${workspaceFolder}/cli/deno.json",
+        "--inspect-wait",
+        "--allow-all"
+      ],
+      "attachSimplePort": 9229
     }
   ]
 }
