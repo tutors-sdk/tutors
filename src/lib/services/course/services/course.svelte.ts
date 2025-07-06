@@ -74,7 +74,6 @@ export const courseService: CourseService = {
    * @returns Promise resolving to the loaded Course
    */
   async readCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course> {
-    courseId = courseId.replace(".netlify.app", "");
     const course = await this.getOrLoadCourse(courseId, fetchFunction);
     this.courseUrl.value = course.courseUrl;
     currentCourse.value = course;
