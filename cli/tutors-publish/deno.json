@@ -1,0 +1,14 @@
+{
+  "name": "@tutors/tutors-publish",
+  "version": "4.1.0",
+  "exports": "./main.ts",
+  "license": "MIT",
+  "tasks": {
+    "run": "deno run main.ts",
+    "dev": "deno run --watch main.ts"
+  },
+  "imports": {
+    "@tutors/tutors-gen-lib": "jsr:@tutors/tutors-gen-lib@^4",
+    "@tutors/tutors-model-lib": "jsr:@tutors/tutors-model-lib@^4"
+  }
+}

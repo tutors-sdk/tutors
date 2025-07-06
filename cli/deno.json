@@ -1,0 +1,17 @@
+{
+  "workspace": ["./tutors-gen-lib",  "./tutors-model-lib", "./tutors-publish", "./tutors-publish-html"],
+  "fmt": {
+    "include": ["./tutors-gen-lib/src/", "./tutors-model-lib/src/", "./tutors-publish/src/", "./tutors-publish-html/src/"],
+    "exclude": [],
+    "useTabs": false,
+    "lineWidth": 180,
+    "indentWidth": 2,
+    "singleQuote": false
+  },
+  "tasks": {
+    "fmt": "deno fmt",
+    "fmt:check": "deno fmt --check",
+    "publish": "deno publish",
+    "publish-test": "deno publish --dry-run"
+  }
+}

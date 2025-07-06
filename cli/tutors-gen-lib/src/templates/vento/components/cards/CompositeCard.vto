@@ -1,0 +1,33 @@
+{{ import { cardDeck } from "/components/cards/CardDeck.vto" }}
+{{ import { unitCard } from "/components/cards/UnitCard.vto" }}
+{{ import { panelCards } from "/components/cards/PanelCards.vto" }}
+{{ import { mainNavigator } from "/components/navigators/MainNavigator.vto" }}
+
+{{ export function compositeCard(lo) }}
+  {{ if lo.units.sides.length > 0 }}
+    <div class="block md:flex w-11/12 mx-auto">
+      <div class="w-full">
+        {{ panelCards(lo.panels, "./") }}
+        {{ for unit of lo.units.units }}
+          <div class="mt-2">
+            {{ unitCard(unit) }}
+          </div>
+        {{ /for }}
+        {{ cardDeck(lo.units.standardLos, "") }}
+      </div>
+      <div class="block w-full md:w-[30rem] md:ml-2">
+        {{ for side of lo.units.sides }}
+          {{ unitCard(side) }}
+        {{ /for }}
+      </div>
+    </div>
+  {{ else }}
+    {{ panelCards(lo.panels, "./") }}
+    {{ for unit of lo.units.units }}
+      <div class="mt-2">
+        {{ unitCard(unit) }}
+      </div>
+    {{ /for }}
+    {{ cardDeck(lo.units.standardLos, "./") }}
+  {{ /if }}
+{{ /export }}

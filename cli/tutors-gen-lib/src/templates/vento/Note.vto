@@ -1,0 +1,7 @@
+{{ import { mainNavigator } from "/components/navigators/MainNavigator.vto" }}
+{{ import { noteCard } from "/components/cards/NoteCard.vto" }}
+
+{{ layout "layouts/main.vto" }}
+  {{ mainNavigator(lo) }}
+  {{ noteCard(lo) }}
+{{ /layout }}

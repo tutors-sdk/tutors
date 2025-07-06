@@ -1,0 +1,20 @@
+{{ import { image } from "/components/cards/Image.vto" }}
+{{ import { cardDeck } from "/components/cards/CardDeck.vto" }}
+{{ import { videoCard } from "/components/cards/VideoCard.vto" }}
+{{ import { talkCard } from "/components/cards/TalkCard.vto" }}
+{{ import { noteCard } from "/components/cards/NoteCard.vto" }}
+{{ import { panelCards } from "/components/cards/PanelCards.vto" }}
+
+{{ export function unitCard(lo) }}
+  <div class="bg-[rgb(245,245,245)] text-base-content  p-2 mb-2">
+    <div class="flex justify-between w-full">
+      <h2 class="p-2 text-lg font-normal">
+        {{ lo.title }}
+      </h2>
+    </div>
+    {{ panelCards(lo.panels, "./") }}
+    <div class="flex flex-wrap justify-center">
+      {{ cardDeck(lo.units.standardLos, './' + lo.id) }}
+    </div>
+  </div>
+{{ /export }}
