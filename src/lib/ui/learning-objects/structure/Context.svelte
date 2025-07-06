@@ -1,12 +1,10 @@
 <script lang="ts">
-  import type { Lo } from "$lib/services/base";
+  import type { Lo } from "@tutors/tutors-model-lib";
   import { onMount, type Snippet } from "svelte";
   import LoContextPanel from "../layout/LoContextPanel.svelte";
   import { slideFromRight } from "$lib/ui/navigators/animations";
   import { fly } from "svelte/transition";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
-  import Image from "../../components/Image.svelte";
-  import { currentLo } from "$lib/runes.svelte";
 
   type Props = {
     children: Snippet;

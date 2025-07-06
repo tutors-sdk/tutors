@@ -1,9 +1,8 @@
 <script lang="ts">
   import { currentLo } from "$lib/runes.svelte";
-  import type { Lo } from "$lib/services/base";
+  import type { Lo } from "@tutors/tutors-model-lib";
   import Image from "../../components/Image.svelte";
   import LoContext from "../structure/LoContext.svelte";
-  import { onMount } from "svelte";
 
   interface Props {
     loContext: Lo;

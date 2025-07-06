@@ -1,12 +1,13 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { ResultType } from "$lib/services/course";
-  import { isValid, searchHits, filterByType } from "$lib/services/course";
-  import type { Lo } from "$lib/services/base";
-  import type { Course } from "$lib/services/base";
-  import { convertMdToHtml, currentCodeTheme } from "$lib/services/markdown";
+  import type { ResultType } from "@tutors/tutors-model-lib";
+  import { isValid, searchHits, filterByType } from "@tutors/tutors-model-lib";
+  import type { Lo } from "@tutors/tutors-model-lib";
+  import type { Course } from "@tutors/tutors-model-lib";
+  import { convertMdToHtml } from "@tutors/tutors-model-lib";
   import type { PageData } from "./$types";
   import { currentLo } from "$lib/runes.svelte";
+  import { currentCodeTheme } from "$lib/services/markdown";
 
   interface Props {
     data: PageData;
@@ -61,18 +62,10 @@
   });
 </script>
 
-<div class="container card mx-auto mb-4 p-4">
+<div class="card container mx-auto mb-4 p-4">
   <label for="search" class="label"
     ><span>Enter search term:</span>
-    <input
-      bind:value={searchTerm}
-      bind:this={searchInputElement}
-      type="text"
-      name="search"
-      id="search"
-      class="input m-2 p-2"
-      placeholder="..."
-    /></label
+    <input bind:value={searchTerm} bind:this={searchInputElement} type="text" name="search" id="search" class="input m-2 p-2" placeholder="..." /></label
   >
   <div class="mt-2 flex flex-wrap justify-center">
     {#each searchResults as result}
@@ -82,12 +75,7 @@
             {@html result.html}
           </div>
           <div class="pt-4 text-right text-sm">
-            <a
-              rel="noopener noreferrer"
-              href={result.link}
-              target="_blank"
-              class="text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
-            >
+            <a rel="noopener noreferrer" href={result.link} target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300">
               {result.title}
             </a>
           </div>

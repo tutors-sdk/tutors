@@ -8,7 +8,7 @@ import { signOut } from "@auth/sveltekit/client";
 import { signIn } from "@auth/sveltekit/client";
 import { browser } from "$app/environment";
 import { goto } from "$app/navigation";
-import type { Course } from "$lib/services/base";
+import type { Course } from "@tutors/tutors-model-lib";
 
 import { analyticsService, presenceService } from "$lib/services/community";
 import { PUBLIC_ANON_MODE } from "$env/static/public";

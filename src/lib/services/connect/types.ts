@@ -1,4 +1,4 @@
-import type { Course, IconType } from "$lib/services/base/lo-types";
+import type { Course, IconType } from "@tutors/tutors-model-lib";
 
 /**
  * Record of a user's interaction with a course

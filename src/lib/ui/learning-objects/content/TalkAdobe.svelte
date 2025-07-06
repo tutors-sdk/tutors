@@ -2,7 +2,7 @@
   import { page } from "$app/state";
   import { PUBLIC_PDF_KEY } from "$env/static/public";
   import { adobeLoaded, currentCourse } from "$lib/runes.svelte";
-  import type { Talk } from "$lib/services/base";
+  import type { Talk } from "@tutors/tutors-model-lib";
   import { onMount } from "svelte";
 
   interface Props {
@@ -88,7 +88,7 @@
     <div id={viewerId} class="mx-auto h-full w-full"></div>
   </div>
 {:else}
-  <div class="mr-2 mt-2 px-4 py-2">
+  <div class="mt-2 mr-2 px-4 py-2">
     <div id={viewerId} class="mx-auto h-[85dvh]"></div>
   </div>
 {/if}

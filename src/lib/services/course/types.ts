@@ -1,4 +1,4 @@
-import type { Course, Lab, Lo, Note } from "$lib/services/base/lo-types";
+import type { Course, Lab, Lo, Note } from "@tutors/tutors-model-lib";
 
 /**
  * Interface representing a live interactive lab session

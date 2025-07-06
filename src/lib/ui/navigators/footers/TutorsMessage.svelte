@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { convertMdToHtml } from "$lib/services/markdown";
+  import { convertMdToHtml } from "@tutors/tutors-model-lib";
   import { onMount } from "svelte";
   let contentHtml = "";
 

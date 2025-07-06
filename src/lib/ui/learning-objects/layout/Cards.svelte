@@ -1,13 +1,14 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import type { Lo } from "$lib/services/base";
-  import { setShowHide } from "$lib/services/course";
+  import type { Lo } from "@tutors/tutors-model-lib";
+
   import Card from "$lib/ui/learning-objects/layout/Card.svelte";
   import { cubicOut } from "svelte/easing";
   import { scale } from "svelte/transition";
   import { scaleTransition } from "$lib/ui/navigators/animations";
   import { currentCourse } from "$lib/runes.svelte";
+  import { setShowHide } from "@tutors/tutors-model-lib";
 
   interface Props {
     los?: Lo[];
@@ -40,10 +41,7 @@
 </script>
 
 {#if los.length > 0 && isLoaded}
-  <div
-    transition:scale|local={scaleTransition}
-    class="mx-auto mb-2 place-items-center overflow-hidden rounded-xl bg-surface-100 p-4 dark:bg-surface-900"
-  >
+  <div transition:scale|local={scaleTransition} class="bg-surface-100 dark:bg-surface-900 mx-auto mb-2 place-items-center overflow-hidden rounded-xl p-4">
     <div class="mx-auto flex flex-wrap justify-center">
       {#key refresh}
         {#each los as lo}

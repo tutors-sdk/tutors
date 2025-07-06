@@ -3,8 +3,8 @@
  * Service for tracking and managing course access statistics across all users
  */
 
-import type { Course, IconType } from "$lib/services/base/lo-types";
-import { supabase } from "$lib/services/base/utils/supabase-client";
+import type { Course, IconType } from "@tutors/tutors-model-lib";
+import { supabase } from "$lib/services/community/utils/supabase-client";
 import type { CourseVisit } from "../types";
 
 /**
@@ -14,11 +14,7 @@ import type { CourseVisit } from "../types";
  */
 export async function updateCourseList(course: Course): Promise<void> {
   if (!isValidCourseName(course.courseId)) return;
-  const { data, error } = await supabase
-    .from("tutors-connect-courses")
-    .select("visit_count")
-    .eq("course_id", course.courseId)
-    .single();
+  const { data, error } = await supabase.from("tutors-connect-courses").select("visit_count").eq("course_id", course.courseId).single();
 
   if (error && error.code !== "PGRST116") {
     console.error("Error fetching row:", error);
