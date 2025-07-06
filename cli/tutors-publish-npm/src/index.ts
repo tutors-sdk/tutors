@@ -2,7 +2,7 @@
 import { existsSync } from "fs";
 import { parseCourse, generateDynamicCourse } from "@tutors/tutors-gen-lib";
 
-const versionStr = `tutors-publish-npm: 4.1.0`;
+const versionStr = `tutors-publish-npm: 4.1.1`;
 
 if (!existsSync("course.md")) {
   console.log(
