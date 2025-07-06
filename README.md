@@ -32,27 +32,13 @@ Tutors: An Open Learning Web Toolkit
 
 There are three components making up the generators family of components:
 
-- cli/tutors-gen-lib: A share library encapsulating the core Tutors course model, published to [npm here](https://www.npmjs.com/package/tutors-gen-lib)
-- cli/tutors-publish: The primary Tutors course generator producing a course for consumption by the Tutors Reader - on [npm here](https://www.npmjs.com/package/tutors-publish).  
-- cli/tutors-publish-html: A backup generator, which generators a static version of a course.
+- cli/tutors-model-lib: A shared library encapsulating the core Tutors course model, published to [jsr here](https://jsr.io/@tutors/tutors-model-lib)
+- cli/tutors-gen-lib: A shared library encapsulating Tutors course generation logic, published to [jsr here](https://jsr.io/@tutors/tutors-gen-lib)
+- cli/tutors-publish: The primary Tutors course generator producing a course for consumption by the Tutors Reader - on [jsr here](https://jsr.io/@tutors/tutors-publish).  
+- cli/tutors-publish-html: A secondary Tutors course generator producing a standalond static web site - on [jsr here](https://jsr.io/@tutors/tutors-publish-html).
+- cli/tutors-publish-npm: A version of the primary course generator published for backward compatimility to npm - on [npm here](https://www.npmjs.com/package/tutors-publish-npm).
 
 See the tutors manual for [guidance on using the generators](https://tutors.dev/course/tutors-reference-manual#publish ) command line applications.
-
-### JSON Manager
-
-There is a component in cli/tutors-json-manager that adds the capability to encyrpt and / or compress the JSON file. 
-
-It's a simple standalone CLI tool but more importantly it standardises on a set of libraries and commonalities (such as base64 encoding) so that when this gets implemented in the reader application we can have consistency.
-Arguments:
-  file             JSON file to process
-
-Options:
-  --encrypt <key>  Encrypt the file with the specified key
-  --compress       Compress the file
-  --key <key>      Key to decrypt the file
-  -h, --help       display help for command
-
-  The rough compression saved % is printed out for convenience but we accept no liability for the accuracy!!
 
 ### Partykit
 
