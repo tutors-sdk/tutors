@@ -1,9 +1,11 @@
 <script lang="ts">
-  import { storeTheme } from "$lib/stores";
+  import { storeTheme, setInitialTheme } from "$lib/stores";
   export let themeName = "";
 
   function setTheme() {
-    storeTheme.set(themeName);
+    console.log(`Setting theme to: ${themeName}`);
+    setInitialTheme(themeName);  // Ensure the initial theme is set
+    storeTheme.set(themeName);   // Update the store
   }
 </script>
 

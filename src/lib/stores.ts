@@ -13,7 +13,6 @@ export const currentLabStepIndex = writable(0);
 export const currentSession: Writable<Session> = writable();
 export const layout = writable("");
 export const transitionKey = writable("");
-export const storeTheme = localStorageStore("storeTheme", "tutors");
 export const storePreview = localStorageStore("storePreview", false);
 export const onlineStatus = localStorageStore("onlineStatus", true);
 export const authenticating: Writable<boolean> = writable(false);
@@ -26,3 +25,10 @@ export const coursesOnlineList = writable<LoEvent[]>([]);
 
 export const allStudentsOnline = writable(0);
 export const allStudentsOnlineList = writable<LoEvent[]>([]);
+
+let initialTheme = "tutors"; // Default value
+export const setInitialTheme = (theme: string) => {
+    initialTheme = theme;
+};
+
+export const storeTheme = localStorageStore("storeTheme", initialTheme);
