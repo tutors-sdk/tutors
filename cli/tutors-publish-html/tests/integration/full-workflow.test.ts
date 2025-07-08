@@ -13,8 +13,8 @@ import {
 } from "../utils/test-helpers.ts";
 
 // Path to the reference course and expected HTML output
-const REFERENCE_COURSE_PATH = resolve(Deno.cwd(), "../../testing_artifacts/reference-course");
-const REFERENCE_HTML_PATH = resolve(Deno.cwd(), "../../testing_artifacts/reference-html");
+const REFERENCE_COURSE_PATH = resolve(Deno.cwd(), "../test_fixtures/reference-course");
+const REFERENCE_HTML_PATH = resolve(Deno.cwd(), "../test_fixtures/reference-html");
 
 async function runTutorsPublishHtmlOnCourse(coursePath: string): Promise<{ success: boolean; output: string; htmlPath: string }> {
   const originalCwd = Deno.cwd();

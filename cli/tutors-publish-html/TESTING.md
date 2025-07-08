@@ -4,43 +4,7 @@
 
 ### Prerequisites
 
-You need **Deno** installed on your system to run the tests. Choose one of these installation methods:
-
-#### Option 1: Install Deno (Recommended)
-
-**Windows (PowerShell):**
-```powershell
-irm https://deno.land/install.ps1 | iex
-```
-
-**Windows (using Chocolatey):**
-```powershell
-choco install deno
-```
-
-**Windows (using Scoop):**
-```powershell
-scoop install deno
-```
-
-**macOS/Linux:**
-```bash
-curl -fsSL https://deno.land/install.sh | sh
-```
-
-#### Option 2: Install via npm script
-
-If you prefer to install Deno via npm script:
-```bash
-npm run install:deno
-```
-
-### Verify Installation
-
-After installation, verify Deno is working:
-```bash
-deno --version
-```
+You need **Deno** installed on your system to run the tests. 
 
 ## 🧪 Running Tests
 
@@ -48,45 +12,24 @@ deno --version
 
 ```bash
 # Run all tests
-npm run test:tutors-publish-html
+deno run test:tutors-publish-html
 
 # Run only unit tests
-npm run test:tutors-publish-html:unit
+deno run test:tutors-publish-html:unit
 
 # Run only integration tests
-npm run test:tutors-publish-html:integration
+deno run test:tutors-publish-html:integration
 
 # Run tests with coverage
-npm run test:tutors-publish-html:coverage
+deno run test:tutors-publish-html:coverage
 
 # Generate HTML coverage report
-npm run test:tutors-publish-html:coverage:html
+deno run test:tutors-publish-html:coverage:html
 
 # Run tests in watch mode
-npm run test:tutors-publish-html:watch
+deno run test:tutors-publish-html:watch
 ```
 
-### Installing and running in one step:
-
-```bash
-# Install Deno and run tests
-npm run test:tutors-publish-html:install
-```
-
-### From the cli/tutors-publish-html directory:
-
-```bash
-# Run all tests
-deno test --allow-read --allow-write --allow-run
-
-# Run specific test files
-deno test tests/unit/main-direct.test.ts --allow-read --allow-write --allow-run
-deno test tests/unit/path-test.test.ts --allow-read --allow-write --allow-run
-
-# Run with coverage
-deno test --coverage=coverage --allow-read --allow-write --allow-run
-deno coverage coverage
-```
 
 ## 📁 Test Structure
 

@@ -6,8 +6,8 @@ Deno.test("Integration paths - verify reference course exists", async () => {
   console.log("Current working directory:", Deno.cwd());
   
   // Calculate paths to reference data
-  const referenceCourse = resolve(Deno.cwd(), "../../testing_artifacts/reference-course");
-  const referenceHtml = resolve(Deno.cwd(), "../../testing_artifacts/reference-html");
+  const referenceCourse = resolve(Deno.cwd(), "../test_fixtures/reference-course");
+  const referenceHtml = resolve(Deno.cwd(), "../test_fixtures/reference-html");
   
   console.log("Looking for reference course at:", referenceCourse);
   console.log("Looking for reference HTML at:", referenceHtml);
@@ -41,7 +41,7 @@ Deno.test("Integration paths - verify reference course exists", async () => {
 });
 
 Deno.test("Integration paths - check course.md in reference course", async () => {
-  const referenceCourse = resolve(Deno.cwd(), "../../testing_artifacts/reference-course");
+  const referenceCourse = resolve(Deno.cwd(), "../test_fixtures/reference-course");
   const courseMarkdown = resolve(referenceCourse, "course.md");
   
   console.log("Looking for course.md at:", courseMarkdown);
