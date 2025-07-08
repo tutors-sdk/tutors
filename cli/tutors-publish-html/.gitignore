@@ -1,0 +1,13 @@
+# Test coverage files
+coverage/
+*.lcov
+
+# Temporary test directories
+tmp/
+temp/
+
+# Generated HTML files during testing
+html/
+
+# Test output files
+test-results/ 
