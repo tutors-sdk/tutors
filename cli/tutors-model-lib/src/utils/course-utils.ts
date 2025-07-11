@@ -69,7 +69,7 @@ export function createCompanions(course: Course) {
   ];
   companionsList.forEach((companionItem) => {
     const { key, type, target, tip } = companionItem;
-    if (course.properties[key]) {
+    if (course.properties?.[key]) {
       course.companions.bar.push({
         link: course.properties[key],
         type,
@@ -78,7 +78,7 @@ export function createCompanions(course: Course) {
       });
     }
   });
-  if (course.properties.companions) {
+  if (course.properties?.companions) {
     for (const [key, value] of Object.entries(course.properties.companions)) {
       const companion: any = value;
       // themeService.addIcon(key, companion.icon);
