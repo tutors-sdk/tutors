@@ -9,7 +9,7 @@
   </div>
   <div class="flex flex-wrap lg:flex-nowrap mb-2">
    {{ breadcrumbs(lo, isWall) }}
-   {{ companions(lo.parentCourse.properties) }}
-   {{ walls(lo) }}  
+   {{ companions(lo?.parentCourse?.properties) }}
+   {{ walls(lo) }}   
   </div>
 {{ /export }}

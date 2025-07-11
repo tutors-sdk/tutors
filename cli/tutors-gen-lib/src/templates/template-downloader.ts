@@ -1,5 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { copyFolder } from "../utils/file-utils.ts";
 
 let destVentoDir = "";
 const srcVentoDir = "https://raw.githubusercontent.com/tutors-sdk/tutors-cli/refs/heads/master/tutors-gen-lib/src/templates/vento/";
@@ -51,9 +52,13 @@ async function downloadFile(filePath: string) {
   }
 }
 
-export async function downloadVentoTemplates(folder:string) {
+export async function downloadVentoTemplates(folder: string, srcVentoFolder: string = "") {
+  if (srcVentoFolder) {
+    copyFolder(srcVentoFolder, `${folder}`);
+    return;
+  }
   try {
-   destVentoDir = path.join(folder, 'vento');
+    destVentoDir = path.join(folder, 'vento');
     await Promise.all(filesToDownload.map(downloadFile));
   } catch (error) {
     console.error('Error downloading vento templates:', error);
