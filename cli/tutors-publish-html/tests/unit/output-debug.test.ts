@@ -26,7 +26,7 @@ Deno.test("Debug - check actual output from main.ts", async () => {
     console.log(output);
     console.log("=== END OUTPUT ===");
     console.log("Exit code:", code);
-    console.log("Contains version:", output.includes("tutors-publish-html: 4.1.1"));
+    console.log("Contains version:", output.includes("tutors-publish-html: 4.1.2"));
     console.log("Contains error:", output.includes("Cannot locate course.md"));
     
     // Simple assertion that always passes
@@ -63,7 +63,7 @@ Deno.test("Debug - check output with course.md", async () => {
     console.log(output);
     console.log("=== END OUTPUT ===");
     console.log("Exit code:", code);
-    console.log("Contains version:", output.includes("tutors-publish-html: 4.1.1"));
+    console.log("Contains version:", output.includes("tutors-publish-html: 4.1.2"));
     
     // Simple assertion that always passes
     assertEquals(true, true);
