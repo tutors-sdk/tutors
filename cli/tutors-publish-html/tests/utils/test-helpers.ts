@@ -78,10 +78,27 @@ export function compareFileStructures(
 /**
  * Creates a temporary directory for testing
  */
-export async function createTempDir(): Promise<string> {
-  const tempDir = await Deno.makeTempDir({ prefix: "tutors-test-" });
-  return tempDir;
+export async function createTempDir(dirName: string): Promise<string> {
+  try {
+    await Deno.remove(dirName, { recursive: true });
+  } catch (_) {
+    // Ignore error if directory doesn't exist
+  }
+  await Deno.mkdir(dirName, { recursive: true });
+  return dirName;
 }
+
+/**
+ * Creates a temporary directory for testing
+ */
+export async function removeTmpDir(dirName: string): Promise<void> {  
+  try {
+    await Deno.remove(dirName, { recursive: true });
+  } catch (_) {
+    // Ignore error if directory doesn't exist
+  }
+}
+
 
 /**
  * Copies a directory recursively
@@ -163,3 +180,22 @@ export async function compareHtmlFiles(actualPath: string, expectedPath: string)
   
   return normalizeHtml(actualContent) === normalizeHtml(expectedContent);
 } 
+
+// Helper function to extract all paths from directory structure
+export function extractPaths(structure: any): string[] {
+  const paths: string[] = [];
+  
+  function traverse(node: any) {
+    if (node.path) {
+      paths.push(node.path);
+    }
+    if (node.children) {
+      for (const child of node.children) {
+        traverse(child);
+      }
+    }
+  }
+  
+  traverse(structure);
+  return paths;
+}

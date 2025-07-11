@@ -8,50 +8,18 @@ import {
   assertFileExists, 
   assertDirExists 
 } from "../utils/test-helpers.ts";
+import { TEST_FOLDER } from "../utils/tutors-runner.ts";
+import { runTutorsProcess } from "../utils/tutors-runner.ts";
 
-// Mock the main module functionality for testing
-async function runTutorsPublishHtml(workingDir: string): Promise<{ success: boolean; output: string }> {
-  const originalCwd = Deno.cwd();
-  
-  try {
-    // Get the path to main.ts - it should be in the cli/tutors-publish-html directory
-    // The test runner starts from cli/tutors-publish-html, so main.ts is in that directory
-    const mainPath = join(originalCwd, "main.ts");
-    
-    // Verify the main.ts file exists
-    if (!await exists(mainPath)) {
-      throw new Error(`main.ts not found at ${mainPath}`);
-    }
-    
-    // Import the main module - this will execute the main logic
-    const process = new Deno.Command("deno", {
-      args: ["run", "-A", mainPath],
-      cwd: workingDir,
-      stdout: "piped",
-      stderr: "piped",
-    });
-    
-    const { code, stdout, stderr } = await process.output();
-    const output = new TextDecoder().decode(stdout) + new TextDecoder().decode(stderr);
-    
-    return {
-      success: code === 0,
-      output: output,
-    };
-  } finally {
-    // Restore original working directory
-    Deno.chdir(originalCwd);
-  }
-}
 
 Deno.test("main.ts - should display version when course.md exists", async () => {
-  const tempDir = await createTempDir();
+  const tempDir = await createTempDir(`${TEST_FOLDER}`);
   
   try {
     // Create a minimal course.md file
     await Deno.writeTextFile(join(tempDir, "course.md"), "# Test Course\n\nThis is a test course.");
     
-    const result = await runTutorsPublishHtml(tempDir);
+    const result = await runTutorsProcess(tempDir);
     
     // Should contain version string
     assertEquals(result.output.includes("tutors-publish-html: 4.1.1"), true);
@@ -65,10 +33,10 @@ Deno.test("main.ts - should display version when course.md exists", async () => 
 });
 
 Deno.test("main.ts - should display error when course.md missing", async () => {
-  const tempDir = await createTempDir();
+  const tempDir = await createTempDir(`${TEST_FOLDER}`);
   
   try {
-    const result = await runTutorsPublishHtml(tempDir);
+    const result = await runTutorsProcess(tempDir);
     
     // Should contain error message
     assertEquals(result.output.includes("Cannot locate course.md"), true);
@@ -85,13 +53,13 @@ Deno.test("main.ts - should display error when course.md missing", async () => {
 });
 
 Deno.test("main.ts - should handle empty course.md", async () => {
-  const tempDir = await createTempDir();
+  const tempDir = await createTempDir(`${TEST_FOLDER}`);
   
   try {
     // Create empty course.md file
     await Deno.writeTextFile(join(tempDir, "course.md"), "");
     
-    const result = await runTutorsPublishHtml(tempDir);
+    const result = await runTutorsProcess(tempDir);
     
     // Should still display version
     assertEquals(result.output.includes("tutors-publish-html: 4.1.1"), true);
@@ -105,7 +73,7 @@ Deno.test("main.ts - should handle empty course.md", async () => {
 });
 
 Deno.test("main.ts - should handle course with basic structure", async () => {
-  const tempDir = await createTempDir();
+  const tempDir = await createTempDir(`${TEST_FOLDER}`);
   
   try {
     // Create a course with basic structure
@@ -123,7 +91,7 @@ This is a test course for unit testing.
     await Deno.mkdir(join(tempDir, "topic-01"), { recursive: true });
     await Deno.writeTextFile(join(tempDir, "topic-01", "topic.md"), "# Topic 1\n\nFirst topic content.");
     
-    const result = await runTutorsPublishHtml(tempDir);
+    const result = await runTutorsProcess(tempDir);
     
     // Should display version
     assertEquals(result.output.includes("tutors-publish-html: 4.1.1"), true);
@@ -137,7 +105,7 @@ This is a test course for unit testing.
 });
 
 Deno.test("main.ts - should handle course with invalid markdown", async () => {
-  const tempDir = await createTempDir();
+  const tempDir = await createTempDir(`${TEST_FOLDER}`);
   
   try {
     // Create course.md with invalid/malformed markdown
@@ -146,7 +114,7 @@ Deno.test("main.ts - should handle course with invalid markdown", async () => {
 Missing closing bracket
 `);
     
-    const result = await runTutorsPublishHtml(tempDir);
+    const result = await runTutorsProcess(tempDir);
     
     // Should still display version (graceful handling)
     assertEquals(result.output.includes("tutors-publish-html: 4.1.1"), true);
@@ -157,7 +125,7 @@ Missing closing bracket
 });
 
 Deno.test("main.ts - should handle permission errors gracefully", async () => {
-  const tempDir = await createTempDir();
+  const tempDir = await createTempDir(`${TEST_FOLDER}`);
   
   try {
     // Create course.md
@@ -166,7 +134,7 @@ Deno.test("main.ts - should handle permission errors gracefully", async () => {
     // Create a file where html directory should be created
     await Deno.writeTextFile(join(tempDir, "html"), "This is a file, not a directory");
     
-    const result = await runTutorsPublishHtml(tempDir);
+    const result = await runTutorsProcess(tempDir);
     
     // Should still display version
     assertEquals(result.output.includes("tutors-publish-html: 4.1.1"), true);
@@ -180,7 +148,7 @@ Deno.test("main.ts - should handle permission errors gracefully", async () => {
 });
 
 Deno.test("main.ts - should create correct output directory structure", async () => {
-  const tempDir = await createTempDir();
+  const tempDir = await createTempDir(`${TEST_FOLDER}`);
   
   try {
     // Create a minimal valid course
@@ -189,7 +157,7 @@ Deno.test("main.ts - should create correct output directory structure", async ()
 A test course for output structure validation.
 `);
     
-    const result = await runTutorsPublishHtml(tempDir);
+    const result = await runTutorsProcess(tempDir);
     
     // Should succeed
     assertEquals(result.output.includes("tutors-publish-html: 4.1.1"), true);
@@ -206,7 +174,7 @@ A test course for output structure validation.
 });
 
 Deno.test("main.ts - should handle working directory changes", async () => {
-  const tempDir = await createTempDir();
+  const tempDir = await createTempDir(`${TEST_FOLDER}`);
   const originalCwd = Deno.cwd();
   
   try {

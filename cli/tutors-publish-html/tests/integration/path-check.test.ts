@@ -2,19 +2,17 @@ import { assertEquals, assertExists } from "@std/assert";
 import { exists } from "@std/fs";
 import { resolve } from "@std/path";
 
+import { REFERENCE_COURSE, REFERENCE_HTML } from "../utils/tutors-runner.ts";
+
 Deno.test("Integration paths - verify reference course exists", async () => {
   console.log("Current working directory:", Deno.cwd());
-  
-  // Calculate paths to reference data
-  const referenceCourse = resolve(Deno.cwd(), "../test_fixtures/reference-course");
-  const referenceHtml = resolve(Deno.cwd(), "../test_fixtures/reference-html");
-  
-  console.log("Looking for reference course at:", referenceCourse);
-  console.log("Looking for reference HTML at:", referenceHtml);
+
+  console.log("Looking for reference course at:", REFERENCE_COURSE);
+  console.log("Looking for reference HTML at:", REFERENCE_HTML);
   
   // Check if paths exist
-  const courseExists = await exists(referenceCourse);
-  const htmlExists = await exists(referenceHtml);
+  const courseExists = await exists(REFERENCE_COURSE);
+  const htmlExists = await exists(REFERENCE_HTML);
   
   console.log("Reference course exists:", courseExists);
   console.log("Reference HTML exists:", htmlExists);
@@ -22,7 +20,7 @@ Deno.test("Integration paths - verify reference course exists", async () => {
   if (courseExists) {
     // List contents of reference course
     console.log("Reference course contents:");
-    for await (const entry of Deno.readDir(referenceCourse)) {
+    for await (const entry of Deno.readDir(REFERENCE_COURSE)) {
       console.log("  -", entry.name, entry.isDirectory ? "(dir)" : "(file)");
     }
   }
@@ -30,19 +28,18 @@ Deno.test("Integration paths - verify reference course exists", async () => {
   if (htmlExists) {
     // List contents of reference HTML
     console.log("Reference HTML contents:");
-    for await (const entry of Deno.readDir(referenceHtml)) {
+    for await (const entry of Deno.readDir(REFERENCE_HTML)) {
       console.log("  -", entry.name, entry.isDirectory ? "(dir)" : "(file)");
     }
   }
   
   // For now, just test that we can calculate the paths
-  assertEquals(typeof referenceCourse, "string");
-  assertEquals(typeof referenceHtml, "string");
+  assertEquals(typeof REFERENCE_COURSE, "string");
+  assertEquals(typeof REFERENCE_HTML, "string");
 });
 
 Deno.test("Integration paths - check course.md in reference course", async () => {
-  const referenceCourse = resolve(Deno.cwd(), "../test_fixtures/reference-course");
-  const courseMarkdown = resolve(referenceCourse, "course.md");
+  const courseMarkdown = resolve(REFERENCE_COURSE, "course.md");
   
   console.log("Looking for course.md at:", courseMarkdown);
   

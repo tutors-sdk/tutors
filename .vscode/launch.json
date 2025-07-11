@@ -49,6 +49,46 @@
         "--allow-all"
       ],
       "attachSimplePort": 9229
+    },
+    {
+      "request": "launch",
+      "name": "tutors-publish-html-test-workflow",
+      "type": "node",
+      "program": "${workspaceFolder}/cli/tutors-publish-html/tests/integration/full-workflow.test.ts",
+      "cwd": "${workspaceFolder}/cli/tutors-publish-html",
+      "env": {},
+      "runtimeExecutable": "/Users/edeleastar/.deno/bin/deno",
+      "runtimeArgs": [
+        "test",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-run",
+        "--allow-env",
+        "--allow-sys",
+        "--allow-net"
+      ],
+      "attachSimplePort": 9229
+    },
+    {
+      "request": "launch",
+      "name": "tutors-publish-html-test-unit",
+      "type": "node",
+      "program": "${workspaceFolder}/cli/tutors-publish-html/tests/unit/main-direct.test.ts",
+      "cwd": "${workspaceFolder}/cli/tutors-publish-html",
+      "env": {},
+      "runtimeExecutable": "/Users/edeleastar/.deno/bin/deno",
+      "runtimeArgs": [
+        "test",
+        "--inspect-brk",
+        "--allow-read",
+        "--allow-write",
+        "--allow-run",
+        "--allow-env",
+        "--allow-sys",
+        "--allow-net"
+      ],
+      "attachSimplePort": 9229
     }
   ]
 }

@@ -1,9 +1,10 @@
 import { assertEquals } from "@std/assert";
 import { join } from "@std/path";
 import { createTempDir, removeDir } from "../utils/test-helpers.ts";
+import { TEST_FOLDER } from "../utils/tutors-runner.ts";
 
 Deno.test("Debug - check actual output from main.ts", async () => {
-  const tempDir = await createTempDir();
+  const tempDir = await createTempDir(`${TEST_FOLDER}`);
   const originalCwd = Deno.cwd();
   
   try {
@@ -38,7 +39,7 @@ Deno.test("Debug - check actual output from main.ts", async () => {
 });
 
 Deno.test("Debug - check output with course.md", async () => {
-  const tempDir = await createTempDir();
+  const tempDir = await createTempDir(`${TEST_FOLDER}`);
   const originalCwd = Deno.cwd();
   
   try {
