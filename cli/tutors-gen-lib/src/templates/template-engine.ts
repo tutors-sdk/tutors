@@ -2,8 +2,7 @@ import * as fs from "node:fs";
 import * as path from "node:path";
 import { getIconColour, getIconType } from "./styles.ts";
 import vento from "@vento/vento";
-import process from "node:process";
-import { downloadVentoTemplates } from "./template-downloader.ts";
+import autoTrim from "jsr:@vento/vento/plugins/auto_trim.ts";
 
 // Get current module directory
 const moduleDir = path.dirname(new URL(import.meta.url).pathname);
@@ -23,6 +22,7 @@ export async function initTemplateEngine(folder:string) {
   });
   env.filters.iconType = getIconType;
   env.filters.iconColour = getIconColour;
+  env.use(autoTrim());
 }
 
 function writeFile(

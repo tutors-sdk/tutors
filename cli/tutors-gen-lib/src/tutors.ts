@@ -9,10 +9,14 @@ import { emitStaticCourse } from "./services/course-emitter.ts";
 import { downloadVentoTemplates } from "./templates/template-downloader.ts";
 import { initTemplateEngine } from "./templates/template-engine.ts";
 
-export function parseCourse(folder: string): Course {
+export function parseCourse(folder: string, silent: boolean = false): Course {
   resourceBuilder.buildTree(folder);
-  const course = buildCourse(resourceBuilder.lr);
+  const course = buildCourse(resourceBuilder.lr, silent);
   return course;
+}
+
+export function copyAssets(folder: string) {
+  resourceBuilder.copyAssets(folder);
 }
 
 export function decorateCourse(course: Course) {

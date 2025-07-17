@@ -24,6 +24,8 @@ import { type Archive, type Composite, type Course, isCompositeLo, type Lab, typ
 import { readWholeFile, readYamlFile } from "../utils/file-utils.ts";
 import type { LearningResource } from "../types/types.ts";
 
+let silentGlobal = false;
+
 function buildTalk(lo: Lo, lr: LearningResource) {
   const talk = lo as Talk;
   talk.pdf = getPdf(lr);
@@ -178,7 +180,7 @@ function buildLo(
   keyFileName: string = "",
 ): Lo {
   let lo = buildDefaultLo(lr, keyFileName);
-  console.log(`${"-".repeat(level * 2)}: ${lo.id} : ${lo.title}`);
+  if (!silentGlobal) console.log(`${"-".repeat(level * 2)}: ${lo.id} : ${lo.title}`);
   if (isCompositeLo(lo)) {
     lo = buildCompositeLo(lo, lr, level);
   } else {
@@ -187,7 +189,8 @@ function buildLo(
   return lo;
 }
 
-export function buildCourse(lr: LearningResource): Course {
+export function buildCourse(lr: LearningResource, silent: boolean = false): Course {
+  silentGlobal = silent;
   const course = buildLo(lr, 0, "course.md") as Course;
   course.type = "course";
   course.route = "/";
