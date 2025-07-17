@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tutors</title>
+    <link rel="stylesheet" href="/global.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://unpkg.com/@tailwindcss/typography@0.4.1/dist/typography.min.css" />
+    
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/base16/railscasts.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/default.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/light.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous"/>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@vime/core@^4/dist/vime/vime.esm.js"></script>
+  </head>
+
+  <body>
+    <div class="mx-auto px-3 antialiased bg-base-100 min-h-screen w-full 2xl:w-11/12" data-theme="light">
+    
+    <div class="p-3 shadow-lg bg-[rgb(245,245,245)] text-base-content rounded-box nav-corner mb-1 justify-start z-40 flex mt-2">
+      <div class="flex flex-row">
+    <div>
+        <span class="iconify" data-icon="jam:flask" data-width="50" style="color:blue;"></span>
+    </div>
+    <div class="ml-4 flex-nowrap">
+      <h2 class="mr-4 font-bold">Lab-07</h2>
+      <h2>
+           Iconify
+      </h2>
+    </div>
+  </div>
+
+  </div>
+  <div class="flex flex-wrap lg:flex-nowrap mb-2">
+     <div class="shadow-lg text-black bg-[rgb(225,239,240)] rounded-box nav-corner horizontal text-neutral-content text-sm breadcrumbs flex flex-auto content-center h-12">
+    <ul>
+          <li class="ml-2">
+              <a href=../../home.html>
+
+                    <div>
+   <span class="mx-2 iconify" data-icon="fluent:home-24-filled" data-height="20" style="color:#37919b"></span>
+  </div> 
+
+              <span class="hidden text-xs lg:block lg:pl-2">
+                 Reference Course
+              </span>
+              </a>
+
+          </li>
+          <li class="ml-2">
+              <a href=../index.html>
+
+                    <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="20" style="color:#37919b"></span>
+  </div> 
+
+              <span class="hidden text-xs lg:block lg:pl-2">
+                 Iconify
+              </span>
+              </a>
+
+          </li>
+          <li class="ml-2">
+              <a href=index.html>
+
+                    <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="20" style="color:#37919b"></span>
+  </div> 
+
+              <span class="hidden text-xs lg:block lg:pl-2">
+                Lab-07
+              </span>
+              </a>
+
+          </li>
+    </ul>
+  </div>
+
+       <div class="p-3 flex-wrap lg:flex-none shadow-lg bg-[rgb(225,239,240)]  text-neutral-content rounded-box nav-corner horizontal h-12">
+              <a href="https://moodle.wit.ie" target="_blank" ">
+    <div class="tooltip tooltip-bottom" data-tip="To Moodle ...">
+   <span class="mx-2 iconify" data-icon="fluent:hat-graduation-24-filled" data-height="20" style="color:#d27711"></span>
+  </div> 
+    </a>
+
+              <a href="https://www.youtube.com/playlist?list=PLMW4bgOfD3Dwi6FWirJ3AQtXZ-N_hV3Eo" target="_blank" ">
+    <div class="tooltip tooltip-bottom" data-tip="To Youtube ...">
+   <span class="mx-2 iconify" data-icon="fluent:video-clip-24-filled" data-height="20" style="color:#ba5150"></span>
+  </div> 
+    </a>
+
+            <a href="https://piazza.com/" target="_blank">
+      <div class="tooltip tooltip-bottom" data-tip="Piazza Q & A for this course">
+    <span class="mx-2 iconify" data-icon="" data-height="20" style="color:"></span>
+  </div>
+     </a>
+
+    </div>
+
+     
+  <div class="p-3 flex-wrap lg:flex-none shadow-lg bg-[rgb(225,239,240)] text-neutral-content rounded-box nav-corner horizontal h-12">
+            <a href="../../talk.html">
+    <div class="tooltip tooltip-bottom" data-tip="All talk's in module">
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="20" style="color:#37919b"></span>
+  </div> 
+    </a>
+
+            <a href="../../note.html">
+    <div class="tooltip tooltip-bottom" data-tip="All note's in module">
+   <span class="mx-2 iconify" data-icon="fluent:notepad-16-regular" data-height="20" style="color:#d27711"></span>
+  </div> 
+    </a>
+
+            <a href="../../lab.html">
+    <div class="tooltip tooltip-bottom" data-tip="All lab's in module">
+   <span class="mx-2 iconify" data-icon="fluent:beaker-24-filled" data-height="20" style="color:#557927"></span>
+  </div> 
+    </a>
+
+            <a href="../../web.html">
+    <div class="tooltip tooltip-bottom" data-tip="All web's in module">
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-regular" data-height="20" style="color:#ba5150"></span>
+  </div> 
+    </a>
+
+            <a href="../../archive.html">
+    <div class="tooltip tooltip-bottom" data-tip="All archive's in module">
+   <span class="mx-2 iconify" data-icon="fluent:archive-24-filled" data-height="20" style="color:#37919b"></span>
+  </div> 
+    </a>
+
+            <a href="../../github.html">
+    <div class="tooltip tooltip-bottom" data-tip="All github's in module">
+   <span class="mx-2 iconify" data-icon="fluent:code-circle-20-filled" data-height="20" style="color:#d27711"></span>
+  </div> 
+    </a>
+
+  </div>
+   
+  </div>
+
+
+<div class="lab-content w-full pb-14">
+  <div class="max-w-l flex">
+    <div class="mr-2 hidden h-auto w-72 lg:block">
+      <div class="bg-[rgb(245,245,245)] sticky top-14 m-2 h-auto rounded-xl py-4">
+        <ul class="menu menu-compact">
+            <a class="p-4 py-3 text-base " href="./index.html">
+               Objectives
+            </a>
+            <a class="p-4 py-3 text-base " href="./01.html">
+               Text
+            </a>
+            <a class="p-4 py-3 text-base " href="./02.html">
+               Tables, Lines and Images
+            </a>
+            <a class="p-4 py-3 text-base " href="./03.html">
+               Links and Code Blocks
+            </a>
+            <a class="p-4 py-3 text-base " href="./04.html">
+               Images
+            </a>
+            <a class="p-4 py-3 text-base " href="./05.html">
+               Latex
+            </a>
+            <a class="p-4 py-3 text-base font-bold bordered" href="./06.html">
+               Reference
+            </a>
+            <a class="p-4 py-3 text-base " href="./Exercises.html">
+               Exercises & Archives
+            </a>
+        </ul>
+      </div>
+    </div>
+
+    <div class="min-h-screen flex-1 mt-4">
+      <article class="prose prose-pre:overflow-x-auto 2xl:prose-pre:max-w-[120ch] max-w-[65ch] sm:mx-1 md:mx-4 2xl:max-w-[120ch]">
+        <h1 id="reference" tabindex="-1"><a class="header-anchor" href="#reference">Reference</a></h1>
+<h1 id="h1-heading" tabindex="-1"><a class="header-anchor" href="#h1-heading">h1 Heading</a></h1>
+<h2 id="h2-heading" tabindex="-1"><a class="header-anchor" href="#h2-heading">h2 Heading</a></h2>
+<h3 id="h3-heading" tabindex="-1"><a class="header-anchor" href="#h3-heading">h3 Heading</a></h3>
+<h4 id="h4-heading" tabindex="-1"><a class="header-anchor" href="#h4-heading">h4 Heading</a></h4>
+<h5 id="h5-heading" tabindex="-1"><a class="header-anchor" href="#h5-heading">h5 Heading</a></h5>
+<h6 id="h6-heading" tabindex="-1"><a class="header-anchor" href="#h6-heading">h6 Heading</a></h6>
+<h2 id="horizontal-rules" tabindex="-1"><a class="header-anchor" href="#horizontal-rules">Horizontal Rules</a></h2>
+<hr>
+<hr>
+<hr>
+<h2 id="quotes" tabindex="-1"><a class="header-anchor" href="#quotes">Quotes</a></h2>
+<p>“Smartypants, double quotes” and ‘single quotes’ and <code>back tick</code> quotes</p>
+<h2 id="emphasis" tabindex="-1"><a class="header-anchor" href="#emphasis">Emphasis</a></h2>
+<p><strong>This is bold text</strong></p>
+<p><strong>This is bold text</strong></p>
+<p><em>This is italic text</em></p>
+<p><em>This is italic text</em></p>
+<p><s>Strikethrough</s></p>
+<h2 id="blockquotes" tabindex="-1"><a class="header-anchor" href="#blockquotes">Blockquotes</a></h2>
+<div class="custom-blockquote" style="border-left: 3px solid #ccc; padding-left: 10px; font-style: italic;"><p>Blockquotes can also be nested…</p>
+<div class="custom-blockquote" style="border-left: 3px solid #ccc; padding-left: 10px; font-style: italic;"><p>…by using additional greater-than signs right next to each other…</p>
+<div class="custom-blockquote" style="border-left: 3px solid #ccc; padding-left: 10px; font-style: italic;"><p>…or with spaces between arrows.</p>
+</div></div></div><h2 id="lists" tabindex="-1"><a class="header-anchor" href="#lists">Lists</a></h2>
+<p>Unordered</p>
+<ul>
+<li>Create a list by starting a line with <code>+</code>, <code>-</code>, or <code>*</code></li>
+<li>Sub-lists are made by indenting 2 spaces:
+<ul>
+<li>Marker character change forces new list start:
+<ul>
+<li>Ac tristique libero volutpat at</li>
+</ul>
+<ul>
+<li>Facilisis in pretium nisl aliquet</li>
+</ul>
+<ul>
+<li>Nulla volutpat aliquam velit</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Very easy!</li>
+</ul>
+<p>Ordered</p>
+<ol>
+<li>
+<p>Lorem ipsum dolor sit amet</p>
+</li>
+<li>
+<p>Consectetur adipiscing elit</p>
+</li>
+<li>
+<p>Integer molestie lorem at massa</p>
+</li>
+<li>
+<p>You can use sequential numbers…</p>
+</li>
+<li>
+<p>…or keep all the numbers as <code>1.</code></p>
+</li>
+</ol>
+<p>Start numbering with offset:</p>
+<ol start="57">
+<li>foo</li>
+<li>bar</li>
+</ol>
+<h2 id="code" tabindex="-1"><a class="header-anchor" href="#code">Code</a></h2>
+<p>Inline <code>code</code></p>
+<p>Indented code</p>
+<pre><code>// Some comments
+line 1 of code
+line 2 of code
+line 3 of code
+</code></pre>
+<p>Block code “fences”</p>
+<pre><code>Sample text here...
+</code></pre>
+<p>Syntax highlighting</p>
+<pre><code class="language-js">var foo = function (bar) {
+  return bar++;
+};
+
+console.log(foo(5));
+</code></pre>
+<h2 id="tables" tabindex="-1"><a class="header-anchor" href="#tables">Tables</a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data</td>
+<td>path to data files to supply the data that will be passed into templates.</td>
+</tr>
+<tr>
+<td>engine</td>
+<td>engine to be used for processing templates. Handlebars is the default.</td>
+</tr>
+<tr>
+<td>ext</td>
+<td>extension to be used for dest files.</td>
+</tr>
+</tbody>
+</table>
+<p>Right aligned columns</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">Option</th>
+<th style="text-align:right">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">data</td>
+<td style="text-align:right">path to data files to supply the data that will be passed into templates.</td>
+</tr>
+<tr>
+<td style="text-align:right">engine</td>
+<td style="text-align:right">engine to be used for processing templates. Handlebars is the default.</td>
+</tr>
+<tr>
+<td style="text-align:right">ext</td>
+<td style="text-align:right">extension to be used for dest files.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="links" tabindex="-1"><a class="header-anchor" href="#links">Links</a></h2>
+<p><a href="http://dev.nodeca.com" target="_blank">link text</a></p>
+<p><a href="http://nodeca.github.io/pica/demo/" title="title text!" target="_blank">link with title</a></p>
+<h2 id="images" tabindex="-1"><a class="header-anchor" href="#images">Images</a></h2>
+<p><img src="https://octodex.github.com/images/minion.png" alt="Minion">
+<img src="https://octodex.github.com/images/stormtroopocat.jpg" alt="Stormtroopocat" title="The Stormtroopocat"></p>
+<p>Like links, Images also have a footnote style syntax</p>
+<p><img src="https://octodex.github.com/images/dojocat.jpg" alt="Alt text" title="The Dojocat"></p>
+<p>With a reference later in the document defining the URL location:</p>
+<h3 id="emojies" tabindex="-1"><a class="header-anchor" href="#emojies"><a href="https://github.com/markdown-it/markdown-it-emoji" target="_blank">Emojies</a></a></h3>
+<p>Classic markup: 😉 :crush: 😢 :tear: 😆 :yum</p>
+<p>see <a href="https://github.com/markdown-it/markdown-it-emoji#change-output" target="_blank">how to change output</a> with twemoji.</p>
+<h3 id="emojies-1" tabindex="-1"><a class="header-anchor" href="#emojies-1"><a href="https://github.com/markdown-it/markdown-it-emoji" target="_blank">Emojies</a></a></h3>
+<div class="custom-blockquote" style="border-left: 3px solid #ccc; padding-left: 10px; font-style: italic;"><p>Classic markup: 😉 :crush: 😢 :tear: 😆 😋</p>
+</div><h3 id="image-tools" tabindex="-1"><a class="header-anchor" href="#image-tools">Image Tools</a></h3>
+<p>Use this tool to resize hi definition images to “canvas” dimensions:</p>
+<ul>
+<li><strong><a href="https://nodeca.github.io/pica/demo/" target="_blank">pica</a></strong> - high quality and fast image
+resize in browser.</li>
+</ul>
+
+      </article>
+    </div>
+  </div>
+  <div class="bg-[rgb(245,245,245)] fixed bottom-0 left-0 z-50 block w-full rounded-sm  lg:hidden">
+    <nav class="flex flex-wrap justify-between p-2">
+      <a class="btn btn-sm text-base capitalize" href="05.html">  Latex </a>
+      <a class="ml-auto btn btn-sm capitalize text-base" style="margin-left: auto" href="Exercises.html">  Exercises & Archives </a>
+    </nav>
+  </div>
+</div>
+
+    </div>
+    <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
+  </body>
+</html>
+

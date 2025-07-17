@@ -1,0 +1,15 @@
+{{ import { videoCard } from "/components/cards/VideoCard.vto" }}
+{{ import { talkCard } from "/components/cards/TalkCard.vto" }}
+{{ import { noteCard } from "/components/cards/NoteCard.vto" }}
+
+{{ export function panelCards(lo, path) }}
+  {{ for video of lo.panelVideos }}
+    {{ videoCard(video, path) }}
+  {{ /for }}
+  {{ for talk of lo.panelTalks }}
+    {{ talkCard(talk, path) }}
+  {{ /for }}
+  {{ for note of lo.panelNotes }}
+    {{ noteCard(note, path) }}
+  {{ /for }}
+{{ /export }}

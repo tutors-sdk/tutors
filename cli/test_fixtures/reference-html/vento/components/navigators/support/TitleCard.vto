@@ -1,0 +1,21 @@
+{{ export function titleCard (lo) }}
+  <div class="flex flex-row">
+    <div>
+      {{ if (lo?.icon) }}
+        <span class="iconify" data-icon="{{ lo.icon.type }}" data-width="50" style="color:{{ lo.icon.color }};"></span>
+      {{ else }}
+        <img loading="lazy" class="h-12" src="./{{ lo.imgFile }}" alt="{{ lo.title }}"/>
+      {{ /if }}
+    </div>
+    <div class="ml-4 flex-nowrap">
+      <h2 class="mr-4 font-bold">{{ lo.title }}</h2>
+      <h2>
+        {{ if (lo.type == "course") }}
+          {{ lo?.properties?.credits }}
+        {{ else }}
+          {{ lo?.parentLo?.title }}
+        {{ /if }}
+      </h2>
+    </div>
+  </div>
+{{ /export }}

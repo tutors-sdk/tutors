@@ -1,0 +1,35 @@
+{{ import { image } from "/components/cards/Image.vto" }}
+{{ import { urlStart, urlEnd } from "/components/url.vto" }}
+{{ import { icon } from "/components/iconography/Icon.vto" }}
+
+{{ export function card(lo, path, pathoverride = "", imageoverride = "") }}
+  <div class="card compact text-center shadow-2xl rounded-box card-corner bg-base-100 m-2 border-t-8 border-b-8 z-0 w-60 border-[{{ lo.type |> iconColour }}]">
+    {{ urlStart(lo, path, pathoverride) }}
+    <div class="flex flex-row justify-between items-center p-3">
+      <h3 class="card-title text-md font-normal">{{ lo.title }}</h3>
+      {{ icon(lo.type, 20, "", "") }}
+    </div>
+    <figure class="flex justify-center">
+      {{ image(lo, path, imageoverride) }}
+    </figure>
+    <div class="card-body">
+      <div>
+        {{ if lo.videoid && lo.videoid !== 'none' }}
+          <div class="flex justify-center">
+            {{ if lo.videoids.videoIds.length > 0 && lo.videoids.videoIds[lo.videoids.videoIds.length - 1].service === 'heanet' }}
+              {{ icon("video", 30, "https://media.heanet.ie/page/" + lo.videoids.videoIds[lo.videoids.videoIds.length - 1].id, "Play") }}
+            {{ else if lo.videoids.videoIds.length > 0 && lo.videoids.videoIds[lo.videoids.videoIds.length - 1].service === 'vimp' }}
+              {{ icon("video", 30, "https://vimp.oth-regensburg.de/media/embed?key=" + lo.videoids.videoIds[lo.videoids.videoIds.length - 1].id, "Play") }}
+            {{ else }}
+              {{ icon("video", 30, "https://www.youtube.com/watch?v=" + lo.videoid, "Play") }}
+            {{ /if }}
+          </div>
+        {{ /if }}
+        <div class="prose">
+          {{ lo.summary }}
+        </div>
+      </div>
+    </div>
+    {{ urlEnd() }}
+  </div>
+{{ /export }}

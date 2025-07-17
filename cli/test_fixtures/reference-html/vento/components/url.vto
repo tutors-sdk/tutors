@@ -1,0 +1,32 @@
+{{ export function crumbUrlStart (index, lo) }}
+  {{ set page = lo.type === "course" ? "home" : "index" }}
+  {{ if lo.type === "unit" || lo.type === "side" }}
+    {{ set url = `../../${page}.html` }}
+  {{ else }}
+    {{ set url = "../".repeat(index) + `${page}.html` }}
+  {{ /if }}
+  <a href={{ url }}>
+{{ /export }}
+
+{{ export function crumbUrlEnd(lo) }}
+  </a>
+{{ /export }}
+
+{{ export function urlStart(lo, path, pathoverride = "") }}
+  {{ if pathoverride !== "" }}
+    {{ set url = pathoverride }}
+  {{ else if (lo.type === "web") || (lo.type === "github") }}
+    {{ set url = lo.route + ' target="_blank"' }}
+  {{ else if lo.type === "archive" }}
+    {{ set url = path + '/' + lo.id + "/" + lo.archiveFile }}
+  {{ else }}
+    {{ set hasParentUnit = lo.parentLo && (lo.parentLo.type === "unit" || lo.parentLo.type === "side") }}
+    {{ set prefix = hasParentUnit ? './' + lo.parentLo.id + '/' : './' }}
+    {{ set url = prefix + lo.id + "/index.html" }}
+  {{ /if }}
+  <a href={{ url }}>
+{{ /export }}
+
+{{ export function urlEnd(lo) }}
+  </a>
+{{ /export }}

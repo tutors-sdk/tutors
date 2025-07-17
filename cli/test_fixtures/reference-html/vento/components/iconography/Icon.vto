@@ -1,0 +1,31 @@
+{{ export function icon (type, size, link, tip, blankWindow) }}
+  {{ if (link === "") }}
+    <div>
+  {{ else }}
+    {{ if blankWindow }}
+      <a href="{{ link }}" target="_blank" ">
+    {{ else }}
+      <a href="{{ link }}">
+    {{ /if }}
+    <div class="tooltip tooltip-bottom" data-tip="{{ tip }}">
+  {{ /if }}
+   <span class="mx-2 iconify" data-icon="{{ type |> iconType }}" data-height="{{ size }}" style="color:{{ type |> iconColour}}"></span>
+  </div> 
+  {{ if (link != "") }}
+    </a>
+  {{ /if }}
+{{ /export }}
+
+{{ export function customicon (iconifytype, colour, size, link, tip) }}
+  {{ if (link === "") }}
+    <div>
+  {{ else }}
+    <a href="{{ link }}" target="_blank">
+      <div class="tooltip tooltip-bottom" data-tip="{{ tip }}">
+  {{ /if }}
+    <span class="mx-2 iconify" data-icon="{{ iconifytype }}" data-height="{{ size }}" style="color:{{ colour }}"></span>
+  </div>
+  {{ if (link != "") }}
+     </a>
+  {{ /if }}
+{{ /export }}

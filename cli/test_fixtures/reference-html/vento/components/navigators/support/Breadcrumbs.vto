@@ -1,0 +1,38 @@
+{{ import { icon } from "/components/iconography/Icon.vto"}}
+{{ import { crumbUrlStart } from "/components/url.vto"}}
+{{ import { crumbUrlEnd } from "/components/url.vto"}}
+
+{{ export function breadcrumbs (lo, isWall) }}
+  <div class="shadow-lg text-black bg-[rgb(225,239,240)] rounded-box nav-corner horizontal text-neutral-content text-sm breadcrumbs flex flex-auto content-center h-12">
+    <ul>
+      {{ if isWall }}
+        <li class="ml-2">
+          <a href="./home.html">
+            {{ icon("moduleHome", 20, "", "") }}
+            <span class="hidden text-xs lg:block lg:pl-2">
+              {{ lo.title }}
+            </span>
+          </a>
+        </li>
+      {{ else }}
+        {{> let loopIndex = 0 }}
+        {{> let loopLength = lo.breadCrumbs.length-1 }}
+        {{ for l of lo.breadCrumbs }}
+          <li class="ml-2">
+            {{ crumbUrlStart(loopLength, l) }}
+              {{ if l.type == "course" }}
+                {{ icon("moduleHome", 20, "", "") }}
+              {{ else }}
+                {{ icon("topic", 20, "") }}
+              {{ /if }}
+              <span class="hidden text-xs lg:block lg:pl-2">
+                {{ l.title }}
+              </span>
+            {{ crumbUrlEnd() }}
+            {{> loopLength-- }}
+          </li>
+        {{ /for }}
+      {{ /if }}
+    </ul>
+  </div>
+{{ /export }}

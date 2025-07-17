@@ -1,0 +1,7 @@
+{{ import { mainNavigator } from "/components/navigators/MainNavigator.vto" }}
+{{ import { compositeCard } from "/components/cards/CompositeCard.vto" }}
+
+{{ layout "layouts/main.vto" }}
+  {{ mainNavigator(lo) }}
+  {{ compositeCard(lo) }}
+{{ /layout }}
