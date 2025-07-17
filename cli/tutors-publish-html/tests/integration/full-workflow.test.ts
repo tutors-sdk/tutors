@@ -1,6 +1,6 @@
-import { assertEquals, assertExists } from "@std/assert";
-import { exists } from "@std/fs";
-import { join, resolve } from "@std/path";
+import { assertEquals } from "jsr:@std/assert";
+import { exists } from "jsr:@std/fs";
+import { join } from "jsr:@std/path";
 import { 
   createTempDir, 
   assertFileExists, 
@@ -11,6 +11,7 @@ import {
   extractPaths
 } from "../utils/test-helpers.ts";
 import { generateHtml, REFERENCE_COURSE, REFERENCE_HTML, TEST_FOLDER, tutorsPublishHtml } from "../utils/tutors-runner.ts";
+
 
 Deno.test("Integration - basic sanity check, should produce html folder with index.html", async () => {
   try {
@@ -34,7 +35,7 @@ Deno.test("Integration - should match reference HTML structure", async () => {
   
   // Instead of exact comparison, check for key structural elements
   const htmlPaths = extractPaths(htmlStructure);
-  const referencePaths = extractPaths(referenceStructure);
+  const _referencePaths = extractPaths(referenceStructure);
   
   // Check that we have the essential files
   const essentialFiles = [
@@ -197,8 +198,53 @@ Deno.test("Integration - should be reproducible", async () => {
     assertEquals(structuresMatch, true, "Multiple runs should produce identical results");
     
     console.log("✓ Multiple runs produce consistent results");
-    
   } finally {
-    await removeTmpDir(`${TEST_FOLDER}`);
+    await removeTmpDir(TEST_FOLDER);
   }
-}); 
+});
+
+Deno.test("Integration - should handle lab content correctly", async () => {
+  try {
+    const result = await tutorsPublishHtml(REFERENCE_COURSE, `${TEST_FOLDER}/test-course`);
+    assertEquals(result, true, `Generator failed`);
+
+    // Check that lab content is generated correctly
+    const labPaths = [
+      "topic-01-typical/unit-1/book-a/lab/index.html",
+      "topic-02-side/archive/lab-01/index.html"
+    ];
+
+    for (const labPath of labPaths) {
+      const filePath = `${TEST_FOLDER}/test-course/html/${labPath}`;
+      if (await exists(filePath)) {
+        const content = await Deno.readTextFile(filePath);
+
+        // Verify lab-specific elements
+        assertEquals(content.includes("<html"), true, `${labPath} should contain HTML tag`);
+        assertEquals(content.includes("lab"), true, `${labPath} should contain lab-related content`);
+
+        // Check for lab-specific structure (steps, instructions, etc)
+        const hasLabStructure = content.includes("steps") || 
+                               content.includes("instructions") || 
+                               content.includes("exercises");
+        assertEquals(hasLabStructure, true, `${labPath} should contain lab structure`);
+
+        console.log(`✓ ${labPath} has valid lab structure`);
+      }
+    }
+
+    // Verify lab assets are copied
+    const labAssetPaths = [
+      "topic-01-typical/unit-1/book-a/lab/img",
+      "topic-02-side/archive/lab-01/files"
+    ];
+
+    for (const assetPath of labAssetPaths) {
+      const dirPath = `${TEST_FOLDER}/test-course/html/${assetPath}`;
+      await assertDirExists(dirPath);
+      console.log(`✓ ${assetPath} assets directory exists`);
+    }
+  } finally {
+    await removeTmpDir(TEST_FOLDER);
+  }
+});

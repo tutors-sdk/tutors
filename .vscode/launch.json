@@ -16,17 +16,15 @@
       "name": "tutors-publish",
       "type": "node",
       "program": "${workspaceFolder}/cli/tutors-publish/main.ts",
-      // "cwd": "${workspaceFolder}",
       "cwd": "/Users/edeleastar/repos/tutor-sdk/docs/tutors-reference-course",
-      //"cwd": "/Users/edeleastar/repos/hdip/2024/sem-3/full-stack-1",
       "env": {},
-      "runtimeExecutable": "/Users/edeleastar/.deno/bin/deno",
+      "runtimeExecutable": "deno",
       "runtimeArgs": [
         "run",
-        "--config",
-        "${workspaceFolder}/cli/deno.json",
         "--inspect-wait",
-        "--allow-all"
+        "--allow-all",
+        "${workspaceFolder}/cli/tutors-publish/main.ts",
+        "--silent"
       ],
       "attachSimplePort": 9229
     },
@@ -35,16 +33,11 @@
       "name": "tutors-publish-html",
       "type": "node",
       "program": "${workspaceFolder}/cli/tutors-publish-html/main.ts",
-      // "cwd": "${workspaceFolder}",
       "cwd": "/Users/edeleastar/repos/tutor-sdk/docs/tutors-reference-course",
-      //"cwd": "/Users/edeleastar/repos/tutor-sdk/docs/layout-reference-course",
-      //"cwd": "/Users/edeleastar/repos/hdip/2024/sem-3/full-stack-1",
       "env": {},
-      "runtimeExecutable": "/Users/edeleastar/.deno/bin/deno",
+      "runtimeExecutable": "deno",
       "runtimeArgs": [
         "run",
-        "--config",
-        "${workspaceFolder}/cli/deno.json",
         "--inspect-wait",
         "--allow-all"
       ],
@@ -52,9 +45,9 @@
     },
     {
       "request": "launch",
-      "name": "tutors-publish-html-test-workflow",
+      "name": "regression",
       "type": "node",
-      "program": "${workspaceFolder}/cli/tutors-publish-html/tests/integration/full-workflow.test.ts",
+      "program": "${workspaceFolder}/cli/tutors-publish-html/tests/reference-compare/reference-equivalent.ts",
       "cwd": "${workspaceFolder}/cli/tutors-publish-html",
       "env": {},
       "runtimeExecutable": "/Users/edeleastar/.deno/bin/deno",

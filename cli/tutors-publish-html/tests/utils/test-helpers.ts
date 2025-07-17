@@ -1,6 +1,6 @@
-import { assert, assertEquals, assertExists } from "@std/assert";
-import { exists, walk } from "@std/fs";
-import { join, relative } from "@std/path";
+import { assert, assertEquals, assertExists } from "jsr:@std/assert";
+import { exists, walk } from "jsr:@std/fs";
+import { join, relative } from "jsr:@std/path";
 
 export interface FileStructure {
   path: string;
@@ -13,6 +13,7 @@ export interface FileStructure {
  * Recursively builds a file structure representation
  */
 export async function buildFileStructure(rootPath: string): Promise<FileStructure> {
+
   const stats = await Deno.stat(rootPath);
   const structure: FileStructure = {
     path: rootPath,
@@ -24,6 +25,9 @@ export async function buildFileStructure(rootPath: string): Promise<FileStructur
     structure.children = [];
     for await (const entry of Deno.readDir(rootPath)) {
       const childPath = join(rootPath, entry.name);
+      if (childPath.endsWith(".DS_Store")) {
+        continue;
+      }
       const childStructure = await buildFileStructure(childPath);
       structure.children.push(childStructure);
     }
@@ -157,35 +161,11 @@ export async function assertDirExists(dirPath: string, expectedFiles?: string[])
   }
 }
 
-/**
- * Normalizes HTML content for comparison by removing whitespace differences
- */
-export function normalizeHtml(html: string): string {
-  return html
-    .replace(/>\s+</g, "><")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
-/**
- * Compares two HTML files for structural equality
- */
-export async function compareHtmlFiles(actualPath: string, expectedPath: string): Promise<boolean> {
-  if (!(await exists(actualPath)) || !(await exists(expectedPath))) {
-    return false;
-  }
-  
-  const actualContent = await Deno.readTextFile(actualPath);
-  const expectedContent = await Deno.readTextFile(expectedPath);
-  
-  return normalizeHtml(actualContent) === normalizeHtml(expectedContent);
-} 
-
 // Helper function to extract all paths from directory structure
-export function extractPaths(structure: any): string[] {
+export function extractPaths(structure: FileStructure): string[] {
   const paths: string[] = [];
   
-  function traverse(node: any) {
+  function traverse(node: FileStructure) {
     if (node.path) {
       paths.push(node.path);
     }

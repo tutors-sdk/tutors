@@ -11,15 +11,16 @@
     "test:coverage": "deno test --coverage=coverage --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net && deno coverage coverage",
     "test:coverage:html": "deno test --coverage=coverage --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net && deno coverage coverage --html",
     "test:unit": "deno test tests/unit/ --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net",
-    "test:integration": "deno test tests/integration/ --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net"
+    "test:integration": "deno test tests/integration/ --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net",
+    "test:reference": "deno test tests/reference-compare/reference-equivalent.ts --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net"
   },
   "imports": {
     "@tutors/tutors-gen-lib": "jsr:@tutors/tutors-gen-lib@^4",
     "@tutors/tutors-model-lib": "jsr:@tutors/tutors-model-lib@^4",
     "@vento/vento": "jsr:@vento/vento@^1.14.0",
     "shelljs": "npm:shelljs@^0.8.5",
-    "@std/assert": "jsr:@std/assert@^1.0.0",
-    "@std/fs": "jsr:@std/fs@^1.0.0",
-    "@std/path": "jsr:@std/path@^1.0.0"
+    "@std/assert": "jsr:@std/assert@^1.0.13",
+    "@std/fs": "jsr:@std/fs@^1.0.19",
+    "@std/path": "jsr:@std/path@^1.1.1"
   }
 }

@@ -4,6 +4,18 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.requireConfig": true,
   "prettier.useEditorConfig": false,
+  "deno.enable": true,
+  "deno.lint": true,
+  "deno.unstable": false,
+  "deno.testing.args": [
+    "--allow-read",
+    "--allow-write",
+    "--allow-run",
+    "--allow-env",
+    "--allow-sys",
+    "--allow-net",
+    "--no-check"
+  ],
   "files.exclude": {
     "**/*.js": {
       "when": "$(basename).ts"

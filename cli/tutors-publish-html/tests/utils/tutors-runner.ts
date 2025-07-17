@@ -1,13 +1,13 @@
-
 import { parseCourse, generateStaticCourse } from "@tutors/tutors-gen-lib";
-import { join, resolve } from "@std/path";
+import { join, resolve } from "jsr:@std/path";
 import { createTempDir, copyDir, removeTmpDir } from "./test-helpers.ts";
-import { exists } from "@std/fs/exists";
+import { exists } from "jsr:@std/fs/exists";
 
 const rootPath = Deno.cwd();
 
 export const REFERENCE_COURSE = resolve(Deno.cwd(), "../test_fixtures/reference-course");
 export const REFERENCE_HTML = resolve(Deno.cwd(), "../test_fixtures/reference-html");
+
 export const TEST_FOLDER = `${rootPath}/temp`;
 
 const localVentoTemplates = "/Users/edeleastar/repos/tutor-sdk/apps/tutors-apps/cli/tutors-gen-lib/src/templates/vento";

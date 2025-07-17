@@ -2,14 +2,21 @@
   "version": "5",
   "specifiers": {
     "jsr:@davidbonnet/astring@1.8.6": "1.8.6",
-    "jsr:@std/assert@1": "1.0.13",
-    "jsr:@std/fs@1": "1.0.19",
+    "jsr:@std/assert@*": "1.0.13",
+    "jsr:@std/assert@^1.0.13": "1.0.13",
+    "jsr:@std/cli@*": "1.0.20",
+    "jsr:@std/fs@*": "1.0.19",
+    "jsr:@std/fs@^1.0.19": "1.0.19",
     "jsr:@std/html@1.0.3": "1.0.3",
     "jsr:@std/internal@^1.0.6": "1.0.9",
     "jsr:@std/internal@^1.0.9": "1.0.9",
+    "jsr:@std/path@*": "1.1.1",
     "jsr:@std/path@1": "1.0.8",
     "jsr:@std/path@1.0.8": "1.0.8",
     "jsr:@std/path@^1.1.1": "1.1.1",
+    "jsr:@tutors/tutors-gen-lib@4": "4.1.2",
+    "jsr:@tutors/tutors-model-lib@4": "4.1.2",
+    "jsr:@vento/vento@*": "1.14.0",
     "jsr:@vento/vento@^1.14.0": "1.14.0",
     "npm:@iktakahiro/markdown-it-katex@^4.0.1": "4.0.1",
     "npm:@types/estree@1.0.6": "1.0.6",
@@ -44,6 +51,9 @@
         "jsr:@std/internal@^1.0.6"
       ]
     },
+    "@std/cli@1.0.20": {
+      "integrity": "a8c384a2c98cec6ec6a2055c273a916e2772485eb784af0db004c5ab8ba52333"
+    },
     "@std/fs@1.0.19": {
       "integrity": "051968c2b1eae4d2ea9f79a08a3845740ef6af10356aff43d3e2ef11ed09fb06",
       "dependencies": [
@@ -64,6 +74,32 @@
       "integrity": "fe00026bd3a7e6a27f73709b83c607798be40e20c81dde655ce34052fd82ec76",
       "dependencies": [
         "jsr:@std/internal@^1.0.9"
+      ]
+    },
+    "@tutors/tutors-gen-lib@4.1.2": {
+      "integrity": "9d147337596a254902380e7a4acaca587297690f2ca77b3a4f5827c8dade0a04",
+      "dependencies": [
+        "jsr:@vento/vento@^1.14.0",
+        "npm:archiver@7",
+        "npm:front-matter",
+        "npm:js-yaml@4",
+        "npm:js-yaml@^4.1.0"
+      ]
+    },
+    "@tutors/tutors-model-lib@4.1.2": {
+      "integrity": "b83bd3f681ecdc9dd676c13bfefb029546e15d9e94f386bf285a9b08fff41f8a",
+      "dependencies": [
+        "npm:@iktakahiro/markdown-it-katex",
+        "npm:markdown-it",
+        "npm:markdown-it-anchor",
+        "npm:markdown-it-deflist",
+        "npm:markdown-it-emoji",
+        "npm:markdown-it-footnote",
+        "npm:markdown-it-mark",
+        "npm:markdown-it-sub",
+        "npm:markdown-it-sup",
+        "npm:markdown-it-table-of-contents",
+        "npm:shiki-transformer-copy-button"
       ]
     },
     "@vento/vento@1.14.0": {
@@ -940,9 +976,9 @@
       },
       "tutors-publish-html": {
         "dependencies": [
-          "jsr:@std/assert@1",
-          "jsr:@std/fs@1",
-          "jsr:@std/path@1",
+          "jsr:@std/assert@^1.0.13",
+          "jsr:@std/fs@^1.0.19",
+          "jsr:@std/path@^1.1.1",
           "jsr:@tutors/tutors-gen-lib@4",
           "jsr:@tutors/tutors-model-lib@4",
           "jsr:@vento/vento@^1.14.0",
