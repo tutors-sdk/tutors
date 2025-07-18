@@ -17,6 +17,7 @@
     "jsr:@tutors/tutors-gen-lib@4": "4.1.2",
     "jsr:@tutors/tutors-model-lib@4": "4.1.2",
     "jsr:@vento/vento@*": "1.14.0",
+    "jsr:@vento/vento@1.14.0": "1.14.0",
     "jsr:@vento/vento@^1.14.0": "1.14.0",
     "npm:@iktakahiro/markdown-it-katex@^4.0.1": "4.0.1",
     "npm:@types/estree@1.0.6": "1.0.6",

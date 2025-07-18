@@ -22,7 +22,7 @@ Deno.test("main.ts - should display version when course.md exists", async () => 
     const result = await runTutorsProcess(tempDir);
     
     // Should contain version string
-    assertEquals(result.output.includes("tutors-publish-html: 4.1.2"), true);
+    assertEquals(result.output.includes("tutors-publish-html: 4.1.3"), true);
     
     // Should create html directory
     assertExists(await exists(join(tempDir, "html")));
@@ -42,7 +42,7 @@ Deno.test("main.ts - should display error when course.md missing", async () => {
     assertEquals(result.output.includes("Cannot locate course.md"), true);
     
     // Should still display version
-    assertEquals(result.output.includes("tutors-publish-html: 4.1.2"), true);
+    assertEquals(result.output.includes("tutors-publish-html: 4.1.3"), true);
     
     // Should not create html directory
     assertEquals(await exists(join(tempDir, "html")), false);
@@ -62,7 +62,7 @@ Deno.test("main.ts - should handle empty course.md", async () => {
     const result = await runTutorsProcess(tempDir);
     
     // Should still display version
-    assertEquals(result.output.includes("tutors-publish-html: 4.1.2"), true);
+    assertEquals(result.output.includes("tutors-publish-html: 4.1.3"), true);
     
     // Should attempt to create html directory (even if generation fails)
     // This tests that the main logic runs
@@ -94,7 +94,7 @@ This is a test course for unit testing.
     const result = await runTutorsProcess(tempDir);
     
     // Should display version
-    assertEquals(result.output.includes("tutors-publish-html: 4.1.2"), true);
+    assertEquals(result.output.includes("tutors-publish-html: 4.1.3"), true);
     
     // Should create html directory
     await assertDirExists(join(tempDir, "html"));
@@ -117,7 +117,7 @@ Missing closing bracket
     const result = await runTutorsProcess(tempDir);
     
     // Should still display version (graceful handling)
-    assertEquals(result.output.includes("tutors-publish-html: 4.1.2"), true);
+    assertEquals(result.output.includes("tutors-publish-html: 4.1.3"), true);
     
   } finally {
     await removeDir(tempDir);
@@ -137,7 +137,7 @@ Deno.test("main.ts - should handle permission errors gracefully", async () => {
     const result = await runTutorsProcess(tempDir);
     
     // Should still display version
-    assertEquals(result.output.includes("tutors-publish-html: 4.1.2"), true);
+    assertEquals(result.output.includes("tutors-publish-html: 4.1.3"), true);
     
     // May contain error about directory creation
     // But should handle gracefully without crashing
@@ -160,7 +160,7 @@ A test course for output structure validation.
     const result = await runTutorsProcess(tempDir);
     
     // Should succeed
-    assertEquals(result.output.includes("tutors-publish-html: 4.1.2"), true);
+    assertEquals(result.output.includes("tutors-publish-html: 4.1.3"), true);
     
     // Should create html directory
     await assertDirExists(join(tempDir, "html"));
@@ -198,7 +198,7 @@ Deno.test("main.ts - should handle working directory changes", async () => {
     const output = new TextDecoder().decode(stdout) + new TextDecoder().decode(stderr);
     
     // Should succeed and display version
-    assertEquals(output.includes("tutors-publish-html: 4.1.2"), true);
+    assertEquals(output.includes("tutors-publish-html: 4.1.3"), true);
     
     // Should create html directory in current directory
     await assertDirExists("html");
