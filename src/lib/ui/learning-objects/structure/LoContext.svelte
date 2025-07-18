@@ -1,10 +1,12 @@
 <script lang="ts">
   import type { Lo } from "@tutors/tutors-model-lib";
   import LoReference from "./LoReference.svelte";
+  import Self from "./LoContext.svelte";
 
-  export let lo: Lo;
+  let { lo, indent = 0 }: { lo: Lo; indent: number } = $props();
+
   if (lo?.toc) {
-    lo?.toc.forEach((lo) => {
+    lo?.toc?.forEach((lo) => {
       if (lo?.route.endsWith("/")) {
         lo.route = lo?.route.slice(0, -1);
       }
@@ -13,12 +15,11 @@
       }
     });
   }
-  export let indent = 0;
 </script>
 
 {#each lo?.toc as lo}
   <LoReference {lo} indent={indent + 2} />
-  {#if lo.toc}
-    <svelte:self {lo} indent={indent + 2} />
+  {#if lo?.toc}
+    <Self {lo} indent={indent + 2} />
   {/if}
 {/each}

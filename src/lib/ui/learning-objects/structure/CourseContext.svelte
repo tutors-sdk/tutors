@@ -12,7 +12,8 @@
         {#snippet lead()}<Icon type={lo.type} />{/snippet}
         {#snippet control()}{lo.title}{/snippet}
         {#snippet panel()}
-          <LoContext {lo} />{/snippet}
+          <LoContext {lo} />
+        {/snippet}
       </Accordion.Item>
       <hr class="hr" />
     {/if}
