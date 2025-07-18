@@ -2,8 +2,8 @@
   import type { Lo } from "@tutors/tutors-model-lib";
   import Icon from "$lib/ui/components/Icon.svelte";
 
-  export let lo: Lo;
-  export let indent = 0;
+  let { lo, indent = 0 }: { lo: Lo; indent: number } = $props();
+
   if (indent > 16) {
     indent = 16;
   }
