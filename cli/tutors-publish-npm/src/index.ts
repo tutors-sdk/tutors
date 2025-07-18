@@ -1,8 +1,9 @@
 #!/usr/bin/env node
-import { existsSync } from "fs";
+import { existsSync } from "node:fs";
 import { parseCourse, generateDynamicCourse } from "@tutors/tutors-gen-lib";
+import process from "node:process";
 
-const versionStr = `tutors-publish-npm: 4.1.1`;
+const versionStr = `tutors-publish-npm: 4.1.3`;
 
 if (!existsSync("course.md")) {
   console.log(
