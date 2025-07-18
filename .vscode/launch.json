@@ -15,16 +15,14 @@
       "request": "launch",
       "name": "tutors-publish",
       "type": "node",
-      "program": "${workspaceFolder}/cli/tutors-publish/main.ts",
-      "cwd": "/Users/edeleastar/repos/tutor-sdk/docs/tutors-reference-course",
+      "cwd": "/Users/edeleastar/repos/tutor-sdk/docs/layout-reference-course",
       "env": {},
       "runtimeExecutable": "deno",
       "runtimeArgs": [
         "run",
         "--inspect-wait",
         "--allow-all",
-        "${workspaceFolder}/cli/tutors-publish/main.ts",
-        "--silent"
+        "${workspaceFolder}/cli/tutors-publish/main.ts"
       ],
       "attachSimplePort": 9229
     },
@@ -45,41 +43,16 @@
     },
     {
       "request": "launch",
-      "name": "regression",
+      "name": "reference",
       "type": "node",
-      "program": "${workspaceFolder}/cli/tutors-publish-html/tests/reference-compare/reference-equivalent.ts",
+      "program": "${workspaceFolder}/cli/tutors-publish-html/tests/reference/reference.test.ts",
       "cwd": "${workspaceFolder}/cli/tutors-publish-html",
       "env": {},
-      "runtimeExecutable": "/Users/edeleastar/.deno/bin/deno",
+      "runtimeExecutable": "deno",
       "runtimeArgs": [
         "test",
         "--inspect-brk",
-        "--allow-read",
-        "--allow-write",
-        "--allow-run",
-        "--allow-env",
-        "--allow-sys",
-        "--allow-net"
-      ],
-      "attachSimplePort": 9229
-    },
-    {
-      "request": "launch",
-      "name": "tutors-publish-html-test-unit",
-      "type": "node",
-      "program": "${workspaceFolder}/cli/tutors-publish-html/tests/unit/main-direct.test.ts",
-      "cwd": "${workspaceFolder}/cli/tutors-publish-html",
-      "env": {},
-      "runtimeExecutable": "/Users/edeleastar/.deno/bin/deno",
-      "runtimeArgs": [
-        "test",
-        "--inspect-brk",
-        "--allow-read",
-        "--allow-write",
-        "--allow-run",
-        "--allow-env",
-        "--allow-sys",
-        "--allow-net"
+      "--allow-all"
       ],
       "attachSimplePort": 9229
     }

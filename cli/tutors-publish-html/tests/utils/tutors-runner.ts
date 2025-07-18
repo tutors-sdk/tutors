@@ -1,4 +1,4 @@
-import { parseCourse, generateStaticCourse } from "@tutors/tutors-gen-lib";
+import { parseCourse, generateStaticCourse, copyAssets, generateDynamicCourse } from "@tutors/tutors-gen-lib";
 import { join, resolve } from "jsr:@std/path";
 import { createTempDir, copyDir, removeTmpDir } from "./test-helpers.ts";
 import { exists } from "jsr:@std/fs/exists";
@@ -7,22 +7,40 @@ const rootPath = Deno.cwd();
 
 export const REFERENCE_COURSE = resolve(Deno.cwd(), "../test_fixtures/reference-course");
 export const REFERENCE_HTML = resolve(Deno.cwd(), "../test_fixtures/reference-html");
+export const LAYOUT_REFERENCE_COURSE = resolve(Deno.cwd(), "../test_fixtures/layout-reference-course");
+export const LAYOUT_REFERENCE_JSON = resolve(Deno.cwd(), "../test_fixtures/layout-reference-json");
 
+export const FIXTURES = resolve(Deno.cwd(), "../test_fixtures");
 export const TEST_FOLDER = `${rootPath}/temp`;
 
 const localVentoTemplates = "/Users/edeleastar/repos/tutor-sdk/apps/tutors-apps/cli/tutors-gen-lib/src/templates/vento";
 
 export async function generateHtml(path: string): Promise<boolean> {
-  const lo = await parseCourse(path);
-  const success = await generateStaticCourse(lo, `${path}/html`, localVentoTemplates);
+  const [course, lr] = await parseCourse(path, true);
+  const success = await generateStaticCourse(course, `${path}/html`, localVentoTemplates);
+  copyAssets(lr, `${path}/html`);
   return success
 }
 
-export async function tutorsPublishHtml(coursePath: string, testDir: string): Promise<boolean> {
-  await removeTmpDir(testDir);
-  await createTempDir(testDir);
-  await copyDir(coursePath, testDir);
-  return await generateHtml(testDir);
+export function generateJson(path: string): boolean {
+  const [course, lr] = parseCourse(path);
+  generateDynamicCourse(course, `${path}/json`);
+  copyAssets(lr, `${path}/json`);
+  return true
+}
+
+export async function tutorsPublishHtml(courseId: string): Promise<boolean> {
+  await removeTmpDir(`${TEST_FOLDER}/${courseId}`);
+  await createTempDir(`${TEST_FOLDER}/${courseId}`);
+  await copyDir(`${FIXTURES}/${courseId}`, `${TEST_FOLDER}/${courseId}`);
+  return await generateHtml(`${TEST_FOLDER}/${courseId}`);
+}
+
+export async function tutorsPublishJson(courseId: string): Promise<boolean> {
+  await removeTmpDir(`${TEST_FOLDER}/${courseId}`);
+  await createTempDir(`${TEST_FOLDER}/${courseId}`);
+  await copyDir(`${FIXTURES}/${courseId}`, `${TEST_FOLDER}/${courseId}`);
+  return await generateJson(`${TEST_FOLDER}/${courseId}`);
 }
 
 // Mock the main module functionality for testing

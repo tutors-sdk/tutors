@@ -15,10 +15,10 @@ import { generateHtml, REFERENCE_COURSE, REFERENCE_HTML, TEST_FOLDER, tutorsPubl
 
 Deno.test("Integration - basic sanity check, should produce html folder with index.html", async () => {
   try {
-    const result = await tutorsPublishHtml(REFERENCE_COURSE, `${TEST_FOLDER}/test-course`);
+    const result = await tutorsPublishHtml("reference-course");
     assertEquals(result, true, `Generator failed`);
-    await assertDirExists(`${TEST_FOLDER}/test-course/html`);
-    await assertFileExists(`${TEST_FOLDER}/test-course/html/index.html`);
+    await assertDirExists(`${TEST_FOLDER}/reference-course/html`);
+    await assertFileExists(`${TEST_FOLDER}/reference-course/html/index.html`);
     console.log(`✓ Generated HTML output at: ${TEST_FOLDER}/html`);
   } finally {
     await removeTmpDir(TEST_FOLDER);
@@ -26,11 +26,11 @@ Deno.test("Integration - basic sanity check, should produce html folder with ind
 });
 
 Deno.test("Integration - should match reference HTML structure", async () => {
-  const result = await tutorsPublishHtml(REFERENCE_COURSE, `${TEST_FOLDER}/test-course`);
+  const result = await tutorsPublishHtml("reference-course");
   assertEquals(result, true, `Generator failed`);
   
   // Check that basic HTML structure exists
-  const htmlStructure = await buildFileStructure(`${TEST_FOLDER}/test-course/html`);
+  const htmlStructure = await buildFileStructure(`${TEST_FOLDER}/reference-course/html`);
   const referenceStructure = await buildFileStructure(REFERENCE_HTML);
   
   // Instead of exact comparison, check for key structural elements
@@ -79,7 +79,7 @@ Deno.test("Integration - should match reference HTML structure", async () => {
 
 
 Deno.test("Integration - should generate valid HTML files", async () => {
-  const result = await tutorsPublishHtml(REFERENCE_COURSE, `${TEST_FOLDER}/test-course`);
+  const result = await tutorsPublishHtml("reference-course");
   assertEquals(result, true, `Generator failed`);
     
   const keyFiles = [
@@ -90,7 +90,7 @@ Deno.test("Integration - should generate valid HTML files", async () => {
   ];
     
   for (const file of keyFiles) {
-    const filePath = `${TEST_FOLDER}/test-course/html/${file}`;
+    const filePath = `${TEST_FOLDER}/reference-course/html/${file}`;
     if (await exists(filePath)) {
       const content = await Deno.readTextFile(filePath);
         
@@ -113,7 +113,7 @@ Deno.test("Integration - should generate valid HTML files", async () => {
 });
 
 Deno.test("Integration - should handle topics with different content types", async () => {
-  const result = await tutorsPublishHtml(REFERENCE_COURSE, `${TEST_FOLDER}/test-course`);
+  const result = await tutorsPublishHtml("reference-course");
   assertEquals(result, true, `Generator failed`);
 
   const contentTypes = [
@@ -126,7 +126,7 @@ Deno.test("Integration - should handle topics with different content types", asy
   ];
     
   for (const contentType of contentTypes) {
-    const contentPath = join(`${TEST_FOLDER}/test-course/html`, contentType.path);
+    const contentPath = join(`${TEST_FOLDER}/reference-course/html`, contentType.path);
     if (await exists(contentPath)) {
       await assertDirExists(contentPath);
       console.log(`✓ ${contentType.type} generated successfully`);
@@ -135,7 +135,7 @@ Deno.test("Integration - should handle topics with different content types", asy
 });
 
 Deno.test("Integration - should preserve assets and resources", async () => {
-  const result = await tutorsPublishHtml(REFERENCE_COURSE, `${TEST_FOLDER}/test-course`);
+  const result = await tutorsPublishHtml("reference-course");
   assertEquals(result, true, `Generator failed`);
     
   const assetFiles = [
@@ -146,7 +146,7 @@ Deno.test("Integration - should preserve assets and resources", async () => {
     ];
     
   for (const asset of assetFiles) {
-    const assetPath = join(`${TEST_FOLDER}/test-course/html`, asset);
+    const assetPath = join(`${TEST_FOLDER}/reference-course/html`, asset);
     if (await exists(assetPath)) {
       await assertFileExists(assetPath);
       console.log(`✓ Asset preserved: ${asset}`);
@@ -184,15 +184,14 @@ Deno.test("Integration - should be reproducible", async () => {
   
   try {
     // Copy the reference course to temp directory
-    let result = await tutorsPublishHtml(REFERENCE_COURSE, `${TEST_FOLDER}/test-course-1`);
+    let result = await tutorsPublishHtml("reference-course");
     assertEquals(result, true, `Generator failed`); 
-    result = await tutorsPublishHtml(REFERENCE_COURSE, `${TEST_FOLDER}/test-course-2`);
-    assertEquals(result, true, `Generator failed`);      
-    
+    const structure1 = await buildFileStructure(`${TEST_FOLDER}/reference-course/html`);
+    result = await tutorsPublishHtml("reference-course");
+    assertEquals(result, true, `Generator failed`);     
+    const structure2 = await buildFileStructure(`${TEST_FOLDER}/reference-course/html`); 
     
     // Results should be identical (same file structure)
-    const structure1 = await buildFileStructure(`${TEST_FOLDER}/test-course-1/html`);
-    const structure2 = await buildFileStructure(`${TEST_FOLDER}/test-course-1/html`);
     
     const structuresMatch = compareFileStructures(structure1, structure2, true);
     assertEquals(structuresMatch, true, "Multiple runs should produce identical results");
@@ -205,7 +204,7 @@ Deno.test("Integration - should be reproducible", async () => {
 
 Deno.test("Integration - should handle lab content correctly", async () => {
   try {
-    const result = await tutorsPublishHtml(REFERENCE_COURSE, `${TEST_FOLDER}/test-course`);
+    const result = await tutorsPublishHtml("reference-course");
     assertEquals(result, true, `Generator failed`);
 
     // Check that lab content is generated correctly
@@ -215,7 +214,7 @@ Deno.test("Integration - should handle lab content correctly", async () => {
     ];
 
     for (const labPath of labPaths) {
-      const filePath = `${TEST_FOLDER}/test-course/html/${labPath}`;
+      const filePath = `${TEST_FOLDER}/reference-course/html/${labPath}`;
       if (await exists(filePath)) {
         const content = await Deno.readTextFile(filePath);
 
@@ -240,7 +239,7 @@ Deno.test("Integration - should handle lab content correctly", async () => {
     ];
 
     for (const assetPath of labAssetPaths) {
-      const dirPath = `${TEST_FOLDER}/test-course/html/${assetPath}`;
+      const dirPath = `${TEST_FOLDER}/reference-course/html/${assetPath}`;
       await assertDirExists(dirPath);
       console.log(`✓ ${assetPath} assets directory exists`);
     }

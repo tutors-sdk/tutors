@@ -13,7 +13,8 @@ if (!fs.existsSync("course.md")) {
 } else {
   const srcFolder = process.cwd();
   const destFolder = `${srcFolder}/html`;
-  const lo = parseCourse(srcFolder);
-  generateStaticCourse(lo, destFolder);
+  const [course, lr] = parseCourse(srcFolder);
+  generateStaticCourse(course, destFolder);
+  copyAssets(lr, destFolder);
 }
 console.log(versionStr);

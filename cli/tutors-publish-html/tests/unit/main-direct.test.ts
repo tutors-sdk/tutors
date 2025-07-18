@@ -35,7 +35,7 @@ Some course content here.
     assertEquals(typeof course, "object");
     
     // Should have basic properties
-    assertExists(course.title);
+    assertExists(course[0].title);
     
     console.log("✓ parseCourse works correctly");
     
@@ -151,7 +151,7 @@ This is a test course with topics.
     assertEquals(typeof course, "object");
     
     // Should have basic properties
-    assertExists(course.title);
+    assertExists(course[0].title);
     
     console.log("✓ parseCourse with topics works correctly");
     
