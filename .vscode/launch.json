@@ -45,8 +45,8 @@
       "request": "launch",
       "name": "reference",
       "type": "node",
-      "program": "${workspaceFolder}/cli/tutors-publish-html/tests/reference/reference.test.ts",
-      "cwd": "${workspaceFolder}/cli/tutors-publish-html",
+      "program": "${workspaceFolder}/cli/tutors-gen-lib/test/reference.test.ts",
+      "cwd": "${workspaceFolder}/cli/tutors-gen-lib",
       "env": {},
       "runtimeExecutable": "deno",
       "runtimeArgs": [

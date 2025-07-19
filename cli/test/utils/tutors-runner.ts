@@ -5,12 +5,12 @@ import { exists } from "jsr:@std/fs/exists";
 
 const rootPath = Deno.cwd();
 
-export const REFERENCE_COURSE = resolve(Deno.cwd(), "../test_fixtures/reference-course");
-export const REFERENCE_HTML = resolve(Deno.cwd(), "../test_fixtures/reference-html");
-export const LAYOUT_REFERENCE_COURSE = resolve(Deno.cwd(), "../test_fixtures/layout-reference-course");
-export const LAYOUT_REFERENCE_JSON = resolve(Deno.cwd(), "../test_fixtures/layout-reference-json");
+export const REFERENCE_COURSE = resolve(Deno.cwd(), "../test/fixtures/reference-course");
+export const REFERENCE_HTML = resolve(Deno.cwd(), "../test/fixtures/reference-html");
+export const LAYOUT_REFERENCE_COURSE = resolve(Deno.cwd(), "../test/fixtures/layout-reference-course");
+export const LAYOUT_REFERENCE_JSON = resolve(Deno.cwd(), "../test/fixtures/layout-reference-json");
 
-export const FIXTURES = resolve(Deno.cwd(), "../test_fixtures");
+export const FIXTURES = resolve(Deno.cwd(), "../test/fixtures");
 export const TEST_FOLDER = `${rootPath}/temp`;
 
 const localVentoTemplates = "/Users/edeleastar/repos/tutor-sdk/apps/tutors-apps/cli/tutors-gen-lib/src/templates/vento";

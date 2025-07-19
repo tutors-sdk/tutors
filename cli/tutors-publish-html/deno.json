@@ -6,13 +6,7 @@
   "tasks": {
     "run": "deno run main.ts",
     "dev": "deno run --watch main.ts",
-    "test": "deno test --allow-all",
-    "test:watch": "deno test --watch --allow-all",
-    "test:coverage": "deno test --coverage=coverage --allow-all && deno coverage coverage",
-    "test:coverage:html": "deno test --coverage=coverage --allow-all && deno coverage coverage --html",
-    "test:unit": "deno test tests/unit/ --allow-all",
-    "test:integration": "deno test tests/integration/ --allow-all",
-    "test:reference": "deno test tests/reference/ --allow-all"
+    "test": "deno test --allow-all"
   },
   "imports": {
     "@tutors/tutors-gen-lib": "jsr:@tutors/tutors-gen-lib@^4",

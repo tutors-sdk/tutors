@@ -1,16 +1,15 @@
-import { assertEquals, assertExists } from "@std/assert";
-import { exists } from "@std/fs";
-import { join } from "@std/path";
+import { assertEquals, assertExists } from "jsr:@std/assert";
+import { join } from "jsr:@std/path";
 import { 
   createTempDir, 
   removeDir, 
-  assertFileExists, 
-  assertDirExists 
-} from "../utils/test-helpers.ts";
+  assertDirExists, 
+  assertFileExists
+} from "../../test/utils/test-helpers.ts";
 
 // Import the functions directly from the libraries
 import { parseCourse } from "@tutors/tutors-gen-lib";
-import { TEST_FOLDER } from "../utils/tutors-runner.ts";
+import { TEST_FOLDER } from "../../test/utils/tutors-runner.ts";
 
 Deno.test("Direct - parseCourse should handle valid course", async () => {
   await removeDir(`${TEST_FOLDER}`);

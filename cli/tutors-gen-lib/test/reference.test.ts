@@ -1,7 +1,7 @@
 import { assertEquals } from "jsr:@std/assert";
-import { buildFileStructure, removeTmpDir} from "../utils/test-helpers.ts";
-import { FIXTURES,  TEST_FOLDER, tutorsPublishHtml, tutorsPublishJson } from "../utils/tutors-runner.ts";
-import { compareDirectoryContents } from "../utils/comparators.ts";
+import { buildFileStructure, removeTmpDir} from "../../test/utils/test-helpers.ts";
+import { FIXTURES,  TEST_FOLDER, tutorsPublishHtml, tutorsPublishJson } from "../../test/utils/tutors-runner.ts";
+import { compareDirectoryContents } from "../../test/utils/comparators.ts";
 
 Deno.test("Integration - Reference Static Site", async () => {
   const result = await tutorsPublishHtml("reference-course");

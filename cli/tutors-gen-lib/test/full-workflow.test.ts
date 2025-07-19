@@ -9,8 +9,8 @@ import {
   compareFileStructures,
   removeTmpDir,
   extractPaths
-} from "../utils/test-helpers.ts";
-import { generateHtml, REFERENCE_COURSE, REFERENCE_HTML, TEST_FOLDER, tutorsPublishHtml } from "../utils/tutors-runner.ts";
+} from "../../test/utils/test-helpers.ts";
+import { FIXTURES, generateHtml, TEST_FOLDER, tutorsPublishHtml } from "../../test/utils/tutors-runner.ts";
 
 
 Deno.test("Integration - basic sanity check, should produce html folder with index.html", async () => {
@@ -31,7 +31,7 @@ Deno.test("Integration - should match reference HTML structure", async () => {
   
   // Check that basic HTML structure exists
   const htmlStructure = await buildFileStructure(`${TEST_FOLDER}/reference-course/html`);
-  const referenceStructure = await buildFileStructure(REFERENCE_HTML);
+  const referenceStructure = await buildFileStructure(`${FIXTURES}/reference-html`);
   
   // Instead of exact comparison, check for key structural elements
   const htmlPaths = extractPaths(htmlStructure);
