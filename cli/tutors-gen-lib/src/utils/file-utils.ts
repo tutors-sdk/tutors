@@ -116,14 +116,20 @@ export function withoutHeaderFromBody(body: string): string {
 
 export function copyFolder(src: string, dest: string): void {
   try {
-    if (!fs.existsSync(dest)) {
-      fs.mkdirSync(dest, { recursive: true });
+    // Delete destination if it exists to ensure clean overwrite
+    if (fs.existsSync(dest)) {
+      fs.rmSync(dest, { recursive: true, force: true });
     }
+    
     const stats = fs.statSync(src);
     if (stats.isDirectory()) {
+      // Create destination directory and copy contents
+      fs.mkdirSync(dest, { recursive: true });
       fs.cpSync(src, dest, { recursive: true });
     } else {
-      fs.cpSync(src, path.join(dest, path.basename(src)));
+      // For single file, ensure parent directory exists
+      fs.mkdirSync(path.dirname(dest), { recursive: true });
+      fs.copyFileSync(src, dest);
     }
   } catch (err) {
     console.error(`Error copying folder from ${src} to ${dest}:`, err);
