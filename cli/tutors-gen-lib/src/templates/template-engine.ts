@@ -1,6 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { getBackgroundColour, getIconColour, getIconType, loBackgroundColour, loBorderColour } from "./styles.ts";
+import {  getIconType, loBackgroundColour, loBorderColour } from "./styles.ts";
 import vento from "@vento/vento";
 import autoTrim from "jsr:@vento/vento@1.14.0/plugins/auto_trim.ts";
 import type { Environment } from "@vento/vento/src/environment.ts";
@@ -21,8 +21,6 @@ export function initTemplateEngine(folder:string) {
     autoescape: false
   });
   env.filters.iconType = getIconType;
-  env.filters.iconColour = getIconColour;
-  env.filters.backgroundColour = getBackgroundColour;
   env.filters.loBorderColour = loBorderColour;
   env.filters.loBackgroundColour = loBackgroundColour;
   env.use(autoTrim());

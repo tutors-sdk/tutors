@@ -35,11 +35,6 @@ export const colours = {
   'unit': '#557927',
   'note': '#d27711',
   'panelnote': '#d27711',
-  'moodle': '#d27711',
-  'slack': '#ba5150',
-  'youtube': '#ba5150',
-  'zoom': '#37919b',
-  'teams': '#fbfbfc'
 } as const;
 
 export const backgroundColours = {
@@ -57,25 +52,12 @@ export const backgroundColours = {
   'unit': '#557927',
   'note': '#d27711',
   'panelnote': '#d27711',
-  'moodle': '#d27711',
-  'slack': '#ba5150',
-  'youtube': '#ba5150',
-  'zoom': '#37919b',
-  'teams': '#fbfbfc'
 } as const;
 
 export type IconType = keyof typeof icons;
 
 export function getIconType(type: IconType): string {
   return icons[type];
-}
-
-export function getIconColour(type: IconType): string {
-  return colours[type];
-}
-
-export function getBackgroundColour(type: IconType): string {
-  return backgroundColours[type];
 }
 
 export const loColours = {
