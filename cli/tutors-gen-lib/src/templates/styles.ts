@@ -42,6 +42,28 @@ export const colours = {
   'teams': '#fbfbfc'
 } as const;
 
+export const backgroundColours = {
+  'course': '#37919b',
+  'topic': '#37919b',
+  'talk': '#f4ecce',
+  'reference': '#d27711',
+  'lab': '#557927',
+  'archive': '#37919b',
+  'panelvideo': '#ba5150',
+  'video': '#ba5150',
+  'github': '#d27711',
+  'moduleHome': '#37919b',
+  'web': '#ba5150',
+  'unit': '#557927',
+  'note': '#d27711',
+  'panelnote': '#d27711',
+  'moodle': '#d27711',
+  'slack': '#ba5150',
+  'youtube': '#ba5150',
+  'zoom': '#37919b',
+  'teams': '#fbfbfc'
+} as const;
+
 export type IconType = keyof typeof icons;
 
 export function getIconType(type: IconType): string {
@@ -51,3 +73,38 @@ export function getIconType(type: IconType): string {
 export function getIconColour(type: IconType): string {
   return colours[type];
 }
+
+export function getBackgroundColour(type: IconType): string {
+  return backgroundColours[type];
+}
+
+export const loColours = {
+  "course"     : { border: "#37919b", background: "#37919b" },
+  "topic"      : { border: "#53a878", background: "#d9eee0" },
+  "talk"       : { border: "#cb9d00", background: "#f4ecce" },
+  "reference"  : { border: "#37919b", background: "#37919b" },
+  "lab"        : { border: "#d00034", background: "#fac5c8" },
+  "archive"    : { border: "#d00034", background: "#fac5c8" },
+  "panelvideo" : { border: "#37919b", background: "#37919b" },
+  "video"      : { border: "#37919b", background: "#37919b" },
+  "github"     : { border: "#cb9d00", background: "#f4ecce" },
+  "moduleHome" : { border: "#37919b", background: "#37919b" },
+  "web"        : { border: "#008c8f", background: "#d6e9e9" },
+  "unit"       : { border: "#37919b", background: "#37919b" },
+  "note"       : { border: "#53a878", background: "#d9eee0" },
+  "panelnote"  : { border: "#37919b", background: "#37919b" },
+  "moodle"     : { border: "#37919b", background: "#37919b" },
+  "slack"      : { border: "#37919b", background: "#37919b" },
+  "youtube"    : { border: "#37919b", background: "#37919b" },
+  "zoom"       : { border: "#37919b", background: "#37919b" },
+  "teams"      : { border: "#37919b", background: "#37919b" },
+}
+
+export function loBorderColour(type: IconType): string {
+  return loColours[type].border;
+}
+
+export function loBackgroundColour(type: IconType): string {
+  return loColours[type].background;
+}
+  

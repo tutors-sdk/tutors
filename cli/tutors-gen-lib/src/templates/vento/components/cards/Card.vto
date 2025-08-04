@@ -3,11 +3,11 @@
 {{ import { icon } from "/components/iconography/Icon.vto" }}
 
 {{ export function card(lo, path, pathoverride = "", imageoverride = "") }}
-  <div class="card compact text-center shadow-2xl rounded-box card-corner bg-base-100 m-2 border-t-8 border-b-8 z-0 w-60 border-[{{ lo.type |> iconColour }}] w-60 h-[23rem]">
+  <div class="card compact bg-[{{ lo.type |> loBackgroundColour }}]  text-center shadow-2xl rounded-box card-corner bg-base-100 m-2 border-t-8 border-b-8 z-0 w-60 border-[1px] border-[{{ lo.type |> loBorderColour }}] w-60 h-[23rem]">
     {{ urlStart(lo, path, pathoverride) }}
     <div class="flex flex-row justify-between items-center p-3">
       <h3 class="card-title text-md font-normal">{{ lo.title }}</h3>
-      {{ icon(lo.type, 20, "", "") }}
+      {{ icon(lo.type, 30, "", "") }}
     </div>
     <figure class="flex justify-center">
       {{ image(lo, path, imageoverride) }}
@@ -25,7 +25,7 @@
             {{ /if }}
           </div>
         {{ /if }}
-        <div class="prose">
+        <div class="prose line-clamp-3">
           {{ lo.summary }}
         </div>
       </div>
