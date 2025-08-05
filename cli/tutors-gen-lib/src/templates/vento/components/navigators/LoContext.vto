@@ -1,6 +1,5 @@
 {{ import { loReference } from "/components/navigators/LoReference.vto" }}
 {{ import { image } from "/components/cards/Image.vto" }}
-{{# {{ import { findParent } from "/components/url.vto" }} #}}
 
 {{ export function loContext (lo) }}
 
@@ -18,7 +17,7 @@
       </figure>
 
       <div class="mr-2 hidden h-auto w-72 xl:block">
-        <div class="sticky top-14 flex flex-col overflow-y-auto">
+        <div class="flex flex-col overflow-y-auto">
           <div class="my-auto">
             {{ for loref of topic?.toc }}
               {{ loReference(loref,  "../", 0) }}
