@@ -1,0 +1,35 @@
+{{ import { loReference } from "/components/navigators/LoReference.vto" }}
+{{ import { image } from "/components/cards/Image.vto" }}
+{{# {{ import { findParent } from "/components/url.vto" }} #}}
+
+{{ export function loContext (lo) }}
+
+  {{ set topic = lo.parentLo }}
+  {{ if topic.type !== "course" && topic.type !== "topic" }}
+    {{ set topic = topic.parentLo }}
+  {{/if}} 
+
+
+  <div class="card w-72 p-4 text-center shadow-2xl rounded-box card-corner bg-base-100 m-2 z-0 w-60 border-[1px] h-4/5 bg-[{{ "web" |> loBackgroundColour }}]">
+    <h3 class="px-4 py-2 text-center font-bold">{{lo.title}}</h3>
+    <div class="card-body overflow-y-auto">
+      <figure class="flex h-44 justify-center p-2">
+        <img loading="lazy" class="rounded-xl object-scale-down p-1 h-48" src="{{ lo.imgFile }}" alt="{{ lo.title }}">
+      </figure>
+
+      <div class="mr-2 hidden h-auto w-72 xl:block">
+        <div class="sticky top-14 flex flex-col overflow-y-auto">
+          <div class="my-auto">
+            {{ for loref of topic?.toc }}
+              {{ loReference(loref,  "../", 0) }}
+              {{ for loref2 of loref?.toc }}
+                {{ loReference(loref2, `../../` + loref.id + "/", 4) }}
+              {{/for}}
+            {{/for}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{{/export}}

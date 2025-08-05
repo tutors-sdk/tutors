@@ -34,3 +34,15 @@
 {{ export function urlEnd(lo) }}
   </a>
 {{ /export }}
+
+
+{{ export function loRefUrlStart(lo, path) }}
+  {{ if (lo.type === "web") || (lo.type === "github") }}
+    {{ set url = lo.route + ' target="_blank"' }}
+  {{ else if lo.type === "archive" }}
+    {{ set url = path + '/' + lo.id + "/" + lo.archiveFile }}
+  {{ else }}
+    {{ set url = path + lo.id + "/index.html" }}
+  {{ /if }}
+  <a href={{ url }} class="flex">
+{{ /export }}

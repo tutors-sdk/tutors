@@ -1,0 +1,16 @@
+{{ import { icon } from "/components/iconography/Icon.vto" }}
+{{ import { loRefUrlStart, urlEnd } from "/components/url.vto" }}
+
+{{ export function loReference (lo, prefix, indent) }}
+  <div class="flex py-1 ml-{{indent}}">
+  {{ loRefUrlStart(lo, prefix) }}
+    {{ icon(lo.type, 30, "", "") }}
+    <span class="mb-1 ml-2"> {{ lo.title }} </span>
+  {{ urlEnd() }}
+  {{ if lo.video && lo.type != "panelvideo"}}
+    <a class="flex pl-4" href={lo.video}>
+      {{ icon("video", 30, "", "") }}
+    </a>
+  {{/if}}
+</div>
+{{ /export }}

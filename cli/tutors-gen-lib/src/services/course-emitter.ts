@@ -81,6 +81,6 @@ export async function emitStaticCourse(path: string, lo: Course) {
       await emitComposite(loItem as Topic, path);
     }
   }
-  await publishTemplate(path, "home.html", "Course", lo);
+  await publishTemplate(path, "home.html", "Composite", lo);
   await emitWalls(path, lo);
 }

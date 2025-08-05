@@ -11,6 +11,7 @@ export const icons = {
   'moduleHome': 'fluent:home-24-filled',
   'web': 'fluent:bookmark-24-regular',
   'unit': 'fluent:dual-screen-group-24-filled',
+  'side': 'fluent:dual-screen-group-24-filled',
   'note': 'fluent:notepad-16-regular',
   'panelnote': 'fluent:notepad-16-regular',
   'moodle': 'fluent:hat-graduation-24-filled',
@@ -50,6 +51,7 @@ export const backgroundColours = {
   'moduleHome': '#37919b',
   'web': '#ba5150',
   'unit': '#557927',
+  'side': '#557927',
   'note': '#d27711',
   'panelnote': '#d27711',
 } as const;
@@ -73,6 +75,7 @@ export const loColours = {
   "moduleHome" : { border: "#37919b", background: "#37919b" },
   "web"        : { border: "#008c8f", background: "#d6e9e9" },
   "unit"       : { border: "#37919b", background: "#37919b" },
+  "side"       : { border: "#37919b", background: "#37919b" },
   "note"       : { border: "#53a878", background: "#d9eee0" },
   "panelnote"  : { border: "#37919b", background: "#37919b" },
   "moodle"     : { border: "#37919b", background: "#37919b" },
