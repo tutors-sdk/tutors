@@ -27,3 +27,15 @@ export function fixWallRoutes(los: Lo[]): void {
     }
   });
 }
+
+export function wallPath(lo: Lo): string {
+  let depth = 0;
+  
+  if (lo.route && lo.route.includes('//')) {
+    const pathPart = lo.route.substring(lo.route.indexOf('//') + 2);
+    depth = (pathPart.match(/\//g) || []).length + 1;
+  }
+  const url = depth > 0 ? "../".repeat(depth) : "./";
+  return url;
+}
+  
