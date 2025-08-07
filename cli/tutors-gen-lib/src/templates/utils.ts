@@ -1,34 +1,29 @@
-import type { Lo, Talk } from "@tutors/tutors-model-lib";
+import type { Lo } from "@tutors/tutors-model-lib";
+
+function stripProtocol(url: string): string {
+  if (!url || !url.includes('//')) return url;
+  if (url.includes('///')) {
+    return url.substring(url.indexOf('///') + 3);
+  }
+  return url.substring(url.indexOf('//') + 2);
+}
 
 export function fixWallRoutes(los: Lo[]): void {
   los.forEach((lo) => {
+    lo.route = stripProtocol(lo.route);
+    lo.img = stripProtocol(lo.img);
     switch (lo.type) {
-      case "web":
-      case "github": {
-        lo.route += ' target="_blank"';
-        lo.img = lo.parentLo.route.substring(lo.route.indexOf('//') + 2) + "/" + lo.parentLo.id + "/" + lo.id + "/" + lo.imgFile;
-        break;
-      }
-      case "archive": {
-        lo.route = lo.route.substring(lo.route.indexOf('///') + 3);
-        break;
-      }
-      case "talk": {
-        lo.img = lo.route.substring(lo.route.indexOf('//') + 2) + "/" + lo.imgFile;
-        lo.route = lo.route.substring(lo.route.indexOf('//') + 2);
-        const talk = lo as Talk;
-        talk.route = `${talk.route}/index.html`;
-        break;
-      }
+      case "talk":
       case "lab":
       case "note": {
-        lo.img = lo.route.substring(lo.route.indexOf('//') + 2) + "/" + lo.imgFile;
-        lo.route = lo.route.substring(lo.route.indexOf('//') + 2);
-        lo.route += '/index.html';
+        lo.route += "/index.html";
+        break;
+      }
+      case "web":
+      case "github": {
+        lo.route = `https://${lo.route}`;
         break;
       }
     }
   });
 }
-
-

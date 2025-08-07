@@ -7,16 +7,6 @@
     <div class="flex flex-wrap justify-center">
       {{ for item of lo.los }}
         {{ wallCard(item, "./" + item.route) }} 
-        {{# {{ if item.parentLo.type === "unit" || item.parentLo.type === "side" }}
-          {{ if item.parentLo.parentLo.type === "course" }}
-             {{ set path = item.parentLo.id }}
-          {{ else }}
-             {{ set path = item.parentLo.parentLo.id + "/" + item.parentLo.id }}
-          {{ /if }}
-        {{ else }}
-          {{ set path = item.parentLo.id }}
-        {{ /if }}
-        {{ card(item, path, item.route, item.path) }} #}}
       {{ /for }}
     </div>
   </div>
