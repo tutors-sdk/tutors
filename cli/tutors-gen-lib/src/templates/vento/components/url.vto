@@ -16,10 +16,8 @@
   </a>
 {{ /export }}
 
-{{ export function urlStart(lo, path, pathoverride = "") }}
-  {{ if pathoverride !== "" }}
-    {{ set url = pathoverride }}
-  {{ else if (lo.type === "web") || (lo.type === "github") }}
+{{ export function urlStart(lo, path) }}
+  {{ if (lo.type === "web") || (lo.type === "github") }}
     {{ set url = lo.route + ' target="_blank"' }}
   {{ else if lo.type === "archive" }}
     {{ set url = path + '/' + lo.id + "/" + lo.archiveFile }}

@@ -1,11 +1,7 @@
-{{ export function image(lo, path, imageoverride = "") }}
+{{ export function image(lo, path) }}
   {{ if lo.icon }}
     <span class="iconify" data-icon="{{ lo.icon.type }}" data-width="164" style="color:{{ lo.icon.color }};"></span>
   {{ else }}
-    {{ if imageoverride !== "" }}
-      <img loading="lazy" class="rounded-xl object-scale-down p-1 h-48" src="{{ lo.img }}" alt="{{ lo.title }}">
-    {{ else }}
       <img loading="lazy" class="object-scale-down w-full h-40" src="{{ path }}/{{ lo.id }}/{{ lo.imgFile }}" alt="{{ lo.title }}">
-    {{ /if }}
   {{ /if }}
 {{ /export }}

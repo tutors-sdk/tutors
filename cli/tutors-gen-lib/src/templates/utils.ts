@@ -2,10 +2,12 @@ import type { Lo, Talk } from "@tutors/tutors-model-lib";
 
 export function fixWallRoutes(los: Lo[]): void {
   los.forEach((lo) => {
+    lo.img = lo.route.substring(lo.route.indexOf('//') + 2) + "/" + lo.imgFile;
     switch (lo.type) {
       case "web":
       case "github": {
         lo.route += ' target="_blank"';
+        lo.img = lo.parentLo.route.substring(lo.route.indexOf('//') + 2) + "/" + lo.parentLo.id + "/" + lo.id + "/" + lo.imgFile;
         break;
       }
       case "archive": {
