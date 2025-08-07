@@ -4,7 +4,7 @@
 
 {{ export function wallCard(lo) }}
   <div class="card compact bg-[{{ lo.type |> loBackgroundColour }}]  text-center shadow-2xl rounded-box card-corner bg-base-100 m-2 border-t-8 border-b-8 z-0 w-60 border-[1px] border-[{{ lo.type |> loBorderColour }}] w-60 h-[23rem]">
-    <a href="{{ lo.route }}">
+    <a href="{{ lo |> loPath }}">
       <div class="flex flex-row justify-between items-center p-3">
         <h3 class="card-title text-md font-normal">{{ lo.title }}</h3>
         {{ icon(lo.type, 30, "", "") }}
@@ -13,7 +13,7 @@
         {{ if lo.icon }}
           <span class="iconify" data-icon="{{ lo.icon.type }}" data-width="164" style="color:{{ lo.icon.color }};"></span>
         {{ else }}
-          <img loading="lazy" class="object-scale-down w-full h-40" src="{{ lo.img }}" alt="{{ lo.title }}">
+          <img loading="lazy" class="object-scale-down w-full h-40" src="{{ lo |> loImagePath }}" alt="{{ lo.title }}">
         {{ /if }}
       </figure>
       <div class="card-body">

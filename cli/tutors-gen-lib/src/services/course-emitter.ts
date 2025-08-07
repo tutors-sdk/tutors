@@ -1,5 +1,4 @@
 import type { Course, Lab, Lo, Talk, Topic, Unit } from "@tutors/tutors-model-lib";
-import { fixWallRoutes } from "../templates/utils.ts";
 import { publishTemplate } from "../templates/template-engine.ts";
 
 async function emitTalk(lo: Talk, path: string) {
@@ -69,7 +68,6 @@ async function emitComposite(lo: Topic, path: string) {
 export async function emitWalls(path: string, lo: Course) {
   if (lo.walls) {
     for (const los of lo.walls) {
-      fixWallRoutes(los);
       await publishTemplate(path, `${los[0].type}.html`, "Wall", {course: lo, los:los});
     }
   }

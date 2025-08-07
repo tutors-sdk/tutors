@@ -8,24 +8,25 @@ function stripProtocol(url: string): string {
   return url.substring(url.indexOf('//') + 2);
 }
 
-export function fixWallRoutes(los: Lo[]): void {
-  los.forEach((lo) => {
-    lo.route = stripProtocol(lo.route);
-    lo.img = stripProtocol(lo.img);
+export function loPath(lo : Lo): string {
+    let path = lo.route;
     switch (lo.type) {
       case "talk":
       case "lab":
       case "note": {
-        lo.route += "/index.html";
+        path = `${stripProtocol(lo.route)}/index.html`;
         break;
       }
-      case "web":
-      case "github": {
-        lo.route = `https://${lo.route}`;
+      case "archive": {
+        path = stripProtocol(lo.route);
         break;
       }
     }
-  });
+    return path;
+}
+
+export function loImagePath(lo : Lo): string {
+  return stripProtocol(lo.img);
 }
 
 export function wallPath(lo: Lo): string {
