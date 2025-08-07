@@ -2,7 +2,6 @@ import type { Lo, Talk } from "@tutors/tutors-model-lib";
 
 export function fixWallRoutes(los: Lo[]): void {
   los.forEach((lo) => {
-    lo.img = lo.route.substring(lo.route.indexOf('//') + 2) + "/" + lo.imgFile;
     switch (lo.type) {
       case "web":
       case "github": {
@@ -15,6 +14,7 @@ export function fixWallRoutes(los: Lo[]): void {
         break;
       }
       case "talk": {
+        lo.img = lo.route.substring(lo.route.indexOf('//') + 2) + "/" + lo.imgFile;
         lo.route = lo.route.substring(lo.route.indexOf('//') + 2);
         const talk = lo as Talk;
         talk.route = `${talk.route}/index.html`;
@@ -22,14 +22,10 @@ export function fixWallRoutes(los: Lo[]): void {
       }
       case "lab":
       case "note": {
+        lo.img = lo.route.substring(lo.route.indexOf('//') + 2) + "/" + lo.imgFile;
         lo.route = lo.route.substring(lo.route.indexOf('//') + 2);
         lo.route += '/index.html';
         break;
-      }
-      default: {
-        if (lo.route.includes('//')) {
-          lo.route = lo.route.substring(lo.route.indexOf('//') + 2);
-        }
       }
     }
   });
