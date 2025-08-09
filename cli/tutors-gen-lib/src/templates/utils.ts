@@ -8,7 +8,7 @@ function stripProtocol(url: string): string {
   return url.substring(url.indexOf('//') + 2);
 }
 
-export function loPath(lo : Lo): string {
+export function absoluteLink(lo : Lo): string {
     let path = lo.route;
     switch (lo.type) {
       case "talk":
@@ -25,11 +25,34 @@ export function loPath(lo : Lo): string {
     return path;
 }
 
-export function loImagePath(lo : Lo): string {
+export function absoluteImg(lo : Lo): string {
   return stripProtocol(lo.img);
 }
 
-export function wallPath(lo: Lo): string {
+export function relativeLink(lo: Lo): string {
+  let url: string;
+  
+  if (lo.type === "web" || lo.type === "github") {
+    url = `${lo.route} target="_blank"`;
+  } else if (lo.type === "archive") {
+    const archive = lo as unknown as { archiveFile?: string };
+    const archiveFile = archive.archiveFile || "";
+    url = `${lo.id}/${archiveFile}`;
+  } else {
+    const hasParentUnit = lo.parentLo && (lo.parentLo.type === "unit" || lo.parentLo.type === "side");
+    const prefix = hasParentUnit ? `./${lo.parentLo.id}/` : `./`;
+    url = `${prefix}${lo.id}/index.html`;
+  }
+  return url;
+}
+
+export function relativeImg(lo: Lo): string {
+  const hasParentUnit = lo.parentLo && (lo.parentLo.type === "unit" || lo.parentLo.type === "side");
+  const prefix = hasParentUnit ? `./${lo.parentLo.id}/` : `./`;
+  return `${prefix}${lo.id}/${lo.imgFile}`;
+}
+
+export function wallLink(lo: Lo): string {
   let depth = 0;
   
   if (lo.route && lo.route.includes('//')) {
@@ -39,4 +62,3 @@ export function wallPath(lo: Lo): string {
   const url = depth > 0 ? "../".repeat(depth) : "./";
   return url;
 }
-  

@@ -13,7 +13,7 @@
             {{ unitCard(unit) }}
           </div>
         {{ /for }}
-        {{ cardDeck(lo.units.standardLos, "") }}
+        {{ cardDeck(lo.units.standardLos) }}
       </div>
       <div class="block w-full md:w-[30rem] md:ml-2">
         {{ for side of lo.units.sides }}
@@ -28,6 +28,6 @@
         {{ unitCard(unit) }}
       </div>
     {{ /for }}
-    {{ cardDeck(lo.units.standardLos, "./") }}
+    {{ cardDeck(lo.units.standardLos) }}
   {{ /if }}
 {{ /export }}

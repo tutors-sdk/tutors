@@ -1,9 +1,9 @@
 {{ import { card } from "/components/cards/Card.vto" }}
 
-{{ export function cardDeck(los, path) }}
+{{ export function cardDeck(los) }}
   <div class="flex flex-wrap justify-center">
     {{ for lo of los }}
-      {{ card(lo, path) }}
+      {{ card(lo) }}
     {{ /for }}
   </div>
 {{ /export }}

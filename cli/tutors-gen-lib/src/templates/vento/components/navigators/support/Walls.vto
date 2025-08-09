@@ -4,7 +4,7 @@
   <div class="p-3 flex-wrap lg:flex-none shadow-lg bg-[rgb(225,239,240)] text-neutral-content rounded-box nav-corner horizontal h-12">
     {{ for wall of lo.parentCourse.walls }}
       {{ set type = wall[0].type }}
-      {{ set path = lo |> wallPath }}
+      {{ set path = lo |> wallLink }}
       {{ icon(type, 20, path + type + ".html", "All " + type + "'s in module") }}
     {{ /for }}
   </div>

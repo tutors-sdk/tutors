@@ -4,7 +4,7 @@ import {  getIconType, loBackgroundColour, loBorderColour } from "./styles.ts";
 import vento from "@vento/vento";
 import autoTrim from "jsr:@vento/vento@1.14.0/plugins/auto_trim.ts";
 import type { Environment } from "@vento/vento/src/environment.ts";
-import { loImagePath, loPath, wallPath } from "./utils.ts";
+import { absoluteImg, absoluteLink, loImagePath, loPath, relativeImg, relativeLink, relativePath, wallLink, wallPath } from "./utils.ts";
 
 const moduleDir = path.dirname(new URL(import.meta.url).pathname);
 const ventoDir = path.join(moduleDir, 'vento');
@@ -24,9 +24,14 @@ export function initTemplateEngine(folder:string) {
   env.filters.iconType = getIconType;
   env.filters.loBorderColour = loBorderColour;
   env.filters.loBackgroundColour = loBackgroundColour;
-  env.filters.wallPath = wallPath;
-  env.filters.loPath = loPath;
-  env.filters.loImagePath = loImagePath;
+
+  env.filters.relativeImg = relativeImg;
+  env.filters.relativeLink = relativeLink;
+  env.filters.absoluteLink = absoluteLink;
+  env.filters.absoluteImg = absoluteImg;
+
+  env.filters.wallLink = wallLink;
+
   env.use(autoTrim());
 }
 
