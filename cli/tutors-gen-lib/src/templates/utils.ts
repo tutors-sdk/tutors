@@ -8,48 +8,46 @@ function stripProtocol(url: string): string {
   return url.substring(url.indexOf('//') + 2);
 }
 
-export function absoluteLink(lo : Lo): string {
-    let path = lo.route;
+export function generateLink(lo: Lo, isAbsolute: boolean = false): string {
+  // For web and github links, always use the route with target blank
+  if (lo.type === "web" || lo.type === "github") {
+    return `${lo.route} target="_blank"`;
+  }
+  
+  // For absolute links
+  if (isAbsolute) {
     switch (lo.type) {
       case "talk":
       case "lab":
-      case "note": {
-        path = `${stripProtocol(lo.route)}/index.html`;
-        break;
-      }
-      case "archive": {
-        path = stripProtocol(lo.route);
-        break;
-      }
+      case "note":
+        return `${stripProtocol(lo.route)}/index.html`;
+      case "archive":
+        return stripProtocol(lo.route);
+      default:
+        return lo.route;
     }
-    return path;
-}
-
-export function absoluteImg(lo : Lo): string {
-  return stripProtocol(lo.img);
-}
-
-export function relativeLink(lo: Lo): string {
-  let url: string;
+  } 
   
-  if (lo.type === "web" || lo.type === "github") {
-    url = `${lo.route} target="_blank"`;
-  } else if (lo.type === "archive") {
+  // For relative links
+  if (lo.type === "archive") {
     const archive = lo as unknown as { archiveFile?: string };
     const archiveFile = archive.archiveFile || "";
-    url = `${lo.id}/${archiveFile}`;
+    return `${lo.id}/${archiveFile}`;
   } else {
     const hasParentUnit = lo.parentLo && (lo.parentLo.type === "unit" || lo.parentLo.type === "side");
     const prefix = hasParentUnit ? `./${lo.parentLo.id}/` : `./`;
-    url = `${prefix}${lo.id}/index.html`;
+    return `${prefix}${lo.id}/index.html`;
   }
-  return url;
 }
 
-export function relativeImg(lo: Lo): string {
-  const hasParentUnit = lo.parentLo && (lo.parentLo.type === "unit" || lo.parentLo.type === "side");
-  const prefix = hasParentUnit ? `./${lo.parentLo.id}/` : `./`;
-  return `${prefix}${lo.id}/${lo.imgFile}`;
+export function generateImg(lo : Lo, isAbsolute: boolean = false): string {
+  if (isAbsolute) {
+    return stripProtocol(lo.img);
+  } else {
+    const hasParentUnit = lo.parentLo && (lo.parentLo.type === "unit" || lo.parentLo.type === "side");
+    const prefix = hasParentUnit ? `./${lo.parentLo.id}/` : `./`;
+    return `${prefix}${lo.id}/${lo.imgFile}`;
+  }
 }
 
 export function wallLink(lo: Lo): string {
