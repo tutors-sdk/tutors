@@ -3,7 +3,9 @@ import * as path from "node:path";
 import { copyFolder } from "../utils/file-utils.ts";
 
 let destVentoDir = "";
-const srcVentoDir = "https://raw.githubusercontent.com/tutors-sdk/tutors-cli/refs/heads/master/tutors-gen-lib/src/templates/vento/";
+//const srcVentoDir = "https://raw.githubusercontent.com/tutors-sdk/tutors-cli/refs/heads/master/tutors-gen-lib/src/templates/vento/";
+
+const srcVentoDir = "https://raw.githubusercontent.com/tutors-sdk/tutors-apps/refs/heads/development/cli/tutors-gen-lib/src/templates/vento/";
 
 const filesToDownload = [
   'components/cards/Card.vto',
@@ -17,13 +19,13 @@ const filesToDownload = [
   'components/cards/VideoCard.vto',
   'components/iconography/Icon.vto',
   'components/navigators/MainNavigator.vto',
+  'components/navigators/LoContext.vto',
+  'components/navigators/LoReference.vto',
   'components/navigators/support/Breadcrumbs.vto',
   'components/navigators/support/Companions.vto',
   'components/navigators/support/TitleCard.vto',
   'components/navigators/support/Walls.vto',
-  'components/url.vto',
   'Composite.vto',
-  'Course.vto',
   'Lab.vto',
   'Talk.vto',
   'layouts/main.vto',
