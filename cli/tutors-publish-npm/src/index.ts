@@ -3,7 +3,7 @@ import { existsSync } from "node:fs";
 import { parseCourse, generateDynamicCourse } from "@tutors/tutors-gen-lib";
 import process from "node:process";
 
-const versionStr = `tutors-publish-npm: 4.1.3`;
+const versionStr = `tutors-publish-npm: 4.2.0`;
 
 if (!existsSync("course.md")) {
   console.log(
