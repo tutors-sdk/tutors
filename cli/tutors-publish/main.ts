@@ -6,7 +6,7 @@ import {
 import * as fs from "node:fs";
 import process from "node:process";
 
-const versionStr = `tutors-publish: 4.1.3`;
+const versionStr = `tutors-publish: 4.2.0`;
 
 if (!fs.existsSync("course.md")) {
   console.log("Cannot locate course.md. Please change to course folder and try again.");
