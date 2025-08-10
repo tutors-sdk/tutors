@@ -35,7 +35,7 @@ export function generateLink(lo: Lo, isAbsolute: boolean = false): string {
     return `${lo.id}/${archiveFile}`;
   } else {
     const hasParentUnit = lo.parentLo && (lo.parentLo.type === "unit" || lo.parentLo.type === "side");
-    const prefix = hasParentUnit ? `./${lo.parentLo.id}/` : `./`;
+    const prefix = hasParentUnit ? `./${lo?.parentLo?.id}/` : `./`;
     return `${prefix}${lo.id}/index.html`;
   }
 }
@@ -45,7 +45,7 @@ export function generateImg(lo : Lo, isAbsolute: boolean = false): string {
     return stripProtocol(lo.img);
   } else {
     const hasParentUnit = lo.parentLo && (lo.parentLo.type === "unit" || lo.parentLo.type === "side");
-    const prefix = hasParentUnit ? `./${lo.parentLo.id}/` : `./`;
+    const prefix = hasParentUnit ? `./${lo?.parentLo?.id}/` : `./`;
     return `${prefix}${lo.id}/${lo.imgFile}`;
   }
 }
