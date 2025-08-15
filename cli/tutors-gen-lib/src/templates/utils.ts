@@ -80,6 +80,11 @@ export function generateCrumbLink(index: number, lo: Lo): string {
   if (lo.type === "unit" && lo.parentLo && lo.parentLo.type === "course") {
     page = "home";
   }
+  if (lo.parentLo?.type === "course") {
+    index++;
+    url = "../".repeat(index) + "home.html";
+    return url;
+  }
   
   if (lo.type === "unit" || lo.type === "side") {
     url = `../../${page}.html`;
