@@ -12,7 +12,7 @@ if (!existsSync("course.md")) {
 } else {
   const srcFolder = process.cwd();
   const destFolder = `${srcFolder}/json`;
-  const lo = parseCourse(srcFolder);
-  generateDynamicCourse(lo, destFolder);
+  const [course] = parseCourse(srcFolder);
+  generateDynamicCourse(course, destFolder);
 }
 console.log(versionStr);

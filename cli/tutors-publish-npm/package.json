@@ -23,7 +23,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
-    "@tutors/tutors-gen-lib": "npm:@jsr/tutors__tutors-gen-lib@^4"
+    "@tutors/tutors-gen-lib": "npm:@jsr/tutors__tutors-gen-lib@^4.2.2"
   },
   "bundleDependencies": [
     "@tutors/tutors-gen-lib"
