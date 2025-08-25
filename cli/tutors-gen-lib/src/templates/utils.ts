@@ -62,6 +62,9 @@ export function wallLink(lo: Lo): string {
 }
 
 export function generateRefLink(lo: Lo, path: string): string {
+  if (lo.type === "panelvideo") {
+    return `../../index.html`;
+  }
   if (lo.type === "web" || lo.type === "github") {
     return `${lo.route}`;
   } else if (lo.type === "archive") {
@@ -72,6 +75,28 @@ export function generateRefLink(lo: Lo, path: string): string {
     return `${path}${lo.id}/index.html`;
   }
 }
+
+export function generateVideoLink(lo: Lo): string {
+  const id = lo?.videoids?.videoid;
+  if (!id) return "";
+
+  let url = `https://www.youtube.com/watch?v=${id}`;
+
+  const src = lo.video || "";
+  // If a start parameter is present, convert to YouTube's t parameter
+  const startMatch = src.match(/[?&]start=(\d+)/);
+  if (startMatch) {
+    url += `&t=${startMatch[1]}s`;
+    return url;
+  }
+  // If t already present, preserve it
+  const tMatch = src.match(/[?&]t=([0-9hms]+)/);
+  if (tMatch) {
+    url += `&t=${tMatch[1]}`;
+  }
+  return url;
+}
+
 
 export function generateCrumbLink(index: number, lo: Lo): string {
   let page = lo.type === "course" ? "home" : "index";
