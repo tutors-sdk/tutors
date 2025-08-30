@@ -18,7 +18,8 @@ export const icons = {
   'slack': 'fluent:chat-24-filled',
   'youtube': 'fluent:video-clip-24-filled',
   'zoom': 'fluent:video-24-filled',
-  'teams': 'logos:microsoft-teams'
+  'teams': 'logos:microsoft-teams',
+  'toc': "fluent:line-horizontal-3-20-filled",
 } as const;
 
 export const colours = {
@@ -83,6 +84,7 @@ export const loColours = {
   "youtube"    : { border: "#37919b", background: "#37919b" },
   "zoom"       : { border: "#37919b", background: "#37919b" },
   "teams"      : { border: "#37919b", background: "#37919b" },
+  "toc"        : { border: "#37919b", background: "#37919b" },
 }
 
 export function loBorderColour(type: IconType): string {

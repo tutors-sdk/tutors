@@ -2,14 +2,21 @@
 {{ import { breadcrumbs } from "/components/navigators/support/Breadcrumbs.vto"}}
 {{ import { companions } from "/components/navigators/support/Companions.vto"}}
 {{ import { walls } from "/components/navigators/support/Walls.vto"}}
+{{ import { toc } from "/components/navigators/support/Toc.vto"}}
+{{ import { icon } from "/components/iconography/Icon.vto"}}
 
 {{ export function mainNavigator (lo, isWall) }}
   <div class="p-3 shadow-lg bg-zinc-100 text-base-content rounded-box nav-corner mb-1 justify-start z-40 flex mt-2">
     {{ titleCard(lo) }}
+    <button command="show-modal" commandfor="drawer" class="ml-auto rounded-md bg-gray-950/5 px-2.5 py-1.5 hover:bg-gray-950/10 dark:bg-white/10 dark:inset-ring dark:inset-ring-white/5 dark:hover:bg-white/20">
+      {{ icon("toc", 30, "", "open Table of Contents ...", true) }} 
+    </button>
   </div>
   <div class="flex flex-wrap lg:flex-nowrap mb-2">
    {{ breadcrumbs(lo, isWall) }}
    {{ companions(lo?.parentCourse?.properties) }}
    {{ walls(lo) }}   
+   {{ toc(lo) }}
   </div>
-{{ /export }}
+
+{{ /export }}  

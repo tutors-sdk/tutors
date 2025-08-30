@@ -2,7 +2,7 @@
 
 {{ export function companions(properties) }}
   {{ if properties?.moodle || properties?.slack || properties?.youtube || properties?.teams }}
-    <div class="p-3 flex-wrap lg:flex-none shadow-lg bg-[rgb(225,239,240)]  text-neutral-content rounded-box nav-corner horizontal h-12">
+    <div class="hidden xl:block p-3 flex-wrap lg:flex-none shadow-lg bg-[rgb(225,239,240)]  text-neutral-content rounded-box nav-corner horizontal h-12">
       {{ if properties.moodle }}
         {{ icon("moodle", 20, properties.moodle, "To Moodle ...", true) }}
       {{ /if }}

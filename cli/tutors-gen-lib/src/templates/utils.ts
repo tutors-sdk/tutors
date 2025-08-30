@@ -20,6 +20,8 @@ export function generateLink(lo: Lo, isAbsolute: boolean = false): string {
       case "talk":
       case "lab":
       case "note":
+      case "topic":
+      case "unit":
         return `${stripProtocol(lo.route)}/index.html`;
       case "archive":
         return stripProtocol(lo.route);
@@ -59,6 +61,18 @@ export function wallLink(lo: Lo): string {
   }
   const url = depth > 0 ? "../".repeat(depth) : "./";
   return url;
+}
+
+export function tocLink(lo: Lo): string {
+  let depth = 0;
+  let pathPart = "";
+  if (lo.route && lo.route.includes('//')) {
+    pathPart = lo.route.substring(lo.route.indexOf('//') + 2);
+    depth = (pathPart.match(/\//g) || []).length + 1;
+  }
+  const url = depth > 0 ? "../".repeat(depth) : "./";
+  const link = `${url}/${generateLink(lo, true)}`;
+  return link;
 }
 
 export function generateRefLink(lo: Lo, path: string): string {
