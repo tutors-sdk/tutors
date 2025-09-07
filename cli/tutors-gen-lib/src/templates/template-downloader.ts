@@ -25,6 +25,7 @@ const filesToDownload = [
   'components/navigators/support/Companions.vto',
   'components/navigators/support/TitleCard.vto',
   'components/navigators/support/Walls.vto',
+  'components/navigators/support/Toc.vto',
   'Composite.vto',
   'Lab.vto',
   'Talk.vto',

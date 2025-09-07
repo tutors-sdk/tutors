@@ -6,7 +6,7 @@ import {
 import * as fs from "node:fs";
 import process from "node:process";
 
-const versionStr = `tutors-publish-html: 4.2.0`;
+const versionStr = `tutors-publish-html: 4.2.5`;
 const srcVentoFolder = "/Users/edeleastar/repos/tutor-sdk/apps/tutors-apps/cli/tutors-gen-lib/src/templates/vento"; 
 
 if (!fs.existsSync("course.md")) {
