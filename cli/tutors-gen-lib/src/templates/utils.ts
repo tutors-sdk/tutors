@@ -63,15 +63,15 @@ export function wallLink(lo: Lo): string {
   return url;
 }
 
-export function tocLink(lo: Lo): string {
+export function tocLink(fromlo: Lo, lo: Lo): string {
   let depth = 0;
   let pathPart = "";
-  if (lo.route && lo.route.includes('//')) {
-    pathPart = lo.route.substring(lo.route.indexOf('//') + 2);
+  if (fromlo.route && fromlo.route.includes('//')) {
+    pathPart = fromlo.route.substring(fromlo.route.indexOf('//') + 2);
     depth = (pathPart.match(/\//g) || []).length + 1;
   }
   const url = depth > 0 ? "../".repeat(depth) : "./";
-  const link = `${url}/${generateLink(lo, true)}`;
+  const link = `${url}${generateLink(lo, true)}`;
   return link;
 }
 

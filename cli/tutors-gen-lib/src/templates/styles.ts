@@ -2,6 +2,7 @@ export const icons = {
   'course': 'fluent:notebook-24-filled',
   'topic': 'fluent:bookmark-24-filled',
   'talk': 'fluent:presenter-24-filled',
+  'paneltalk': 'fluent:presenter-24-filled',
   'reference': 'fluent:document-copy-24-filled',
   'lab': 'fluent:beaker-24-filled',
   'archive': 'fluent:archive-24-filled',
@@ -60,13 +61,18 @@ export const backgroundColours = {
 export type IconType = keyof typeof icons;
 
 export function getIconType(type: IconType): string {
-  return icons[type];
+  if (type in icons) {
+    return icons[type];
+  }
+  // Fallback to a default icon if type doesn't exist
+  return icons.course;
 }
 
 export const loColours = {
   "course"     : { border: "#37919b", background: "#37919b" },
   "topic"      : { border: "#53a878", background: "#d9eee0" },
   "talk"       : { border: "#cb9d00", background: "#f4ecce" },
+  "paneltalk"  : { border: "#cb9d00", background: "#f4ecce" },
   "reference"  : { border: "#37919b", background: "#37919b" },
   "lab"        : { border: "#d00034", background: "#fac5c8" },
   "archive"    : { border: "#d00034", background: "#fac5c8" },

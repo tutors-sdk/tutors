@@ -1,19 +1,18 @@
 {{ import { loContext } from "/components/navigators/LoContext.vto" }}
-{{# {{ import { loReference } from "/components/navigators/LoReference.vto" }} #}}
 {{ import { icon } from "/components/iconography/Icon.vto" }}
 
-{{ export function loReference (lo, indent) }}
+{{ export function loReference (fromlo, lo, indent) }}
   <div class="flex py-1 ml-{{indent}}">
-    <a href="{{ lo |> tocLink }}" class="flex">
-    {{ icon(lo.type, 30, "", "") }}
-    <span class="mb-1 ml-2"> {{ lo.title }} </span>
-  </a>
-  {{ if lo.video && lo.type != "panelvideo"}}
-    <a class="flex pl-4" href="{{ lo |> generateVideoLink }}" target="_blank">
-      {{ icon("video", 24, "", "") }}
-    </a>
-  {{/if}}
-</div>
+    <a href="{{ fromlo, lo |> tocLink }}" class="flex">
+      {{ icon(lo?.type, 30, "", "") }}
+      <span class="mb-1 ml-2"> {{ lo?.title }} </span>
+    </a> 
+    {{ if lo.video && lo.type != "panelvideo"}}
+      <a class="flex pl-4" href="{{ lo |> generateVideoLink }}" target="_blank">
+        {{ icon("video", 24, "", "") }}
+      </a>
+    {{/if}} 
+  </div>
 {{ /export }}
 
 {{ export function toc (lo) }}
@@ -38,15 +37,16 @@
             </div>
             <div class="relative mt-6 flex-1 px-4 sm:px-6">
               {{ for topic of lo.parentCourse.toc }}
-                 {{ for loref of topic?.toc }}
-                    {{ loReference(loref, 0) }}
-                    {{ for loref2 of loref?.toc }}
-                      {{ loReference(loref2, 4) }}
-                      {{ for loref3 of loref2?.toc }}
-                        {{ loReference(loref3, 8) }}
-                      {{/for}}
+                {{ loReference(lo,topic, 0) }}
+                  {{ for loref of topic?.toc }}
+                   {{ loReference(lo, loref, 4) }}
+                   {{ for loref2 of loref?.toc }}
+                     {{ loReference(lo, loref2, 8) }}
+                     {{ for loref3 of loref2?.toc }}
+                       {{ loReference(lo, loref3, 12) }}
                     {{/for}}
-                {{/for}}  
+                  {{/for}}
+                {{/for}}   
               {{ /for }}
             </div>
             </div>
