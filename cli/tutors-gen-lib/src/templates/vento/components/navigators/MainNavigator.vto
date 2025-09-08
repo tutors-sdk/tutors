@@ -4,11 +4,14 @@
 {{ import { walls } from "/components/navigators/support/Walls.vto"}}
 {{ import { toc } from "/components/navigators/support/Toc.vto"}}
 {{ import { tocButton } from "/components/navigators/support/TocButton.vto"}}
-{{ import { icon } from "/components/iconography/Icon.vto"}}
+{{ import { icon } from "/components/iconography/Icon.vto"}}  
+{{ import { infoButton } from "/components/navigators/support/InfoButton.vto"}}
+{{ import { info } from "/components/navigators/support/Info.vto"}}
+
 
 {{ export function mainNavigator (lo, isWall) }}
-  <div class="p-3 shadow-lg bg-zinc-100 text-base-content rounded-box nav-corner mb-1 justify-start z-40 flex mt-2">
-    <div class="ml-0">{{ tocButton() }}</div>
+  <div class="p-3 shadow-lg bg-zinc-100 text-base-content rounded-box nav-corner mb-1 justify-start z-40 flex items-center mt-2">
+    <div class="ml-0">{{ infoButton() }}</div>
     <div class="ml-2">{{ titleCard(lo) }}</div>
     <div class="ml-auto">{{ tocButton() }}</div>
   </div>
@@ -17,5 +20,6 @@
    {{ companions(lo?.parentCourse?.properties) }}
    {{ walls(lo) }}   
    {{ toc(lo) }}
+   {{ info(lo) }}
   </div>
 {{ /export }}  

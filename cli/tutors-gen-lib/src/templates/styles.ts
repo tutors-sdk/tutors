@@ -21,6 +21,7 @@ export const icons = {
   'zoom': 'fluent:video-24-filled',
   'teams': 'logos:microsoft-teams',
   'toc': "fluent:line-horizontal-3-20-filled",
+  'info': "fluent:info-28-regular",
 } as const;
 
 export const colours = {
@@ -90,7 +91,8 @@ export const loColours = {
   "youtube"    : { border: "#37919b", background: "#37919b" },
   "zoom"       : { border: "#37919b", background: "#37919b" },
   "teams"      : { border: "#37919b", background: "#37919b" },
-  "toc"        : { border: "#37919b", background: "#37919b" },
+  "toc"        : { border: "#37919b", background: "#37919b" },  
+  "info"       : { border: "#37919b", background: "#37919b" },
 }
 
 export function loBorderColour(type: IconType): string {
