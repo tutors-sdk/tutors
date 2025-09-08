@@ -22,6 +22,9 @@ export function generateLink(lo: Lo, isAbsolute: boolean = false): string {
       case "note":
       case "topic":
       case "unit":
+        if (lo.parentLo && lo.parentLo.type === "course") {
+          return "home.html";
+        }
         return `${stripProtocol(lo.route)}/index.html`;
       case "archive":
         return stripProtocol(lo.route);
