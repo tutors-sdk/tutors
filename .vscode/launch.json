@@ -13,7 +13,7 @@
     },
     {
       "request": "launch",
-      "name": "tutors-publish",
+      "name": "tutors",
       "type": "node",
       "cwd": "/Users/edeleastar/repos/tutor-sdk/docs/layout-reference-course",
       "env": {},
@@ -28,9 +28,9 @@
     },
     {
       "request": "launch",
-      "name": "tutors-publish-html",
+      "name": "tutors-lite",
       "type": "node",
-      "program": "${workspaceFolder}/cli/tutors-publish-html/main.ts",
+      "program": "${workspaceFolder}/cli/tutors-lite/main.ts",
       "cwd": "/Users/edeleastar/repos/tutor-sdk/docs/tutors-reference-course",
       //"cwd": "/Users/edeleastar/repos/tutor-sdk/docs/layout-reference-course",
       //"cwd": "/Users/edeleastar/repos/hdip/2024/sem-3/full-stack-1",
