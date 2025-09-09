@@ -23,7 +23,7 @@ export function generateLink(lo: Lo, isAbsolute: boolean = false): string {
       case "topic":
       case "unit":
         if (lo.parentLo && lo.parentLo.type === "course") {
-          return "home.html";
+          return "index.html";
         }
         return `${stripProtocol(lo.route)}/index.html`;
       case "archive":
@@ -116,22 +116,16 @@ export function generateVideoLink(lo: Lo): string {
 
 
 export function generateCrumbLink(index: number, lo: Lo): string {
-  let page = lo.type === "course" ? "home" : "index";
   let url: string;
-  
-  if (lo.type === "unit" && lo.parentLo && lo.parentLo.type === "course") {
-    page = "home";
-  }
   if (lo.parentLo?.type === "course") {
     index++;
-    url = "../".repeat(index) + "home.html";
+    url = "../".repeat(index) + "index.html";
     return url;
   }
-  
   if (lo.type === "unit" || lo.type === "side") {
-    url = `../../${page}.html`;
+    url = `../../index.html`;
   } else {
-    url = "../".repeat(index) + `${page}.html`;
+    url = "../".repeat(index) + `index.html`;
   }
   return url;
 }

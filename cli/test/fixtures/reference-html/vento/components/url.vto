@@ -1,9 +1,8 @@
 {{ export function crumbUrlStart (index, lo) }}
-  {{ set page = lo.type === "course" ? "home" : "index" }}
   {{ if lo.type === "unit" || lo.type === "side" }}
-    {{ set url = `../../${page}.html` }}
+    {{ set url = `../../index.html` }}
   {{ else }}
-    {{ set url = "../".repeat(index) + `${page}.html` }}
+    {{ set url = "../".repeat(index) + `index.html` }}
   {{ /if }}
   <a href={{ url }}>
 {{ /export }}

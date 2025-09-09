@@ -30,7 +30,7 @@ The generator creates:
 
 1. Local Viewing:
    - Run the generator
-   - Open `html/home.html` in your browser
+   - Open `html/index.html` in your browser
 
 2. Static Hosting:
    - Deploy the `html` folder to any static web host
