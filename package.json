@@ -12,14 +12,14 @@
     "party/*"
   ],
   "scripts": {
-    "test:tutors-publish-html": "cd cli/tutors-publish-html && deno test --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net",
-    "test:tutors-publish-html:unit": "cd cli/tutors-publish-html && deno test tests/unit/ --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net",
-    "test:tutors-publish-html:integration": "cd cli/tutors-publish-html && deno test tests/integration/ --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net",
-    "test:tutors-publish-html:coverage": "cd cli/tutors-publish-html && deno test --coverage=coverage --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net && deno coverage coverage",
-    "test:tutors-publish-html:coverage:html": "cd cli/tutors-publish-html && deno test --coverage=coverage --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net && deno coverage coverage --html",
-    "test:tutors-publish-html:watch": "cd cli/tutors-publish-html && deno test --watch --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net",
+    "test:tutors-lite": "cd cli/tutors-lite && deno test --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net",
+    "test:tutors-lite:unit": "cd cli/tutors-lite && deno test tests/unit/ --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net",
+    "test:tutors-lite:integration": "cd cli/tutors-lite && deno test tests/integration/ --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net",
+    "test:tutors-lite:coverage": "cd cli/tutors-lite && deno test --coverage=coverage --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net && deno coverage coverage",
+    "test:tutors-lite:coverage:html": "cd cli/tutors-lite && deno test --coverage=coverage --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net && deno coverage coverage --html",
+    "test:tutors-lite:watch": "cd cli/tutors-lite && deno test --watch --allow-read --allow-write --allow-run --allow-env --allow-sys --allow-net",
     "install:deno": "powershell -c \"irm https://deno.land/install.ps1 | iex\"",
-    "test:tutors-publish-html:install": "npm run install:deno && npm run test:tutors-publish-html"
+    "test:tutors-lite:install": "npm run install:deno && npm run test:tutors-lite"
   },
   "dependencies": {
     "crypto-js": "^4.2.0",

@@ -942,6 +942,12 @@
   },
   "workspace": {
     "members": {
+      "tutors": {
+        "dependencies": [
+          "jsr:@tutors/tutors-gen-lib@4",
+          "jsr:@tutors/tutors-model-lib@4"
+        ]
+      },
       "tutors-gen-lib": {
         "dependencies": [
           "jsr:@tutors/tutors-model-lib@4",
@@ -949,6 +955,17 @@
           "npm:archiver@^7.0.1",
           "npm:front-matter@^4.0.2",
           "npm:js-yaml@^4.1.0"
+        ]
+      },
+      "tutors-lite": {
+        "dependencies": [
+          "jsr:@std/assert@^1.0.13",
+          "jsr:@std/fs@^1.0.19",
+          "jsr:@std/path@^1.1.1",
+          "jsr:@tutors/tutors-gen-lib@4",
+          "jsr:@tutors/tutors-model-lib@4",
+          "jsr:@vento/vento@^1.14.0",
+          "npm:shelljs@~0.8.5"
         ]
       },
       "tutors-model-lib": {
@@ -967,23 +984,6 @@
           "npm:markdown-it-table-of-contents@0.9",
           "npm:markdown-it@^14.1.0",
           "npm:shiki-transformer-copy-button@^0.0.5"
-        ]
-      },
-      "tutors-publish": {
-        "dependencies": [
-          "jsr:@tutors/tutors-gen-lib@4",
-          "jsr:@tutors/tutors-model-lib@4"
-        ]
-      },
-      "tutors-publish-html": {
-        "dependencies": [
-          "jsr:@std/assert@^1.0.13",
-          "jsr:@std/fs@^1.0.19",
-          "jsr:@std/path@^1.1.1",
-          "jsr:@tutors/tutors-gen-lib@4",
-          "jsr:@tutors/tutors-model-lib@4",
-          "jsr:@vento/vento@^1.14.0",
-          "npm:shelljs@~0.8.5"
         ]
       }
     }

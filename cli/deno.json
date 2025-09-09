@@ -1,7 +1,7 @@
 {
-  "workspace": ["./tutors-gen-lib",  "./tutors-model-lib", "./tutors-publish", "./tutors-publish-html"],
+  "workspace": ["./tutors-gen-lib",  "./tutors-model-lib", "./tutors", "./tutors-lite"],
   "fmt": {
-    "include": ["./tutors-gen-lib/src/", "./tutors-model-lib/src/", "./tutors-publish/src/", "./tutors-publish-html/src/"],
+    "include": ["./tutors-gen-lib/src/", "./tutors-model-lib/src/", "./tutors/src/", "./tutors-lite/src/"],
     "exclude": [],
     "useTabs": false,
     "lineWidth": 180,
