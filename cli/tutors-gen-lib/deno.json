@@ -1,6 +1,6 @@
 {
   "name": "@tutors/tutors-gen-lib",
-  "version": "4.2.8",
+  "version": "4.2.9",
   "exports": "./src/tutors.ts",
   "license": "MIT",
   "tasks": {
