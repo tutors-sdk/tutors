@@ -1,13 +1,13 @@
 # Tutors Publisher
 
-Command-line tool for generating dynamic JSON-based Tutors courses, designed for deployment to web platforms like Netlify.
+Command-line tool for generating dynamic Tutors courses, designed for deployment to web platforms like Netlify.
 
 ## Usage
 
 Basic command to run the generator:
 
 ```bash
-deno run -A jsr:@tutors/tutors-publish
+deno run -A jsr:@tutors/tutors
 ```
 
 ## Features

@@ -7,7 +7,7 @@ Command-line tool for generating static HTML-based Tutors courses, ideal for off
 Basic command to run the generator:
 
 ```bash
-deno run -A jsr:@tutors/tutors-publish-html
+deno run -A jsr:@tutors/tutors-lite
 ```
 
 ## Features
