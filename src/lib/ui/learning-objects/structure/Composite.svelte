@@ -11,14 +11,13 @@
   }
   let { composite }: Props = $props();
 
-  const sideWidth = $derived(themeService.cardStyle.value === "landscape" ? "w-[64rem]" : "w-[28rem]");
-  const mainWidth = $derived(themeService.cardStyle.value === "landscape" ? "w-[64rem]" : "md:w-[64rem]");
+  const sideWidth = $derived(themeService.cardStyle.value === "landscape" ? "w-[64rem]" : "w-[28rem]")
 </script>
 
 <SecondaryNavigator lo={composite} parentCourse={composite?.parentCourse?.properties?.parent} />
 {#if composite?.units?.sides?.length > 0}
   <div class="m-4 block justify-center md:flex">
-    <div class={mainWidth}>
+    <div>
       <Panels panels={composite.panels} />
       <Units units={composite.units.units} />
       <Cards los={composite.units.standardLos} />
