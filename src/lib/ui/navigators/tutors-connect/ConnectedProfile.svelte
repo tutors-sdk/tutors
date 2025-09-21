@@ -6,6 +6,7 @@
   import OnlineButton from "../buttons/OnlineButton.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { currentCourse, tutorsId } from "$lib/runes.svelte";
+  import { analyticsEnabled } from "$lib/services/connect/services/connect.svelte";
 
   function logout() {
     tutorsConnectService.disconnect("/");
@@ -19,7 +20,7 @@
 {#snippet menuSelector()}
   <div class="relative">
     {#if presenceService.studentsOnline.value.length && tutorsId.value?.share}
-      <span class="variant-filled-error badge-icon text-error-500 font-bold absolute -top-1 -right-2 z-10">
+      <span class="variant-filled-error badge-icon text-error-500 absolute -top-1 -right-2 z-10 font-bold">
         {presenceService.studentsOnline.value.length}
       </span>
     {/if}
@@ -45,7 +46,9 @@
         <MenuItem text="Share Presence" type="offline" onClick={shareStatusChange} />
       {/if}
       {#if tutorsId.value?.share === "true"}
-        <MenuItem link="https://time.tutors.dev/{currentCourse.value?.courseId}" text="Tutors Time" type="tutorsTime" targetStr="_blank" />
+        {#if analyticsEnabled}
+          <MenuItem link="https://time.tutors.dev/{currentCourse.value?.courseId}" text="Tutors Time" type="tutorsTime" targetStr="_blank" />
+        {/if}
         <MenuItem link="/live/{currentCourse.value?.courseId}" text="Tutors Live" type="live" targetStr="_blank" />
 
         <li class="option hover:preset-tonal p-0!">

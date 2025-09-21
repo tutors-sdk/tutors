@@ -23,6 +23,9 @@ import { supabaseProfile } from "./supabaseProfile.svelte";
 /** Global anonymous mode flag, controlled by environment variable */
 let anonMode = false;
 
+/** Global flag to disable analytics in case of database issues*/
+export let analyticsEnabled = false;
+
 if (PUBLIC_ANON_MODE === "TRUE") {
   anonMode = true;
 }
@@ -98,8 +101,10 @@ export const tutorsConnectService: TutorsConnectService = {
    */
   courseVisit(course: Course) {
     if (anonMode) return;
-    updateCourseList(course);
-    this.profile.logCourseVisit(course);
+    if (analyticsEnabled) {
+      updateCourseList(course);
+      this.profile.logCourseVisit(course);
+    }
     presenceService.startPresenceListener(course.courseId);
     if (course.authLevel! > 0 && !tutorsId.value?.login) {
       localStorage.loginCourse = course.courseId;
@@ -146,7 +151,7 @@ export const tutorsConnectService: TutorsConnectService = {
   learningEvent(params: Record<string, string>): void {
     if (anonMode) return;
     if (currentCourse.value && currentLo.value && tutorsId.value) {
-      analyticsService.learningEvent(currentCourse.value, params, currentLo.value, tutorsId.value);
+      if (analyticsEnabled) analyticsService.learningEvent(currentCourse.value, params, currentLo.value, tutorsId.value);
       if (tutorsId.value.share === "true" && !currentCourse.value.isPrivate) {
         presenceService.sendLoEvent(currentCourse.value, currentLo.value, tutorsId.value);
       }
@@ -161,7 +166,7 @@ export const tutorsConnectService: TutorsConnectService = {
     if (anonMode) return;
     this.intervalId = setInterval(() => {
       if (!document.hidden && currentCourse.value && currentLo.value && tutorsId.value) {
-        analyticsService.updatePageCount(currentCourse.value, currentLo.value, tutorsId.value);
+        if (analyticsEnabled) analyticsService.updatePageCount(currentCourse.value, currentLo.value, tutorsId.value);
       }
     }, 30 * 1000);
   },
