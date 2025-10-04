@@ -13,15 +13,13 @@
       "request": "launch",
       "name": "tutors",
       "type": "node",
-      "cwd": "/Users/edeleastar/repos/tutor-sdk/docs/layout-reference-course",
+      "program": "${workspaceFolder}/cli/tutors/main.ts",
+      "cwd": "/Users/edeleastar/repos/tutor-sdk/docs/tutors-reference-course",
+      //"cwd": "/Users/edeleastar/repos/tutor-sdk/docs/layout-reference-course",
+      //"cwd": "/Users/edeleastar/repos/hdip/2024/sem-3/full-stack-1",
       "env": {},
       "runtimeExecutable": "deno",
-      "runtimeArgs": [
-        "run",
-        "--inspect-wait",
-        "--allow-all",
-        "${workspaceFolder}/cli/tutors-publish/main.ts"
-      ],
+      "runtimeArgs": ["run", "--inspect-wait", "--allow-all"],
       "attachSimplePort": 9229
     },
     {
