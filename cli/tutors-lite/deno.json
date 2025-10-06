@@ -1,6 +1,6 @@
 {
   "name": "@tutors/tutors-lite",
-  "version": "4.2.8",
+  "version": "4.2.9",
   "exports": "./main.ts",
   "license": "MIT",
   "tasks": {
