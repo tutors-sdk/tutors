@@ -1,7 +1,7 @@
 import { buildCourse } from "./services/course-builder.ts";
 import { decorateCourseTree } from "@tutors/tutors-model-lib";
 import type { Course, Lo } from "@tutors/tutors-model-lib";
-
+import {version} from "@tutors/tutors-model-lib";
 import * as fs from "node:fs";
 import * as path from "node:path";
 
@@ -48,9 +48,9 @@ export async function generateStaticCourse(course: Course, destFolder: string, s
   }
 }
 
-export function version(): string {
-  const denoJsonPath = path.resolve(import.meta.dirname, "../deno.json");
+export function versionInfo(): string {
+  const denoJsonPath = path.resolve(import.meta.dirname ?? "", "../deno.json");
   const pkg = JSON.parse(fs.readFileSync(denoJsonPath, "utf8"));
-  const versionStr = `${pkg.version}`;
+  const versionStr = `Generator:${pkg.version}, Model:${version()}`;
   return versionStr;
 }

@@ -13,5 +13,12 @@
     "fmt:check": "deno fmt --check",
     "publish": "deno publish",
     "publish-test": "deno publish --dry-run"
+  },
+ "compilerOptions": {
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
   }
 }

@@ -110,7 +110,7 @@ export function convertLabToHtml(course: Course, lab: Lab) {
   });
 }
 
-export function convertNoteToHtml(course: Course, note: Note, refreshOnly: boolean = false) {
+export function convertNoteToHtml(course: Course, note: Note) {
   note.summary = convertMdToHtml(note.summary);
   const url = note.route.replace(`/note/${course.courseId}`, course.courseUrl);
   if (course.courseUrl) {

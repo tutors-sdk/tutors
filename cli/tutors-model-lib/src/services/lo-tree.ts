@@ -4,6 +4,9 @@ import { allVideoLos, crumbs, filterByType, flattenLos, getPanels, getUnits, inj
 import { createCompanions, createWalls, initCalendar, loadPropertyFlags } from "../utils/course-utils.ts";
 import { convertLoToHtml } from "../utils/markdown-utils.ts";
 
+import * as fs from "node:fs";
+import * as path from "node:path";
+
 export function decorateCourseTree(
   course: Course,
   courseId: string = "",
@@ -94,4 +97,12 @@ export function decorateLoTree(course: Course, lo: Lo) {
       }
     }
   }
+}
+
+export function version(): string {
+  const dirname = import.meta.dirname ?? __dirname;
+  const denoJsonPath = path.resolve(dirname, "../../deno.json");
+  const pkg = JSON.parse(fs.readFileSync(denoJsonPath, "utf8"));
+  const versionStr = `${pkg.version}`;
+  return versionStr;
 }

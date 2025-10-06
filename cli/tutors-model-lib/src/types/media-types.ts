@@ -10,10 +10,12 @@ export const imageTypes = [
   "jpg",
   "jpeg",
   "gif",
+  "svg",
   "PNG",
   "JPG",
   "JPEG",
   "GIF",
+  "SVG",
 ];
 
 /**
