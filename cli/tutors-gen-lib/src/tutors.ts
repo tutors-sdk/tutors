@@ -2,6 +2,9 @@ import { buildCourse } from "./services/course-builder.ts";
 import { decorateCourseTree } from "@tutors/tutors-model-lib";
 import type { Course, Lo } from "@tutors/tutors-model-lib";
 
+import * as fs from "node:fs";
+import * as path from "node:path";
+
 import { writeFile } from "./utils/file-utils.ts";
 import { generateNetlifyToml } from "./utils/netlify.ts";
 import { generateLlms } from "./utils/llms.ts";
@@ -43,4 +46,11 @@ export async function generateStaticCourse(course: Course, destFolder: string, s
     console.error('Error generating static course:', error);
     return false;
   }
+}
+
+export function version(): string {
+  const denoJsonPath = path.resolve(import.meta.dirname, "../deno.json");
+  const pkg = JSON.parse(fs.readFileSync(denoJsonPath, "utf8"));
+  const versionStr = `${pkg.version}`;
+  return versionStr;
 }
