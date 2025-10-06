@@ -17,4 +17,4 @@ if (!fs.existsSync("course.md")) {
   generateStaticCourse(course, destFolder);//, srcVentoFolder);
   copyAssets(lr, destFolder);
 }
-console.log(`Tutors Lite: 4.2.8`);;
+console.log(`Tutors Lite: 4.2.11`);;
