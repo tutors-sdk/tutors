@@ -1,21 +1,10 @@
 import {
   parseCourse,
   generateStaticCourse,
-  copyAssets, versionInfo
+  copyAssets
 } from "@tutors/tutors-gen-lib";
-
-
 import * as fs from "node:fs";
-import * as path from "node:path";
 import process from "node:process";
-
-const dirname = import.meta.dirname ?? path.dirname(process.argv[1]);
-if (!dirname) {
-  throw new Error("Cannot determine directory name for deno.json path.");
-}
-const denoJsonPath = path.resolve(dirname, "./deno.json");
-const pkg = JSON.parse(fs.readFileSync(denoJsonPath, "utf8"));
-const tutorsLiteVersion = `${pkg.version}`;
 
 // const srcVentoFolder = "/Users/edeleastar/repos/tutor-sdk/apps/tutors-apps/cli/tutors-gen-lib/src/templates/vento"; 
 
@@ -28,4 +17,4 @@ if (!fs.existsSync("course.md")) {
   generateStaticCourse(course, destFolder);//, srcVentoFolder);
   copyAssets(lr, destFolder);
 }
-console.log(`Tutors Lite: 4.2.8`);// (${versionInfo()})`);
+console.log(`Tutors Lite: 4.2.8`);;
