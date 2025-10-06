@@ -28,4 +28,4 @@ if (!fs.existsSync("course.md")) {
   generateStaticCourse(course, destFolder);//, srcVentoFolder);
   copyAssets(lr, destFolder);
 }
-console.log(`Tutors Lite: ${tutorsLiteVersion} (${versionInfo()})`);
+console.log(`Tutors Lite: ${tutorsLiteVersion}`);// (${versionInfo()})`);
