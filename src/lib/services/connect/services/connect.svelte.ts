@@ -24,7 +24,7 @@ import { supabaseProfile } from "./supabaseProfile.svelte";
 let anonMode = false;
 
 /** Global flag to disable analytics in case of database issues*/
-export let analyticsEnabled = false;
+export let analyticsEnabled = true;
 
 if (PUBLIC_ANON_MODE === "TRUE") {
   anonMode = true;
