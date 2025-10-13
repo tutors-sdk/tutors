@@ -1,0 +1,33 @@
+{
+  "baselines": [
+    {
+      "testId": "minimal-course-generation",
+      "cliTool": "tutors",
+      "inputSize": "minimal",
+      "metrics": {
+        "generationTimeMs": 1040.2576,
+        "filesProcessed": 10
+      },
+      "recordedAt": "2025-10-13T15:19:02.656Z",
+      "environment": {
+        "os": "windows",
+        "denoVersion": "2.4.0"
+      }
+    },
+    {
+      "testId": "minimal-course-html-generation",
+      "cliTool": "tutors-lite",
+      "inputSize": "minimal",
+      "metrics": {
+        "generationTimeMs": 1204.6424,
+        "filesProcessed": 10
+      },
+      "recordedAt": "2025-10-13T15:19:04.033Z",
+      "environment": {
+        "os": "windows",
+        "denoVersion": "2.4.0"
+      }
+    }
+  ],
+  "lastUpdated": "2025-10-13T15:19:04.033Z"
+}

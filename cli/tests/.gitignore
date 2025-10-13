@@ -1,0 +1,16 @@
+# Test outputs
+test-output/
+
+# Coverage reports
+cov_profile/
+coverage.lcov
+.coverage/
+
+# Temporary test files
+*.tmp
+*.temp
+*.txt
+
+# Lock files
+*.lock
+

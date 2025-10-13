@@ -3,9 +3,11 @@
   "specifiers": {
     "jsr:@davidbonnet/astring@1.8.6": "1.8.6",
     "jsr:@std/assert@*": "1.0.13",
+    "jsr:@std/assert@1": "1.0.13",
     "jsr:@std/assert@^1.0.13": "1.0.13",
     "jsr:@std/cli@*": "1.0.20",
     "jsr:@std/fs@*": "1.0.19",
+    "jsr:@std/fs@1": "1.0.19",
     "jsr:@std/fs@^1.0.19": "1.0.19",
     "jsr:@std/html@1.0.3": "1.0.3",
     "jsr:@std/internal@^1.0.6": "1.0.9",
@@ -40,7 +42,8 @@
     "npm:meriyah@6.0.5": "6.0.5",
     "npm:shelljs@0": "0.10.0",
     "npm:shelljs@~0.8.5": "0.8.5",
-    "npm:shiki-transformer-copy-button@^0.0.5": "0.0.5"
+    "npm:shiki-transformer-copy-button@^0.0.5": "0.0.5",
+    "npm:zod@^3.23.0": "3.25.76"
   },
   "jsr": {
     "@davidbonnet/astring@1.8.6": {
@@ -938,10 +941,23 @@
         "compress-commons",
         "readable-stream@4.7.0"
       ]
+    },
+    "zod@3.25.76": {
+      "integrity": "sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ=="
     }
   },
   "workspace": {
     "members": {
+      "tests": {
+        "dependencies": [
+          "jsr:@b-fuze/deno-dom@0.1",
+          "jsr:@std/assert@1",
+          "jsr:@std/fs@1",
+          "jsr:@std/html@1",
+          "jsr:@std/testing@1",
+          "npm:zod@^3.23.0"
+        ]
+      },
       "tutors": {
         "dependencies": [
           "jsr:@tutors/tutors-gen-lib@4",

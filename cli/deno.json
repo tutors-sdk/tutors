@@ -1,5 +1,5 @@
 {
-  "workspace": ["./tutors-gen-lib",  "./tutors-model-lib", "./tutors", "./tutors-lite"],
+  "workspace": ["./tutors-gen-lib",  "./tutors-model-lib", "./tutors", "./tutors-lite", "./tests"],
   "fmt": {
     "include": ["./tutors-gen-lib/src/", "./tutors-model-lib/src/", "./tutors/src/", "./tutors-lite/src/"],
     "exclude": [],
