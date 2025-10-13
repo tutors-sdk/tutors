@@ -1,35 +1,51 @@
 {{ import { mainNavigator } from "/components/navigators/MainNavigator.vto" }}
+{{ import { loContext } from "/components/navigators/LoContext.vto" }}
+
 
 {{ layout "layouts/main.vto" }}
+    <script>hljs.highlightAll();</script>
   {{ mainNavigator(lo.lab) }}
 
-<div class="lab-content w-full pb-14">
-  <div class="max-w-l flex">
-    <div class="mr-2 hidden h-auto w-72 lg:block">
-      <div class="bg-[rgb(245,245,245)] sticky top-14 m-2 h-auto rounded-xl py-4">
-        <ul class="menu menu-compact">
-          {{> index=0 }}
-          {{ for chapter of lo.lab.los }}
-            <a class="p-4 py-3 text-base {{ lo.labStep.shortTitle === chapter.shortTitle ? 'font-bold bordered' : '' }}" href="{{ index === 0 ? './index.html' : `./${chapter.shortTitle}.html` }}">
-              {{ chapter.title }}
-            </a>
-            {{> index++ }}
-          {{ /for }}
-        </ul>
+  <div class="mx-10 flex justify-between gap-6">
+    <!-- Main Content Area -->
+    <div class="flex-1 pb-14">
+      <div class="flex gap-4">
+        <!-- Lab Navigation Sidebar - Desktop -->
+        <aside class="hidden w-72 lg:block">
+          <div class="bg-[rgb(245,245,245)] sticky top-14 rounded-xl py-4">
+            <ul class="menu menu-compact">
+              {{> index=0 }}
+              {{ for chapter of lo.lab.los }}
+                <a class="p-4 py-3 text-base {{ lo.labStep.shortTitle === chapter.shortTitle ? 'font-bold bordered' : '' }}" 
+                   href="{{ index === 0 ? './index.html' : `./${chapter.shortTitle}.html` }}">
+                  {{ chapter.title }}
+                </a>
+                {{> index++ }}
+              {{ /for }}
+            </ul>
+          </div>
+        </aside>
+        
+        <!-- Lab Content -->
+        <article class="prose flex-1 max-w-[65ch] 2xl:max-w-[120ch] prose-pre:overflow-x-auto">
+          {{ lo.labStep.contentHtml }}
+        </article>
       </div>
+      
+      <!-- Mobile Navigation Bar -->
+      <nav class="bg-[rgb(245,245,245)] fixed bottom-0 left-0 z-50 w-full p-2 flex justify-between lg:hidden">
+        <a class="btn btn-sm text-base capitalize" 
+           href="{{ lo.prevStep?.shortTitle === lo.lab.los[0].shortTitle ? 'index' : lo.prevStep?.shortTitle }}.html">
+           {{ lo.prevStep?.title }}
+        </a>
+        <a class="btn btn-sm text-base capitalize" 
+           href="{{ lo.nextStep?.shortTitle }}.html">
+           {{ lo.nextStep?.title }}
+        </a>
+      </nav>
     </div>
-
-    <div class="min-h-screen flex-1 mt-4">
-      <article class="prose prose-pre:overflow-x-auto 2xl:prose-pre:max-w-[120ch] max-w-[65ch] sm:mx-1 md:mx-4 2xl:max-w-[120ch]">
-        {{ lo.labStep.contentHtml }}
-      </article>
-    </div>
+    
+    <!-- Context Sidebar -->
+    {{ loContext(lo.lab) }}
   </div>
-  <div class="bg-[rgb(245,245,245)] fixed bottom-0 left-0 z-50 block w-full rounded-sm  lg:hidden">
-    <nav class="flex flex-wrap justify-between p-2">
-      <a class="btn btn-sm text-base capitalize" href="{{ lo.prevStep?.shortTitle === lo.lab.los[0].shortTitle ? 'index' : lo.prevStep?.shortTitle }}.html"> {{ lo.prevStep?.title }} </a>
-      <a class="ml-auto btn btn-sm capitalize text-base" style="margin-left: auto" href="{{ lo.nextStep?.shortTitle }}.html"> {{ lo.nextStep?.title }} </a>
-    </nav>
-  </div>
-</div>
 {{ /layout }}

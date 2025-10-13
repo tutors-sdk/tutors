@@ -1,0 +1,15 @@
+{{ import { icon } from "/components/iconography/Icon.vto" }}
+
+{{ export function loReference (lo, prefix, indent) }}
+  <div class="flex py-1 ml-{{indent}}">
+    <a href="{{ lo, prefix |> generateRefLink }}" class="flex">
+    {{ icon(lo.type, 30, "", "") }}
+    <span class="mb-1 ml-2"> {{ lo.title }} </span>
+  </a>
+  {{ if lo.video && lo.type != "panelvideo"}}
+    <a class="flex pl-4" href="{{ lo |> generateVideoLink }}" target="_blank">
+      {{ icon("video", 24, "", "") }}
+    </a>
+  {{/if}}
+</div>
+{{ /export }}

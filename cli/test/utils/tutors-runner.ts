@@ -46,17 +46,17 @@ export async function tutorsPublishJson(courseId: string): Promise<boolean> {
 // Mock the main module functionality for testing
 export async function runTutorsProcess(workingDir: string): Promise<{ success: boolean; output: string }> {
   const originalCwd = Deno.cwd();
-  
+
   try {
     // Get the path to main.ts - it should be in the cli/tutors-publish-html directory
     // The test runner starts from cli/tutors-publish-html, so main.ts is in that directory
     const mainPath = join(originalCwd, "main.ts");
-    
+
     // Verify the main.ts file exists
     if (!await exists(mainPath)) {
       throw new Error(`main.ts not found at ${mainPath}`);
     }
-    
+
     // Import the main module - this will execute the main logic
     const process = new Deno.Command("deno", {
       args: ["run", "-A", mainPath],
@@ -64,10 +64,10 @@ export async function runTutorsProcess(workingDir: string): Promise<{ success: b
       stdout: "piped",
       stderr: "piped",
     });
-    
+
     const { code, stdout, stderr } = await process.output();
     const output = new TextDecoder().decode(stdout) + new TextDecoder().decode(stderr);
-    
+
     return {
       success: code === 0,
       output: output,

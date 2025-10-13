@@ -1,0 +1,7 @@
+ {{ import { icon } from "/components/iconography/Icon.vto"}}
+
+{{ export function tocButton }}
+   <button command="show-modal" commandfor="tocdrawer" class="ml-auto rounded-md bg-gray-950/5 px-2.5 py-1.5 hover:bg-gray-950/10 dark:bg-white/10 dark:inset-ring dark:inset-ring-white/5 dark:hover:bg-white/20">
+    {{ icon("toc", 20, "", "Open Table of Contents ...", true) }} 
+  </button> 
+{{ /export }}

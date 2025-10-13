@@ -50,7 +50,7 @@ async function downloadFile(filePath: string) {
     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const content = await response.text();
     fs.writeFileSync(targetPath, content);
-  } 
+  }
   catch (error: unknown) {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     console.error(`Error downloading ${filePath}: ${errorMessage}`);
@@ -60,7 +60,7 @@ async function downloadFile(filePath: string) {
 
 export async function downloadVentoTemplates(folder: string, srcVentoFolder: string = "") {
   if (srcVentoFolder) {
-    copyFolder(srcVentoFolder, `${folder}`);
+    copyFolder(srcVentoFolder, `${folder}/vento`);
     return;
   }
   try {

@@ -1,11 +1,9 @@
 {{ import { card } from "/components/cards/Card.vto" }}
 
 {{ export function cardDeck(los) }}
-  <div class="bg-base-100 rounded-xl shadow-lg">
-    <div class="flex flex-wrap justify-center">
-      {{ for lo of los }}
-        {{ card(lo) }}
-      {{ /for }}
-    </div>
+  <div class="flex flex-wrap justify-center">
+    {{ for lo of los }}
+      {{ card(lo) }}
+    {{ /for }}
   </div>
 {{ /export }}

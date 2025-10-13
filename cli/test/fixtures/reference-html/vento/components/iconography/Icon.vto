@@ -9,7 +9,7 @@
     {{ /if }}
     <div class="tooltip tooltip-bottom" data-tip="{{ tip }}">
   {{ /if }}
-   <span class="mx-2 iconify" data-icon="{{ type |> iconType }}" data-height="{{ size }}" style="color:{{ type |> iconColour}}"></span>
+   <span class="mx-2 iconify" data-icon="{{ type |> iconType }}" data-height="{{ size }}" style="color:{{ type |> loBorderColour}}"></span>
   </div> 
   {{ if (link != "") }}
     </a>

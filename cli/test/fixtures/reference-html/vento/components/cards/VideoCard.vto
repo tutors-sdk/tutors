@@ -1,4 +1,4 @@
-{{ export function videoCard(lo, path) }}
+{{ export function videoCard(lo) }}
   <div class="bg-base-100 rounded-xl shadow-lg p-4 my-4">
     {{ if lo.videoids.videoIds.length > 0 && lo.videoids.videoIds[lo.videoids.videoIds.length - 1].service === 'heanet' }}
       <vime-player controls cross-origin="true">
@@ -21,7 +21,7 @@
           allowfullscreen></iframe>
       </div>
     {{ else }}
-      <div class="relative aspect-video" style="padding-top: 40%;">
+      <div class="relative mx-auto aspect-video w-4/5" style="padding-top: 40%;">
         <iframe 
           title="{{ lo.title }}" 
           class="absolute inset-0 w-full h-full" 

@@ -1,7 +1,14 @@
 {{ import { mainNavigator } from "/components/navigators/MainNavigator.vto" }}
 {{ import { noteCard } from "/components/cards/NoteCard.vto" }}
+{{ import { loContext } from "/components/navigators/LoContext.vto" }}
 
 {{ layout "layouts/main.vto" }}
   {{ mainNavigator(lo) }}
-  {{ noteCard(lo) }}
+  <div class="mr-10 ml-10 flex justify-between">
+    <div class="w-full">
+      {{ noteCard(lo) }}s
+    </div>
+    {{ loContext(lo) }}
+  </div>
+
 {{ /layout }}

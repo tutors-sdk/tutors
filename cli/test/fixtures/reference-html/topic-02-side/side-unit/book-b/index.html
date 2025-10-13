@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,21 +15,29 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://unpkg.com/@tailwindcss/typography@0.4.1/dist/typography.min.css" />
     
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/base16/railscasts.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/highlight.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/base16/chalk.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/default.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@vime/core@^4/themes/light.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" integrity="sha384-GvrOXuhMATgEsSwCs4smul74iXGOixntILdUW9XmUC6+HX0sLNAK3q71HotJqlAn" crossorigin="anonymous"/>
     <script type="module" src="https://cdn.jsdelivr.net/npm/@vime/core@^4/dist/vime/vime.esm.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
   </head>
 
   <body>
-    <div class="mx-auto px-3 antialiased bg-base-100 min-h-screen w-full 2xl:w-11/12" data-theme="light">
+    <div class="flex h-screen flex-col" data-theme="light">
     
-    <div class="p-3 shadow-lg bg-[rgb(245,245,245)] text-base-content rounded-box nav-corner mb-1 justify-start z-40 flex mt-2">
-      <div class="flex flex-row">
+    <script>hljs.highlightAll();</script>
+    <div class="p-3 shadow-lg bg-zinc-100 text-base-content rounded-box nav-corner mb-1 justify-start z-40 flex items-center mt-2">
+    <div class="ml-0">   <button command="show-modal" commandfor="infodrawer" class="ml-auto rounded-md bg-gray-950/5 px-2.5 py-1.5 hover:bg-gray-950/10 dark:bg-white/10 dark:inset-ring dark:inset-ring-white/5 dark:hover:bg-white/20">
+        <div>
+   <span class="mx-2 iconify" data-icon="fluent:info-28-regular" data-height="20" style="color:#37919b"></span>
+  </div> 
+ 
+  </button> 
+</div>
+    <div class="ml-2">  <div class="flex flex-row">
     <div>
         <img loading="lazy" class="h-12" src="./img/main.png" alt="Lab-03"/>
     </div>
@@ -39,76 +48,75 @@
       </h2>
     </div>
   </div>
-
+</div>
+    <div class="ml-auto">   <button command="show-modal" commandfor="tocdrawer" class="ml-auto rounded-md bg-gray-950/5 px-2.5 py-1.5 hover:bg-gray-950/10 dark:bg-white/10 dark:inset-ring dark:inset-ring-white/5 dark:hover:bg-white/20">
+        <div>
+   <span class="mx-2 iconify" data-icon="fluent:line-horizontal-3-20-filled" data-height="20" style="color:#37919b"></span>
+  </div> 
+ 
+  </button> 
+</div>
   </div>
   <div class="flex flex-wrap lg:flex-nowrap mb-2">
-     <div class="shadow-lg text-black bg-[rgb(225,239,240)] rounded-box nav-corner horizontal text-neutral-content text-sm breadcrumbs flex flex-auto content-center h-12">
+     <div class="pl-3 shadow-lg text-black bg-[rgb(225,239,240)] rounded-box nav-corner horizontal text-neutral-content text-sm breadcrumbs flex flex-auto content-center h-12">
     <ul>
-          <li class="ml-2">
-              <a href=../../../home.html>
-
+          <li class="">
+            <a href="../../../index.html">
                     <div>
    <span class="mx-2 iconify" data-icon="fluent:home-24-filled" data-height="20" style="color:#37919b"></span>
   </div> 
 
-              <span class="hidden text-xs lg:block lg:pl-2">
+              <span class="hidden text-xs lg:block -m-1">
                  Reference Course
               </span>
-              </a>
-
+            </a>
           </li>
-          <li class="ml-2">
-              <a href=../../index.html>
-
+          <li class="">
+            <a href="../../../index.html">
                     <div>
-   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="20" style="color:#37919b"></span>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="20" style="color:#53a878"></span>
   </div> 
 
-              <span class="hidden text-xs lg:block lg:pl-2">
+              <span class="hidden text-xs lg:block -m-1">
                  Sidebar
               </span>
-              </a>
-
+            </a>
           </li>
-          <li class="ml-2">
-              <a href=../../index.html>
-
+          <li class="">
+            <a href="../../index.html">
                     <div>
-   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="20" style="color:#37919b"></span>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="20" style="color:#53a878"></span>
   </div> 
 
-              <span class="hidden text-xs lg:block lg:pl-2">
+              <span class="hidden text-xs lg:block -m-1">
                  Labs for this Topic
               </span>
-              </a>
-
+            </a>
           </li>
-          <li class="ml-2">
-              <a href=index.html>
-
+          <li class="">
+            <a href="index.html">
                     <div>
-   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="20" style="color:#37919b"></span>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="20" style="color:#53a878"></span>
   </div> 
 
-              <span class="hidden text-xs lg:block lg:pl-2">
+              <span class="hidden text-xs lg:block -m-1">
                 Lab-03
               </span>
-              </a>
-
+            </a>
           </li>
     </ul>
   </div>
 
-       <div class="p-3 flex-wrap lg:flex-none shadow-lg bg-[rgb(225,239,240)]  text-neutral-content rounded-box nav-corner horizontal h-12">
+       <div class="hidden xl:block p-3 flex-wrap lg:flex-none shadow-lg bg-[rgb(225,239,240)]  text-neutral-content rounded-box nav-corner horizontal h-12">
               <a href="https://moodle.wit.ie" target="_blank" ">
     <div class="tooltip tooltip-bottom" data-tip="To Moodle ...">
-   <span class="mx-2 iconify" data-icon="fluent:hat-graduation-24-filled" data-height="20" style="color:#d27711"></span>
+   <span class="mx-2 iconify" data-icon="fluent:hat-graduation-24-filled" data-height="20" style="color:#37919b"></span>
   </div> 
     </a>
 
               <a href="https://www.youtube.com/playlist?list=PLMW4bgOfD3Dwi6FWirJ3AQtXZ-N_hV3Eo" target="_blank" ">
     <div class="tooltip tooltip-bottom" data-tip="To Youtube ...">
-   <span class="mx-2 iconify" data-icon="fluent:video-clip-24-filled" data-height="20" style="color:#ba5150"></span>
+   <span class="mx-2 iconify" data-icon="fluent:video-clip-24-filled" data-height="20" style="color:#37919b"></span>
   </div> 
     </a>
 
@@ -120,100 +128,968 @@
 
     </div>
 
-     
-  <div class="p-3 flex-wrap lg:flex-none shadow-lg bg-[rgb(225,239,240)] text-neutral-content rounded-box nav-corner horizontal h-12">
+     <div class="hidden xl:block p-3 flex-wrap lg:flex-none shadow-lg bg-[rgb(225,239,240)] text-neutral-content rounded-box nav-corner horizontal h-12">
+
             <a href="../../../talk.html">
     <div class="tooltip tooltip-bottom" data-tip="All talk's in module">
-   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="20" style="color:#37919b"></span>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="20" style="color:#cb9d00"></span>
   </div> 
     </a>
+
 
             <a href="../../../note.html">
     <div class="tooltip tooltip-bottom" data-tip="All note's in module">
-   <span class="mx-2 iconify" data-icon="fluent:notepad-16-regular" data-height="20" style="color:#d27711"></span>
+   <span class="mx-2 iconify" data-icon="fluent:notepad-16-regular" data-height="20" style="color:#53a878"></span>
   </div> 
     </a>
+
 
             <a href="../../../lab.html">
     <div class="tooltip tooltip-bottom" data-tip="All lab's in module">
-   <span class="mx-2 iconify" data-icon="fluent:beaker-24-filled" data-height="20" style="color:#557927"></span>
+   <span class="mx-2 iconify" data-icon="fluent:beaker-24-filled" data-height="20" style="color:#d00034"></span>
   </div> 
     </a>
+
 
             <a href="../../../web.html">
     <div class="tooltip tooltip-bottom" data-tip="All web's in module">
-   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-regular" data-height="20" style="color:#ba5150"></span>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-regular" data-height="20" style="color:#008c8f"></span>
   </div> 
     </a>
+
 
             <a href="../../../archive.html">
     <div class="tooltip tooltip-bottom" data-tip="All archive's in module">
-   <span class="mx-2 iconify" data-icon="fluent:archive-24-filled" data-height="20" style="color:#37919b"></span>
+   <span class="mx-2 iconify" data-icon="fluent:archive-24-filled" data-height="20" style="color:#d00034"></span>
   </div> 
     </a>
 
+
             <a href="../../../github.html">
     <div class="tooltip tooltip-bottom" data-tip="All github's in module">
-   <span class="mx-2 iconify" data-icon="fluent:code-circle-20-filled" data-height="20" style="color:#d27711"></span>
+   <span class="mx-2 iconify" data-icon="fluent:code-circle-20-filled" data-height="20" style="color:#cb9d00"></span>
   </div> 
     </a>
 
   </div>
    
+     <el-dialog>
+    <dialog id="tocdrawer" aria-labelledby="drawer-title" class="fixed inset-0 size-auto max-h-none max-w-none overflow-hidden bg-transparent backdrop:bg-transparent">
+        <div tabindex="0" class="absolute inset-0 pl-10 focus:outline-none sm:pl-16">
+        <el-dialog-panel class="ml-auto block size-full max-w-md transform transition duration-500 ease-in-out data-closed:translate-x-full sm:duration-700">
+            <div class="relative flex h-full flex-col overflow-y-auto bg-white py-6 shadow-xl dark:bg-gray-800 dark:after:absolute dark:after:inset-y-0 dark:after:left-0 dark:after:w-px dark:after:bg-white/10">
+            <div class="px-4 sm:px-6">
+                <div class="flex items-start justify-between">
+                <h2 id="drawer-title" class="text-base font-semibold text-gray-900 dark:text-white">Course Contents</h2>
+                <div class="ml-3 flex h-7 items-center">
+                    <button type="button" command="close" commandfor="tocdrawer" class="relative rounded-md text-gray-400 hover:text-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:hover:text-white dark:focus-visible:outline-indigo-500">
+                    <span class="absolute -inset-2.5"></span>
+                    <span class="sr-only">Close panel</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6">
+                        <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    </button>
+                </div>
+                </div>
+            </div>
+            <div class="relative mt-6 flex-1 px-4 sm:px-6">
+                  <div class="flex py-1 ml-0">
+    <a href="../../../index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Simple </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-01-typical/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:dual-screen-group-24-filled" data-height="30" style="color:#37919b"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Main Lesson </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-01-typical/unit-1/talk-1-intro/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lecture 1 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-01-typical/unit-1/talk-2-explore/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lecture 2 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-01-typical/unit-1/book-a/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:beaker-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lab-01 </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-01-typical/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:dual-screen-group-24-filled" data-height="30" style="color:#37919b"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Supporting Resources </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-01-typical/unit-2/note-1/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:notepad-16-regular" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Note 1 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../https://tutors.dev" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-regular" data-height="30" style="color:#008c8f"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Web Site 1 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-01-typical/unit-2/archive/archive.zip" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:archive-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Resource 1 </span>
+    </a> 
+  </div>
+
+                  <div class="flex py-1 ml-0">
+    <a href="../../../index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Sidebar </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-02-side/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:dual-screen-group-24-filled" data-height="30" style="color:#37919b"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Main Lesson </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../https://tutors.dev" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-regular" data-height="30" style="color:#008c8f"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Web Site 2 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-02-side/unit-1/talk-1/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lecture 3 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-02-side/unit-1/talk-2/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lecture 4 </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-02-side/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:dual-screen-group-24-filled" data-height="30" style="color:#37919b"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Supporting Resources </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-02-side/unit-2/note-1/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:notepad-16-regular" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Note 1 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../https://tutors.dev" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-regular" data-height="30" style="color:#008c8f"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Web Site 1 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-02-side/unit-2/archive/archive.zip" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:archive-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Resource 1 </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../..//topic//topic-02-side" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:dual-screen-group-24-filled" data-height="30" style="color:#37919b"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Labs for this Topic </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-02-side/side-unit/book-a/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:beaker-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lab-02 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-02-side/side-unit/book-b/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:beaker-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lab-03 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-02-side/side-unit/book-c/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:beaker-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Problem Sheet 1 </span>
+    </a> 
+  </div>
+
+                  <div class="flex py-1 ml-0">
+    <a href="../../../index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Videos </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../..//video//topic-03-media/panelvideo-1/x09E7b2ESE8" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:video-clip-24-regular" data-height="30" style="color:#ff0032"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Main Video </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-03-media/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:dual-screen-group-24-filled" data-height="30" style="color:#37919b"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Main Lesson </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-03-media/unit-1/talk-1/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lecture 5 </span>
+    </a> 
+      <a class="flex pl-4" href="https://www.youtube.com/watch?v=x09E7b2ESE8?start=106&286&t=106s" target="_blank">
+            <div>
+   <span class="mx-2 iconify" data-icon="fluent:video-clip-24-filled" data-height="24" style="color:#ff0032"></span>
+  </div> 
+
+      </a>
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-03-media/unit-1/talk-2/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lecture 6 </span>
+    </a> 
+      <a class="flex pl-4" href="https://www.youtube.com/watch?v=x09E7b2ESE8?start=106&286&t=106s" target="_blank">
+            <div>
+   <span class="mx-2 iconify" data-icon="fluent:video-clip-24-filled" data-height="24" style="color:#ff0032"></span>
+  </div> 
+
+      </a>
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-03-media/unit-1/talk-3/x09E7b2ESE8?start=1068&1370/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lecture 7 </span>
+    </a> 
+      <a class="flex pl-4" href="https://www.youtube.com/watch?v=x09E7b2ESE8?start=1068&1370&t=1068s" target="_blank">
+            <div>
+   <span class="mx-2 iconify" data-icon="fluent:video-clip-24-filled" data-height="24" style="color:#ff0032"></span>
+  </div> 
+
+      </a>
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-03-media/unit-1/book-a/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:beaker-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lab-04 </span>
+    </a> 
+      <a class="flex pl-4" href="https://www.youtube.com/watch?v=x09E7b2ESE8?start=1370&1802&t=1370s" target="_blank">
+            <div>
+   <span class="mx-2 iconify" data-icon="fluent:video-clip-24-filled" data-height="24" style="color:#ff0032"></span>
+  </div> 
+
+      </a>
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-03-media/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:dual-screen-group-24-filled" data-height="30" style="color:#37919b"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> HeaNet Hosted Video </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../..//video//topic-03-media/unit-2-heanet/panelvideo/7e4f1e9afedb40d5996d0703702eaaa4" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:video-clip-24-regular" data-height="30" style="color:#ff0032"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Heanet Example </span>
+    </a> 
+  </div>
+
+                  <div class="flex py-1 ml-0">
+    <a href="../../../index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Panel Note </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../..//panelnote//topic-04-panel-note/panelnote" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:notepad-16-regular" data-height="30" style="color:#37919b"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Note 1 </span>
+    </a> 
+  </div>
+
+                  <div class="flex py-1 ml-0">
+    <a href="../../../index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Panel Talk </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../..//paneltalk//topic-05-panel-talk/paneltalk" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lecture 1 </span>
+    </a> 
+  </div>
+
+                  <div class="flex py-1 ml-0">
+    <a href="../../../index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Reference </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-07-reference/talk-1/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lecture 8 </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-07-reference/book-a/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:beaker-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lab-05 </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-07-reference/note-1/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:notepad-16-regular" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Markdown Options </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-07-reference/note-2/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:notepad-16-regular" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Note 4 </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../https://tutors.dev" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-regular" data-height="30" style="color:#008c8f"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Web Site 4 </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../https://github.com/tutors-sdk/tutors" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:code-circle-20-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Github Repo  1 </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-07-reference/archive/archive.zip" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:archive-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Resource 2 </span>
+    </a> 
+  </div>
+
+                  <div class="flex py-1 ml-0">
+    <a href="../../../index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Ordering </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-08-ordering/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:dual-screen-group-24-filled" data-height="30" style="color:#37919b"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Ordering </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-08-ordering/unit-0/note-1/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:notepad-16-regular" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Note 5 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-08-ordering/unit-0/book-a/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:beaker-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lab-06 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-08-ordering/unit-0/talk-1/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lecture 9 </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-08-ordering/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:dual-screen-group-24-filled" data-height="30" style="color:#37919b"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Ordering </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../https://tutors.dev" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-regular" data-height="30" style="color:#008c8f"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Web Site 2 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../https://github.com/tutors-sdk/tutors" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:code-circle-20-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Github Repo  2 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-08-ordering/unit-1/archive/archive.zip" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:archive-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Resource 3 </span>
+    </a> 
+  </div>
+
+                       <div class="flex py-1 ml-8">
+    <a href="../../../topic-08-ordering/unit-1/note-2/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:notepad-16-regular" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Note 6 </span>
+    </a> 
+  </div>
+
+                  <div class="flex py-1 ml-0">
+    <a href="../../../index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Iconify </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-09-svg/talk-1/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lecture 10 </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-09-svg/talk-2/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lecture 11 </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-09-svg/talk-3/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lecture 12 </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-09-svg/book-a/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:beaker-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Lab-07 </span>
+    </a> 
+  </div>
+
+                  <div class="flex py-1 ml-0">
+    <a href="../../../index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-filled" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+      <span class="mb-1 ml-2">  Hidden </span>
+    </a> 
+  </div>
+
+                     <div class="flex py-1 ml-4">
+    <a href="../../../topic-10-hidden/talk-2/index.html" class="flex">
+          <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+      <span class="mb-1 ml-2"> Hidden Lecure </span>
+    </a> 
+  </div>
+
+            </div>
+            </div>
+        </el-dialog-panel>
+        </div>
+    </dialog>
+  </el-dialog>
+
+     <el-dialog>
+
+    <dialog id="infodrawer" aria-labelledby="drawer-title" class="fixed inset-0 size-auto max-h-none max-w-none overflow-hidden bg-transparent backdrop:bg-transparent">
+        <div tabindex="0" class="absolute inset-0 pr-10 focus:outline-none sm:pr-16 flex">
+          <el-dialog-panel class="block size-full max-w-md transform transition duration-500 ease-in-out data-closed:-translate-x-full sm:duration-700">
+            <div class="relative flex h-full flex-col overflow-y-auto bg-white py-6 shadow-xl dark:bg-gray-800 dark:after:absolute dark:after:inset-y-0 dark:after:right-0 dark:after:w-px dark:after:bg-white/10">
+            <div class="px-4 sm:px-6">
+                <div class="flex items-start justify-between">
+                <h2 id="drawer-title" class="text-base font-semibold text-gray-900 dark:text-white">Course Info</h2>
+                <div class="ml-3 flex h-7 items-center">
+                    <button type="button" command="close" commandfor="infodrawer" class="relative rounded-md text-gray-400 hover:text-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:hover:text-white dark:focus-visible:outline-indigo-500">
+                    <span class="absolute -inset-2.5"></span>
+                    <span class="sr-only">Close panel</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" data-slot="icon" aria-hidden="true" class="size-6">
+                        <path d="M6 18 18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    </button>
+                </div>
+              </div>
+            </div>
+            <div class="relative mt-6 flex-1 px-4 sm:px-6">
+              <article>
+                <prose class="prose dark:prose-invert">
+                  <h1 id="reference-course" tabindex="-1"><a class="header-anchor" href="#reference-course">Reference Course</a></h1>
+<p>A short description of the course. This description will be available when the information icon in the top left selected.</p>
+<p>This can be any markdown document:</p>
+<ul>
+<li>with the usual</li>
+<li>markdown facilities</li>
+</ul>
+<h2 id="can-include-headings" tabindex="-1"><a class="header-anchor" href="#can-include-headings">Can include Headings</a></h2>
+<p>And even tables …</p>
+<table>
+<thead>
+<tr>
+<th>Head 1</th>
+<th>Head 2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cell 1</td>
+<td>cell 2</td>
+</tr>
+<tr>
+<td>cell 3</td>
+<td>cell 4</td>
+</tr>
+</tbody>
+</table>
+
+                </prose>
+              </article>
+            </div>
+          </el-dialog-panel>
+        </div>
+    </dialog>
+  </el-dialog>
+
   </div>
 
 
-<div class="lab-content w-full pb-14">
-  <div class="max-w-l flex">
-    <div class="mr-2 hidden h-auto w-72 lg:block">
-      <div class="bg-[rgb(245,245,245)] sticky top-14 m-2 h-auto rounded-xl py-4">
-        <ul class="menu menu-compact">
-            <a class="p-4 py-3 text-base font-bold bordered" href="./index.html">
-               Objectives
-            </a>
-            <a class="p-4 py-3 text-base " href="./01.html">
-               Text
-            </a>
-            <a class="p-4 py-3 text-base " href="./02.html">
-               Tables, Lines and Images
-            </a>
-            <a class="p-4 py-3 text-base " href="./03.html">
-               Links and Code Blocks
-            </a>
-            <a class="p-4 py-3 text-base " href="./04.html">
-               Images
-            </a>
-            <a class="p-4 py-3 text-base " href="./05.html">
-               Latex
-            </a>
-            <a class="p-4 py-3 text-base " href="./06.html">
-               Reference
-            </a>
-            <a class="p-4 py-3 text-base " href="./Exercises.html">
-               Exercises & Archives
-            </a>
-        </ul>
-      </div>
-    </div>
-
-    <div class="min-h-screen flex-1 mt-4">
-      <article class="prose prose-pre:overflow-x-auto 2xl:prose-pre:max-w-[120ch] max-w-[65ch] sm:mx-1 md:mx-4 2xl:max-w-[120ch]">
-        <h1 id="objectives" tabindex="-1"><a class="header-anchor" href="#objectives">Objectives</a></h1>
+  <div class="mx-10 flex justify-between gap-6">
+    <!-- Main Content Area -->
+    <div class="flex-1 pb-14">
+      <div class="flex gap-4">
+        <!-- Lab Navigation Sidebar - Desktop -->
+        <aside class="hidden w-72 lg:block">
+          <div class="bg-[rgb(245,245,245)] sticky top-14 rounded-xl py-4">
+            <ul class="menu menu-compact">
+                <a class="p-4 py-3 text-base font-bold bordered" 
+                   href="./index.html">
+                   Objectives
+                </a>
+                <a class="p-4 py-3 text-base " 
+                   href="./01.html">
+                   Text
+                </a>
+                <a class="p-4 py-3 text-base " 
+                   href="./02.html">
+                   Tables, Lines and Images
+                </a>
+                <a class="p-4 py-3 text-base " 
+                   href="./03.html">
+                   Links and Code Blocks
+                </a>
+                <a class="p-4 py-3 text-base " 
+                   href="./04.html">
+                   Images
+                </a>
+                <a class="p-4 py-3 text-base " 
+                   href="./05.html">
+                   Latex
+                </a>
+                <a class="p-4 py-3 text-base " 
+                   href="./06.html">
+                   Reference
+                </a>
+                <a class="p-4 py-3 text-base " 
+                   href="./Exercises.html">
+                   Exercises & Archives
+                </a>
+            </ul>
+          </div>
+        </aside>
+        
+        <!-- Lab Content -->
+        <article class="prose flex-1 max-w-[65ch] 2xl:max-w-[120ch] prose-pre:overflow-x-auto">
+          <h1 id="objectives" tabindex="-1"><a class="header-anchor" href="#objectives">Objectives</a></h1>
 <p>A set of practical instructions or a walk-though</p>
 
-      </article>
+        </article>
+      </div>
+      
+      <!-- Mobile Navigation Bar -->
+      <nav class="bg-[rgb(245,245,245)] fixed bottom-0 left-0 z-50 w-full p-2 flex justify-between lg:hidden">
+        <a class="btn btn-sm text-base capitalize" 
+           href=".html">
+           
+        </a>
+        <a class="btn btn-sm text-base capitalize" 
+           href="01.html">
+            Text
+        </a>
+      </nav>
     </div>
-  </div>
-  <div class="bg-[rgb(245,245,245)] fixed bottom-0 left-0 z-50 block w-full rounded-sm  lg:hidden">
-    <nav class="flex flex-wrap justify-between p-2">
-      <a class="btn btn-sm text-base capitalize" href=".html">  </a>
-      <a class="ml-auto btn btn-sm capitalize text-base" style="margin-left: auto" href="01.html">  Text </a>
-    </nav>
-  </div>
+    
+    <!-- Context Sidebar -->
+    
+
+
+  <div class="hidden xl:block card w-80 min-w-80 max-w-80 p-4 text-center shadow-2xl rounded-box bg-[#d6e9e9] m-2 h-auto overflow-y-auto self-start sticky top-20">
+    <h3 class="font-bold mb-2">Lab-03</h3>
+    
+      <img loading="lazy" class="rounded-xl object-scale-down h-32 mx-auto" src="img/main.png" alt="Lab-03">
+    
+    <div class="mt-4 text-left">
+          <div class="flex py-1 ml-0">
+    <a href="../unit-1/index.html" class="flex">
+        <div>
+   <span class="mx-2 iconify" data-icon="fluent:dual-screen-group-24-filled" data-height="30" style="color:#37919b"></span>
+  </div> 
+
+    <span class="mb-1 ml-2"> Main Lesson </span>
+  </a>
+</div>
+
+            <div class="flex py-1 ml-4">
+    <a href="https://tutors.dev" class="flex">
+        <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-regular" data-height="30" style="color:#008c8f"></span>
+  </div> 
+
+    <span class="mb-1 ml-2"> Web Site 2 </span>
+  </a>
+</div>
+
+            <div class="flex py-1 ml-4">
+    <a href="../../unit-1/talk-1/index.html" class="flex">
+        <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+    <span class="mb-1 ml-2"> Lecture 3 </span>
+  </a>
+</div>
+
+            <div class="flex py-1 ml-4">
+    <a href="../../unit-1/talk-2/index.html" class="flex">
+        <div>
+   <span class="mx-2 iconify" data-icon="fluent:presenter-24-filled" data-height="30" style="color:#cb9d00"></span>
+  </div> 
+
+    <span class="mb-1 ml-2"> Lecture 4 </span>
+  </a>
+</div>
+
+          <div class="flex py-1 ml-0">
+    <a href="../unit-2/index.html" class="flex">
+        <div>
+   <span class="mx-2 iconify" data-icon="fluent:dual-screen-group-24-filled" data-height="30" style="color:#37919b"></span>
+  </div> 
+
+    <span class="mb-1 ml-2"> Supporting Resources </span>
+  </a>
+</div>
+
+            <div class="flex py-1 ml-4">
+    <a href="../../unit-2/note-1/index.html" class="flex">
+        <div>
+   <span class="mx-2 iconify" data-icon="fluent:notepad-16-regular" data-height="30" style="color:#53a878"></span>
+  </div> 
+
+    <span class="mb-1 ml-2">  Note 1 </span>
+  </a>
+</div>
+
+            <div class="flex py-1 ml-4">
+    <a href="https://tutors.dev" class="flex">
+        <div>
+   <span class="mx-2 iconify" data-icon="fluent:bookmark-24-regular" data-height="30" style="color:#008c8f"></span>
+  </div> 
+
+    <span class="mb-1 ml-2"> Web Site 1 </span>
+  </a>
+</div>
+
+            <div class="flex py-1 ml-4">
+    <a href="../../unit-2//archive/archive.zip" class="flex">
+        <div>
+   <span class="mx-2 iconify" data-icon="fluent:archive-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+    <span class="mb-1 ml-2"> Resource 1 </span>
+  </a>
+</div>
+
+          <div class="flex py-1 ml-0">
+    <a href="../side-unit/index.html" class="flex">
+        <div>
+   <span class="mx-2 iconify" data-icon="fluent:dual-screen-group-24-filled" data-height="30" style="color:#37919b"></span>
+  </div> 
+
+    <span class="mb-1 ml-2">  Labs for this Topic </span>
+  </a>
+</div>
+
+            <div class="flex py-1 ml-4">
+    <a href="../../side-unit/book-a/index.html" class="flex">
+        <div>
+   <span class="mx-2 iconify" data-icon="fluent:beaker-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+    <span class="mb-1 ml-2"> Lab-02 </span>
+  </a>
+</div>
+
+            <div class="flex py-1 ml-4">
+    <a href="../../side-unit/book-b/index.html" class="flex">
+        <div>
+   <span class="mx-2 iconify" data-icon="fluent:beaker-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+    <span class="mb-1 ml-2"> Lab-03 </span>
+  </a>
+</div>
+
+            <div class="flex py-1 ml-4">
+    <a href="../../side-unit/book-c/index.html" class="flex">
+        <div>
+   <span class="mx-2 iconify" data-icon="fluent:beaker-24-filled" data-height="30" style="color:#d00034"></span>
+  </div> 
+
+    <span class="mb-1 ml-2"> Problem Sheet 1 </span>
+  </a>
 </div>
 
     </div>
+  </div>
+
+
+  </div>
+
+    </div>
     <script src="https://code.iconify.design/2/2.1.2/iconify.min.js"></script>
+
   </body>
 </html>
 
