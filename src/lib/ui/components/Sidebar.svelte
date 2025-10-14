@@ -4,36 +4,39 @@
 
   let { position = "left", menuSelector, sidebarContent } = $props();
 
-  let openState = $state(false);
-  function popoverClose() {
-    openState = false;
-  }
-  let positionerJustify = $state("justify-start");
-  let transitionInOut = $state(-480);
-  if (position === "right") {
-    positionerJustify = "justify-end";
-    transitionInOut = 480;
-  }
+  let positionerJustify = $state(position === "right" ? "justify-end" : "justify-start");
+  let contentTranslate = $state(
+    position === "right"
+      ? "translate-x-full data-[state=open]:translate-x-0 starting:data-[state=open]:translate-x-full"
+      : "-translate-x-full data-[state=open]:translate-x-0 starting:data-[state=open]:-translate-x-full"
+  );
+
+  // let openState = $state(false);
+  // function popoverClose() {
+  //   openState = false;
+  // }
+  // let positionerJustify = $state("justify-start");
+  // let transitionInOut = $state(-480);
+  // if (position === "right") {
+  //   positionerJustify = "justify-end";
+  //   transitionInOut = 480;
+  // }
 </script>
 
 <Dialog>
-  <Dialog.Trigger class="btn preset-filled">
+  <Dialog.Trigger>
     {@render menuSelector()}
   </Dialog.Trigger>
   <Portal>
-    <Dialog.Backdrop class="bg-surface-50-950/50 fixed inset-0 z-50 opacity-0 transition transition-discrete data-[state=open]:opacity-100 starting:data-[state=open]:opacity-0" />
-    <Dialog.Positioner class="fixed inset-0 z-50 flex justify-start">
+    <Dialog.Backdrop class="bg-surface-100-900 h-screen w-[480px] space-y-4 p-4 shadow-xl" />
+    <Dialog.Positioner class={`fixed inset-0 z-50 flex ${positionerJustify}`}>
       <Dialog.Content
         class="card bg-surface-100-900 h-screen w-sm -translate-x-full space-y-4 p-4 opacity-0 shadow-xl transition transition-discrete data-[state=open]:translate-x-0 data-[state=open]:opacity-100 starting:data-[state=open]:-translate-x-full starting:data-[state=open]:opacity-0"
       >
-        <div class="relative h-full">
-          <button class="btn-icon hover:preset-tonal absolute top-0 right-0 z-10" onclick={popoverClose}>
-            <Icon type="close" />
-          </button>
-          <div class="h-full overflow-y-auto">
-            {@render sidebarContent()}
-          </div>
-        </div>
+        <header class="flex items-center justify-between">
+          <Dialog.CloseTrigger class="btn-icon preset-tonal"><Icon type="close" /></Dialog.CloseTrigger>
+        </header>
+        {@render sidebarContent()}
       </Dialog.Content>
     </Dialog.Positioner>
   </Portal>
