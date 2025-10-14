@@ -27,6 +27,7 @@ export const FluentIconLib: IconLib = {
   panelvideo: { type: "fluent:video-clip-24-regular", color: "error" },
   paneltalk: { type: "fluent:presenter-24-filled", color: "primary" },
   panelnote: { type: "fluent:notepad-16-regular", color: "warning" },
+  tutorial: { type: "fluent:arrow-clockwise-dashes-settings-24-regular", color: "primary" },
 
   // pdf reader icons
   left: { type: "fluent:ios-arrow-left-24-filled", color: "success" },
