@@ -62,7 +62,7 @@ export async function validateHtmlStructure(htmlPath: string): Promise<HtmlValid
     }
 
     // Check for charset
-    const charset = doc.querySelector('meta[charset]');
+    const charset = doc.querySelector("meta[charset]");
     if (!charset) {
       warnings.push("Missing charset meta tag");
     }
@@ -90,7 +90,7 @@ export async function validateHtmlStructure(htmlPath: string): Promise<HtmlValid
  */
 export async function validateHtmlLinks(
   htmlPath: string,
-  baseDir: string
+  baseDir: string,
 ): Promise<HtmlValidationResult> {
   const errors: string[] = [];
   const warnings: string[] = [];
@@ -155,7 +155,7 @@ export async function validateHtmlLinks(
  */
 export async function validateHtmlContent(
   htmlPath: string,
-  expectedContent: string[]
+  expectedContent: string[],
 ): Promise<HtmlValidationResult> {
   const errors: string[] = [];
   const warnings: string[] = [];
@@ -192,7 +192,7 @@ export async function validateHtmlContent(
  */
 export async function validateHtmlImages(
   htmlPath: string,
-  baseDir: string
+  baseDir: string,
 ): Promise<HtmlValidationResult> {
   const errors: string[] = [];
   const warnings: string[] = [];
@@ -262,7 +262,7 @@ export async function validateHtmlImages(
  */
 export async function validateHtml(
   htmlPath: string,
-  baseDir: string
+  baseDir: string,
 ): Promise<HtmlValidationResult> {
   const structureResult = await validateHtmlStructure(htmlPath);
   const linksResult = await validateHtmlLinks(htmlPath, baseDir);
@@ -296,7 +296,7 @@ export async function validateHtml(
  */
 export async function countHtmlElements(
   htmlPath: string,
-  tagName: string
+  tagName: string,
 ): Promise<number> {
   try {
     const content = await Deno.readTextFile(htmlPath);
@@ -321,7 +321,7 @@ export async function countHtmlElements(
  */
 export async function extractHtmlText(
   htmlPath: string,
-  selector: string
+  selector: string,
 ): Promise<string | null> {
   try {
     const content = await Deno.readTextFile(htmlPath);
@@ -337,4 +337,3 @@ export async function extractHtmlText(
     return null;
   }
 }
-

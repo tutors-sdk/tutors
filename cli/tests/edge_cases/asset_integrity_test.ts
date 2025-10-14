@@ -6,7 +6,7 @@
  * Follows Constitution Principle II: Readable Tests Over Clever Tests
  */
 
-import { assertEquals, assert, assertExists } from "@std/assert";
+import { assert, assertEquals, assertExists } from "@std/assert";
 import { exists } from "@std/fs";
 import { getFileSize } from "../test_helpers/output_validator.ts";
 
@@ -46,7 +46,7 @@ Deno.test("tutors CLI copies all assets to JSON output directory", async () => {
   await Deno.mkdir(topicDir, { recursive: true });
   await Deno.writeTextFile(
     `${topicDir}/topic.md`,
-    "# Topic\n\n![Test Image](../img/test-image.png)\n\nContent here."
+    "# Topic\n\n![Test Image](../img/test-image.png)\n\nContent here.",
   );
 
   try {
@@ -82,7 +82,7 @@ Deno.test("tutors CLI copies all assets to JSON output directory", async () => {
         assertEquals(
           copiedContent,
           testImageContent,
-          "Asset content should match original"
+          "Asset content should match original",
         );
         console.log("✓ Asset integrity verified");
       }
@@ -127,7 +127,7 @@ Deno.test("tutors-lite copies assets to HTML output directory", async () => {
   await Deno.mkdir(topicDir, { recursive: true });
   await Deno.writeTextFile(
     `${topicDir}/topic.md`,
-    "# Topic\n\n![Logo](../img/logo.png)"
+    "# Topic\n\n![Logo](../img/logo.png)",
   );
 
   try {
@@ -193,7 +193,7 @@ Deno.test("tutors CLI handles courses with missing asset references gracefully",
   await Deno.mkdir(topicDir, { recursive: true });
   await Deno.writeTextFile(
     `${topicDir}/topic.md`,
-    "# Topic\n\n![Missing Image](../img/does-not-exist.png)\n\nContent."
+    "# Topic\n\n![Missing Image](../img/does-not-exist.png)\n\nContent.",
   );
 
   try {
@@ -212,7 +212,7 @@ Deno.test("tutors CLI handles courses with missing asset references gracefully",
     // Exit code 0 or 1 is acceptable
     assert(
       code === 0 || code === 1,
-      `CLI should handle missing assets gracefully, got exit code ${code}`
+      `CLI should handle missing assets gracefully, got exit code ${code}`,
     );
 
     // Document behavior
@@ -253,7 +253,7 @@ Deno.test("tutors CLI correctly resolves relative asset paths", async () => {
   // Topic references image with relative path
   await Deno.writeTextFile(
     `${topicDir}/topic.md`,
-    "# Topic\n\n![Shared](../../img/shared.png)"
+    "# Topic\n\n![Shared](../../img/shared.png)",
   );
 
   try {
@@ -351,4 +351,3 @@ async function checkForHtmlFiles(dir: string): Promise<boolean> {
     return false;
   }
 }
-

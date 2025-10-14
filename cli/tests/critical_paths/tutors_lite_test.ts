@@ -6,7 +6,7 @@
  * Follows Constitution Principle II: Readable Tests Over Clever Tests
  */
 
-import { assertEquals, assertExists, assert } from "@std/assert";
+import { assert, assertEquals, assertExists } from "@std/assert";
 import { exists } from "@std/fs";
 import { directoryExists, fileExists } from "../test_helpers/output_validator.ts";
 
@@ -47,7 +47,7 @@ Deno.test("tutors-lite generates complete HTML site from minimal course", async 
   assertEquals(
     code,
     0,
-    `Tutors-lite CLI should exit with code 0, got ${code}.\nStderr: ${stderrText}\nStdout: ${stdoutText}`
+    `Tutors-lite CLI should exit with code 0, got ${code}.\nStderr: ${stderrText}\nStdout: ${stdoutText}`,
   );
 
   // Assert: HTML output directory should exist
@@ -77,7 +77,7 @@ Deno.test("tutors-lite generates complete HTML site from minimal course", async 
   // Assert: Should have generated HTML files (even if in subdirectories)
   assert(
     htmlFilesFound.length > 0,
-    `Expected HTML files in ${htmlOutputPath} or subdirectories. Found: ${htmlFilesFound.join(", ") || "none"}`
+    `Expected HTML files in ${htmlOutputPath} or subdirectories. Found: ${htmlFilesFound.join(", ") || "none"}`,
   );
 
   // Cleanup
@@ -139,7 +139,7 @@ Deno.test("tutors-lite generates HTML with valid structure", async () => {
   // Assert: Should have generated HTML files
   assert(
     htmlFilesFound.length > 0,
-    `Expected HTML files in ${htmlOutputPath} or subdirectories. Found: ${htmlFilesFound.join(", ") || "none"}`
+    `Expected HTML files in ${htmlOutputPath} or subdirectories. Found: ${htmlFilesFound.join(", ") || "none"}`,
   );
 
   // Cleanup
@@ -226,7 +226,7 @@ Deno.test("tutors-lite handles empty directory with clear error", async () => {
     // Note: The actual CLI prints error but exits with code 0
     assert(
       output.includes("course.md") || output.includes("Cannot locate"),
-      `Error should mention missing course.md. Got: ${output}`
+      `Error should mention missing course.md. Got: ${output}`,
     );
 
     // The CLI shows an error message, which is sufficient for user feedback
@@ -236,4 +236,3 @@ Deno.test("tutors-lite handles empty directory with clear error", async () => {
     await Deno.remove(emptyDir, { recursive: true });
   }
 });
-

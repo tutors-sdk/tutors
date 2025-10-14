@@ -18,7 +18,10 @@
     "test:coverage": "deno test --allow-all --coverage=./cov_profile",
     "coverage:report": "deno coverage cov_profile --lcov --output=coverage.lcov",
     "coverage:html": "deno coverage cov_profile --html",
-    "bench": "deno bench --allow-all"
+    "bench": "deno bench --allow-all",
+    "fmt": "deno fmt",
+    "fmt:check": "deno fmt --check",
+    "lint": "deno lint"
   },
   "exclude": [
     "fixtures/",
@@ -26,4 +29,3 @@
     "cov_profile/"
   ]
 }
-

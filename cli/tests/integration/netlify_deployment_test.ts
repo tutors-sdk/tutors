@@ -62,7 +62,7 @@ Deno.test("Integration Netlify: Deployment configuration present", async () => {
       // Basic TOML validation
       assert(
         tomlContent.length > 0,
-        "netlify.toml should not be empty"
+        "netlify.toml should not be empty",
       );
 
       console.log("  ✅ netlify.toml present");
@@ -82,14 +82,14 @@ Deno.test("Integration Netlify: Deployment configuration present", async () => {
     const jsonDir = `${tempDir}/json`;
     assert(
       await exists(jsonDir),
-      "Output directory should exist for deployment"
+      "Output directory should exist for deployment",
     );
 
     // 3. tutors.json should be deployment-ready
     const tutorsJsonPath = `${jsonDir}/tutors.json`;
     assert(
       await exists(tutorsJsonPath),
-      "tutors.json should exist for deployment"
+      "tutors.json should exist for deployment",
     );
 
     const jsonContent = await Deno.readTextFile(tutorsJsonPath);
@@ -216,23 +216,23 @@ Deno.test("Integration Netlify: No broken paths in deployment output", async () 
     // Should not contain Windows-style absolute paths
     assert(
       !jsonString.includes("C:\\"),
-      "Output should not contain Windows absolute paths"
+      "Output should not contain Windows absolute paths",
     );
     assert(
       !jsonString.includes("D:\\"),
-      "Output should not contain drive letter paths"
+      "Output should not contain drive letter paths",
     );
 
     // Should not contain localhost references
     assert(
       !jsonString.includes("localhost"),
-      "Output should not contain localhost references"
+      "Output should not contain localhost references",
     );
 
     // Should not contain file:// protocol
     assert(
       !jsonString.includes("file://"),
-      "Output should not contain file:// protocol"
+      "Output should not contain file:// protocol",
     );
 
     console.log("  ✅ No absolute paths in output");
@@ -278,13 +278,13 @@ Deno.test("Integration Netlify: Deployment output size is reasonable", async () 
     // For a minimal course, JSON should be reasonable (< 1 MB)
     assert(
       sizeMB < 1,
-      `tutors.json should be reasonably sized for minimal course (got ${sizeMB.toFixed(2)} MB)`
+      `tutors.json should be reasonably sized for minimal course (got ${sizeMB.toFixed(2)} MB)`,
     );
 
     // But should have actual content (> 1 KB)
     assert(
       sizeKB > 1,
-      "tutors.json should have meaningful content"
+      "tutors.json should have meaningful content",
     );
 
     console.log("  ✅ Output size is reasonable");
@@ -312,7 +312,7 @@ Deno.test("Integration Netlify: Multiple courses don't conflict", async () => {
     // Modify second course to be different
     await Deno.writeTextFile(
       `${tempDir2}/course.md`,
-      "# Course 2\n\nA different course"
+      "# Course 2\n\nA different course",
     );
 
     // Act: Generate JSON for both courses
@@ -353,7 +353,7 @@ Deno.test("Integration Netlify: Multiple courses don't conflict", async () => {
     // Titles should be different
     assert(
       data1.title !== data2.title,
-      "Courses should have different titles"
+      "Courses should have different titles",
     );
 
     console.log("  ✅ Multiple courses generated successfully");
@@ -364,4 +364,3 @@ Deno.test("Integration Netlify: Multiple courses don't conflict", async () => {
     await Deno.remove(tempDir2, { recursive: true });
   }
 });
-

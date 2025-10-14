@@ -6,13 +6,9 @@
  * Follows Constitution Principle II: Readable Tests Over Clever Tests
  */
 
-import { assertEquals, assert } from "@std/assert";
+import { assert, assertEquals } from "@std/assert";
 import { exists } from "@std/fs";
-import {
-  measureTime,
-  createBaseline,
-  recordBaseline,
-} from "../test_helpers/performance_tracker.ts";
+import { createBaseline, measureTime, recordBaseline } from "../test_helpers/performance_tracker.ts";
 
 const MINIMAL_COURSE_PATH = "./fixtures/sample_courses/minimal_course";
 const MAX_GENERATION_TIME_MS = 60000; // 60 seconds for large courses
@@ -45,11 +41,11 @@ async function copyDirectory(src: string, dest: string): Promise<void> {
 Deno.test("tutors CLI handles minimal course with performance baseline", async () => {
   // Arrange: Create a temporary copy of minimal course to avoid parallel test conflicts
   const tempDir = await Deno.makeTempDir({ prefix: "tutors_perf_test_" });
-  
+
   try {
     // Copy minimal course to temp directory
     await copyDirectory(MINIMAL_COURSE_PATH, tempDir);
-    
+
     const coursePath = tempDir;
     const jsonOutputPath = `${coursePath}/json`;
 
@@ -70,7 +66,7 @@ Deno.test("tutors CLI handles minimal course with performance baseline", async (
     // Assert: Should complete in reasonable time
     assert(
       durationMs < MAX_GENERATION_TIME_MS,
-      `Generation took ${durationMs}ms, expected < ${MAX_GENERATION_TIME_MS}ms`
+      `Generation took ${durationMs}ms, expected < ${MAX_GENERATION_TIME_MS}ms`,
     );
 
     // Record baseline for future regression testing
@@ -81,7 +77,7 @@ Deno.test("tutors CLI handles minimal course with performance baseline", async (
       {
         generationTimeMs: durationMs,
         filesProcessed: 10, // Known count for minimal course
-      }
+      },
     );
 
     try {
@@ -132,7 +128,7 @@ Deno.test("tutors-lite handles minimal course with performance baseline", async 
     // Assert: Should complete in reasonable time
     assert(
       durationMs < MAX_GENERATION_TIME_MS,
-      `HTML generation took ${durationMs}ms, expected < ${MAX_GENERATION_TIME_MS}ms`
+      `HTML generation took ${durationMs}ms, expected < ${MAX_GENERATION_TIME_MS}ms`,
     );
 
     // Record baseline
@@ -143,7 +139,7 @@ Deno.test("tutors-lite handles minimal course with performance baseline", async 
       {
         generationTimeMs: durationMs,
         filesProcessed: 10,
-      }
+      },
     );
 
     try {
@@ -182,7 +178,7 @@ Deno.test("tutors CLI scales with multiple topics efficiently", async () => {
     await Deno.mkdir(topicDir, { recursive: true });
     await Deno.writeTextFile(
       `${topicDir}/topic.md`,
-      `# Topic ${i}\n\nContent for topic ${i}.`
+      `# Topic ${i}\n\nContent for topic ${i}.`,
     );
   }
 
@@ -204,7 +200,7 @@ Deno.test("tutors CLI scales with multiple topics efficiently", async () => {
     // Assert: Should scale reasonably (still under max time)
     assert(
       durationMs < MAX_GENERATION_TIME_MS,
-      `Multi-topic generation took ${durationMs}ms`
+      `Multi-topic generation took ${durationMs}ms`,
     );
 
     // Assert: All topics should be in output
@@ -214,7 +210,7 @@ Deno.test("tutors CLI scales with multiple topics efficiently", async () => {
       const json = JSON.parse(content);
       assert(
         json.los && json.los.length >= topicCount,
-        `Should have processed ${topicCount} topics, found ${json.los?.length || 0}`
+        `Should have processed ${topicCount} topics, found ${json.los?.length || 0}`,
       );
     }
 
@@ -259,7 +255,7 @@ Deno.test("tutors CLI memory usage is reasonable for minimal course", async () =
 
     // Just record the measurement - actual subprocess memory not directly measurable
     console.log(
-      `✓ Memory usage (test process): ${(memoryUsed / 1024 / 1024).toFixed(2)} MB`
+      `✓ Memory usage (test process): ${(memoryUsed / 1024 / 1024).toFixed(2)} MB`,
     );
 
     // This test mainly documents that we're monitoring memory
@@ -273,4 +269,3 @@ Deno.test("tutors CLI memory usage is reasonable for minimal course", async () =
     }
   }
 });
-

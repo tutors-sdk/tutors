@@ -96,7 +96,7 @@ async function acquireLock(lockPath: string, maxRetries = 50): Promise<boolean> 
       return true;
     } catch {
       // Lock exists, wait a bit and retry
-      await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 100));
+      await new Promise((resolve) => setTimeout(resolve, 100 + Math.random() * 100));
     }
   }
   return false;
@@ -121,7 +121,7 @@ async function releaseLock(lockPath: string): Promise<void> {
  */
 export async function saveBaselines(baselines: PerformanceBaseline[], path: string = BASELINES_PATH): Promise<void> {
   const lockPath = path + ".lock";
-  
+
   // Acquire lock
   const locked = await acquireLock(lockPath);
   if (!locked) {
@@ -163,7 +163,7 @@ export async function getBaseline(
   testId: string,
   cliTool: string,
   inputSize: "minimal" | "standard" | "large",
-  path: string = BASELINES_PATH
+  path: string = BASELINES_PATH,
 ): Promise<PerformanceBaseline | null> {
   const baselines = await loadBaselines(path);
   return baselines.find((b) => b.testId === testId && b.cliTool === cliTool && b.inputSize === inputSize) || null;
@@ -180,7 +180,7 @@ export async function recordBaseline(baseline: PerformanceBaseline, path: string
 
   // Remove existing baseline for same test/tool/size if it exists
   const filtered = baselines.filter(
-    (b) => !(b.testId === baseline.testId && b.cliTool === baseline.cliTool && b.inputSize === baseline.inputSize)
+    (b) => !(b.testId === baseline.testId && b.cliTool === baseline.cliTool && b.inputSize === baseline.inputSize),
   );
 
   // Add new baseline
@@ -206,7 +206,7 @@ export async function compareToBaseline(
   inputSize: "minimal" | "standard" | "large",
   currentMetrics: PerformanceMetrics,
   maxDegradation: number = MAX_DEGRADATION_PERCENT,
-  path: string = BASELINES_PATH
+  path: string = BASELINES_PATH,
 ): Promise<ComparisonResult> {
   const baseline = await getBaseline(testId, cliTool, inputSize, path);
 
@@ -260,7 +260,7 @@ export function createBaseline(
   testId: string,
   cliTool: string,
   inputSize: "minimal" | "standard" | "large",
-  metrics: PerformanceMetrics
+  metrics: PerformanceMetrics,
 ): PerformanceBaseline {
   return {
     testId,
@@ -328,4 +328,3 @@ export async function getDirectorySize(dirPath: string): Promise<number> {
   await traverse(dirPath);
   return totalSize;
 }
-

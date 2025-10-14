@@ -6,10 +6,10 @@
  * Follows Constitution Principle II: Readable Tests Over Clever Tests
  */
 
-import { assertEquals, assertExists, assert } from "@std/assert";
+import { assert, assertEquals, assertExists } from "@std/assert";
 import { exists } from "@std/fs";
 import { CourseOutputSchema } from "../fixtures/schemas/course_output_schema.ts";
-import { validateJsonFile, fileExists } from "../test_helpers/output_validator.ts";
+import { fileExists, validateJsonFile } from "../test_helpers/output_validator.ts";
 
 const MINIMAL_COURSE_PATH = "./fixtures/sample_courses/minimal_course";
 const TUTORS_CLI = "jsr:@tutors/tutors";
@@ -48,7 +48,7 @@ Deno.test("tutors CLI generates valid JSON from minimal course", async () => {
   assertEquals(
     code,
     0,
-    `Tutors CLI should exit with code 0, got ${code}.\nStderr: ${stderrText}\nStdout: ${stdoutText}`
+    `Tutors CLI should exit with code 0, got ${code}.\nStderr: ${stderrText}\nStdout: ${stdoutText}`,
   );
 
   // Assert: JSON output directory should exist
@@ -70,7 +70,7 @@ Deno.test("tutors CLI generates valid JSON from minimal course", async () => {
 
   assert(
     validationResult.success,
-    `JSON output should conform to CourseOutputSchema. Errors: ${validationResult.errors?.join(", ")}`
+    `JSON output should conform to CourseOutputSchema. Errors: ${validationResult.errors?.join(", ")}`,
   );
 
   // Assert: Course should have expected content
@@ -115,7 +115,7 @@ Deno.test("tutors CLI handles empty directory with clear error", async () => {
     // Note: The actual CLI prints error but exits with code 0
     assert(
       output.includes("course.md") || output.includes("Cannot locate"),
-      `Error message should mention missing course.md. Got: ${output}`
+      `Error message should mention missing course.md. Got: ${output}`,
     );
 
     // The CLI shows an error message, which is sufficient for user feedback
@@ -176,7 +176,7 @@ Deno.test("tutors CLI preserves hierarchical structure", async () => {
   const topicTitles = course.los.map((lo: any) => lo.title);
   assert(
     topicTitles.some((title: string) => title.includes("Variables")),
-    "Should include 'Variables and Data Types' topic"
+    "Should include 'Variables and Data Types' topic",
   );
 
   // Cleanup
@@ -214,7 +214,7 @@ Deno.test("tutors CLI handles course with minimal content without crashing", asy
     // Exit code 0 or 1 is acceptable - we're testing for no crashes
     assert(
       code === 0 || code === 1,
-      `CLI should handle minimal course gracefully, got exit code ${code}`
+      `CLI should handle minimal course gracefully, got exit code ${code}`,
     );
 
     // If it succeeded, verify output was created
@@ -232,4 +232,3 @@ Deno.test("tutors CLI handles course with minimal content without crashing", asy
     }
   }
 });
-

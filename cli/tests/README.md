@@ -1,8 +1,11 @@
 # Tutors CLI Test Suite
 
+[![Tests](https://github.com/tutors-sdk/tutors-apps/workflows/Tutors%20CLI%20Tests/badge.svg)](https://github.com/tutors-sdk/tutors-apps/actions)
+[![Coverage](https://codecov.io/gh/tutors-sdk/tutors-apps/branch/main/graph/badge.svg)](https://codecov.io/gh/tutors-sdk/tutors-apps)
+
 **Comprehensive testing for Tutors CLI tools**
 
-**Status:** ✅ 54 Tests | 100% Pass Rate (Sequential) | 92-100% (Parallel)
+**Status:** ✅ 54 Tests | 100% Pass Rate (Sequential) | 92-100% (Parallel) | ⚡ ~8s (parallel) / ~27s (sequential)
 
 ---
 
@@ -69,17 +72,20 @@ tests/
 ## Parallel vs Sequential
 
 ### Parallel Mode (Default)
+
 - **Speed:** ~8 seconds
 - **Reliability:** 92-100% (50-54 tests pass)
 - **Use for:** Development, quick feedback
 - **Note:** 0-4 intermittent failures expected due to race conditions
 
 ### Sequential Mode
+
 - **Speed:** ~28 seconds
 - **Reliability:** 100% (54 tests always pass)
 - **Use for:** CI/CD, releases, pre-commit validation
 
 **Why intermittent failures?** When tests run in parallel:
+
 - Multiple CLI processes spawn simultaneously
 - Performance measurements vary with system load
 - File system operations can conflict
@@ -95,23 +101,40 @@ Located in `fixtures/`:
 ```
 fixtures/
 ├── sample_courses/
-│   └── minimal_course/         # Complete sample course for testing
-│       ├── course.md
-│       ├── properties.yaml
-│       ├── topic-01/
-│       ├── topic-02/
-│       ├── lab-01/
-│       └── img/
+│   └── minimal_course/              # Complete sample course (mirrors reference course structure)
+│       ├── course.md                # Course description
+│       ├── course.png               # Course image
+│       ├── properties.yaml          # Course properties
+│       ├── topic-01/                # Variables and Data Types topic
+│       │   ├── topic.md
+│       │   ├── topic.png
+│       │   └── unit-1/
+│       │       ├── book-a/          # Lab with steps
+│       │       ├── note-1/          # Note with markdown
+│       │       └── talk-1/          # Talk with PDF
+│       └── topic-02/                # Control Flow topic
+│           ├── topic.md
+│           ├── web-1/               # Web link reference
+│           ├── github-1/            # GitHub repo reference
+│           └── archive-1/           # Archive resource
 └── schemas/
-    ├── course_output_schema.ts     # Zod schema for JSON validation
-    └── netlify_config_schema.ts    # Netlify config validation
+    ├── course_output_schema.ts      # Zod schema for JSON validation
+    └── netlify_config_schema.ts     # Netlify config validation
 ```
+
+**Note:** The minimal_course structure mirrors the [Tutors Reference Course](https://github.com/tutors-sdk/tutors-reference-course) with:
+
+- Topics containing units
+- Units containing labs (books), notes, and talks
+- Reference materials (web links, GitHub repos, archives)
+- Proper frontmatter and metadata
 
 ---
 
 ## What's Tested
 
 ### ✅ Critical Paths (14 tests)
+
 - JSON generation (`tutors` CLI)
 - HTML generation (`tutors-lite` CLI)
 - Core parsing (`tutors-gen-lib`)
@@ -119,6 +142,7 @@ fixtures/
 - File structure and output
 
 ### ✅ Edge Cases (14 tests)
+
 - Special characters (Unicode, symbols)
 - Large courses (scalability)
 - Asset integrity (images, PDFs, archives)
@@ -126,12 +150,14 @@ fixtures/
 - Long topic names
 
 ### ✅ Regression Prevention (12 tests)
+
 - Performance baselines (within 50% threshold)
 - Test suite health checks
 - Infrastructure validation
 - Baseline age monitoring
 
 ### ✅ Integration (14 tests)
+
 - End-to-end JSON workflows
 - End-to-end HTML workflows
 - Netlify deployment readiness
@@ -165,6 +191,7 @@ Baselines automatically update and include file locking to prevent race conditio
 ## Adding Tests
 
 ### 1. Critical Path Test
+
 Test core CLI functionality:
 
 ```typescript
@@ -181,6 +208,7 @@ Deno.test("tutors CLI generates valid JSON", async () => {
 ```
 
 ### 2. Edge Case Test
+
 Test boundary conditions:
 
 ```typescript
@@ -190,6 +218,7 @@ Deno.test("CLI handles Unicode filenames", async () => {
 ```
 
 ### 3. Regression Test
+
 Prevent bug recurrence (link to GitHub issue):
 
 ```typescript
@@ -203,6 +232,7 @@ Deno.test("Regression: Unicode filenames don't crash", async () => {
 ```
 
 ### 4. Integration Test
+
 Test complete workflows:
 
 ```typescript
@@ -216,6 +246,7 @@ Deno.test("Integration: Complete JSON pipeline", async () => {
 ## Best Practices
 
 ### ✅ DO
+
 - Use descriptive test names
 - Clean up temp files in `finally` blocks
 - Test behavior, not implementation
@@ -223,6 +254,7 @@ Deno.test("Integration: Complete JSON pipeline", async () => {
 - Use existing fixtures when possible
 
 ### ❌ DON'T
+
 - Test implementation details
 - Leave temp files/directories
 - Make tests dependent on each other
@@ -233,22 +265,37 @@ Deno.test("Integration: Complete JSON pipeline", async () => {
 
 ## CI/CD Integration
 
-Recommended GitHub Actions setup:
+Tests run automatically via GitHub Actions:
 
-```yaml
-- name: Run Tests
-  run: |
-    cd cli/tests
-    deno task test:sequential
+### Main Workflow (Sequential - 100% Reliable)
+
+**Triggers**: PRs and pushes to main/master\
+**Mode**: Sequential testing\
+**Platforms**: Ubuntu, Windows, macOS\
+**Coverage**: Enabled on Ubuntu
+
+### Quick Workflow (Parallel with Retry)
+
+**Triggers**: Pushes to feature branches\
+**Mode**: Parallel (fast) with sequential fallback\
+**Platform**: Ubuntu only\
+**Purpose**: Fast feedback during development
+
+### Status Badges
+
+Add to your PR or branch README:
+
+```markdown
+![Tests](https://github.com/tutors-sdk/tutors-apps/workflows/Tutors%20CLI%20Tests/badge.svg)
 ```
 
-Or with retry for parallel mode:
+### Local CI Simulation
 
-```yaml
-- name: Run Tests
-  run: |
-    cd cli/tests
-    deno task test || deno task test || deno task test:sequential
+```bash
+# Run the same tests as CI
+deno task fmt:check
+deno task lint
+deno task test:sequential
 ```
 
 ---
@@ -256,16 +303,21 @@ Or with retry for parallel mode:
 ## Troubleshooting
 
 ### Tests fail in parallel mode
+
 **Solution:** This is expected (0-4 intermittent failures). Run again or use sequential mode.
 
 ### Performance tests failing
+
 **Check:**
+
 - System load (high CPU/disk usage?)
 - Background processes
 - Try sequential mode: `deno task test:sequential`
 
 ### Tests fail consistently
+
 **Debug:**
+
 ```bash
 # Run specific test
 deno test --allow-all path/to/test.ts --filter "test name"
@@ -283,23 +335,23 @@ deno task test:sequential
 
 Current coverage by tool:
 
-| Tool | Tests | Coverage |
-|------|-------|----------|
-| `tutors` CLI | 18 | Core JSON generation |
-| `tutors-lite` CLI | 16 | HTML generation |
-| `tutors-gen-lib` | 8 | Parsing logic |
-| Integration | 14 | End-to-end workflows |
-| **Total** | **54** | **Comprehensive** |
+| Tool              | Tests  | Coverage             |
+| ----------------- | ------ | -------------------- |
+| `tutors` CLI      | 18     | Core JSON generation |
+| `tutors-lite` CLI | 16     | HTML generation      |
+| `tutors-gen-lib`  | 8      | Parsing logic        |
+| Integration       | 14     | End-to-end workflows |
+| **Total**         | **54** | **Comprehensive**    |
 
 ---
 
 ## Success Metrics
 
-✅ **54 tests** covering all scenarios  
-✅ **100% pass rate** in sequential mode  
-✅ **92-100% pass rate** in parallel mode  
-✅ **~8 seconds** execution time (parallel)  
-✅ **Performance monitoring** active  
+✅ **54 tests** covering all scenarios\
+✅ **100% pass rate** in sequential mode\
+✅ **92-100% pass rate** in parallel mode\
+✅ **~8 seconds** execution time (parallel)\
+✅ **Performance monitoring** active\
 ✅ **Regression prevention** in place
 
 ---
@@ -331,7 +383,7 @@ deno task test:sequential
 
 ---
 
-Last Updated: October 13, 2025  
-Test Count: 54  
-Sequential Pass Rate: 100%  
+Last Updated: October 13, 2025\
+Test Count: 54\
+Sequential Pass Rate: 100%\
 Parallel Pass Rate: 92-100%

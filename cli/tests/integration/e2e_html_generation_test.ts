@@ -34,7 +34,7 @@ async function copyDirectory(src: string, dest: string): Promise<void> {
  */
 async function findHtmlFiles(
   dir: string,
-  relativePath: string = ""
+  relativePath: string = "",
 ): Promise<string[]> {
   const htmlFiles: string[] = [];
 
@@ -90,7 +90,7 @@ Deno.test("Integration E2E: Complete HTML generation pipeline", async () => {
     assertEquals(
       result.code,
       0,
-      `CLI should succeed. Output: ${output}\nErrors: ${errors}`
+      `CLI should succeed. Output: ${output}\nErrors: ${errors}`,
     );
 
     // Assert: HTML output directory should be created
@@ -102,14 +102,14 @@ Deno.test("Integration E2E: Complete HTML generation pipeline", async () => {
     const htmlFiles = await findHtmlFiles(htmlDir);
     assert(
       htmlFiles.length > 0,
-      `HTML files should be generated. Found: ${htmlFiles.join(", ")}`
+      `HTML files should be generated. Found: ${htmlFiles.join(", ")}`,
     );
 
     // Assert: Should have index.html files
-    const indexFiles = htmlFiles.filter(file => file.includes("index.html"));
+    const indexFiles = htmlFiles.filter((file) => file.includes("index.html"));
     assert(
       indexFiles.length > 0,
-      "Should have at least one index.html file"
+      "Should have at least one index.html file",
     );
 
     // Assert: HTML files should be valid (basic check)
@@ -120,7 +120,7 @@ Deno.test("Integration E2E: Complete HTML generation pipeline", async () => {
       // Basic HTML structure validation
       assert(
         htmlContent.includes("<html") || htmlContent.includes("<!DOCTYPE"),
-        `${htmlFile} should contain HTML tags`
+        `${htmlFile} should contain HTML tags`,
       );
     }
 
@@ -187,11 +187,11 @@ Deno.test("Integration E2E: HTML output is static hosting ready", async () => {
       // Check for server-side code (shouldn't exist in static output)
       assert(
         !htmlContent.includes("<?php"),
-        "HTML should not contain PHP code"
+        "HTML should not contain PHP code",
       );
       assert(
         !htmlContent.includes("<%"),
-        "HTML should not contain template code"
+        "HTML should not contain template code",
       );
     }
 
@@ -204,7 +204,7 @@ Deno.test("Integration E2E: HTML output is static hosting ready", async () => {
       const tomlContent = await Deno.readTextFile(netlifyTomlPath);
       assert(
         tomlContent.includes("html") || tomlContent.includes("publish"),
-        "netlify.toml should reference HTML output directory"
+        "netlify.toml should reference HTML output directory",
       );
       console.log("  ✅ netlify.toml configured for HTML output");
     }
@@ -253,11 +253,11 @@ Deno.test("Integration E2E: HTML generation preserves assets", async () => {
     // Assert: Check if assets are preserved (flexible check)
     if (sourceAssets > 0) {
       console.log(`  ℹ Source has ${sourceAssets} assets`);
-      
+
       // tutors-lite may handle assets differently
       // Just verify generation completed successfully
       // (Assets are typically referenced in HTML via relative paths)
-      
+
       console.log("  ✅ Generation completed with source assets present");
     } else {
       console.log("  ℹ No source assets to check");
@@ -303,25 +303,25 @@ Deno.test("Integration E2E: HTML uses semantic structure", async () => {
       // Should have basic HTML structure
       assert(
         htmlContent.includes("<html") || htmlContent.includes("<!DOCTYPE"),
-        `${htmlFile} should have HTML declaration`
+        `${htmlFile} should have HTML declaration`,
       );
 
       // Should have head section
       assert(
         htmlContent.includes("<head"),
-        `${htmlFile} should have <head> section`
+        `${htmlFile} should have <head> section`,
       );
 
       // Should have body section
       assert(
         htmlContent.includes("<body"),
-        `${htmlFile} should have <body> section`
+        `${htmlFile} should have <body> section`,
       );
 
       // Should have title
       assert(
         htmlContent.includes("<title"),
-        `${htmlFile} should have <title> tag`
+        `${htmlFile} should have <title> tag`,
       );
     }
 
@@ -369,7 +369,7 @@ Deno.test("Integration E2E: HTML output is stable across runs", async () => {
     assertEquals(
       JSON.stringify(htmlFiles1),
       JSON.stringify(htmlFiles2),
-      "Same HTML files should be generated on each run"
+      "Same HTML files should be generated on each run",
     );
 
     console.log("  ✅ HTML output is stable");
@@ -379,4 +379,3 @@ Deno.test("Integration E2E: HTML output is stable across runs", async () => {
     await Deno.remove(tempDir, { recursive: true });
   }
 });
-

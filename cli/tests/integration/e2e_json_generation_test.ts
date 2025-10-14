@@ -62,7 +62,7 @@ Deno.test("Integration E2E: Complete JSON generation pipeline", async () => {
     assertEquals(
       result.code,
       0,
-      `CLI should succeed. Output: ${output}\nErrors: ${errors}`
+      `CLI should succeed. Output: ${output}\nErrors: ${errors}`,
     );
 
     // Assert: tutors.json should be generated
@@ -89,11 +89,11 @@ Deno.test("Integration E2E: Complete JSON generation pipeline", async () => {
     assertExists(courseData.los, "Course should have learning objects");
     assert(
       Array.isArray(courseData.los),
-      "Learning objects should be an array"
+      "Learning objects should be an array",
     );
     assert(
       courseData.los.length > 0,
-      "Course should have at least one learning object"
+      "Course should have at least one learning object",
     );
 
     // Assert: Topics should have proper structure
@@ -162,7 +162,7 @@ Deno.test("Integration E2E: JSON output is Netlify deployment-ready", async () =
       const tomlContent = await Deno.readTextFile(netlifyTomlPath);
       assert(
         tomlContent.includes("publish"),
-        "netlify.toml should define publish directory"
+        "netlify.toml should define publish directory",
       );
       console.log("  ✅ netlify.toml present and valid");
     } else {
@@ -211,11 +211,11 @@ Deno.test("Integration E2E: Pipeline handles missing optional assets", async () 
     // Create minimal course without img directory
     await Deno.writeTextFile(
       `${tempDir}/course.md`,
-      "# Test Course\n\nCourse without images"
+      "# Test Course\n\nCourse without images",
     );
     await Deno.writeTextFile(
       `${tempDir}/properties.yaml`,
-      "credits: Test\n"
+      "credits: Test\n",
     );
 
     // Create a topic
@@ -223,7 +223,7 @@ Deno.test("Integration E2E: Pipeline handles missing optional assets", async () 
     await Deno.mkdir(topicDir);
     await Deno.writeTextFile(
       `${topicDir}/topic.md`,
-      "# Topic 1\n\nA simple topic"
+      "# Topic 1\n\nA simple topic",
     );
 
     // Act: Run JSON generation
@@ -241,7 +241,7 @@ Deno.test("Integration E2E: Pipeline handles missing optional assets", async () 
     assertEquals(
       result.code,
       0,
-      `Pipeline should handle missing assets gracefully. Output: ${output}`
+      `Pipeline should handle missing assets gracefully. Output: ${output}`,
     );
 
     // Assert: JSON should still be generated
@@ -299,17 +299,17 @@ Deno.test("Integration E2E: JSON output is stable across multiple runs", async (
     assertEquals(
       data1.type,
       data2.type,
-      "Course type should be consistent"
+      "Course type should be consistent",
     );
     assertEquals(
       data1.title,
       data2.title,
-      "Course title should be consistent"
+      "Course title should be consistent",
     );
     assertEquals(
       data1.los.length,
       data2.los.length,
-      "Number of topics should be consistent"
+      "Number of topics should be consistent",
     );
 
     // Assert: Topic IDs should be stable
@@ -318,7 +318,7 @@ Deno.test("Integration E2E: JSON output is stable across multiple runs", async (
     assertEquals(
       JSON.stringify(topics1),
       JSON.stringify(topics2),
-      "Topic IDs should be stable across runs"
+      "Topic IDs should be stable across runs",
     );
 
     console.log("  ✅ JSON output is stable");
@@ -328,4 +328,3 @@ Deno.test("Integration E2E: JSON output is stable across multiple runs", async (
     await Deno.remove(tempDir, { recursive: true });
   }
 });
-

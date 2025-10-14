@@ -50,7 +50,7 @@ Deno.test("Regression: All previously passing tests still pass", () => {
   // The actual regression detection happens by running the full suite
   assert(
     true,
-    "Meta-test: Test suite structure is intact and runnable"
+    "Meta-test: Test suite structure is intact and runnable",
   );
 });
 
@@ -91,7 +91,7 @@ Deno.test("Regression: Test directory structure is intact", async () => {
 
   assert(
     missingDirs.length === 0,
-    `Test directory structure incomplete: ${missingDirs.join(", ")}`
+    `Test directory structure incomplete: ${missingDirs.join(", ")}`,
   );
 
   console.log("  ✓ All test directories present");
@@ -119,7 +119,7 @@ Deno.test("Regression: Test helpers are accessible", async () => {
 
   assert(
     missingHelpers.length === 0,
-    `Test helpers missing: ${missingHelpers.join(", ")}`
+    `Test helpers missing: ${missingHelpers.join(", ")}`,
   );
 
   console.log("  ✓ All test helpers accessible");
@@ -148,7 +148,7 @@ Deno.test("Regression: Test fixtures are intact", async () => {
 
   assert(
     missingFixtures.length === 0,
-    `Test fixtures missing: ${missingFixtures.join(", ")}`
+    `Test fixtures missing: ${missingFixtures.join(", ")}`,
   );
 
   console.log("  ✓ All test fixtures intact");
@@ -186,7 +186,7 @@ Deno.test("Regression: Core test files exist", async () => {
 
   assert(
     missingTests.length === 0,
-    `Core test files missing: ${missingTests.join(", ")}`
+    `Core test files missing: ${missingTests.join(", ")}`,
   );
 
   console.log("  ✓ All core test files present");
@@ -231,7 +231,7 @@ Deno.test("Regression: Test suite version tracking", () => {
 
   console.log("\n  📦 Test Suite Version:");
   console.log(
-    `  v${TEST_SUITE_VERSION.major}.${TEST_SUITE_VERSION.minor}.${TEST_SUITE_VERSION.patch}`
+    `  v${TEST_SUITE_VERSION.major}.${TEST_SUITE_VERSION.minor}.${TEST_SUITE_VERSION.patch}`,
   );
   console.log(`  Phase: ${TEST_SUITE_VERSION.phase} (Regression Prevention)\n`);
 
@@ -246,4 +246,3 @@ Deno.test("Regression: Test suite version tracking", () => {
 
   assert(true, "Version tracking active");
 });
-

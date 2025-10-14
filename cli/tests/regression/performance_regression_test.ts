@@ -8,10 +8,12 @@
 
 import { assert, assertEquals } from "@std/assert";
 import {
-  measureTime,
   compareToBaseline,
+  createBaseline,
   getBaseline,
   loadBaselines,
+  measureTime,
+  recordBaseline,
 } from "../test_helpers/performance_tracker.ts";
 
 const MINIMAL_COURSE_PATH = "./fixtures/sample_courses/minimal_course";
@@ -61,25 +63,26 @@ Deno.test("Regression: Tutors CLI performance within 10% of baseline", async () 
     // Assert: Should complete successfully
     assertEquals(result.code, 0, "CLI should complete successfully");
 
+    // Prepare current metrics
+    const currentMetrics = {
+      generationTimeMs: durationMs,
+      filesProcessed: 10,
+    };
+
     // Assert: Compare to baseline (if exists)
     const baseline = await getBaseline(
       "minimal-course-generation",
       "tutors",
-      "minimal"
+      "minimal",
     );
 
     if (baseline) {
-      const currentMetrics = {
-        generationTimeMs: durationMs,
-        filesProcessed: 10,
-      };
-
       const comparison = await compareToBaseline(
         "minimal-course-generation",
         "tutors",
         "minimal",
         currentMetrics,
-        25 // 25% threshold to account for parallel execution and system load
+        25, // 25% threshold to account for parallel execution and system load
       );
 
       console.log(`  ${comparison.message}`);
@@ -90,7 +93,7 @@ Deno.test("Regression: Tutors CLI performance within 10% of baseline", async () 
       // Warn for degradation > 25% but don't fail
       if (comparison.changePercent > 50) {
         throw new Error(
-          `Significant performance degradation: ${comparison.changePercent.toFixed(1)}%`
+          `Significant performance degradation: ${comparison.changePercent.toFixed(1)}%`,
         );
       } else if (comparison.changePercent > 25) {
         console.log(`  ⚠️  Warning: Performance degraded by ${comparison.changePercent.toFixed(1)}% (still acceptable)`);
@@ -98,8 +101,16 @@ Deno.test("Regression: Tutors CLI performance within 10% of baseline", async () 
     } else {
       console.log("  ℹ No baseline found - this run establishes baseline");
       console.log(`  Current: ${durationMs.toFixed(0)}ms`);
-      // First run - no regression to check
-      assert(true, "Baseline will be established");
+      
+      // Save baseline for future runs
+      const baseline = createBaseline(
+        "minimal-course-generation",
+        "tutors",
+        "minimal",
+        currentMetrics,
+      );
+      await recordBaseline(baseline);
+      console.log("  ✓ Baseline saved for future runs");
     }
   } finally {
     // Cleanup
@@ -135,7 +146,7 @@ Deno.test("Regression: Tutors-lite performance within 10% of baseline", async ()
     const baseline = await getBaseline(
       "minimal-course-html-generation",
       "tutors-lite",
-      "minimal"
+      "minimal",
     );
 
     if (baseline) {
@@ -149,7 +160,7 @@ Deno.test("Regression: Tutors-lite performance within 10% of baseline", async ()
         "tutors-lite",
         "minimal",
         currentMetrics,
-        25 // 25% threshold to account for parallel execution and system load
+        25, // 25% threshold to account for parallel execution and system load
       );
 
       console.log(`  ${comparison.message}`);
@@ -160,7 +171,7 @@ Deno.test("Regression: Tutors-lite performance within 10% of baseline", async ()
       // Warn for degradation > 25% but don't fail
       if (comparison.changePercent > 50) {
         throw new Error(
-          `Significant performance degradation: ${comparison.changePercent.toFixed(1)}%`
+          `Significant performance degradation: ${comparison.changePercent.toFixed(1)}%`,
         );
       } else if (comparison.changePercent > 25) {
         console.log(`  ⚠️  Warning: Performance degraded by ${comparison.changePercent.toFixed(1)}% (still acceptable)`);
@@ -168,7 +179,20 @@ Deno.test("Regression: Tutors-lite performance within 10% of baseline", async ()
     } else {
       console.log("  ℹ No baseline found - this run establishes baseline");
       console.log(`  Current: ${durationMs.toFixed(0)}ms`);
-      assert(true, "Baseline will be established");
+      
+      // Save baseline for future runs
+      const currentMetrics = {
+        generationTimeMs: durationMs,
+        filesProcessed: 10,
+      };
+      const baseline = createBaseline(
+        "minimal-course-html-generation",
+        "tutors-lite",
+        "minimal",
+        currentMetrics,
+      );
+      await recordBaseline(baseline);
+      console.log("  ✓ Baseline saved for future runs");
     }
   } finally {
     // Cleanup
@@ -192,7 +216,7 @@ Deno.test("Regression: Test suite executes within acceptable time", async () => 
     // Calculate total time from all baselines
     const totalBaselineTime = baselines.reduce(
       (sum, baseline) => sum + baseline.metrics.generationTimeMs,
-      0
+      0,
     );
 
     // Test suite should complete in reasonable time
@@ -204,7 +228,7 @@ Deno.test("Regression: Test suite executes within acceptable time", async () => 
     // This test documents that we're monitoring suite performance
     assert(
       totalBaselineTime < MAX_SUITE_TIME_MS / 2,
-      "Test suite should complete well within target time"
+      "Test suite should complete well within target time",
     );
   } else {
     console.log("  ℹ No baselines yet - establishing performance metrics");
@@ -246,7 +270,7 @@ Deno.test("Regression: Performance baselines file exists and is valid", async ()
 
 /**
  * Alert on significant performance improvements
- * 
+ *
  * If performance improves significantly (> 20%), we want to know
  * so we can update baselines appropriately.
  */
@@ -269,7 +293,7 @@ Deno.test("Regression: Alert on significant performance changes", async () => {
 
   if (oldBaselines.length > 0) {
     console.log(
-      `  ⚠️ Warning: ${oldBaselines.length} baseline(s) are > 30 days old`
+      `  ⚠️ Warning: ${oldBaselines.length} baseline(s) are > 30 days old`,
     );
     console.log(`  Consider re-establishing baselines if environment has changed`);
   } else {
@@ -279,4 +303,3 @@ Deno.test("Regression: Alert on significant performance changes", async () => {
   // This test always passes but provides useful information
   assert(true, "Performance monitoring active");
 });
-

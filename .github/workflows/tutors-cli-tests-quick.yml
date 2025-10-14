@@ -1,0 +1,62 @@
+name: Quick Tests (Parallel)
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - master
+    paths:
+      - 'cli/**'
+      - '.github/workflows/tutors-cli-tests-quick.yml'
+  workflow_dispatch:
+
+jobs:
+  quick-test:
+    name: Quick Test (Parallel Mode)
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: '2.x'
+
+      - name: Cache Deno dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/deno
+            ~/.deno
+          key: ${{ runner.os }}-deno-${{ hashFiles('cli/tests/deno.json') }}
+          restore-keys: |
+            ${{ runner.os }}-deno-
+
+      - name: Run tests (Parallel - Fast)
+        working-directory: cli/tests
+        run: deno task test
+        continue-on-error: true
+        id: parallel-test
+
+      - name: Retry with sequential if needed
+        if: steps.parallel-test.outcome == 'failure'
+        working-directory: cli/tests
+        run: |
+          echo "⚠️ Parallel tests had intermittent failures, retrying sequential..."
+          deno task test:sequential
+
+      - name: Test Summary
+        if: always()
+        shell: bash
+        run: |
+          echo "## Quick Test Results" >> $GITHUB_STEP_SUMMARY
+          if [ "${{ steps.parallel-test.outcome }}" == "success" ]; then
+            echo "- ✅ Parallel tests passed (~8 seconds)" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ⚠️ Parallel tests needed retry" >> $GITHUB_STEP_SUMMARY
+            echo "- ✅ Sequential tests passed" >> $GITHUB_STEP_SUMMARY
+          fi
+

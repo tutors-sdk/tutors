@@ -33,7 +33,7 @@ export interface ValidationResult<T = unknown> {
  */
 export function validateWithZod<T>(
   schema: z.ZodType<T>,
-  data: unknown
+  data: unknown,
 ): ValidationResult<T> {
   try {
     const result = schema.safeParse(data);
@@ -77,7 +77,7 @@ export function validateWithZod<T>(
  */
 export async function validateJsonFile<T>(
   filePath: string,
-  schema: z.ZodType<T>
+  schema: z.ZodType<T>,
 ): Promise<ValidationResult<T>> {
   try {
     const content = await Deno.readTextFile(filePath);
@@ -149,7 +149,7 @@ export async function countFiles(dirPath: string): Promise<number> {
  */
 export async function countFilesRecursive(dirPath: string): Promise<number> {
   let count = 0;
-  
+
   async function traverse(path: string): Promise<void> {
     try {
       for await (const entry of Deno.readDir(path)) {
@@ -164,7 +164,7 @@ export async function countFilesRecursive(dirPath: string): Promise<number> {
       // Ignore errors (permission issues, etc.)
     }
   }
-  
+
   await traverse(dirPath);
   return count;
 }
@@ -193,7 +193,7 @@ export async function getFileSize(filePath: string): Promise<number> {
  */
 export async function validateOutputStructure(
   outputPath: string,
-  expectedFiles: string[]
+  expectedFiles: string[],
 ): Promise<ValidationResult<string[]>> {
   const missingFiles: string[] = [];
 
@@ -218,4 +218,3 @@ export async function validateOutputStructure(
     data: [],
   };
 }
-

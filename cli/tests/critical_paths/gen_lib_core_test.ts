@@ -6,7 +6,7 @@
  * Follows Constitution Principle II: Readable Tests Over Clever Tests
  */
 
-import { assertEquals, assertExists, assert } from "@std/assert";
+import { assert, assertEquals, assertExists } from "@std/assert";
 import { parseCourse } from "@tutors/tutors-gen-lib";
 import { exists } from "@std/fs";
 
@@ -38,19 +38,19 @@ Deno.test("parseCourse successfully parses minimal course", () => {
   assertEquals(
     course.title.trim(),
     "Introduction to Programming",
-    "Course title should match course.md content"
+    "Course title should match course.md content",
   );
 
   // Assert: Learning objects should be populated
   assert(
     Array.isArray(course.los),
-    "Learning objects should be an array"
+    "Learning objects should be an array",
   );
 
   // We expect at least the topics and lab from minimal course
   assert(
     course.los.length > 0,
-    `Course should have learning objects, found ${course.los.length}`
+    `Course should have learning objects, found ${course.los.length}`,
   );
 });
 
@@ -89,7 +89,7 @@ Deno.test("parseCourse creates properly structured learning objects", () => {
     ];
     assert(
       validTypes.includes(lo.type),
-      `Learning object type '${lo.type}' should be valid`
+      `Learning object type '${lo.type}' should be valid`,
     );
   }
 });
@@ -143,7 +143,7 @@ Deno.test("parseCourse includes course properties from properties.yaml", () => {
   // Properties should be an object
   assert(
     typeof course.properties === "object",
-    "Properties should be an object"
+    "Properties should be an object",
   );
 });
 
@@ -164,13 +164,13 @@ Deno.test("parseCourse handles non-existent directory gracefully", () => {
     // The exact behavior depends on implementation
     assert(
       !course || course.los.length === 0,
-      "Non-existent course should result in empty or undefined course"
+      "Non-existent course should result in empty or undefined course",
     );
   } catch (error) {
     // Expected behavior - should throw an error
     assert(
       error instanceof Error,
-      "Should throw an Error for non-existent directory"
+      "Should throw an Error for non-existent directory",
     );
   }
 });
@@ -191,14 +191,13 @@ Deno.test("parseCourse collects learning resources", () => {
   // LR should be an object
   assert(
     typeof lr === "object",
-    "Learning resources should be an object"
+    "Learning resources should be an object",
   );
 
   // The structure of lr depends on the implementation
   // At minimum, it should be a defined object
   assert(
     Object.keys(lr).length >= 0,
-    "Learning resources should have some structure"
+    "Learning resources should have some structure",
   );
 });
-

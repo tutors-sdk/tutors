@@ -6,7 +6,7 @@
  * Follows Constitution Principle II: Readable Tests Over Clever Tests
  */
 
-import { assertEquals, assert } from "@std/assert";
+import { assert, assertEquals } from "@std/assert";
 import { exists } from "@std/fs";
 
 /**
@@ -23,7 +23,7 @@ Deno.test("tutors CLI handles course with special characters in title", async ()
   // Title with special characters: quotes, ampersand, apostrophe
   await Deno.writeTextFile(
     courseFile,
-    '# "Programming & Web Development" - Beginner\'s Guide\n\nA course with special chars.'
+    '# "Programming & Web Development" - Beginner\'s Guide\n\nA course with special chars.',
   );
 
   // Add properties file
@@ -73,7 +73,7 @@ Deno.test("tutors CLI handles unicode characters in course content", async () =>
   // Content with various unicode characters
   await Deno.writeTextFile(
     courseFile,
-    "# Introducción a la Programación\n\nCurso en español: ñ, á, é, í, ó, ú\n\n日本語のテキスト\n\nEmoji: 🚀 💻 📚"
+    "# Introducción a la Programación\n\nCurso en español: ñ, á, é, í, ó, ú\n\n日本語のテキスト\n\nEmoji: 🚀 💻 📚",
   );
 
   // Add properties file
@@ -116,7 +116,7 @@ Deno.test("tutors CLI handles special characters in frontmatter", async () => {
     courseFile,
     `# Test Course
 
-Course content here.`
+Course content here.`,
   );
 
   // Properties file with special characters
@@ -124,7 +124,7 @@ Course content here.`
     propsFile,
     `credits: "Dr. O'Brien & Prof. Smith"
 version: "1.0"
-`
+`,
   );
 
   try {
@@ -168,13 +168,12 @@ Deno.test("tutors CLI handles reasonably long topic names", async () => {
   await Deno.writeTextFile(propsFile, "credits: Test\n");
 
   // Create topic with long name (but reasonable - not hitting filesystem limits)
-  const longTopicName =
-    "topic-introduction-to-advanced-object-oriented-programming-concepts";
+  const longTopicName = "topic-introduction-to-advanced-object-oriented-programming-concepts";
   const topicDir = `${tempDir}/${longTopicName}`;
   await Deno.mkdir(topicDir, { recursive: true });
   await Deno.writeTextFile(
     `${topicDir}/topic.md`,
-    "# Introduction to Advanced OOP\n\nDetailed content."
+    "# Introduction to Advanced OOP\n\nDetailed content.",
   );
 
   try {
@@ -215,7 +214,7 @@ Deno.test("tutors CLI handles HTML entities in markdown content", async () => {
 
   await Deno.writeTextFile(
     courseFile,
-    "# Test Course\n\nContent with &lt;tags&gt; and &amp; entities.\n\n&copy; 2024"
+    "# Test Course\n\nContent with &lt;tags&gt; and &amp; entities.\n\n&copy; 2024",
   );
 
   await Deno.writeTextFile(propsFile, "credits: Test\n");
@@ -243,4 +242,3 @@ Deno.test("tutors CLI handles HTML entities in markdown content", async () => {
     await Deno.remove(tempDir, { recursive: true });
   }
 });
-
