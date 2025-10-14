@@ -14,7 +14,61 @@
   import { currentCourse, tutorsId } from "$lib/runes.svelte";
 </script>
 
-<AppBar
+<AppBar>
+  <AppBar.Toolbar class="grid-cols-[auto_1fr_auto]">
+    <AppBar.Lead>
+      {#if currentCourse?.value}
+        <!-- <span class="hidden md:block"> -->
+        <InfoButton />
+        <!-- </span> -->
+        <!-- <CourseTitle /> -->
+      {:else}
+        <!-- <span class="ml-12">
+          <TutorsTitle title="Tutors Open Source Project" subtitle="Open Web Learning Components" />
+        </span> -->
+      {/if}
+    </AppBar.Lead>
+    <CalendarButton />
+    <AppBar.Headline>
+      <CourseTitle />
+    </AppBar.Headline>
+    <AppBar.Trail>
+      <div class="items-center md:flex">
+        <div class="hidden md:flex">
+          <LlmsIndicator />
+        </div>
+        <div class="hidden md:flex">
+          <TutorsTimeIndicator />
+        </div>
+        <div class="flex items-center">
+          {#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
+            <SearchButton />
+          {/if}
+        </div>
+      </div>
+      <div class="flex items-center">
+        <LayoutMenu />
+      </div>
+      <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
+      {#if !currentCourse?.value?.isPrivate}
+        <div class="relative">
+          {#if !tutorsId.value?.login}
+            <AnonProfile redirect="/{currentCourse?.value?.courseId}" />
+          {:else}
+            <ConnectedProfile />
+          {/if}
+        </div>
+      {/if}
+      <span class="hidden md:block">
+        {#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
+          <TocButton />
+        {/if}
+      </span>
+    </AppBar.Trail>
+  </AppBar.Toolbar>
+</AppBar>
+
+<!-- <AppBar
   padding="p-2"
   spaceY=""
   toolbarClasses="flex items-center"
@@ -67,4 +121,4 @@
       {/if}
     </span>
   {/snippet}
-</AppBar>
+</AppBar> -->
