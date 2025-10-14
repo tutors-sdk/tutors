@@ -19,9 +19,9 @@
     {#if currentCourse.value?.defaultPdfReader === "mozilla"}
       <Talk lo={data.lo} />
     {:else if currentCourse.value?.defaultPdfReader === "adobe"}
-      <TalkAdobe lo={data.lo} />
+      <TalkAdobe lo={data.lo} orientation="portrait" />
     {:else}
-      <TalkAdobe lo={data.lo} />
+      <TalkAdobe lo={data.lo} orientation="portrait" />
     {/if}
   {/if}
 </Context>
