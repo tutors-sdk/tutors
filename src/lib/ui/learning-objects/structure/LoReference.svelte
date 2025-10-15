@@ -14,11 +14,8 @@
     class="flex"
     onclick={async (e) => {
       e.stopPropagation();
-      // Respect modifier/middle clicks for new tab/window behavior
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
       e.preventDefault();
-      const target = lo?.route || "/";
-      await goto(target);
+      await goto(lo?.route);
     }}
   >
     <Icon type={lo.type} />
@@ -30,11 +27,8 @@
       href={lo.video}
     onclick={async (e) => {
       e.stopPropagation();
-      // Respect modifier/middle clicks for new tab/window behavior
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.button === 1) return;
       e.preventDefault();
-      const target = lo?.video || "/";
-      await goto(target);
+      await goto(lo?.video);
     }}
     >
       <Icon type="video" />
