@@ -2,9 +2,9 @@
   import type { Lo } from "@tutors/tutors-model-lib";
   import { TreeView, createTreeViewCollection, useTreeView } from "@skeletonlabs/skeleton-svelte";
   import { onMount } from "svelte";
-    import LoReference from "./LoReference.svelte";
+  import LoReference from "./LoReference.svelte";
 
-  let { lo }: { lo: Lo } = $props();
+  let { lo, expandState = "expanded" }: { lo: Lo; expandState?: "expanded" | "collapsed" | "auto" } = $props();
 
   type Node = { id: string; name: string; lo?: Lo; children?: Node[] };
 
@@ -30,8 +30,13 @@
   const treeView = useTreeView({ id, collection });
 
   onMount(() => {
-    // Expand all branches by default
-    treeView().expand();
+    if (expandState === "expanded") {
+      treeView().expand();
+    } else if (expandState === "collapsed") {
+      treeView().collapse();
+    } else {
+      // 'auto' -> leave default behavior
+    }
   });
 </script>
 
@@ -51,7 +56,7 @@
           <TreeView.BranchIndicator />
           <TreeView.BranchText class="py-0.5">
             {#if node.lo}
-              <LoReference lo={node.lo} indent={indexPath.length * 1} compact={true} />
+              <LoReference lo={node.lo} indent={indexPath.length * 1} />
             {/if}
           </TreeView.BranchText>
         </TreeView.BranchControl>
@@ -65,7 +70,7 @@
     {:else}
       <TreeView.Item class="py-0.5">
         {#if node.lo}
-          <LoReference lo={node.lo} indent={indexPath.length * 1} compact={true} />
+          <LoReference lo={node.lo} indent={indexPath.length * 1} />
         {/if}
       </TreeView.Item>
     {/if}
