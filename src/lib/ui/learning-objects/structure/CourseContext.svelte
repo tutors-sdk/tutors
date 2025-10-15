@@ -5,15 +5,24 @@
   import { currentCourse } from "$lib/runes.svelte";
 </script>
 
-<Accordion multiple>
+<Accordion multiple class=" max-h-[90vh]  overflow-y-auto">
   {#each currentCourse?.value?.los ?? [] as lo}
     {#if !lo.hide}
       <Accordion.Item value={lo?.id}>
-        {#snippet lead()}<Icon type={lo.type} />{/snippet}
-        {#snippet control()}{lo.title}{/snippet}
-        {#snippet panel()}
-          <LoContext {lo} />
-        {/snippet}
+        <Accordion.ItemTrigger>
+          <div class="flex w-full items-center gap-2">
+            <Icon type={lo.type} />
+            <span>{lo.title}</span>
+            <span class="flex-1"></span>
+            <Accordion.ItemIndicator class="group">
+              <span class="hidden size-4 group-data-[state=open]:block"> + </span>
+              <span class="block size-4 group-data-[state=open]:hidden"> − </span>
+            </Accordion.ItemIndicator>
+          </div>
+        </Accordion.ItemTrigger>
+        <Accordion.ItemContent>
+          <LoContext {lo} indent={0} />
+        </Accordion.ItemContent>
       </Accordion.Item>
       <hr class="hr" />
     {/if}

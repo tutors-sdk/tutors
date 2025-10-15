@@ -1,43 +1,32 @@
 <script lang="ts">
-  import { Modal } from "@skeletonlabs/skeleton-svelte";
+  import { Dialog, Portal } from "@skeletonlabs/skeleton-svelte";
   import Icon from "./Icon.svelte";
 
   let { position = "left", menuSelector, sidebarContent } = $props();
 
-  let openState = $state(false);
-  function popoverClose() {
-    openState = false;
-  }
-  let positionerJustify = $state("justify-start");
-  let transitionInOut = $state(-480);
-  if (position === "right") {
-    positionerJustify = "justify-end";
-    transitionInOut = 480;
-  }
+  let positionerJustify = $state(position === "right" ? "justify-end" : "justify-start");
+  let contentTranslate = $state(
+    position === "right"
+      ? "translate-x-full data-[state=open]:translate-x-0 starting:data-[state=open]:translate-x-full"
+      : "-translate-x-full data-[state=open]:translate-x-0 starting:data-[state=open]:-translate-x-full"
+  );
 </script>
 
-<Modal
-  open={openState}
-  onOpenChange={(e) => (openState = e.open)}
-  triggerBase="btn"
-  contentBase="bg-surface-100-900 p-4 space-y-4 shadow-xl w-[480px] h-screen"
-  {positionerJustify}
-  positionerAlign=""
-  positionerPadding=""
-  transitionsPositionerIn={{ x: transitionInOut, duration: 200 }}
-  transitionsPositionerOut={{ x: transitionInOut, duration: 200 }}
->
-  {#snippet trigger()}
+<Dialog>
+  <Dialog.Trigger>
     {@render menuSelector()}
-  {/snippet}
-  {#snippet content()}
-    <div class="relative h-full">
-      <button class="btn-icon hover:preset-tonal absolute top-0 right-0 z-10" onclick={popoverClose}>
-        <Icon type="close" />
-      </button>
-      <div class="h-full overflow-y-auto">
+  </Dialog.Trigger>
+  <Portal>
+    <Dialog.Backdrop class="bg-surface-100-900 h-screen w-[480px] space-y-4 p-4 shadow-xl" />
+    <Dialog.Positioner class={`fixed inset-0 z-50 flex ${positionerJustify}`}>
+      <Dialog.Content
+        class={`card bg-surface-100-900 h-screen w-sm space-y-4 p-4 opacity-0 shadow-xl transition transition-discrete ${contentTranslate} data-[state=open]:opacity-100 starting:data-[state=open]:opacity-0`}
+      >
+        <header class="flex items-center justify-end">
+          <Dialog.CloseTrigger class="btn-icon preset-tonal"><Icon type="close" /></Dialog.CloseTrigger>
+        </header>
         {@render sidebarContent()}
-      </div>
-    </div>
-  {/snippet}
-</Modal>
+      </Dialog.Content>
+    </Dialog.Positioner>
+  </Portal>
+</Dialog>
