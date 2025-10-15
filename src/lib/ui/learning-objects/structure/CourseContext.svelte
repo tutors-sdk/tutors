@@ -10,9 +10,14 @@
     {#if !lo.hide}
       <Accordion.Item value={lo?.id}>
         <Accordion.ItemTrigger>
-          <div class="flex items-center gap-2">
+          <div class="flex w-full items-center gap-2">
             <Icon type={lo.type} />
             <span>{lo.title}</span>
+            <span class="flex-1"></span>
+            <Accordion.ItemIndicator class="group">
+              <span class="hidden size-4 group-data-[state=open]:block"> + </span>
+              <span class="block size-4 group-data-[state=open]:hidden"> − </span>
+            </Accordion.ItemIndicator>
           </div>
         </Accordion.ItemTrigger>
         <Accordion.ItemContent>

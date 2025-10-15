@@ -18,21 +18,24 @@
   <AppBar.Toolbar class="grid-cols-[auto_1fr_auto]">
     <AppBar.Lead>
       {#if currentCourse?.value}
-        <!-- <span class="hidden md:block"> -->
-        <InfoButton />
-        <!-- </span> -->
-        <!-- <CourseTitle /> -->
+        <span class="hidden md:block">
+          <InfoButton />
+        </span>
       {:else}
-        <!-- <span class="ml-12">
+        <span class="ml-12">
           <TutorsTitle title="Tutors Open Source Project" subtitle="Open Web Learning Components" />
-        </span> -->
+        </span>
       {/if}
     </AppBar.Lead>
-    <CalendarButton />
+
     <AppBar.Headline>
-      <CourseTitle />
+      {#if currentCourse?.value}
+        <CourseTitle />
+      {/if}
     </AppBar.Headline>
+
     <AppBar.Trail>
+      <CalendarButton />
       <div class="items-center md:flex">
         <div class="hidden md:flex">
           <LlmsIndicator />
