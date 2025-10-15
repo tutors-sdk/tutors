@@ -4,22 +4,22 @@
   import Self from "./LoContext.svelte";
 
   let { lo, indent = 0 }: { lo: Lo; indent: number } = $props();
-
+  
   if (lo?.toc) {
-    lo?.toc?.forEach((lo) => {
-      if (lo?.route.endsWith("/")) {
-        lo.route = lo?.route.slice(0, -1);
+    lo.toc.forEach((child: Lo) => {
+      if (child.route.endsWith("/")) {
+        child.route = child.route.slice(0, -1);
       }
-      if ((lo?.type === "unit" || lo?.type === "side") && lo?.parentLo?.type === "course") {
+      if ((child.type === "unit" || child.type === "side") && child.parentLo?.type === "course") {
         lo.route = lo.route.replace("topic", "course");
       }
     });
   }
 </script>
 
-{#each lo?.toc as lo}
-  <LoReference {lo} indent={indent + 2} />
-  {#if lo?.toc}
-    <Self {lo} indent={indent + 2} />
+{#each (lo as any)?.toc as childLo}
+  <LoReference lo={childLo} indent={indent + 2} />
+  {#if childLo?.toc}
+    <Self lo={childLo} indent={indent + 2} />
   {/if}
 {/each}

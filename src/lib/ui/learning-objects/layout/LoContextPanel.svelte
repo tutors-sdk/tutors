@@ -3,6 +3,7 @@
   import type { Lo } from "@tutors/tutors-model-lib";
   import Image from "../../components/Image.svelte";
   import LoContext from "../structure/LoContext.svelte";
+    import LoContextTree from "../structure/LoContextTree.svelte";
 
   interface Props {
     loContext: Lo;
@@ -19,6 +20,6 @@
     <figure class="flex h-44 justify-center p-2">
       <Image lo={currentLo?.value} />
     </figure>
-    <LoContext lo={loContext} />
+    <LoContextTree lo={loContext} />
   </div>
 </div>
