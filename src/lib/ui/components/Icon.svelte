@@ -1,8 +1,7 @@
 <script lang="ts">
+  import { themeService } from "$lib/services/themes";
   import Icon from "@iconify/svelte";
-
-  import { Tooltip } from "@skeletonlabs/skeleton-svelte";
-  import { themeService } from "$lib/services/themes/services/themes.svelte";
+  import { Portal, Tooltip } from "@skeletonlabs/skeleton-svelte";
 
   interface Props {
     type?: string;
@@ -59,13 +58,17 @@
 {/snippet}
 
 {#if tip}
-  <Tooltip positioning={{ placement: "top" }} triggerBase="underline" contentBase="card preset-filled p-4 text-sm z-10 " openDelay={2000}>
-    {#snippet trigger()}
+  <Tooltip>
+    <Tooltip.Trigger>
       {@render displayIcon()}
-    {/snippet}
-    {#snippet content()}
-      {tip}
-    {/snippet}
+    </Tooltip.Trigger>
+    <Portal>
+      <Tooltip.Positioner>
+        <Tooltip.Content class="card bg-surface-100-900 z-9999 max-w-md p-2 shadow-xl">
+          {tip}
+        </Tooltip.Content>
+      </Tooltip.Positioner>
+    </Portal>
   </Tooltip>
 {:else}
   {@render displayIcon()}

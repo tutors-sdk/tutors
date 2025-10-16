@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { Lo } from "$lib/services/base";
   import Iconify from "@iconify/svelte";
+  import type { Lo } from "@tutors/tutors-model-lib";
 
   interface Props {
     lo: Lo;

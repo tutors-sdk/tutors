@@ -165,6 +165,15 @@ All contributors are eligible to earn a [Holopin](https://holopin.io) - a digita
 
 Every time you open a PR that is accepted, you will be assigned holobytes. Collect these holobytes to see your owl evolve!
 
+Use the following in package json when debugging:
+
+~~~
+  // deployed
+    "@tutors/tutors-model-lib": "npm:@jsr/tutors__tutors-model-lib@^4.2.1",
+  // debug - replace with correct absolute path
+    "@tutors/tutors-model-lib": "file:../tutors-apps/cli/tutors-model-lib"
+~~~
+
 ### License
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)

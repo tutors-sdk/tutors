@@ -1,7 +1,7 @@
 <script lang="ts">
   import { currentCodeTheme } from "$lib/services/markdown";
-  import type { Lo } from "$lib/services/base";
-
+  import type { Lo } from "@tutors/tutors-model-lib";
+  
   interface Props {
     lo: Lo;
   }

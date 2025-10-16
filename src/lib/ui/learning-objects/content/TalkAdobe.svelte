@@ -7,8 +7,9 @@
 
   interface Props {
     lo: Talk;
+    orientation?: "landscape" | "portrait";
   }
-  let { lo }: Props = $props();
+  let { lo, orientation = "landscape" }: Props = $props();
 
   let embedOption = "SIZED_CONTAINER";
   if (currentCourse.value?.pdfOrientation === "portrait") {
@@ -83,7 +84,11 @@
   });
 </script>
 
-{#if currentCourse?.value?.pdfOrientation === "landscape"}
+{#if orientation === "portrait"}
+  <div class="mt-2 mr-2 px-4 py-2">
+    <div id={viewerId} class="mx-auto h-[85dvh]"></div>
+  </div>
+{:else if currentCourse?.value?.pdfOrientation === "landscape"}
   <div class="relative w-full p-2" style="aspect-ratio: 16/11;">
     <div id={viewerId} class="mx-auto h-full w-full"></div>
   </div>

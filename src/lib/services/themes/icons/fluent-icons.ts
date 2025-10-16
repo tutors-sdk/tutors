@@ -27,6 +27,7 @@ export const FluentIconLib: IconLib = {
   panelvideo: { type: "fluent:video-clip-24-regular", color: "error" },
   paneltalk: { type: "fluent:presenter-24-filled", color: "primary" },
   panelnote: { type: "fluent:notepad-16-regular", color: "warning" },
+  tutorial: { type: "fluent:arrow-clockwise-dashes-settings-24-regular", color: "primary" },
 
   // pdf reader icons
   left: { type: "fluent:ios-arrow-left-24-filled", color: "success" },
@@ -56,6 +57,7 @@ export const FluentIconLib: IconLib = {
   portrait: { type: "fluent:rectangle-portrait-location-target-20-regular", color: "primary" },
   circular: { type: "fluent:circle-sparkle-28-regular", color: "warning" },
   landscape: { type: "fluent:rectangle-landscape-sparkle-48-regular", color: "error" },
+  coursetree: { type: "ph:tree-view-duotone", color: "primary" },
 
   courseinfo: { type: "fluent:info-28-regular", color: "bg-base-content" },
   llm: { type: "hugeicons:ai-innovation-01", color: "bg-base-content" },
