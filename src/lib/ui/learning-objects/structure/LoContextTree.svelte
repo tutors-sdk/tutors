@@ -20,7 +20,7 @@
     };
   }
 
-  const rootChildren = ((lo as any)?.toc as any[] | undefined)?.map((child, i) => mapLoToNode(child, 'root', i)) || [];
+  const rootChildren = ((lo as any)?.toc as any[] | undefined)?.map((child, i) => mapLoToNode(child, "root", i)) || [];
 
   const collection = createTreeViewCollection<Node>({
     nodeToValue: (node) => node.id,
@@ -48,12 +48,12 @@
   }
 </script>
 
-<div class="flex w-full justify-center items-center gap-2 mb-2">
-  <button class="btn btn-sm preset-filled" onclick={toggleExpandAll}>
+<div class="mb-2 flex w-full items-center justify-center gap-2">
+  <button class="btn btn-sm border-1" onclick={toggleExpandAll}>
     {#if allExpanded}
-      <Icon type="expanded" tip="Collapse all"/>
+      <Icon type="expanded" tip="Collapse all" />
     {:else}
-      <Icon type="compacted" tip="Expand all"/>
+      <Icon type="compacted" tip="Expand all" />
     {/if}
   </button>
 </div>

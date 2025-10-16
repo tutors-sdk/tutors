@@ -64,7 +64,7 @@
     </Tooltip.Trigger>
     <Portal>
       <Tooltip.Positioner>
-        <Tooltip.Content class="card bg-surface-100-900 z-999 max-w-md p-2 shadow-xl">
+        <Tooltip.Content class="card bg-surface-100-900 z-9999 max-w-md p-2 shadow-xl">
           {tip}
         </Tooltip.Content>
       </Tooltip.Positioner>

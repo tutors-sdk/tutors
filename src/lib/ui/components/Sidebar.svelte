@@ -17,7 +17,7 @@
     {@render menuSelector()}
   </Dialog.Trigger>
   <Portal>
-    <Dialog.Backdrop class="bg-surface-100-900 h-screen w-[480px] space-y-4 p-4 shadow-xl" />
+    <Dialog.Backdrop class="bg-surface-100-900 h-screen w-[480px] shadow-xl" />
     <Dialog.Positioner class={`fixed inset-0 z-50 flex ${positionerJustify}`}>
       <Dialog.Content
         class={`card bg-surface-100-900 h-screen w-sm space-y-4 p-4 opacity-0 shadow-xl transition transition-discrete ${contentTranslate} data-[state=open]:opacity-100 starting:data-[state=open]:opacity-0`}
