@@ -57,6 +57,7 @@ export const FluentIconLib: IconLib = {
   portrait: { type: "fluent:rectangle-portrait-location-target-20-regular", color: "primary" },
   circular: { type: "fluent:circle-sparkle-28-regular", color: "warning" },
   landscape: { type: "fluent:rectangle-landscape-sparkle-48-regular", color: "error" },
+  coursetree: { type: "ph:tree-view-duotone", color: "primary" },
 
   courseinfo: { type: "fluent:info-28-regular", color: "bg-base-content" },
   llm: { type: "hugeicons:ai-innovation-01", color: "bg-base-content" },

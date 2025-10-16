@@ -3,7 +3,6 @@
   import Icon from "@iconify/svelte";
   import { Portal, Tooltip } from "@skeletonlabs/skeleton-svelte";
 
-
   interface Props {
     type?: string;
     icon?: string;
@@ -65,7 +64,7 @@
     </Tooltip.Trigger>
     <Portal>
       <Tooltip.Positioner>
-        <Tooltip.Content class="card bg-surface-100-900 max-w-md p-2 shadow-xl">
+        <Tooltip.Content class="card bg-surface-100-900 z-999 max-w-md p-2 shadow-xl">
           {tip}
         </Tooltip.Content>
       </Tooltip.Positioner>
