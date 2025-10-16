@@ -3,22 +3,24 @@
   import { TreeView, createTreeViewCollection, useTreeView } from "@skeletonlabs/skeleton-svelte";
   import { onMount } from "svelte";
   import LoReference from "./LoReference.svelte";
+  import Icon from "$lib/ui/components/Icon.svelte";
 
   let { lo }: { lo: Lo } = $props();
 
   type Node = { id: string; name: string; lo?: Lo; children?: Node[] };
 
-  function mapLoToNode(item: any): Node {
-    const children = (item?.toc as any[] | undefined)?.map(mapLoToNode);
+  function mapLoToNode(item: any, parentPath: string, index: number): Node {
+    const thisPath = `${parentPath}/${index}`;
+    const children = ((item?.toc as any[] | undefined) || []).map((child, i) => mapLoToNode(child, thisPath, i));
     return {
-      id: item?.route || item?.title,
+      id: item.id,
       name: item?.title || "",
       lo: item as Lo,
       children
     };
   }
 
-  const rootChildren = ((lo as any)?.toc as any[] | undefined)?.map(mapLoToNode) || [];
+  const rootChildren = ((lo as any)?.toc as any[] | undefined)?.map((child, i) => mapLoToNode(child, 'root', i)) || [];
 
   const collection = createTreeViewCollection<Node>({
     nodeToValue: (node) => node.id,
@@ -32,8 +34,29 @@
   onMount(() => {
     // Expand all branches by default
     treeView().expand();
+    allExpanded = true;
   });
+
+  let allExpanded = $state(true);
+  function toggleExpandAll() {
+    if (allExpanded) {
+      treeView().collapse();
+    } else {
+      treeView().expand();
+    }
+    allExpanded = !allExpanded;
+  }
 </script>
+
+<div class="flex w-full justify-center items-center gap-2 mb-2">
+  <button class="btn btn-sm preset-filled" onclick={toggleExpandAll}>
+    {#if allExpanded}
+      <Icon type="expanded" tip="Collapse all"/>
+    {:else}
+      <Icon type="compacted" tip="Expand all"/>
+    {/if}
+  </button>
+</div>
 
 <TreeView.Provider value={treeView}>
   <TreeView.Tree>
