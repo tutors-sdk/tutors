@@ -78,7 +78,7 @@
             {/if}
           </TreeView.BranchText>
         </TreeView.BranchControl>
-        <TreeView.BranchContent>
+        <TreeView.BranchContent class="-pl-1">
           <TreeView.BranchIndentGuide />
           {#each node.children as childNode, childIndex (childNode)}
             {@render treeNode(childNode, [...indexPath, childIndex])}
