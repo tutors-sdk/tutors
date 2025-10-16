@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   import LoReference from "./LoReference.svelte";
 
-  let { lo, expandState = "expanded" }: { lo: Lo; expandState?: "expanded" | "collapsed" | "auto" } = $props();
+  let { lo }: { lo: Lo } = $props();
 
   type Node = { id: string; name: string; lo?: Lo; children?: Node[] };
 
@@ -30,13 +30,8 @@
   const treeView = useTreeView({ id, collection });
 
   onMount(() => {
-    if (expandState === "expanded") {
-      treeView().expand();
-    } else if (expandState === "collapsed") {
-      treeView().collapse();
-    } else {
-      // 'auto' -> leave default behavior
-    }
+    // Expand all branches by default
+    treeView().expand();
   });
 </script>
 
@@ -56,7 +51,7 @@
           <TreeView.BranchIndicator />
           <TreeView.BranchText class="py-0.5">
             {#if node.lo}
-              <LoReference lo={node.lo} indent={indexPath.length * 1} />
+              <LoReference lo={node.lo} />
             {/if}
           </TreeView.BranchText>
         </TreeView.BranchControl>
@@ -70,7 +65,7 @@
     {:else}
       <TreeView.Item class="py-0.5">
         {#if node.lo}
-          <LoReference lo={node.lo} indent={indexPath.length * 1} />
+          <LoReference lo={node.lo} />
         {/if}
       </TreeView.Item>
     {/if}

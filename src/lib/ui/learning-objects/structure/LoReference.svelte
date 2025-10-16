@@ -3,7 +3,7 @@
   import Icon from "$lib/ui/components/Icon.svelte";
   import { goto } from "$app/navigation";
 
-  let { lo }: { lo: Lo; indent: number } = $props();
+  let { lo }: { lo: Lo } = $props();
 
   const handleClick = async (e: MouseEvent, href?: string) => {
     e.stopPropagation();
