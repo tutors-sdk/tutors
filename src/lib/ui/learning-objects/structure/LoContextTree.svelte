@@ -11,7 +11,9 @@
 
   function mapLoToNode(item: any, parentPath: string, index: number): Node {
     const thisPath = `${parentPath}/${index}`;
-    const children = ((item?.toc as any[] | undefined) || []).map((child, i) => mapLoToNode(child, thisPath, i));
+    const children = ((item?.toc as any[] | undefined) || [])
+      .filter((child) => !child?.hide)
+      .map((child, i) => mapLoToNode(child, thisPath, i));
     return {
       id: item.id,
       name: item?.title || "",
@@ -20,7 +22,7 @@
     };
   }
 
-  const rootChildren = ((lo as any)?.toc as any[] | undefined)?.map((child, i) => mapLoToNode(child, "root", i)) || [];
+  const rootChildren = ((lo as any)?.toc as any[] | undefined)?.filter((child) => !child?.hide).map((child, i) => mapLoToNode(child, "root", i)) || [];
 
   const collection = createTreeViewCollection<Node>({
     nodeToValue: (node) => node.id,
