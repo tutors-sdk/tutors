@@ -10,6 +10,9 @@
   }
   let { lab }: Props = $props();
 
+  let loaded = false;
+  let lastLab = lab.lab.id;
+
   onMount(async () => {
     window.addEventListener("keydown", keypressInput);
   });
@@ -19,6 +22,11 @@
   });
 
   afterNavigate(() => {
+    if (!loaded || lastLab !== lab.lab.id) {
+      lastLab = lab.lab.id;
+      loaded = true;
+      return;
+    }
     const elemPage = document.querySelector("#lab-panel");
     if (elemPage && window.innerWidth >= 600) {
       elemPage.scrollIntoView({ behavior: "smooth", block: "start" });
