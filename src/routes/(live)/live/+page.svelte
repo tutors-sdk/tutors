@@ -10,16 +10,15 @@
   liveService.startGlobalPresenceService();
 </script>
 
-<Tabs value={group} onValueChange={(e) => (group = e.value)} listJustify="justify-center">
-  {#snippet list()}
-    <Tabs.Control value="courses">Courses ({liveService.coursesOnline.value.length})</Tabs.Control>
-    <Tabs.Control value="students">Students ({liveService.studentsOnline.value.length})</Tabs.Control>
-    <Tabs.Control value="groups">Groups</Tabs.Control>
-  {/snippet}
-
-  {#snippet content()}
-    <Tabs.Panel value="courses"><Courses /></Tabs.Panel>
-    <Tabs.Panel value="students"><Students /></Tabs.Panel>
-    <Tabs.Panel value="groups"><CoursesGroup /></Tabs.Panel>
-  {/snippet}
+<Tabs defaultValue="Courses">
+  <Tabs.List>
+    <Tabs.Trigger value="Courses">Courses ({liveService.coursesOnline.value.length})</Tabs.Trigger>
+    <Tabs.Trigger value="Students">Students ({liveService.studentsOnline.value.length})</Tabs.Trigger>
+    <Tabs.Trigger value="Groups">Groups</Tabs.Trigger>
+    <Tabs.Indicator />
+  </Tabs.List>
+    <Tabs.Content value="Courses"><Courses /></Tabs.Content>
+    <Tabs.Content value="Students"><Students /></Tabs.Content>
+    <Tabs.Content value="Groups"><CoursesGroup /></Tabs.Content>
 </Tabs>
+
