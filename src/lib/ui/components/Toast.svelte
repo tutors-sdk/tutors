@@ -25,7 +25,7 @@
 </script>
 
 <div
-  class="pointer-events-auto flex w-full max-w-md overflow-hidden rounded-lg shadow-lg {typeStyles[toast.type]}"
+  class="pointer-events-auto flex min-w-[320px] max-w-xl overflow-hidden rounded-lg shadow-lg {typeStyles[toast.type]}"
   transition:fly={{ y: -20, duration: 300 }}
   role="alert"
   aria-live="polite"
