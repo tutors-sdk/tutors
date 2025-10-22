@@ -17,7 +17,7 @@
 <SecondaryNavigator lo={composite} parentCourse={composite?.parentCourse?.properties?.parent} />
 {#if composite?.units?.sides?.length > 0}
   <div class="m-4 block justify-center md:flex">
-    <div>
+    <div class="w-full">
       <Panels panels={composite.panels} />
       <Units units={composite.units.units} />
       <Cards los={composite.units.standardLos} />
