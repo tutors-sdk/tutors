@@ -24,7 +24,7 @@
 </script>
 
 <div class="mx-8 my-2 flex items-center overflow-hidden p-1">
-  <ol class="flex w-full items-center gap-4">
+  <ol class="flex w-full items-center gap-2 min-w-0">
     <li class="mb-1">
       <a class="hover:underline" href="/"> <TutorsIcon widthPlease="25px" /></a>
     </li>
@@ -41,8 +41,8 @@
         {#if i >= 1}
           <li class="mb-1 opacity-50" aria-hidden="true">&rsaquo;</li>
         {/if}
-        <li class="flex items-center hover:underline">
-          <a href={lo.route} class="inline-flex space-x-[-1rem]! text-black lg:space-x-0! dark:text-white">
+        <li class="flex items-center hover:underline min-w-0 flex-shrink-0">
+          <a href={lo.route} class="inline-flex items-center gap-1 text-black dark:text-white">
             <Icon type={lo.type} tip={`Go to ${lo.title}`} />
 
             <!-- svelte-ignore a11y_no_static_element_interactions -->
