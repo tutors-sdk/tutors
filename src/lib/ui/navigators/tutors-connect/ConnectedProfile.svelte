@@ -38,7 +38,7 @@
 {/snippet}
 
 {#snippet menuContent()}
-  <ul class="mt-12 space-y-2">
+  <ul class="space-y-2">
     {#if currentCourse.value}
       {#if tutorsId.value?.share === "true"}
         <MenuItem text="Share Presence" type="online" onClick={shareStatusChange} />
