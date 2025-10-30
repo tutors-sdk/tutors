@@ -38,7 +38,16 @@
         <iframe title={lo.title} class="absolute inset-0 h-full w-full" src={videoConfig.url} allow="encrypted-media" allowfullscreen></iframe>
       </div>
     {:else if videoConfig.service === "vimp"}
-      <iframe title={lo.title} src={videoConfig.url} class="iframeLoaded" width="720" height="405" aria-label="media embed code" allowtransparency={true} allowfullscreen></iframe>
+      <iframe
+        title={lo.title}
+        src={videoConfig.url}
+        class="iframeLoaded block mx-auto max-w-full"
+        width="720"
+        height="405"
+        aria-label="media embed code"
+        allowtransparency={true}
+        allowfullscreen
+      ></iframe>
     {:else}
       <!-- <div class="relative mx-auto aspect-video w-3/4" style="padding-top: 40%;"> -->
       <div class="relative mr-2 w-full" style="aspect-ratio: 16/9;">
@@ -47,5 +56,8 @@
     {/if}
     <br />
     <p class="text-center text-lg italic">{lo.title}</p>
+    <div class="text-center text-sm italic">
+      {@html lo.summary}
+    </div>
   </div>
 {/if}
