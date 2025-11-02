@@ -4,6 +4,7 @@
   import type { PageData } from "./$types";
   import { browser } from "$app/environment";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
+  import ToastContainer from "$lib/ui/components/ToastContainer.svelte";
 
   interface Props {
     data: PageData;
@@ -21,3 +22,4 @@
 </script>
 
 {@render children()}
+<ToastContainer />
