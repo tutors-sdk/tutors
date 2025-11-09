@@ -8,6 +8,7 @@
   import type { PageData } from "./$types";
   import { currentLo } from "$lib/runes.svelte";
   import { currentCodeTheme } from "$lib/services/markdown";
+  import Icon from "$lib/ui/components/Icon.svelte";
 
   interface Props {
     data: PageData;
@@ -53,20 +54,42 @@
   }
 
   let lastSearchTerm = "";
-  $effect(() => {
+
+  function performSearch() {
     if (isValid(searchTerm) && searchTerm !== lastSearchTerm) {
       lastSearchTerm = searchTerm;
       searchResults = searchHits(searchLos, searchTerm);
       transformResults(searchResults);
     }
-  });
+  }
+
+  // $effect(() => {
+  //   if (isValid(searchTerm) && searchTerm !== lastSearchTerm) {
+  //     lastSearchTerm = searchTerm;
+  //     searchResults = searchHits(searchLos, searchTerm);
+  //     transformResults(searchResults);
+  //   }
+  // });
 </script>
 
 <div class="card container mx-auto mb-4 p-4">
-  <label for="search" class="label"
-    ><span>Enter search term:</span>
-    <input bind:value={searchTerm} bind:this={searchInputElement} type="text" name="search" id="search" class="input m-2 p-2" placeholder="..." /></label
-  >
+  <label for="search" class="label"><span>Enter search term:</span></label>
+  <div class="flex items-center gap-2">
+    <button onclick={performSearch} class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary flex items-center gap-2 rounded-lg p-3 text-sm font-bold">
+      <Icon type="search" tip="Search this course" />
+      <span class="hidden lg:block">Search</span>
+    </button>
+    <input
+      bind:value={searchTerm}
+      bind:this={searchInputElement}
+      type="text"
+      name="search"
+      id="search"
+      class="input flex-1 p-2"
+      placeholder="..."
+      onkeydown={(e) => e.key === "Enter" && performSearch()}
+    />
+  </div>
   <div class="mt-2 flex flex-wrap justify-center">
     {#each searchResults as result}
       <div class="card m-1 w-full border p-4">
