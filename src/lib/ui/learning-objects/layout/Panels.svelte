@@ -4,12 +4,17 @@
   import Talk from "../content/Talk.svelte";
   import TalkAdobe from "../content/TalkAdobe.svelte";
   import Video from "../content/Video.svelte";
+  import Podcast from "../content/Podcast.svelte";
 
   interface Props {
     panels: Panels;
   }
   let { panels }: Props = $props();
 </script>
+
+{#each panels?.panelPodcasts as lo}
+  <Podcast {lo} />
+{/each}
 
 {#each panels?.panelVideos as lo}
   <Video {lo} />
