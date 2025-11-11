@@ -4,6 +4,7 @@
   import Video from "../content/Video.svelte";
   import { currentCourse } from "$lib/runes.svelte";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
+  import Podcast from "../content/Podcast.svelte";
 
   interface Props {
     los: Lo[];
@@ -18,8 +19,16 @@
 <SecondaryNavigator lo={currentCourse.value} parentCourse={currentCourse.value?.properties?.parent} />
 <div class="flex flex-wrap justify-center">
   {#key los}
-    {#if type !== "video"}
+    {#if type !== "video" && type !== "podcast"}
       <Cards {los} />
+    {:else if type === "podcast"}
+      <div class="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {#each los as lo}
+          <div class="flex justify-center">
+            <Podcast {lo} />
+          </div>
+        {/each}
+      </div>
     {:else}
       <div class="flex flex-wrap justify-center">
         {#each panelVideos as lo}
