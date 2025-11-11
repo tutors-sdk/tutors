@@ -3,13 +3,14 @@
  * Handles course loading, caching, and content transformation.
  */
 
-import { type Lo, type Course, type Lab, type Note, decorateCourseTree } from "@tutors/tutors-model-lib";
+import { type Lo, type Course, type Lab, type Note } from "@tutors/tutors-model-lib";
 
 import { LiveLab } from "./live-lab";
 
 import { markdownService } from "$lib/services/markdown";
 import { currentCourse, currentLo, rune } from "$lib/runes.svelte";
 import type { CourseService, LabService } from "../types";
+import { decorateCourseTree } from "./lo-tree";
 
 export const courseService: CourseService = {
   /** Cache of loaded courses indexed by courseId */
@@ -115,7 +116,7 @@ export const courseService: CourseService = {
     let liveLab = this.labs.get(labId);
     if (!liveLab) {
       const lab = course.loIndex.get(labId) as Lab;
-      // markdownService.convertLabToHtml(course, lab);
+      markdownService.convertLabToHtml(course, lab);
       liveLab = new LiveLab(course, lab, labId);
       this.labs.set(labId, liveLab);
     }
