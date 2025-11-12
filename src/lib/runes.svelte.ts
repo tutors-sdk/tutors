@@ -1,5 +1,6 @@
 import type { TutorsId } from "$lib/services/connect";
-import type { Course, Lo } from "./services/base/lo-types";
+import type { Course, Lo } from "@tutors/tutors-model-lib";
+
 
 export const rune = <T>(initialValue: T) => {
   let _rune = $state(initialValue);
