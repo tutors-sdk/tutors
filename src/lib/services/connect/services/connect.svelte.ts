@@ -164,6 +164,7 @@ export const tutorsConnectService: TutorsConnectService = {
    */
   startTimer() {
     if (anonMode) return;
+    this.checkWhiteList();
     this.intervalId = setInterval(() => {
       if (!document.hidden && currentCourse.value && currentLo.value && tutorsId.value) {
         if (analyticsEnabled) analyticsService.updatePageCount(currentCourse.value, currentLo.value, tutorsId.value);
@@ -179,5 +180,21 @@ export const tutorsConnectService: TutorsConnectService = {
       clearInterval(this.intervalId);
       this.intervalId = null;
     }
-  }
+  },
+
+  checkWhiteList():void {
+    if (currentCourse.value) {
+      if (currentCourse.value.hasWhiteList && currentCourse.value.enrollment) {
+        if (!tutorsId.value?.login) {
+          goto(`/`);
+        } 
+        else {
+          if (!currentCourse.value.enrollment.includes(tutorsId.value.login)) {
+            goto(`/`);
+            // signOut({ callbackUrl: "/auth" });
+          }
+        }
+      }
+    }
+  },
 };
