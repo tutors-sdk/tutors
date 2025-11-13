@@ -25,7 +25,7 @@
       <div class="grid grid-cols-1 gap-6 p-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {#each los as lo}
           <div class="flex justify-center">
-            <Podcast {lo} />
+            <Podcast {lo} hideSummary={true} />
           </div>
         {/each}
       </div>

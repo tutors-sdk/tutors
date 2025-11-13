@@ -64,4 +64,6 @@ export interface TutorsConnectService {
   learningEvent(params: Record<string, string>): void;
   startTimer(): void;
   stopTimer(): void;
+  
+  checkWhiteList(): void;
 }
