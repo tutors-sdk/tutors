@@ -164,7 +164,7 @@ export const tutorsConnectService: TutorsConnectService = {
    */
   startTimer() {
     if (anonMode) return;
-    this.checkWhiteList();
+    // this.checkWhiteList();
     this.intervalId = setInterval(() => {
       if (!document.hidden && currentCourse.value && currentLo.value && tutorsId.value) {
         if (analyticsEnabled) analyticsService.updatePageCount(currentCourse.value, currentLo.value, tutorsId.value);
