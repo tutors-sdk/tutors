@@ -164,7 +164,6 @@ export const tutorsConnectService: TutorsConnectService = {
    */
   startTimer() {
     if (anonMode) return;
-    // this.checkWhiteList();
     this.intervalId = setInterval(() => {
       if (!document.hidden && currentCourse.value && currentLo.value && tutorsId.value) {
         if (analyticsEnabled) analyticsService.updatePageCount(currentCourse.value, currentLo.value, tutorsId.value);
@@ -182,19 +181,16 @@ export const tutorsConnectService: TutorsConnectService = {
     }
   },
 
-  checkWhiteList():void {
-    if (currentCourse.value) {
-      if (currentCourse.value.hasWhiteList && currentCourse.value.enrollment) {
-        if (!tutorsId.value?.login) {
+  checkWhiteList(): void {
+    const enrollment = currentCourse.value?.enrollment;
+    if (currentCourse?.value?.hasWhiteList && enrollment?.authorisedIds && enrollment.authorisedIds.length > 0) {
+      if (!tutorsId.value?.login) {
+        goto(`/`);
+      } else {
+        if (!enrollment.authorisedIds.includes(tutorsId.value.login)) {
           goto(`/`);
-        } 
-        else {
-          if (!currentCourse.value.enrollment.includes(tutorsId.value.login)) {
-            goto(`/`);
-            // signOut({ callbackUrl: "/auth" });
-          }
         }
       }
     }
-  },
+  }
 };

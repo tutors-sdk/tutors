@@ -15,6 +15,7 @@
     tutorsConnectService.learningEvent(page.params);
 
     if (currentCourse.value?.courseId !== lastCourseId) {
+      tutorsConnectService.checkWhiteList();
       tutorsConnectService.courseVisit(currentCourse.value!);
       lastCourseId = currentCourse.value?.courseId!;
     }
