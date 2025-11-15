@@ -183,7 +183,7 @@ export const tutorsConnectService: TutorsConnectService = {
 
   checkWhiteList(): void {
     const enrollment = currentCourse.value?.enrollment;
-    if (currentCourse?.value?.hasWhiteList && enrollment?.authorisedIds && enrollment.authorisedIds.length > 0) {
+    if (enrollment?.authorisedIds && enrollment.authorisedIds.length > 0) {
       if (!tutorsId.value?.login) {
         goto(`/`);
       } else {
