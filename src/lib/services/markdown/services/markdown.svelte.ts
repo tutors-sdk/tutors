@@ -4,7 +4,8 @@
  * Handles markdown conversion for labs, notes, and learning objects.
  */
 
-import { type Course, type Lab, type Note, type Lo, convertMdToHtml, initHighlighter, filter } from "@tutors/tutors-model-lib";
+import type { Course, Lab, Note, Lo } from "@tutors/tutors-model-lib";
+import { convertMdToHtml, initHighlighter, filter } from "@tutors/tutors-model-lib";
 
 // Import Shiki themes
 import ayuDark from "shiki/themes/ayu-dark.mjs";
@@ -51,7 +52,7 @@ import xml from "shiki/langs/xml.mjs";
 import vue from "shiki/langs/vue.mjs";
 import { browser } from "$app/environment";
 import type { MarkdownService } from "../types";
-import { rune } from "$lib/runes.svelte";
+import { courseProtocol, rune } from "$lib/runes.svelte";
 
 /** Supported programming languages for syntax highlighting */
 const languages = [
@@ -137,7 +138,7 @@ export const markdownService: MarkdownService = {
     const url = lab.route.replace(`/lab/${course.courseId}`, course.courseUrl);
     lab?.los?.forEach((step) => {
       if (course.courseUrl && !refreshOnly) {
-        step.contentMd = filter(step.contentMd, url);
+        step.contentMd = filter(step.contentMd, url, courseProtocol.value);
       }
       step.contentHtml = convertMdToHtml(step.contentMd, currentCodeTheme.value);
       step.parentLo = lab;
@@ -155,7 +156,7 @@ export const markdownService: MarkdownService = {
     note.summary = convertMdToHtml(note.summary, currentCodeTheme.value);
     const url = note.route.replace(`/note/${course.courseId}`, course.courseUrl);
     if (!refreshOnly) {
-      note.contentMd = filter(note.contentMd, url);
+      note.contentMd = filter(note.contentMd, url, courseProtocol.value);
     }
     note.contentHtml = convertMdToHtml(note.contentMd, currentCodeTheme.value);
   }

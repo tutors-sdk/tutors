@@ -1,3 +1,4 @@
+import { courseProtocol } from "$lib/runes.svelte";
 import {
   allVideoLos,
   convertLoToHtml,
@@ -5,19 +6,23 @@ import {
   createWalls,
   crumbs,
   filterByType,
+  fixRoutePaths,
   flattenLos,
   getPanels,
   getUnits,
   initCalendar,
-  injectCourseUrl,
   isCompositeLo,
   loadIcon,
   loadPropertyFlags,
   removeUnknownLos,
+  type Archive,
   type Composite,
   type Course,
+  type Lab,
   type Lo,
-  type Topic
+  type Talk,
+  type Topic,
+  type Tutorial
 } from "@tutors/tutors-model-lib";
 
 export function decorateCourseTree(course: Course, courseId: string = "", courseUrl = "") {
@@ -69,8 +74,8 @@ export function decorateLoTree(course: Course, lo: Lo) {
   }
 
   // Convert contentMd to html
-  if (lo.type !== "lab") {
-    // Convert labs on demmand as can be time consuming
+  if (lo.type !== "lab" && lo.type !== "note") {
+    // Convert labs & note on demmand as can be time consuming to convert all at once
     convertLoToHtml(course, lo);
   }
 
@@ -103,4 +108,74 @@ export function decorateLoTree(course: Course, lo: Lo) {
       }
     }
   }
+}
+
+export function injectCourseUrl(los: Lo[], id: string, url: string) {
+  los.forEach((lo) => {
+    if (lo.type === "archive") {
+      const archive: Archive = lo as Archive;
+      archive.route = `https://${lo.route?.replace("/archive/{{COURSEURL}}", url)}/${archive.archiveFile}`;
+    } else {
+      lo.route = lo.route?.replace("{{COURSEURL}}", id);
+    }
+
+    lo.img = lo.img?.replace("{{COURSEURL}}", url);
+    lo.video = lo.video?.replace("{{COURSEURL}}", id);
+    if (lo.type == "talk" || lo.type == "paneltalk") {
+      const talk = lo as Talk;
+      talk.pdf = talk.pdf?.replace("{{COURSEURL}}", url);
+    }
+    if (lo.type === "tutorial") {
+      const tutorial = lo as Tutorial;
+      if (tutorial.pdf) {
+        tutorial.pdf = tutorial.pdf?.replace("{{COURSEURL}}", url);
+      }
+    }
+    if (lo.type == "lab") {
+      const lab = lo as Lab;
+      lab.pdf = lab.pdf?.replace("{{COURSEURL}}", url);
+    }
+
+    localizePath(lo);
+    fixRoutePaths(lo);
+  });
+}
+
+function localizePath(lo: Lo) {
+  if (courseProtocol.value === "http://") {
+    lo.route = lo.route?.replace("https://", "http://");
+    lo.video = lo.video?.replace("https://", "http://");
+    lo.img = lo.img?.replace("https://", "http://");
+    if (lo.pdf) {
+      lo.pdf = lo?.pdf?.replace("https://", "http://");
+    }
+  }
+}
+
+/**
+ * Determines the course URL and normalized course ID from various input formats.
+ * Handles full URLs, Netlify domains, localhost/IP addresses, and plain course IDs.
+ * @param input - Course identifier (URL, domain, or ID)
+ * @returns Object with normalized courseId and courseUrl
+ */
+export function determineCourseUrl(input: string): { courseId: string; courseUrl: string } {
+  const urlPattern = /^(https?:\/\/)?([A-Za-z0-9.-]+\.[A-Za-z]{2,})(:[0-9]+)?(\/[A-Za-z0-9_.-]+)*(\/[A-Za-z0-9_.-]+\?[A-Za-z0-9_=-]+)?(#.*)?$/;
+  const isValidURL = urlPattern.test(input);
+
+  if (isValidURL) {
+    // Full URL provided (e.g., https://example.netlify.app)
+    const courseUrl = input;
+    const courseId = input.includes(".netlify.app") ? input.replace(".netlify.app", "") : input;
+    return { courseId, courseUrl };
+  }
+
+  // Course ID only - determine protocol and construct URL
+  const isLocalhost = input.startsWith("192") || input.startsWith("localhost");
+  if (isLocalhost) {
+    courseProtocol.value = "http://";
+    return { courseId: input, courseUrl: input };
+  }
+
+  // Default to Netlify subdomain
+  return { courseId: input, courseUrl: `${input}.netlify.app` };
 }

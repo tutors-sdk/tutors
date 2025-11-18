@@ -3,14 +3,12 @@
  * Handles course loading, caching, and content transformation.
  */
 
-import { type Lo, type Course, type Lab, type Note } from "@tutors/tutors-model-lib";
-
+import type { Lo, Course, Lab, Note } from "@tutors/tutors-model-lib";
 import { LiveLab } from "./live-lab";
-
 import { markdownService } from "$lib/services/markdown";
-import { currentCourse, currentLo, rune } from "$lib/runes.svelte";
+import { courseProtocol, currentCourse, currentLo, rune } from "$lib/runes.svelte";
 import type { CourseService, LabService } from "../types";
-import { decorateCourseTree } from "./lo-tree";
+import { decorateCourseTree, determineCourseUrl } from "./lo-tree";
 
 export const courseService: CourseService = {
   /** Cache of loaded courses indexed by courseId */
@@ -30,27 +28,13 @@ export const courseService: CourseService = {
    */
   async getOrLoadCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course> {
     let course = this.courses.get(courseId);
-    let courseUrl = courseId;
-
-    function isValidURL(url: string) {
-      const urlPattern = /^(https?:\/\/)?([A-Za-z0-9.-]+\.[A-Za-z]{2,})(:[0-9]+)?(\/[A-Za-z0-9_.-]+)*(\/[A-Za-z0-9_.-]+\?[A-Za-z0-9_=-]+)?(#.*)?$/;
-      return urlPattern.test(url);
-    }
 
     if (!course) {
-      if (isValidURL(courseId)) {
-        if (courseId.includes(".netlify.app")) {
-          courseUrl = courseId;
-          courseId = courseId.replace(".netlify.app", "");
-        } else {
-          courseUrl = courseId;
-        }
-      } else {
-        courseUrl = `${courseId}.netlify.app`;
-      }
+      const { courseId: normalizedCourseId, courseUrl } = determineCourseUrl(courseId);
+      courseId = normalizedCourseId;
 
       try {
-        const response = await fetchFunction(`https://${courseUrl}/tutors.json`);
+        const response = await fetchFunction(`${courseProtocol.value}${courseUrl}/tutors.json`);
         if (!response.ok) {
           throw new Error(`Fetch failed with status ${response.status}`);
         }
@@ -152,8 +136,10 @@ export const courseService: CourseService = {
       currentLo.value = lo;
     }
     if (lo?.type === "note") {
-      // markdownService.convertNoteToHtml(course, lo as Note);
-      this.notes.set(loId, lo as Note);
+      if (!this.notes.has(loId)) {
+        markdownService.convertNoteToHtml(course, lo as Note);
+        this.notes.set(loId, lo as Note);
+      }
     }
     return lo!;
   },
