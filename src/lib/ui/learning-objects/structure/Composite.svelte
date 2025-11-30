@@ -11,7 +11,7 @@
   }
   let { composite }: Props = $props();
 
-  const sideWidth = $derived(themeService.cardStyle.value === "landscape" ? "w-[64rem]" : "w-[28rem]")
+  const sideWidth = $derived(themeService.cardStyle.value === "landscape" ? "w-[64rem]" : "w-[28rem]");
 </script>
 
 <SecondaryNavigator lo={composite} parentCourse={composite?.parentCourse?.properties?.parent} />
@@ -23,7 +23,9 @@
       <Cards los={composite.units.standardLos} />
     </div>
     <div class="block md:ml-2 {sideWidth}">
-      <Units units={composite.units?.sides} />
+      <div class="sticky top-14 max-h-[calc(100vh-6.5rem)] overflow-y-auto">
+        <Units units={composite.units?.sides} />
+      </div>
     </div>
   </div>
 {:else if composite}
