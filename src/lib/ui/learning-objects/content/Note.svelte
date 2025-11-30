@@ -1,14 +1,14 @@
 <script lang="ts">
   import { currentCodeTheme } from "$lib/services/markdown";
   import type { Lo } from "@tutors/tutors-model-lib";
-  
+
   interface Props {
     lo: Lo;
   }
   let { lo }: Props = $props();
 </script>
 
-<article class="prose mr-4 max-w-none dark:prose-invert">
+<article class="prose dark:prose-invert mr-4 max-w-none">
   {#key currentCodeTheme.value}
     {@html lo.contentHtml}
   {/key}

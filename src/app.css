@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/forms";
-@import '@skeletonlabs/skeleton-svelte';
+@import "@skeletonlabs/skeleton-svelte";
 
 @import "@skeletonlabs/skeleton";
 @import "@skeletonlabs/skeleton/themes/cerberus";
@@ -11,5 +11,6 @@
 @import "./lib/services/themes/styles/classic.css";
 @import "./lib/services/themes/styles/dyslexia.css";
 @import "./lib/services/themes/styles/easter.css";
+@import "./lib/services/themes/styles/prose-headings.css";
 
 @custom-variant dark (&:where(.dark, .dark *));

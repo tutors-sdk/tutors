@@ -1,0 +1,60 @@
+/* Customize prose headings - shared across Note, Lab, and other prose content */
+
+.prose h1 {
+  font-size: 1.5rem; /* text-3xl */
+  font-weight: 700; /* font-bold */
+  margin-bottom: 1rem; /* mb-4 */
+  margin-top: 2rem; /* mt-8 */
+  /* Add your custom styles here, e.g.:
+  color: var(--your-color);
+  border-bottom: 2px solid currentColor;
+  padding-bottom: 0.5rem;
+  */
+}
+
+.prose h2 {
+  font-size: 1.25rem; /* text-2xl */
+  font-weight: 600; /* font-semibold */
+  margin-bottom: 0.75rem; /* mb-3 */
+  margin-top: 1.5rem; /* mt-6 */
+}
+
+.prose h3 {
+  font-size: 1.125rem; /* text-xl */
+  font-weight: 600; /* font-semibold */
+  margin-bottom: 0.5rem; /* mb-2 */
+  margin-top: 1rem; /* mt-4 */
+}
+
+.prose h4 {
+  font-size: 1rem; /* text-lg */
+  font-weight: 500; /* font-medium */
+  margin-bottom: 0.5rem; /* mb-2 */
+  margin-top: 0.75rem; /* mt-3 */
+}
+
+.prose h5 {
+  font-size: 0.875rem; /* text-base */
+  font-weight: 500; /* font-medium */
+  margin-bottom: 0.25rem; /* mb-1 */
+  margin-top: 0.5rem; /* mt-2 */
+}
+
+.prose h6 {
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  margin-bottom: 0.25rem; /* mb-1 */
+  margin-top: 0.5rem; /* mt-2 */
+}
+
+/* Dark mode heading styles - uncomment and customize as needed */
+/*
+.dark .prose h1,
+.dark .prose h2,
+.dark .prose h3,
+.dark .prose h4,
+.dark .prose h5,
+.dark .prose h6 {
+  color: #your-dark-color;
+}
+*/
