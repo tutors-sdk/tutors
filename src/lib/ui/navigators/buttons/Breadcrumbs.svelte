@@ -25,15 +25,15 @@
 
 <div class="mx-8 my-2 flex items-center overflow-hidden p-1">
   <ol class="flex w-full items-center gap-2 min-w-0">
-    <li class="mb-1">
-      <a class="hover:underline" href="/"> <TutorsIcon widthPlease="25px" /></a>
+    <li class="flex items-center">
+      <a class="inline-flex items-center hover:underline" href="/"> <TutorsIcon widthPlease="25px" /></a>
     </li>
-    <li class="mb-1 opacity-50" aria-hidden="true">&rsaquo;</li>
+    <li class="flex items-center opacity-50" aria-hidden="true">&rsaquo;</li>
     {#if parentCourse}
-      <li>
-        <a class="hover:underline" href="/{parentCourse}"> <Icon type="programHome" tip={`Go to Course Home`} /></a>
+      <li class="flex items-center">
+        <a class="inline-flex items-center hover:underline" href="/{parentCourse}"> <Icon type="programHome" tip={`Go to Course Home`} /></a>
       </li>
-      <li class="mb-1 opacity-50" aria-hidden="true">&rsaquo;</li>
+      <li class="flex items-center opacity-50" aria-hidden="true">&rsaquo;</li>
     {/if}
 
     {#if breadCrumbs}
