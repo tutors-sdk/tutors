@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-tailwindcss--vite",
+  "version": "4.1.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/@tailwindcss/vite@4.1.12",
+  "summary": "A Vite plugin for Tailwind CSS v4 that provides integration with the Vite build tool for utility-first CSS framework development"
+}

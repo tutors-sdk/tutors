@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-prettier",
+  "version": "3.6.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/prettier@3.6.2",
+  "summary": "Prettier is an opinionated code formatter that enforces consistent style across multiple languages including JavaScript, TypeScript, Flow, JSX, JSON, CSS, SCSS, Less, HTML, Vue, Angular, GraphQL, Markdown, and YAML."
+}

@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-eslint--compat",
+  "version": "1.3.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/%40eslint/compat@1.3.2",
+  "summary": "Compatibility utilities that enable ESLint v8.x rules, plugins, and configurations to work seamlessly in ESLint v9.x"
+}

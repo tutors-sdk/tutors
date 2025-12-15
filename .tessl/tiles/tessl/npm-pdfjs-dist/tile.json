@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-pdfjs-dist",
+  "version": "5.4.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/pdfjs-dist@5.4.149",
+  "summary": "Generic build of Mozilla's PDF.js library - a Portable Document Format (PDF) viewer that is built with HTML5"
+}

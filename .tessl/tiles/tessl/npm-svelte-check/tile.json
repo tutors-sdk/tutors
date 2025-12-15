@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-svelte-check",
+  "version": "4.0.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/svelte-check@4.0.0",
+  "summary": "Svelte Code Checker Terminal Interface that provides CLI diagnostics for unused CSS, Svelte A11y hints, and JavaScript/TypeScript compiler errors"
+}

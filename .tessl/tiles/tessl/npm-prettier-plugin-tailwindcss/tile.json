@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-prettier-plugin-tailwindcss",
+  "version": "0.6.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/prettier-plugin-tailwindcss@0.6.14",
+  "summary": "A Prettier plugin for sorting Tailwind CSS classes based on the recommended class order"
+}

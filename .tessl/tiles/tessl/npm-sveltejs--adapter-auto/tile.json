@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-sveltejs--adapter-auto",
+  "version": "6.1.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/@sveltejs/adapter-auto@6.1.0",
+  "summary": "SvelteKit adapter that automatically detects deployment environment and installs appropriate platform-specific adapter"
+}

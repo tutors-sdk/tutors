@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-svelte",
+  "version": "5.38.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/svelte@5.38.8",
+  "summary": "A cybernetically enhanced web application framework that compiles to highly optimized JavaScript with reactive state management and component-based architecture."
+}

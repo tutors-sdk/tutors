@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-supabase--supabase-js",
+  "version": "2.57.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/@supabase/supabase-js@2.57.0",
+  "summary": "Isomorphic JavaScript client for Supabase providing authentication, database, real-time, storage, and edge functions capabilities."
+}
