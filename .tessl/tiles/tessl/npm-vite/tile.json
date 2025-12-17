@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-vite",
+  "version": "7.1.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/vite@7.1.2",
+  "summary": "Native-ESM powered web dev build tool"
+}

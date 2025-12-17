@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-eslint-config-prettier",
+  "version": "10.1.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/eslint-config-prettier@10.1.8",
+  "summary": "Turns off all rules that are unnecessary or might conflict with Prettier."
+}

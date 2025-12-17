@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-sveltejs--vite-plugin-svelte",
+  "version": "6.1.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/@sveltejs/vite-plugin-svelte@6.1.4",
+  "summary": "The official Vite plugin for integrating Svelte components into Vite-based development workflows."
+}
