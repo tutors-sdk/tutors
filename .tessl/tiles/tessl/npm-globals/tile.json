@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-globals",
+  "version": "16.3.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/globals@16.3.0",
+  "summary": "Global identifiers from different JavaScript environments"
+}

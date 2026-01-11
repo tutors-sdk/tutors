@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-eslint-plugin-svelte",
+  "version": "3.12.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/eslint-plugin-svelte@3.12.1",
+  "summary": "ESLint plugin for Svelte applications providing comprehensive linting rules and configurations using AST parsing"
+}

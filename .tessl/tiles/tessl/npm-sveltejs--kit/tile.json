@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-sveltejs--kit",
+  "version": "2.37.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/%40sveltejs/kit@2.37.0",
+  "summary": "SvelteKit is the fastest way to build Svelte apps with file-based routing, server-side rendering, and multiple deployment adapters"
+}

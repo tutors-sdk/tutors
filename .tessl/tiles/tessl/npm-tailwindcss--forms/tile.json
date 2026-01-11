@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-tailwindcss--forms",
+  "version": "0.5.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/@tailwindcss/forms@0.5.10",
+  "summary": "A Tailwind CSS plugin that provides comprehensive form element styling and normalization with base styles and utility classes"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "tessl/npm-tailwindcss--typography",
+  "version": "0.5.0",
+  "docs": "docs/index.md",
+  "describes": "pkg:npm/@tailwindcss/typography@0.5.16",
+  "summary": "A Tailwind CSS plugin for automatically styling plain HTML content with beautiful typographic defaults."
+}
