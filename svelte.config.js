@@ -7,6 +7,12 @@ const config = {
   // for more information about preprocessors
   preprocess: vitePreprocess(),
 
+  onwarn(warning, defaultHandler) {
+    // Ignore state_referenced_locally warning globally
+    if (warning.code === 'state_referenced_locally') return;
+    defaultHandler(warning);
+  },
+
   kit: {
     // adapter-auto only supports some environments, see https://svelte.dev/docs/kit/adapter-auto for a list.
     // If your environment is not supported, or you settled on a specific environment, switch out the adapter.
