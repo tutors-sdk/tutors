@@ -224,7 +224,7 @@ export async function addOrUpdateStudent(student: TutorsId) {
   if (!student) return;
 
   try {
-    const { error } = await supabase.from("users").upsert(
+    const { error } = await supabase.from("tutors-connect-users").upsert(
       {
         github_id: student.login,
         avatar_url: student.image,
@@ -232,7 +232,6 @@ export async function addOrUpdateStudent(student: TutorsId) {
         email: student.email,
         date_last_accessed: new Date().toISOString()
       },
-      { onConflict: "id" }
     );
 
     if (error) {

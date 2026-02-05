@@ -19,6 +19,7 @@ import { localStorageProfile } from "./localStorageProfile";
 import { updateCourseList } from "../utils/allCourseAccess";
 import type { CourseVisit, TutorsConnectService, TutorsId } from "../types";
 import { supabaseProfile } from "./supabaseProfile.svelte";
+import { addOrUpdateStudent } from "$lib/services/community/utils/supabase-client";
 
 /** Global anonymous mode flag, controlled by environment variable */
 let anonMode = false;
@@ -57,6 +58,7 @@ export const tutorsConnectService: TutorsConnectService = {
     presenceService.connectToAllCourseAccess();
     if (user) {
       tutorsId.value = user;
+      addOrUpdateStudent(user);
       this.profile = supabaseProfile;
       if (browser) {
         if (!localStorage.share) {
