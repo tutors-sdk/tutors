@@ -224,11 +224,31 @@ export async function addOrUpdateStudent(student: TutorsId) {
   if (!student) return;
 
   try {
+    let fullName = student.name;
+    
+    // If name is null or empty, fetch from GitHub API
+    if (!fullName && student.login) {
+      try {
+        const response = await fetch(`https://api.github.com/users/${student.login}`);
+        if (response.ok) {
+          const githubUser = await response.json();
+          fullName = githubUser.name || student.login;
+        } else {
+          // Fallback to login if API call fails
+          fullName = student.login;
+        }
+      } catch (fetchError) {
+        console.error("Failed to fetch GitHub user:", fetchError);
+        // Fallback to login if API call fails
+        fullName = student.login;
+      }
+    }
+
     const { error } = await supabase.from("tutors-connect-users").upsert(
       {
         github_id: student.login,
         avatar_url: student.image,
-        full_name: student.name,
+        full_name: fullName,
         email: student.email,
         date_last_accessed: new Date().toISOString()
       },
