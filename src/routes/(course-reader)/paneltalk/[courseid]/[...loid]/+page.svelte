@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from "./$types";
   import Context from "$lib/ui/learning-objects/structure/Context.svelte";
-  import Talk from "$lib/ui/learning-objects/content/Talk.svelte";
+  import TalkClient from "$lib/ui/learning-objects/content/TalkClient.svelte";
   import TalkAdobe from "$lib/ui/learning-objects/content/TalkAdobe.svelte";
   import { currentCourse } from "$lib/runes.svelte";
 
@@ -13,7 +13,7 @@
 
 <Context lo={data.lo}>
   {#if currentCourse.value?.defaultPdfReader === "mozilla"}
-    <Talk lo={data.lo} />
+    <TalkClient lo={data.lo} />
   {:else if currentCourse.value?.defaultPdfReader === "adobe"}
     <TalkAdobe lo={data.lo} />
   {:else}
