@@ -47,8 +47,8 @@
       {/if}
       {#if tutorsId.value?.share === "true"}
         {#if analyticsEnabled}
-          <!-- <MenuItem link="https://time.tutors.dev/{currentCourse.value?.courseId}" text="Tutors Time" type="tutorsTime" targetStr="_blank" /> -->
-           <MenuItem link="/time/{currentCourse.value?.courseId}" text="Tutors Time" type="tutorsTime" />
+          <MenuItem link="/time/{currentCourse.value?.courseId}" text="Tutors Time" type="tutorsTime" />
+          <MenuItem link="https://time.tutors.dev/{currentCourse.value?.courseId}" text="(Educator Time)" type="tutorsTime" targetStr="_blank" />
         {/if}
         <MenuItem link="/live/{currentCourse.value?.courseId}" text="Tutors Live" type="live" targetStr="_blank" />
 
