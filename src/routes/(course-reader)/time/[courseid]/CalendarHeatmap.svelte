@@ -46,6 +46,13 @@
       }
     };
 
+        /** Defer render until layout has settled – avoids distorted grid on first load */
+    await new Promise<void>((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(resolve));
+    });
+
+    if (!container || !document.contains(container)) return;
+
     heat.render(container, bindingOptions);
 
     for (const dateStr of dates) {
