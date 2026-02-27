@@ -5,7 +5,7 @@
 </script>
 
 {#snippet menuSelector()}
-  <div class="ml-2">
+  <div class="ml-6">
     View <span class="badge bg-error-500 text-white">{presenceService.studentsOnline.value.length}</span> Online
   </div>
 {/snippet}
