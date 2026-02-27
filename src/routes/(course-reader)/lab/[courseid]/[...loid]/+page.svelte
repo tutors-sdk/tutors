@@ -2,7 +2,7 @@
   import type { PageData } from "./$types";
   import Lab from "$lib/ui/learning-objects/content/Lab.svelte";
   import Context from "$lib/ui/learning-objects/structure/Context.svelte";
-  import Talk from "$lib/ui/learning-objects/content/Talk.svelte";
+  import TalkClient from "$lib/ui/learning-objects/content/TalkClient.svelte";
 
   interface Props {
     data: PageData;
@@ -12,7 +12,7 @@
 
 {#if data.lab.lab.pdf}
   <Context lo={data.lab.lab}>
-    <Talk lo={data.lab.lab} />
+    <TalkClient lo={data.lab.lab} />
   </Context>
 {:else}
   <Context lo={data.lab.lab}>
