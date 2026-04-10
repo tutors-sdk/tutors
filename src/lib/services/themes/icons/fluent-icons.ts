@@ -70,5 +70,14 @@ export const FluentIconLib: IconLib = {
   close: { type: "carbon:close-outline", color: "primary" },
   theme: { type: "fluent:color-fill-24-regular", color: "success" },
   codeTheme: { type: "fluent:paint-brush-sparkle-20-regular", color: "primary" },
+
+  // course sentiment — how you feel about the course (twemoji)
+  delighted: { type: "twemoji:grinning-face-with-big-eyes", color: "success" },
+  confident: { type: "twemoji:flexed-biceps", color: "primary" },
+  overwhelmed: { type: "twemoji:exploding-head", color: "warning" },
+  confused: { type: "twemoji:face-with-spiral-eyes", color: "secondary" },
+  drained: { type: "twemoji:weary-face", color: "error" },
+  exhausted: { type: "twemoji:sleeping-face", color: "tertiary" },
+
   default: { type: "fluent:re-order-dots-vertical-24-filled", color: "error" }
 };
