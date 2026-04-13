@@ -37,7 +37,7 @@
 
     <AppBar.Trail>
       <CalendarButton />
-      {#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
+      {#if tutorsId.value?.login && tutorsId.value?.share === "true"}
         <div class="flex items-center">
           <CourseSentimentButton />
         </div>
