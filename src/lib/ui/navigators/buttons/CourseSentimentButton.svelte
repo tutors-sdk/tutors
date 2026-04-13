@@ -8,7 +8,7 @@
   let selected = $state<CourseSentimentId>("neutral");
 
   $effect(() => {
-    selected = tutorsId.value?.sentiment ?? (typeof localStorage !== "undefined" ? localStorage.sentiment : undefined);
+    selected = tutorsId.value?.sentiment ?? (typeof localStorage !== "undefined" ? localStorage.sentiment : "neutral");
   });
 
   async function pick(id: CourseSentimentId) {
