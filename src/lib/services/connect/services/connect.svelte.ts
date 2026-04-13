@@ -17,9 +17,13 @@ import { currentCourse, currentLo, tutorsId } from "$lib/runes.svelte";
 import { localStorageProfile } from "./localStorageProfile";
 
 import { updateCourseList } from "../utils/allCourseAccess";
-import type { CourseVisit, TutorsConnectService, TutorsId } from "../types";
+import { type CourseVisit, type TutorsConnectService, type TutorsId } from "../types";
 import { supabaseProfile } from "./supabaseProfile.svelte";
-import { addOrUpdateStudent } from "$lib/services/community/utils/supabase-client";
+import {
+  addOrUpdateStudent,
+  updateTutorsConnectUserOnlineStatus,
+  updateTutorsConnectUserSentiment
+} from "$lib/services/community/utils/supabase-client";
 
 /** Global anonymous mode flag, controlled by environment variable */
 let anonMode = false;
@@ -57,14 +61,22 @@ export const tutorsConnectService: TutorsConnectService = {
     if (anonMode) return;
     presenceService.connectToAllCourseAccess();
     if (user) {
-      tutorsId.value = user;
-      addOrUpdateStudent(user);
+      tutorsId.value = {
+        ...user,
+        sentiment: user.sentiment ?? "neutral"
+      } as TutorsId;
+      addOrUpdateStudent(tutorsId.value);
       this.profile = supabaseProfile;
       if (browser) {
         if (!localStorage.share) {
           localStorage.share = true;
         }
         tutorsId.value.share = localStorage.share;
+        if (!localStorage.sentiment) {
+          localStorage.sentiment = "neutral";
+        }
+        const sentiment = localStorage.sentiment;
+        tutorsId.value = { ...tutorsId.value!, sentiment };
         if (localStorage.loginCourse) {
           const courseId = localStorage.loginCourse;
           localStorage.removeItem("loginCourse");
@@ -93,6 +105,26 @@ export const tutorsConnectService: TutorsConnectService = {
       } else {
         localStorage.share = tutorsId.value.share = "true";
       }
+      const login = tutorsId.value.login;
+      if (login && !anonMode) {
+        const onlineStatus = tutorsId.value.share === "true" ? "online" : "offline";
+        void updateTutorsConnectUserOnlineStatus(login, onlineStatus).catch((err) => console.error(err));
+      }
+    }
+  },
+
+  async updateSentiment(sentiment: string) {
+    const s = sentiment;
+    if (browser) {
+      localStorage.sentiment = s;
+    }
+    if (anonMode) return;
+    if (tutorsId.value) {
+      tutorsId.value = { ...tutorsId.value, sentiment: s };
+    }
+    const login = tutorsId.value?.login;
+    if (login) {
+      await updateTutorsConnectUserSentiment(login, s);
     }
   },
 

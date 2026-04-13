@@ -67,5 +67,15 @@ export const EasterIcons: IconLib = {
   close: { type: "carbon:close-outline", color: "primary" },
   theme: { type: "mdi:palette-swatch", color: "success" },
   codeTheme: { type: "mdi:brush-outline", color: "primary" },
+
+  // sentiment — same twemoji set as fluent theme
+  neutral: { type: "twemoji:dizzy", color: "bg-base-content" },
+  fine: { type: "twemoji:slightly-smiling-face", color: "bg-base-content" },
+  delighted: { type: "twemoji:grinning-face-with-big-eyes", color: "success" },
+  confident: { type: "twemoji:flexed-biceps", color: "primary" },
+  overwhelmed: { type: "twemoji:exploding-head", color: "warning" },
+  confused: { type: "twemoji:face-with-spiral-eyes", color: "secondary" },
+  drained: { type: "twemoji:melting-face", color: "error" },
+
   default: { type: "fluent:re-order-dots-vertical-24-filled", color: "error" }
 };
