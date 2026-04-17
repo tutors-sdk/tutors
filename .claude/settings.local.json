@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git branch:*)",
+      "Bash(git cherry-pick:*)",
+      "Bash(git push:*)"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "tessl"
+  ],
+  "enableAllProjectMcpServers": true
+}
