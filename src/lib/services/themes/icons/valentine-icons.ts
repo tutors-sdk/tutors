@@ -67,5 +67,15 @@ export const ValentineIcons: IconLib = {
   close: { type: "carbon:close-outline", color: "primary" },
   theme: { type: "fluent:color-fill-24-regular", color: "success" },
   codeTheme: { type: "fluent:paint-brush-sparkle-20-regular", color: "primary" },
+
+  // sentiment — same twemoji set as fluent theme
+  neutral: { type: "twemoji:dizzy", color: "bg-base-content" },
+  fine: { type: "twemoji:slightly-smiling-face", color: "bg-base-content" },
+  delighted: { type: "twemoji:grinning-face-with-big-eyes", color: "success" },
+  confident: { type: "twemoji:flexed-biceps", color: "primary" },
+  overwhelmed: { type: "twemoji:exploding-head", color: "warning" },
+  confused: { type: "twemoji:face-with-spiral-eyes", color: "secondary" },
+  drained: { type: "twemoji:melting-face", color: "error" },
+
   default: { type: "fluent:re-order-dots-vertical-24-filled", color: "error" }
 };

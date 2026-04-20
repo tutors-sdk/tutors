@@ -250,7 +250,8 @@ export async function addOrUpdateStudent(student: TutorsId) {
         avatar_url: student.image,
         full_name: fullName,
         email: student.email,
-        date_last_accessed: new Date().toISOString()
+        date_last_accessed: new Date().toISOString(),
+        sentiment: student.sentiment
       },
     );
 
@@ -260,6 +261,48 @@ export async function addOrUpdateStudent(student: TutorsId) {
     }
   } catch (error) {
     console.error("An error occurred in addOrUpdateUserProfile:", error);
+    throw error;
+  }
+}
+
+/**
+ * Updates sentiment (and last-accessed) for a row in tutors-connect-users.
+ * @param githubId - Student GitHub login (primary key for the row)
+ * @param sentiment - Current mood string
+ */
+export async function updateTutorsConnectUserSentiment(githubId: string, sentiment: string) {
+  if (PUBLIC_ANON_MODE === "TRUE" || !githubId) return;
+
+  const { error } = await supabase
+    .from("tutors-connect-users")
+    .update({
+      sentiment,
+      date_last_accessed: new Date().toISOString()
+    })
+    .eq("github_id", githubId);
+
+  if (error) {
+    console.error("updateTutorsConnectUserSentiment failed:", error);
+    throw error;
+  }
+}
+
+/**
+ * Sets online_status on tutors-connect-users (mirrors share: visible / sharing = online).
+ */
+export async function updateTutorsConnectUserOnlineStatus(githubId: string, onlineStatus: "online" | "offline") {
+  if (PUBLIC_ANON_MODE === "TRUE" || !githubId) return;
+
+  const { error } = await supabase
+    .from("tutors-connect-users")
+    .update({
+      online_status: onlineStatus,
+      date_last_accessed: new Date().toISOString()
+    })
+    .eq("github_id", githubId);
+
+  if (error) {
+    console.error("updateTutorsConnectUserOnlineStatus failed:", error);
     throw error;
   }
 }

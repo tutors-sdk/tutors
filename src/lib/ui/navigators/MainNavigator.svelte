@@ -11,6 +11,7 @@
   import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
   import TutorsTitle from "./titles/TutorsTitle.svelte";
   import CalendarButton from "./buttons/CalendarButton.svelte";
+  import CourseSentimentButton from "./buttons/CourseSentimentButton.svelte";
   import { currentCourse, tutorsId } from "$lib/runes.svelte";
 </script>
 
@@ -36,6 +37,11 @@
 
     <AppBar.Trail>
       <CalendarButton />
+      {#if tutorsId.value?.login && tutorsId.value?.share === "true"}
+        <div class="flex items-center">
+          <CourseSentimentButton />
+        </div>
+      {/if}
       <div class="items-center md:flex">
         <div class="hidden md:flex">
           <LlmsIndicator />
