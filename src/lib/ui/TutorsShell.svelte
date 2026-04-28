@@ -30,7 +30,7 @@
   <main class="flex-1 overflow-y-auto">
     {@render children()}
   </main>
-  {#if showFooter}
+  {#if showFooter && !hideMainNavigator.value}}
     <footer transition:slide={{ duration: 800 }} class="mt-auto hidden [@media(min-height:800px)]:lg:block">
       <Footer />
     </footer>
