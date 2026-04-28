@@ -9,6 +9,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, PUBLIC_ANON_MODE } from "$env/static/public";
 import type { Course, Lo } from "@tutors/tutors-model-lib";
 import type { TutorsId } from "$lib/services/connect";
+import { COURSE_SENTIMENT_IDS } from "$lib/services/connect/types";
 
 export let supabase: SupabaseClient;
 
@@ -215,6 +216,28 @@ export async function updateLearningRecordsDuration(courseId: string, studentId:
   await supabase.from("learning_records").update({ duration: numOfDuration }).eq("student_id", studentId).eq("course_id", courseId).eq("lo_id", loId);
 }
 
+function normalizeStoredSentiment(raw: string | null | undefined): string | null {
+  if (raw == null || !String(raw).trim()) return null;
+  const s = String(raw).trim();
+  return (COURSE_SENTIMENT_IDS as readonly string[]).includes(s) ? s : null;
+}
+
+/**
+ * Reads persisted course sentiment from tutors-connect-users (for new browser sessions without localStorage).
+ */
+export async function getTutorsConnectUserSentiment(githubId: string): Promise<string | null> {
+  if (PUBLIC_ANON_MODE === "TRUE" || !githubId) return null;
+
+  const { data, error } = await supabase
+    .from("tutors-connect-users")
+    .select("sentiment")
+    .eq("github_id", githubId)
+    .maybeSingle();
+
+  if (error || !data) return null;
+  return normalizeStoredSentiment((data as { sentiment?: string | null }).sentiment);
+}
+
 /**
  * Creates or updates a student record in the database
  * @async
@@ -244,16 +267,29 @@ export async function addOrUpdateStudent(student: TutorsId) {
       }
     }
 
-    const { error } = await supabase.from("tutors-connect-users").upsert(
-      {
-        github_id: student.login,
-        avatar_url: student.image,
-        full_name: fullName,
-        email: student.email,
-        date_last_accessed: new Date().toISOString(),
-        sentiment: student.sentiment
-      },
-    );
+    const row: {
+      github_id: string;
+      avatar_url: string;
+      full_name: string;
+      email: string;
+      date_last_accessed: string;
+      sentiment: string;
+      online_status?: string;
+    } = {
+      github_id: student.login,
+      avatar_url: student.image,
+      full_name: fullName,
+      email: student.email,
+      date_last_accessed: new Date().toISOString(),
+      sentiment: student.sentiment
+    };
+    if (student.share === "true") {
+      row.online_status = "online";
+    } else if (student.share === "false") {
+      row.online_status = "offline";
+    }
+
+    const { error } = await supabase.from("tutors-connect-users").upsert(row);
 
     if (error) {
       console.error("Upsert failed:", error);
