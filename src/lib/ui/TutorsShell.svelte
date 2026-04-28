@@ -43,6 +43,3 @@
     </footer>
   {/if}
 </div>
-
-<style>
-</style>
