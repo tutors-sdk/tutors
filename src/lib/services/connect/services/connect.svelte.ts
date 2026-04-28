@@ -21,6 +21,8 @@ import { type CourseVisit, type TutorsConnectService, type TutorsId } from "../t
 import { supabaseProfile } from "./supabaseProfile.svelte";
 import {
   addOrUpdateStudent,
+  getTutorsConnectUserOnlineStatus,
+  getTutorsConnectUserSentiment,
   updateTutorsConnectUserOnlineStatus,
   updateTutorsConnectUserSentiment
 } from "$lib/services/community/utils/supabase-client";
@@ -57,26 +59,21 @@ export const tutorsConnectService: TutorsConnectService = {
    * Switches to Supabase profile and handles course redirects
    * @param user - User identity to reconnect
    */
-  reconnect(user: TutorsId) {
+
+  async reconnect(user: TutorsId) {
     if (anonMode) return;
     presenceService.connectToAllCourseAccess();
     if (user) {
-      tutorsId.value = {
-        ...user,
-        sentiment: user.sentiment ?? "neutral"
-      } as TutorsId;
-      addOrUpdateStudent(tutorsId.value);
       this.profile = supabaseProfile;
+      tutorsId.value = user;
+      tutorsId.value.sentiment! = await getTutorsConnectUserSentiment(user.login) ?? "neutral";
+      tutorsId.value.share = await getTutorsConnectUserOnlineStatus(user.login) ?? "true";
+      addOrUpdateStudent(user);
       if (browser) {
         if (!localStorage.share) {
           localStorage.share = true;
         }
         tutorsId.value.share = localStorage.share;
-        if (!localStorage.sentiment) {
-          localStorage.sentiment = "neutral";
-        }
-        const sentiment = localStorage.sentiment;
-        tutorsId.value = { ...tutorsId.value!, sentiment };
         if (localStorage.loginCourse) {
           const courseId = localStorage.loginCourse;
           localStorage.removeItem("loginCourse");
@@ -228,3 +225,4 @@ export const tutorsConnectService: TutorsConnectService = {
     }
   }
 };
+

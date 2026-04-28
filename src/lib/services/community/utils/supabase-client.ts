@@ -9,6 +9,7 @@ import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, PUBLIC_ANON_MODE } from "$env/static/public";
 import type { Course, Lo } from "@tutors/tutors-model-lib";
 import type { TutorsId } from "$lib/services/connect";
+import { COURSE_SENTIMENT_IDS } from "$lib/services/connect/types";
 
 export let supabase: SupabaseClient;
 
@@ -244,16 +245,29 @@ export async function addOrUpdateStudent(student: TutorsId) {
       }
     }
 
-    const { error } = await supabase.from("tutors-connect-users").upsert(
-      {
-        github_id: student.login,
-        avatar_url: student.image,
-        full_name: fullName,
-        email: student.email,
-        date_last_accessed: new Date().toISOString(),
-        sentiment: student.sentiment
-      },
-    );
+    const row: {
+      github_id: string;
+      avatar_url: string;
+      full_name: string;
+      email: string;
+      date_last_accessed: string;
+      sentiment: string;
+      online_status?: string;
+    } = {
+      github_id: student.login,
+      avatar_url: student.image,
+      full_name: fullName,
+      email: student.email,
+      date_last_accessed: new Date().toISOString(),
+      sentiment: student.sentiment
+    };
+    if (student.share === "true") {
+      row.online_status = "online";
+    } else if (student.share === "false") {
+      row.online_status = "offline";
+    }
+
+    const { error } = await supabase.from("tutors-connect-users").upsert(row);
 
     if (error) {
       console.error("Upsert failed:", error);
@@ -263,6 +277,34 @@ export async function addOrUpdateStudent(student: TutorsId) {
     console.error("An error occurred in addOrUpdateUserProfile:", error);
     throw error;
   }
+}
+
+function normalizeStoredSentiment(raw: string | null | undefined): string | null {
+  if (raw == null || !String(raw).trim()) return null;
+  const s = String(raw).trim();
+  return (COURSE_SENTIMENT_IDS as readonly string[]).includes(s) ? s : null;
+}
+
+/**
+ * Fetches sentiment for a row in tutors-connect-users.
+ * @param githubId - Student GitHub login (primary key for the row)
+ * @returns Stored sentiment if present and valid per {@link COURSE_SENTIMENT_IDS}, otherwise null (includes no row).
+ */
+export async function getTutorsConnectUserSentiment(githubId: string): Promise<string | null> {
+  if (PUBLIC_ANON_MODE === "TRUE" || !githubId) return null;
+
+  const { data, error } = await supabase
+    .from("tutors-connect-users")
+    .select("sentiment")
+    .eq("github_id", githubId)
+    .maybeSingle();
+
+  if (error) {
+    console.error("getTutorsConnectUserSentiment failed:", error);
+    throw error;
+  }
+  if (!data) return null;
+  return normalizeStoredSentiment((data as { sentiment: string | null }).sentiment);
 }
 
 /**
@@ -288,6 +330,30 @@ export async function updateTutorsConnectUserSentiment(githubId: string, sentime
 }
 
 /**
+ * Fetches online_status for a row in tutors-connect-users (mirrors Share Presence / {@link updateTutorsConnectUserOnlineStatus}).
+ * @param githubId - Student GitHub login (primary key for the row)
+ * @returns Stored online_status if present, otherwise null (includes no row).
+ */
+export async function getTutorsConnectUserOnlineStatus(githubId: string): Promise<string | null> {
+  if (PUBLIC_ANON_MODE === "TRUE" || !githubId) return null;
+
+  const { data, error } = await supabase
+    .from("tutors-connect-users")
+    .select("online_status")
+    .eq("github_id", githubId)
+    .maybeSingle();
+
+  if (error) {
+    console.error("getTutorsConnectShare failed:", error);
+    throw error;
+  }
+  if (!data) return null;
+  const raw = (data as { online_status: string | null }).online_status;
+  if (raw == null || !String(raw).trim()) return null;
+  return String(raw).trim();
+}
+
+/**
  * Sets online_status on tutors-connect-users (mirrors share: visible / sharing = online).
  */
 export async function updateTutorsConnectUserOnlineStatus(githubId: string, onlineStatus: "online" | "offline") {
@@ -306,3 +372,5 @@ export async function updateTutorsConnectUserOnlineStatus(githubId: string, onli
     throw error;
   }
 }
+
+
