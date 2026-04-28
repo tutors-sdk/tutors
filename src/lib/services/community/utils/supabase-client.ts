@@ -10,14 +10,67 @@ import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, PUBLIC_ANON_MODE } from 
 import type { Course, Lo } from "@tutors/tutors-model-lib";
 import type { TutorsId } from "$lib/services/connect";
 
+/**
+ * Build a no-op stand-in for the Supabase client when credentials aren't
+ * configured (anon mode, or missing env vars in local/preview).
+ *
+ * The real client exposes a chainable, awaitable query builder
+ * (`supabase.from(...).select(...).eq(...)` etc.). Many call sites in this
+ * codebase invoke that chain directly without first checking whether the
+ * client is configured. If `supabase` is `undefined`, those calls throw
+ * `TypeError: Cannot read properties of undefined (reading 'from')` at
+ * module-load / SSR time, which cascades into 500s on every page.
+ *
+ * The stub below uses a Proxy so:
+ *   - any property access returns another stub (so chains keep chaining)
+ *   - calling any method also returns a stub (so `.from().select().eq()` works)
+ *   - `await`ing a stub resolves to `{ data: null, error, count: 0 }` —
+ *     matching the real client's response shape, so the existing
+ *     try/catch + error-checking code paths handle it cleanly and
+ *     return empty results.
+ */
+function createSupabaseStub(): SupabaseClient {
+  const stubError = {
+    name: "SupabaseNotConfigured",
+    message: "Supabase is not configured (running in anonymous mode).",
+    details: "",
+    hint: "Set PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY to enable.",
+    code: "ANON_MODE"
+  };
+  const result = { data: null, error: stubError, count: 0, status: 200, statusText: "OK" };
+
+  const handler: ProxyHandler<any> = {
+    get(_target, prop) {
+      if (prop === "then") {
+        // Make the stub thenable so `await supabase.from(...).select(...)`
+        // resolves to a proper PostgREST-shaped response.
+        return (resolve: (v: typeof result) => void) => resolve(result);
+      }
+      if (prop === Symbol.toPrimitive || prop === "toString") {
+        return () => "[SupabaseStub]";
+      }
+      // Every other property access returns another callable stub so chains
+      // like `.from(...).select(...).eq(...).order(...)` keep working.
+      return new Proxy(() => proxy, handler);
+    },
+    apply() {
+      return proxy;
+    }
+  };
+
+  const proxy: any = new Proxy(() => proxy, handler);
+  return proxy as SupabaseClient;
+}
+
 export let supabase: SupabaseClient;
 
-// Only create the client when we are NOT in anon mode AND credentials are
+// Only create the real client when we are NOT in anon mode AND credentials are
 // actually configured. Otherwise `createClient` throws at module-load time
-// ("supabaseUrl is required"), which cascades into 500s on every request
-// (including SvelteKit's dev error page that re-renders the layout).
+// ("supabaseUrl is required"), which cascades into 500s on every request.
 if (PUBLIC_ANON_MODE !== "TRUE" && PUBLIC_SUPABASE_URL && PUBLIC_SUPABASE_ANON_KEY) {
   supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
+} else {
+  supabase = createSupabaseStub();
 }
 
 /**
