@@ -22,9 +22,3 @@
     crossorigin="anonymous"
   />
 </svelte:head>
-
-<style>
-  :global(.notecontent pre) {
-    color: white;
-  }
-</style>

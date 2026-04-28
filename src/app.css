@@ -14,3 +14,11 @@
 @import "./lib/services/themes/styles/prose-headings.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* Ensure code blocks rendered into note content are readable on the dark
+   pre backgrounds produced by the syntax-highlighting theme. Previously
+   defined as a :global rule inside Note.svelte; moved here so Tailwind v4's
+   Vite plugin doesn't try to parse the surrounding Svelte file as CSS. */
+.notecontent pre {
+  color: white;
+}
