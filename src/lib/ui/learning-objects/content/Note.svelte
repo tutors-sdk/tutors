@@ -8,7 +8,7 @@
   let { lo }: Props = $props();
 </script>
 
-<article class="prose dark:prose-invert mr-4 max-w-none">
+<article class="prose dark:prose-invert mx-auto w-full max-w-3xl px-4 py-2 lg:max-w-4xl">
   {#key currentCodeTheme.value}
     {@html lo.contentHtml}
   {/key}

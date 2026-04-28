@@ -115,11 +115,16 @@
   </div>
 {/snippet}
 
-<a href={route} {target}>
+<a
+  href={route}
+  {target}
+  aria-label={cardDetails.title}
+  class="focus-visible:ring-primary-500 inline-block rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+>
   <div
     class="card preset-filled-{themeService.getTypeColour(cardDetails.type)}-100-900 border-[1px]
     {styles.container} border-{themeService.getTypeColour(cardDetails.type)}-500
-    m-2 {styles.dimensions} transition-all hover:scale-[1.10]"
+    m-2 {styles.dimensions} shadow-sm transition-all duration-200 ease-out hover:-translate-y-0.5 hover:shadow-lg motion-reduce:transition-none motion-reduce:hover:translate-y-0"
   >
     {#if isLandscape}
       {@render landscape(cardDetails)}

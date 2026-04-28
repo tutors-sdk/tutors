@@ -6,55 +6,59 @@
   let { lo, parentCourse = null } = $props();
 
   let breadCrumbs: Lo[] = $derived(lo?.breadCrumbs!);
-  let truncated = [true, true, true, true, true, true, true];
+  // Track expanded crumbs reactively (Svelte 5 runes-aware state).
+  let expanded: boolean[] = $state([]);
 
+  const MAX_LEN = 28;
   function truncate(input: string) {
-    if (input.length > 16) {
-      return input.substring(0, 15) + "...";
-    }
-    return input;
-  }
-
-  function title(input: string, truncated: boolean, i: number) {
-    if (truncated === true) {
-      return truncate(input);
+    if (input && input.length > MAX_LEN) {
+      return input.substring(0, MAX_LEN - 1).trimEnd() + "…";
     }
     return input;
   }
 </script>
 
-<div class="mx-8 my-2 flex items-center overflow-hidden p-1">
+<div class="mx-4 my-2 flex items-center overflow-hidden p-1 sm:mx-6 lg:mx-8">
   <ol class="flex w-full items-center gap-2 min-w-0">
     <li class="flex items-center">
-      <a class="inline-flex items-center hover:underline" href="/"> <TutorsIcon widthPlease="25px" /></a>
+      <a class="inline-flex items-center rounded hover:underline focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-none" href="/" aria-label="Tutors home">
+        <TutorsIcon widthPlease="25px" />
+      </a>
     </li>
     <li class="flex items-center opacity-50" aria-hidden="true">&rsaquo;</li>
     {#if parentCourse}
       <li class="flex items-center">
-        <a class="inline-flex items-center hover:underline" href="/{parentCourse}"> <Icon type="programHome" tip={`Go to Course Home`} /></a>
+        <a
+          class="inline-flex items-center rounded hover:underline focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-none"
+          href="/{parentCourse}"
+          aria-label="Go to parent course"
+        >
+          <Icon type="programHome" tip={`Go to Course Home`} />
+        </a>
       </li>
       <li class="flex items-center opacity-50" aria-hidden="true">&rsaquo;</li>
     {/if}
 
     {#if breadCrumbs}
-      {#each breadCrumbs as lo, i}
+      {#each breadCrumbs as crumb, i}
         {#if i >= 1}
-          <li class="mb-1 opacity-50" aria-hidden="true">&rsaquo;</li>
+          <li class="opacity-50" aria-hidden="true">&rsaquo;</li>
         {/if}
-        <li class="flex items-center hover:underline min-w-0 flex-shrink-0">
-          <a href={lo.route} class="inline-flex items-center gap-1 text-black dark:text-white">
-            <Icon type={lo.type} tip={`Go to ${lo.title}`} />
-
-            <!-- svelte-ignore a11y_no_static_element_interactions -->
+        <li class="flex items-center min-w-0 flex-shrink-0">
+          <a
+            href={crumb.route}
+            class="inline-flex items-center gap-1 rounded text-black hover:underline focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:outline-none dark:text-white"
+            aria-label={`Go to ${crumb.title}`}
+          >
+            <Icon type={crumb.type} tip={`Go to ${crumb.title}`} />
             <span
-              class="hidden items-center pl-2 text-xs lg:inline-flex"
-              onmouseenter={() => {
-                truncated[i] = false;
-              }}
-              onmouseleave={() => {
-                truncated[i] = true;
-              }}
-              >{title(lo.title, truncated[i], i)}
+              class="hidden items-center pl-2 text-xs md:inline-flex"
+              onmouseenter={() => (expanded[i] = true)}
+              onmouseleave={() => (expanded[i] = false)}
+              onfocusin={() => (expanded[i] = true)}
+              onfocusout={() => (expanded[i] = false)}
+            >
+              {expanded[i] ? crumb.title : truncate(crumb.title)}
             </span>
           </a>
         </li>
