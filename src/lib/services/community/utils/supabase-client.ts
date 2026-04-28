@@ -216,28 +216,6 @@ export async function updateLearningRecordsDuration(courseId: string, studentId:
   await supabase.from("learning_records").update({ duration: numOfDuration }).eq("student_id", studentId).eq("course_id", courseId).eq("lo_id", loId);
 }
 
-function normalizeStoredSentiment(raw: string | null | undefined): string | null {
-  if (raw == null || !String(raw).trim()) return null;
-  const s = String(raw).trim();
-  return (COURSE_SENTIMENT_IDS as readonly string[]).includes(s) ? s : null;
-}
-
-/**
- * Reads persisted course sentiment from tutors-connect-users (for new browser sessions without localStorage).
- */
-export async function getTutorsConnectUserSentiment(githubId: string): Promise<string | null> {
-  if (PUBLIC_ANON_MODE === "TRUE" || !githubId) return null;
-
-  const { data, error } = await supabase
-    .from("tutors-connect-users")
-    .select("sentiment")
-    .eq("github_id", githubId)
-    .maybeSingle();
-
-  if (error || !data) return null;
-  return normalizeStoredSentiment((data as { sentiment?: string | null }).sentiment);
-}
-
 /**
  * Creates or updates a student record in the database
  * @async
@@ -301,6 +279,34 @@ export async function addOrUpdateStudent(student: TutorsId) {
   }
 }
 
+function normalizeStoredSentiment(raw: string | null | undefined): string | null {
+  if (raw == null || !String(raw).trim()) return null;
+  const s = String(raw).trim();
+  return (COURSE_SENTIMENT_IDS as readonly string[]).includes(s) ? s : null;
+}
+
+/**
+ * Fetches sentiment for a row in tutors-connect-users.
+ * @param githubId - Student GitHub login (primary key for the row)
+ * @returns Stored sentiment if present and valid per {@link COURSE_SENTIMENT_IDS}, otherwise null (includes no row).
+ */
+export async function getTutorsConnectUserSentiment(githubId: string): Promise<string | null> {
+  if (PUBLIC_ANON_MODE === "TRUE" || !githubId) return null;
+
+  const { data, error } = await supabase
+    .from("tutors-connect-users")
+    .select("sentiment")
+    .eq("github_id", githubId)
+    .maybeSingle();
+
+  if (error) {
+    console.error("getTutorsConnectUserSentiment failed:", error);
+    throw error;
+  }
+  if (!data) return null;
+  return normalizeStoredSentiment((data as { sentiment: string | null }).sentiment);
+}
+
 /**
  * Updates sentiment (and last-accessed) for a row in tutors-connect-users.
  * @param githubId - Student GitHub login (primary key for the row)
@@ -324,6 +330,30 @@ export async function updateTutorsConnectUserSentiment(githubId: string, sentime
 }
 
 /**
+ * Fetches online_status for a row in tutors-connect-users (mirrors Share Presence / {@link updateTutorsConnectUserOnlineStatus}).
+ * @param githubId - Student GitHub login (primary key for the row)
+ * @returns Stored online_status if present, otherwise null (includes no row).
+ */
+export async function getTutorsConnectUserOnlineStatus(githubId: string): Promise<string | null> {
+  if (PUBLIC_ANON_MODE === "TRUE" || !githubId) return null;
+
+  const { data, error } = await supabase
+    .from("tutors-connect-users")
+    .select("online_status")
+    .eq("github_id", githubId)
+    .maybeSingle();
+
+  if (error) {
+    console.error("getTutorsConnectShare failed:", error);
+    throw error;
+  }
+  if (!data) return null;
+  const raw = (data as { online_status: string | null }).online_status;
+  if (raw == null || !String(raw).trim()) return null;
+  return String(raw).trim();
+}
+
+/**
  * Sets online_status on tutors-connect-users (mirrors share: visible / sharing = online).
  */
 export async function updateTutorsConnectUserOnlineStatus(githubId: string, onlineStatus: "online" | "offline") {
@@ -342,3 +372,5 @@ export async function updateTutorsConnectUserOnlineStatus(githubId: string, onli
     throw error;
   }
 }
+
+

@@ -21,6 +21,7 @@ import { type CourseVisit, type TutorsConnectService, type TutorsId } from "../t
 import { supabaseProfile } from "./supabaseProfile.svelte";
 import {
   addOrUpdateStudent,
+  getTutorsConnectUserOnlineStatus,
   getTutorsConnectUserSentiment,
   updateTutorsConnectUserOnlineStatus,
   updateTutorsConnectUserSentiment
@@ -58,69 +59,28 @@ export const tutorsConnectService: TutorsConnectService = {
    * Switches to Supabase profile and handles course redirects
    * @param user - User identity to reconnect
    */
-  reconnect(user: TutorsId) {
+
+  async reconnect(user: TutorsId) {
     if (anonMode) return;
     presenceService.connectToAllCourseAccess();
-    if (!user) return;
-
-    let merged: TutorsId = {
-      ...user,
-      sentiment: user.sentiment ?? "neutral"
-    } as TutorsId;
-
-    const applyLoginCourseRedirect = () => {
-      if (browser && localStorage.loginCourse) {
-        const courseId = localStorage.loginCourse;
-        localStorage.removeItem("loginCourse");
-        goto(`/course/${courseId}`);
-      }
-    };
-
-    if (!browser) {
-      tutorsId.value = merged;
+    if (user) {
+      tutorsId.value = user;
+      tutorsId.value.sentiment! = await getTutorsConnectUserSentiment(user.login) ?? "neutral";
+      tutorsId.value.share = await getTutorsConnectUserOnlineStatus(user.login) ?? "true";
+      addOrUpdateStudent(user);
       this.profile = supabaseProfile;
-      return;
+      if (browser) {
+        if (!localStorage.share) {
+          localStorage.share = true;
+        }
+        tutorsId.value.share = localStorage.share;
+        if (localStorage.loginCourse) {
+          const courseId = localStorage.loginCourse;
+          localStorage.removeItem("loginCourse");
+          goto(`/course/${courseId}`);
+        }
+      }
     }
-
-    if (!localStorage.share) {
-      localStorage.share = "true";
-    }
-    merged.share = String(localStorage.share);
-    this.profile = supabaseProfile;
-
-    if (localStorage.sentiment) {
-      merged.sentiment = localStorage.sentiment;
-      tutorsId.value = merged;
-      void addOrUpdateStudent(merged).catch((err) => console.error(err));
-      applyLoginCourseRedirect();
-      return;
-    }
-
-    const login = merged.login;
-    if (login) {
-      tutorsId.value = merged;
-      void getTutorsConnectUserSentiment(login)
-        .then((dbSentiment) => {
-          const sentiment = dbSentiment ?? "neutral";
-          localStorage.sentiment = sentiment;
-          if (tutorsId.value?.login !== login) return;
-          tutorsId.value = { ...tutorsId.value!, sentiment };
-          void addOrUpdateStudent(tutorsId.value!).catch((err) => console.error(err));
-        })
-        .catch(() => {
-          if (tutorsId.value?.login !== login) return;
-          localStorage.sentiment = "neutral";
-          tutorsId.value = { ...tutorsId.value!, sentiment: "neutral" };
-          void addOrUpdateStudent(tutorsId.value!).catch((err) => console.error(err));
-        });
-      applyLoginCourseRedirect();
-      return;
-    }
-
-    merged.sentiment = "neutral";
-    tutorsId.value = merged;
-    void addOrUpdateStudent(merged).catch((err) => console.error(err));
-    applyLoginCourseRedirect();
   },
 
   /**
@@ -265,3 +225,4 @@ export const tutorsConnectService: TutorsConnectService = {
     }
   }
 };
+
