@@ -12,7 +12,11 @@ import type { TutorsId } from "$lib/services/connect";
 
 export let supabase: SupabaseClient;
 
-if (PUBLIC_ANON_MODE !== "TRUE") {
+// Only create the client when we are NOT in anon mode AND credentials are
+// actually configured. Otherwise `createClient` throws at module-load time
+// ("supabaseUrl is required"), which cascades into 500s on every request
+// (including SvelteKit's dev error page that re-renders the layout).
+if (PUBLIC_ANON_MODE !== "TRUE" && PUBLIC_SUPABASE_URL && PUBLIC_SUPABASE_ANON_KEY) {
   supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
 }
 

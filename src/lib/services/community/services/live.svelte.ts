@@ -12,9 +12,11 @@ import { LoRecord, type LiveService } from "../types.svelte";
 // Server URL from environment variables
 const partyKitServer = PUBLIC_party_kit_main_room;
 
-// Initialize global WebSocket connection if server URL is configured
+// Initialize global WebSocket connection if server URL is configured.
+// Note: also guard against an empty/undefined value so we don't throw at
+// module-load (PartySocket calls .replace on the host string).
 let partyKitAll = <PartySocket>{};
-if (PUBLIC_party_kit_main_room !== "XXX") {
+if (partyKitServer && PUBLIC_party_kit_main_room !== "XXX") {
   partyKitAll = new PartySocket({
     host: partyKitServer,
     room: "tutors-all-course-access"
@@ -98,6 +100,8 @@ export const liveService: LiveService = {
   },
 
   startGlobalPresenceService() {
+    // No-op if PartyKit isn't configured
+    if (typeof partyKitAll.addEventListener !== "function") return;
     // Only set up global listener once
     if (!this.listeningAll) {
       partyKitAll.addEventListener("message", this.partyKitListener.bind(this));
@@ -110,6 +114,9 @@ export const liveService: LiveService = {
     this.listeningForCourse.value = courseId;
     this.studentsOnline.value = [];
     this.studentEventMap.clear();
+
+    // No-op if PartyKit isn't configured (e.g. local dev without env vars)
+    if (!partyKitServer || partyKitServer === "XXX") return;
 
     // Create new WebSocket connection for course
     this.partyKitCourse = new PartySocket({

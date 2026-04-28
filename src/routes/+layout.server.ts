@@ -1,9 +1,10 @@
 export const load = async ({ locals }) => {
-  const session = await locals?.auth();
-  const loggedIn = !!session?.user;
-  const user = session?.user;
-  return {
-    loggedIn,
-    user
-  };
+  // Auth may not be configured in dev; degrade to anonymous if anything throws.
+  try {
+    const session = await locals?.auth?.();
+    const user = session?.user;
+    return { loggedIn: !!user, user };
+  } catch {
+    return { loggedIn: false, user: undefined };
+  }
 };
