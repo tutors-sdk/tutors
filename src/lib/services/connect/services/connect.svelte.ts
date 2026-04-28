@@ -64,11 +64,11 @@ export const tutorsConnectService: TutorsConnectService = {
     if (anonMode) return;
     presenceService.connectToAllCourseAccess();
     if (user) {
+      this.profile = supabaseProfile;
       tutorsId.value = user;
       tutorsId.value.sentiment! = await getTutorsConnectUserSentiment(user.login) ?? "neutral";
       tutorsId.value.share = await getTutorsConnectUserOnlineStatus(user.login) ?? "true";
       addOrUpdateStudent(user);
-      this.profile = supabaseProfile;
       if (browser) {
         if (!localStorage.share) {
           localStorage.share = true;
