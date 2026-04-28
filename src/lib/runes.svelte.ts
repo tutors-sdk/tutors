@@ -23,3 +23,5 @@ export const currentCourse = rune<Course | null>(null);
 export const tutorsId = rune<TutorsId | null>(null);
 
 export const courseProtocol = rune("https://");
+
+export const hideMainNavigator = rune(false);
