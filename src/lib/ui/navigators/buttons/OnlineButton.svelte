@@ -19,10 +19,9 @@
             student: lo?.user,
             type: lo?.type,
             summary: lo?.courseTitle,
-            // title: lo?.courseTitle,
             summaryEx: lo?.title + " (" + lo?.type + ")",
             img: lo?.img,
-            icon: lo?.icon
+            icon: lo?.icon,
           }}
           cardLayout={{
             layout: "compacted",

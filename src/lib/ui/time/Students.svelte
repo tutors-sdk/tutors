@@ -5,17 +5,20 @@
 
 <div class="flex flex-wrap justify-center">
   {#each liveService.studentsOnline.value as lo}
-    <Card
-      cardDetails={{
-        route: lo?.loRoute,
-        student: lo?.user,
-        type: lo?.type,
-        summary: lo?.courseTitle,
-        title: lo?.courseTitle,
-        summaryEx: lo?.title,
-        img: lo?.img,
-        icon: lo?.icon
-      }}
-    />
+        <Card
+          cardDetails={{
+            route: lo?.loRoute,
+            student: lo?.user,
+            type: lo?.type,
+            summary: lo?.title + " (" + lo?.type + ")",
+  
+            img: lo?.img,
+            icon: lo?.icon,
+          }}
+          cardLayout={{
+            layout: "expanded",
+            style: "landscape"
+          }}
+        />
   {/each}
 </div>

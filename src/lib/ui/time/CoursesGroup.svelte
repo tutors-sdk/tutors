@@ -4,7 +4,7 @@
 </script>
 
 <div class="flex flex-wrap justify-center">
-  {#each liveService.studentsOnlineByCourse.value as los}
-    <CourseGroup {los} />
+  {#each liveService.coursesOnline.value as course}
+    <CourseGroup course={course} />
   {/each}
 </div>

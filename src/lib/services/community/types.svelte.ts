@@ -8,6 +8,7 @@ export interface LoUser {
   fullName: string;
   avatar: string;
   id: string;
+  sentiment: string;
 }
 
 /**
@@ -84,8 +85,6 @@ export interface LiveService {
   coursesOnline: { value: LoRecord[] };
   /** List of all active students in current course */
   studentsOnline: { value: LoRecord[] };
-  /** Active students grouped by their courses */
-  studentsOnlineByCourse: { value: LoRecord[][] };
   /** Quick lookup for student activity by ID */
   studentEventMap: Map<string, LoRecord>;
   /** Quick lookup for course activity by ID */
@@ -94,12 +93,6 @@ export interface LiveService {
   partyKitCourse: PartySocket;
   /** Flag indicating if global monitoring is active */
   listeningAll: boolean;
-
-  /**
-   * Process student activity for course grouping
-   * @param event - WebSocket message containing student activity
-   */
-  groupedStudentListener(event: MessageEvent): void;
 
   /**
    * Process individual student activity

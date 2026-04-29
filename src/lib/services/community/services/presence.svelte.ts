@@ -27,7 +27,7 @@ export const presenceService: PresenceService = {
     // Parse JSON data from WebSocket message
     const nextCourseEvent = JSON.parse(event.data);
     // Only process events for current course and from other users
-    if (nextCourseEvent.courseId === this.listeningTo && nextCourseEvent.user.id !== tutorsId.value?.login) {
+    if (nextCourseEvent.courseId === this.listeningTo) {// && nextCourseEvent.user.id !== tutorsId.value?.login) {
       const studentEvent = this.studentEventMap.get(nextCourseEvent.user.id);
       if (!studentEvent) {
         // First time seeing this student - add to online list
@@ -98,6 +98,7 @@ export function refreshLoRecord(loEvent: LoRecord, nextLoEvent: LoRecord) {
   loEvent.loRoute = `https://tutors.dev${nextLoEvent.loRoute}`;
   loEvent.title = nextLoEvent.title;
   loEvent.type = nextLoEvent.type;
+  loEvent.user = nextLoEvent.user;
   if (nextLoEvent.icon) {
     loEvent.icon = nextLoEvent.icon;
     loEvent.img = undefined;
@@ -117,12 +118,14 @@ function getUser(tutorsId: TutorsId): LoUser {
   const user: LoUser = {
     fullName: "Anon",
     avatar: "https://tutors.dev/logo.svg",
-    id: getTutorsTimeId()
+    id: getTutorsTimeId(),
+    sentiment: "neutral"
   };
   if (tutorsId.share) {
     user.fullName = tutorsId.name;
     user.avatar = tutorsId.image;
     user.id = tutorsId.login;
+    user.sentiment = tutorsId.sentiment ?? "neutral";
   }
   return user;
 }

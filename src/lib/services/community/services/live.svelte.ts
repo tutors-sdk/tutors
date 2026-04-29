@@ -26,7 +26,6 @@ export const liveService: LiveService = {
   listeningForCourse: rune<string>(""),
   coursesOnline: rune<LoRecord[]>([]),
   studentsOnline: rune<LoRecord[]>([]),
-  studentsOnlineByCourse: rune<LoRecord[][]>([]),
 
   // Maps for efficient event lookup and updates
   studentEventMap: new Map<string, LoRecord>(),
@@ -35,28 +34,6 @@ export const liveService: LiveService = {
   // Course-specific WebSocket connection - initialized on demand
   partyKitCourse: <PartySocket>{},
   listeningAll: false,
-
-  groupedStudentListener(event: MessageEvent) {
-    // Parse incoming WebSocket data
-    const data = JSON.parse(event.data);
-
-    // Find existing course group or create new one
-    const courseArray = this.studentsOnlineByCourse.value.find((lo: LoRecord[]) => lo[0].courseId === data.courseId);
-    if (!courseArray) {
-      // First student in this course
-      const studentArray = new Array<LoRecord>();
-      studentArray.push(new LoRecord(data));
-      this.studentsOnlineByCourse.value.push(studentArray);
-    } else {
-      // Course exists, find or add student
-      const loStudent = courseArray.find((lo: LoRecord) => lo.user?.id === data.user.id);
-      if (!loStudent) {
-        courseArray.push(new LoRecord(data));
-      } else {
-        refreshLoRecord(loStudent, data);
-      }
-    }
-  },
 
   studentListener(event: MessageEvent) {
     // Parse and extract student data
@@ -68,6 +45,7 @@ export const liveService: LiveService = {
       const latestLo = new LoRecord(data);
       this.studentsOnline.value.push(latestLo);
       this.studentEventMap.set(data.user.id, latestLo);
+
     } else {
       // Update existing student record
       refreshLoRecord(studentEvent, data);
@@ -91,8 +69,6 @@ export const liveService: LiveService = {
   },
 
   partyKitListener(event: MessageEvent) {
-    // Parse message once and distribute to specific handlers
-    this.groupedStudentListener(event);
     this.courseListener(event);
     this.studentListener(event);
   },
