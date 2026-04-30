@@ -16,19 +16,11 @@
   <div class="flex flex-wrap justify-center">
     {#each students as lo}
       {#if lo?.user?.fullName !== "Anon"}
-        <StudentCard 
-          cardDetails={{
-            route: lo?.loRoute,
-            student: lo?.user!,
-            type: lo?.type,
-            summary: lo?.title + " (" + lo?.type + ")",
-  
-            img: lo?.img,
-            icon: lo?.icon,
-          }}
+        <StudentCard
+          {lo}
           cardLayout={{
             layout: "expanded",
-            style: "landscape"
+            style: "landscape",
           }}
         />
       {/if}

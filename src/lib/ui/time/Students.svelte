@@ -1,25 +1,19 @@
 <script lang="ts">
   import { liveService } from "$lib/services/community";
-  import Card from "../learning-objects/layout/Card.svelte";
   import StudentCard from "./StudentCard.svelte";
 </script>
 
 <div class="flex flex-wrap justify-center">
   {#each liveService.studentsOnline.value as lo}
-        <StudentCard
-          cardDetails={{
-            route: lo?.loRoute,
-            student: lo?.user,
-            type: lo?.type,
-            summary: lo?.title + " (" + lo?.type + ")",
-  
-            img: lo?.img,
-            icon: lo?.icon,
-          }}
-          cardLayout={{
-            layout: "expanded",
-            style: "landscape"
-          }}
-        />
+    {#if lo?.user}
+      <StudentCard
+        {lo}
+        showCourseTitle={true}
+        cardLayout={{
+          layout: "expanded",
+          style: "landscape",
+        }}
+      />
+    {/if}
   {/each}
 </div>

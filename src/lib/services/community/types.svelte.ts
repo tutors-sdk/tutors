@@ -32,6 +32,9 @@ export class LoRecord {
   }
 }
 
+/** Learning-object presence / activity record (live, time, PartyKit payloads). */
+export type LoEvent = LoRecord;
+
 /**
  * Service for managing real-time user presence and interactions
  * Tracks student activity and broadcasts learning object interactions

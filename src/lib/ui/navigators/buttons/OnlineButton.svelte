@@ -13,19 +13,12 @@
   <div class="flex flex-wrap justify-center">
     {#each presenceService.studentsOnline.value as lo}
       {#if lo?.user?.fullName !== "Anon"}
-        <StudentCard 
-          cardDetails={{
-            route: lo?.loRoute,
-            student: lo?.user!,
-            type: lo?.type,
-            summary: lo?.courseTitle,
-            summaryEx: lo?.title + " (" + lo?.type + ")",
-            img: lo?.img,
-            icon: lo?.icon,
-          }}
+        <StudentCard
+          {lo}
+          showCourseTitle={true}
           cardLayout={{
             layout: "compacted",
-            style: "landscape"
+            style: "landscape",
           }}
         />
       {/if}

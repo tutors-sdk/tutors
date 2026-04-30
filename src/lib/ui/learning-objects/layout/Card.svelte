@@ -1,12 +1,35 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
+  import { LoRecord } from "$lib/services/community";
   import { cardStyles, type CardConfig, type CardDetails } from "$lib/services/themes";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { currentCourse } from "$lib/runes.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
   import StudentCard from "$lib/ui/time/StudentCard.svelte";
 
-let { cardDetails, cardLayout } = $props<{ cardDetails: CardDetails; cardLayout?: CardConfig }>();
+  let { cardDetails, cardLayout } = $props<{ cardDetails: CardDetails; cardLayout?: CardConfig }>();
+
+  function plainFromSummary(html: string | undefined): string {
+    if (!html) return "";
+    return html.replace(/<[^>]*>/g, "").trim();
+  }
+
+  const studentLoFromCard = $derived.by(() => {
+    const d = cardDetails;
+    const loRoute = d.type === "video" && d.video ? d.video : d.route;
+    const title = (d.title ?? plainFromSummary(d.summary)) || "";
+    return new LoRecord({
+      loRoute,
+      title,
+      type: d.type,
+      img: d.img,
+      icon: d.icon,
+      user: d.student!,
+      courseTitle: "",
+      courseId: "",
+      courseUrl: "",
+    });
+  });
 
   const target = $derived(cardDetails.type === "web" && cardDetails.route.startsWith("http") ? "_blank" : "");
   const route = $derived(cardDetails.type === "video" ? cardDetails.video! : cardDetails.route);
@@ -124,7 +147,7 @@ let { cardDetails, cardLayout } = $props<{ cardDetails: CardDetails; cardLayout?
 {/snippet}
 
 {#if cardDetails.student}
-  <StudentCard {cardDetails} {cardLayout} />
+  <StudentCard lo={studentLoFromCard} {cardLayout} />
 {:else}
   <a href={route} {target}>
     <div class={cardShellClass}>
