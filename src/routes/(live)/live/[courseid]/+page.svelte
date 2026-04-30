@@ -1,7 +1,7 @@
 <script lang="ts">
   import { presenceService } from "$lib/services/community";
-  import Course from "$lib/ui/time/Course.svelte";
-  import CourseGroup from "$lib/ui/time/CourseGroup.svelte";
+  import StudentCard from "$lib/ui/time/StudentCard.svelte";
+  import CourseGroupHeader from "$lib/ui/time/CourseGroupHeader.svelte";
 
   interface Props {
     data: any;
@@ -13,4 +13,18 @@
   }
 </script>
 
-<CourseGroup los={presenceService.studentsOnline.value} />
+  <div class="flex flex-wrap justify-center">
+    <CourseGroupHeader course={presenceService.studentsOnline.value[0]!} />
+    {#each presenceService.studentsOnline.value as lo}
+      {#if lo?.user?.fullName !== "Anon"}
+        <StudentCard
+          {lo}
+          cardLayout={{
+            layout: "expanded",
+            style: "landscape",
+          }}
+        />
+      {/if}
+    {/each}
+    </div>
+
