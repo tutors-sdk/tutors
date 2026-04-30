@@ -1,11 +1,12 @@
 <script lang="ts">
   import { liveService } from "$lib/services/community";
   import Card from "../learning-objects/layout/Card.svelte";
+  import StudentCard from "./StudentCard.svelte";
 </script>
 
 <div class="flex flex-wrap justify-center">
   {#each liveService.studentsOnline.value as lo}
-        <Card
+        <StudentCard
           cardDetails={{
             route: lo?.loRoute,
             student: lo?.user,
