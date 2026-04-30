@@ -1,11 +1,35 @@
 <script lang="ts">
   import Iconify from "@iconify/svelte";
+  import { LoRecord } from "$lib/services/community";
   import { cardStyles, type CardConfig, type CardDetails } from "$lib/services/themes";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { currentCourse } from "$lib/runes.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
+  import StudentCard from "$lib/ui/time/StudentCard.svelte";
 
   let { cardDetails, cardLayout } = $props<{ cardDetails: CardDetails; cardLayout?: CardConfig }>();
+
+  function plainFromSummary(html: string | undefined): string {
+    if (!html) return "";
+    return html.replace(/<[^>]*>/g, "").trim();
+  }
+
+  const studentLoFromCard = $derived.by(() => {
+    const d = cardDetails;
+    const loRoute = d.type === "video" && d.video ? d.video : d.route;
+    const title = (d.title ?? plainFromSummary(d.summary)) || "";
+    return new LoRecord({
+      loRoute,
+      title,
+      type: d.type,
+      img: d.img,
+      icon: d.icon,
+      user: d.student!,
+      courseTitle: "",
+      courseId: "",
+      courseUrl: "",
+    });
+  });
 
   const target = $derived(cardDetails.type === "web" && cardDetails.route.startsWith("http") ? "_blank" : "");
   const route = $derived(cardDetails.type === "video" ? cardDetails.video! : cardDetails.route);
@@ -26,6 +50,12 @@
     avatar: cardStyles.avatar[layout][style],
     container: cardStyles.container[layout][style]
   });
+
+  const cardShellClass = $derived(
+    `card preset-filled-${themeService.getTypeColour(cardDetails.type)}-100-900 border-[1px] ` +
+      `${styles.container} border-${themeService.getTypeColour(cardDetails.type)}-500 ` +
+      `m-2 ${styles.dimensions} transition-all hover:scale-[1.10]`
+  );
 </script>
 
 {#snippet header(cardDetails: CardDetails)}
@@ -46,6 +76,7 @@
           </span>
           <span>
             <h6 class={styles.text}>&nbsp;{cardDetails.student.fullName ?? cardDetails.student.id}</h6>
+
           </span>
         </div>
       {:else}
@@ -115,18 +146,18 @@
   </div>
 {/snippet}
 
-<a href={route} {target}>
-  <div
-    class="card preset-filled-{themeService.getTypeColour(cardDetails.type)}-100-900 border-[1px]
-    {styles.container} border-{themeService.getTypeColour(cardDetails.type)}-500
-    m-2 {styles.dimensions} transition-all hover:scale-[1.10]"
-  >
-    {#if isLandscape}
-      {@render landscape(cardDetails)}
-    {:else if isCircular}
-      {@render circular(cardDetails)}
-    {:else if isPortrait}
-      {@render portrait(cardDetails)}
-    {/if}
-  </div>
-</a>
+{#if cardDetails.student}
+  <StudentCard lo={studentLoFromCard} {cardLayout} />
+{:else}
+  <a href={route} {target}>
+    <div class={cardShellClass}>
+      {#if isLandscape}
+        {@render landscape(cardDetails)}
+      {:else if isCircular}
+        {@render circular(cardDetails)}
+      {:else if isPortrait}
+        {@render portrait(cardDetails)}
+      {/if}
+    </div>
+  </a>
+{/if}
