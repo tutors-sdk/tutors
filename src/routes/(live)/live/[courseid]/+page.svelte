@@ -1,6 +1,7 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import { LoRecord, presenceService } from "$lib/services/community";
-  import { getTutorsConnectLatestLosByCourseId } from "$lib/services/community/utils/supabase-client";
+  import { getTutorsConnectLatestLosByCourseId, instantLocalYmd, localYyyyMmDd } from "$lib/services/community/utils/supabase-client";
   import CourseGroupHeader from "$lib/ui/time/CourseGroupHeader.svelte";
   import StudentCard from "$lib/ui/time/StudentCard.svelte";
 
@@ -11,35 +12,13 @@
 
   let earlierLos = $state<LoRecord[]>([]);
 
-  function localYyyyMmDd(d = new Date()) {
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, "0");
-    const day = String(d.getDate()).padStart(2, "0");
-    return `${y}-${m}-${day}`;
-  }
-
-  function instantLocalYmd(iso: string | null | undefined): string | null {
-    if (!iso?.trim()) return null;
-    try {
-      const d = new Date(iso.trim());
-      if (!Number.isFinite(d.getTime())) return null;
-      return localYyyyMmDd(d);
-    } catch {
-      return null;
-    }
-  }
-
-  $effect(() => {
+  onMount(() => {
     const courseid = data.courseid;
     if (!courseid) return;
+
     if (presenceService.listeningTo !== courseid) {
       presenceService.startPresenceListener(courseid);
     }
-  });
-
-  $effect(() => {
-    const courseid = data.courseid;
-    if (!courseid) return;
 
     let cancelled = false;
     void (async () => {
