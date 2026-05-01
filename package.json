@@ -54,6 +54,6 @@
   },
   "dependencies": {
     "@tutors/tutors-model-lib": "npm:@jsr/tutors__tutors-model-lib@^5.0.0",
-    "@tutors/tutors-time-lib": "npm:@jsr/tutors__tutors-time-lib@^5.0.2"
+    "@tutors/tutors-time-lib": "npm:@jsr/tutors__tutors-time-lib@^5.0.3"
   }
 }

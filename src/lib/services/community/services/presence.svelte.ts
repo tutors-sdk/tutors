@@ -10,6 +10,7 @@ import type { Course, Lo } from "@tutors/tutors-model-lib";
 import { rune, tutorsId } from "$lib/runes.svelte";
 import { LoRecord, type LoUser, type PresenceService } from "../types.svelte";
 import type { TutorsId } from "$lib/services/connect";
+import { upsertTutorsConnectLatestLo } from "../utils/supabase-client";
 
 // Server URL from environment variables
 const partyKitServer = PUBLIC_party_kit_main_room;
@@ -86,7 +87,9 @@ export const presenceService: PresenceService = {
     if (this.listeningTo !== "") {
       this.partyKitCourse.send(loRecordJson);
     }
-  }
+
+    void upsertTutorsConnectLatestLo(loRecord);
+  },
 };
 
 /**
