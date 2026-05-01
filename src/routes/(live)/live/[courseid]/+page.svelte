@@ -83,10 +83,10 @@
     <h2 class="border-surface-300-600-token mb-3 border-b pb-2 text-lg font-semibold">Latest activity</h2>
     <Tabs defaultValue="Day">
       <Tabs.List>
-        <Tabs.Trigger value="Day">Day</Tabs.Trigger>
-        <Tabs.Trigger value="Week">Week</Tabs.Trigger>
-        <Tabs.Trigger value="Month">Month</Tabs.Trigger>
-        <Tabs.Trigger value="Year">Year</Tabs.Trigger>
+        <Tabs.Trigger value="Day">Today</Tabs.Trigger>
+        <Tabs.Trigger value="Week">This Week</Tabs.Trigger>
+        <Tabs.Trigger value="Month">This Month</Tabs.Trigger>
+        <Tabs.Trigger value="Year">This Year</Tabs.Trigger>
         <Tabs.Indicator />
       </Tabs.List>
       <Tabs.Content value="Day">
