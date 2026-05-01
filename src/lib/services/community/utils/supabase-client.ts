@@ -10,11 +10,86 @@ import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, PUBLIC_ANON_MODE } from 
 import type { Course, Lo } from "@tutors/tutors-model-lib";
 import type { TutorsId } from "$lib/services/connect";
 import { COURSE_SENTIMENT_IDS } from "$lib/services/connect/types";
+import type { TutorsConnectLatestRow } from "../types.svelte";
 
 export let supabase: SupabaseClient;
 
 if (PUBLIC_ANON_MODE !== "TRUE") {
   supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
+}
+
+
+export function localYyyyMmDd(d = new Date()) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+export function instantLocalYmd(iso: string | null | undefined): string | null {
+  if (!iso?.trim()) return null;
+  try {
+    const d = new Date(iso.trim());
+    if (!Number.isFinite(d.getTime())) return null;
+    return localYyyyMmDd(d);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Upsert latest Lo snapshot for (course, student) into tutors-connect-latest.
+ * Fire-and-forget from presence; does not throw.
+ */
+export async function upsertTutorsConnectLatestLo(loRecord: object): Promise<void> {
+  if (PUBLIC_ANON_MODE === "TRUE" || typeof supabase === "undefined") return;
+
+  const rec = loRecord as { courseId?: string; user?: { id?: string } };
+  const courseId = rec.courseId?.trim();
+  const studentId = rec.user?.id?.trim();
+  if (!courseId || !studentId) return;
+
+  const { error } = await supabase.from("tutors-connect-latest").upsert(
+    {
+      course_id: courseId,
+      student_id: studentId,
+      payload: loRecord,
+      received_at: new Date().toISOString(),
+    },
+    { onConflict: "course_id,student_id" }
+  );
+
+  if (error) {
+    console.error("upsertTutorsConnectLatestLo failed:", error);
+  }
+}
+
+
+
+/**
+ * All stored Lo snapshots for a course (one row per student, already “latest” by key).
+ * Sorted by `received_at` descending (most recently updated first).
+ */
+export async function getTutorsConnectLatestLosByCourseId(
+  courseId: string
+): Promise<TutorsConnectLatestRow[]> {
+  if (PUBLIC_ANON_MODE === "TRUE" || typeof supabase === "undefined") return [];
+
+  const id = courseId?.trim();
+  if (!id) return [];
+
+  const { data, error } = await supabase
+    .from("tutors-connect-latest")
+    .select("course_id, student_id, payload, received_at")
+    .eq("course_id", id)
+    .order("received_at", { ascending: false });
+
+  if (error) {
+    console.error("getTutorsConnectLatestLosByCourseId failed:", error);
+    return [];
+  }
+
+  return (data ?? []) as TutorsConnectLatestRow[];
 }
 
 /**

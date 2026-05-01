@@ -32,6 +32,14 @@ export class LoRecord {
   }
 }
 
+/** Row from tutors-connect-latest (one latest snapshot per student per course). */
+export type TutorsConnectLatestRow = {
+  course_id: string;
+  student_id: string;
+  payload: Record<string, unknown>;
+  received_at: string;
+};
+
 /** Learning-object presence / activity record (live, time, PartyKit payloads). */
 export type LoEvent = LoRecord;
 
