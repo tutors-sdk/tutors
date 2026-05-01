@@ -37,6 +37,56 @@ export function instantLocalYmd(iso: string | null | undefined): string | null {
   }
 }
 
+function startOfLocalMondayWeek(d: Date): number {
+  const copy = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const day = copy.getDay();
+  const diff = day === 0 ? -6 : 1 - day;
+  copy.setDate(copy.getDate() + diff);
+  copy.setHours(0, 0, 0, 0);
+  return copy.getTime();
+}
+
+/** Local calendar day match (same semantics as `localYyyyMmDd` / `instantLocalYmd`). */
+export function isReceivedAtOnLocalDay(
+  iso: string | null | undefined,
+  ref = new Date()
+): boolean {
+  const ymd = instantLocalYmd(iso);
+  if (!ymd) return false;
+  return ymd === localYyyyMmDd(ref);
+}
+
+/** Local week starting Monday, through Sunday. */
+export function isReceivedAtInLocalWeek(
+  iso: string | null | undefined,
+  ref = new Date()
+): boolean {
+  if (!iso?.trim()) return false;
+  const d = new Date(iso.trim());
+  if (!Number.isFinite(d.getTime())) return false;
+  return startOfLocalMondayWeek(d) === startOfLocalMondayWeek(ref);
+}
+
+export function isReceivedAtInLocalMonth(
+  iso: string | null | undefined,
+  ref = new Date()
+): boolean {
+  if (!iso?.trim()) return false;
+  const d = new Date(iso.trim());
+  if (!Number.isFinite(d.getTime())) return false;
+  return d.getFullYear() === ref.getFullYear() && d.getMonth() === ref.getMonth();
+}
+
+export function isReceivedAtInLocalYear(
+  iso: string | null | undefined,
+  ref = new Date()
+): boolean {
+  if (!iso?.trim()) return false;
+  const d = new Date(iso.trim());
+  if (!Number.isFinite(d.getTime())) return false;
+  return d.getFullYear() === ref.getFullYear();
+}
+
 /**
  * Upsert latest Lo snapshot for (course, student) into tutors-connect-latest.
  * Fire-and-forget from presence; does not throw.
