@@ -33,17 +33,33 @@
 
   const losThisWeek = $derived.by(() => {
     const ref = new Date();
-    return toVisibleLos(connectRows.filter((r) => isReceivedAtInLocalWeek(r.received_at, ref)));
+    return toVisibleLos(
+      connectRows.filter(
+        (r) =>
+          isReceivedAtInLocalWeek(r.received_at, ref) && !isReceivedAtOnLocalDay(r.received_at, ref)
+      )
+    );
   });
 
   const losThisMonth = $derived.by(() => {
     const ref = new Date();
-    return toVisibleLos(connectRows.filter((r) => isReceivedAtInLocalMonth(r.received_at, ref)));
+    return toVisibleLos(
+      connectRows.filter(
+        (r) =>
+          isReceivedAtInLocalMonth(r.received_at, ref) && !isReceivedAtInLocalWeek(r.received_at, ref)
+      )
+    );
   });
 
   const losThisYear = $derived.by(() => {
     const ref = new Date();
-    return toVisibleLos(connectRows.filter((r) => isReceivedAtInLocalYear(r.received_at, ref)));
+    return toVisibleLos(
+      connectRows.filter(
+        (r) =>
+          isReceivedAtInLocalYear(r.received_at, ref) &&
+          !isReceivedAtInLocalMonth(r.received_at, ref)
+      )
+    );
   });
 
   onMount(async () => {
@@ -57,11 +73,10 @@
   });
 </script>
 
-<div class="flex flex-col gap-4 px-4 pb-4">
+<div class="flex w-full min-w-0 flex-col gap-4 pb-4">
   <section
-    class="bg-surface-100-800-token border-surface-200-700-token w-full overflow-hidden rounded-xl border p-4"
-  >
-    <div class="flex flex-wrap justify-center">
+     class="bg-surface-100-800-token border-surface-200-700-token w-full min-w-0 overflow-hidden  p-4">
+   <div class="flex flex-wrap justify-center">
       <CourseGroupHeader course={presenceService.studentsOnline.value[0]!} />
       {#each presenceService.studentsOnline.value as lo}
         {#if lo?.user?.fullName !== "Anon"}
@@ -78,8 +93,7 @@
   </section>
 
   <section
-    class="bg-surface-100-800-token border-surface-200-700-token w-full overflow-hidden rounded-xl border p-4"
-  >
+    class="bg-surface-100-800-token border-surface-200-700-token w-full min-w-0 overflow-hidden p-4">
     <h2 class="border-surface-300-600-token mb-3 border-b pb-2 text-lg font-semibold">Latest activity</h2>
     <Tabs defaultValue="Day">
       <Tabs.List>
@@ -118,7 +132,7 @@
             />
           {:else}
             <p class="text-surface-600-300-token text-sm">
-              No saved activity this calendar week (Mon–Sun) in tutors-connect-latest for this course yet.
+              No activity earlier this week (outside today) in tutors-connect-latest for this course yet.
             </p>
           {/each}
         </div>
@@ -135,7 +149,7 @@
             />
           {:else}
             <p class="text-surface-600-300-token text-sm">
-              No saved activity this month in tutors-connect-latest for this course yet.
+              No activity earlier this month (outside this week) in tutors-connect-latest for this course yet.
             </p>
           {/each}
         </div>
@@ -152,7 +166,7 @@
             />
           {:else}
             <p class="text-surface-600-300-token text-sm">
-              No saved activity this year in tutors-connect-latest for this course yet.
+              No activity earlier this year (outside this month) in tutors-connect-latest for this course yet.
             </p>
           {/each}
         </div>
