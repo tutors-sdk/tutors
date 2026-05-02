@@ -15,7 +15,7 @@
   });
 </script>
 
-<div class="w-full">
+<div class="w-full p-4">
   <div class="flex justify-end gap-2">
     <div class="bg-gray-100 p-1 text-right text-xs dark:bg-gray-800">
       Totals: modules-{totalModules}:students-{totalStudents}

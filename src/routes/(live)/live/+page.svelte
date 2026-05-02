@@ -10,6 +10,7 @@
   liveService.startGlobalPresenceService();
 </script>
 
+<div class="p-4">
 <Tabs defaultValue="Courses">
   <Tabs.List>
     <Tabs.Trigger value="Courses">Courses ({liveService.coursesOnline.value.length})</Tabs.Trigger>
@@ -21,4 +22,5 @@
     <Tabs.Content value="Students"><Students /></Tabs.Content>
     <Tabs.Content value="Groups"><CoursesGroup /></Tabs.Content>
 </Tabs>
+</div>
 
