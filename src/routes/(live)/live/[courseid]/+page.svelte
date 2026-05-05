@@ -12,9 +12,10 @@
   import CourseGroupHeader from "$lib/ui/time/CourseGroupHeader.svelte";
   import StudentCard from "$lib/ui/time/StudentCard.svelte";
   import { Tabs } from "@skeletonlabs/skeleton-svelte";
+  import type { Course } from "@tutors/tutors-model-lib";
 
   interface Props {
-    data: { courseid: string };
+    data: { courseid: string, course: Course };
   }
   let { data }: Props = $props();
 
@@ -77,7 +78,7 @@
   <section
      class="bg-surface-100-800-token border-surface-200-700-token w-full min-w-0 overflow-hidden  p-4">
    <div class="flex flex-wrap justify-center">
-      <CourseGroupHeader course={presenceService.studentsOnline.value[0]!} />
+      <CourseGroupHeader courseId={data.course.courseId!} courseTitle={data.course.title!}/>
       {#each presenceService.studentsOnline.value as lo}
         {#if lo?.user?.fullName !== "Anon"}
           <StudentCard
