@@ -3,16 +3,16 @@
   import CourseGroupHeader from "./CourseGroupHeader.svelte";
   import StudentCard from "./StudentCard.svelte";
 
-  let { course } = $props<{ course: LoRecord }>();
+  let { courseId, courseTitle } = $props<{ courseId: string, courseTitle: string }>();
 
   let students = $derived(
-    liveService.studentsOnline.value.filter((lo: LoRecord) => lo.courseId === course.courseId)
+    liveService.studentsOnline.value.filter((lo: LoRecord) => lo.courseId === courseId)
   );
 </script>
 
 <div
   class="bg-surface-100-800-token border-surface-200-700-token mx-auto mb-2 w-full place-items-center overflow-hidden rounded-xl border-[1px] p-4">
-  <CourseGroupHeader {course} />
+  <CourseGroupHeader {courseId} {courseTitle} />
   <div class="flex flex-wrap justify-center">
     {#each students as lo}
       {#if lo?.user?.fullName !== "Anon"}

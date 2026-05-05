@@ -5,6 +5,6 @@
 
 <div class="flex flex-wrap justify-center">
   {#each liveService.coursesOnline.value as course}
-    <CourseGroup course={course} />
+    <CourseGroup courseId={course.courseId!} courseTitle={course.courseTitle!} />
   {/each}
 </div>
