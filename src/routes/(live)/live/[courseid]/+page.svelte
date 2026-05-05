@@ -9,8 +9,8 @@
     isReceivedAtInLocalYear,
     isReceivedAtOnLocalDay,
   } from "$lib/services/community/utils/supabase-client";
+  import ConnectLatestLosCards from "$lib/ui/time/ConnectLatestLosCards.svelte";
   import CourseGroupHeader from "$lib/ui/time/CourseGroupHeader.svelte";
-  import StudentCard from "$lib/ui/time/StudentCard.svelte";
   import { Tabs } from "@skeletonlabs/skeleton-svelte";
   import type { Course } from "@tutors/tutors-model-lib";
 
@@ -63,6 +63,10 @@
     );
   });
 
+  const studentsOnlineVisible = $derived(
+    presenceService.studentsOnline.value.filter((lo) => lo?.user?.fullName !== "Anon")
+  );
+
   onMount(async () => {
     const courseid = data.courseid;
     if (!courseid) return;
@@ -78,18 +82,14 @@
   <section
      class="bg-surface-100-800-token border-surface-200-700-token w-full min-w-0 overflow-hidden  p-4">
    <div class="flex flex-wrap justify-center">
-      <CourseGroupHeader courseId={data.course.courseId!} courseTitle={data.course.title!}/>
-      {#each presenceService.studentsOnline.value as lo}
-        {#if lo?.user?.fullName !== "Anon"}
-          <StudentCard
-            {lo}
-            cardLayout={{
-              layout: "expanded",
-              style: "landscape",
-            }}
-          />
-        {/if}
-      {/each}
+      <div class="border-surface-300-600-token mb-2 w-full ">
+        <CourseGroupHeader courseId={data.course.courseId!} courseTitle={data.course.title!} />
+      </div>
+      <h2 class="border-surface-300-600-token mb-3 w-full border-b pb-2 text-lg font-semibold">Online right now</h2>
+      <ConnectLatestLosCards
+        los={studentsOnlineVisible}
+        emptyMessage="No students online for this course right now."
+      />
     </div>
   </section>
 
@@ -105,72 +105,28 @@
         <Tabs.Indicator />
       </Tabs.List>
       <Tabs.Content value="Day">
-        <div class="flex flex-wrap justify-center pt-4">
-          {#each losThisDay as lo}
-            <StudentCard
-              {lo}
-              cardLayout={{
-                layout: "expanded",
-                style: "landscape",
-              }}
-            />
-          {:else}
-            <p class="text-surface-600-300-token text-sm">
-              No saved activity today in tutors-connect-latest for this course yet.
-            </p>
-          {/each}
-        </div>
+        <ConnectLatestLosCards
+          los={losThisDay}
+          emptyMessage="No saved activity today in tutors-connect-latest for this course yet."
+        />
       </Tabs.Content>
       <Tabs.Content value="Week">
-        <div class="flex flex-wrap justify-center pt-4">
-          {#each losThisWeek as lo}
-            <StudentCard
-              {lo}
-              cardLayout={{
-                layout: "expanded",
-                style: "landscape",
-              }}
-            />
-          {:else}
-            <p class="text-surface-600-300-token text-sm">
-              No activity earlier this week (outside today) in tutors-connect-latest for this course yet.
-            </p>
-          {/each}
-        </div>
+        <ConnectLatestLosCards
+          los={losThisWeek}
+          emptyMessage="No activity earlier this week (outside today) in tutors-connect-latest for this course yet."
+        />
       </Tabs.Content>
       <Tabs.Content value="Month">
-        <div class="flex flex-wrap justify-center pt-4">
-          {#each losThisMonth as lo}
-            <StudentCard
-              {lo}
-              cardLayout={{
-                layout: "expanded",
-                style: "landscape",
-              }}
-            />
-          {:else}
-            <p class="text-surface-600-300-token text-sm">
-              No activity earlier this month (outside this week) in tutors-connect-latest for this course yet.
-            </p>
-          {/each}
-        </div>
+        <ConnectLatestLosCards
+          los={losThisMonth}
+          emptyMessage="No activity earlier this month (outside this week) in tutors-connect-latest for this course yet."
+        />
       </Tabs.Content>
       <Tabs.Content value="Year">
-        <div class="flex flex-wrap justify-center pt-4">
-          {#each losThisYear as lo}
-            <StudentCard
-              {lo}
-              cardLayout={{
-                layout: "expanded",
-                style: "landscape",
-              }}
-            />
-          {:else}
-            <p class="text-surface-600-300-token text-sm">
-              No activity earlier this year (outside this month) in tutors-connect-latest for this course yet.
-            </p>
-          {/each}
-        </div>
+        <ConnectLatestLosCards
+          los={losThisYear}
+          emptyMessage="No activity earlier this year (outside this month) in tutors-connect-latest for this course yet."
+        />
       </Tabs.Content>
     </Tabs>
   </section>
