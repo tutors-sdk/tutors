@@ -32,11 +32,12 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   course.route = `/course/${courseId}`;
 
   // retrieve all Los in course
-  const allLos = flattenLos(course.los);
+  let allLos = flattenLos(course.los);
   allLos.push(course);
-
   // inject course path into all routes
   injectCourseUrl(allLos, courseId, courseUrl);
+  // remove all los with type = "web"
+  allLos = allLos.filter((lo) => lo.type !== "web");
 
   removeUnknownLos(course.los);
   // Construct course tree
