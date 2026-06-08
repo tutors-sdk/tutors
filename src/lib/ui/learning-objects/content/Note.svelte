@@ -1,14 +1,23 @@
 <script lang="ts">
+    import { hideMainNavigator } from "$lib/runes.svelte";
   import { currentCodeTheme } from "$lib/services/markdown";
   import type { Lo } from "@tutors/tutors-model-lib";
+    import { onDestroy, onMount } from "svelte";
 
   interface Props {
     lo: Lo;
   }
   let { lo }: Props = $props();
+
+    onMount(() => {
+    hideMainNavigator.value = true;
+  });
+  onDestroy(() => {
+    hideMainNavigator.value = false;
+  });
 </script>
 
-<article class="prose dark:prose-invert mr-4 max-w-none">
+<article class="prose dark:prose-invert mr-4 max-w-none overflow-x-auto">
   {#key currentCodeTheme.value}
     {@html lo.contentHtml}
   {/key}
