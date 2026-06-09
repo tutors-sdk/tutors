@@ -4,6 +4,7 @@
   import { tutorsConnectService } from "$lib/services/connect";
   import { page } from "$app/state";
   import { currentCourse } from "$lib/runes.svelte";
+    import { afterNavigate } from "$app/navigation";
 
   type Props = { children: Snippet };
   let { children }: Props = $props();
@@ -20,6 +21,15 @@
       lastCourseId = currentCourse.value?.courseId!;
     }
   });
+
+
+    afterNavigate(() => {
+    const elemPage = document.querySelector("#content-panel");
+    if (elemPage && window.innerWidth >= 600) {
+      elemPage.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  });
+
 </script>
 
 <svelte:head>
@@ -27,5 +37,7 @@
 </svelte:head>
 
 <CourseShell>
+  <span id="content-panel" class="mt-[-60px] block pt-[60px]"></span>
+
   {@render children()}
 </CourseShell>
