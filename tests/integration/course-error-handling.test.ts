@@ -1,14 +1,22 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { courseService } from '$lib/services/course/services/course.svelte';
 import { courseProtocol } from '$lib/runes.svelte';
 
 describe('Course Service - Error Handling', () => {
   let mockFetch: ReturnType<typeof vi.fn>;
+  let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
     courseService.courses.clear();
     courseProtocol.value = 'https://';
     mockFetch = vi.fn();
+
+    // Suppress console.error during error tests to reduce noise
+    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    consoleErrorSpy.mockRestore();
   });
 
   describe('WHEN fetch response is not ok', () => {

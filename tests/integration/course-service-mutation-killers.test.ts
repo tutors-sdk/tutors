@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { courseService } from '$lib/services/course/services/course.svelte';
 import { currentCourse, currentLo, courseProtocol } from '$lib/runes.svelte';
 import type { Course } from '@tutors/tutors-model-lib';
@@ -10,6 +10,7 @@ import type { Course } from '@tutors/tutors-model-lib';
 
 describe('Course Service - Mutation Killers', () => {
   let mockFetch: ReturnType<typeof vi.fn>;
+  let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
 
   const mockCourse: Partial<Course> = {
     title: 'Test Course',
@@ -26,6 +27,13 @@ describe('Course Service - Mutation Killers', () => {
     currentLo.value = null;
     courseProtocol.value = 'https://';
     mockFetch = vi.fn();
+
+    // Suppress console.error during tests to reduce noise
+    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    consoleErrorSpy.mockRestore();
   });
 
   describe('WHEN course is successfully loaded', () => {

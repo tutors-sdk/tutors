@@ -10,6 +10,10 @@ beforeAll(() => {
   // Start MSW server to intercept network requests
   server.listen({ onUnhandledRequest: 'error' });
 
+  // Note: KaTeX emits a "quirks mode" warning in happy-dom environment
+  // This is harmless - KaTeX works fine, it just detects the test environment
+  // The warning cannot be suppressed as it's emitted during module import
+
   // Mock SvelteKit environment variables
   globalThis.__SVELTEKIT_APP_VERSION__ = 'test';
   globalThis.__SVELTEKIT_DEV__ = false;

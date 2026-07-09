@@ -5,6 +5,7 @@ import type { Course } from '@tutors/tutors-model-lib';
 
 describe('Course Service Integration Tests', () => {
   let mockFetch: ReturnType<typeof vi.fn>;
+  let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
 
   const mockCourseData: Partial<Course> = {
     title: 'Test Course',
@@ -26,6 +27,13 @@ describe('Course Service Integration Tests', () => {
 
     // Create mock fetch function
     mockFetch = vi.fn();
+
+    // Suppress console.error during tests to reduce noise
+    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    consoleErrorSpy.mockRestore();
   });
 
   afterEach(() => {
