@@ -11,6 +11,7 @@
 The Authentication feature manages user identity through GitHub OAuth, session management, and access control for protected courses.
 
 **User Story**:
+
 > As a **student or instructor**  
 > I want to **authenticate with my GitHub account**  
 > So that I can **access protected courses and have my progress tracked**
@@ -205,16 +206,19 @@ The Authentication feature manages user identity through GitHub OAuth, session m
 ## Dependencies
 
 **Upstream**:
+
 - GitHub OAuth API
 - Auth.js / NextAuth.js library
 - Browser localStorage API
 
 **Downstream**:
+
 - Course access control
 - Analytics user tracking
 - Presence system (real-time user display)
 
 **External Services**:
+
 - GitHub OAuth (https://github.com/login/oauth)
 
 ---
@@ -230,9 +234,9 @@ The Authentication feature manages user identity through GitHub OAuth, session m
 
 ## Change History
 
-| Date | Requirement ID | Change | Reason |
-|------|---------------|--------|--------|
-| 2024-07-09 | R1-R12 | Initial draft | Feature planning |
+| Date       | Requirement ID | Change        | Reason           |
+| ---------- | -------------- | ------------- | ---------------- |
+| 2024-07-09 | R1-R12         | Initial draft | Feature planning |
 
 ---
 
@@ -243,6 +247,7 @@ The Authentication feature manages user identity through GitHub OAuth, session m
 **Status**: Draft - implementation pending
 
 **Next Steps**:
+
 1. Implement GitHub OAuth flow
 2. Write E2E tests for authentication journey
 3. Add integration tests for access control

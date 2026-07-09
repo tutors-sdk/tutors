@@ -5,6 +5,7 @@ This directory contains behavior-driven requirements written using the **EARS (E
 ## Purpose
 
 EARS requirements serve as:
+
 - **Living documentation** of system behavior
 - **Direct mapping** to automated test cases
 - **Shared understanding** between stakeholders, developers, and QA
@@ -18,29 +19,34 @@ Each requirement document follows this format:
 # Feature Name Requirements
 
 ## Event-Driven Requirements
+
 **R1**: WHEN <trigger> the Tutors Reader shall <response>
 
 ## State-Driven Requirements
+
 **R2**: WHILE <state> the Tutors Reader shall <response>
 
 ## Unwanted Behaviors
+
 **R3**: IF <condition> THEN the Tutors Reader shall <response>
 
 ## Optional Features
+
 **R4**: WHERE <feature enabled> the Tutors Reader shall <response>
 ```
 
 ## Requirements Index
 
-| Document | Feature Area | Test Coverage | Status |
-|----------|-------------|---------------|--------|
+| Document                                           | Feature Area             | Test Coverage  | Status   |
+| -------------------------------------------------- | ------------------------ | -------------- | -------- |
 | [course-loading.ears.md](./course-loading.ears.md) | Course Loading & Caching | ✅ 16/16 tests | Complete |
-| [authentication.ears.md](./authentication.ears.md) | GitHub OAuth & Sessions | 🚧 0/12 tests | Draft |
-| [analytics.ears.md](./analytics.ears.md) | Learning Event Tracking | 🚧 0/10 tests | Draft |
-| [lab-navigation.ears.md](./lab-navigation.ears.md) | Lab Step Navigation | 🚧 0/15 tests | Draft |
-| [presence.ears.md](./presence.ears.md) | Real-time User Presence | 🚧 0/8 tests | Draft |
+| [authentication.ears.md](./authentication.ears.md) | GitHub OAuth & Sessions  | 🚧 0/12 tests  | Draft    |
+| [analytics.ears.md](./analytics.ears.md)           | Learning Event Tracking  | 🚧 0/10 tests  | Draft    |
+| [lab-navigation.ears.md](./lab-navigation.ears.md) | Lab Step Navigation      | 🚧 0/15 tests  | Draft    |
+| [presence.ears.md](./presence.ears.md)             | Real-time User Presence  | 🚧 0/8 tests   | Draft    |
 
 Legend:
+
 - ✅ Complete - All requirements have passing tests
 - 🚧 Draft - Requirements documented but tests not implemented
 - 📝 Planned - Feature identified but requirements not written
@@ -101,17 +107,17 @@ Tests should reference requirement IDs in their describe blocks:
 ```typescript
 // tests/integration/course-service.test.ts
 
-describe('Feature: Course Loading', () => {
+describe("Feature: Course Loading", () => {
   // Implements R1 from course-loading.ears.md
-  describe('R1: WHEN a user navigates to /course/{courseId}', () => {
-    it('the Tutors Reader shall fetch tutors.json from the course URL', async () => {
+  describe("R1: WHEN a user navigates to /course/{courseId}", () => {
+    it("the Tutors Reader shall fetch tutors.json from the course URL", async () => {
       // Test implementation
     });
   });
-  
+
   // Implements R2 from course-loading.ears.md
-  describe('R2: WHEN a course is successfully loaded', () => {
-    it('the Tutors Reader shall cache it in courseService.courses Map', async () => {
+  describe("R2: WHEN a course is successfully loaded", () => {
+    it("the Tutors Reader shall cache it in courseService.courses Map", async () => {
       // Test implementation
     });
   });
@@ -121,6 +127,7 @@ describe('Feature: Course Loading', () => {
 ## Reviewing Requirements
 
 Before merging new requirements:
+
 - [ ] Each requirement uses correct EARS template
 - [ ] Requirements are specific and testable
 - [ ] Requirement IDs are unique within document
@@ -130,6 +137,7 @@ Before merging new requirements:
 ## Stakeholder Sign-off
 
 Requirements in this directory represent **agreed-upon system behavior**. Changes to requirements require:
+
 1. Developer proposal with rationale
 2. Stakeholder review
 3. Test updates to match new requirements

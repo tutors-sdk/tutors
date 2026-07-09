@@ -11,6 +11,7 @@
 Brief description of the feature and its purpose in the Tutors Reader application.
 
 **User Story**:
+
 > As a [type of user]  
 > I want [goal/desire]  
 > So that [benefit/value]
@@ -134,10 +135,10 @@ Explicitly document what this feature does NOT cover to prevent scope creep.
 
 ## Change History
 
-| Date | Requirement ID | Change | Reason |
-|------|---------------|--------|--------|
-| 2024-01-15 | R3 | Added error case for timeout | Bug #123 |
-| 2024-01-10 | R1 | Initial version | Feature kickoff |
+| Date       | Requirement ID | Change                       | Reason          |
+| ---------- | -------------- | ---------------------------- | --------------- |
+| 2024-01-15 | R3             | Added error case for timeout | Bug #123        |
+| 2024-01-10 | R1             | Initial version              | Feature kickoff |
 
 ---
 

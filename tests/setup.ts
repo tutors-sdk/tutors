@@ -1,29 +1,29 @@
-import { beforeAll, afterEach, afterAll, vi } from 'vitest';
-import { setupServer } from 'msw/node';
-import { handlers } from './mocks/handlers';
-import '@testing-library/jest-dom/vitest';
+import { beforeAll, afterEach, afterAll, vi } from "vitest";
+import { setupServer } from "msw/node";
+import { handlers } from "./mocks/handlers";
+import "@testing-library/jest-dom/vitest";
 
 // Setup MSW (Mock Service Worker) server for API mocking
 export const server = setupServer(...handlers);
 
 beforeAll(() => {
   // Start MSW server to intercept network requests
-  server.listen({ onUnhandledRequest: 'error' });
+  server.listen({ onUnhandledRequest: "error" });
 
   // Note: KaTeX emits a "quirks mode" warning in happy-dom environment
   // This is harmless - KaTeX works fine, it just detects the test environment
   // The warning cannot be suppressed as it's emitted during module import
 
   // Mock SvelteKit environment variables
-  globalThis.__SVELTEKIT_APP_VERSION__ = 'test';
+  globalThis.__SVELTEKIT_APP_VERSION__ = "test";
   globalThis.__SVELTEKIT_DEV__ = false;
 
   // Mock $app/environment
-  vi.mock('$app/environment', () => ({
+  vi.mock("$app/environment", () => ({
     browser: false,
     dev: false,
     building: false,
-    version: 'test'
+    version: "test"
   }));
 
   // Mock localStorage
@@ -36,23 +36,23 @@ beforeAll(() => {
     clear: vi.fn()
   };
 
-  Object.defineProperty(window, 'localStorage', {
+  Object.defineProperty(window, "localStorage", {
     value: localStorageMock,
     writable: true,
     configurable: true
   });
 
   // Mock sessionStorage
-  Object.defineProperty(window, 'sessionStorage', {
+  Object.defineProperty(window, "sessionStorage", {
     value: localStorageMock,
     writable: true,
     configurable: true
   });
 
   // Mock window.matchMedia (for theme detection)
-  Object.defineProperty(window, 'matchMedia', {
+  Object.defineProperty(window, "matchMedia", {
     writable: true,
-    value: vi.fn().mockImplementation(query => ({
+    value: vi.fn().mockImplementation((query) => ({
       matches: false,
       media: query,
       onchange: null,

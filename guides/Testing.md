@@ -1,6 +1,7 @@
 # Testing Guide for Tutors Reader
 
 ## Table of Contents
+
 - [Testing Philosophy](#testing-philosophy)
 - [The Testing Pyramid](#the-testing-pyramid)
 - [BDD with EARS](#bdd-with-ears)
@@ -17,16 +18,20 @@
 The Tutors Reader testing strategy is built on three core principles:
 
 ### 1. **Safety for Contributors**
+
 New developers should be able to contribute confidently without fear of breaking existing functionality. Comprehensive automated tests catch regressions before code reaches production.
 
 ### 2. **Fast Feedback Loops**
+
 Tests execute quickly to support rapid development:
+
 - Unit tests: <5ms each
 - Integration tests: <100ms each
 - Full suite: <5 minutes
 - Watch mode provides instant feedback on changes
 
 ### 3. **Test Quality Over Quantity**
+
 We use mutation testing to ensure tests actually verify behavior, not just execute code. A test that doesn't catch bugs when code changes is worse than no test at all.
 
 ---
@@ -58,32 +63,35 @@ Our testing strategy follows a four-layer pyramid that balances speed, confidenc
 **Environment**: happy-dom (lightweight DOM simulation)
 
 **Examples**:
+
 ```typescript
 // src/lib/services/course/services/__tests__/lo-tree.test.ts
 
-describe('determineCourseUrl()', () => {
-  it('should extract courseId from Netlify URL', () => {
-    const result = determineCourseUrl('https://test-course.netlify.app');
-    
-    expect(result.courseId).toBe('test-course');
-    expect(result.courseUrl).toBe('test-course.netlify.app');
+describe("determineCourseUrl()", () => {
+  it("should extract courseId from Netlify URL", () => {
+    const result = determineCourseUrl("https://test-course.netlify.app");
+
+    expect(result.courseId).toBe("test-course");
+    expect(result.courseUrl).toBe("test-course.netlify.app");
   });
-  
-  it('should handle localhost URLs', () => {
-    const result = determineCourseUrl('localhost:3000');
-    
-    expect(result.courseId).toBe('localhost:3000');
-    expect(courseProtocol.value).toBe('http://');
+
+  it("should handle localhost URLs", () => {
+    const result = determineCourseUrl("localhost:3000");
+
+    expect(result.courseId).toBe("localhost:3000");
+    expect(courseProtocol.value).toBe("http://");
   });
 });
 ```
 
 **Key Files to Test**:
+
 - `/src/lib/services/course/services/lo-tree.ts` - Course tree decoration, URL determination
 - `/src/lib/services/community/utils/supabase-utils.ts` - Data formatters
 - `/src/lib/runes.svelte.ts` - Rune factory functions
 
 **Best Practices**:
+
 - ✅ Test one function per describe block
 - ✅ No I/O operations (file system, network, database)
 - ✅ Deterministic - same input always produces same output
@@ -100,65 +108,67 @@ describe('determineCourseUrl()', () => {
 **Environment**: MSW for HTTP mocking, mocked Supabase/PartyKit
 
 **Examples**:
+
 ```typescript
 // tests/integration/course-service.test.ts
 
-import { server } from '../setup';
-import { http, HttpResponse } from 'msw';
+import { server } from "../setup";
+import { http, HttpResponse } from "msw";
 
-describe('Course Service Integration', () => {
-  describe('WHEN a course is successfully loaded', () => {
-    it('shall cache the course with correct courseId key', async () => {
+describe("Course Service Integration", () => {
+  describe("WHEN a course is successfully loaded", () => {
+    it("shall cache the course with correct courseId key", async () => {
       mockFetch.mockResolvedValueOnce({
         ok: true,
-        json: async () => ({ title: 'Test Course', los: [] })
+        json: async () => ({ title: "Test Course", los: [] })
       });
 
-      await courseService.getOrLoadCourse('cache-test', mockFetch);
+      await courseService.getOrLoadCourse("cache-test", mockFetch);
 
-      expect(courseService.courses.has('cache-test')).toBe(true);
-      expect(courseService.courses.get('cache-test')?.title).toBe('Test Course');
+      expect(courseService.courses.has("cache-test")).toBe(true);
+      expect(courseService.courses.get("cache-test")?.title).toBe("Test Course");
     });
   });
 
-  describe('IF the course JSON fetch fails', () => {
-    it('THEN shall throw error with status code', async () => {
+  describe("IF the course JSON fetch fails", () => {
+    it("THEN shall throw error with status code", async () => {
       mockFetch.mockResolvedValueOnce({ ok: false, status: 404 });
 
-      await expect(
-        courseService.getOrLoadCourse('missing-course', mockFetch)
-      ).rejects.toThrow('Fetch failed with status 404');
+      await expect(courseService.getOrLoadCourse("missing-course", mockFetch)).rejects.toThrow("Fetch failed with status 404");
     });
   });
 });
 ```
 
 **Key Areas to Test**:
+
 - Course service fetching and caching
 - Analytics service with mocked Supabase
 - Authentication flow with mocked Auth.js
 - WebSocket presence with mocked PartyKit
 
 **MSW Setup**:
+
 ```typescript
 // tests/mocks/handlers.ts
 
 export const handlers = [
-  http.get('https://*.netlify.app/tutors.json', () => {
+  http.get("https://*.netlify.app/tutors.json", () => {
     return HttpResponse.json({
-      courseId: 'mock-course',
-      title: 'Mock Course',
+      courseId: "mock-course",
+      title: "Mock Course",
       los: []
     });
   }),
-  
-  http.post('https://*.supabase.co/rest/v1/:table', () => {
+
+  http.post("https://*.supabase.co/rest/v1/:table", () => {
     return HttpResponse.json({ data: {}, error: null });
   })
 ];
 ```
 
 **Best Practices**:
+
 - ✅ Mock external services (HTTP, database, WebSockets)
 - ✅ Test service contracts and error handling
 - ✅ Verify side effects (cache updates, state changes)
@@ -175,40 +185,41 @@ export const handlers = [
 **Environment**: Vitest browser mode (real Chromium for Svelte 5 runes)
 
 **Examples**:
+
 ```typescript
 // tests/components/Lab.test.ts
 
-import { render, screen } from '@testing-library/svelte';
-import userEvent from '@testing-library/user-event';
-import Lab from '$lib/ui/learning-objects/content/Lab.svelte';
+import { render, screen } from "@testing-library/svelte";
+import userEvent from "@testing-library/user-event";
+import Lab from "$lib/ui/learning-objects/content/Lab.svelte";
 
-describe('Lab Component', () => {
-  describe('WHEN a user clicks the Next button', () => {
-    it('shall navigate to the next lab step', async () => {
-      const mockLab = createMockLiveLab({ 
-        currentStepIndex: 0, 
-        totalSteps: 5 
+describe("Lab Component", () => {
+  describe("WHEN a user clicks the Next button", () => {
+    it("shall navigate to the next lab step", async () => {
+      const mockLab = createMockLiveLab({
+        currentStepIndex: 0,
+        totalSteps: 5
       });
-      
+
       render(Lab, { props: { lab: mockLab } });
-      
-      const nextButton = screen.getByRole('button', { name: /next/i });
+
+      const nextButton = screen.getByRole("button", { name: /next/i });
       await userEvent.click(nextButton);
-      
+
       expect(mockLab.currentStepIndex).toBe(1);
     });
   });
-  
-  describe('WHILE on the last step', () => {
-    it('the Next button shall be disabled', () => {
-      const mockLab = createMockLiveLab({ 
-        currentStepIndex: 4, 
-        totalSteps: 5 
+
+  describe("WHILE on the last step", () => {
+    it("the Next button shall be disabled", () => {
+      const mockLab = createMockLiveLab({
+        currentStepIndex: 4,
+        totalSteps: 5
       });
-      
+
       render(Lab, { props: { lab: mockLab } });
-      
-      const nextButton = screen.getByRole('button', { name: /next/i });
+
+      const nextButton = screen.getByRole("button", { name: /next/i });
       expect(nextButton).toBeDisabled();
     });
   });
@@ -216,22 +227,24 @@ describe('Lab Component', () => {
 ```
 
 **Key Components to Test**:
+
 - Navigation: MainNavigator, Breadcrumbs, Sidebar
 - Learning Objects: Lab.svelte, Video.svelte, TalkClient.svelte
 - Time Tracking: StudentCard.svelte, Course.svelte
 
 **Testing Svelte 5 Runes**:
+
 ```typescript
 // tests/unit/runes.test.ts
 
-import { rune } from '$lib/runes.svelte';
+import { rune } from "$lib/runes.svelte";
 
-describe('Svelte 5 Runes', () => {
-  it('WHEN a rune value is updated THEN reactive subscribers are notified', () => {
+describe("Svelte 5 Runes", () => {
+  it("WHEN a rune value is updated THEN reactive subscribers are notified", () => {
     const count = rune(0);
-    
+
     expect(count.value).toBe(0);
-    
+
     count.value = 5;
     expect(count.value).toBe(5);
   });
@@ -239,6 +252,7 @@ describe('Svelte 5 Runes', () => {
 ```
 
 **Best Practices**:
+
 - ✅ Test user interactions (clicks, keyboard, form input)
 - ✅ Verify accessibility (ARIA labels, keyboard navigation)
 - ✅ Mock service dependencies via props
@@ -255,36 +269,38 @@ describe('Svelte 5 Runes', () => {
 **Environment**: Playwright (Chromium + Firefox)
 
 **Examples**:
+
 ```typescript
 // tests/e2e/authentication.spec.ts
 
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test.describe('GitHub OAuth Authentication', () => {
-  test('WHEN a user signs in with GitHub THEN they can access protected courses', async ({ page }) => {
+test.describe("GitHub OAuth Authentication", () => {
+  test("WHEN a user signs in with GitHub THEN they can access protected courses", async ({ page }) => {
     // Navigate to protected course
-    await page.goto('/course/protected-course');
-    
+    await page.goto("/course/protected-course");
+
     // Should redirect to auth
     await expect(page).toHaveURL(/\/auth/);
-    
+
     // Sign in with GitHub
-    await page.getByRole('button', { name: /sign in with github/i }).click();
-    
+    await page.getByRole("button", { name: /sign in with github/i }).click();
+
     // Mock OAuth flow
     // ... OAuth simulation ...
-    
+
     // Should redirect back to course
-    await expect(page).toHaveURL('/course/protected-course');
-    
+    await expect(page).toHaveURL("/course/protected-course");
+
     // Verify authenticated state
-    const tutorsId = await page.evaluate(() => localStorage.getItem('tutorsId'));
+    const tutorsId = await page.evaluate(() => localStorage.getItem("tutorsId"));
     expect(tutorsId).toBeTruthy();
   });
 });
 ```
 
 **Critical Flows to Test**:
+
 1. Anonymous user browsing public course
 2. GitHub OAuth login → protected course access
 3. Lab step navigation with time tracking
@@ -293,6 +309,7 @@ test.describe('GitHub OAuth Authentication', () => {
 6. Real-time presence updates
 
 **Best Practices**:
+
 - ✅ Test critical user journeys only
 - ✅ Use page object pattern for reusable selectors
 - ✅ Retry on failure (2 retries in CI)
@@ -307,6 +324,7 @@ test.describe('GitHub OAuth Authentication', () => {
 ### What is EARS?
 
 **EARS (Easy Approach to Requirements Syntax)** is a structured template for writing requirements that makes them:
+
 - **Unambiguous** - Only one interpretation possible
 - **Testable** - Can be directly converted to test cases
 - **Traceable** - Requirements map 1:1 to tests
@@ -314,49 +332,53 @@ test.describe('GitHub OAuth Authentication', () => {
 ### The Five EARS Templates
 
 #### 1. Ubiquitous Requirements (Applies Everywhere)
+
 ```
 The <system> shall <system response>
 ```
 
 **Example**:
+
 ```
 The Tutors Reader shall display a loading indicator while fetching resources
 ```
 
 **Test**:
+
 ```typescript
-it('shall display loading indicator while fetching', async () => {
+it("shall display loading indicator while fetching", async () => {
   render(CourseView);
-  expect(screen.getByRole('status')).toHaveTextContent('Loading');
+  expect(screen.getByRole("status")).toHaveTextContent("Loading");
 });
 ```
 
 ---
 
 #### 2. Event-Driven Requirements (Most Common)
+
 ```
 WHEN <trigger> the <system> shall <response>
 ```
 
 **Example**:
+
 ```
 WHEN a user navigates to /course/{courseId} the Tutors Reader shall fetch tutors.json from the course URL
 ```
 
 **Test**:
+
 ```typescript
-describe('WHEN a user navigates to /course/{courseId}', () => {
-  it('the Tutors Reader shall fetch tutors.json from the course URL', async () => {
+describe("WHEN a user navigates to /course/{courseId}", () => {
+  it("the Tutors Reader shall fetch tutors.json from the course URL", async () => {
     const mockFetch = vi.fn().mockResolvedValue({
       ok: true,
-      json: async () => ({ courseId: 'test', title: 'Test' })
+      json: async () => ({ courseId: "test", title: "Test" })
     });
-    
-    await courseService.getOrLoadCourse('test-course', mockFetch);
-    
-    expect(mockFetch).toHaveBeenCalledWith(
-      expect.stringContaining('/tutors.json')
-    );
+
+    await courseService.getOrLoadCourse("test-course", mockFetch);
+
+    expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining("/tutors.json"));
   });
 });
 ```
@@ -364,22 +386,25 @@ describe('WHEN a user navigates to /course/{courseId}', () => {
 ---
 
 #### 3. State-Driven Requirements
+
 ```
 WHILE <in state> the <system> shall <response>
 ```
 
 **Example**:
+
 ```
 WHILE a course is being loaded the Tutors Reader shall display a loading indicator
 ```
 
 **Test**:
+
 ```typescript
-describe('WHILE a course is being loaded', () => {
-  it('the Tutors Reader shall display a loading indicator', async () => {
+describe("WHILE a course is being loaded", () => {
+  it("the Tutors Reader shall display a loading indicator", async () => {
     render(CourseView, { props: { loading: true } });
-    
-    expect(screen.getByRole('status')).toBeInTheDocument();
+
+    expect(screen.getByRole("status")).toBeInTheDocument();
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
   });
 });
@@ -388,26 +413,27 @@ describe('WHILE a course is being loaded', () => {
 ---
 
 #### 4. Unwanted Behaviors (Error Cases)
+
 ```
 IF <condition> THEN the <system> shall <response>
 ```
 
 **Example**:
+
 ```
 IF the course JSON fetch fails THEN the Tutors Reader shall display an error message and log the failure
 ```
 
 **Test**:
+
 ```typescript
-describe('IF the course JSON fetch fails', () => {
-  it('THEN the Tutors Reader shall display an error message and log the failure', async () => {
+describe("IF the course JSON fetch fails", () => {
+  it("THEN the Tutors Reader shall display an error message and log the failure", async () => {
     const mockFetch = vi.fn().mockResolvedValue({ ok: false, status: 404 });
-    const consoleErrorSpy = vi.spyOn(console, 'error');
-    
-    await expect(
-      courseService.getOrLoadCourse('missing-course', mockFetch)
-    ).rejects.toThrow('Fetch failed with status 404');
-    
+    const consoleErrorSpy = vi.spyOn(console, "error");
+
+    await expect(courseService.getOrLoadCourse("missing-course", mockFetch)).rejects.toThrow("Fetch failed with status 404");
+
     expect(consoleErrorSpy).toHaveBeenCalled();
   });
 });
@@ -416,24 +442,27 @@ describe('IF the course JSON fetch fails', () => {
 ---
 
 #### 5. Optional Features
+
 ```
 WHERE <feature enabled> the <system> shall <response>
 ```
 
 **Example**:
+
 ```
 WHERE analytics are enabled the Tutors Reader shall record learning events to Supabase
 ```
 
 **Test**:
+
 ```typescript
-describe('WHERE analytics are enabled', () => {
-  it('the Tutors Reader shall record learning events to Supabase', async () => {
+describe("WHERE analytics are enabled", () => {
+  it("the Tutors Reader shall record learning events to Supabase", async () => {
     const mockSupabase = createMockSupabaseClient();
-    
-    await analyticsService.learningEvent('course-1', 'lab-1', 'lab');
-    
-    expect(mockSupabase.from).toHaveBeenCalledWith('learning_records');
+
+    await analyticsService.learningEvent("course-1", "lab-1", "lab");
+
+    expect(mockSupabase.from).toHaveBeenCalledWith("learning_records");
     expect(mockSupabase.upsert).toHaveBeenCalled();
   });
 });
@@ -486,23 +515,27 @@ We store EARS specifications in `/tests/requirements/`:
 #### For Product Owners / Stakeholders
 
 **What you can expect**:
+
 - ✅ Requirements written in plain English (no code)
 - ✅ Each requirement maps to 1+ automated tests
 - ✅ Test reports show which requirements pass/fail
 - ✅ Can verify behavior without running the app
 
 **How to write good EARS requirements**:
+
 1. **Be specific about triggers**: "WHEN a user clicks Login" not "WHEN logging in"
 2. **State expected outcome clearly**: "shall display error message" not "shall handle error"
 3. **Include acceptance criteria**: "shall fetch within 3 seconds" not "shall fetch quickly"
 4. **One requirement per statement**: Avoid "and" - split into multiple requirements
 
 **Example - Bad Requirement**:
+
 ```
 The system should handle authentication properly
 ```
 
 **Example - Good Requirements**:
+
 ```
 WHEN a user enters valid credentials the Tutors Reader shall redirect to the dashboard
 IF a user enters invalid credentials THEN the Tutors Reader shall display "Invalid username or password"
@@ -520,10 +553,11 @@ WHEN a session expires the Tutors Reader shall redirect to the login page
    - Understand all event-driven and error cases
 
 2. **Write tests that match requirement IDs**
+
    ```typescript
    // Implements R1 from course-loading.ears.md
-   describe('R1: WHEN a user navigates to /course/{courseId}', () => {
-     it('the Tutors Reader shall fetch tutors.json from the course URL', async () => {
+   describe("R1: WHEN a user navigates to /course/{courseId}", () => {
+     it("the Tutors Reader shall fetch tutors.json from the course URL", async () => {
        // Test implementation
      });
    });
@@ -568,6 +602,7 @@ WHEN a session expires the Tutors Reader shall redirect to the login page
 Mutation testing validates **test quality** by introducing bugs into your code and checking if tests catch them.
 
 **How it works**:
+
 1. Stryker creates "mutants" - small code changes like:
    - `if (x > 5)` → `if (x >= 5)` (boundary change)
    - `return true` → `return false` (boolean flip)
@@ -583,11 +618,13 @@ Mutation Score = (Killed Mutants / Total Mutants) × 100%
 ```
 
 **Our Thresholds**:
+
 - **High (80%+)**: Excellent test quality - most code changes caught
 - **Low (60%)**: Acceptable minimum - basic coverage
 - **Break (50%)**: CI fails below this - insufficient testing
 
 **Current Scores**:
+
 - `lo-tree.ts`: 70.63% (113 killed / 160 covered)
 - `course.svelte.ts`: 76.19% (16 killed / 21 covered)
 
@@ -607,45 +644,48 @@ open reports/mutation/mutation.html
 ### Interpreting Mutation Reports
 
 **Example Surviving Mutant**:
+
 ```typescript
 // Original code
-if (courseUrl.endsWith('.netlify.app')) {
-  return courseUrl.replace('.netlify.app', '');
+if (courseUrl.endsWith(".netlify.app")) {
+  return courseUrl.replace(".netlify.app", "");
 }
 
 // Stryker creates mutant:
-if (courseUrl.endsWith('.netlify.app')) {
-  return courseUrl.replace('.netlify.app', 'MUTATED'); // Changed '' to 'MUTATED'
+if (courseUrl.endsWith(".netlify.app")) {
+  return courseUrl.replace(".netlify.app", "MUTATED"); // Changed '' to 'MUTATED'
 }
 
 // If no test fails, you need a test like:
-it('should remove .netlify.app completely', () => {
-  const result = determineCourseUrl('test.netlify.app');
-  expect(result.courseId).toBe('test'); // Not 'testMUTATED'
+it("should remove .netlify.app completely", () => {
+  const result = determineCourseUrl("test.netlify.app");
+  expect(result.courseId).toBe("test"); // Not 'testMUTATED'
 });
 ```
 
 ### Writing Mutant-Killing Tests
 
 **Bad Test** (executes code but doesn't verify behavior):
+
 ```typescript
-it('should process course URL', () => {
-  const result = determineCourseUrl('test.netlify.app');
+it("should process course URL", () => {
+  const result = determineCourseUrl("test.netlify.app");
   expect(result).toBeDefined(); // Weak assertion!
 });
 ```
 
 **Good Test** (verifies exact behavior):
+
 ```typescript
-it('should extract courseId from Netlify URL', () => {
-  const result = determineCourseUrl('test.netlify.app');
-  
+it("should extract courseId from Netlify URL", () => {
+  const result = determineCourseUrl("test.netlify.app");
+
   // Exact value assertions kill mutants
-  expect(result.courseId).toBe('test');
-  expect(result.courseUrl).toBe('test.netlify.app');
-  
+  expect(result.courseId).toBe("test");
+  expect(result.courseUrl).toBe("test.netlify.app");
+
   // Verify transformation happened
-  expect(result.courseId).not.toContain('.netlify.app');
+  expect(result.courseId).not.toContain(".netlify.app");
 });
 ```
 
@@ -687,25 +727,27 @@ npm run test:changed
 ### CI/CD Pipeline
 
 Tests run automatically on:
+
 - **Pull Requests**: All layers + mutation testing on changed files
 - **Main Branch Push**: Full test suite + weekly full mutation run
 - **Pre-commit Hook**: Lint + type check + changed file tests
 
 **GitHub Actions Workflow**:
+
 ```yaml
 jobs:
   unit-integration-tests:
     - npm run lint
     - npm run check
     - npm run test:unit -- --coverage
-    
+
   component-tests:
     - npm run test:components
-    
+
   e2e-tests:
     - npm run build
     - npm run test:e2e
-    
+
   mutation-testing:
     - npx stryker run (on changed files only)
 ```
@@ -717,31 +759,31 @@ jobs:
 ### Test File Structure
 
 ```typescript
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { render, screen } from '@testing-library/svelte';
-import { functionToTest } from '../module';
+import { describe, it, expect, beforeEach, vi } from "vitest";
+import { render, screen } from "@testing-library/svelte";
+import { functionToTest } from "../module";
 
-describe('Feature: Course Loading', () => {
+describe("Feature: Course Loading", () => {
   // Setup runs before each test
   beforeEach(() => {
     // Reset state
     courseService.courses.clear();
   });
 
-  describe('WHEN a course is successfully loaded', () => {
-    it('shall cache the course with correct courseId', async () => {
+  describe("WHEN a course is successfully loaded", () => {
+    it("shall cache the course with correct courseId", async () => {
       // Given (Arrange)
       const mockFetch = vi.fn().mockResolvedValue({
         ok: true,
-        json: async () => ({ title: 'Test' })
+        json: async () => ({ title: "Test" })
       });
 
       // When (Act)
-      const result = await courseService.getOrLoadCourse('test', mockFetch);
+      const result = await courseService.getOrLoadCourse("test", mockFetch);
 
       // Then (Assert)
-      expect(courseService.courses.has('test')).toBe(true);
-      expect(result.title).toBe('Test');
+      expect(courseService.courses.has("test")).toBe(true);
+      expect(result.title).toBe("Test");
     });
   });
 });
@@ -752,6 +794,7 @@ describe('Feature: Course Loading', () => {
 **Format**: `<EARS template> <expected behavior>`
 
 **Examples**:
+
 - ✅ `WHEN a user clicks Next THEN shall navigate to next step`
 - ✅ `IF fetch fails THEN shall throw error with status code`
 - ✅ `WHILE loading shall display spinner`
@@ -761,12 +804,14 @@ describe('Feature: Course Loading', () => {
 ### Mocking Guidelines
 
 **When to Mock**:
+
 - ✅ External services (HTTP, database, WebSockets)
 - ✅ Time-dependent code (`Date.now()`, timers)
 - ✅ Browser APIs (localStorage, fetch)
 - ✅ Slow operations
 
 **When NOT to Mock**:
+
 - ❌ Pure functions (test them directly)
 - ❌ Framework code (Svelte, SvelteKit)
 - ❌ Your own utilities (integration test them)
@@ -777,16 +822,16 @@ describe('Feature: Course Loading', () => {
 // Mock fetch with Vitest
 const mockFetch = vi.fn().mockResolvedValue({
   ok: true,
-  json: async () => ({ data: 'test' })
+  json: async () => ({ data: "test" })
 });
 
 // Mock Supabase client
-import { createMockSupabaseClient } from '../mocks/supabase';
+import { createMockSupabaseClient } from "../mocks/supabase";
 const mockSupabase = createMockSupabaseClient();
 
 // Mock MSW handlers
 server.use(
-  http.get('/api/courses', () => {
+  http.get("/api/courses", () => {
     return HttpResponse.json({ courses: [] });
   })
 );
@@ -837,6 +882,7 @@ vi.useRealTimers();
 ### PR Merge Requirements
 
 All of these must pass:
+
 - ✅ All tests pass (100% pass rate)
 - ✅ No coverage decrease vs. target branch
 - ✅ Mutation score ≥60% on changed files
@@ -846,13 +892,13 @@ All of these must pass:
 
 ### Coverage Targets
 
-| Layer | Current | Target |
-|-------|---------|--------|
-| Service Layer | 70% | 80% |
-| Utilities | 60% | 75% |
-| UI Components | 5% | 60% |
-| Routes | 10% | 40% |
-| **Overall** | **60%** | **70%** |
+| Layer         | Current | Target  |
+| ------------- | ------- | ------- |
+| Service Layer | 70%     | 80%     |
+| Utilities     | 60%     | 75%     |
+| UI Components | 5%      | 60%     |
+| Routes        | 10%     | 40%     |
+| **Overall**   | **60%** | **70%** |
 
 ### Test Quality Metrics
 
@@ -868,42 +914,40 @@ All of these must pass:
 ### Testing Async Code
 
 ```typescript
-it('shall load course asynchronously', async () => {
-  const promise = courseService.getOrLoadCourse('test', mockFetch);
-  
+it("shall load course asynchronously", async () => {
+  const promise = courseService.getOrLoadCourse("test", mockFetch);
+
   // Test loading state
   expect(courseService.loading).toBe(true);
-  
+
   // Wait for completion
   const result = await promise;
-  
+
   // Test final state
   expect(courseService.loading).toBe(false);
-  expect(result.title).toBe('Test');
+  expect(result.title).toBe("Test");
 });
 ```
 
 ### Testing Error Handling
 
 ```typescript
-describe('Error Handling Tests', () => {
+describe("Error Handling Tests", () => {
   let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
     // Suppress console.error during error tests to reduce noise
-    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
   });
 
   afterEach(() => {
     consoleErrorSpy.mockRestore();
   });
 
-  it('shall throw error when fetch fails', async () => {
-    mockFetch.mockRejectedValue(new Error('Network error'));
-    
-    await expect(
-      courseService.getOrLoadCourse('test', mockFetch)
-    ).rejects.toThrow('Network error');
+  it("shall throw error when fetch fails", async () => {
+    mockFetch.mockRejectedValue(new Error("Network error"));
+
+    await expect(courseService.getOrLoadCourse("test", mockFetch)).rejects.toThrow("Network error");
   });
 });
 ```
@@ -912,13 +956,11 @@ describe('Error Handling Tests', () => {
 Tests that intentionally trigger errors should suppress `console.error()` output to avoid polluting test logs with expected error messages. The spy can still be inspected if you need to verify errors were logged:
 
 ```typescript
-it('shall log error to console', async () => {
-  mockFetch.mockRejectedValue(new Error('Network error'));
-  
-  await expect(
-    courseService.getOrLoadCourse('test', mockFetch)
-  ).rejects.toThrow();
-  
+it("shall log error to console", async () => {
+  mockFetch.mockRejectedValue(new Error("Network error"));
+
+  await expect(courseService.getOrLoadCourse("test", mockFetch)).rejects.toThrow();
+
   expect(consoleErrorSpy).toHaveBeenCalled();
 });
 ```
@@ -926,26 +968,26 @@ it('shall log error to console', async () => {
 ### Testing User Events
 
 ```typescript
-it('shall increment count when button clicked', async () => {
+it("shall increment count when button clicked", async () => {
   const user = userEvent.setup();
   render(Counter);
-  
-  const button = screen.getByRole('button', { name: /increment/i });
+
+  const button = screen.getByRole("button", { name: /increment/i });
   await user.click(button);
-  
-  expect(screen.getByText('Count: 1')).toBeInTheDocument();
+
+  expect(screen.getByText("Count: 1")).toBeInTheDocument();
 });
 ```
 
 ### Testing Reactive State (Svelte 5 Runes)
 
 ```typescript
-it('shall react to rune value changes', () => {
+it("shall react to rune value changes", () => {
   const count = rune(0);
   let doubled = $derived(count.value * 2);
-  
+
   expect(doubled).toBe(0);
-  
+
   count.value = 5;
   expect(doubled).toBe(10);
 });
@@ -958,6 +1000,7 @@ it('shall react to rune value changes', () => {
 ### KaTeX Quirks Mode Warning (Known Issue)
 
 **Warning Message**:
+
 ```
 stderr | tests/integration/course-service.test.ts
 Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitable doctype.
@@ -980,18 +1023,20 @@ Warning: KaTeX doesn't work in quirks mode. Make sure your website has a suitabl
 **Problem**: Tests pass but stderr shows error messages
 
 **Likely causes**:
+
 - Tests intentionally triggering errors (error handling tests)
 - Application code logging errors with `console.error()`
 - Expected errors being treated as unexpected noise
 
 **Solution**:
+
 ```typescript
-describe('Error Tests', () => {
+describe("Error Tests", () => {
   let consoleErrorSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
     // Suppress console.error to reduce noise in test output
-    consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    consoleErrorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
   });
 
   afterEach(() => {
@@ -999,7 +1044,7 @@ describe('Error Tests', () => {
     consoleErrorSpy.mockRestore();
   });
 
-  it('shall handle errors gracefully', async () => {
+  it("shall handle errors gracefully", async () => {
     // Test that intentionally triggers an error
     await expect(riskyOperation()).rejects.toThrow();
     // No error spam in test output!
@@ -1010,43 +1055,49 @@ describe('Error Tests', () => {
 ### Tests Failing in CI but Passing Locally
 
 **Likely causes**:
+
 - Timezone differences (use UTC in tests)
 - Race conditions (add proper awaits)
 - Environment variables not set
 - File system case sensitivity (Linux vs Mac)
 
 **Solution**:
+
 ```typescript
 // Bad - relies on system timezone
 const date = new Date().toLocaleDateString();
 
 // Good - explicit timezone
-const date = new Date().toLocaleDateString('en-US', { timeZone: 'UTC' });
+const date = new Date().toLocaleDateString("en-US", { timeZone: "UTC" });
 ```
 
 ### Flaky E2E Tests
 
 **Likely causes**:
+
 - Not waiting for elements to appear
 - Network timing issues
 - Animation delays
 
 **Solution**:
+
 ```typescript
 // Bad - will randomly fail
-await page.click('.button');
+await page.click(".button");
 
 // Good - waits for element to be ready
-await page.getByRole('button').click(); // Auto-waits with Playwright
+await page.getByRole("button").click(); // Auto-waits with Playwright
 ```
 
 ### Mutation Tests Taking Too Long
 
 **Likely causes**:
+
 - Running all mutants instead of incremental
 - Too many slow integration tests
 
 **Solution**:
+
 ```bash
 # Use incremental mode
 npm run test:mutation:incremental
@@ -1071,6 +1122,7 @@ npx stryker run --mutate "src/lib/services/course/**/*.ts"
 ## Contributing
 
 When adding new features:
+
 1. Create EARS requirements document in `/tests/requirements/`
 2. Write tests that implement each requirement
 3. Run mutation testing to verify test quality

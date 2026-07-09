@@ -11,6 +11,7 @@
 The Lab Navigation feature enables users to progress through multi-step lab exercises with next/previous controls, progress tracking, and time monitoring.
 
 **User Story**:
+
 > As a **student**  
 > I want to **navigate through lab steps sequentially**  
 > So that I can **complete exercises at my own pace and track my progress**
@@ -242,16 +243,19 @@ The Lab Navigation feature enables users to progress through multi-step lab exer
 ## Dependencies
 
 **Upstream**:
+
 - Course loading (lab data structure)
 - Markdown rendering service
 - Analytics service (for time tracking)
 
 **Downstream**:
+
 - Progress tracking across courses
 - Student analytics dashboard
 - Completion certificates
 
 **External Services**:
+
 - None (all client-side)
 
 ---
@@ -267,9 +271,9 @@ The Lab Navigation feature enables users to progress through multi-step lab exer
 
 ## Change History
 
-| Date | Requirement ID | Change | Reason |
-|------|---------------|--------|--------|
-| 2024-07-09 | R1-R15 | Initial draft | Feature planning |
+| Date       | Requirement ID | Change        | Reason           |
+| ---------- | -------------- | ------------- | ---------------- |
+| 2024-07-09 | R1-R15         | Initial draft | Feature planning |
 
 ---
 
@@ -280,6 +284,7 @@ The Lab Navigation feature enables users to progress through multi-step lab exer
 **Status**: Draft - implementation pending
 
 **Next Steps**:
+
 1. Implement LiveLab class with step navigation
 2. Write component tests for Lab.svelte
 3. Add E2E test for complete lab journey

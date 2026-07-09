@@ -11,6 +11,7 @@
 The Course Loading feature manages fetching, parsing, caching, and decorating course data from remote JSON files. It is the foundation of the Tutors Reader, enabling users to browse course content.
 
 **User Story**:
+
 > As a **student or instructor**  
 > I want to **load course content from a URL**  
 > So that I can **view and navigate the course materials**
@@ -352,16 +353,19 @@ The Course Loading feature manages fetching, parsing, caching, and decorating co
 ## Dependencies
 
 **Upstream**:
+
 - `@tutors/tutors-model-lib` - Course data types and utilities
 - Fetch API - Network requests
 - Svelte runes - Reactive state management
 
 **Downstream**:
+
 - Navigation system - Depends on course routes being decorated
 - Analytics - Depends on courseId being set
 - Content rendering - Depends on learning objects being processed
 
 **External Services**:
+
 - Netlify hosting (default)
 - Custom domain hosting (optional)
 
@@ -379,10 +383,10 @@ The Course Loading feature manages fetching, parsing, caching, and decorating co
 
 ## Change History
 
-| Date | Requirement ID | Change | Reason |
-|------|---------------|--------|--------|
-| 2024-07-09 | R1-R22 | Initial requirements documented | Captured existing tested behavior |
-| 2024-07-09 | NFR1-NFR3 | Added non-functional requirements | Performance and quality targets |
+| Date       | Requirement ID | Change                            | Reason                            |
+| ---------- | -------------- | --------------------------------- | --------------------------------- |
+| 2024-07-09 | R1-R22         | Initial requirements documented   | Captured existing tested behavior |
+| 2024-07-09 | NFR1-NFR3      | Added non-functional requirements | Performance and quality targets   |
 
 ---
 
@@ -395,6 +399,7 @@ The Course Loading feature manages fetching, parsing, caching, and decorating co
 **Mutation Test Score**: 70.63% (lo-tree.ts)
 
 **Next Priorities**:
+
 1. R9 - Loading state component tests
 2. R14 - Input validation
 3. NFR1 - Performance benchmarking
