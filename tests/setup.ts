@@ -10,6 +10,18 @@ beforeAll(() => {
   // Start MSW server to intercept network requests
   server.listen({ onUnhandledRequest: 'error' });
 
+  // Mock SvelteKit environment variables
+  globalThis.__SVELTEKIT_APP_VERSION__ = 'test';
+  globalThis.__SVELTEKIT_DEV__ = false;
+
+  // Mock $app/environment
+  vi.mock('$app/environment', () => ({
+    browser: false,
+    dev: false,
+    building: false,
+    version: 'test'
+  }));
+
   // Mock localStorage
   const localStorageMock: Storage = {
     length: 0,
