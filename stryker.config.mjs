@@ -25,11 +25,14 @@ export default {
   incrementalFile: '.stryker-tmp/incremental.json',
 
   // Concurrency settings
-  maxConcurrentTestRunners: 4,
+  concurrency: 4,
 
   // Timeout configuration
   timeoutMS: 60000,
   timeoutFactor: 1.5,
+
+  // Ensure .svelte-kit directory is included in sandbox
+  buildCommand: 'npm run prepare',
 
   // Vitest configuration
   vitest: {
