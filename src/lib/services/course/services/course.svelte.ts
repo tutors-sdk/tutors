@@ -17,6 +17,8 @@ export const courseService: CourseService = {
   labs: new Map<string, LiveLab>(),
   /** Cache of processed notes indexed by noteId */
   notes: new Map<string, Note>(),
+  /** Cache of processed notebooks indexed by notebookId */
+  notebooks: new Map<string, Lo>(),
   /** Current course URL */
   courseUrl: rune(""),
 
@@ -141,6 +143,12 @@ export const courseService: CourseService = {
         this.notes.set(loId, lo as Note);
       }
     }
+    if (lo?.type === "notebook") {
+      if (!this.notebooks.has(loId)) {
+        markdownService.convertNotebookToHtml(course, lo);
+        this.notebooks.set(loId, lo);
+      }
+    }
     return lo!;
   },
 
@@ -155,6 +163,9 @@ export const courseService: CourseService = {
     }
     for (const note of this.notes.values()) {
       markdownService.convertNoteToHtml(currentCourse.value!, note, true);
+    }
+    for (const notebook of this.notebooks.values()) {
+      markdownService.convertNotebookToHtml(currentCourse.value!, notebook, true);
     }
   }
 };
