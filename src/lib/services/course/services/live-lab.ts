@@ -50,7 +50,7 @@ export class LiveLab implements LabService {
   }
 
   refreshStep() {
-    this.content = this.chaptersHtml.get(this.currentChapterShortTitle)!;
+    this.content = this.chaptersHtml.get(this.currentChapterShortTitle) ?? "";
   }
   refreshNav() {
     //const number = this.autoNumber ? this.lab.shortTitle + ": " : "";
@@ -95,8 +95,8 @@ export class LiveLab implements LabService {
   setCurrentChapter(step: string) {
     if (!this.steps.includes(step)) return;
     this.currentChapterShortTitle = step;
-    this.currentChapterTitle = this.chaptersTitles.get(step)!;
-    this.content = this.chaptersHtml.get(step)!;
+    this.currentChapterTitle = this.chaptersTitles.get(step) ?? "";
+    this.content = this.chaptersHtml.get(step) ?? "";
     this.index = getKeyIndex(this.chaptersHtml, step);
     this.refreshNav();
   }

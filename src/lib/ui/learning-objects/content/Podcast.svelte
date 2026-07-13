@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Lo, Podcast } from "@tutors/tutors-model-lib";
+  import { sanitizeHtml } from "$lib/utils/sanitize";
 
   interface Props {
     lo: Podcast;
@@ -27,7 +28,7 @@
       <p class="text-center text-lg italic">{lo.title}</p>
       {#if !hideSummary}
         <div class="text-center text-sm italic">
-          {@html lo.summary}
+          {@html sanitizeHtml(lo.summary ?? "")}
         </div>
         {/if}
     </div>

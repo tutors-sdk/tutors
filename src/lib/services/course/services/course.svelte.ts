@@ -79,7 +79,7 @@ export const courseService: CourseService = {
     if (topic) {
       currentLo.value = topic;
     }
-    return topic!;
+    return topic ?? course;
   },
 
   /**
@@ -119,7 +119,7 @@ export const courseService: CourseService = {
   async readWall(courseId: string, type: string, fetchFunction: typeof fetch): Promise<Lo[]> {
     const course = await this.readCourse(courseId, fetchFunction);
     const wall = course.wallMap?.get(type);
-    return wall!;
+    return wall ?? [];
   },
 
   /**
@@ -141,7 +141,7 @@ export const courseService: CourseService = {
         this.notes.set(loId, lo as Note);
       }
     }
-    return lo!;
+    return lo ?? course;
   },
 
   /**

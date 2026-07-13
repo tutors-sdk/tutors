@@ -9,6 +9,7 @@
   import { currentLo } from "$lib/runes.svelte";
   import { currentCodeTheme } from "$lib/services/markdown";
   import Icon from "$lib/ui/components/Icon.svelte";
+  import { sanitizeHtml } from "$lib/utils/sanitize";
 
   interface Props {
     data: PageData;
@@ -95,7 +96,7 @@
       <div class="card m-1 w-full border p-4">
         <div>
           <div class="prose dark:prose-invert">
-            {@html result.html}
+            {@html sanitizeHtml(result.html ?? "")}
           </div>
           <div class="pt-4 text-right text-sm">
             <a rel="noopener noreferrer" href={result.link} target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300">
