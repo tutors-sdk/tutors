@@ -24,11 +24,7 @@
     lo.icon = themeService.getIcon("video");
   }
 
-  let videoConfig = $state(getVideoConfig(lo));
-
-  $effect(() => {
-    videoConfig = getVideoConfig(lo);
-  });
+  let videoConfig = $derived(getVideoConfig(lo));
 </script>
 
 {#if !currentCourse?.value?.areVideosHidden}

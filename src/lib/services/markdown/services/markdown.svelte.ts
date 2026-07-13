@@ -29,7 +29,6 @@ import markdown from "shiki/langs/markdown.mjs";
 import bash from "shiki/langs/bash.mjs";
 import python from "shiki/langs/python.mjs";
 import sql from "shiki/langs/sql.mjs";
-import typescript from "shiki/langs/typescript.mjs";
 import java from "shiki/langs/java.mjs";
 import kotlin from "shiki/langs/kotlin.mjs";
 import csharp from "shiki/langs/csharp.mjs";
@@ -66,7 +65,6 @@ const languages = [
   bash,
   python,
   sql,
-  typescript,
   java,
   kotlin,
   csharp,
@@ -78,7 +76,6 @@ const languages = [
   ruby,
   swift,
   dockerfile,
-  html,
   jsx,
   svelte,
   haskell,

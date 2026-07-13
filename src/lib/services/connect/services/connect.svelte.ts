@@ -68,7 +68,7 @@ export const tutorsConnectService: TutorsConnectService = {
       tutorsId.value = user;
       tutorsId.value.sentiment! = await getTutorsConnectUserSentiment(user.login) ?? "neutral";
       tutorsId.value.share = await getTutorsConnectUserOnlineStatus(user.login) ?? "online";
-      addOrUpdateStudent(user);
+      addOrUpdateStudent(user).catch(() => {});
       if (browser) {
         if (!localStorage.share) {
           localStorage.share = true;

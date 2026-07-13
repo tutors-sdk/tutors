@@ -36,8 +36,8 @@ export const liveService: LiveService = {
   listeningAll: false,
 
   studentListener(event: MessageEvent) {
-    // Parse and extract student data
-    const data = JSON.parse(event.data);
+    let data;
+    try { data = JSON.parse(event.data); } catch { return; }
     const studentEvent = this.studentEventMap.get(data.user.id);
 
     if (!studentEvent) {
@@ -53,8 +53,8 @@ export const liveService: LiveService = {
   },
 
   courseListener(event: MessageEvent) {
-    // Parse and extract course data
-    const data = JSON.parse(event.data);
+    let data;
+    try { data = JSON.parse(event.data); } catch { return; }
     const courseEvent = this.courseEventMap.get(data.courseId);
 
     if (!courseEvent) {
