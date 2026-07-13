@@ -4,6 +4,7 @@
   import { goto, afterNavigate } from "$app/navigation";
   import type { LiveLab } from "$lib/services/course";
   import { currentCodeTheme } from "$lib/services/markdown";
+  import { mermaidify } from "$lib/services/markdown/services/mermaid-action";
 
   interface Props {
     lab: LiveLab;
@@ -70,7 +71,7 @@
       </div>
     </div>
     <div class="min-h-screen flex-1">
-      <article class="prose dark:prose-invert prose-pre:overflow-x-auto 2xl:prose-pre:max-w-[120ch] max-w-[65ch] sm:mx-1 md:mx-4 2xl:max-w-[120ch]">
+      <article class="prose dark:prose-invert prose-pre:overflow-x-auto 2xl:prose-pre:max-w-[120ch] max-w-[65ch] sm:mx-1 md:mx-4 2xl:max-w-[120ch]" use:mermaidify={lab.content}>
         {#key currentCodeTheme.value}
           <span id="lab-panel" class="mt-[-60px] block pt-[60px]">
             {@html lab.content}

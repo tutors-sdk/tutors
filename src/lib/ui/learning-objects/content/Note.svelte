@@ -1,6 +1,7 @@
 <script lang="ts">
     import { hideMainNavigator } from "$lib/runes.svelte";
   import { currentCodeTheme } from "$lib/services/markdown";
+  import { mermaidify } from "$lib/services/markdown/services/mermaid-action";
   import type { Lo } from "@tutors/tutors-model-lib";
     import { onDestroy, onMount } from "svelte";
 
@@ -17,7 +18,7 @@
   });
 </script>
 
-<article class="prose dark:prose-invert mr-4 max-w-none overflow-x-auto">
+<article class="prose dark:prose-invert mr-4 max-w-none overflow-x-auto" use:mermaidify>
   {#key currentCodeTheme.value}
     {@html lo.contentHtml}
   {/key}
