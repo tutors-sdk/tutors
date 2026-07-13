@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { hideMainNavigator } from "$lib/runes.svelte";
+  import { hideMainNavigator } from "$lib/runes.svelte";
   import { currentCodeTheme } from "$lib/services/markdown";
   import type { Lo } from "@tutors/tutors-model-lib";
-    import { onDestroy, onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
 
   interface Props {
     lo: Lo;
   }
   let { lo }: Props = $props();
 
-    onMount(() => {
+  onMount(() => {
     hideMainNavigator.value = true;
   });
   onDestroy(() => {

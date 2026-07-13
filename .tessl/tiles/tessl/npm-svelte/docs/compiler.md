@@ -109,11 +109,14 @@ Parses a Svelte component and returns its Abstract Syntax Tree (AST).
  * @param options - Parse options
  * @returns AST representation of the component
  */
-function parse(source: string, options?: {
-  filename?: string;
-  modern?: boolean;
-  loose?: boolean;
-}): AST.Root;
+function parse(
+  source: string,
+  options?: {
+    filename?: string;
+    modern?: boolean;
+    loose?: boolean;
+  }
+): AST.Root;
 ```
 
 **Usage Examples:**
@@ -150,13 +153,13 @@ console.log(ast.css); // Style AST
 function walkAST(node, callback) {
   callback(node);
   if (node.children) {
-    node.children.forEach(child => walkAST(child, callback));
+    node.children.forEach((child) => walkAST(child, callback));
   }
 }
 
 walkAST(ast, (node) => {
-  if (node.type === 'Text') {
-    console.log('Text node:', node.data);
+  if (node.type === "Text") {
+    console.log("Text node:", node.data);
   }
 });
 ```
@@ -173,11 +176,7 @@ Transforms Svelte component source code using preprocessors before compilation.
  * @param options - Preprocessing options
  * @returns Promise with processed code
  */
-function preprocess(
-  source: string,
-  preprocessor: PreprocessorGroup | PreprocessorGroup[],
-  options?: { filename?: string }
-): Promise<Processed>;
+function preprocess(source: string, preprocessor: PreprocessorGroup | PreprocessorGroup[], options?: { filename?: string }): Promise<Processed>;
 ```
 
 **Usage Examples:**
@@ -207,33 +206,37 @@ const source = `
 `;
 
 // TypeScript and SCSS preprocessing
-const result = await preprocess(source, [
-  {
-    name: "typescript",
-    script: ({ content, attributes }) => {
-      if (attributes.lang === "ts") {
-        // Transform TypeScript to JavaScript
-        return {
-          code: transformTypeScript(content),
-          map: sourceMap
-        };
+const result = await preprocess(
+  source,
+  [
+    {
+      name: "typescript",
+      script: ({ content, attributes }) => {
+        if (attributes.lang === "ts") {
+          // Transform TypeScript to JavaScript
+          return {
+            code: transformTypeScript(content),
+            map: sourceMap
+          };
+        }
+      }
+    },
+    {
+      name: "scss",
+      style: ({ content, attributes }) => {
+        if (attributes.lang === "scss") {
+          return {
+            code: compileSCSS(content),
+            map: sourceMap
+          };
+        }
       }
     }
-  },
+  ],
   {
-    name: "scss",
-    style: ({ content, attributes }) => {
-      if (attributes.lang === "scss") {
-        return {
-          code: compileSCSS(content),
-          map: sourceMap
-        };
-      }
-    }
+    filename: "Component.svelte"
   }
-], {
-  filename: "Component.svelte"
-});
+);
 
 console.log(result.code); // Processed source ready for compilation
 ```
@@ -249,10 +252,13 @@ Migrates Svelte 4 code to Svelte 5 syntax, converting to runes and modern patter
  * @param options - Migration options
  * @returns Migrated code
  */
-function migrate(source: string, options?: {
-  filename?: string;
-  use_ts?: boolean;
-}): { code: string };
+function migrate(
+  source: string,
+  options?: {
+    filename?: string;
+    use_ts?: boolean;
+  }
+): { code: string };
 ```
 
 **Usage Examples:**
@@ -312,7 +318,7 @@ import { VERSION } from "svelte/compiler";
 console.log(`Using Svelte compiler version: ${VERSION}`);
 
 // Conditional logic based on version
-const majorVersion = parseInt(VERSION.split('.')[0]);
+const majorVersion = parseInt(VERSION.split(".")[0]);
 if (majorVersion >= 5) {
   // Use Svelte 5 features
 }
@@ -329,11 +335,11 @@ interface CompileOptions extends ModuleCompileOptions {
   /** Create accessors for component props */
   accessors?: boolean;
   /** Element namespace (html, svg, mathml) */
-  namespace?: 'html' | 'svg' | 'mathml';
+  namespace?: "html" | "svg" | "mathml";
   /** Enable immutable mode optimizations */
   immutable?: boolean;
   /** CSS handling strategy */
-  css?: 'injected' | 'external';
+  css?: "injected" | "external";
   /** Custom CSS class name hasher */
   cssHash?: (args: { name: string; filename: string; css: string; hash: (input: string) => string }) => string;
   /** Preserve HTML comments in output */
@@ -362,7 +368,7 @@ interface ModuleCompileOptions {
   /** Enable development mode with runtime checks */
   dev?: boolean;
   /** Target platform (client, server, or false for syntax-only) */
-  generate?: 'client' | 'server' | false;
+  generate?: "client" | "server" | false;
   /** Source filename for debugging */
   filename?: string;
   /** Root directory for relative paths */
@@ -415,17 +421,9 @@ interface PreprocessorGroup {
   script?: Preprocessor;
 }
 
-type MarkupPreprocessor = (options: {
-  content: string;
-  filename?: string;
-}) => Processed | void | Promise<Processed | void>;
+type MarkupPreprocessor = (options: { content: string; filename?: string }) => Processed | void | Promise<Processed | void>;
 
-type Preprocessor = (options: {
-  content: string;
-  attributes: Record<string, string | boolean>;
-  markup: string;
-  filename?: string;
-}) => Processed | void | Promise<Processed | void>;
+type Preprocessor = (options: { content: string; attributes: Record<string, string | boolean>; markup: string; filename?: string }) => Processed | void | Promise<Processed | void>;
 ```
 
 ## Best Practices

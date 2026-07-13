@@ -1,8 +1,8 @@
-import type { Theme } from '@skeletonlabs/skeleton/themes';
+import type { Theme } from "@skeletonlabs/skeleton/themes";
 
 const valentines = {
-  "name": "valentines",
-  "properties": {
+  name: "valentines",
+  properties: {
     "--type-scale-factor": "1.067",
     "--type-scale-1": "calc(0.75rem * var(--type-scale-factor))",
     "--type-scale-2": "calc(0.875rem * var(--type-scale-factor))",
@@ -221,8 +221,8 @@ const valentines = {
     "--color-surface-contrast-900": "var(--color-surface-contrast-light)",
     "--color-surface-contrast-950": "var(--color-surface-contrast-light)"
   },
-  "metadata": {
-    "version": "3.0.0"
+  metadata: {
+    version: "3.0.0"
   }
 } satisfies Theme;
 

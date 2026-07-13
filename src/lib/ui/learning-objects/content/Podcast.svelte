@@ -22,14 +22,12 @@
     loading="lazy"
   ></iframe>
 
-
-    <div class="mt-4 flex flex-col gap-2">
-      <p class="text-center text-lg italic">{lo.title}</p>
-      {#if !hideSummary}
-        <div class="text-center text-sm italic">
-          {@html lo.summary}
-        </div>
-        {/if}
-    </div>
-
+  <div class="mt-4 flex flex-col gap-2">
+    <p class="text-center text-lg italic">{lo.title}</p>
+    {#if !hideSummary}
+      <div class="text-center text-sm italic">
+        {@html lo.summary}
+      </div>
+    {/if}
+  </div>
 </div>

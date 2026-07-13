@@ -5,9 +5,10 @@ Prettier's configuration system allows you to discover and resolve configuration
 ## Configuration Functions
 
 ### resolveConfig
+
 ```javascript { .api }
 async function resolveConfig(
-  fileUrlOrPath: string | URL, 
+  fileUrlOrPath: string | URL,
   options?: ResolveConfigOptions
 ): Promise<Options | null>
 ```
@@ -15,12 +16,14 @@ async function resolveConfig(
 Resolve Prettier configuration for a given file path. Searches up the directory tree for configuration files and merges them with defaults.
 
 **Parameters:**
+
 - `fileUrlOrPath` (string | URL): File path or URL to resolve configuration for
 - `options` (ResolveConfigOptions, optional): Resolution options
 
 **Returns:** Promise resolving to merged Options object or null if no config found
 
 **Types:**
+
 ```javascript { .api }
 interface ResolveConfigOptions {
   useCache?: boolean;         // Use cached results (default: true)
@@ -30,24 +33,26 @@ interface ResolveConfigOptions {
 ```
 
 **Example:**
+
 ```javascript { .api }
 // Basic configuration resolution
-const config = await prettier.resolveConfig('/project/src/file.js');
+const config = await prettier.resolveConfig("/project/src/file.js");
 // Result: { semi: true, singleQuote: false, ... } or null
 
 // With EditorConfig support
-const config = await prettier.resolveConfig('/project/src/file.js', {
+const config = await prettier.resolveConfig("/project/src/file.js", {
   editorconfig: true,
   useCache: false
 });
 
 // With explicit config file
-const config = await prettier.resolveConfig('/project/src/file.js', {
-  config: '/project/.prettierrc.json'
+const config = await prettier.resolveConfig("/project/src/file.js", {
+  config: "/project/.prettierrc.json"
 });
 ```
 
 ### resolveConfigFile
+
 ```javascript { .api }
 async function resolveConfigFile(fileUrlOrPath?: string | URL): Promise<string | null>
 ```
@@ -55,14 +60,16 @@ async function resolveConfigFile(fileUrlOrPath?: string | URL): Promise<string |
 Find the path to the Prettier configuration file that would be used for a given file path.
 
 **Parameters:**
+
 - `fileUrlOrPath` (string | URL, optional): Starting point for search (default: current working directory)
 
 **Returns:** Promise resolving to config file path or null if not found
 
 **Example:**
+
 ```javascript { .api }
 // Find config file for specific path
-const configPath = await prettier.resolveConfigFile('/project/src/file.js');
+const configPath = await prettier.resolveConfigFile("/project/src/file.js");
 // Result: '/project/.prettierrc.json' or null
 
 // Find config file from current directory
@@ -71,6 +78,7 @@ const configPath = await prettier.resolveConfigFile();
 ```
 
 ### clearConfigCache
+
 ```javascript { .api }
 async function clearConfigCache(): Promise<void>
 ```
@@ -78,12 +86,13 @@ async function clearConfigCache(): Promise<void>
 Clear the configuration file system cache. Useful for editor integrations and long-running processes that need to detect config changes.
 
 **Example:**
+
 ```javascript { .api }
 // Clear cache when config files change
 await prettier.clearConfigCache();
 
 // Subsequent resolveConfig calls will re-read files
-const freshConfig = await prettier.resolveConfig('/project/src/file.js');
+const freshConfig = await prettier.resolveConfig("/project/src/file.js");
 ```
 
 ## Configuration File Formats
@@ -91,6 +100,7 @@ const freshConfig = await prettier.resolveConfig('/project/src/file.js');
 Prettier supports multiple configuration file formats, searched in this order:
 
 ### Package.json
+
 ```json { .api }
 {
   "prettier": {
@@ -102,6 +112,7 @@ Prettier supports multiple configuration file formats, searched in this order:
 ```
 
 ### .prettierrc (JSON/YAML)
+
 ```json { .api }
 {
   "semi": false,
@@ -119,6 +130,7 @@ Prettier supports multiple configuration file formats, searched in this order:
 ```
 
 ### .prettierrc.json
+
 ```json { .api }
 {
   "printWidth": 100,
@@ -135,16 +147,17 @@ Prettier supports multiple configuration file formats, searched in this order:
 ```
 
 ### .prettierrc.js/.prettierrc.cjs
+
 ```javascript { .api }
 module.exports = {
   semi: false,
   singleQuote: true,
-  trailingComma: 'all',
+  trailingComma: "all",
   overrides: [
     {
-      files: '*.ts',
+      files: "*.ts",
       options: {
-        parser: 'typescript'
+        parser: "typescript"
       }
     }
   ]
@@ -152,31 +165,34 @@ module.exports = {
 ```
 
 ### prettier.config.js/prettier.config.cjs
+
 ```javascript { .api }
 module.exports = {
-  plugins: ['prettier-plugin-organize-imports'],
+  plugins: ["prettier-plugin-organize-imports"],
   semi: false,
   singleQuote: true
 };
 ```
 
 ### .prettierrc.mjs/prettier.config.mjs (ESM)
+
 ```javascript { .api }
 export default {
   semi: false,
   singleQuote: true,
-  trailingComma: 'all'
+  trailingComma: "all"
 };
 ```
 
 ### .prettierrc.ts/prettier.config.ts (TypeScript)
+
 ```typescript { .api }
-import type { Config } from 'prettier';
+import type { Config } from "prettier";
 
 const config: Config = {
   semi: false,
   singleQuote: true,
-  trailingComma: 'all'
+  trailingComma: "all"
 };
 
 export default config;
@@ -193,25 +209,25 @@ const config = {
   singleQuote: false,
   overrides: [
     {
-      files: '*.json',
+      files: "*.json",
       options: {
         printWidth: 120,
         tabWidth: 4
       }
     },
     {
-      files: ['*.md', '*.mdx'],
+      files: ["*.md", "*.mdx"],
       options: {
-        proseWrap: 'always',
+        proseWrap: "always",
         printWidth: 70
       }
     },
     {
-      files: 'legacy/**/*.js',
-      excludeFiles: 'legacy/vendor/**',
+      files: "legacy/**/*.js",
+      excludeFiles: "legacy/vendor/**",
       options: {
         semi: false,
-        trailingComma: 'none'
+        trailingComma: "none"
       }
     }
   ]
@@ -219,11 +235,12 @@ const config = {
 ```
 
 **Override Types:**
+
 ```javascript { .api }
 interface Config extends Options {
   overrides?: Array<{
     files: string | string[];      // Glob patterns to match
-    excludeFiles?: string | string[]; // Glob patterns to exclude  
+    excludeFiles?: string | string[]; // Glob patterns to exclude
     options?: Options;             // Options to apply
   }>;
 }
@@ -251,14 +268,16 @@ max_line_length = 80
 ```
 
 **Supported EditorConfig Properties:**
-- `indent_style` → `useTabs` 
+
+- `indent_style` → `useTabs`
 - `indent_size`/`tab_width` → `tabWidth`
 - `max_line_length` → `printWidth`
 - `end_of_line` → `endOfLine`
 
 **Example:**
+
 ```javascript { .api }
-const config = await prettier.resolveConfig('/project/src/file.js', {
+const config = await prettier.resolveConfig("/project/src/file.js", {
   editorconfig: true
 });
 // Result merges .prettierrc with .editorconfig properties
@@ -277,8 +296,8 @@ Configuration is resolved in this precedence order (highest to lowest):
 // Explicit options override config files
 const formatted = await prettier.format(code, {
   // This config resolution is automatic
-  filepath: '/project/src/file.js',
-  
+  filepath: "/project/src/file.js",
+
   // These explicit options override resolved config
   semi: false,
   singleQuote: true
@@ -291,16 +310,16 @@ Configuration results are cached by file path for performance:
 
 ```javascript { .api }
 // First call reads from disk
-const config1 = await prettier.resolveConfig('/project/src/file.js');
+const config1 = await prettier.resolveConfig("/project/src/file.js");
 
 // Second call uses cache
-const config2 = await prettier.resolveConfig('/project/src/file.js');
+const config2 = await prettier.resolveConfig("/project/src/file.js");
 
 // Clear cache to force re-read
 await prettier.clearConfigCache();
 
 // Next call reads from disk again
-const config3 = await prettier.resolveConfig('/project/src/file.js');
+const config3 = await prettier.resolveConfig("/project/src/file.js");
 ```
 
 ## Ignore Files
@@ -321,20 +340,21 @@ The ignore patterns affect `getFileInfo()` results but don't directly impact con
 ## Usage Patterns
 
 ### Editor Integration
+
 ```javascript { .api }
 async function formatFileForEditor(filePath, content) {
   // Get file info including ignore status
   const fileInfo = await prettier.getFileInfo(filePath, {
     resolveConfig: true
   });
-  
+
   if (fileInfo.ignored || !fileInfo.inferredParser) {
     return content; // Don't format
   }
-  
+
   // Resolve config for file
   const config = await prettier.resolveConfig(filePath);
-  
+
   // Format with cursor tracking
   return prettier.formatWithCursor(content, {
     ...config,
@@ -345,20 +365,21 @@ async function formatFileForEditor(filePath, content) {
 ```
 
 ### Build Tool Integration
+
 ```javascript { .api }
 async function formatProjectFiles(pattern) {
   const files = await glob(pattern);
-  
+
   for (const file of files) {
     const config = await prettier.resolveConfig(file);
     if (!config) continue; // No config found, skip
-    
-    const content = await fs.readFile(file, 'utf8');
+
+    const content = await fs.readFile(file, "utf8");
     const needsFormatting = !(await prettier.check(content, {
       ...config,
       filepath: file
     }));
-    
+
     if (needsFormatting) {
       const formatted = await prettier.format(content, {
         ...config,

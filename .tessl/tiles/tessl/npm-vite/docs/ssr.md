@@ -11,14 +11,11 @@ Create and manage module runners for executing code in SSR environments.
 ```typescript { .api }
 /**
  * Create server-side module runner
- * @param server - Vite dev server instance  
+ * @param server - Vite dev server instance
  * @param options - Module runner options
  * @returns Promise resolving to ModuleRunner instance
  */
-function createServerModuleRunner(
-  server: ViteDevServer,
-  options?: ServerModuleRunnerOptions
-): Promise<ModuleRunner>;
+function createServerModuleRunner(server: ViteDevServer, options?: ServerModuleRunnerOptions): Promise<ModuleRunner>;
 
 interface ModuleRunner {
   /** Import and execute module */
@@ -51,8 +48,8 @@ const runner = await createServerModuleRunner(server, {
 });
 
 // Import and execute SSR module
-const { render } = await runner.import('./src/entry-server.js');
-const html = await render({ url: '/about' });
+const { render } = await runner.import("./src/entry-server.js");
+const html = await render({ url: "/about" });
 
 // Cleanup
 await runner.destroy();
@@ -69,12 +66,7 @@ Create transport mechanisms for module runner communication.
  * @param options - Transport options
  * @returns Module runner transport handlers
  */
-function createServerModuleRunnerTransport(
-  options?: {
-    runner?: ModuleRunner;
-    transport?: ModuleRunnerTransport;
-  }
-): ModuleRunnerTransportHandlers;
+function createServerModuleRunnerTransport(options?: { runner?: ModuleRunner; transport?: ModuleRunnerTransport }): ModuleRunnerTransportHandlers;
 
 interface ModuleRunnerTransport {
   /** Connect to transport */
@@ -108,12 +100,7 @@ Fetch and process modules for SSR execution.
  * @param options - Fetch options
  * @returns Promise resolving to fetch result
  */
-function fetchModule(
-  server: ViteDevServer,
-  url: string,
-  importer?: string,
-  options?: FetchModuleOptions
-): Promise<FetchResult>;
+function fetchModule(server: ViteDevServer, url: string, importer?: string, options?: FetchModuleOptions): Promise<FetchResult>;
 
 interface FetchModuleOptions {
   /** SSR mode */
@@ -160,13 +147,7 @@ Transform modules for SSR execution with proper module format handling.
  * @param options - Transform options
  * @returns Promise resolving to transform result
  */
-function moduleRunnerTransform(
-  code: string,
-  inMap: SourceMap | null,
-  url: string,
-  originalCode?: string,
-  options?: ModuleRunnerTransformOptions
-): Promise<TransformResult>;
+function moduleRunnerTransform(code: string, inMap: SourceMap | null, url: string, originalCode?: string, options?: ModuleRunnerTransformOptions): Promise<TransformResult>;
 
 interface ModuleRunnerTransformOptions {
   /** SSR mode */
@@ -210,7 +191,7 @@ interface ResolvedSSROptions extends SSROptions {
   optimizeDeps: SsrDepOptimizationConfig;
 }
 
-type SSRTarget = 'node' | 'webworker';
+type SSRTarget = "node" | "webworker";
 ```
 
 **Usage Examples:**
@@ -218,12 +199,12 @@ type SSRTarget = 'node' | 'webworker';
 ```typescript
 export default defineConfig({
   ssr: {
-    external: ['some-large-lib'],
-    noExternal: ['@my-org/shared-components'],
-    target: 'node',
+    external: ["some-large-lib"],
+    noExternal: ["@my-org/shared-components"],
+    target: "node",
     resolve: {
-      conditions: ['node', 'import', 'module', 'default'],
-      externalConditions: ['node']
+      conditions: ["node", "import", "module", "default"],
+      externalConditions: ["node"]
     }
   }
 });
@@ -257,7 +238,7 @@ interface ModuleRunnerOptions {
   /** Fetch function for modules */
   fetch: FetchFunction;
   /** Source map support */
-  sourcemapInterceptor?: 'prepareStackTrace' | 'node' | InterceptorOptions | false;
+  sourcemapInterceptor?: "prepareStackTrace" | "node" | InterceptorOptions | false;
   /** Module evaluator */
   evaluator?: ModuleEvaluator;
   /** HMR configuration */
@@ -266,7 +247,7 @@ interface ModuleRunnerOptions {
   environment?: string;
 }
 
-interface ServerModuleRunnerOptions extends Omit<ModuleRunnerOptions, 'fetch'> {
+interface ServerModuleRunnerOptions extends Omit<ModuleRunnerOptions, "fetch"> {
   /** Fetch function override */
   fetch?: FetchFunction;
   /** Transport configuration */
@@ -276,11 +257,7 @@ interface ServerModuleRunnerOptions extends Omit<ModuleRunnerOptions, 'fetch'> {
 /**
  * Function to fetch modules
  */
-type FetchFunction = (
-  id: string,
-  importer?: string,
-  options?: FetchFunctionOptions
-) => Promise<FetchResult>;
+type FetchFunction = (id: string, importer?: string, options?: FetchFunctionOptions) => Promise<FetchResult>;
 
 interface FetchFunctionOptions {
   /** Whether this is an SSR request */
@@ -295,11 +272,7 @@ Configure how modules are evaluated in the runner environment.
 ```typescript { .api }
 interface ModuleEvaluator {
   /** Evaluate module code */
-  runInlinedModule(
-    context: ModuleRunnerContext,
-    code: string,
-    id: string
-  ): Promise<any>;
+  runInlinedModule(context: ModuleRunnerContext, code: string, id: string): Promise<any>;
   /** Run external module */
   runExternalModule(filepath: string): Promise<any>;
 }
@@ -328,7 +301,7 @@ interface ModuleRunnerHmr {
   /** HMR logger */
   logger?: HMRLogger;
   /** Connection configuration */
-  connection?: 'ws' | ModuleRunnerHMRConnection;
+  connection?: "ws" | ModuleRunnerHMRConnection;
 }
 
 interface ModuleRunnerHMRConnection {
@@ -368,7 +341,7 @@ function createDefaultImportMeta(url: string, context?: ModuleRunnerContext): Mo
  * @param url - Module URL
  * @param context - Runner context
  * @returns import.meta object with Node.js features
- */  
+ */
 function createNodeImportMeta(url: string, context?: ModuleRunnerContext): ModuleRunnerImportMeta;
 
 interface ModuleRunnerImportMeta {

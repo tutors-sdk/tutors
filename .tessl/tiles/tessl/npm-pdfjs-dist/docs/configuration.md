@@ -46,25 +46,25 @@ class PDFWorker {
   port: MessagePort;
   /** Worker message handler */
   messageHandler: MessageHandler;
-  
+
   /**
    * Constructor for custom PDF worker
    * @param params - Worker parameters
    */
   constructor(params?: PDFWorkerParameters);
-  
+
   /**
    * Destroy the worker and clean up resources
    */
   destroy(): void;
-  
+
   /**
    * Create worker from existing port
    * @param params - Port parameters
    * @returns PDF worker instance
    */
   static fromPort(params: FromPortParameters): PDFWorker;
-  
+
   /**
    * Get the configured worker source URL
    * @returns Worker source URL
@@ -132,7 +132,7 @@ const FeatureTest: {
     isOffscreenCanvasSupported: boolean;
     canvasMaxAreaInBytes: number;
   };
-  
+
   /** Check for specific feature support */
   checkFeature(feature: string): boolean;
 };
@@ -193,7 +193,7 @@ interface CanvasFactory {
     canvas: HTMLCanvasElement | OffscreenCanvas;
     context: CanvasRenderingContext2D | OffscreenCanvasRenderingContext2D;
   };
-  
+
   /**
    * Reset canvas dimensions
    * @param canvasAndContext - Canvas and context object
@@ -201,7 +201,7 @@ interface CanvasFactory {
    * @param height - New height
    */
   reset(canvasAndContext: any, width: number, height: number): void;
-  
+
   /**
    * Destroy canvas
    * @param canvasAndContext - Canvas and context to destroy
@@ -228,10 +228,10 @@ interface CMapReaderFactory {
    * @param params - Fetch parameters
    * @returns Promise resolving to CMap data
    */
-  fetch(params: { 
-    name: string; 
-    url: string; 
-    packed: boolean; 
+  fetch(params: {
+    name: string;
+    url: string;
+    packed: boolean;
   }): Promise<{
     cMapData: Uint8Array;
     compressionType: number;
@@ -239,8 +239,8 @@ interface CMapReaderFactory {
 }
 
 class DOMCMapReaderFactory implements CMapReaderFactory {
-  constructor(options?: { 
-    baseUrl?: string; 
+  constructor(options?: {
+    baseUrl?: string;
     isCompressed?: boolean;
   });
   fetch(params: any): Promise<any>;
@@ -328,30 +328,28 @@ interface AdvancedPDFConfiguration {
 class PDFConfiguration {
   static setup(options = {}) {
     // Set required worker source
-    GlobalWorkerOptions.workerSrc = options.workerSrc || 
-      "/node_modules/pdfjs-dist/build/pdf.worker.mjs";
-    
+    GlobalWorkerOptions.workerSrc = options.workerSrc || "/node_modules/pdfjs-dist/build/pdf.worker.mjs";
+
     // Configure verbosity for debugging
     if (options.debug) {
       setVerbosityLevel(VerbosityLevel.INFOS);
     } else {
       setVerbosityLevel(VerbosityLevel.ERRORS);
     }
-    
+
     // Feature detection
     console.log("PDF.js Configuration:");
     console.log("- Little Endian:", FeatureTest.platform.isLittleEndian);
     console.log("- Eval Supported:", FeatureTest.platform.isEvalSupported);
     console.log("- OffscreenCanvas:", FeatureTest.platform.isOffscreenCanvasSupported);
     console.log("- Max Canvas Area:", FeatureTest.platform.canvasMaxAreaInBytes);
-    
+
     return {
       // Standard configuration
       cMapUrl: options.cMapUrl || "/node_modules/pdfjs-dist/cmaps/",
       cMapPacked: options.cMapPacked !== false,
-      standardFontDataUrl: options.standardFontDataUrl || 
-        "/node_modules/pdfjs-dist/standard_fonts/",
-      
+      standardFontDataUrl: options.standardFontDataUrl || "/node_modules/pdfjs-dist/standard_fonts/",
+
       // Factory configuration
       canvasFactory: new DOMCanvasFactory(),
       cMapReaderFactory: new DOMCMapReaderFactory({
@@ -361,7 +359,7 @@ class PDFConfiguration {
       standardFontDataFactory: new DOMStandardFontDataFactory({
         baseUrl: options.standardFontDataUrl
       }),
-      
+
       // Advanced options
       disableFontFace: options.disableFontFace || false,
       fontExtraProperties: options.fontExtraProperties || false,
@@ -370,20 +368,20 @@ class PDFConfiguration {
       enableWebGL: options.enableWebGL || false
     };
   }
-  
+
   static createWorker(name = "pdf-worker") {
     return new PDFWorker({ name });
   }
-  
+
   static async loadDocument(src, options = {}) {
     const config = this.setup(options);
-    
+
     const loadingTask = getDocument({
       ...config,
-      ...((typeof src === 'string') ? { url: src } : { data: src }),
+      ...(typeof src === "string" ? { url: src } : { data: src }),
       ...options
     });
-    
+
     return await loadingTask.promise;
   }
 }
@@ -393,7 +391,7 @@ const config = {
   workerSrc: "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.worker.mjs",
   cMapUrl: "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/cmaps/",
   standardFontDataUrl: "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/standard_fonts/",
-  debug: process.env.NODE_ENV === 'development',
+  debug: process.env.NODE_ENV === "development",
   enableXfa: true,
   useSystemFonts: true
 };
@@ -406,19 +404,19 @@ const pdf = await PDFConfiguration.loadDocument("document.pdf", config);
 
 ```javascript { .api }
 // Browser configuration
-if (typeof window !== 'undefined') {
-  GlobalWorkerOptions.workerSrc = '/pdf.worker.mjs';
+if (typeof window !== "undefined") {
+  GlobalWorkerOptions.workerSrc = "/pdf.worker.mjs";
 }
 
 // Node.js configuration
-if (typeof process !== 'undefined' && process.versions?.node) {
+if (typeof process !== "undefined" && process.versions?.node) {
   // Node.js-specific setup
-  GlobalWorkerOptions.workerSrc = require.resolve('pdfjs-dist/build/pdf.worker.js');
+  GlobalWorkerOptions.workerSrc = require.resolve("pdfjs-dist/build/pdf.worker.js");
 }
 
 // Webpack configuration
-if (typeof __webpack_require__ !== 'undefined') {
-  GlobalWorkerOptions.workerSrc = require('pdfjs-dist/build/pdf.worker.entry');
+if (typeof __webpack_require__ !== "undefined") {
+  GlobalWorkerOptions.workerSrc = require("pdfjs-dist/build/pdf.worker.entry");
 }
 ```
 

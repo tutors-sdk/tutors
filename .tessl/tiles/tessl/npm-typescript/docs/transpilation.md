@@ -39,7 +39,8 @@ interface TranspileOutput {
 import * as ts from "typescript";
 
 // Basic transpilation
-const result = ts.transpileModule(`
+const result = ts.transpileModule(
+  `
   interface User {
     name: string;
     age: number;
@@ -48,13 +49,15 @@ const result = ts.transpileModule(`
   const user: User = { name: "Alice", age: 30 };
   const greeting = \`Hello, \${user.name}!\`;
   console.log(greeting);
-`, {
-  compilerOptions: {
-    module: ts.ModuleKind.CommonJS,
-    target: ts.ScriptTarget.ES5,
-    sourceMap: true
+`,
+  {
+    compilerOptions: {
+      module: ts.ModuleKind.CommonJS,
+      target: ts.ScriptTarget.ES5,
+      sourceMap: true
+    }
   }
-});
+);
 
 console.log("JavaScript output:");
 console.log(result.outputText);
@@ -62,7 +65,8 @@ console.log("Source map:");
 console.log(result.sourceMapText);
 
 // Transpile with JSX
-const jsxResult = ts.transpileModule(`
+const jsxResult = ts.transpileModule(
+  `
   import React from 'react';
   
   interface Props {
@@ -74,15 +78,17 @@ const jsxResult = ts.transpileModule(`
   };
   
   export default Greeting;
-`, {
-  compilerOptions: {
-    module: ts.ModuleKind.ESNext,
-    target: ts.ScriptTarget.ES2018,
-    jsx: ts.JsxEmit.React,
-    esModuleInterop: true
-  },
-  fileName: "Greeting.tsx"
-});
+`,
+  {
+    compilerOptions: {
+      module: ts.ModuleKind.ESNext,
+      target: ts.ScriptTarget.ES2018,
+      jsx: ts.JsxEmit.React,
+      esModuleInterop: true
+    },
+    fileName: "Greeting.tsx"
+  }
+);
 
 console.log(jsxResult.outputText);
 ```
@@ -101,13 +107,7 @@ Transpile TypeScript code with minimal configuration.
  * @param moduleName - Optional module name
  * @returns JavaScript output text
  */
-function transpile(
-  input: string,
-  compilerOptions?: CompilerOptions,
-  fileName?: string,
-  diagnostics?: Diagnostic[],
-  moduleName?: string
-): string;
+function transpile(input: string, compilerOptions?: CompilerOptions, fileName?: string, diagnostics?: Diagnostic[], moduleName?: string): string;
 ```
 
 **Usage Examples:**
@@ -116,7 +116,8 @@ function transpile(
 import * as ts from "typescript";
 
 // Simple transpilation with minimal options
-const jsCode = ts.transpile(`
+const jsCode = ts.transpile(
+  `
   enum Color {
     Red = "red",
     Green = "green",
@@ -128,26 +129,33 @@ const jsCode = ts.transpile(`
   }
   
   console.log(paintHouse(Color.Blue));
-`, {
-  target: ts.ScriptTarget.ES2015,
-  module: ts.ModuleKind.CommonJS
-});
+`,
+  {
+    target: ts.ScriptTarget.ES2015,
+    module: ts.ModuleKind.CommonJS
+  }
+);
 
 console.log(jsCode);
 
 // With diagnostics collection
 const diagnostics: ts.Diagnostic[] = [];
-const result = ts.transpile(`
+const result = ts.transpile(
+  `
   let message: string = 42; // Type error
   console.log(message);
-`, {
-  target: ts.ScriptTarget.ES2018
-}, "example.ts", diagnostics);
+`,
+  {
+    target: ts.ScriptTarget.ES2018
+  },
+  "example.ts",
+  diagnostics
+);
 
 if (diagnostics.length > 0) {
   console.log("Transpilation diagnostics:");
-  diagnostics.forEach(diag => {
-    console.log(ts.flattenDiagnosticMessageText(diag.messageText, '\n'));
+  diagnostics.forEach((diag) => {
+    console.log(ts.flattenDiagnosticMessageText(diag.messageText, "\n"));
   });
 }
 ```
@@ -187,31 +195,14 @@ const addLoggingTransformer: ts.TransformerFactory<ts.SourceFile> = (context) =>
     function visitor(node: ts.Node): ts.Node {
       if (ts.isFunctionDeclaration(node) && node.name) {
         const logStatement = ts.factory.createExpressionStatement(
-          ts.factory.createCallExpression(
-            ts.factory.createPropertyAccessExpression(
-              ts.factory.createIdentifier("console"),
-              ts.factory.createIdentifier("log")
-            ),
-            undefined,
-            [ts.factory.createStringLiteral(`Entering function: ${node.name.text}`)]
-          )
+          ts.factory.createCallExpression(ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("console"), ts.factory.createIdentifier("log")), undefined, [
+            ts.factory.createStringLiteral(`Entering function: ${node.name.text}`)
+          ])
         );
-        
-        const newBody = ts.factory.updateBlock(
-          node.body!,
-          [logStatement, ...node.body!.statements]
-        );
-        
-        return ts.factory.updateFunctionDeclaration(
-          node,
-          node.modifiers,
-          node.asteriskToken,
-          node.name,
-          node.typeParameters,
-          node.parameters,
-          node.type,
-          newBody
-        );
+
+        const newBody = ts.factory.updateBlock(node.body!, [logStatement, ...node.body!.statements]);
+
+        return ts.factory.updateFunctionDeclaration(node, node.modifiers, node.asteriskToken, node.name, node.typeParameters, node.parameters, node.type, newBody);
       }
       return ts.visitEachChild(node, visitor, context);
     }
@@ -220,7 +211,8 @@ const addLoggingTransformer: ts.TransformerFactory<ts.SourceFile> = (context) =>
 };
 
 // Use custom transformer
-const result = ts.transpileModule(`
+const result = ts.transpileModule(
+  `
   function greet(name: string): string {
     return \`Hello, \${name}!\`;
   }
@@ -228,15 +220,17 @@ const result = ts.transpileModule(`
   function calculate(a: number, b: number): number {
     return a + b;
   }
-`, {
-  compilerOptions: {
-    target: ts.ScriptTarget.ES2015,
-    module: ts.ModuleKind.CommonJS
-  },
-  transformers: {
-    before: [addLoggingTransformer]
+`,
+  {
+    compilerOptions: {
+      target: ts.ScriptTarget.ES2015,
+      module: ts.ModuleKind.CommonJS
+    },
+    transformers: {
+      before: [addLoggingTransformer]
+    }
   }
-});
+);
 
 console.log(result.outputText);
 ```
@@ -262,7 +256,8 @@ enum JsxEmit {
 import * as ts from "typescript";
 
 // React JSX transpilation
-const reactResult = ts.transpileModule(`
+const reactResult = ts.transpileModule(
+  `
   import React from 'react';
   
   interface ButtonProps {
@@ -284,19 +279,22 @@ const reactResult = ts.transpileModule(`
   };
   
   export default Button;
-`, {
-  compilerOptions: {
-    target: ts.ScriptTarget.ES2018,
-    module: ts.ModuleKind.ESNext,
-    jsx: ts.JsxEmit.React,
-    jsxFactory: "React.createElement",
-    esModuleInterop: true
-  },
-  fileName: "Button.tsx"
-});
+`,
+  {
+    compilerOptions: {
+      target: ts.ScriptTarget.ES2018,
+      module: ts.ModuleKind.ESNext,
+      jsx: ts.JsxEmit.React,
+      jsxFactory: "React.createElement",
+      esModuleInterop: true
+    },
+    fileName: "Button.tsx"
+  }
+);
 
 // Modern React JSX transform
-const modernReactResult = ts.transpileModule(`
+const modernReactResult = ts.transpileModule(
+  `
   interface CardProps {
     title: string;
     children: React.ReactNode;
@@ -312,15 +310,17 @@ const modernReactResult = ts.transpileModule(`
       </div>
     );
   };
-`, {
-  compilerOptions: {
-    target: ts.ScriptTarget.ES2020,
-    module: ts.ModuleKind.ESNext,
-    jsx: ts.JsxEmit.ReactJSX, // Modern transform
-    moduleResolution: ts.ModuleResolutionKind.NodeJs
-  },
-  fileName: "Card.tsx"
-});
+`,
+  {
+    compilerOptions: {
+      target: ts.ScriptTarget.ES2020,
+      module: ts.ModuleKind.ESNext,
+      jsx: ts.JsxEmit.ReactJSX, // Modern transform
+      moduleResolution: ts.ModuleResolutionKind.NodeJs
+    },
+    fileName: "Card.tsx"
+  }
+);
 
 console.log("Classic React transform:");
 console.log(reactResult.outputText);
@@ -338,23 +338,23 @@ interface CompilerOptions {
   target?: ScriptTarget;
   module?: ModuleKind;
   jsx?: JsxEmit;
-  
+
   // Output control
   sourceMap?: boolean;
   inlineSourceMap?: boolean;
   removeComments?: boolean;
   downlevelIteration?: boolean;
-  
+
   // Module resolution
   esModuleInterop?: boolean;
   allowSyntheticDefaultImports?: boolean;
   moduleResolution?: ModuleResolutionKind;
-  
+
   // Type checking (usually disabled for fast transpilation)
   skipLibCheck?: boolean;
   noEmit?: boolean;
   isolatedModules?: boolean;
-  
+
   // JSX-specific
   jsxFactory?: string;
   jsxFragmentFactory?: string;

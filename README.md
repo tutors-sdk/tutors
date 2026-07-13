@@ -56,38 +56,38 @@ If you have an idea for a new feature or enhancement, feel free to open a [Tutor
 
 Make sure you have Node 18 + installed, and start by cloning this repo:
 
-~~~bash
+```bash
 git clone https://github.com/tutors-sdk/tutors.git
-~~~
+```
 
 Open a shell and change into the project folder and run `npm install`...
 
-~~~bash
+```bash
 cd tutors
 npm install
-~~~
+```
 
 Then copy the file `.env.example` to `.env`
 
 Now to start the app you can run this command from the root:
 
-~~~bash
+```bash
 npm run dev
-~~~
+```
 
 This should launch the application:
 
-~~~bash
+```bash
   VITE v5.0.12  ready in 1069 ms
 
   ➜  Local:   http://localhost:3000/
   ➜  Network: use --host to expose
   ➜  press h + enter to show help
-~~~
+```
 
 Now the app is up and running and you can browse to it by opening the <a href="http://localhost:3000/">local location</a> in your browser.
 
-The Tutors reader relies on a segment of the url to locate the course to display. Any of the [samples below]((#example-tutors-courses)) can be 'read' with an appropriate url segments appended to the local url you now have running. So for instance:
+The Tutors reader relies on a segment of the url to locate the course to display. Any of the [samples below](<(#example-tutors-courses)>) can be 'read' with an appropriate url segments appended to the local url you now have running. So for instance:
 
 - <https://tutors.dev/course/reference-course>
 
@@ -155,9 +155,9 @@ We welcome [feature requests](#requesting-features) & [bug reports](#reporting-b
 2. [Set up a local build](#setting-up-a-tutors-development-environment)
 3. Create a new branch for [your selected issue](https://github.com/tutors-sdk/tutors/issues) (feature or fix).
 4. Make your changes, and verify that feature behaves as expected in your local build
-6. Commit your changes, perhpas consider [following these guideline for commit messages](https://www.freecodecamp.org/news/how-to-write-better-git-commit-messages/)
-7. Push your changes to your fork
-8. Submit a pull request to [tutors](https://github.com/tutors-sdk/tutors).
+5. Commit your changes, perhpas consider [following these guideline for commit messages](https://www.freecodecamp.org/news/how-to-write-better-git-commit-messages/)
+6. Push your changes to your fork
+7. Submit a pull request to [tutors](https://github.com/tutors-sdk/tutors).
 
 ![Tutors Holopin](static/tutors-holopin.png)
 
@@ -167,12 +167,12 @@ Every time you open a PR that is accepted, you will be assigned holobytes. Colle
 
 Use the following in package json when debugging:
 
-~~~
+```
   // deployed
     "@tutors/tutors-model-lib": "npm:@jsr/tutors__tutors-model-lib@^4.2.1",
   // debug - replace with correct absolute path
     "@tutors/tutors-model-lib": "file:../tutors-apps/cli/tutors-model-lib"
-~~~
+```
 
 ### License
 

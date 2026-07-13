@@ -12,13 +12,13 @@ A Tailwind CSS plugin that provides comprehensive form element styling and norma
 ## Core Imports
 
 ```javascript
-const forms = require('@tailwindcss/forms');
+const forms = require("@tailwindcss/forms");
 ```
 
 For ES modules:
 
 ```javascript
-import forms from '@tailwindcss/forms';
+import forms from "@tailwindcss/forms";
 ```
 
 ## Basic Usage
@@ -32,10 +32,10 @@ module.exports = {
     // ...
   },
   plugins: [
-    require('@tailwindcss/forms'),
+    require("@tailwindcss/forms")
     // ...
-  ],
-}
+  ]
+};
 ```
 
 With configuration options:
@@ -44,15 +44,15 @@ With configuration options:
 // tailwind.config.js
 module.exports = {
   plugins: [
-    require('@tailwindcss/forms')({
-      strategy: 'base', // only generate global styles
+    require("@tailwindcss/forms")({
+      strategy: "base" // only generate global styles
     }),
     // or
-    require('@tailwindcss/forms')({
-      strategy: 'class', // only generate classes
-    }),
-  ],
-}
+    require("@tailwindcss/forms")({
+      strategy: "class" // only generate classes
+    })
+  ]
+};
 ```
 
 ## Architecture
@@ -181,6 +181,7 @@ File inputs receive minimal reset styling to preserve browser functionality whil
 The plugin provides comprehensive support for all HTML form input types:
 
 ### Text Input Types
+
 - `type="text"` - Standard text input
 - `type="email"` - Email address input
 - `type="url"` - URL input
@@ -190,6 +191,7 @@ The plugin provides comprehensive support for all HTML form input types:
 - `type="tel"` - Telephone number input
 
 ### Date and Time Input Types
+
 - `type="date"` - Date picker
 - `type="datetime-local"` - Local date and time
 - `type="month"` - Month picker
@@ -197,6 +199,7 @@ The plugin provides comprehensive support for all HTML form input types:
 - `type="week"` - Week picker
 
 ### Other Input Types
+
 - `type="checkbox"` - Checkbox input
 - `type="radio"` - Radio button input
 - `type="file"` - File upload input
@@ -243,11 +246,11 @@ The plugin provides comprehensive support for all HTML form input types:
 
 ```html
 <!-- Combining with Tailwind utilities -->
-<input type="email" class="form-input px-4 py-3 rounded-full border-2 border-blue-300 focus:border-blue-500" />
-<select class="form-select bg-gray-50 text-lg rounded-xl">
+<input type="email" class="form-input rounded-full border-2 border-blue-300 px-4 py-3 focus:border-blue-500" />
+<select class="form-select rounded-xl bg-gray-50 text-lg">
   <option>Large rounded select</option>
 </select>
-<input type="checkbox" class="form-checkbox h-6 w-6 text-green-600 rounded-lg" />
+<input type="checkbox" class="form-checkbox h-6 w-6 rounded-lg text-green-600" />
 ```
 
 ## Dependencies
@@ -256,12 +259,12 @@ The plugin has minimal dependencies:
 
 ```javascript { .api }
 // External dependency for SVG data URI conversion
-const svgToDataUri = require('mini-svg-data-uri');
+const svgToDataUri = require("mini-svg-data-uri");
 
 // Tailwind CSS plugin utilities
-const plugin = require('tailwindcss/plugin');
-const defaultTheme = require('tailwindcss/defaultTheme');
-const colors = require('tailwindcss/colors');
+const plugin = require("tailwindcss/plugin");
+const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
 
 // Destructured defaults from Tailwind's default theme
 const [baseFontSize, { lineHeight: baseLineHeight }] = defaultTheme.fontSize.base;
@@ -274,7 +277,7 @@ const { spacing, borderWidth, borderRadius } = defaultTheme;
  * @returns Resolved color value with proper opacity variable
  */
 function resolveColor(color, opacityVariableName) {
-  return color.replace('<alpha-value>', `var(${opacityVariableName}, 1)`);
+  return color.replace("<alpha-value>", `var(${opacityVariableName}, 1)`);
 }
 
 /**
@@ -285,12 +288,12 @@ function resolveColor(color, opacityVariableName) {
  */
 function resolveChevronColor(color, fallback) {
   let resolved = theme(color);
-  
-  if (!resolved || resolved.includes('var(')) {
+
+  if (!resolved || resolved.includes("var(")) {
     return fallback;
   }
-  
-  return resolved.replace('<alpha-value>', '1');
+
+  return resolved.replace("<alpha-value>", "1");
 }
 ```
 
@@ -309,7 +312,7 @@ The plugin includes TypeScript definitions:
 
 ```typescript { .api }
 declare const forms: {
-  (options?: Partial<{ strategy: 'base' | 'class' }>): {
+  (options?: Partial<{ strategy: "base" | "class" }>): {
     handler: (tailwindApi: { addBase: Function; addComponents: Function; theme: Function }) => void;
   };
   __isOptionsFunction: true;

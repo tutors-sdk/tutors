@@ -58,19 +58,19 @@ const version: string;
 
 ```javascript
 // src/service-worker.js
-import { build, files, prerendered, version } from '$service-worker';
+import { build, files, prerendered, version } from "$service-worker";
 
 const CACHE_NAME = `cache-${version}`;
 
 // Assets to cache on install
 const ASSETS = [
-  ...build,    // Generated build files
-  ...files,    // Static files
+  ...build, // Generated build files
+  ...files, // Static files
   ...prerendered // Prerendered pages
 ];
 
 // Install event - cache all assets
-self.addEventListener('install', (event) => {
+self.addEventListener("install", (event) => {
   event.waitUntil(
     caches
       .open(CACHE_NAME)
@@ -83,30 +83,24 @@ self.addEventListener('install', (event) => {
 });
 
 // Activate event - clean up old caches
-self.addEventListener('activate', (event) => {
+self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches
       .keys()
-      .then((cacheNames) =>
-        Promise.all(
-          cacheNames
-            .filter((name) => name !== CACHE_NAME)
-            .map((name) => caches.delete(name))
-        )
-      )
+      .then((cacheNames) => Promise.all(cacheNames.filter((name) => name !== CACHE_NAME).map((name) => caches.delete(name))))
       .then(() => {
-        console.log('Old caches cleared');
+        console.log("Old caches cleared");
         self.clients.claim();
       })
   );
 });
 
 // Fetch event - serve from cache, fallback to network
-self.addEventListener('fetch', (event) => {
+self.addEventListener("fetch", (event) => {
   const { request } = event;
 
   // Skip non-GET requests
-  if (request.method !== 'GET') return;
+  if (request.method !== "GET") return;
 
   event.respondWith(
     caches
@@ -122,8 +116,8 @@ self.addEventListener('fetch', (event) => {
       })
       .catch(() => {
         // Fallback for offline scenarios
-        if (request.destination === 'document') {
-          return caches.match('/offline.html');
+        if (request.destination === "document") {
+          return caches.match("/offline.html");
         }
       })
   );
@@ -134,57 +128,43 @@ self.addEventListener('fetch', (event) => {
 
 ```javascript
 // src/service-worker.js
-import { build, files, prerendered, version } from '$service-worker';
+import { build, files, prerendered, version } from "$service-worker";
 
 const STATIC_CACHE = `static-${version}`;
 const DYNAMIC_CACHE = `dynamic-${version}`;
-const OFFLINE_PAGE = '/offline.html';
+const OFFLINE_PAGE = "/offline.html";
 
 // Categorize assets
 const STATIC_ASSETS = [...build, ...files];
 const PRERENDERED_PAGES = prerendered;
 
-self.addEventListener('install', (event) => {
+self.addEventListener("install", (event) => {
   event.waitUntil(
     Promise.all([
       // Cache static assets
-      caches
-        .open(STATIC_CACHE)
-        .then((cache) => cache.addAll(STATIC_ASSETS)),
-      
+      caches.open(STATIC_CACHE).then((cache) => cache.addAll(STATIC_ASSETS)),
+
       // Cache prerendered pages
-      caches
-        .open(DYNAMIC_CACHE)
-        .then((cache) => cache.addAll([
-          ...PRERENDERED_PAGES,
-          OFFLINE_PAGE
-        ]))
+      caches.open(DYNAMIC_CACHE).then((cache) => cache.addAll([...PRERENDERED_PAGES, OFFLINE_PAGE]))
     ]).then(() => {
-      console.log('All assets cached successfully');
+      console.log("All assets cached successfully");
       self.skipWaiting();
     })
   );
 });
 
-self.addEventListener('activate', (event) => {
+self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches
       .keys()
       .then((cacheNames) =>
-        Promise.all(
-          cacheNames
-            .filter((name) => 
-              !name.startsWith(`static-${version}`) &&
-              !name.startsWith(`dynamic-${version}`)
-            )
-            .map((name) => caches.delete(name))
-        )
+        Promise.all(cacheNames.filter((name) => !name.startsWith(`static-${version}`) && !name.startsWith(`dynamic-${version}`)).map((name) => caches.delete(name)))
       )
       .then(() => self.clients.claim())
   );
 });
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener("fetch", (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
@@ -196,29 +176,29 @@ self.addEventListener('fetch', (event) => {
 
 async function handleRequest(request) {
   const url = new URL(request.url);
-  
+
   // Static assets - cache first
-  if (STATIC_ASSETS.some(asset => url.pathname === asset)) {
+  if (STATIC_ASSETS.some((asset) => url.pathname === asset)) {
     const cached = await caches.match(request);
     if (cached) return cached;
-    
+
     const response = await fetch(request);
     const cache = await caches.open(STATIC_CACHE);
     cache.put(request, response.clone());
     return response;
   }
-  
+
   // Pages - network first with cache fallback
-  if (request.destination === 'document') {
+  if (request.destination === "document") {
     try {
       const response = await fetch(request);
-      
+
       // Cache successful page responses
       if (response.ok) {
         const cache = await caches.open(DYNAMIC_CACHE);
         cache.put(request, response.clone());
       }
-      
+
       return response;
     } catch {
       // Fallback to cached version or offline page
@@ -226,22 +206,19 @@ async function handleRequest(request) {
       return cached || caches.match(OFFLINE_PAGE);
     }
   }
-  
+
   // API requests - network only with error handling
-  if (url.pathname.startsWith('/api/')) {
+  if (url.pathname.startsWith("/api/")) {
     try {
       return await fetch(request);
     } catch {
-      return new Response(
-        JSON.stringify({ error: 'Network unavailable' }),
-        {
-          status: 503,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      );
+      return new Response(JSON.stringify({ error: "Network unavailable" }), {
+        status: 503,
+        headers: { "Content-Type": "application/json" }
+      });
     }
   }
-  
+
   // Everything else - network first
   try {
     return await fetch(request);
@@ -255,11 +232,11 @@ async function handleRequest(request) {
 
 ```javascript
 // src/service-worker.js
-import { build, files, version } from '$service-worker';
+import { build, files, version } from "$service-worker";
 
 // Handle background sync for offline form submissions
-self.addEventListener('sync', (event) => {
-  if (event.tag === 'form-sync') {
+self.addEventListener("sync", (event) => {
+  if (event.tag === "form-sync") {
     event.waitUntil(syncForms());
   }
 });
@@ -267,37 +244,37 @@ self.addEventListener('sync', (event) => {
 async function syncForms() {
   const db = await openDB();
   const forms = await getAllPendingForms(db);
-  
+
   for (const form of forms) {
     try {
       const response = await fetch(form.url, {
-        method: 'POST',
+        method: "POST",
         body: form.data,
         headers: form.headers
       });
-      
+
       if (response.ok) {
         await deletePendingForm(db, form.id);
-        
+
         // Notify the client
         const clients = await self.clients.matchAll();
-        clients.forEach(client => {
+        clients.forEach((client) => {
           client.postMessage({
-            type: 'form-synced',
+            type: "form-synced",
             formId: form.id,
             success: true
           });
         });
       }
     } catch (error) {
-      console.error('Failed to sync form:', error);
+      console.error("Failed to sync form:", error);
     }
   }
 }
 
 // Handle offline form submissions
-self.addEventListener('message', (event) => {
-  if (event.data.type === 'queue-form') {
+self.addEventListener("message", (event) => {
+  if (event.data.type === "queue-form") {
     queueFormForSync(event.data.form);
   }
 });
@@ -305,9 +282,9 @@ self.addEventListener('message', (event) => {
 async function queueFormForSync(formData) {
   const db = await openDB();
   await addPendingForm(db, formData);
-  
+
   // Register for background sync
-  await self.registration.sync.register('form-sync');
+  await self.registration.sync.register("form-sync");
 }
 ```
 
@@ -317,7 +294,7 @@ async function queueFormForSync(formData) {
 
 ```javascript
 // svelte.config.js
-import adapter from '@sveltejs/adapter-auto';
+import adapter from "@sveltejs/adapter-auto";
 
 export default {
   kit: {
@@ -334,8 +311,8 @@ export default {
 
 ```javascript
 // src/app.html or layout
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker.js');
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("/service-worker.js");
 }
 ```
 

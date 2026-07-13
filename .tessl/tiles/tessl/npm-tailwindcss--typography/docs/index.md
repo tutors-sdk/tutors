@@ -12,13 +12,13 @@ The official Tailwind CSS Typography plugin provides a set of `prose` classes fo
 ## Core Imports
 
 ```javascript
-const typographyPlugin = require('@tailwindcss/typography');
+const typographyPlugin = require("@tailwindcss/typography");
 ```
 
 ESM:
 
 ```javascript
-import typographyPlugin from '@tailwindcss/typography';
+import typographyPlugin from "@tailwindcss/typography";
 ```
 
 ## Basic Usage
@@ -30,10 +30,10 @@ module.exports = {
     // ...
   },
   plugins: [
-    require('@tailwindcss/typography'),
+    require("@tailwindcss/typography")
     // ...
-  ],
-}
+  ]
+};
 ```
 
 ```html
@@ -77,12 +77,12 @@ function plugin(options?: Partial<PluginOptions>): TailwindPlugin;
 interface PluginOptions {
   /** Base class name for typography styles (default: 'prose') */
   className?: string;
-  /** 
+  /**
    * Targeting mode for CSS selectors (default: 'modern')
    * - 'modern': Uses modern CSS selectors with :where() and :is()
    * - 'legacy': Uses traditional CSS selectors for older browser compatibility
    */
-  target?: 'modern' | 'legacy';
+  target?: "modern" | "legacy";
 }
 
 interface TailwindPlugin {
@@ -99,12 +99,12 @@ Typography scales that adjust the overall size and spacing of content for differ
 
 ```typescript { .api }
 // Available size modifier classes
-type SizeModifiers = 
-  | 'prose-sm'    // Small scale (14px base)
-  | 'prose'       // Base scale (16px base) 
-  | 'prose-lg'    // Large scale (18px base)
-  | 'prose-xl'    // Extra large scale (20px base)
-  | 'prose-2xl';  // Double extra large scale (24px base)
+type SizeModifiers =
+  | "prose-sm" // Small scale (14px base)
+  | "prose" // Base scale (16px base)
+  | "prose-lg" // Large scale (18px base)
+  | "prose-xl" // Extra large scale (20px base)
+  | "prose-2xl"; // Double extra large scale (24px base)
 ```
 
 **Usage Examples:**
@@ -129,22 +129,35 @@ Pre-built color themes that provide consistent styling across light and dark mod
 
 ```typescript { .api }
 // Gray scale themes
-type GrayScaleThemes = 
-  | 'prose-gray'    // Default gray theme
-  | 'prose-slate'   // Slate gray theme
-  | 'prose-zinc'    // Zinc gray theme
-  | 'prose-neutral' // Neutral gray theme
-  | 'prose-stone';  // Stone gray theme
+type GrayScaleThemes =
+  | "prose-gray" // Default gray theme
+  | "prose-slate" // Slate gray theme
+  | "prose-zinc" // Zinc gray theme
+  | "prose-neutral" // Neutral gray theme
+  | "prose-stone"; // Stone gray theme
 
 // Accent color themes (affects links only)
-type AccentColorThemes = 
-  | 'prose-red' | 'prose-orange' | 'prose-amber' | 'prose-yellow'
-  | 'prose-lime' | 'prose-green' | 'prose-emerald' | 'prose-teal'
-  | 'prose-cyan' | 'prose-sky' | 'prose-blue' | 'prose-indigo'
-  | 'prose-violet' | 'prose-purple' | 'prose-fuchsia' | 'prose-pink' | 'prose-rose';
+type AccentColorThemes =
+  | "prose-red"
+  | "prose-orange"
+  | "prose-amber"
+  | "prose-yellow"
+  | "prose-lime"
+  | "prose-green"
+  | "prose-emerald"
+  | "prose-teal"
+  | "prose-cyan"
+  | "prose-sky"
+  | "prose-blue"
+  | "prose-indigo"
+  | "prose-violet"
+  | "prose-purple"
+  | "prose-fuchsia"
+  | "prose-pink"
+  | "prose-rose";
 
 // Special themes
-type SpecialThemes = 'prose-invert'; // Dark mode theme
+type SpecialThemes = "prose-invert"; // Dark mode theme
 ```
 
 **Usage Examples:**
@@ -169,20 +182,36 @@ Element-specific modifier classes for granular control over individual HTML elem
 
 ```typescript { .api }
 // Element-specific variant classes
-type ElementVariants = 
-  | 'prose-headings' // All headings (h1-h6, th)
-  | 'prose-h1' | 'prose-h2' | 'prose-h3' | 'prose-h4' | 'prose-h5' | 'prose-h6'
-  | 'prose-p'        // Paragraphs
-  | 'prose-a'        // Links
-  | 'prose-blockquote' // Block quotes
-  | 'prose-figure' | 'prose-figcaption' // Figures and captions
-  | 'prose-strong' | 'prose-em' // Text emphasis
-  | 'prose-kbd' | 'prose-code' | 'prose-pre' // Code elements
-  | 'prose-ol' | 'prose-ul' | 'prose-li' // Lists
-  | 'prose-table' | 'prose-thead' | 'prose-tr' | 'prose-th' | 'prose-td' // Tables
-  | 'prose-img' | 'prose-video' // Media
-  | 'prose-hr'       // Horizontal rules
-  | 'prose-lead';    // Lead text (class-based)
+type ElementVariants =
+  | "prose-headings" // All headings (h1-h6, th)
+  | "prose-h1"
+  | "prose-h2"
+  | "prose-h3"
+  | "prose-h4"
+  | "prose-h5"
+  | "prose-h6"
+  | "prose-p" // Paragraphs
+  | "prose-a" // Links
+  | "prose-blockquote" // Block quotes
+  | "prose-figure"
+  | "prose-figcaption" // Figures and captions
+  | "prose-strong"
+  | "prose-em" // Text emphasis
+  | "prose-kbd"
+  | "prose-code"
+  | "prose-pre" // Code elements
+  | "prose-ol"
+  | "prose-ul"
+  | "prose-li" // Lists
+  | "prose-table"
+  | "prose-thead"
+  | "prose-tr"
+  | "prose-th"
+  | "prose-td" // Tables
+  | "prose-img"
+  | "prose-video" // Media
+  | "prose-hr" // Horizontal rules
+  | "prose-lead"; // Lead text (class-based)
 ```
 
 ### Not-Prose Utility
@@ -191,7 +220,7 @@ Disables typography styles for specific content areas within prose-styled contai
 
 ```typescript { .api }
 // Utility class for disabling prose styles
-type NotProseUtility = 'not-prose'; // Disables all prose styling for nested content
+type NotProseUtility = "not-prose"; // Disables all prose styling for nested content
 ```
 
 **Usage Examples:**
@@ -201,14 +230,12 @@ type NotProseUtility = 'not-prose'; // Disables all prose styling for nested con
 <article class="prose">
   <h1>Article Title</h1>
   <p>This paragraph has prose styling.</p>
-  
+
   <div class="not-prose">
     <!-- This content is not styled by prose -->
-    <div class="bg-blue-500 p-4 text-white">
-      Custom styled content that ignores prose
-    </div>
+    <div class="bg-blue-500 p-4 text-white">Custom styled content that ignores prose</div>
   </div>
-  
+
   <p>This paragraph has prose styling again.</p>
 </article>
 ```
@@ -232,7 +259,7 @@ interface TypographyTheme {
   base: TypographyConfig;
   lg: TypographyConfig;
   xl: TypographyConfig;
-  '2xl': TypographyConfig;
+  "2xl": TypographyConfig;
   // Color themes
   slate: TypographyConfig;
   gray: TypographyConfig;
@@ -261,29 +288,13 @@ The plugin defines comprehensive CSS custom properties for consistent theming:
 
 ```css { .api }
 /* Light mode properties */
---tw-prose-body: /* Body text color */
---tw-prose-headings: /* Heading text color */
---tw-prose-lead: /* Lead text color */
---tw-prose-links: /* Link color */
---tw-prose-bold: /* Bold text color */
---tw-prose-counters: /* List counter color */
---tw-prose-bullets: /* List bullet color */
---tw-prose-hr: /* Horizontal rule color */
---tw-prose-quotes: /* Blockquote text color */
---tw-prose-quote-borders: /* Blockquote border color */
---tw-prose-captions: /* Caption text color */
---tw-prose-kbd: /* Keyboard text color */
---tw-prose-kbd-shadows: /* Keyboard shadow color (RGB values) */
---tw-prose-code: /* Inline code color */
---tw-prose-pre-code: /* Code block text color */
---tw-prose-pre-bg: /* Code block background color */
---tw-prose-th-borders: /* Table header border color */
---tw-prose-td-borders: /* Table cell border color */
-
-/* Dark mode properties (used with prose-invert) */
---tw-prose-invert-body: /* Inverted body text color */
---tw-prose-invert-headings: /* Inverted heading text color */
-/* ... all other invert properties */
+--tw-prose-body: /* Body text color */ --tw-prose-headings: /* Heading text color */ --tw-prose-lead: /* Lead text color */ --tw-prose-links: /* Link color */
+  --tw-prose-bold: /* Bold text color */ --tw-prose-counters: /* List counter color */ --tw-prose-bullets: /* List bullet color */ --tw-prose-hr: /* Horizontal rule color */
+  --tw-prose-quotes: /* Blockquote text color */ --tw-prose-quote-borders: /* Blockquote border color */ --tw-prose-captions: /* Caption text color */
+  --tw-prose-kbd: /* Keyboard text color */ --tw-prose-kbd-shadows: /* Keyboard shadow color (RGB values) */ --tw-prose-code: /* Inline code color */
+  --tw-prose-pre-code: /* Code block text color */ --tw-prose-pre-bg: /* Code block background color */ --tw-prose-th-borders: /* Table header border color */
+  --tw-prose-td-borders: /* Table cell border color */ /* Dark mode properties (used with prose-invert) */ --tw-prose-invert-body: /* Inverted body text color */
+  --tw-prose-invert-headings: /* Inverted heading text color */ /* ... all other invert properties */;
 ```
 
 ## Advanced Configuration
@@ -296,20 +307,18 @@ module.exports = {
   theme: {
     extend: {
       typography: {
-        'custom': {
+        custom: {
           css: {
-            '--tw-prose-body': '#1a1a1a',
-            '--tw-prose-headings': '#0f0f0f',
+            "--tw-prose-body": "#1a1a1a",
+            "--tw-prose-headings": "#0f0f0f"
             // ... custom properties
-          },
-        },
-      },
-    },
+          }
+        }
+      }
+    }
   },
-  plugins: [
-    require('@tailwindcss/typography'),
-  ],
-}
+  plugins: [require("@tailwindcss/typography")]
+};
 ```
 
 ### Plugin Options
@@ -318,12 +327,12 @@ module.exports = {
 // tailwind.config.js
 module.exports = {
   plugins: [
-    require('@tailwindcss/typography')({
-      className: 'wysiwyg',  // Use 'wysiwyg' instead of 'prose'
-      target: 'legacy'       // Use legacy CSS selectors for older browsers
-    }),
-  ],
-}
+    require("@tailwindcss/typography")({
+      className: "wysiwyg", // Use 'wysiwyg' instead of 'prose'
+      target: "legacy" // Use legacy CSS selectors for older browsers
+    })
+  ]
+};
 ```
 
 **Target Options:**

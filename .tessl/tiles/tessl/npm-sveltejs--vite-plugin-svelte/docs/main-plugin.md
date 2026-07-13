@@ -12,7 +12,7 @@ Creates an array of specialized Vite plugins that handle different aspects of Sv
 /**
  * Returns a list of plugins to handle svelte files
  * plugins are named `vite-plugin-svelte:<task>`
- * 
+ *
  * @param inlineOptions - Optional configuration options
  * @returns Array of Vite plugins for Svelte file processing
  */
@@ -79,8 +79,8 @@ interface FileProcessingOptions {
 
 ```javascript
 svelte({
-  include: ['src/**/*.svelte'],
-  exclude: ['node_modules/**', 'src/**/*.test.svelte']
+  include: ["src/**/*.svelte"],
+  exclude: ["node_modules/**", "src/**/*.test.svelte"]
 });
 
 // Using RegExp patterns
@@ -117,7 +117,7 @@ Configure development-time hot reload behavior.
 
 ```typescript { .api }
 interface HmrOptions {
-  /** 
+  /**
    * Enable or disable Hot Module Replacement
    * @deprecated Use compilerOptions.hmr instead
    * @default true for development, always false for production
@@ -132,13 +132,13 @@ interface HmrOptions {
 // Preferred approach (not deprecated)
 svelte({
   compilerOptions: {
-    hmr: process.env.NODE_ENV === 'development'
+    hmr: process.env.NODE_ENV === "development"
   }
 });
 
 // Deprecated approach (still works)
 svelte({
-  hot: process.env.NODE_ENV === 'development'
+  hot: process.env.NODE_ENV === "development"
 });
 ```
 
@@ -148,7 +148,7 @@ Control how the plugin interacts with preprocessors from other Vite plugins.
 
 ```typescript { .api }
 interface PreprocessorOptions {
-  /** 
+  /**
    * Ignore preprocessors contributed by other Vite plugins
    * - true: ignore all plugin preprocessors
    * - string[]: ignore preprocessors from specific plugins
@@ -165,8 +165,8 @@ interface PreprocessorOptions {
 svelte({ ignorePluginPreprocessors: true });
 
 // Ignore specific plugins
-svelte({ 
-  ignorePluginPreprocessors: ['vite-plugin-windicss', 'other-plugin'] 
+svelte({
+  ignorePluginPreprocessors: ["vite-plugin-windicss", "other-plugin"]
 });
 ```
 
@@ -176,15 +176,15 @@ Control automatic handling of Svelte library dependencies.
 
 ```typescript { .api }
 interface DependencyOptions {
-  /** 
+  /**
    * Control automatic dependency reinclusion in vite.optimizeDeps
    * - true: disable all reinclusions
    * - string[]: disable reinclusions for specific dependencies
    * @default false
    */
   disableDependencyReinclusion?: boolean | string[];
-  
-  /** 
+
+  /**
    * Enable dependency optimization to prebundle Svelte libraries
    * @default true for dev, false for build
    */
@@ -199,13 +199,13 @@ interface DependencyOptions {
 svelte({ disableDependencyReinclusion: true });
 
 // Disable for specific hybrid packages
-svelte({ 
-  disableDependencyReinclusion: ['@routify/router', 'some-hybrid-package'] 
+svelte({
+  disableDependencyReinclusion: ["@routify/router", "some-hybrid-package"]
 });
 
 // Control prebundling
 svelte({
-  prebundleSvelteLibraries: process.env.NODE_ENV === 'development'
+  prebundleSvelteLibraries: process.env.NODE_ENV === "development"
 });
 ```
 
@@ -215,7 +215,7 @@ Configure Svelte Inspector for development debugging.
 
 ```typescript { .api }
 interface InspectorOptions {
-  /** 
+  /**
    * Toggle or configure Svelte Inspector
    * @default unset for dev, always false for build
    */
@@ -235,9 +235,9 @@ svelte({ inspector: false });
 // Configure inspector options
 svelte({
   inspector: {
-    toggleKeyCombo: 'control-shift',
+    toggleKeyCombo: "control-shift",
     holdMode: true,
-    showToggleButton: 'always'
+    showToggleButton: "always"
   }
 });
 ```
@@ -248,7 +248,7 @@ Provide per-file dynamic compiler configuration.
 
 ```typescript { .api }
 interface DynamicCompileOptions {
-  /** 
+  /**
    * Function to update compilerOptions before compilation
    * @param data - Compilation context data
    * @returns Partial compiler options to merge
@@ -267,15 +267,15 @@ interface DynamicCompileOptions {
 svelte({
   dynamicCompileOptions({ filename, compileOptions }) {
     // Enable runes mode for specific files
-    if (filename.includes('.runes.svelte')) {
+    if (filename.includes(".runes.svelte")) {
       return { runes: true };
     }
-    
+
     // Different settings for test files
-    if (filename.includes('.test.svelte')) {
-      return { 
+    if (filename.includes(".test.svelte")) {
+      return {
         dev: true,
-        hydratable: false 
+        hydratable: false
       };
     }
   }
@@ -296,7 +296,7 @@ Control Svelte configuration file loading.
 
 ```typescript { .api }
 interface ConfigFileOptions {
-  /** 
+  /**
    * Path to svelte config file, absolute or relative to Vite root
    * Set to false to ignore svelte config file
    */
@@ -308,10 +308,10 @@ interface ConfigFileOptions {
 
 ```javascript
 // Use custom config file path
-svelte({ configFile: './config/svelte.config.js' });
+svelte({ configFile: "./config/svelte.config.js" });
 
 // Use absolute path
-svelte({ configFile: '/path/to/project/custom.svelte.config.js' });
+svelte({ configFile: "/path/to/project/custom.svelte.config.js" });
 
 // Ignore svelte config file completely
 svelte({ configFile: false });
@@ -354,17 +354,17 @@ svelte({
   experimental: {
     // Send warnings to browser console during development
     sendWarningsToBrowser: true,
-    
+
     // Suppress specific warning types
     disableSvelteResolveWarnings: true,
     disableApiSveltePreprocessWarnings: true,
-    
+
     // Configure module compilation
     compileModule: {
-      infixes: ['.svelte.', '.component.'],
-      extensions: ['.ts', '.js', '.mjs'],
-      include: ['src/modules/**'],
-      exclude: ['**/*.test.*']
+      infixes: [".svelte.", ".component."],
+      extensions: [".ts", ".js", ".mjs"],
+      include: ["src/modules/**"],
+      exclude: ["**/*.test.*"]
     }
   }
 });

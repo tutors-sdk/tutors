@@ -75,10 +75,14 @@ interface TypeChecker {
 import * as ts from "typescript";
 
 // Create program and type checker
-const program = ts.createProgram(["example.ts"], {
-  target: ts.ScriptTarget.ES2020,
-  module: ts.ModuleKind.CommonJS
-}, compilerHost);
+const program = ts.createProgram(
+  ["example.ts"],
+  {
+    target: ts.ScriptTarget.ES2020,
+    module: ts.ModuleKind.CommonJS
+  },
+  compilerHost
+);
 
 const typeChecker = program.getTypeChecker();
 const sourceFile = program.getSourceFile("example.ts")!;
@@ -277,11 +281,7 @@ interface TypeChecker {
    * @param flags - Conversion flags
    * @returns TypeNode AST or undefined
    */
-  typeToTypeNode(
-    type: Type,
-    enclosingDeclaration?: Node,
-    flags?: NodeBuilderFlags
-  ): TypeNode | undefined;
+  typeToTypeNode(type: Type, enclosingDeclaration?: Node, flags?: NodeBuilderFlags): TypeNode | undefined;
 
   /**
    * Convert a symbol to EntityName AST representation
@@ -290,11 +290,7 @@ interface TypeChecker {
    * @param enclosingDeclaration - Context for conversion
    * @returns EntityName AST or undefined
    */
-  symbolToEntityName(
-    symbol: Symbol,
-    meaning: SymbolFlags,
-    enclosingDeclaration?: Node
-  ): EntityName | undefined;
+  symbolToEntityName(symbol: Symbol, meaning: SymbolFlags, enclosingDeclaration?: Node): EntityName | undefined;
 
   /**
    * Convert type to string representation
@@ -303,11 +299,7 @@ interface TypeChecker {
    * @param flags - Type formatting flags
    * @returns String representation
    */
-  typeToString(
-    type: Type,
-    enclosingDeclaration?: Node,
-    flags?: TypeFormatFlags
-  ): string;
+  typeToString(type: Type, enclosingDeclaration?: Node, flags?: TypeFormatFlags): string;
 
   /**
    * Convert symbol to string representation
@@ -316,11 +308,7 @@ interface TypeChecker {
    * @param meaning - Symbol meaning
    * @returns String representation
    */
-  symbolToString(
-    symbol: Symbol,
-    enclosingDeclaration?: Node,
-    meaning?: SymbolFlags
-  ): string;
+  symbolToString(symbol: Symbol, enclosingDeclaration?: Node, meaning?: SymbolFlags): string;
 }
 ```
 

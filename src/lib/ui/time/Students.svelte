@@ -11,7 +11,7 @@
         showCourseTitle={true}
         cardLayout={{
           layout: "expanded",
-          style: "landscape",
+          style: "landscape"
         }}
       />
     {/if}

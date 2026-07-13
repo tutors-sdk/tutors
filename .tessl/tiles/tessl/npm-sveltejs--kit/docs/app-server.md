@@ -21,17 +21,17 @@ function getRequestEvent(): RequestEvent;
 **Usage Examples:**
 
 ```typescript
-import { getRequestEvent } from '$app/server';
+import { getRequestEvent } from "$app/server";
 
 // In a utility function called during request handling
 export function getCurrentUser() {
   const event = getRequestEvent();
-  const sessionId = event.cookies.get('session');
-  
+  const sessionId = event.cookies.get("session");
+
   if (!sessionId) {
-    throw error(401, 'Not authenticated');
+    throw error(401, "Not authenticated");
   }
-  
+
   return getUserFromSession(sessionId);
 }
 
@@ -61,19 +61,19 @@ function read(asset: string): ReadableStream;
 **Usage Examples:**
 
 ```typescript
-import { read } from '$app/server';
-import templateFile from '../templates/email.html?url';
+import { read } from "$app/server";
+import templateFile from "../templates/email.html?url";
 
 export async function GET() {
   // Read the imported template file
   const stream = read(templateFile);
   const template = await new Response(stream).text();
-  
+
   // Process template with data
-  const html = template.replace('{{title}}', 'Welcome!');
-  
+  const html = template.replace("{{title}}", "Welcome!");
+
   return new Response(html, {
-    headers: { 'Content-Type': 'text/html' }
+    headers: { "Content-Type": "text/html" }
   });
 }
 ```
@@ -119,15 +119,15 @@ function form(id: string, formData: FormData): Promise<any>;
 **Usage Examples:**
 
 ```typescript
-import { query, command, prerender } from '$app/server';
+import { query, command, prerender } from "$app/server";
 
 // Remote database query
 export async function load() {
-  const users = await query('getUserList', { 
-    limit: 10, 
-    active: true 
+  const users = await query("getUserList", {
+    limit: 10,
+    active: true
   });
-  
+
   return { users };
 }
 
@@ -135,25 +135,25 @@ export async function load() {
 export const actions = {
   deploy: async ({ request }) => {
     const formData = await request.formData();
-    const environment = formData.get('environment');
-    
-    const result = await command('deployApp', {
+    const environment = formData.get("environment");
+
+    const result = await command("deployApp", {
       environment,
       timestamp: Date.now()
     });
-    
+
     return { success: true, deployId: result.id };
   }
 };
 
 // Remote prerendering
 export async function entries() {
-  const routes = await prerender('generateRoutes', {
+  const routes = await prerender("generateRoutes", {
     includeStatic: true,
-    locale: 'en'
+    locale: "en"
   });
-  
-  return routes.map(route => ({ slug: route.slug }));
+
+  return routes.map((route) => ({ slug: route.slug }));
 }
 ```
 

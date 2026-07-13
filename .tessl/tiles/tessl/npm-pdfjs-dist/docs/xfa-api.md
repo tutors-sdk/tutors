@@ -16,13 +16,13 @@ class XfaLayer {
    * @returns XFA layer result
    */
   static render(parameters: XfaLayerParameters): XfaLayerResult;
-  
+
   /**
    * Update existing XFA layer
    * @param parameters - XFA layer parameters
    */
   static update(parameters: XfaLayerParameters): void;
-  
+
   /**
    * Set up XFA layer container
    * @param div - Container element
@@ -79,7 +79,7 @@ if (xfaHtml) {
   const xfaDiv = document.createElement("div");
   xfaDiv.className = "xfaLayer";
   document.body.appendChild(xfaDiv);
-  
+
   // Render XFA form
   const xfaResult = XfaLayer.render({
     viewport: viewport,
@@ -89,7 +89,7 @@ if (xfaHtml) {
     linkService: linkService,
     xfaHtmlFactory: new XfaHtmlFactory()
   });
-  
+
   console.log("XFA form rendered with", xfaResult.children.length, "elements");
 }
 ```
@@ -106,14 +106,14 @@ interface XfaHtmlFactory {
    * @returns HTML element
    */
   createElement(data: XfaElementData): HTMLElement;
-  
+
   /**
    * Create XFA text node
    * @param text - Text content
    * @returns Text node
    */
   createTextNode(text: string): Text;
-  
+
   /**
    * Create XFA document fragment
    * @returns Document fragment
@@ -155,19 +155,19 @@ interface XfaTextField {
   pattern?: string;
   /** Placeholder text */
   placeholder?: string;
-  
+
   /**
    * Set field value
    * @param value - New value
    */
   setValue(value: string): void;
-  
+
   /**
    * Validate field value
    * @returns Validation result
    */
   validate(): boolean;
-  
+
   /**
    * Focus the field
    */
@@ -183,13 +183,13 @@ interface XfaCheckBox {
   required: boolean;
   /** Whether field is read-only */
   readOnly: boolean;
-  
+
   /**
    * Set checked state
    * @param checked - Whether to check
    */
   setChecked(checked: boolean): void;
-  
+
   /**
    * Toggle checked state
    */
@@ -207,19 +207,19 @@ interface XfaDropdownList {
   required: boolean;
   /** Whether field is read-only */
   readOnly: boolean;
-  
+
   /**
    * Set selected value
    * @param value - Value to select
    */
   setValue(value: string): void;
-  
+
   /**
    * Add option
    * @param option - Option to add
    */
   addOption(option: { value: string; text: string }): void;
-  
+
   /**
    * Remove option
    * @param value - Value of option to remove
@@ -240,20 +240,20 @@ interface XfaDataConnection {
   dataSource: string;
   /** Connection type */
   type: "xml" | "json" | "database";
-  
+
   /**
    * Load data from source
    * @returns Promise resolving to data
    */
   loadData(): Promise<any>;
-  
+
   /**
    * Save data to source
    * @param data - Data to save
    * @returns Promise resolving when complete
    */
   saveData(data: any): Promise<void>;
-  
+
   /**
    * Bind data to form
    * @param formData - Form data object
@@ -268,14 +268,14 @@ interface XfaCalculation {
   target: string;
   /** Dependencies */
   dependencies: string[];
-  
+
   /**
    * Execute calculation
    * @param context - Calculation context
    * @returns Calculated value
    */
   execute(context: any): any;
-  
+
   /**
    * Check if calculation is valid
    * @returns Whether valid
@@ -298,19 +298,19 @@ interface XfaEvent {
   data: any;
   /** Whether event can be cancelled */
   cancelable: boolean;
-  
+
   /**
    * Cancel event
    */
   cancel(): void;
-  
+
   /**
    * Get field value
    * @param fieldName - Name of field
    * @returns Field value
    */
   getFieldValue(fieldName: string): any;
-  
+
   /**
    * Set field value
    * @param fieldName - Name of field
@@ -325,14 +325,14 @@ interface XfaEventHandler {
    * @param event - XFA event
    */
   handleEvent(event: XfaEvent): void;
-  
+
   /**
    * Register event listener
    * @param eventType - Type of event
    * @param handler - Event handler function
    */
   addEventListener(eventType: string, handler: (event: XfaEvent) => void): void;
-  
+
   /**
    * Remove event listener
    * @param eventType - Type of event
@@ -389,18 +389,18 @@ class XfaFormHandler {
     this.xfaElements = new Map();
     this.eventHandlers = new Map();
   }
-  
+
   async renderXfaPage(page, viewport) {
     const xfaHtml = await page.getXfa();
-    
+
     if (!xfaHtml) {
       return null; // No XFA content
     }
-    
+
     const xfaDiv = document.createElement("div");
     xfaDiv.className = "xfaLayer";
     this.container.appendChild(xfaDiv);
-    
+
     const xfaResult = XfaLayer.render({
       viewport: viewport,
       div: xfaDiv,
@@ -409,89 +409,89 @@ class XfaFormHandler {
       linkService: this.linkService,
       xfaHtmlFactory: new XfaHtmlFactory()
     });
-    
+
     this.setupXfaEventHandlers(xfaResult.element);
     this.xfaElements.set(page.pageNumber, xfaResult.element);
-    
+
     return xfaResult;
   }
-  
+
   setupXfaEventHandlers(xfaElement) {
     // Handle form field changes
-    xfaElement.addEventListener('change', (event) => {
+    xfaElement.addEventListener("change", (event) => {
       const field = event.target;
       if (field.name) {
         this.annotationStorage.setValue(field.name, this.getFieldValue(field));
         this.triggerCalculations();
       }
     });
-    
+
     // Handle validations
-    xfaElement.addEventListener('blur', (event) => {
+    xfaElement.addEventListener("blur", (event) => {
       const field = event.target;
       if (field.name && field.required && !field.value) {
         this.showValidationError(field, "This field is required");
       }
     });
   }
-  
+
   getFieldValue(field) {
     switch (field.type) {
-      case 'checkbox':
+      case "checkbox":
         return field.checked;
-      case 'radio':
+      case "radio":
         return field.checked ? field.value : null;
-      case 'select-one':
+      case "select-one":
         return field.value;
-      case 'select-multiple':
-        return Array.from(field.selectedOptions).map(opt => opt.value);
+      case "select-multiple":
+        return Array.from(field.selectedOptions).map((opt) => opt.value);
       default:
         return field.value;
     }
   }
-  
+
   triggerCalculations() {
     // Find all calculated fields and update them
-    this.xfaElements.forEach(element => {
-      const calculatedFields = element.querySelectorAll('[data-calculate]');
-      calculatedFields.forEach(field => {
+    this.xfaElements.forEach((element) => {
+      const calculatedFields = element.querySelectorAll("[data-calculate]");
+      calculatedFields.forEach((field) => {
         const expression = field.dataset.calculate;
         try {
           const result = this.evaluateExpression(expression);
           field.value = result;
           this.annotationStorage.setValue(field.name, result);
         } catch (error) {
-          console.warn('Calculation error:', error);
+          console.warn("Calculation error:", error);
         }
       });
     });
   }
-  
+
   evaluateExpression(expression) {
     // Simple expression evaluator (implement based on XFA spec)
     // This would need a full XFA expression parser in practice
     return expression;
   }
-  
+
   showValidationError(field, message) {
     // Show validation error UI
-    field.classList.add('error');
-    const errorDiv = document.createElement('div');
-    errorDiv.className = 'validation-error';
+    field.classList.add("error");
+    const errorDiv = document.createElement("div");
+    errorDiv.className = "validation-error";
     errorDiv.textContent = message;
     field.parentNode.appendChild(errorDiv);
-    
+
     setTimeout(() => {
-      field.classList.remove('error');
+      field.classList.remove("error");
       errorDiv.remove();
     }, 3000);
   }
-  
+
   getFormData() {
     const formData = {};
-    this.xfaElements.forEach(element => {
-      const fields = element.querySelectorAll('input, select, textarea');
-      fields.forEach(field => {
+    this.xfaElements.forEach((element) => {
+      const fields = element.querySelectorAll("input, select, textarea");
+      fields.forEach((field) => {
         if (field.name) {
           formData[field.name] = this.getFieldValue(field);
         }
@@ -499,9 +499,9 @@ class XfaFormHandler {
     });
     return formData;
   }
-  
+
   setFormData(data) {
-    this.xfaElements.forEach(element => {
+    this.xfaElements.forEach((element) => {
       Object.entries(data).forEach(([name, value]) => {
         const field = element.querySelector(`[name="${name}"]`);
         if (field) {
@@ -510,24 +510,24 @@ class XfaFormHandler {
       });
     });
   }
-  
+
   setFieldValue(field, value) {
     switch (field.type) {
-      case 'checkbox':
-      case 'radio':
+      case "checkbox":
+      case "radio":
         field.checked = Boolean(value);
         break;
-      case 'select-multiple':
-        Array.from(field.options).forEach(option => {
+      case "select-multiple":
+        Array.from(field.options).forEach((option) => {
           option.selected = Array.isArray(value) && value.includes(option.value);
         });
         break;
       default:
-        field.value = value || '';
+        field.value = value || "";
     }
-    
+
     // Trigger change event
-    field.dispatchEvent(new Event('change', { bubbles: true }));
+    field.dispatchEvent(new Event("change", { bubbles: true }));
   }
 }
 ```
