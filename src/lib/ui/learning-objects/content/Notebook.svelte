@@ -37,9 +37,14 @@
 
   let activeCellIndex = $state(0);
   let loaded = false;
+  let revealedOutputs: Record<number, boolean> = $state({});
 
   const cells = $derived(lo.cells ?? []);
   const cellCount = $derived(cells.length);
+
+  function toggleOutput(index: number) {
+    revealedOutputs[index] = !revealedOutputs[index];
+  }
 
   function scrollToCell(index: number) {
     const el = document.getElementById(`notebook-cell-${index}`);
@@ -178,9 +183,23 @@
                       {@html cell.sourceHtml ?? ""}
                     </div>
                     {#if cell.outputsHtml}
-                      <div class="notebook-outputs border-t border-surface-200 dark:border-surface-700 bg-surface-50 dark:bg-surface-900 p-3">
-                        {@html cell.outputsHtml}
+                      <div class="flex items-center border-t border-surface-200 dark:border-surface-700 px-3 py-1.5">
+                        <button
+                          class="run-button flex items-center gap-1.5 rounded-md px-3 py-1 text-xs font-medium transition-colors
+                            {revealedOutputs[i]
+                              ? 'bg-surface-200 dark:bg-surface-700 text-surface-600 dark:text-surface-300'
+                              : 'bg-success-100 dark:bg-success-900 text-success-700 dark:text-success-300 hover:bg-success-200 dark:hover:bg-success-800'}"
+                          onclick={(e) => { e.stopPropagation(); toggleOutput(i); }}
+                        >
+                          <span class="text-sm">{revealedOutputs[i] ? "▾" : "▸"}</span>
+                          {revealedOutputs[i] ? "Hide Output" : "Run"}
+                        </button>
                       </div>
+                      {#if revealedOutputs[i]}
+                        <div class="notebook-outputs border-t border-surface-200 dark:border-surface-700 bg-surface-50 dark:bg-surface-900 p-3">
+                          {@html cell.outputsHtml}
+                        </div>
+                      {/if}
                     {/if}
                   </div>
                 </div>
