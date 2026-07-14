@@ -16,7 +16,7 @@
       <p class="line-clamp-1">{courseVisit.credits}</p>
       <p class="line-clamp-1">
         Last Accessed: {courseVisit.lastVisit?.slice(0, 10)}
-        {courseVisit.lastVisit.slice(11, 19)}
+        {courseVisit.lastVisit?.slice(11, 19)}
       </p>
       <p>Visits: {courseVisit.visits}</p>
     </section>

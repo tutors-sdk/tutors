@@ -49,7 +49,7 @@ function getCourseRecord(course: Course) {
   const courseVisit: CourseVisit = {
     id: course.courseId,
     title: course.title,
-    lastVisit: new Date(),
+    lastVisit: new Date().toISOString(),
     credits: course.properties.credits,
     private: course.isPrivate
   };
