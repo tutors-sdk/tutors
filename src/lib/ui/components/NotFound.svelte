@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount } from "svelte";
+  import { t } from "$lib/services/i18n";
 
   interface Props {
     params: Record<string, string> | null;
@@ -11,4 +12,4 @@
   });
 </script>
 
-<h1>Not Found</h1>
+<h1>{t("notFound.title")}</h1>

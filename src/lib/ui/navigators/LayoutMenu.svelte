@@ -1,9 +1,11 @@
 <script lang="ts">
   import Menu from "$lib/ui/components/Menu.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
+  import LanguageSwitcher from "$lib/ui/components/LanguageSwitcher.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
   import { courseService } from "$lib/services/course";
   import { currentCodeTheme, markdownService } from "$lib/services/markdown";
+  import { t } from "$lib/services/i18n";
 
   import { Combobox, SegmentedControl, Portal } from "@skeletonlabs/skeleton-svelte";
   import { currentCourse } from "$lib/runes.svelte";
@@ -39,15 +41,15 @@
 
 {#snippet menuSelector()}
   <div class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary flex items-center rounded-lg p-4">
-    <Icon type="lightMode" tip="Open Theme Menu" />
-    <span class="ml-2 hidden text-sm font-bold md:block">Layout</span>
+    <Icon type="lightMode" tip={t("nav.layout.tip")} />
+    <span class="ml-2 hidden text-sm font-bold md:block">{t("nav.layout")}</span>
   </div>
 {/snippet}
 
 {#snippet menuContent()}
-  <div class="ml-2 font-bold">Layout Options</div>
+  <div class="ml-2 font-bold">{t("nav.layout.options")}</div>
   <div class="mt-5">
-    <div class="mt-4 mb-1 ml-2">Appearance</div>
+    <div class="mt-4 mb-1 ml-2">{t("nav.layout.appearance")}</div>
     <div class="mb-2 flex justify-center">
       <SegmentedControl defaultValue={themeService.lightMode.value} onValueChange={(e) => themeService.setDisplayMode(e.value!)}>
         <SegmentedControl.Control>
@@ -68,7 +70,7 @@
       </SegmentedControl>
     </div>
     <hr />
-    <div class="mt-1 mb-1 ml-2">Card Style</div>
+    <div class="mt-1 mb-1 ml-2">{t("nav.layout.cardStyle")}</div>
     <div class="mb-2 flex justify-center">
       <SegmentedControl defaultValue={themeService.cardStyle.value} onValueChange={(e) => themeService.setCardStyle(e.value!)}>
         <SegmentedControl.Control>
@@ -95,7 +97,7 @@
       </SegmentedControl>
     </div>
     <hr />
-    <div class="mt-1 mb-1 ml-2">Theme</div>
+    <div class="mt-1 mb-1 ml-2">{t("nav.layout.theme")}</div>
     <div class="relative z-50 mx-4 mb-2">
       <Combobox class="w-full max-w-md" placeholder={theme[0]} {onOpenChange} onValueChange={(e) => ((theme = e.value), changeTheme(e.value!))}>
         <Combobox.Control>
@@ -117,7 +119,7 @@
       </Combobox>
     </div>
     <hr />
-    <div class="mt-1 mb-1 ml-2">Code Style</div>
+    <div class="mt-1 mb-1 ml-2">{t("nav.layout.codeStyle")}</div>
     <div class="relative z-10 mx-4 mb-2">
       <Combobox class="w-full max-w-md" placeholder={codeTheme[0]} {onOpenChange} onValueChange={(e) => ((codeTheme = e.value), changeCodeTheme())}>
         <Combobox.Control>
@@ -139,7 +141,7 @@
       </Combobox>
     </div>
     <hr />
-    <div class="mt-1 mb-1 ml-2">Layout</div>
+    <div class="mt-1 mb-1 ml-2">{t("nav.layout.layout")}</div>
     <div class="mb-2 flex justify-center">
       <SegmentedControl defaultValue={themeService.layout.value} onValueChange={(e) => themeService.setLayout(e.value!)}>
         <SegmentedControl.Control>
@@ -158,6 +160,11 @@
           </SegmentedControl.Item>
         </SegmentedControl.Control>
       </SegmentedControl>
+    </div>
+    <hr />
+    <div class="mt-1 mb-1 ml-2">{t("nav.layout.language")}</div>
+    <div class="mx-2 mb-2">
+      <LanguageSwitcher />
     </div>
   </div>
 {/snippet}

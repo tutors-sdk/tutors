@@ -1,14 +1,11 @@
 <script lang="ts">
   import { convertMdToHtml } from "@tutors/tutors-model-lib";
   import { onMount } from "svelte";
+  import { t } from "$lib/services/i18n";
   let contentHtml = "";
 
   onMount(async () => {
-    contentHtml = convertMdToHtml(
-      "An [Open Learning Web Toolkit](/course/tutors-reference-manual): Explore the [Tutors Catalogue](/catalogue)"
-      //"An [Open Learning Web Toolkit](/course/tutors-reference-manual): Light and dark mode + themes available on the Layout menu 🥚"
-      //"🐰🐰🐰  🥚🥚🥚 🐰🐰🐰 🥚🥚🥚 🐰🐰🐰  🥚🥚🥚"
-    );
+    contentHtml = convertMdToHtml(t("footer.message"));
   });
 </script>
 

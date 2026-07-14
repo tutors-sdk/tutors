@@ -13,6 +13,7 @@
   import CourseGroupHeader from "$lib/ui/time/CourseGroupHeader.svelte";
   import { Tabs } from "@skeletonlabs/skeleton-svelte";
   import type { Course } from "@tutors/tutors-model-lib";
+  import { t } from "$lib/services/i18n";
 
   interface Props {
     data: { courseid: string, course: Course };
@@ -85,47 +86,47 @@
       <div class="border-surface-300-600-token mb-2 w-full ">
         <CourseGroupHeader courseId={data.course.courseId!} courseTitle={data.course.title!} />
       </div>
-      <h2 class="border-surface-300-600-token mb-3 w-full border-b pb-2 text-lg font-semibold">Online right now</h2>
+      <h2 class="border-surface-300-600-token mb-3 w-full border-b pb-2 text-lg font-semibold">{t("live.onlineNow")}</h2>
       <ConnectLatestLosCards
         los={studentsOnlineVisible}
-        emptyMessage="No students online for this course right now."
+        emptyMessage={t("live.emptyOnline")}
       />
     </div>
   </section>
 
   <section
     class="bg-surface-100-800-token border-surface-200-700-token w-full min-w-0 overflow-hidden p-4">
-    <h2 class="border-surface-300-600-token mb-3 border-b pb-2 text-lg font-semibold">Latest activity</h2>
+    <h2 class="border-surface-300-600-token mb-3 border-b pb-2 text-lg font-semibold">{t("live.latestActivity")}</h2>
     <Tabs defaultValue="Day">
       <Tabs.List>
-        <Tabs.Trigger value="Day">Today</Tabs.Trigger>
-        <Tabs.Trigger value="Week">This Week</Tabs.Trigger>
-        <Tabs.Trigger value="Month">This Month</Tabs.Trigger>
-        <Tabs.Trigger value="Year">This Year</Tabs.Trigger>
+        <Tabs.Trigger value="Day">{t("live.today")}</Tabs.Trigger>
+        <Tabs.Trigger value="Week">{t("live.thisWeek")}</Tabs.Trigger>
+        <Tabs.Trigger value="Month">{t("live.thisMonth")}</Tabs.Trigger>
+        <Tabs.Trigger value="Year">{t("live.thisYear")}</Tabs.Trigger>
         <Tabs.Indicator />
       </Tabs.List>
       <Tabs.Content value="Day">
         <ConnectLatestLosCards
           los={losThisDay}
-          emptyMessage="No saved activity today in tutors-connect-latest for this course yet."
+          emptyMessage={t("live.emptyToday")}
         />
       </Tabs.Content>
       <Tabs.Content value="Week">
         <ConnectLatestLosCards
           los={losThisWeek}
-          emptyMessage="No activity earlier this week (outside today) in tutors-connect-latest for this course yet."
+          emptyMessage={t("live.emptyWeek")}
         />
       </Tabs.Content>
       <Tabs.Content value="Month">
         <ConnectLatestLosCards
           los={losThisMonth}
-          emptyMessage="No activity earlier this month (outside this week) in tutors-connect-latest for this course yet."
+          emptyMessage={t("live.emptyMonth")}
         />
       </Tabs.Content>
       <Tabs.Content value="Year">
         <ConnectLatestLosCards
           los={losThisYear}
-          emptyMessage="No activity earlier this year (outside this month) in tutors-connect-latest for this course yet."
+          emptyMessage={t("live.emptyYear")}
         />
       </Tabs.Content>
     </Tabs>

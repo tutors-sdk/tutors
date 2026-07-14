@@ -1,6 +1,9 @@
 import { SvelteKitAuth } from "@auth/sveltekit";
 import { PRIVATE_AUTH_GITHUB_SECRET, PRIVATE_AUTH_GITHUB_ID, PRIVATE_AUTH_SECRET } from "$env/static/private";
 import GithubProvider from "@auth/core/providers/github";
+import { sequence } from "@sveltejs/kit/hooks";
+import type { Handle } from "@sveltejs/kit";
+import { initLocaleFromCookie } from "$lib/services/i18n";
 
 const { handle: authInitHandle } = SvelteKitAuth({
   basePath: "/auth",
@@ -47,4 +50,9 @@ const { handle: authInitHandle } = SvelteKitAuth({
   trustHost: true
 });
 
-export const handle = authInitHandle;
+const localeHandle: Handle = async ({ event, resolve }) => {
+  event.locals.locale = initLocaleFromCookie(event.request.headers.get("cookie") ?? "");
+  return resolve(event);
+};
+
+export const handle = sequence(localeHandle, authInitHandle);

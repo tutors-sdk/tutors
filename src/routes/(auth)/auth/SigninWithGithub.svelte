@@ -4,6 +4,7 @@
   import { tutorsConnectService } from "$lib/services/connect";
   import TutorsTerms from "./TutorsTerms.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
+  import { t } from "$lib/services/i18n";
 
   let showProgress = $state(false);
   interface Props {
@@ -25,7 +26,7 @@
         .color}-500 m-2"
     >
       <header class="card-header flex flex-row items-center justify-between p-3">
-        <div class="flex-auto text-center text-black! dark:text-white!">Tutors Sign In</div>
+        <div class="flex-auto text-center text-black! dark:text-white!">{t("auth.signIn")}</div>
       </header>
       <footer class="card-footer">
         {#if showProgress}
@@ -41,7 +42,7 @@
                 onclick={handleSignInWithProgress}
               >
                 <span><Icon icon="mdi:github" /></span>
-                <span>Sign in with GitHub</span>
+                <span>{t("auth.signInWithGithub")}</span>
               </button>
             </div>
           </div>

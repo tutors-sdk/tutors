@@ -1,0 +1,144 @@
+const it: Record<string, string> = {
+  // Navigation
+  "nav.search": "Cerca",
+  "nav.search.exit": "Esci dalla ricerca",
+  "nav.search.tip": "Cerca in questo corso",
+  "nav.layout": "Layout",
+  "nav.layout.options": "Opzioni di layout",
+  "nav.layout.appearance": "Aspetto",
+  "nav.layout.cardStyle": "Stile scheda",
+  "nav.layout.theme": "Tema",
+  "nav.layout.codeStyle": "Stile codice",
+  "nav.layout.layout": "Disposizione",
+  "nav.layout.language": "Lingua",
+  "nav.layout.tip": "Apri menu tema",
+  "nav.info.title": "Info corso",
+  "nav.info.tip": "Apri info corso",
+  "nav.toc.suffix": "Albero del corso",
+  "nav.toc.tip": "Apri albero del corso",
+  "nav.calendar.label": "Settimana corrente",
+  "nav.calendar.tip": "Visualizza il calendario di questo corso",
+  "nav.online.view": "Vedi",
+  "nav.online.online": "Online",
+  "nav.llms.tip": "Una versione di questo corso per i LLM",
+  "nav.time.tip": "Questo corso utilizza Tutors Time",
+  "nav.edit.tip": "Modifica questo corso",
+  "nav.context.collapseAll": "Comprimi tutto",
+  "nav.context.expandAll": "Espandi tutto",
+  "nav.breadcrumbs.goHome": "Vai alla home del corso",
+  "nav.breadcrumbs.goTo": "Vai a",
+
+  // Profile menus
+  "menu.anonName": "Profilo Tutors anonimo",
+  "menu.connect": "Connetti",
+  "menu.home": "Home",
+  "menu.sharePresence": "Condividi presenza",
+  "menu.tutorsTime": "Tutors Time",
+  "menu.educatorTime": "(Tempo educatore)",
+  "menu.tutorsLive": "Tutors Live",
+  "menu.dashboard": "Dashboard",
+  "menu.githubProfile": "Profilo Github",
+  "menu.disconnect": "Disconnetti",
+
+  // Home page
+  "home.title": "Tutors:",
+  "home.titleAn": "Un",
+  "home.openLearning": "Apprendimento aperto",
+  "home.webToolkit": "Toolkit web",
+  "home.description": "Componenti e servizi open source a supporto della creazione di esperienze di apprendimento utilizzando gli standard web. Sviluppato presso",
+  "home.setu": "SETU",
+  "home.location": ", Waterford, Irlanda.",
+  "home.docs": "Docs",
+  "home.source": "Sorgente",
+  "home.catalogue": "Catalogo",
+  "home.live": "Live",
+  "home.connectedAs": "Connesso come:",
+  "home.favourites": "Preferiti",
+  "home.recentlyAccessed": "Accesso recente",
+  "home.values.title": "I <span class=\"font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone\">Valori</span> del progetto",
+  "home.developer.title": "Esperienza dello sviluppatore",
+  "home.developer.description": "L'<b>Esperienza dello sviluppatore</b> da priorita alla specificazione e implementazione di <b>componenti e servizi robusti, ben documentati e a basso accoppiamento</b>, integrati in un <b>toolkit coerente</b> aperto ai contributi di <b>competenze diverse</b>.",
+  "home.educator.title": "Esperienza dell'educatore",
+  "home.educator.description": "L'<b>Esperienza dell'educatore</b> da priorita alla creazione di <b>percorsi guidati</b> attraverso un curriculum mediante la creazione di materiali didattici che sono <b>autonomi, strutturalmente allineati, componibili, auditabili, estensibili, versionati</b> e <b>indipendenti</b>.",
+  "home.learner.title": "Esperienza del discente",
+  "home.learner.description": "L'<b>Esperienza del discente</b> da priorita alle interazioni web che sono <b>coinvolgenti, contestuali, collegabili, ricercabili, accessibili</b> e <b>responsive</b>. Inoltre, l'esperienza dovrebbe favorire un senso di <b>comunita</b> e <b>connessione</b> tra i discenti.",
+  "home.credits.title": "Un progetto completamente <span class=\"font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone\">Open Source</span>",
+  "home.credits.description": "Tutors e un progetto open source disponibile gratuitamente su GitHub con licenza MIT.",
+  "home.credits.viewSource": "Visualizza il codice sorgente",
+
+  // Course reader
+  "course.search.label": "Inserisci un termine di ricerca:",
+  "course.search.button": "Cerca",
+  "course.visitCard.lastAccessed": "Ultimo accesso:",
+  "course.visitCard.visits": "Visite:",
+  "course.visitCard.visitCourse": "Visita corso",
+  "course.visitCard.delete": "Elimina",
+  "course.visitCard.star": "Aggiungi ai preferiti",
+  "course.visitCard.unstar": "Rimuovi dai preferiti",
+  "course.title.fallback": "Tutors",
+
+  // Live page
+  "live.onlineNow": "Online adesso",
+  "live.latestActivity": "Ultima attivita",
+  "live.today": "Oggi",
+  "live.thisWeek": "Questa settimana",
+  "live.thisMonth": "Questo mese",
+  "live.thisYear": "Quest'anno",
+  "live.emptyOnline": "Nessuno studente online per questo corso al momento.",
+  "live.emptyToday": "Nessuna attivita registrata oggi per questo corso.",
+  "live.emptyWeek": "Nessuna attivita precedente questa settimana per questo corso.",
+  "live.emptyMonth": "Nessuna attivita precedente questo mese per questo corso.",
+  "live.emptyYear": "Nessuna attivita precedente quest'anno per questo corso.",
+  "live.catalogue.totals": "Totali:",
+
+  // Auth
+  "auth.signIn": "Accesso Tutors",
+  "auth.signInWithGithub": "Accedi con GitHub",
+
+  // Time tables
+  "time.name": "Nome",
+  "time.github": "Github",
+  "time.total": "Totale",
+  "time.median": "Mediana del corso",
+  "time.calendarByDay": "Attivita calendario per giorno",
+  "time.labByStep": "Attivita lab per passaggio",
+  "time.labByLab": "Attivita lab per lab",
+  "time.calendarByWeek": "Attivita calendario per settimana",
+
+  // Content
+  "content.slideOf": "di",
+  "content.slideBack": "Diapositiva precedente",
+  "content.slideForward": "Diapositiva successiva",
+  "content.slideRotate": "Ruota diapositiva di 90 gradi",
+  "content.slideDownload": "Scarica",
+  "content.slideFullScreen": "Schermo intero",
+  "content.weekNo": "Sett. No.",
+  "content.type": "Tipo",
+  "content.dateStarts": "Data inizio",
+  "content.sentiment": "Sentiment del corso",
+  "content.sentimentOpen": "Apri menu per cambiare.",
+  "content.sentimentLabel": "Sentiment",
+
+  // Footer
+  "footer.version": "Tutors v:",
+  "footer.message": "Un [Toolkit di apprendimento web aperto](/course/tutors-reference-manual): Esplora il [Catalogo Tutors](/catalogue)",
+  "footer.sponsorsAlt": "sponsor",
+  "footer.setuAlt": "South East Technological University",
+
+  // Error page
+  "error.fallback": "Si e verificato un errore imprevisto",
+  "error.goHome": "Home",
+
+  // Not found
+  "notFound.title": "Non trovato",
+
+  // Accessibility
+  "a11y.skipToContent": "Vai al contenuto",
+  "a11y.mainNavigation": "Navigazione principale",
+  "a11y.breadcrumbs": "Breadcrumb",
+  "a11y.secondaryNavigation": "Navigazione secondaria",
+  "a11y.sidebar": "Barra laterale",
+  "a11y.footer": "Pie di pagina"
+};
+
+export default it;

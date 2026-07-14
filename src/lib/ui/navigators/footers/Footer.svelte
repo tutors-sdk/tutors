@@ -4,11 +4,12 @@
   import TutorsIcon from "$lib/ui/components/TutorsIcon.svelte";
   import TutorsMessage from "./TutorsMessage.svelte";
   import TutorsVersion from "./TutorsVersion.svelte";
+  import { t } from "$lib/services/i18n";
 </script>
 
 {#if currentCourse?.value?.footer}
   <div class="w-full">
-    <img src="https://{currentCourse?.value?.courseUrl}/{currentCourse?.value?.footer}" alt="sponsors" class="w-full" />
+    <img src="https://{currentCourse?.value?.courseUrl}/{currentCourse?.value?.footer}" alt={t("footer.sponsorsAlt")} class="w-full" />
   </div>
 {:else}
   <div class="bg-surface-100-800-token border-surface-200-700-token h-12 w-full border-t-[1px]">

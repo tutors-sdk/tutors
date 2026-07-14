@@ -2,6 +2,7 @@
   import { page } from "$app/stores";
   import { currentCourse, currentLabStepIndex, currentLo } from "$lib/runes.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
+  import { t } from "$lib/services/i18n";
 
   let editRoute = $state(currentCourse?.value?.properties.github);
 
@@ -47,5 +48,5 @@
 </script>
 
 <div class="flex items-center">
-  <Icon type="edit" link={editRoute} target="_blank" tip="Edit this course"></Icon>
+  <Icon type="edit" link={editRoute} target="_blank" tip={t("nav.edit.tip")}></Icon>
 </div>

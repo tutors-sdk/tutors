@@ -7,6 +7,7 @@
   import Icon from "$lib/ui/components/Icon.svelte";
   import { currentCourse, tutorsId } from "$lib/runes.svelte";
   import { analyticsEnabled } from "$lib/services/connect/services/connect.svelte";
+  import { t } from "$lib/services/i18n";
 
   function logout() {
     tutorsConnectService.disconnect("/");
@@ -41,16 +42,16 @@
   <ul class="space-y-2">
     {#if currentCourse.value}
       {#if tutorsId.value?.share === "true"}
-        <MenuItem text="Share Presence" type="online" onClick={shareStatusChange} />
+        <MenuItem text={t("menu.sharePresence")} type="online" onClick={shareStatusChange} />
       {:else}
-        <MenuItem text="Share Presence" type="offline" onClick={shareStatusChange} />
+        <MenuItem text={t("menu.sharePresence")} type="offline" onClick={shareStatusChange} />
       {/if}
       {#if tutorsId.value?.share === "true"}
         {#if analyticsEnabled}
-          <MenuItem link="/time/{currentCourse.value?.courseId}" text="Tutors Time" type="tutorsTime" />
-          <MenuItem link="https://time.tutors.dev/{currentCourse.value?.courseId}" text="(Educator Time)" type="tutorsTime" targetStr="_blank" />
+          <MenuItem link="/time/{currentCourse.value?.courseId}" text={t("menu.tutorsTime")} type="tutorsTime" />
+          <MenuItem link="https://time.tutors.dev/{currentCourse.value?.courseId}" text={t("menu.educatorTime")} type="tutorsTime" targetStr="_blank" />
         {/if}
-        <MenuItem link="/live/{currentCourse.value?.courseId}" text="Tutors Live" type="live" targetStr="_blank" />
+        <MenuItem link="/live/{currentCourse.value?.courseId}" text={t("menu.tutorsLive")} type="live" targetStr="_blank" />
 
         <li class="option hover:preset-tonal p-0!">
           <OnlineButton />
@@ -59,9 +60,9 @@
         <hr />
       {/if}
     {/if}
-    <MenuItem link="/" text="Dashboard" type="tutors" />
-    <MenuItem link="https://github.com/{tutorsId.value?.login}" text="Github Profile" type="github" targetStr="_blank" />
-    <MenuItem text="Disconnect" type="logout" onClick={logout} />
+    <MenuItem link="/" text={t("menu.dashboard")} type="tutors" />
+    <MenuItem link="https://github.com/{tutorsId.value?.login}" text={t("menu.githubProfile")} type="github" targetStr="_blank" />
+    <MenuItem text={t("menu.disconnect")} type="logout" onClick={logout} />
   </ul>
 {/snippet}
 
