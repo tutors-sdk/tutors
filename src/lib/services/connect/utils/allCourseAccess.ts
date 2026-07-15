@@ -6,6 +6,7 @@
 import type { Course, IconType } from "@tutors/tutors-model-lib";
 import { supabase } from "$lib/services/community/utils/supabase-client";
 import type { CourseVisit } from "../types";
+import log from "$lib/services/logger";
 
 /**
  * Updates the course access statistics in the database
@@ -17,7 +18,7 @@ export async function updateCourseList(course: Course): Promise<void> {
   const { data, error } = await supabase.from("tutors-connect-courses").select("visit_count").eq("course_id", course.courseId).single();
 
   if (error && error.code !== "PGRST116") {
-    console.error("Error fetching row:", error);
+    log.error("Error fetching row:", error);
     return;
   }
 
@@ -36,7 +37,7 @@ export async function updateCourseList(course: Course): Promise<void> {
   );
 
   if (upsertError) {
-    console.error("Error upserting row:", upsertError);
+    log.error("Error upserting row:", upsertError);
   }
 }
 

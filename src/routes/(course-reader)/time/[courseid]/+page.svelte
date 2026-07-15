@@ -4,6 +4,7 @@
   import HeatMaps from "./HeatMaps.svelte";
   import Tables from "./Tables.svelte";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
+  import log from "$lib/services/logger";
 
   interface Props {
     data: any;
@@ -26,7 +27,7 @@
         studentCalendar = data;
       })
       .catch((error) => {
-        console.error("Failed to load student calendar:", error);
+        log.error("Failed to load student calendar:", error);
       })
       .finally(() => {
         isLoading = false;

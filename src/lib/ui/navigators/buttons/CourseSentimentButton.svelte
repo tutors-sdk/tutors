@@ -3,6 +3,7 @@
   import Icon from "$lib/ui/components/Icon.svelte";
   import { tutorsId } from "$lib/runes.svelte";
   import { tutorsConnectService, COURSE_SENTIMENT_IDS, type CourseSentimentId } from "$lib/services/connect";
+  import log from "$lib/services/logger";
 
   let menuOpen = $state(false);
   let selected = $state<CourseSentimentId>("neutral");
@@ -16,7 +17,7 @@
     try {
       await tutorsConnectService.updateSentiment(id);
     } catch (e) {
-      console.error(e);
+      log.error(e);
     }
     selected = id;
   }

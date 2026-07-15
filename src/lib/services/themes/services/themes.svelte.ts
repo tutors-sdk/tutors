@@ -13,6 +13,7 @@ import { makeItSnow, makeItStopSnowing } from "../events/festive.svelte";
 
 import { rune } from "$lib/runes.svelte";
 import type { IconType } from "@tutors/tutors-model-lib";
+import log from "$lib/services/logger";
 
 /**
  * Implementation of the ThemeService interface.
@@ -159,7 +160,7 @@ export const themeService: ThemeService = {
     if (iconLib && iconLib[type]) {
       return iconLib[type];
     } else {
-      console.log("No type found for icon", type);
+      log.warn("No type found for icon", type);
       return FluentIconLib.tutors;
     }
   },

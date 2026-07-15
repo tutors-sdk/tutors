@@ -9,6 +9,7 @@ import { markdownService } from "$lib/services/markdown";
 import { courseProtocol, currentCourse, currentLo, rune } from "$lib/runes.svelte";
 import type { CourseService, LabService } from "../types";
 import { decorateCourseTree, determineCourseUrl } from "./lo-tree";
+import log from "$lib/services/logger";
 
 export const courseService: CourseService = {
   /** Cache of loaded courses indexed by courseId */
@@ -43,8 +44,8 @@ export const courseService: CourseService = {
         decorateCourseTree(course, courseId, courseUrl);
         this.courses.set(courseId, course);
       } catch (error) {
-        console.error(`Error fetching from URL: https://${courseUrl}/tutors.json`);
-        console.error(error);
+        log.error(`Error fetching from URL: https://${courseUrl}/tutors.json`);
+        log.error(error);
         throw error;
       }
     }
