@@ -2,7 +2,7 @@ import type { Course, Lo, Topic } from "@tutors/tutors-model-lib";
 import { filterByType, flattenLos, getVideoConfig } from "@tutors/tutors-model-lib";
 import { convertMdToHtml } from "@tutors/tutors-model-lib";
 
-export function toSnakeCase(str: string): string {
+function toSnakeCase(str: string): string {
   return str
     .toLowerCase()
     .replace(/[^a-z0-9\s]/g, "")

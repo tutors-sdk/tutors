@@ -7,11 +7,6 @@ export const scaleTransition = {
   easing: cubicOut
 };
 
-export const slideFromLeft = {
-  in: { x: -200, duration: animationDelay.value, delay: animationDelay.value },
-  out: { x: -200, duration: animationDelay.value }
-};
-
 export const slideFromRight = {
   in: { x: 200, duration: animationDelay.value, delay: animationDelay.value },
   out: { x: 200, duration: animationDelay.value }

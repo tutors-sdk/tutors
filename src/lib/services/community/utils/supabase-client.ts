@@ -19,14 +19,14 @@ if (PUBLIC_ANON_MODE !== "TRUE") {
 }
 
 
-export function localYyyyMmDd(d = new Date()) {
+function localYyyyMmDd(d = new Date()) {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
   return `${y}-${m}-${day}`;
 }
 
-export function instantLocalYmd(iso: string | null | undefined): string | null {
+function instantLocalYmd(iso: string | null | undefined): string | null {
   if (!iso?.trim()) return null;
   try {
     const d = new Date(iso.trim());
@@ -151,7 +151,7 @@ export async function getTutorsConnectLatestLosByCourseId(
  * @param loId - Identifier of the learning object
  * @returns Promise resolving to the number of increments
  */
-export async function getNumOfLearningRecordsIncrements(fieldName: string, courseId: string, studentId: string, loId: string) {
+async function getNumOfLearningRecordsIncrements(fieldName: string, courseId: string, studentId: string, loId: string) {
   if (!courseId || !studentId || !loId) return 0;
 
   const { data: student, error } = await supabase.rpc("get_count_learning_records", {
@@ -177,7 +177,7 @@ export async function getNumOfLearningRecordsIncrements(fieldName: string, cours
  * @param loId - Identifier of the learning object
  * @param lo - Learning object data
  */
-export async function manageStudentCourseLo(courseId: string, studentId: string, loId: string, lo: Lo) {
+async function manageStudentCourseLo(courseId: string, studentId: string, loId: string, lo: Lo) {
   const durationPromise = getNumOfLearningRecordsIncrements("duration", courseId, studentId, loId);
   const countPromise = getNumOfLearningRecordsIncrements("count", courseId, studentId, loId);
   const [duration, count] = await Promise.all([durationPromise, countPromise]);
@@ -242,7 +242,7 @@ export const updateCalendarDuration = async (id: string, studentId: string, cour
  * @param courseId - Identifier of the course
  * @returns Promise resolving to the duration value
  */
-export async function getCalendarDuration(id: string, studentId: string, courseId: string): Promise<number> {
+async function getCalendarDuration(id: string, studentId: string, courseId: string): Promise<number> {
   const { data } = await supabase.from("calendar").select("timeactive").eq("id", id).eq("studentid", studentId).eq("courseid", courseId).maybeSingle();
   return data?.timeactive ? data.timeactive + 1 : 1;
 }
@@ -255,22 +255,9 @@ export async function getCalendarDuration(id: string, studentId: string, courseI
  * @param courseId - Identifier of the course
  * @returns Promise resolving to the count value
  */
-export async function getCalendarCount(id: string, studentId: string, courseId: string): Promise<number> {
+async function getCalendarCount(id: string, studentId: string, courseId: string): Promise<number> {
   const { data } = await supabase.from("calendar").select("pageloads").eq("id", id).eq("studentid", studentId).eq("courseid", courseId).maybeSingle();
   return data?.pageloads ? data.pageloads + 1 : 1;
-}
-
-/**
- * Calculates the total duration for a specific metric
- * @async
- * @param key - Metric key to total
- * @param table - Database table name
- * @param id - Identifier for the record
- * @returns Promise resolving to the total duration
- */
-export async function getDurationTotal(key: string, table: string, id: string): Promise<number> {
-  const { data } = await supabase.from(table).select("duration").eq(key, id).single();
-  return data?.duration || 1;
 }
 
 /**
@@ -279,7 +266,7 @@ export async function getDurationTotal(key: string, table: string, id: string): 
  * @param studentId - Identifier of the student
  * @param courseId - Identifier of the course
  */
-export async function insertOrUpdateCalendar(studentId: string, courseId: string) {
+async function insertOrUpdateCalendar(studentId: string, courseId: string) {
   if (!studentId || !courseId) return;
   const durationPromise = getCalendarDuration(formatDate(new Date()), studentId, courseId);
   const countPromise = getCalendarCount(formatDate(new Date()), studentId, courseId);
@@ -306,7 +293,7 @@ export async function insertOrUpdateCalendar(studentId: string, courseId: string
  * @param loId - Identifier of the learning object
  * @param lo - Learning object data
  */
-export async function handleInteractionData(courseId: string, studentId: string, loId: string, lo: Lo) {
+async function handleInteractionData(courseId: string, studentId: string, loId: string, lo: Lo) {
   if (!courseId || !studentId || !loId) return;
   await manageStudentCourseLo(courseId, studentId, loId, lo);
 }
