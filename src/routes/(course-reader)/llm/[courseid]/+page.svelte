@@ -3,9 +3,10 @@
   import { currentCourse } from "$lib/runes.svelte";
   import { convertMdToHtml } from "@tutors/tutors-model-lib";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
+  import type { PageData } from "./$types";
 
   interface Props {
-    data: any;
+    data: PageData;
   }
   let { data }: Props = $props();
 

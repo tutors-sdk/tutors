@@ -3,6 +3,7 @@
 
   interface Props {
     lo: Podcast;
+    hideSummary?: boolean;
   }
   let { lo, hideSummary = false }: Props = $props();
 

@@ -15,9 +15,9 @@
     <h2 class="h2">Course Info</h2>
   </header>
   <article>
-    <prose class="prose dark:prose-invert">
+    <div class="prose dark:prose-invert">
       {@html currentCourse?.value?.contentHtml}
-    </prose>
+    </div>
   </article>
 {/snippet}
 

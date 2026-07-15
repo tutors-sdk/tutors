@@ -4,9 +4,10 @@
   import HeatMaps from "./HeatMaps.svelte";
   import Tables from "./Tables.svelte";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
+  import type { PageData } from "./$types";
 
   interface Props {
-    data: any;
+    data: PageData;
   }
   let { data }: Props = $props();
 
