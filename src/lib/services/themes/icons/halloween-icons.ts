@@ -20,6 +20,7 @@ export const HalloweenIconLib: IconLib = {
   talk: { type: "carbon:bat", color: "warning" },
   reference: { type: "emojione-monotone:skull", color: "warning" },
   lab: { type: "mdi:spider-thread", color: "warning" },
+  notebook: { type: "simple-icons:jupyter", color: "warning" },
   archive: { type: "emojione-monotone:spider-web", color: "warning" },
   web: { type: "fluent:bookmark-24-regular", color: "warning" },
   github: { type: "fluent:code-circle-20-filled", color: "warning" },
