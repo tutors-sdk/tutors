@@ -1,0 +1,133 @@
+name: Test Suite
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PUBLIC_ANON_MODE: "TRUE"
+  PUBLIC_SUPABASE_URL: "https://test.supabase.co"
+  PUBLIC_SUPABASE_ANON_KEY: "test-key"
+  PUBLIC_party_kit_main_room: "localhost:1999"
+  PUBLIC_PDF_KEY: "test-key"
+  PRIVATE_AUTH_GITHUB_SECRET: "test-github-secret"
+  PRIVATE_AUTH_GITHUB_ID: "test-github-id"
+  PRIVATE_AUTH_SECRET: "test-auth-secret-at-least-32-chars-long"
+
+jobs:
+  type-check:
+    name: Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run check
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+
+  unit-and-bdd:
+    name: Unit + BDD Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Run unit and BDD tests with coverage
+        run: npm run test:coverage
+
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+
+  e2e:
+    name: E2E Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run smoke tests
+        run: npx playwright test --project smoke
+
+      - name: Run full E2E tests
+        run: npx playwright test --project chromium
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+
+  mutation:
+    name: Mutation Testing
+    runs-on: ubuntu-latest
+    needs: [unit-and-bdd]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - uses: actions/cache@v4
+        with:
+          path: .stryker-cache
+          key: stryker-${{ runner.os }}-${{ hashFiles('src/lib/**/*.ts') }}
+          restore-keys: stryker-${{ runner.os }}-
+
+      - name: Run Stryker mutation testing
+        run: npm run test:mutation:incremental
+
+      - name: Upload mutation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mutation-report
+          path: reports/mutation/

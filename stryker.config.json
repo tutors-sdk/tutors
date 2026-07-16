@@ -1,0 +1,33 @@
+{
+  "$schema": "https://raw.githubusercontent.com/stryker-mutator/stryker/master/packages/core/schema/stryker-core.schema.json",
+  "mutate": [
+    "src/lib/**/*.ts",
+    "src/lib/**/*.svelte.ts",
+    "!src/lib/**/*.d.ts",
+    "!src/lib/services/themes/icons/**",
+    "!src/lib/services/themes/events/**",
+    "!src/lib/services/themes/styles/**"
+  ],
+  "testRunner": "vitest",
+  "vitest": {
+    "configFile": "vitest.config.ts"
+  },
+  "checkers": ["typescript"],
+  "tsconfigFile": "tsconfig.json",
+  "reporters": ["html", "clear-text", "progress", "json"],
+  "htmlReporter": {
+    "fileName": "reports/mutation/index.html"
+  },
+  "jsonReporter": {
+    "fileName": "reports/mutation/mutation-report.json"
+  },
+  "thresholds": {
+    "high": 80,
+    "low": 60,
+    "break": 50
+  },
+  "concurrency": 4,
+  "timeoutMS": 60000,
+  "incremental": true,
+  "incrementalFile": ".stryker-cache/incremental.json"
+}
