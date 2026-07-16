@@ -5,7 +5,7 @@
  */
 
 import type { Course, Lab, Note, Lo } from "@tutors/tutors-model-lib";
-import { convertMdToHtml, initHighlighter, filter } from "@tutors/tutors-model-lib";
+import { convertMdToHtml, initHighlighter, filter, markdownIt } from "@tutors/tutors-model-lib";
 
 // Import Shiki themes
 import ayuDark from "shiki/themes/ayu-dark.mjs";
@@ -108,6 +108,16 @@ if (browser && localStorage.codeTheme) {
   currentCodeTheme.value = localStorage.codeTheme;
 }
 initHighlighter(shiki);
+
+const defaultFence = markdownIt.renderer.rules.fence!;
+markdownIt.renderer.rules.fence = (tokens, idx, options, env, self) => {
+  const token = tokens[idx];
+  if (token.info.trim() === "mermaid") {
+    const escaped = token.content.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return `<div class="mermaid">${escaped}</div>`;
+  }
+  return defaultFence(tokens, idx, options, env, self);
+};
 
 export const markdownService: MarkdownService = {
   /** Available syntax highlighting themes */
