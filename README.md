@@ -17,6 +17,7 @@ Tutors: An Open Learning Web Toolkit
 
 - [What is Tutors](#what-is-tutors)
 - [Getting Started](#getting-started)
+- [Testing](#testing)
 - [Requesting Features](#requesting-features)
 - [Reporting Bugs](#reporting-bugs)
 - [Setting Up a Tutors Development Environment](#setting-up-a-tutors-development-environment)
@@ -43,6 +44,113 @@ This repo is the Tutors Reader. A companion repo:
 The first step might be to become familiar with the course structure by [browsing a sample course](https://tutors.dev/course/reference-course), and then scan the [reference manual](https://tutors.dev/course/tutors-reference-manual). The manual will guide you through the process creating and publishing your own course (perhaps a copy of a sample). Thereafter you could scan the [Gallery of existing courses](https://tutors.dev/gallery) to get an idea as to how Tutors is used in practice.
 
 Consider setting up your own [development version of tutors](#setting-up-a-tutors-development-environment) for experimentation.
+
+## Testing
+
+Tutors Reader uses a comprehensive, multi-layered testing strategy to ensure contributor safety and prevent regressions.
+
+### Test Coverage
+
+The project maintains automated tests across four layers:
+
+- **Unit Tests** - Pure functions and utilities (Vitest)
+- **Integration Tests** - Service layer with mocked dependencies (Vitest + MSW)
+- **Component Tests** - Svelte components with user interactions (@testing-library/svelte)
+- **E2E Tests** - Critical user journeys (Playwright)
+
+### Running Tests
+
+```bash
+# Run all unit and integration tests
+npm test
+
+# Run tests with coverage report
+npm run test:unit
+
+# Run tests in watch mode
+npm run test:watch
+
+# Run E2E tests
+npm run test:e2e
+
+# Run E2E tests in UI mode
+npm run test:e2e:ui
+
+# Run mutation testing (test quality validation)
+npm run test:mutation
+```
+
+### Test Requirements (BDD with EARS)
+
+Tests follow the EARS (Easy Approach to Requirements Syntax) specification format:
+
+- **Event-Driven**: "WHEN \<trigger> the system shall \<response>"
+- **State-Driven**: "WHILE \<state> the system shall \<response>"
+- **Unwanted Behaviors**: "IF \<condition> THEN the system shall \<response>"
+
+Requirements are documented in `tests/requirements/*.ears.md` before test implementation.
+
+### Writing Tests
+
+Tests are located alongside source files in `__tests__/` directories or in the `tests/` directory:
+
+```
+src/lib/services/course/services/
+  ├── course.svelte.ts
+  └── __tests__/
+      └── course.test.ts
+
+tests/
+  ├── integration/
+  ├── components/
+  ├── e2e/
+  └── requirements/
+```
+
+Example test structure:
+
+```typescript
+import { describe, it, expect } from 'vitest';
+
+describe('Feature: Course Loading', () => {
+  describe('WHEN a user navigates to /course/{courseId}', () => {
+    it('the system shall fetch tutors.json from the course URL', async () => {
+      // Arrange (Given)
+      const mockFetch = vi.fn().mockResolvedValue({ ok: true, json: async () => ({}) });
+      
+      // Act (When)
+      await courseService.getOrLoadCourse('test-course', mockFetch);
+      
+      // Assert (Then)
+      expect(mockFetch).toHaveBeenCalledWith(expect.stringContaining('/tutors.json'));
+    });
+  });
+});
+```
+
+### Continuous Integration
+
+All tests run automatically on:
+- Push to `main` or `development` branches
+- Pull requests targeting `main` or `development`
+
+The CI pipeline includes:
+- Linting and type checking
+- Unit and integration tests with coverage reporting
+- E2E tests across Chrome and Firefox
+- Mutation testing on changed files (PRs only)
+
+See `.github/workflows/test.yml` for the complete CI configuration.
+
+### Test Philosophy
+
+**BDD with EARS**: Requirements are specified using the Easy Approach to Requirements Syntax before test implementation, ensuring clear acceptance criteria.
+
+**Mutation Testing**: Stryker mutation testing validates test quality by introducing bugs and verifying tests catch them. Target: 80% mutation score on critical services.
+
+**Contributor Safety**: Tests provide a safety net for new contributors, catching regressions before they reach production.
+
+For more details on the testing strategy, see the comprehensive plan in `.claude/plans/`.
 
 ## Reporting Bugs
 
