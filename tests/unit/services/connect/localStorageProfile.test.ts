@@ -118,7 +118,7 @@ describe("getCourseVisits", () => {
     // Write via direct property access, matching how the source reads it
     (localStorage as any).courseVisits = JSON.stringify(externalData);
 
-    const visits = localStorageProfile.getCourseVisits();
+    const visits = localStorageProfile.getCourseVisits() as any;
     expect(visits).toHaveLength(1);
     expect(visits[0].id).toBe("ext-1");
     expect(visits[0].visits).toBe(5);

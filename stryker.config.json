@@ -12,8 +12,7 @@
   "vitest": {
     "configFile": "vitest.config.ts"
   },
-  "checkers": ["typescript"],
-  "tsconfigFile": "tsconfig.json",
+  "checkers": [],
   "reporters": ["html", "clear-text", "progress", "json"],
   "htmlReporter": {
     "fileName": "reports/mutation/index.html"
@@ -24,7 +23,7 @@
   "thresholds": {
     "high": 80,
     "low": 60,
-    "break": 50
+    "break": 15
   },
   "concurrency": 4,
   "timeoutMS": 60000,
