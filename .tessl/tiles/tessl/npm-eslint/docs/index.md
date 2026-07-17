@@ -84,7 +84,7 @@ class ESLint {
   static readonly version: string;
   static readonly configType: "flat";
   static readonly defaultConfig: Config[];
-  
+
   lintFiles(patterns: string | string[]): Promise<LintResult[]>;
   lintText(code: string, options?: {filePath?: string, warnIgnored?: boolean}): Promise<LintResult[]>;
   getRulesMetaForResults(results: LintResult[]): Record<string, RuleMetaData>;
@@ -93,7 +93,7 @@ class ESLint {
   calculateConfigForFile(filePath: string): Promise<Config | undefined>;
   findConfigFile(filePath?: string): Promise<string | undefined>;
   isPathIgnored(filePath: string): Promise<boolean>;
-  
+
   static outputFixes(results: LintResult[]): Promise<void>;
   static getErrorResults(results: LintResult[]): LintResult[];
   static fromOptionsModule(optionsURL: {readonly href: string}): Promise<ESLint>;
@@ -133,7 +133,7 @@ The core linting engine that can be used independently of file system operations
 class Linter {
   constructor(options?: {cwd?: string, configType?: "flat" | "eslintrc", flags?: string[]});
   static readonly version: string;
-  
+
   verify(textOrSourceCode: string | SourceCode, config: Config | Config[], options?: VerifyOptions): LintMessage[];
   verifyAndFix(text: string, config: Config | Config[], options?: FixOptions): FixReport;
   getSourceCode(): SourceCode;
@@ -168,9 +168,9 @@ class RuleTester {
   static describe: Function | null;
   static it: Function | null;
   static itOnly: Function | null;
-  
+
   run(name: string, rule: RuleDefinition, tests: {valid: ValidTestCase[], invalid: InvalidTestCase[]}): void;
-  
+
   static setDefaultConfig(config: Object): void;
   static getDefaultConfig(): Object;
   static resetDefaultConfig(): void;
@@ -203,9 +203,9 @@ Rich abstraction of JavaScript source code providing utilities for rules to anal
 class SourceCode {
   constructor(text: string, ast: Program);
   constructor(config: {text: string, ast: Program, parserServices?: Object, scopeManager?: ScopeManager, visitorKeys?: Object});
-  
+
   static splitLines(text: string): string[];
-  
+
   readonly text: string;
   readonly ast: Program;
   readonly hasBOM: boolean;
@@ -213,7 +213,7 @@ class SourceCode {
   readonly scopeManager: ScopeManager;
   readonly parserServices: Object;
   readonly visitorKeys: Object;
-  
+
   getText(node?: ASTNode, beforeCount?: number, afterCount?: number): string;
   getLines(): string[];
   getAllComments(): Comment[];
@@ -281,11 +281,15 @@ Complete TypeScript definitions for all ESLint rules enabling type-safe rule con
 
 ```typescript { .api }
 interface ESLintRules extends Linter.RulesRecord {
-  "no-unused-vars": Linter.RuleEntry<[{
-    vars?: "all" | "local";
-    args?: "all" | "after-used" | "none";
-    // ... more options
-  }]>;
+  "no-unused-vars": Linter.RuleEntry<
+    [
+      {
+        vars?: "all" | "local";
+        args?: "all" | "after-used" | "none";
+        // ... more options
+      }
+    ]
+  >;
   // ... 330+ more rule definitions
 }
 ```
@@ -324,11 +328,13 @@ const eslint = new ESLintClass({
 // Force flat config usage
 const FlatESLintClass = await loadESLint({ useFlatConfig: true });
 const flatEslint = new FlatESLintClass({
-  baseConfig: [{
-    rules: {
-      "prefer-const": "warn"
+  baseConfig: [
+    {
+      rules: {
+        "prefer-const": "warn"
+      }
     }
-  }]
+  ]
 });
 
 // Force legacy eslintrc usage

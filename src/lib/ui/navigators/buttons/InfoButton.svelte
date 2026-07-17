@@ -3,6 +3,7 @@
   import Icon from "$lib/ui/components/Icon.svelte";
   import Sidebar from "$lib/ui/components/Sidebar.svelte";
   import { t } from "$lib/services/i18n";
+  import { sanitizeHtml } from "$lib/utils/sanitize";
 </script>
 
 {#snippet menuSelector()}
@@ -16,9 +17,9 @@
     <h2 class="h2">{t("nav.info.title")}</h2>
   </header>
   <article>
-    <prose class="prose dark:prose-invert">
-      {@html currentCourse?.value?.contentHtml}
-    </prose>
+    <div class="prose dark:prose-invert">
+      {@html sanitizeHtml(currentCourse?.value?.contentHtml ?? "")}
+    </div>
   </article>
 {/snippet}
 

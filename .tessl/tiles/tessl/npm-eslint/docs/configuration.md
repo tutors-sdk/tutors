@@ -134,7 +134,7 @@ export default defineConfig([
     "tmp/**",
     "*.generated.js"
   ]),
-  
+
   // Base configuration
   {
     name: "base",
@@ -142,7 +142,7 @@ export default defineConfig([
       ecmaVersion: 2022
     }
   },
-  
+
   // Specific file configurations
   {
     name: "test-files",
@@ -276,7 +276,7 @@ export default defineConfig([
       "no-unused-vars": "error"
     }
   },
-  
+
   // Configuration for TypeScript files
   {
     name: "typescript",
@@ -295,7 +295,7 @@ export default defineConfig([
       "@typescript-eslint/no-unused-vars": "error"
     }
   },
-  
+
   // Configuration for test files
   {
     name: "tests",
@@ -334,7 +334,7 @@ export default defineConfig([
       }
     }
   },
-  
+
   // Browser environment
   {
     name: "browser",
@@ -362,7 +362,7 @@ import react from "eslint-plugin-react";
 export default defineConfig([
   // Use recommended configurations
   js.configs.recommended,
-  
+
   // Custom configuration with plugins
   {
     name: "custom-with-plugins",
@@ -374,11 +374,11 @@ export default defineConfig([
       // JavaScript rules
       "no-console": "warn",
       "prefer-const": "error",
-      
+
       // TypeScript rules
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/prefer-nullish-coalescing": "error",
-      
+
       // React rules
       "react/jsx-uses-react": "error",
       "react/jsx-uses-vars": "error"

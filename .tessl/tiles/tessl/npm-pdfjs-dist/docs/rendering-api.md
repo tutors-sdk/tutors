@@ -20,60 +20,60 @@ interface PDFPageProxy {
   userUnit: number;
   /** Page dimensions in points */
   view: number[];
-  
+
   /**
    * Render page to canvas context
    * @param params - Rendering parameters
    * @returns Render task for controlling operation
    */
   render(params: RenderParameters): RenderTask;
-  
+
   /**
    * Get page viewport for given parameters
    * @param params - Viewport parameters
    * @returns Viewport with dimensions and transforms
    */
   getViewport(params: GetViewportParameters): PageViewport;
-  
+
   /**
    * Get page annotations
    * @param params - Annotation parameters
    * @returns Promise resolving to annotation array
    */
   getAnnotations(params?: GetAnnotationsParameters): Promise<any[]>;
-  
+
   /**
    * Extract text content from page
    * @param params - Text extraction parameters
    * @returns Promise resolving to text content
    */
   getTextContent(params?: GetTextContentParameters): Promise<TextContent>;
-  
+
   /**
    * Get operator list for advanced rendering
    * @param params - Operator list parameters
    * @returns Promise resolving to operation list
    */
   getOperatorList(params?: GetOperatorListParameters): Promise<any>;
-  
+
   /**
    * Get page structure tree for accessibility
    * @returns Promise resolving to structure tree
    */
   getStructTree(): Promise<any>;
-  
+
   /**
    * Get JavaScript actions for this page
    * @returns Promise resolving to actions object
    */
   getJSActions(): Promise<{ [name: string]: any }>;
-  
+
   /**
    * Clean up page resources
    * @param resetStats - Reset page statistics
    */
   cleanup(resetStats?: boolean): void;
-  
+
   /**
    * Get page statistics
    * @returns Statistics object
@@ -167,14 +167,14 @@ class PageViewport {
   transform: number[];
   /** Raw dimensions from PDF */
   viewBox: number[];
-  
+
   /**
    * Clone viewport with new parameters
    * @param params - Parameters to override
    * @returns New viewport instance
    */
   clone(params?: Partial<GetViewportParameters>): PageViewport;
-  
+
   /**
    * Convert PDF coordinates to viewport coordinates
    * @param x - PDF X coordinate
@@ -182,7 +182,7 @@ class PageViewport {
    * @returns Viewport coordinates [x, y]
    */
   convertToViewportPoint(x: number, y: number): number[];
-  
+
   /**
    * Convert viewport coordinates to PDF coordinates
    * @param x - Viewport X coordinate
@@ -190,7 +190,7 @@ class PageViewport {
    * @returns PDF coordinates [x, y]
    */
   convertToPdfPoint(x: number, y: number): number[];
-  
+
   /**
    * Convert PDF rectangle to viewport rectangle
    * @param rect - PDF rectangle [x1, y1, x2, y2]
@@ -225,10 +225,10 @@ interface GetViewportParameters {
 // Different viewport configurations
 const viewport1 = page.getViewport({ scale: 1.0 });
 const viewport2 = page.getViewport({ scale: 2.0, rotation: 90 });
-const viewport3 = page.getViewport({ 
-  scale: 1.5, 
-  offsetX: 100, 
-  offsetY: 50 
+const viewport3 = page.getViewport({
+  scale: 1.5,
+  offsetX: 100,
+  offsetY: 50
 });
 
 // Convert coordinates
@@ -248,19 +248,19 @@ Controls an ongoing rendering operation with progress tracking and cancellation.
 interface RenderTask {
   /** Promise that resolves when rendering completes */
   promise: Promise<void>;
-  
+
   /**
    * Cancel the rendering operation
    * @param extraDelay - Extra delay before cleanup
    */
   cancel(extraDelay?: number): void;
-  
+
   /** Whether task is cancelled */
   cancelled: boolean;
-  
+
   /** Rendering progress callback */
   onProgress?: (progressData: { percent: number }) => void;
-  
+
   /** Continue rendering callback for chunked rendering */
   onContinue?: (cont: () => void) => void;
 }
@@ -367,7 +367,7 @@ const textContent = await page.getTextContent({
 
 // Process text items
 let pageText = "";
-textContent.items.forEach(item => {
+textContent.items.forEach((item) => {
   pageText += item.str;
   if (item.hasEOL) {
     pageText += "\n";
@@ -377,7 +377,7 @@ textContent.items.forEach(item => {
 console.log("Page text:", pageText);
 
 // Access text positioning
-textContent.items.forEach(item => {
+textContent.items.forEach((item) => {
   const [x, y] = item.transform.slice(4, 6);
   console.log(`Text "${item.str}" at position (${x}, ${y})`);
 });

@@ -27,13 +27,13 @@ For programmatic usage in build scripts:
 
 ```typescript
 // Import for programmatic usage (advanced)
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { exec } from "child_process";
+import { promisify } from "util";
 
 const execAsync = promisify(exec);
 
 // Run svelte-check programmatically
-const { stdout, stderr } = await execAsync('svelte-check --output machine');
+const { stdout, stderr } = await execAsync("svelte-check --output machine");
 ```
 
 ## Basic Usage
@@ -66,7 +66,7 @@ svelte-check --workspace ./src --output machine --tsconfig ./tsconfig.json
 
 ```typescript
 // Run svelte-check programmatically via child process
-import { spawn } from 'child_process';
+import { spawn } from "child_process";
 
 function runSvelteCheck(options: string[] = []): Promise<{
   stdout: string;
@@ -74,25 +74,25 @@ function runSvelteCheck(options: string[] = []): Promise<{
   exitCode: number;
 }> {
   return new Promise((resolve) => {
-    const child = spawn('svelte-check', options);
-    let stdout = '';
-    let stderr = '';
-    
-    child.stdout.on('data', (data) => stdout += data);
-    child.stderr.on('data', (data) => stderr += data);
-    
-    child.on('close', (exitCode) => {
+    const child = spawn("svelte-check", options);
+    let stdout = "";
+    let stderr = "";
+
+    child.stdout.on("data", (data) => (stdout += data));
+    child.stderr.on("data", (data) => (stderr += data));
+
+    child.on("close", (exitCode) => {
       resolve({ stdout, stderr, exitCode: exitCode || 0 });
     });
   });
 }
 
 // Usage
-const result = await runSvelteCheck(['--workspace', './src', '--output', 'machine']);
+const result = await runSvelteCheck(["--workspace", "./src", "--output", "machine"]);
 if (result.exitCode === 0) {
-  console.log('No issues found');
+  console.log("No issues found");
 } else {
-  console.log('Issues found:', result.stdout);
+  console.log("Issues found:", result.stdout);
 }
 ```
 
@@ -190,7 +190,7 @@ function parseMachineOutput(output: string): ParsedDiagnostic[];
  */
 interface ParsedDiagnostic {
   /** Diagnostic type */
-  type: 'ERROR' | 'WARNING';
+  type: "ERROR" | "WARNING";
   /** File path relative to workspace */
   filename: string;
   /** Line number (1-based) */
@@ -271,24 +271,14 @@ interface Writer {
  * Human-readable console output writer
  */
 class HumanFriendlyWriter implements Writer {
-  constructor(
-    stream: Writable, 
-    isVerbose?: boolean, 
-    isWatchMode?: boolean, 
-    clearScreen?: boolean, 
-    diagnosticFilter?: DiagnosticFilter
-  );
+  constructor(stream: Writable, isVerbose?: boolean, isWatchMode?: boolean, clearScreen?: boolean, diagnosticFilter?: DiagnosticFilter);
 }
 
 /**
  * Machine-readable structured output writer
  */
 class MachineFriendlyWriter implements Writer {
-  constructor(
-    stream: Writable, 
-    isVerbose?: boolean, 
-    diagnosticFilter?: DiagnosticFilter
-  );
+  constructor(stream: Writable, isVerbose?: boolean, diagnosticFilter?: DiagnosticFilter);
 }
 
 /**
@@ -324,13 +314,12 @@ interface SvelteCheckCliOptions {
   /** Fail on warnings flag */
   failOnWarnings: boolean;
   /** Compiler warning configuration */
-  compilerWarnings: Record<string, 'error' | 'ignore'>;
+  compilerWarnings: Record<string, "error" | "ignore">;
   /** Enabled diagnostic sources */
   diagnosticSources: DiagnosticSource[];
   /** Diagnostic threshold level */
   threshold: Threshold;
 }
-
 ```
 
 ## Types
@@ -369,23 +358,27 @@ class URI {
 Svelte Check reports various types of issues:
 
 **JavaScript/TypeScript Errors:**
+
 - Syntax errors
 - Type checking errors
 - Import resolution failures
 - Missing type declarations
 
 **Svelte Component Errors:**
+
 - Component compilation errors
 - Invalid Svelte syntax
 - Unused export properties
 - Accessibility warnings
 
 **CSS Errors:**
+
 - Unused CSS selectors
 - CSS syntax errors
 - SCSS/PostCSS compilation errors
 
 **Configuration Errors:**
+
 - Invalid TypeScript configuration
 - Missing or invalid workspace paths
 - File access permissions
@@ -427,21 +420,19 @@ svelte-check --threshold error --diagnostic-sources "js,svelte"
 ### Build Tool Integration
 
 ```typescript
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { exec } from "child_process";
+import { promisify } from "util";
 
 const execAsync = promisify(exec);
 
 export async function runSvelteCheck(workspacePath: string) {
   try {
-    const { stdout, stderr } = await execAsync(
-      `svelte-check --workspace "${workspacePath}" --output machine --fail-on-warnings`
-    );
-    console.log('Svelte check passed');
+    const { stdout, stderr } = await execAsync(`svelte-check --workspace "${workspacePath}" --output machine --fail-on-warnings`);
+    console.log("Svelte check passed");
     return { success: true, output: stdout };
   } catch (error: any) {
-    console.error('Svelte check failed:', error.stdout || error.message);
-    throw new Error('Svelte check failed with errors');
+    console.error("Svelte check failed:", error.stdout || error.message);
+    throw new Error("Svelte check failed with errors");
   }
 }
 ```
@@ -450,13 +441,13 @@ export async function runSvelteCheck(workspacePath: string) {
 
 ```typescript
 // Watch mode via CLI in a separate process
-const watcher = spawn('svelte-check', ['--watch', '--workspace', workspacePath]);
+const watcher = spawn("svelte-check", ["--watch", "--workspace", workspacePath]);
 
-watcher.stdout.on('data', (data) => {
-  console.log('Diagnostics updated:', data.toString());
+watcher.stdout.on("data", (data) => {
+  console.log("Diagnostics updated:", data.toString());
 });
 
-watcher.on('close', (code) => {
-  console.log('Watch mode ended with code:', code);
+watcher.on("close", (code) => {
+  console.log("Watch mode ended with code:", code);
 });
 ```

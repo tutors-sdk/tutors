@@ -25,10 +25,16 @@ export const presenceService: PresenceService = {
   studentEventMap: new Map<string, LoRecord>(),
 
   studentListener(event: MessageEvent) {
-    // Parse JSON data from WebSocket message
-    const nextCourseEvent = JSON.parse(event.data);
+    // Parse JSON data from WebSocket message with error handling
+    let nextCourseEvent;
+    try {
+      nextCourseEvent = JSON.parse(event.data);
+    } catch {
+      return;
+    }
     // Only process events for current course and from other users
-    if (nextCourseEvent.courseId === this.listeningTo) {// && nextCourseEvent.user.id !== tutorsId.value?.login) {
+    if (nextCourseEvent.courseId === this.listeningTo) {
+      // && nextCourseEvent.user.id !== tutorsId.value?.login) {
       const studentEvent = this.studentEventMap.get(nextCourseEvent.user.id);
       if (!studentEvent) {
         // First time seeing this student - add to online list
@@ -89,7 +95,7 @@ export const presenceService: PresenceService = {
     }
 
     void upsertTutorsConnectLatestLo(loRecord);
-  },
+  }
 };
 
 /**
@@ -98,7 +104,7 @@ export const presenceService: PresenceService = {
  * @param nextLoEvent - New event data
  */
 export function refreshLoRecord(loEvent: LoRecord, nextLoEvent: LoRecord) {
-  loEvent.loRoute = `https://tutors.dev${nextLoEvent.loRoute}`;
+  loEvent.loRoute = nextLoEvent.loRoute;
   loEvent.title = nextLoEvent.title;
   loEvent.type = nextLoEvent.type;
   loEvent.user = nextLoEvent.user;
@@ -138,11 +144,7 @@ function getUser(tutorsId: TutorsId): LoUser {
  * @returns UUID v4 string
  */
 function generateTutorsTimeId() {
-  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
-    const r = (Math.random() * 16) | 0;
-    const v = c === "x" ? r : (r & 0x3) | 0x8;
-    return v.toString(16);
-  });
+  return crypto.randomUUID();
 }
 
 /**

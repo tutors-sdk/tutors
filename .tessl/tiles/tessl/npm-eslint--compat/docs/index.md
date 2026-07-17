@@ -32,14 +32,14 @@ import path from "node:path";
 export default [
   {
     plugins: {
-      somePlugin: fixupPluginRules(somePlugin),
+      somePlugin: fixupPluginRules(somePlugin)
     },
     rules: {
-      "somePlugin/rule-name": "error",
-    },
+      "somePlugin/rule-name": "error"
+    }
   },
   // Include ignore file patterns
-  includeIgnoreFile(path.resolve(process.cwd(), ".gitignore")),
+  includeIgnoreFile(path.resolve(process.cwd(), ".gitignore"))
 ];
 ```
 
@@ -109,12 +109,12 @@ import somePlugin from "eslint-plugin-some-plugin";
 export default [
   {
     plugins: {
-      somePlugin: fixupPluginRules(somePlugin),
+      somePlugin: fixupPluginRules(somePlugin)
     },
     rules: {
-      "somePlugin/rule-name": "error",
-    },
-  },
+      "somePlugin/rule-name": "error"
+    }
+  }
 ];
 ```
 
@@ -150,7 +150,7 @@ export default [
   ...fixupConfigRules(someConfig),
   {
     // your overrides
-  },
+  }
 ];
 ```
 
@@ -162,7 +162,7 @@ Reads ignore files (like .gitignore) and converts patterns into the correct form
 /**
  * Reads an ignore file and returns an object with the ignore patterns.
  * @param ignoreFilePath - The absolute path to the ignore file (e.g., .gitignore, .eslintignore)
- * @param name - Optional descriptive name for the ignore file config (defaults to "Imported .gitignore patterns") 
+ * @param name - Optional descriptive name for the ignore file config (defaults to "Imported .gitignore patterns")
  * @returns A flat config object with name and ignores array properties
  * @throws Error if the ignore file path is not absolute
  */
@@ -197,7 +197,7 @@ export default [
   includeIgnoreFile(gitignorePath, "Custom ignore patterns"),
   {
     // your config
-  },
+  }
 ];
 ```
 
@@ -206,6 +206,7 @@ export default [
 ### fixupRule and fixupPluginRules
 
 These functions handle various edge cases silently:
+
 - If a rule has already been fixed up, returns cached version
 - If plugin has no rules property, returns plugin unchanged
 - Preserves all original rule metadata and schema information

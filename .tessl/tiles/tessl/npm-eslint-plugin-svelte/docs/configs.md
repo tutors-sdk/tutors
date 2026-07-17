@@ -17,6 +17,7 @@ const base: Linter.Config[];
 ```
 
 **Features:**
+
 - Configures svelte-eslint-parser for .svelte files
 - Disables conflicting ESLint core rules (no-inner-declarations, no-self-assign)
 - Enables essential svelte rules: comment-directive, system
@@ -26,10 +27,10 @@ const base: Linter.Config[];
 **Usage:**
 
 ```javascript
-import svelte from 'eslint-plugin-svelte';
+import svelte from "eslint-plugin-svelte";
 
 export default [
-  ...svelte.configs.base,
+  ...svelte.configs.base
   // your additional configuration
 ];
 ```
@@ -47,12 +48,14 @@ const recommended: Linter.Config[];
 ```
 
 **Features:**
+
 - Includes all base configuration
 - Enables 35+ recommended rules for Svelte development
 - Optimized for security and best practices
 - Suitable for production applications
 
 **Enabled Rules:**
+
 - `svelte/comment-directive: 'error'`
 - `svelte/infinite-reactive-loop: 'error'`
 - `svelte/no-at-debug-tags: 'warn'`
@@ -94,10 +97,10 @@ const recommended: Linter.Config[];
 **Usage:**
 
 ```javascript
-import svelte from 'eslint-plugin-svelte';
+import svelte from "eslint-plugin-svelte";
 
 export default [
-  ...svelte.configs.recommended,
+  ...svelte.configs.recommended
   // your additional configuration
 ];
 ```
@@ -115,6 +118,7 @@ const prettier: Linter.Config[];
 ```
 
 **Features:**
+
 - Extends base configuration
 - Disables rules that conflict with Prettier
 - Maintains functionality while allowing Prettier to handle formatting
@@ -123,10 +127,10 @@ const prettier: Linter.Config[];
 **Usage:**
 
 ```javascript
-import svelte from 'eslint-plugin-svelte';
+import svelte from "eslint-plugin-svelte";
 
 export default [
-  ...svelte.configs.prettier,
+  ...svelte.configs.prettier
   // your additional configuration
 ];
 ```
@@ -144,6 +148,7 @@ const all: Linter.Config[];
 ```
 
 **Features:**
+
 - Extends base configuration
 - Enables all 79 available rules
 - Includes experimental and strict rules
@@ -152,14 +157,14 @@ const all: Linter.Config[];
 **Usage:**
 
 ```javascript
-import svelte from 'eslint-plugin-svelte';
+import svelte from "eslint-plugin-svelte";
 
 export default [
   ...svelte.configs.all,
   // override specific rules as needed
   {
     rules: {
-      'svelte/some-strict-rule': 'warn' // downgrade if needed
+      "svelte/some-strict-rule": "warn" // downgrade if needed
     }
   }
 ];
@@ -175,10 +180,10 @@ Legacy flat config aliases for backward compatibility.
  * These reference the same configurations as above
  */
 interface BackwardCompatibilityConfigs {
-  'flat/base': typeof base;
-  'flat/recommended': typeof recommended;
-  'flat/prettier': typeof prettier;
-  'flat/all': typeof all;
+  "flat/base": typeof base;
+  "flat/recommended": typeof recommended;
+  "flat/prettier": typeof prettier;
+  "flat/all": typeof all;
 }
 ```
 
@@ -197,10 +202,10 @@ export default [...svelte.configs['flat/recommended']];
 ### Combining Configurations
 
 ```javascript
-import js from '@eslint/js';
-import ts from 'typescript-eslint';
-import svelte from 'eslint-plugin-svelte';
-import globals from 'globals';
+import js from "@eslint/js";
+import ts from "typescript-eslint";
+import svelte from "eslint-plugin-svelte";
+import globals from "globals";
 
 export default ts.config(
   js.configs.recommended,
@@ -215,10 +220,10 @@ export default ts.config(
     }
   },
   {
-    files: ['**/*.svelte'],
+    files: ["**/*.svelte"],
     languageOptions: {
       parserOptions: {
-        svelteConfig: './svelte.config.js'
+        svelteConfig: "./svelte.config.js"
       }
     }
   }
@@ -228,16 +233,16 @@ export default ts.config(
 ### Custom Rule Overrides
 
 ```javascript
-import svelte from 'eslint-plugin-svelte';
+import svelte from "eslint-plugin-svelte";
 
 export default [
   ...svelte.configs.recommended,
   {
     rules: {
       // Override specific rules
-      'svelte/no-at-debug-tags': 'off',
-      'svelte/no-unused-props': 'warn',
-      'svelte/prefer-class-directive': 'error'
+      "svelte/no-at-debug-tags": "off",
+      "svelte/no-unused-props": "warn",
+      "svelte/prefer-class-directive": "error"
     }
   }
 ];
@@ -253,10 +258,10 @@ interface PluginConfigs {
   recommended: Linter.Config[];
   prettier: Linter.Config[];
   all: Linter.Config[];
-  'flat/base': Linter.Config[];
-  'flat/recommended': Linter.Config[];
-  'flat/prettier': Linter.Config[];
-  'flat/all': Linter.Config[];
+  "flat/base": Linter.Config[];
+  "flat/recommended": Linter.Config[];
+  "flat/prettier": Linter.Config[];
+  "flat/all": Linter.Config[];
 }
 ```
 

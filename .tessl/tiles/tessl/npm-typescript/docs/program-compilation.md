@@ -32,10 +32,7 @@ function createProgram(
  * @param setParentNodes - Whether to set parent node references
  * @returns Compiler host instance
  */
-function createCompilerHost(
-  options: CompilerOptions,
-  setParentNodes?: boolean
-): CompilerHost;
+function createCompilerHost(options: CompilerOptions, setParentNodes?: boolean): CompilerHost;
 
 /**
  * Create a watch compiler host for file watching scenarios
@@ -81,11 +78,13 @@ console.log(`Program has ${sourceFiles.length} source files`);
 // Check for errors
 const diagnostics = ts.getPreEmitDiagnostics(program);
 if (diagnostics.length > 0) {
-  console.log(ts.formatDiagnosticsWithColorAndContext(diagnostics, {
-    getCurrentDirectory: () => ts.sys.getCurrentDirectory(),
-    getCanonicalFileName: (fileName) => fileName,
-    getNewLine: () => ts.sys.newLine
-  }));
+  console.log(
+    ts.formatDiagnosticsWithColorAndContext(diagnostics, {
+      getCurrentDirectory: () => ts.sys.getCurrentDirectory(),
+      getCanonicalFileName: (fileName) => fileName,
+      getNewLine: () => ts.sys.newLine
+    })
+  );
 }
 
 // Emit JavaScript files
@@ -171,10 +170,7 @@ interface Program {
    * @param cancellationToken - Token for cancelling operation
    * @returns Array of semantic diagnostics
    */
-  getSemanticDiagnostics(
-    sourceFile?: SourceFile,
-    cancellationToken?: CancellationToken
-  ): readonly Diagnostic[];
+  getSemanticDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly Diagnostic[];
 
   /**
    * Get declaration diagnostics for a source file
@@ -182,10 +178,7 @@ interface Program {
    * @param cancellationToken - Token for cancelling operation
    * @returns Array of declaration diagnostics
    */
-  getDeclarationDiagnostics(
-    sourceFile?: SourceFile,
-    cancellationToken?: CancellationToken
-  ): readonly Diagnostic[];
+  getDeclarationDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly Diagnostic[];
 
   /**
    * Get configuration file diagnostics
@@ -215,11 +208,7 @@ interface Program {
  * @param cancellationToken - Token for cancelling operation
  * @returns Combined array of all diagnostics
  */
-function getPreEmitDiagnostics(
-  program: Program,
-  sourceFile?: SourceFile,
-  cancellationToken?: CancellationToken
-): readonly Diagnostic[];
+function getPreEmitDiagnostics(program: Program, sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly Diagnostic[];
 ```
 
 ### Code Emission
@@ -277,12 +266,7 @@ interface CompilerHost extends ModuleResolutionHost {
    * @param shouldCreateNewSourceFile - Whether to create new source file
    * @returns Source file or undefined
    */
-  getSourceFile(
-    fileName: string,
-    languageVersion: ScriptTarget,
-    onError?: (message: string) => void,
-    shouldCreateNewSourceFile?: boolean
-  ): SourceFile | undefined;
+  getSourceFile(fileName: string, languageVersion: ScriptTarget, onError?: (message: string) => void, shouldCreateNewSourceFile?: boolean): SourceFile | undefined;
 
   /**
    * Write a file to disk
@@ -354,11 +338,7 @@ Find and parse TypeScript configuration files.
  * @param configName - Configuration file name (default: "tsconfig.json")
  * @returns Path to config file or undefined
  */
-function findConfigFile(
-  searchPath: string,
-  fileExists: (fileName: string) => boolean,
-  configName?: string
-): string | undefined;
+function findConfigFile(searchPath: string, fileExists: (fileName: string) => boolean, configName?: string): string | undefined;
 
 /**
  * Read a configuration file
@@ -366,10 +346,7 @@ function findConfigFile(
  * @param readFile - Function to read file content
  * @returns Configuration object and any errors
  */
-function readConfigFile(
-  fileName: string,
-  readFile: (path: string) => string | undefined
-): { config?: any; error?: Diagnostic };
+function readConfigFile(fileName: string, readFile: (path: string) => string | undefined): { config?: any; error?: Diagnostic };
 
 /**
  * Parse configuration file JSON text
@@ -377,10 +354,7 @@ function readConfigFile(
  * @param jsonText - JSON content of config file
  * @returns Parsed configuration and any errors
  */
-function parseConfigFileTextToJson(
-  fileName: string,
-  jsonText: string
-): { config?: any; error?: Diagnostic };
+function parseConfigFileTextToJson(fileName: string, jsonText: string): { config?: any; error?: Diagnostic };
 
 /**
  * Parse a JSON configuration file into compiler options
@@ -452,11 +426,7 @@ function resolveTypeReferenceDirective(
  * @param options - Compiler options
  * @returns Module resolution cache
  */
-function createModuleResolutionCache(
-  currentDirectory: string,
-  getCanonicalFileName: (fileName: string) => string,
-  options?: CompilerOptions
-): ModuleResolutionCache;
+function createModuleResolutionCache(currentDirectory: string, getCanonicalFileName: (fileName: string) => string, options?: CompilerOptions): ModuleResolutionCache;
 
 interface ModuleResolutionHost {
   fileExists(fileName: string): boolean;
@@ -491,10 +461,7 @@ Format diagnostics for display.
  * @param host - Format host for path resolution
  * @returns Formatted diagnostic string
  */
-function formatDiagnostics(
-  diagnostics: readonly Diagnostic[],
-  host: FormatDiagnosticsHost
-): string;
+function formatDiagnostics(diagnostics: readonly Diagnostic[], host: FormatDiagnosticsHost): string;
 
 /**
  * Format diagnostics with color and context
@@ -502,10 +469,7 @@ function formatDiagnostics(
  * @param host - Format host for path resolution
  * @returns Formatted diagnostic string with colors
  */
-function formatDiagnosticsWithColorAndContext(
-  diagnostics: readonly Diagnostic[],
-  host: FormatDiagnosticsHost
-): string;
+function formatDiagnosticsWithColorAndContext(diagnostics: readonly Diagnostic[], host: FormatDiagnosticsHost): string;
 
 interface FormatDiagnosticsHost {
   getCurrentDirectory(): string;

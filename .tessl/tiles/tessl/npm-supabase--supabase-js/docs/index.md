@@ -42,29 +42,20 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 import { createClient } from "@supabase/supabase-js";
 
 // Create a single supabase client for interacting with your database
-const supabase = createClient('https://xyzcompany.supabase.co', 'public-anon-key');
+const supabase = createClient("https://xyzcompany.supabase.co", "public-anon-key");
 
 // Example: Select data from a table
-const { data, error } = await supabase
-  .from('countries')
-  .select('*');
+const { data, error } = await supabase.from("countries").select("*");
 
 // Example: Insert data
-const { data, error } = await supabase
-  .from('countries')
-  .insert([
-    { name: 'Denmark' }
-  ]);
+const { data, error } = await supabase.from("countries").insert([{ name: "Denmark" }]);
 
 // Example: Listen for real-time changes
 const channel = supabase
-  .channel('countries-channel')
-  .on('postgres_changes', 
-    { event: '*', schema: 'public', table: 'countries' },
-    (payload) => {
-      console.log('Change received!', payload);
-    }
-  )
+  .channel("countries-channel")
+  .on("postgres_changes", { event: "*", schema: "public", table: "countries" }, (payload) => {
+    console.log("Change received!", payload);
+  })
   .subscribe();
 ```
 
@@ -92,15 +83,9 @@ The Supabase client is built around several key components:
  */
 function createClient<
   Database = any,
-  SchemaNameOrClientOptions extends string | { PostgrestVersion: string } = 'public',
-  SchemaName extends string = SchemaNameOrClientOptions extends string 
-    ? SchemaNameOrClientOptions 
-    : 'public'
->(
-  supabaseUrl: string,
-  supabaseKey: string,
-  options?: SupabaseClientOptions<SchemaName>
-): SupabaseClient<Database, SchemaNameOrClientOptions, SchemaName>;
+  SchemaNameOrClientOptions extends string | { PostgrestVersion: string } = "public",
+  SchemaName extends string = SchemaNameOrClientOptions extends string ? SchemaNameOrClientOptions : "public"
+>(supabaseUrl: string, supabaseKey: string, options?: SupabaseClientOptions<SchemaName>): SupabaseClient<Database, SchemaNameOrClientOptions, SchemaName>;
 
 interface SupabaseClientOptions<SchemaName> {
   /** Database configuration */
@@ -119,11 +104,11 @@ interface SupabaseClientOptions<SchemaName> {
     /** Detect a session from the URL. Used for OAuth login callbacks. Defaults to true */
     detectSessionInUrl?: boolean;
     /** A storage provider. Used to store the logged-in session */
-    storage?: SupabaseAuthClientOptions['storage'];
+    storage?: SupabaseAuthClientOptions["storage"];
     /** OAuth flow to use - defaults to implicit flow. PKCE is recommended for mobile and server-side applications */
-    flowType?: SupabaseAuthClientOptions['flowType'];
+    flowType?: SupabaseAuthClientOptions["flowType"];
     /** If debug messages for authentication client are emitted */
-    debug?: SupabaseAuthClientOptions['debug'];
+    debug?: SupabaseAuthClientOptions["debug"];
   };
   /** Options passed to the realtime-js instance */
   realtime?: RealtimeClientOptions;
@@ -175,19 +160,17 @@ Complete user management system with email/password, OAuth providers, magic link
 ```typescript { .api }
 interface SupabaseAuthClient {
   // Session management
-  getSession(): Promise<{ data: { session: Session | null }, error: AuthError | null }>;
-  getUser(): Promise<{ data: { user: User | null }, error: AuthError | null }>;
-  
+  getSession(): Promise<{ data: { session: Session | null }; error: AuthError | null }>;
+  getUser(): Promise<{ data: { user: User | null }; error: AuthError | null }>;
+
   // Authentication methods
   signUp(credentials: SignUpWithPasswordCredentials): Promise<AuthResponse>;
   signInWithPassword(credentials: SignInWithPasswordCredentials): Promise<AuthResponse>;
-  signInWithOAuth(credentials: SignInWithOAuthCredentials): Promise<{ data: { url: string }, error: AuthError | null }>;
+  signInWithOAuth(credentials: SignInWithOAuthCredentials): Promise<{ data: { url: string }; error: AuthError | null }>;
   signOut(): Promise<{ error: AuthError | null }>;
-  
+
   // Event handling
-  onAuthStateChange(
-    callback: (event: AuthChangeEvent, session: Session | null) => void
-  ): { data: { subscription: Subscription } };
+  onAuthStateChange(callback: (event: AuthChangeEvent, session: Session | null) => void): { data: { subscription: Subscription } };
 }
 ```
 
@@ -213,13 +196,13 @@ interface RealtimeChannel {
     filter: { event: string; schema: string; table?: string; filter?: string },
     callback: (payload: any) => void
   ): RealtimeChannel;
-  
+
   // Broadcast messaging
   on(type: 'broadcast', filter: { event: string }, callback: (payload: any) => void): RealtimeChannel;
-  
+
   // Presence tracking
   on(type: 'presence', filter: { event: string }, callback: (payload: any) => void): RealtimeChannel;
-  
+
   subscribe(): RealtimeChannel;
   unsubscribe(): Promise<'ok' | 'timed out' | 'error'>;
 }
@@ -234,19 +217,19 @@ File upload, download, and management system with access policies, image transfo
 ```typescript { .api }
 interface SupabaseStorageClient {
   // Bucket operations
-  listBuckets(): Promise<{ data: Bucket[] | null, error: StorageError | null }>;
-  createBucket(id: string, options?: BucketOptions): Promise<{ data: Bucket | null, error: StorageError | null }>;
-  getBucket(id: string): Promise<{ data: Bucket | null, error: StorageError | null }>;
-  
+  listBuckets(): Promise<{ data: Bucket[] | null; error: StorageError | null }>;
+  createBucket(id: string, options?: BucketOptions): Promise<{ data: Bucket | null; error: StorageError | null }>;
+  getBucket(id: string): Promise<{ data: Bucket | null; error: StorageError | null }>;
+
   // File operations
   from(bucketId: string): FileApi;
 }
 
 interface FileApi {
-  upload(path: string, fileBody: File | ArrayBuffer | string, options?: FileOptions): Promise<{ data: FileObject | null, error: StorageError | null }>;
-  download(path: string): Promise<{ data: Blob | null, error: StorageError | null }>;
-  list(path?: string, options?: SearchOptions): Promise<{ data: FileObject[] | null, error: StorageError | null }>;
-  remove(paths: string[]): Promise<{ data: FileObject[] | null, error: StorageError | null }>;
+  upload(path: string, fileBody: File | ArrayBuffer | string, options?: FileOptions): Promise<{ data: FileObject | null; error: StorageError | null }>;
+  download(path: string): Promise<{ data: Blob | null; error: StorageError | null }>;
+  list(path?: string, options?: SearchOptions): Promise<{ data: FileObject[] | null; error: StorageError | null }>;
+  remove(paths: string[]): Promise<{ data: FileObject[] | null; error: StorageError | null }>;
 }
 ```
 
@@ -258,10 +241,7 @@ Serverless function invocation system for running custom business logic at the e
 
 ```typescript { .api }
 interface FunctionsClient {
-  invoke<T = any>(
-    functionName: string,
-    options?: FunctionInvokeOptions
-  ): Promise<FunctionResponse<T>>;
+  invoke<T = any>(functionName: string, options?: FunctionInvokeOptions): Promise<FunctionResponse<T>>;
 }
 
 interface FunctionInvokeOptions {
@@ -276,18 +256,18 @@ interface FunctionResponse<T> {
 }
 
 enum FunctionRegion {
-  Any = 'any',
-  ApNortheast1 = 'ap-northeast-1',
-  ApSoutheast1 = 'ap-southeast-1',
-  ApSouth1 = 'ap-south-1',
-  CaCentral1 = 'ca-central-1',
-  EuCentral1 = 'eu-central-1',
-  EuWest1 = 'eu-west-1',
-  EuWest2 = 'eu-west-2',
-  SaEast1 = 'sa-east-1',
-  UsEast1 = 'us-east-1',
-  UsWest1 = 'us-west-1',
-  UsWest2 = 'us-west-2'
+  Any = "any",
+  ApNortheast1 = "ap-northeast-1",
+  ApSoutheast1 = "ap-southeast-1",
+  ApSouth1 = "ap-south-1",
+  CaCentral1 = "ca-central-1",
+  EuCentral1 = "eu-central-1",
+  EuWest1 = "eu-west-1",
+  EuWest2 = "eu-west-2",
+  SaEast1 = "sa-east-1",
+  UsEast1 = "us-east-1",
+  UsWest1 = "us-west-1",
+  UsWest2 = "us-west-2"
 }
 ```
 
@@ -297,17 +277,13 @@ enum FunctionRegion {
 
 ```typescript { .api }
 // Main client class
-class SupabaseClient<Database = any, SchemaNameOrClientOptions = 'public', SchemaName = 'public'> {
+class SupabaseClient<Database = any, SchemaNameOrClientOptions = "public", SchemaName = "public"> {
   auth: SupabaseAuthClient;
   realtime: RealtimeClient;
   storage: SupabaseStorageClient;
   readonly functions: FunctionsClient;
-  
-  constructor(
-    supabaseUrl: string,
-    supabaseKey: string,
-    options?: SupabaseClientOptions<SchemaName>
-  );
+
+  constructor(supabaseUrl: string, supabaseKey: string, options?: SupabaseClientOptions<SchemaName>);
 }
 
 // Type alias for Fetch
@@ -359,7 +335,7 @@ The client re-exports key types from its dependencies for convenience:
 // From @supabase/auth-js
 export type AuthUser = User;
 export type AuthSession = Session;
-export * from '@supabase/auth-js';
+export * from "@supabase/auth-js";
 
 // From @supabase/postgrest-js
 export type PostgrestResponse<T> = PostgrestResponse<T>;
@@ -376,5 +352,5 @@ export type FunctionInvokeOptions = FunctionInvokeOptions;
 export type FunctionRegion = FunctionRegion;
 
 // From @supabase/realtime-js
-export * from '@supabase/realtime-js';
+export * from "@supabase/realtime-js";
 ```

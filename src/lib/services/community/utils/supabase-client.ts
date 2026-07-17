@@ -18,7 +18,6 @@ if (PUBLIC_ANON_MODE !== "TRUE") {
   supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
 }
 
-
 export function localYyyyMmDd(d = new Date()) {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
@@ -47,40 +46,28 @@ function startOfLocalMondayWeek(d: Date): number {
 }
 
 /** Local calendar day match (same semantics as `localYyyyMmDd` / `instantLocalYmd`). */
-export function isReceivedAtOnLocalDay(
-  iso: string | null | undefined,
-  ref = new Date()
-): boolean {
+export function isReceivedAtOnLocalDay(iso: string | null | undefined, ref = new Date()): boolean {
   const ymd = instantLocalYmd(iso);
   if (!ymd) return false;
   return ymd === localYyyyMmDd(ref);
 }
 
 /** Local week starting Monday, through Sunday. */
-export function isReceivedAtInLocalWeek(
-  iso: string | null | undefined,
-  ref = new Date()
-): boolean {
+export function isReceivedAtInLocalWeek(iso: string | null | undefined, ref = new Date()): boolean {
   if (!iso?.trim()) return false;
   const d = new Date(iso.trim());
   if (!Number.isFinite(d.getTime())) return false;
   return startOfLocalMondayWeek(d) === startOfLocalMondayWeek(ref);
 }
 
-export function isReceivedAtInLocalMonth(
-  iso: string | null | undefined,
-  ref = new Date()
-): boolean {
+export function isReceivedAtInLocalMonth(iso: string | null | undefined, ref = new Date()): boolean {
   if (!iso?.trim()) return false;
   const d = new Date(iso.trim());
   if (!Number.isFinite(d.getTime())) return false;
   return d.getFullYear() === ref.getFullYear() && d.getMonth() === ref.getMonth();
 }
 
-export function isReceivedAtInLocalYear(
-  iso: string | null | undefined,
-  ref = new Date()
-): boolean {
+export function isReceivedAtInLocalYear(iso: string | null | undefined, ref = new Date()): boolean {
   if (!iso?.trim()) return false;
   const d = new Date(iso.trim());
   if (!Number.isFinite(d.getTime())) return false;
@@ -104,7 +91,7 @@ export async function upsertTutorsConnectLatestLo(loRecord: object): Promise<voi
       course_id: courseId,
       student_id: studentId,
       payload: loRecord,
-      received_at: new Date().toISOString(),
+      received_at: new Date().toISOString()
     },
     { onConflict: "course_id,student_id" }
   );
@@ -114,15 +101,11 @@ export async function upsertTutorsConnectLatestLo(loRecord: object): Promise<voi
   }
 }
 
-
-
 /**
  * All stored Lo snapshots for a course (one row per student, already “latest” by key).
  * Sorted by `received_at` descending (most recently updated first).
  */
-export async function getTutorsConnectLatestLosByCourseId(
-  courseId: string
-): Promise<TutorsConnectLatestRow[]> {
+export async function getTutorsConnectLatestLosByCourseId(courseId: string): Promise<TutorsConnectLatestRow[]> {
   if (PUBLIC_ANON_MODE === "TRUE" || typeof supabase === "undefined") return [];
 
   const id = courseId?.trim();
@@ -270,7 +253,7 @@ export async function getCalendarCount(id: string, studentId: string, courseId: 
  */
 export async function getDurationTotal(key: string, table: string, id: string): Promise<number> {
   const { data } = await supabase.from(table).select("duration").eq(key, id).single();
-  return data?.duration || 1;
+  return data?.duration ?? 1;
 }
 
 /**
@@ -351,7 +334,7 @@ export async function addOrUpdateStudent(student: TutorsId) {
 
   try {
     let fullName = student.name;
-    
+
     // If name is null or empty, fetch from GitHub API
     if (!fullName && student.login) {
       try {
@@ -418,11 +401,7 @@ function normalizeStoredSentiment(raw: string | null | undefined): string | null
 export async function getTutorsConnectUserSentiment(githubId: string): Promise<string | null> {
   if (PUBLIC_ANON_MODE === "TRUE" || !githubId) return null;
 
-  const { data, error } = await supabase
-    .from("tutors-connect-users")
-    .select("sentiment")
-    .eq("github_id", githubId)
-    .maybeSingle();
+  const { data, error } = await supabase.from("tutors-connect-users").select("sentiment").eq("github_id", githubId).maybeSingle();
 
   if (error) {
     console.error("getTutorsConnectUserSentiment failed:", error);
@@ -462,11 +441,7 @@ export async function updateTutorsConnectUserSentiment(githubId: string, sentime
 export async function getTutorsConnectUserOnlineStatus(githubId: string): Promise<string | null> {
   if (PUBLIC_ANON_MODE === "TRUE" || !githubId) return null;
 
-  const { data, error } = await supabase
-    .from("tutors-connect-users")
-    .select("online_status")
-    .eq("github_id", githubId)
-    .maybeSingle();
+  const { data, error } = await supabase.from("tutors-connect-users").select("online_status").eq("github_id", githubId).maybeSingle();
 
   if (error) {
     console.error("getTutorsConnectShare failed:", error);
@@ -497,5 +472,3 @@ export async function updateTutorsConnectUserOnlineStatus(githubId: string, onli
     throw error;
   }
 }
-
-

@@ -16,17 +16,17 @@ const colors: {
   black: string;
   white: string;
   slate: {
-    '50': string;
-    '100': string;
-    '200': string;
-    '300': string;
-    '400': string;
-    '500': string;
-    '600': string;
-    '700': string;
-    '800': string;
-    '900': string;
-    '950': string;
+    "50": string;
+    "100": string;
+    "200": string;
+    "300": string;
+    "400": string;
+    "500": string;
+    "600": string;
+    "700": string;
+    "800": string;
+    "900": string;
+    "950": string;
   };
   gray: Record<string, string>;
   zinc: Record<string, string>;
@@ -58,18 +58,18 @@ const colors: {
 import colors from "tailwindcss/colors";
 
 // Access specific colors
-const primaryBlue = colors.blue['500']; // 'oklch(62.3% 0.214 259.815)'
-const slate50 = colors.slate['50']; // 'oklch(98.4% 0.003 247.858)'
+const primaryBlue = colors.blue["500"]; // 'oklch(62.3% 0.214 259.815)'
+const slate50 = colors.slate["50"]; // 'oklch(98.4% 0.003 247.858)'
 
 // Use in plugin
-plugin(function({ addUtilities }) {
+plugin(function ({ addUtilities }) {
   addUtilities({
-    '.text-brand': {
-      color: colors.indigo['600'],
+    ".text-brand": {
+      color: colors.indigo["600"]
     },
-    '.bg-success': {
-      backgroundColor: colors.green['500'],
-    },
+    ".bg-success": {
+      backgroundColor: colors.green["500"]
+    }
   });
 });
 
@@ -78,14 +78,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'brand': colors.purple,
-        'custom': {
-          light: colors.sky['100'],
-          dark: colors.slate['800'],
-        },
-      },
-    },
-  },
+        brand: colors.purple,
+        custom: {
+          light: colors.sky["100"],
+          dark: colors.slate["800"]
+        }
+      }
+    }
+  }
 };
 ```
 
@@ -206,7 +206,7 @@ const defaultTheme: {
     md: string;
     lg: string;
     xl: string;
-    '2xl': string;
+    "2xl": string;
   };
   scrollMargin: (options: { theme: ThemeFn }) => any;
   scrollPadding: (options: { theme: ThemeFn }) => any;
@@ -285,30 +285,30 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', ...defaultTheme.fontFamily.sans],
+        sans: ["Inter", ...defaultTheme.fontFamily.sans]
       },
       spacing: {
         ...defaultTheme.spacing,
-        '18': '4.5rem',
-        '88': '22rem',
+        "18": "4.5rem",
+        "88": "22rem"
       },
       screens: {
         ...defaultTheme.screens,
-        '3xl': '1600px',
-      },
-    },
-  },
+        "3xl": "1600px"
+      }
+    }
+  }
 };
 
 // Use in plugin
-plugin(function({ addComponents, theme }) {
+plugin(function ({ addComponents, theme }) {
   addComponents({
-    '.btn': {
-      padding: `${theme('spacing.2')} ${theme('spacing.4')}`,
-      fontSize: theme('fontSize.sm'),
-      fontWeight: theme('fontWeight.medium'),
-      borderRadius: theme('borderRadius.md'),
-    },
+    ".btn": {
+      padding: `${theme("spacing.2")} ${theme("spacing.4")}`,
+      fontSize: theme("fontSize.sm"),
+      fontWeight: theme("fontWeight.medium"),
+      borderRadius: theme("borderRadius.md")
+    }
   });
 });
 ```
@@ -343,25 +343,25 @@ const flatColors = flattenColorPalette(colors);
 // Flatten custom colors
 const customColors = {
   primary: {
-    50: '#eff6ff',
-    100: '#dbeafe',
-    500: '#3b82f6',
-    900: '#1e3a8a',
+    50: "#eff6ff",
+    100: "#dbeafe",
+    500: "#3b82f6",
+    900: "#1e3a8a"
   },
-  secondary: '#10b981',
+  secondary: "#10b981"
 };
 
 const flattened = flattenColorPalette(customColors);
 // Result: { 'primary-50': '#eff6ff', 'primary-100': '#dbeafe', 'primary-500': '#3b82f6', 'primary-900': '#1e3a8a', 'secondary': '#10b981' }
 
 // Use in plugin
-plugin(function({ addUtilities, theme }) {
-  const colors = flattenColorPalette(theme('colors'));
+plugin(function ({ addUtilities, theme }) {
+  const colors = flattenColorPalette(theme("colors"));
   const utilities = Object.entries(colors).reduce((acc, [key, value]) => {
     acc[`.border-${key}`] = { borderColor: value };
     return acc;
   }, {});
-  
+
   addUtilities(utilities);
 });
 ```
@@ -374,11 +374,11 @@ Default screen breakpoints for responsive design:
 
 ```typescript { .api }
 const screens = {
-  sm: '40rem',    // 640px
-  md: '48rem',    // 768px  
-  lg: '64rem',    // 1024px
-  xl: '80rem',    // 1280px
-  '2xl': '96rem', // 1536px
+  sm: "40rem", // 640px
+  md: "48rem", // 768px
+  lg: "64rem", // 1024px
+  xl: "80rem", // 1280px
+  "2xl": "96rem" // 1536px
 };
 ```
 
@@ -388,41 +388,41 @@ Core spacing scale used for padding, margin, width, height, and more:
 
 ```typescript { .api }
 const spacing = {
-  px: '1px',
-  0: '0px',
-  0.5: '0.125rem',  // 2px
-  1: '0.25rem',     // 4px
-  1.5: '0.375rem',  // 6px
-  2: '0.5rem',      // 8px
-  2.5: '0.625rem',  // 10px
-  3: '0.75rem',     // 12px
-  3.5: '0.875rem',  // 14px
-  4: '1rem',        // 16px
-  5: '1.25rem',     // 20px
-  6: '1.5rem',      // 24px
-  7: '1.75rem',     // 28px
-  8: '2rem',        // 32px
-  9: '2.25rem',     // 36px
-  10: '2.5rem',     // 40px
-  11: '2.75rem',    // 44px
-  12: '3rem',       // 48px
-  14: '3.5rem',     // 56px
-  16: '4rem',       // 64px
-  20: '5rem',       // 80px
-  24: '6rem',       // 96px
-  28: '7rem',       // 112px
-  32: '8rem',       // 128px
-  36: '9rem',       // 144px
-  40: '10rem',      // 160px
-  44: '11rem',      // 176px
-  48: '12rem',      // 192px
-  52: '13rem',      // 208px
-  56: '14rem',      // 224px
-  60: '15rem',      // 240px
-  64: '16rem',      // 256px
-  72: '18rem',      // 288px
-  80: '20rem',      // 320px
-  96: '24rem',      // 384px
+  px: "1px",
+  0: "0px",
+  0.5: "0.125rem", // 2px
+  1: "0.25rem", // 4px
+  1.5: "0.375rem", // 6px
+  2: "0.5rem", // 8px
+  2.5: "0.625rem", // 10px
+  3: "0.75rem", // 12px
+  3.5: "0.875rem", // 14px
+  4: "1rem", // 16px
+  5: "1.25rem", // 20px
+  6: "1.5rem", // 24px
+  7: "1.75rem", // 28px
+  8: "2rem", // 32px
+  9: "2.25rem", // 36px
+  10: "2.5rem", // 40px
+  11: "2.75rem", // 44px
+  12: "3rem", // 48px
+  14: "3.5rem", // 56px
+  16: "4rem", // 64px
+  20: "5rem", // 80px
+  24: "6rem", // 96px
+  28: "7rem", // 112px
+  32: "8rem", // 128px
+  36: "9rem", // 144px
+  40: "10rem", // 160px
+  44: "11rem", // 176px
+  48: "12rem", // 192px
+  52: "13rem", // 208px
+  56: "14rem", // 224px
+  60: "15rem", // 240px
+  64: "16rem", // 256px
+  72: "18rem", // 288px
+  80: "20rem", // 320px
+  96: "24rem" // 384px
 };
 ```
 
@@ -432,19 +432,19 @@ Font sizes with corresponding line heights:
 
 ```typescript { .api }
 const fontSize = {
-  xs: ['0.75rem', { lineHeight: '1rem' }],     // 12px
-  sm: ['0.875rem', { lineHeight: '1.25rem' }], // 14px
-  base: ['1rem', { lineHeight: '1.5rem' }],    // 16px
-  lg: ['1.125rem', { lineHeight: '1.75rem' }], // 18px
-  xl: ['1.25rem', { lineHeight: '1.75rem' }],  // 20px
-  '2xl': ['1.5rem', { lineHeight: '2rem' }],   // 24px
-  '3xl': ['1.875rem', { lineHeight: '2.25rem' }], // 30px
-  '4xl': ['2.25rem', { lineHeight: '2.5rem' }],   // 36px
-  '5xl': ['3rem', { lineHeight: '1' }],           // 48px
-  '6xl': ['3.75rem', { lineHeight: '1' }],        // 60px
-  '7xl': ['4.5rem', { lineHeight: '1' }],         // 72px
-  '8xl': ['6rem', { lineHeight: '1' }],           // 96px
-  '9xl': ['8rem', { lineHeight: '1' }],           // 128px
+  xs: ["0.75rem", { lineHeight: "1rem" }], // 12px
+  sm: ["0.875rem", { lineHeight: "1.25rem" }], // 14px
+  base: ["1rem", { lineHeight: "1.5rem" }], // 16px
+  lg: ["1.125rem", { lineHeight: "1.75rem" }], // 18px
+  xl: ["1.25rem", { lineHeight: "1.75rem" }], // 20px
+  "2xl": ["1.5rem", { lineHeight: "2rem" }], // 24px
+  "3xl": ["1.875rem", { lineHeight: "2.25rem" }], // 30px
+  "4xl": ["2.25rem", { lineHeight: "2.5rem" }], // 36px
+  "5xl": ["3rem", { lineHeight: "1" }], // 48px
+  "6xl": ["3.75rem", { lineHeight: "1" }], // 60px
+  "7xl": ["4.5rem", { lineHeight: "1" }], // 72px
+  "8xl": ["6rem", { lineHeight: "1" }], // 96px
+  "9xl": ["8rem", { lineHeight: "1" }] // 128px
 };
 ```
 
@@ -454,35 +454,35 @@ Built-in animation utilities:
 
 ```typescript { .api }
 const animation = {
-  none: 'none',
-  spin: 'spin 1s linear infinite',
-  ping: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
-  pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-  bounce: 'bounce 1s infinite',
+  none: "none",
+  spin: "spin 1s linear infinite",
+  ping: "ping 1s cubic-bezier(0, 0, 0.2, 1) infinite",
+  pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+  bounce: "bounce 1s infinite"
 };
 
 const keyframes = {
   spin: {
-    to: { transform: 'rotate(360deg)' },
+    to: { transform: "rotate(360deg)" }
   },
   ping: {
-    '75%, 100%': {
-      transform: 'scale(2)',
-      opacity: '0',
-    },
+    "75%, 100%": {
+      transform: "scale(2)",
+      opacity: "0"
+    }
   },
   pulse: {
-    '50%': { opacity: '.5' },
+    "50%": { opacity: ".5" }
   },
   bounce: {
-    '0%, 100%': {
-      transform: 'translateY(-25%)',
-      animationTimingFunction: 'cubic-bezier(0.8,0,1,1)',
+    "0%, 100%": {
+      transform: "translateY(-25%)",
+      animationTimingFunction: "cubic-bezier(0.8,0,1,1)"
     },
-    '50%': {
-      transform: 'none',
-      animationTimingFunction: 'cubic-bezier(0,0,0.2,1)',
-    },
-  },
+    "50%": {
+      transform: "none",
+      animationTimingFunction: "cubic-bezier(0,0,0.2,1)"
+    }
+  }
 };
 ```

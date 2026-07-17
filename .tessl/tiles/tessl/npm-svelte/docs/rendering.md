@@ -15,10 +15,7 @@ Mounts a component to the specified target and returns the component instance wi
  * @param options - Mount configuration options
  * @returns Component instance with exports
  */
-function mount<Props extends Record<string, any>, Exports extends Record<string, any>>(
-  component: Component<Props, Exports, any>,
-  options: MountOptions<Props>
-): Exports;
+function mount<Props extends Record<string, any>, Exports extends Record<string, any>>(component: Component<Props, Exports, any>, options: MountOptions<Props>): Exports;
 ```
 
 **Usage Examples:**
@@ -66,10 +63,7 @@ Hydrates a server-rendered component, attaching event listeners and making it in
  * @param options - Hydration configuration options
  * @returns Component instance with exports
  */
-function hydrate<Props extends Record<string, any>, Exports extends Record<string, any>>(
-  component: Component<Props, Exports, any>,
-  options: HydrateOptions<Props>
-): Exports;
+function hydrate<Props extends Record<string, any>, Exports extends Record<string, any>>(component: Component<Props, Exports, any>, options: HydrateOptions<Props>): Exports;
 ```
 
 **Usage Examples:**
@@ -105,9 +99,12 @@ Unmounts a component that was previously mounted using `mount` or `hydrate`. Opt
  * @param options - Unmount options including outro transitions
  * @returns Promise that resolves after transitions complete
  */
-function unmount(component: Record<string, any>, options?: {
-  outro?: boolean;
-}): Promise<void>;
+function unmount(
+  component: Record<string, any>,
+  options?: {
+    outro?: boolean;
+  }
+): Promise<void>;
 ```
 
 **Usage Examples:**
@@ -132,7 +129,7 @@ let currentApp = null;
 
 function showApp() {
   if (currentApp) return;
-  
+
   currentApp = mount(App, {
     target: document.getElementById("app")
   });
@@ -140,7 +137,7 @@ function showApp() {
 
 async function hideApp() {
   if (!currentApp) return;
-  
+
   await unmount(currentApp, { outro: true });
   currentApp = null;
 }
@@ -179,11 +176,7 @@ interface HydrateOptions<Props extends Record<string, any> = Record<string, any>
   events?: Record<string, (e: any) => any>;
 }
 
-interface Component<
-  Props extends Record<string, any> = {},
-  Exports extends Record<string, any> = {},
-  Bindings extends keyof Props | '' = string
-> {
+interface Component<Props extends Record<string, any> = {}, Exports extends Record<string, any> = {}, Bindings extends keyof Props | "" = string> {
   (internals: ComponentInternals, props: Props): Exports;
 }
 ```

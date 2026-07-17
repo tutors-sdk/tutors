@@ -72,31 +72,16 @@ function atRoot(nodes: AstNode[]): AtRoot;
 import { styleRule, atRule, decl, comment, context } from "tailwindcss";
 
 // Create a simple style rule
-const buttonRule = styleRule('.btn', [
-  decl('padding', '0.5rem 1rem'),
-  decl('border-radius', '0.25rem'),
-  decl('font-weight', '500'),
-]);
+const buttonRule = styleRule(".btn", [decl("padding", "0.5rem 1rem"), decl("border-radius", "0.25rem"), decl("font-weight", "500")]);
 
 // Create a media query
-const mediaRule = atRule('@media', '(min-width: 768px)', [
-  styleRule('.btn', [
-    decl('padding', '0.75rem 1.5rem'),
-  ]),
-]);
+const mediaRule = atRule("@media", "(min-width: 768px)", [styleRule(".btn", [decl("padding", "0.75rem 1.5rem")])]);
 
 // Create at-rule with auto-detection
-const keyframesRule = rule('@keyframes spin', [
-  styleRule('to', [
-    decl('transform', 'rotate(360deg)'),
-  ]),
-]);
+const keyframesRule = rule("@keyframes spin", [styleRule("to", [decl("transform", "rotate(360deg)")])]);
 
 // Add comments and context
-const ast = [
-  comment('Button component styles'),
-  context({ component: 'button' }, [buttonRule, mediaRule]),
-];
+const ast = [comment("Button component styles"), context({ component: "button" }, [buttonRule, mediaRule])];
 ```
 
 ### AST Walking
@@ -127,7 +112,7 @@ enum WalkAction {
   /** Skip child nodes but continue with siblings */
   Skip,
   /** Stop walking entirely */
-  Stop,
+  Stop
 }
 ```
 
@@ -138,24 +123,22 @@ import { walk, WalkAction } from "tailwindcss";
 
 // Find and modify declarations
 walk(ast, (node, { replaceWith }) => {
-  if (node.kind === 'declaration' && node.property === 'color') {
+  if (node.kind === "declaration" && node.property === "color") {
     // Replace color declarations with custom property
-    replaceWith([
-      decl('color', 'var(--text-color)', node.important),
-    ]);
+    replaceWith([decl("color", "var(--text-color)", node.important)]);
   }
 });
 
 // Remove comments
 walk(ast, (node, { replaceWith }) => {
-  if (node.kind === 'comment') {
+  if (node.kind === "comment") {
     replaceWith([]);
   }
 });
 
 // Skip processing certain rules
 walk(ast, (node) => {
-  if (node.kind === 'rule' && node.selector.includes('.skip')) {
+  if (node.kind === "rule" && node.selector.includes(".skip")) {
     return WalkAction.Skip;
   }
 });
@@ -180,13 +163,7 @@ function toCss(ast: AstNode[], withSourceMaps?: boolean): string;
 ```typescript
 import { toCss, styleRule, decl } from "tailwindcss";
 
-const ast = [
-  styleRule('.btn', [
-    decl('padding', '0.5rem 1rem'),
-    decl('background-color', '#3b82f6'),
-    decl('color', 'white'),
-  ]),
-];
+const ast = [styleRule(".btn", [decl("padding", "0.5rem 1rem"), decl("background-color", "#3b82f6"), decl("color", "white")])];
 
 const css = toCss(ast);
 console.log(css);
@@ -210,11 +187,7 @@ Optimize AST for better performance and smaller output.
  * @param polyfills - Polyfill configuration
  * @returns Optimized AST nodes
  */
-function optimizeAst(
-  ast: AstNode[],
-  designSystem: DesignSystem,
-  polyfills?: Polyfills
-): AstNode[];
+function optimizeAst(ast: AstNode[], designSystem: DesignSystem, polyfills?: Polyfills): AstNode[];
 ```
 
 ## AST Node Types
@@ -225,7 +198,7 @@ Represents CSS style rules with selectors and declarations.
 
 ```typescript { .api }
 interface StyleRule {
-  kind: 'rule';
+  kind: "rule";
   selector: string;
   nodes: AstNode[];
   src?: SourceLocation;
@@ -239,7 +212,7 @@ Represents CSS at-rules like @media, @keyframes, etc.
 
 ```typescript { .api }
 interface AtRule {
-  kind: 'at-rule';
+  kind: "at-rule";
   name: string;
   params: string;
   nodes: AstNode[];
@@ -254,7 +227,7 @@ Represents CSS property declarations.
 
 ```typescript { .api }
 interface Declaration {
-  kind: 'declaration';
+  kind: "declaration";
   property: string;
   value: string | undefined;
   important: boolean;
@@ -269,7 +242,7 @@ Represents CSS comments.
 
 ```typescript { .api }
 interface Comment {
-  kind: 'comment';
+  kind: "comment";
   value: string;
   src?: SourceLocation;
   dst?: SourceLocation;
@@ -282,7 +255,7 @@ Wrapper node for adding metadata and context to child nodes.
 
 ```typescript { .api }
 interface Context {
-  kind: 'context';
+  kind: "context";
   context: Record<string, string | boolean>;
   nodes: AstNode[];
   src?: undefined;
@@ -296,7 +269,7 @@ Wrapper node for hoisting child nodes to the root level.
 
 ```typescript { .api }
 interface AtRoot {
-  kind: 'at-root';
+  kind: "at-root";
   nodes: AstNode[];
   src?: undefined;
   dst?: undefined;
@@ -331,21 +304,15 @@ import { compileAst, walk, styleRule, decl } from "tailwindcss";
 
 // Create custom AST
 const customAst = [
-  styleRule(':root', [
-    decl('--primary', '#3b82f6'),
-    decl('--secondary', '#10b981'),
-  ]),
-  styleRule('.custom-btn', [
-    decl('background', 'var(--primary)'),
-    decl('color', 'white'),
-  ]),
+  styleRule(":root", [decl("--primary", "#3b82f6"), decl("--secondary", "#10b981")]),
+  styleRule(".custom-btn", [decl("background", "var(--primary)"), decl("color", "white")])
 ];
 
 // Process with Tailwind
 const result = await compileAst(customAst);
 
 // Generate final CSS
-const finalAst = result.build(['bg-primary', 'text-white']);
+const finalAst = result.build(["bg-primary", "text-white"]);
 ```
 
 ### AST Transformation Pipeline
@@ -356,19 +323,15 @@ import { walk, toCss } from "tailwindcss";
 function transformAst(ast: AstNode[]): AstNode[] {
   // Step 1: Add vendor prefixes
   walk(ast, (node, { replaceWith }) => {
-    if (node.kind === 'declaration' && node.property === 'transform') {
-      replaceWith([
-        decl('-webkit-transform', node.value, node.important),
-        decl('-moz-transform', node.value, node.important),
-        decl('transform', node.value, node.important),
-      ]);
+    if (node.kind === "declaration" && node.property === "transform") {
+      replaceWith([decl("-webkit-transform", node.value, node.important), decl("-moz-transform", node.value, node.important), decl("transform", node.value, node.important)]);
     }
   });
 
   // Step 2: Minify selectors
   walk(ast, (node) => {
-    if (node.kind === 'rule') {
-      node.selector = node.selector.replace(/\s+/g, ' ').trim();
+    if (node.kind === "rule") {
+      node.selector = node.selector.replace(/\s+/g, " ").trim();
     }
   });
 

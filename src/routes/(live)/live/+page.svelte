@@ -11,16 +11,15 @@
 </script>
 
 <div class="p-4">
-<Tabs defaultValue="Courses">
-  <Tabs.List>
-    <Tabs.Trigger value="Courses">Courses ({liveService.coursesOnline.value.length})</Tabs.Trigger>
-    <Tabs.Trigger value="Students">Students ({liveService.studentsOnline.value.length})</Tabs.Trigger>
-    <Tabs.Trigger value="Groups">Groups</Tabs.Trigger>
-    <Tabs.Indicator />
-  </Tabs.List>
+  <Tabs defaultValue="Courses">
+    <Tabs.List>
+      <Tabs.Trigger value="Courses">Courses ({liveService.coursesOnline.value.length})</Tabs.Trigger>
+      <Tabs.Trigger value="Students">Students ({liveService.studentsOnline.value.length})</Tabs.Trigger>
+      <Tabs.Trigger value="Groups">Groups</Tabs.Trigger>
+      <Tabs.Indicator />
+    </Tabs.List>
     <Tabs.Content value="Courses"><Courses /></Tabs.Content>
     <Tabs.Content value="Students"><Students /></Tabs.Content>
     <Tabs.Content value="Groups"><CoursesGroup /></Tabs.Content>
-</Tabs>
+  </Tabs>
 </div>
-

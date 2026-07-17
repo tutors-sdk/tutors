@@ -4,7 +4,7 @@
   import { tutorsConnectService } from "$lib/services/connect";
   import { page } from "$app/state";
   import { currentCourse } from "$lib/runes.svelte";
-    import { afterNavigate } from "$app/navigation";
+  import { afterNavigate } from "$app/navigation";
 
   type Props = { children: Snippet };
   let { children }: Props = $props();
@@ -22,15 +22,13 @@
     }
   });
 
-
-    afterNavigate(() => {
+  afterNavigate(() => {
     const elemPage = document.querySelector("#content-panel");
     if (elemPage && window.innerWidth >= 600) {
       elemPage.scrollIntoView({ behavior: "smooth", block: "start" });
     }
     document.getElementById("main-content")?.focus();
   });
-
 </script>
 
 <svelte:head>

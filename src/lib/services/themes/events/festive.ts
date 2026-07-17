@@ -1,4 +1,4 @@
-import type { Theme } from '@skeletonlabs/skeleton/themes';
+import type { Theme } from "@skeletonlabs/skeleton/themes";
 
 const festive = {
   name: "festive",
@@ -78,15 +78,15 @@ const festive = {
     "--color-primary-contrast-950": "var(--color-primary-contrast-light)",
     "--color-secondary-50": "238 220 221",
     "--color-secondary-100": "232 209 210",
-    "--color-secondary-200": "255 255 255", 
+    "--color-secondary-200": "255 255 255",
     "--color-secondary-300": "209 163 165",
     "--color-secondary-400": "174 93 97",
     "--color-secondary-500": "139 24 29",
     "--color-secondary-600": "125 22 26",
-    "--color-secondary-700": "104 18 22", 
+    "--color-secondary-700": "104 18 22",
     "--color-secondary-800": "28 27 27",
-    "--color-secondary-900": "68 12 14", 
-    "--color-secondary-950": "68 12 14", 
+    "--color-secondary-900": "68 12 14",
+    "--color-secondary-950": "68 12 14",
     "--color-secondary-contrast-dark": "var(--color-secondary-950)",
     "--color-secondary-contrast-light": "var(--color-secondary-50)",
     "--color-secondary-contrast-50": "var(--color-secondary-contrast-dark)",
@@ -205,7 +205,7 @@ const festive = {
     "--color-surface-600": "104 18 22", //
     "--color-surface-700": "28 27 27",
     "--color-surface-800": "25 42 25", //
-    "--color-surface-900": "28 27 27", //  
+    "--color-surface-900": "28 27 27", //
     "--color-surface-950": "25 42 25",
     "--color-surface-contrast-dark": "var(--color-surface-950)",
     "--color-surface-contrast-light": "var(--color-surface-50)",
@@ -227,4 +227,3 @@ const festive = {
 } satisfies Theme;
 
 export default festive;
-
