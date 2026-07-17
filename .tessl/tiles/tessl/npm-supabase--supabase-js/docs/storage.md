@@ -97,27 +97,27 @@ interface BucketOptions {
 // List all buckets
 const { data: buckets, error } = await supabase.storage.listBuckets();
 if (buckets) {
-  console.log('Available buckets:', buckets);
+  console.log("Available buckets:", buckets);
 }
 
 // Create a new bucket
-const { data, error } = await supabase.storage.createBucket('avatars', {
+const { data, error } = await supabase.storage.createBucket("avatars", {
   public: true,
   fileSizeLimit: 1024 * 1024 * 2, // 2MB
-  allowedMimeTypes: ['image/png', 'image/jpeg', 'image/gif']
+  allowedMimeTypes: ["image/png", "image/jpeg", "image/gif"]
 });
 
 // Get bucket details
-const { data: bucket, error } = await supabase.storage.getBucket('avatars');
+const { data: bucket, error } = await supabase.storage.getBucket("avatars");
 
 // Update bucket settings
-const { data, error } = await supabase.storage.updateBucket('avatars', {
+const { data, error } = await supabase.storage.updateBucket("avatars", {
   public: false,
   fileSizeLimit: 1024 * 1024 * 5 // 5MB
 });
 
 // Delete bucket
-const { data, error } = await supabase.storage.deleteBucket('old-bucket');
+const { data, error } = await supabase.storage.deleteBucket("old-bucket");
 ```
 
 ### File Operations
@@ -332,28 +332,22 @@ class StorageError extends Error {
 ```typescript
 // Upload a file
 const file = event.target.files[0];
-const { data, error } = await supabase.storage
-  .from('avatars')
-  .upload(`public/${file.name}`, file, {
-    cacheControl: '3600',
-    upsert: false
-  });
+const { data, error } = await supabase.storage.from("avatars").upload(`public/${file.name}`, file, {
+  cacheControl: "3600",
+  upsert: false
+});
 
 // Upload with custom filename
-const { data, error } = await supabase.storage
-  .from('documents')
-  .upload(`user-123/document-${Date.now()}.pdf`, file, {
-    contentType: 'application/pdf',
-    metadata: {
-      owner: 'user-123',
-      category: 'legal'
-    }
-  });
+const { data, error } = await supabase.storage.from("documents").upload(`user-123/document-${Date.now()}.pdf`, file, {
+  contentType: "application/pdf",
+  metadata: {
+    owner: "user-123",
+    category: "legal"
+  }
+});
 
 // Download a file
-const { data, error } = await supabase.storage
-  .from('avatars')
-  .download('public/avatar.jpg');
+const { data, error } = await supabase.storage.from("avatars").download("public/avatar.jpg");
 
 if (data) {
   // Create a URL for the blob
@@ -362,47 +356,35 @@ if (data) {
 }
 
 // Download with image transformations
-const { data, error } = await supabase.storage
-  .from('images')
-  .download('photo.jpg', {
-    transform: {
-      width: 300,
-      height: 300,
-      resize: 'cover',
-      quality: 80
-    }
-  });
+const { data, error } = await supabase.storage.from("images").download("photo.jpg", {
+  transform: {
+    width: 300,
+    height: 300,
+    resize: "cover",
+    quality: 80
+  }
+});
 
 // List files in a bucket
-const { data: files, error } = await supabase.storage
-  .from('documents')
-  .list('user-123/', {
-    limit: 100,
-    offset: 0,
-    sortBy: { column: 'name', order: 'asc' }
-  });
+const { data: files, error } = await supabase.storage.from("documents").list("user-123/", {
+  limit: 100,
+  offset: 0,
+  sortBy: { column: "name", order: "asc" }
+});
 
 // Search for files
-const { data: files, error } = await supabase.storage
-  .from('documents')
-  .list('user-123/', {
-    search: 'invoice'
-  });
+const { data: files, error } = await supabase.storage.from("documents").list("user-123/", {
+  search: "invoice"
+});
 
 // Remove files
-const { data, error } = await supabase.storage
-  .from('avatars')
-  .remove(['public/avatar1.png', 'public/avatar2.png']);
+const { data, error } = await supabase.storage.from("avatars").remove(["public/avatar1.png", "public/avatar2.png"]);
 
 // Move a file
-const { data, error } = await supabase.storage
-  .from('documents')
-  .move('public/old-name.pdf', 'public/new-name.pdf');
+const { data, error } = await supabase.storage.from("documents").move("public/old-name.pdf", "public/new-name.pdf");
 
 // Copy a file
-const { data, error } = await supabase.storage
-  .from('documents')
-  .copy('templates/invoice.pdf', 'user-123/invoice-copy.pdf');
+const { data, error } = await supabase.storage.from("documents").copy("templates/invoice.pdf", "user-123/invoice-copy.pdf");
 ```
 
 ### URL Generation
@@ -411,45 +393,35 @@ Generate public URLs and signed URLs for secure file access.
 
 ```typescript
 // Get public URL (for public buckets)
-const { data } = supabase.storage
-  .from('avatars')
-  .getPublicUrl('public/avatar.jpg');
+const { data } = supabase.storage.from("avatars").getPublicUrl("public/avatar.jpg");
 
-console.log('Public URL:', data.publicUrl);
+console.log("Public URL:", data.publicUrl);
 
 // Get public URL with transformations
-const { data } = supabase.storage
-  .from('images')
-  .getPublicUrl('photo.jpg', {
-    transform: {
-      width: 500,
-      height: 300,
-      resize: 'cover',
-      format: 'webp',
-      quality: 85
-    }
-  });
+const { data } = supabase.storage.from("images").getPublicUrl("photo.jpg", {
+  transform: {
+    width: 500,
+    height: 300,
+    resize: "cover",
+    format: "webp",
+    quality: 85
+  }
+});
 
 // Create signed URL for private files
-const { data, error } = await supabase.storage
-  .from('private-documents')
-  .createSignedUrl('user-123/confidential.pdf', 3600); // 1 hour expiry
+const { data, error } = await supabase.storage.from("private-documents").createSignedUrl("user-123/confidential.pdf", 3600); // 1 hour expiry
 
 if (data) {
-  console.log('Signed URL:', data.signedUrl);
+  console.log("Signed URL:", data.signedUrl);
 }
 
 // Create signed URL with download option
-const { data, error } = await supabase.storage
-  .from('documents')
-  .createSignedUrl('report.pdf', 3600, {
-    download: 'monthly-report.pdf'
-  });
+const { data, error } = await supabase.storage.from("documents").createSignedUrl("report.pdf", 3600, {
+  download: "monthly-report.pdf"
+});
 
 // Create multiple signed URLs
-const { data, error } = await supabase.storage
-  .from('gallery')
-  .createSignedUrls(['image1.jpg', 'image2.jpg', 'image3.jpg'], 7200);
+const { data, error } = await supabase.storage.from("gallery").createSignedUrls(["image1.jpg", "image2.jpg", "image3.jpg"], 7200);
 
 if (data) {
   data.forEach((item, index) => {
@@ -467,15 +439,13 @@ if (data) {
 ```typescript
 // Upload with progress tracking (requires additional implementation)
 const uploadFileWithProgress = async (file: File, path: string) => {
-  const { data, error } = await supabase.storage
-    .from('uploads')
-    .upload(path, file, {
-      cacheControl: '3600',
-      upsert: false
-    });
+  const { data, error } = await supabase.storage.from("uploads").upload(path, file, {
+    cacheControl: "3600",
+    upsert: false
+  });
 
   if (error) {
-    console.error('Upload error:', error.message);
+    console.error("Upload error:", error.message);
     return null;
   }
 
@@ -494,34 +464,30 @@ const originalFile = event.target.files[0];
 const timestamp = Date.now();
 const originalPath = `originals/${timestamp}-${originalFile.name}`;
 
-const { data: originalUpload, error: uploadError } = await supabase.storage
-  .from('images')
-  .upload(originalPath, originalFile);
+const { data: originalUpload, error: uploadError } = await supabase.storage.from("images").upload(originalPath, originalFile);
 
 if (!uploadError && originalUpload) {
   // Generate different sizes using public URLs with transformations
   const sizes = [
-    { name: 'thumbnail', width: 150, height: 150 },
-    { name: 'medium', width: 500, height: 500 },
-    { name: 'large', width: 1200, height: 1200 }
+    { name: "thumbnail", width: 150, height: 150 },
+    { name: "medium", width: 500, height: 500 },
+    { name: "large", width: 1200, height: 1200 }
   ];
 
-  const processedUrls = sizes.map(size => ({
+  const processedUrls = sizes.map((size) => ({
     ...size,
-    url: supabase.storage
-      .from('images')
-      .getPublicUrl(originalPath, {
-        transform: {
-          width: size.width,
-          height: size.height,
-          resize: 'cover',
-          format: 'webp',
-          quality: 80
-        }
-      }).data.publicUrl
+    url: supabase.storage.from("images").getPublicUrl(originalPath, {
+      transform: {
+        width: size.width,
+        height: size.height,
+        resize: "cover",
+        format: "webp",
+        quality: 80
+      }
+    }).data.publicUrl
   }));
 
-  console.log('Processed image URLs:', processedUrls);
+  console.log("Processed image URLs:", processedUrls);
 }
 ```
 
@@ -532,17 +498,15 @@ if (!uploadError && originalUpload) {
 const uploadMultipleFiles = async (files: FileList, folder: string) => {
   const uploads = Array.from(files).map(async (file, index) => {
     const path = `${folder}/${Date.now()}-${index}-${file.name}`;
-    return supabase.storage
-      .from('uploads')
-      .upload(path, file, {
-        cacheControl: '3600'
-      });
+    return supabase.storage.from("uploads").upload(path, file, {
+      cacheControl: "3600"
+    });
   });
 
   const results = await Promise.all(uploads);
-  
-  const successful = results.filter(result => !result.error);
-  const failed = results.filter(result => result.error);
+
+  const successful = results.filter((result) => !result.error);
+  const failed = results.filter((result) => result.error);
 
   console.log(`Uploaded ${successful.length} files successfully`);
   if (failed.length > 0) {
@@ -557,29 +521,25 @@ const cleanupOldFiles = async (bucketId: string, olderThanDays: number) => {
   const cutoffDate = new Date();
   cutoffDate.setDate(cutoffDate.getDate() - olderThanDays);
 
-  const { data: files, error } = await supabase.storage
-    .from(bucketId)
-    .list('', { limit: 1000 });
+  const { data: files, error } = await supabase.storage.from(bucketId).list("", { limit: 1000 });
 
   if (error || !files) {
-    console.error('Error listing files:', error);
+    console.error("Error listing files:", error);
     return;
   }
 
   const oldFiles = files
-    .filter(file => {
-      const fileDate = new Date(file.created_at || '');
+    .filter((file) => {
+      const fileDate = new Date(file.created_at || "");
       return fileDate < cutoffDate;
     })
-    .map(file => file.name);
+    .map((file) => file.name);
 
   if (oldFiles.length > 0) {
-    const { data, error: deleteError } = await supabase.storage
-      .from(bucketId)
-      .remove(oldFiles);
+    const { data, error: deleteError } = await supabase.storage.from(bucketId).remove(oldFiles);
 
     if (deleteError) {
-      console.error('Error deleting old files:', deleteError);
+      console.error("Error deleting old files:", deleteError);
     } else {
       console.log(`Deleted ${oldFiles.length} old files`);
     }
@@ -592,30 +552,28 @@ const cleanupOldFiles = async (bucketId: string, olderThanDays: number) => {
 ```typescript
 const handleStorageOperation = async () => {
   try {
-    const { data, error } = await supabase.storage
-      .from('documents')
-      .upload('test.pdf', file);
+    const { data, error } = await supabase.storage.from("documents").upload("test.pdf", file);
 
     if (error) {
       switch (error.message) {
-        case 'The resource already exists':
-          console.error('File already exists. Use upsert: true to overwrite.');
+        case "The resource already exists":
+          console.error("File already exists. Use upsert: true to overwrite.");
           break;
-        case 'The object is too large':
-          console.error('File size exceeds the bucket limit.');
+        case "The object is too large":
+          console.error("File size exceeds the bucket limit.");
           break;
-        case 'Invalid MIME type':
-          console.error('File type not allowed for this bucket.');
+        case "Invalid MIME type":
+          console.error("File type not allowed for this bucket.");
           break;
         default:
-          console.error('Storage error:', error.message);
+          console.error("Storage error:", error.message);
       }
       return;
     }
 
-    console.log('File uploaded successfully:', data);
+    console.log("File uploaded successfully:", data);
   } catch (err) {
-    console.error('Unexpected error:', err);
+    console.error("Unexpected error:", err);
   }
 };
 ```

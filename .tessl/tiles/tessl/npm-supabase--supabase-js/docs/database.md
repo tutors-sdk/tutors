@@ -25,7 +25,7 @@ from<ViewName extends string & keyof Schema['Views']>(
 interface PostgrestQueryBuilder<ClientOptions, Schema, Table, TableName> {
   // Data selection
   select(columns?: string, options?: { head?: boolean; count?: 'exact' | 'planned' | 'estimated' }): PostgrestFilterBuilder;
-  
+
   // Data modification
   insert(values: Table['Insert'] | Table['Insert'][], options?: { upsert?: boolean; onConflict?: string; ignoreDuplicates?: boolean }): PostgrestFilterBuilder;
   update(values: Table['Update'], options?: { count?: 'exact' | 'planned' | 'estimated' }): PostgrestFilterBuilder;
@@ -58,23 +58,23 @@ interface PostgrestFilterBuilder<ClientOptions, Schema, Row, Result, RelationNam
   not(column: keyof Row, operator: string, value: any): PostgrestFilterBuilder;
   or(filters: string, options?: { foreignTable?: string }): PostgrestFilterBuilder;
   filter(column: keyof Row, operator: string, value: any): PostgrestFilterBuilder;
-  
+
   // Ordering
   order(column: keyof Row, options?: { ascending?: boolean; nullsFirst?: boolean; foreignTable?: string }): PostgrestFilterBuilder;
-  
+
   // Pagination
   range(from: number, to: number, options?: { foreignTable?: string }): PostgrestFilterBuilder;
   limit(count: number, options?: { foreignTable?: string }): PostgrestFilterBuilder;
-  
+
   // Result limiting
   single(): PostgrestFilterBuilder<ClientOptions, Schema, Row, Row, RelationName, Relationships, Operation>;
   maybeSingle(): PostgrestFilterBuilder<ClientOptions, Schema, Row, Row | null, RelationName, Relationships, Operation>;
-  
+
   // Response configuration
   csv(): PostgrestFilterBuilder<ClientOptions, Schema, Row, string, RelationName, Relationships, Operation>;
   geojson(): PostgrestFilterBuilder<ClientOptions, Schema, Row, Record<string, any>, RelationName, Relationships, Operation>;
   explain(options?: { analyze?: boolean; verbose?: boolean; settings?: boolean; buffers?: boolean; wal?: boolean; format?: 'text' | 'json' }): Promise<{ data: any; error: PostgrestError | null }>;
-  
+
   // Response handling
   abortSignal(signal: AbortSignal): PostgrestFilterBuilder;
   then<TResult1 = PostgrestResponse<Result>, TResult2 = never>(
@@ -113,56 +113,40 @@ class PostgrestError extends Error {
 
 ```typescript
 // Basic select
-const { data, error } = await supabase
-  .from('users')
-  .select('*');
+const { data, error } = await supabase.from("users").select("*");
 
 // Select specific columns
-const { data, error } = await supabase
-  .from('users')
-  .select('id, name, email');
+const { data, error } = await supabase.from("users").select("id, name, email");
 
 // Filtering
-const { data, error } = await supabase
-  .from('users')
-  .select('*')
-  .eq('status', 'active')
-  .gte('age', 18);
+const { data, error } = await supabase.from("users").select("*").eq("status", "active").gte("age", 18);
 
 // Complex filtering
 const { data, error } = await supabase
-  .from('posts')
-  .select('title, content, users(name)')
-  .eq('published', true)
-  .ilike('title', '%javascript%')
-  .order('created_at', { ascending: false })
+  .from("posts")
+  .select("title, content, users(name)")
+  .eq("published", true)
+  .ilike("title", "%javascript%")
+  .order("created_at", { ascending: false })
   .range(0, 9);
 
 // Insert data
 const { data, error } = await supabase
-  .from('users')
+  .from("users")
   .insert([
-    { name: 'John Doe', email: 'john@example.com' },
-    { name: 'Jane Smith', email: 'jane@example.com' }
+    { name: "John Doe", email: "john@example.com" },
+    { name: "Jane Smith", email: "jane@example.com" }
   ])
   .select();
 
 // Update data
-const { data, error } = await supabase
-  .from('users')
-  .update({ status: 'inactive' })
-  .eq('last_login', null);
+const { data, error } = await supabase.from("users").update({ status: "inactive" }).eq("last_login", null);
 
 // Delete data
-const { data, error } = await supabase
-  .from('users')
-  .delete()
-  .eq('status', 'inactive');
+const { data, error } = await supabase.from("users").delete().eq("status", "inactive");
 
 // Upsert (insert or update)
-const { data, error } = await supabase
-  .from('users')
-  .upsert({ id: 1, name: 'Updated Name' }, { onConflict: 'id' });
+const { data, error } = await supabase.from("users").upsert({ id: 1, name: "Updated Name" }, { onConflict: "id" });
 ```
 
 ### Database Functions (RPC)
@@ -207,22 +191,16 @@ rpc<FnName extends string & keyof Schema['Functions']>(
 
 ```typescript
 // Call a function without parameters
-const { data, error } = await supabase
-  .rpc('get_user_count');
+const { data, error } = await supabase.rpc("get_user_count");
 
 // Call a function with parameters
-const { data, error } = await supabase
-  .rpc('get_users_by_status', { status_filter: 'active' });
+const { data, error } = await supabase.rpc("get_users_by_status", { status_filter: "active" });
 
 // Call a function and apply filters to the result
-const { data, error } = await supabase
-  .rpc('search_products', { search_term: 'laptop' })
-  .gte('price', 500)
-  .order('price', { ascending: true });
+const { data, error } = await supabase.rpc("search_products", { search_term: "laptop" }).gte("price", 500).order("price", { ascending: true });
 
 // Call a function with head-only response
-const { data, error, count } = await supabase
-  .rpc('expensive_calculation', { param: 'value' }, { head: true, count: 'exact' });
+const { data, error, count } = await supabase.rpc("expensive_calculation", { param: "value" }, { head: true, count: "exact" });
 ```
 
 ### Schema Switching
@@ -250,19 +228,14 @@ schema<DynamicSchema extends string & keyof Omit<Database, '__InternalSupabase'>
 
 ```typescript
 // Switch to a different schema
-const { data, error } = await supabase
-  .schema('inventory')
-  .from('products')
-  .select('*');
+const { data, error } = await supabase.schema("inventory").from("products").select("*");
 
 // Call functions in a specific schema
-const { data, error } = await supabase
-  .schema('analytics')
-  .rpc('calculate_metrics', { date_range: '7d' });
+const { data, error } = await supabase.schema("analytics").rpc("calculate_metrics", { date_range: "7d" });
 
 // Chain schema operations
-const publicUsers = await supabase.from('users').select('*');
-const adminUsers = await supabase.schema('admin').from('users').select('*');
+const publicUsers = await supabase.from("users").select("*");
+const adminUsers = await supabase.schema("admin").from("users").select("*");
 ```
 
 ## Advanced Query Patterns
@@ -271,9 +244,7 @@ const adminUsers = await supabase.schema('admin').from('users').select('*');
 
 ```typescript
 // Inner joins using foreign key relationships
-const { data, error } = await supabase
-  .from('posts')
-  .select(`
+const { data, error } = await supabase.from("posts").select(`
     title,
     content,
     users (
@@ -283,9 +254,7 @@ const { data, error } = await supabase
   `);
 
 // Multiple level joins
-const { data, error } = await supabase
-  .from('comments')
-  .select(`
+const { data, error } = await supabase.from("comments").select(`
     text,
     posts (
       title,
@@ -296,62 +265,42 @@ const { data, error } = await supabase
   `);
 
 // Filtering on joined tables
-const { data, error } = await supabase
-  .from('posts')
-  .select('title, users(name)')
-  .eq('users.status', 'active');
+const { data, error } = await supabase.from("posts").select("title, users(name)").eq("users.status", "active");
 ```
 
 ### Aggregations and Counting
 
 ```typescript
 // Get count with data
-const { data, error, count } = await supabase
-  .from('users')
-  .select('*', { count: 'exact' })
-  .eq('status', 'active');
+const { data, error, count } = await supabase.from("users").select("*", { count: "exact" }).eq("status", "active");
 
 // Get count only
-const { data, error, count } = await supabase
-  .from('users')
-  .select('*', { head: true, count: 'exact' })
-  .eq('status', 'active');
+const { data, error, count } = await supabase.from("users").select("*", { head: true, count: "exact" }).eq("status", "active");
 
 // Use different count algorithms
-const { count } = await supabase
-  .from('large_table')
-  .select('*', { head: true, count: 'estimated' });
+const { count } = await supabase.from("large_table").select("*", { head: true, count: "estimated" });
 ```
 
 ### Full-Text Search
 
 ```typescript
 // Basic text search
-const { data, error } = await supabase
-  .from('articles')
-  .select('title, content')
-  .textSearch('content', 'javascript programming');
+const { data, error } = await supabase.from("articles").select("title, content").textSearch("content", "javascript programming");
 
 // Advanced text search with configuration
-const { data, error } = await supabase
-  .from('articles')
-  .select('title, content')
-  .textSearch('content', 'javascript & programming', {
-    type: 'websearch',
-    config: 'english'
-  });
+const { data, error } = await supabase.from("articles").select("title, content").textSearch("content", "javascript & programming", {
+  type: "websearch",
+  config: "english"
+});
 ```
 
 ### Error Handling
 
 ```typescript
-const { data, error } = await supabase
-  .from('users')
-  .select('*')
-  .eq('id', userId);
+const { data, error } = await supabase.from("users").select("*").eq("id", userId);
 
 if (error) {
-  console.error('Database error:', {
+  console.error("Database error:", {
     message: error.message,
     details: error.details,
     hint: error.hint,
@@ -361,5 +310,5 @@ if (error) {
 }
 
 // Use data safely
-console.log('Users:', data);
+console.log("Users:", data);
 ```

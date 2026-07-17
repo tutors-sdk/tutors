@@ -27,7 +27,7 @@ onMount(async () => {
   // Fetch data when component mounts
   const response = await fetch("/api/data");
   data = await response.json();
-  
+
   // Return cleanup function (optional)
   return () => {
     console.log("Component unmounted");
@@ -39,7 +39,7 @@ onMount(() => {
   const interval = setInterval(() => {
     console.log("Timer tick");
   }, 1000);
-  
+
   // Cleanup interval when component unmounts
   return () => clearInterval(interval);
 });
@@ -107,7 +107,7 @@ let autoscroll;
 beforeUpdate(() => {
   if (div) {
     const scrollableDistance = div.scrollHeight - div.offsetHeight;
-    autoscroll = div.scrollTop > (scrollableDistance - 20);
+    autoscroll = div.scrollTop > scrollableDistance - 20;
   }
 });
 ```

@@ -4,6 +4,7 @@
   import IconBar from "../components/IconBar.svelte";
   import { currentCourse } from "$lib/runes.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
+  import { t } from "$lib/services/i18n";
 
   let { lo, parentCourse = null } = $props();
   const themeClasses = $derived({
@@ -12,7 +13,7 @@
   });
 </script>
 
-<div class="border-primary-100 bg-primary-50 dark:border-primary-800 z-5 mb-2 {themeClasses.firstDiv} sticky top-0 flex h-12 border-b-[1px]">
+<div role="navigation" aria-label={t("a11y.secondaryNavigation")} class="border-primary-100 bg-primary-50 dark:border-primary-800 z-5 mb-2 {themeClasses.firstDiv} sticky top-0 flex h-12 border-b-[1px]">
   <Breadcrumbs {lo} {parentCourse} />
   {#if currentCourse?.value}
     <div class="flex flex-auto"></div>

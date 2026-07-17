@@ -69,9 +69,7 @@ items[0].name = "Updated Item";
 
 // This will trigger updates
 items = [...items, { id: 2, name: "Item 2" }];
-items = items.map(item => 
-  item.id === 1 ? { ...item, name: "Updated Item" } : item
-);
+items = items.map((item) => (item.id === 1 ? { ...item, name: "Updated Item" } : item));
 ```
 
 ### $state.snapshot
@@ -163,16 +161,16 @@ let total = $derived.by(() => {
 });
 
 let filtered = $derived.by(() => {
-  return numbers.filter(n => n > 2);
+  return numbers.filter((n) => n > 2);
 });
 
 // Complex async-like patterns (though derived should be sync)
 let processedData = $derived.by(() => {
   if (!rawData.length) return [];
-  
+
   return rawData
-    .map(item => processItem(item))
-    .filter(item => item.isValid)
+    .map((item) => processItem(item))
+    .filter((item) => item.isValid)
     .sort((a, b) => a.priority - b.priority);
 });
 ```
@@ -205,7 +203,7 @@ $effect(() => {
   const interval = setInterval(() => {
     console.log(`Count: ${count}`);
   }, 1000);
-  
+
   return () => clearInterval(interval);
 });
 
@@ -243,8 +241,8 @@ let container;
 $effect.pre(() => {
   if (container) {
     const scrollableDistance = container.scrollHeight - container.offsetHeight;
-    const shouldAutoScroll = container.scrollTop > (scrollableDistance - 20);
-    
+    const shouldAutoScroll = container.scrollTop > scrollableDistance - 20;
+
     if (shouldAutoScroll) {
       // Will scroll after DOM updates
       $effect(() => {
@@ -277,7 +275,7 @@ const cleanup = $effect.root(() => {
   $effect(() => {
     console.log(`Count: ${count}`);
   });
-  
+
   return () => {
     console.log("Root effect cleaned up");
   };
@@ -386,9 +384,7 @@ Development utility for inspecting reactive values and their changes.
  * @param values - Values to inspect
  * @returns Object with 'with' method for custom inspection
  */
-declare function $inspect<T extends any[]>(
-  ...values: T
-): { with: (fn: (type: 'init' | 'update', ...values: T) => void) => void };
+declare function $inspect<T extends any[]>(...values: T): { with: (fn: (type: "init" | "update", ...values: T) => void) => void };
 ```
 
 **Usage Examples:**
@@ -407,7 +403,7 @@ $inspect(count).with((type, value) => {
 });
 
 $inspect(count, name).with((type, countVal, nameVal) => {
-  if (type === 'update') {
+  if (type === "update") {
     console.log(`Update: ${nameVal} has count ${countVal}`);
   }
 });

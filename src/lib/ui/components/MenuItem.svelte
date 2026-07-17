@@ -14,19 +14,12 @@
 
 <li class="option p-0!">
   {#if link}
-    <a
-      href={link}
-      class="group btn flex w-full justify-between {isActive ? 'bg-gray-200 dark:bg-gray-700' : 'hover:preset-tonal'}"
-      target={targetStr}
-    >
+    <a href={link} class="group btn flex w-full justify-between {isActive ? 'bg-gray-200 dark:bg-gray-700' : 'hover:preset-tonal'}" target={targetStr}>
       <div class="ml-2">{text}</div>
       <Icon {type} />
     </a>
   {:else}
-    <button
-      class="group btn flex w-full justify-between {isActive ? 'bg-gray-200 dark:bg-gray-700' : 'hover:preset-tonal'}"
-      onclick={onClick}
-    >
+    <button class="group btn flex w-full justify-between {isActive ? 'bg-gray-200 dark:bg-gray-700' : 'hover:preset-tonal'}" onclick={onClick}>
       <div class="ml-2">{text}</div>
       <Icon {type} />
     </button>

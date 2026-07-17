@@ -4,7 +4,7 @@
   import Self from "./LoContext.svelte";
 
   let { lo, indent = 0 }: { lo: Lo; indent: number } = $props();
-  
+
   if (lo?.toc) {
     lo.toc.forEach((child: Lo) => {
       if (child.route.endsWith("/")) {

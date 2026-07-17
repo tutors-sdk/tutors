@@ -16,11 +16,7 @@ Process CSS with various preprocessors and generate source maps.
  * @param config - Resolved Vite configuration
  * @returns Promise resolving to preprocessing result
  */
-function preprocessCSS(
-  code: string,
-  filename: string,
-  config: ResolvedConfig
-): Promise<PreprocessCSSResult>;
+function preprocessCSS(code: string, filename: string, config: ResolvedConfig): Promise<PreprocessCSSResult>;
 
 interface PreprocessCSSResult {
   /** Processed CSS code */
@@ -40,14 +36,10 @@ interface PreprocessCSSResult {
 import { preprocessCSS } from "vite";
 
 // Process Sass file
-const result = await preprocessCSS(
-  '@import "variables"; .btn { color: $primary; }',
-  './src/components/Button.scss', 
-  config
-);
+const result = await preprocessCSS('@import "variables"; .btn { color: $primary; }', "./src/components/Button.scss", config);
 
 console.log(result.code); // Compiled CSS
-console.log(result.map);  // Source map
+console.log(result.map); // Source map
 console.log(result.deps); // Dependencies found during processing
 ```
 
@@ -62,10 +54,7 @@ Format and handle PostCSS source maps for proper debugging.
  * @param file - Source file path
  * @returns Formatted source map
  */
-function formatPostcssSourceMap(
-  rawMap: ExistingRawSourceMap,
-  file: string
-): SourceMap;
+function formatPostcssSourceMap(rawMap: ExistingRawSourceMap, file: string): SourceMap;
 ```
 
 ### CSS Options
@@ -88,7 +77,7 @@ interface CSSOptions {
   /** Enable sourcemaps in dev */
   devSourcemap?: boolean;
   /** Minify CSS */
-  minify?: boolean | 'esbuild' | 'lightningcss';
+  minify?: boolean | "esbuild" | "lightningcss";
   /** Lightning CSS options */
   lightningcss?: LightningCSSOptions;
 }
@@ -97,7 +86,7 @@ interface ResolvedCSSOptions extends CSSOptions {
   modules: CSSModulesOptions | false;
   preprocessorOptions: {
     sass: SassPreprocessorOptions;
-    scss: SassPreprocessorOptions; 
+    scss: SassPreprocessorOptions;
     less: LessPreprocessorOptions;
     stylus: StylusPreprocessorOptions;
   };
@@ -113,7 +102,7 @@ Configure CSS modules for scoped styling and class name generation.
 ```typescript { .api }
 interface CSSModulesOptions {
   /** Scoped names pattern */
-  scopeBehaviour?: 'global' | 'local';
+  scopeBehaviour?: "global" | "local";
   /** Global modules pattern */
   globalModulePaths?: RegExp[];
   /** Exported globals */
@@ -123,7 +112,7 @@ interface CSSModulesOptions {
   /** Hash prefix */
   hashPrefix?: string;
   /** Locales path */
-  localsConvention?: 'camelCase' | 'camelCaseOnly' | 'dashes' | 'dashesOnly';
+  localsConvention?: "camelCase" | "camelCaseOnly" | "dashes" | "dashesOnly";
 }
 ```
 
@@ -134,9 +123,9 @@ interface CSSModulesOptions {
 export default defineConfig({
   css: {
     modules: {
-      scopeBehaviour: 'local',
-      generateScopedName: '[name]__[local]___[hash:base64:5]',
-      localsConvention: 'camelCaseOnly'
+      scopeBehaviour: "local",
+      generateScopedName: "[name]__[local]___[hash:base64:5]",
+      localsConvention: "camelCaseOnly"
     }
   }
 });
@@ -145,8 +134,8 @@ export default defineConfig({
 // styles.module.css
 // .button-primary { color: blue; }
 
-// Component.tsx  
-import styles from './styles.module.css';
+// Component.tsx
+import styles from "./styles.module.css";
 console.log(styles.buttonPrimary); // 'Button__button-primary___2h8kJ'
 ```
 
@@ -169,7 +158,7 @@ type SassPreprocessorOptions = {
   /** Custom functions */
   functions?: Record<string, any>;
   /** Output style */
-  outputStyle?: 'nested' | 'expanded' | 'compact' | 'compressed';
+  outputStyle?: "nested" | "expanded" | "compact" | "compressed";
   /** Source map */
   sourceMap?: boolean;
   /** Source map contents */
@@ -190,7 +179,7 @@ type LessPreprocessorOptions = {
   /** Additional data to prepend */
   additionalData?: string | ((source: string, filename: string) => string);
   /** Math mode */
-  math?: 'always' | 'strict' | 'parens-division' | 'parens' | 'strict-legacy' | number;
+  math?: "always" | "strict" | "parens-division" | "parens" | "strict-legacy" | number;
   /** Include paths */
   paths?: string[];
   /** Global variables */
@@ -256,26 +245,23 @@ type PostCSSOptions = {
 **Usage Examples:**
 
 ```typescript
-import autoprefixer from 'autoprefixer';
-import tailwindcss from 'tailwindcss';
+import autoprefixer from "autoprefixer";
+import tailwindcss from "tailwindcss";
 
 export default defineConfig({
   css: {
     postcss: {
-      plugins: [
-        tailwindcss(),
-        autoprefixer()
-      ]
+      plugins: [tailwindcss(), autoprefixer()]
     },
     preprocessorOptions: {
       scss: {
         additionalData: `@import "@/styles/variables.scss";`,
-        includePaths: ['node_modules', 'src/styles']
+        includePaths: ["node_modules", "src/styles"]
       },
       less: {
         globalVars: {
-          'primary-color': '#1890ff',
-          'border-radius': '4px'
+          "primary-color": "#1890ff",
+          "border-radius": "4px"
         }
       }
     }
@@ -352,7 +338,7 @@ interface LightningCSSOptions {
   targets?: string | string[] | Record<string, any>;
   /** Include features */
   include?: number;
-  /** Exclude features */  
+  /** Exclude features */
   exclude?: number;
   /** Draft features */
   drafts?: {

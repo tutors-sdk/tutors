@@ -103,7 +103,7 @@ export const themeService: ThemeService = {
     if (!theme) {
       theme = "tutors";
     }
-    if (themeService.themes.find((theme) => theme.name === this.currentTheme.value)) {
+    if (themeService.themes.find((t) => t.name === theme)) {
       this.currentTheme.value = theme;
     } else {
       this.currentTheme.value = "tutors";

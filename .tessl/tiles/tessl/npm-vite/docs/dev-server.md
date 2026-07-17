@@ -32,7 +32,7 @@ interface ViteDevServer {
   /** Plugin container */
   pluginContainer: PluginContainer;
   /** Module execution environments */
-  environments: Record<'client' | 'ssr' | (string & {}), DevEnvironment>;
+  environments: Record<"client" | "ssr" | (string & {}), DevEnvironment>;
   /** Module graph for tracking dependencies */
   moduleGraph: ModuleGraph;
   /** Resolved server URLs */
@@ -75,18 +75,18 @@ import { createServer } from "vite";
 const server = await createServer({
   server: {
     port: 3000,
-    host: 'localhost'
+    host: "localhost"
   }
 });
 
 await server.listen();
-console.log('Server running at:', server.resolvedUrls?.local[0]);
+console.log("Server running at:", server.resolvedUrls?.local[0]);
 
 // Server with middleware
 const server2 = await createServer();
-server2.middlewares.use('/api', (req, res, next) => {
-  if (req.url === '/api/health') {
-    res.end('OK');
+server2.middlewares.use("/api", (req, res, next) => {
+  if (req.url === "/api/health") {
+    res.end("OK");
   } else {
     next();
   }
@@ -128,7 +128,7 @@ interface ServerOptions {
   /** Watch options */
   watch?: WatchOptions;
   /** Middleware mode */
-  middlewareMode?: boolean | 'html' | 'ssr';
+  middlewareMode?: boolean | "html" | "ssr";
   /** Middleware options */
   middlewareOptions?: {
     /** Base path for middleware */
@@ -146,7 +146,7 @@ interface ResolvedServerOptions extends ServerOptions {
   fs: Required<FileSystemServeOptions>;
   hmr: HmrOptions | boolean;
   watch: WatchOptions;
-  middlewareMode: boolean | 'html' | 'ssr';
+  middlewareMode: boolean | "html" | "ssr";
 }
 ```
 
@@ -163,7 +163,7 @@ interface FileSystemServeOptions {
   /** Deny patterns */
   deny?: string[];
   /** Case sensitive file names */
-  caseSensitive?: boolean | 'auto';
+  caseSensitive?: boolean | "auto";
 }
 
 /**
@@ -176,7 +176,7 @@ function isFileServingAllowed(filename: string, server: ViteDevServer): boolean;
 
 /**
  * Check if file loading is allowed
- * @param filename - File path to check  
+ * @param filename - File path to check
  * @param server - Vite dev server instance
  * @returns Whether file can be loaded
  */
@@ -231,18 +231,12 @@ Send HTTP responses with proper headers and caching.
 /**
  * Send HTTP response with appropriate headers
  * @param req - HTTP request
- * @param res - HTTP response  
+ * @param res - HTTP response
  * @param content - Response content
  * @param type - Content type
  * @param options - Send options
  */
-function send(
-  req: IncomingMessage,
-  res: ServerResponse,
-  content: string | Buffer,
-  type: string,
-  options: SendOptions
-): void;
+function send(req: IncomingMessage, res: ServerResponse, content: string | Buffer, type: string, options: SendOptions): void;
 
 interface SendOptions {
   /** Enable etag header */
@@ -278,9 +272,7 @@ interface OpenOptions {
   wait?: boolean;
 }
 
-type ServerHook = (
-  server: ViteDevServer
-) => (() => void) | void | Promise<(() => void) | void>;
+type ServerHook = (server: ViteDevServer) => (() => void) | void | Promise<(() => void) | void>;
 
 interface CommonServerOptions {
   /** Server port */

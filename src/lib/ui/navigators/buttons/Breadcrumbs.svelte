@@ -2,6 +2,7 @@
   import type { Lo } from "@tutors/tutors-model-lib";
   import Icon from "$lib/ui/components/Icon.svelte";
   import TutorsIcon from "$lib/ui/components/TutorsIcon.svelte";
+  import { t } from "$lib/services/i18n";
 
   let { lo, parentCourse = null } = $props();
 
@@ -23,6 +24,7 @@
   }
 </script>
 
+<nav aria-label={t("a11y.breadcrumbs")}>
 <div class="mx-8 my-2 flex items-center overflow-hidden p-1">
   <ol class="flex w-full items-center gap-2 min-w-0">
     <li class="flex items-center">
@@ -62,3 +64,4 @@
     {/if}
   </ol>
 </div>
+</nav>

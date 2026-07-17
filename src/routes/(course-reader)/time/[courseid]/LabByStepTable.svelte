@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { LabRow, LabMedianRow } from "@tutors/tutors-time-lib";
   import { extractStepName, formatTimeMinutesOnly, cellColorForMinutes } from "@tutors/tutors-time-lib";
+  import { t } from "$lib/services/i18n";
 
   interface Props {
     courseid: string;
@@ -20,13 +21,13 @@
 
 {#if labsByStep}
   <section class="card p-6">
-    <h2 class="text-2xl font-semibold mb-4">Lab Activity by Step</h2>
+    <h2 class="text-2xl font-semibold mb-4">{t("time.labByStep")}</h2>
     <div class="overflow-x-auto">
       <table class="w-full border-collapse" style="table-layout: fixed;">
         <thead>
           <tr class="border-b-2 border-surface-300">
-            <th class="text-left py-4 px-4 font-semibold" style="width: 160px;">Name</th>
-            <th class="text-left py-4 px-4 font-semibold" style="width: 120px;">Github</th>
+            <th class="text-left py-4 px-4 font-semibold" style="width: 160px;">{t("time.name")}</th>
+            <th class="text-left py-4 px-4 font-semibold" style="width: 120px;">{t("time.github")}</th>
             {#each stepColumns as stepId}
               <th class="text-center py-4 px-1 font-semibold align-middle" style="width: 36px; min-width: 36px; max-width: 36px; height: 140px; overflow: hidden;">
                 <div class="transform -rotate-90 whitespace-nowrap text-xs" style="height: 100%; display: flex; align-items: center; justify-content: center;">
@@ -34,7 +35,7 @@
                 </div>
               </th>
             {/each}
-            <th class="text-right py-4 px-4 font-semibold">Total</th>
+            <th class="text-right py-4 px-4 font-semibold">{t("time.total")}</th>
           </tr>
         </thead>
         <tbody>
@@ -61,11 +62,14 @@
           <!-- Median Row -->
           {#if medianRow}
             <tr class="border-b-2 border-surface-300 bg-surface-100">
-              <td class="py-3 px-4 font-semibold" style="width: 160px;">Course Median</td>
+              <td class="py-3 px-4 font-semibold" style="width: 160px;">{t("time.median")}</td>
               <td class="py-3 px-4" style="width: 120px;">—</td>
               {#each stepColumns as stepId}
                 {@const stepMinutes = medianRow[stepId] as number | undefined}
-                <td class="py-3 px-1 text-center font-mono text-xs" style="width: 36px; min-width: 36px; max-width: 36px; background-color: {cellColorForMinutes(stepMinutes ?? 0)}">
+                <td
+                  class="py-3 px-1 text-center font-mono text-xs"
+                  style="width: 36px; min-width: 36px; max-width: 36px; background-color: {cellColorForMinutes(stepMinutes ?? 0)}"
+                >
                   {formatLabTime(stepMinutes)}
                 </td>
               {/each}

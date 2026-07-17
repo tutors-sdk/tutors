@@ -9,6 +9,8 @@
   import { currentLo } from "$lib/runes.svelte";
   import { currentCodeTheme } from "$lib/services/markdown";
   import Icon from "$lib/ui/components/Icon.svelte";
+  import { t } from "$lib/services/i18n";
+  import { sanitizeHtml } from "$lib/utils/sanitize";
 
   interface Props {
     data: PageData;
@@ -49,7 +51,7 @@
         resultStrs.push("~~~");
       }
       result.html = convertMdToHtml(resultStrs.join("\n"), currentCodeTheme.value);
-      result.link = `https://tutors.dev/${result.link}`;
+      result.link = `/${result.link}`;
     });
   }
 
@@ -73,11 +75,11 @@
 </script>
 
 <div class="card container mx-auto mb-4 p-4">
-  <label for="search" class="label"><span>Enter search term:</span></label>
+  <label for="search" class="label"><span>{t("course.search.label")}</span></label>
   <div class="flex items-center gap-2">
     <button onclick={performSearch} class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary flex items-center gap-2 rounded-lg p-3 text-sm font-bold">
-      <Icon type="search" tip="Search this course" />
-      <span class="hidden lg:block">Search</span>
+      <Icon type="search" tip={t("nav.search.tip")} />
+      <span class="hidden lg:block">{t("course.search.button")}</span>
     </button>
     <input
       bind:value={searchTerm}
@@ -95,7 +97,7 @@
       <div class="card m-1 w-full border p-4">
         <div>
           <div class="prose dark:prose-invert">
-            {@html result.html}
+            {@html sanitizeHtml(result.html ?? "")}
           </div>
           <div class="pt-4 text-right text-sm">
             <a rel="noopener noreferrer" href={result.link} target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300">

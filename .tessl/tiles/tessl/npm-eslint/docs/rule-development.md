@@ -204,12 +204,14 @@ ruleTester.run("no-var", noVarRule, {
     {
       code: "var x = 1;",
       output: "let x = 1;",
-      errors: [{
-        messageId: "unexpectedVar",
-        type: "VariableDeclaration",
-        line: 1,
-        column: 1
-      }]
+      errors: [
+        {
+          messageId: "unexpectedVar",
+          type: "VariableDeclaration",
+          line: 1,
+          column: 1
+        }
+      ]
     },
     {
       code: "var a = 1, b = 2;",
@@ -372,19 +374,21 @@ ruleTester.run("rule-with-suggestions", rule, {
   invalid: [
     {
       code: "problematic code",
-      errors: [{
-        messageId: "problemFound",
-        suggestions: [
-          {
-            messageId: "suggestion1",
-            output: "fixed code option 1"
-          },
-          {
-            messageId: "suggestion2", 
-            output: "fixed code option 2"
-          }
-        ]
-      }]
+      errors: [
+        {
+          messageId: "problemFound",
+          suggestions: [
+            {
+              messageId: "suggestion1",
+              output: "fixed code option 1"
+            },
+            {
+              messageId: "suggestion2",
+              output: "fixed code option 2"
+            }
+          ]
+        }
+      ]
     }
   ]
 });
@@ -402,13 +406,15 @@ ruleTester.run("precise-location-rule", rule, {
           var problematic = 'issue here';
         }
       `,
-      errors: [{
-        message: "Problematic code found",
-        line: 3,
-        column: 11,
-        endLine: 3,
-        endColumn: 22
-      }]
+      errors: [
+        {
+          message: "Problematic code found",
+          line: 3,
+          column: 11,
+          endLine: 3,
+          endColumn: 22
+        }
+      ]
     }
   ]
 });
