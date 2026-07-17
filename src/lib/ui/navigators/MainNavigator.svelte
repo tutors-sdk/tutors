@@ -13,8 +13,10 @@
   import CalendarButton from "./buttons/CalendarButton.svelte";
   import CourseSentimentButton from "./buttons/CourseSentimentButton.svelte";
   import { currentCourse, tutorsId } from "$lib/runes.svelte";
+  import { t } from "$lib/services/i18n";
 </script>
 
+<nav aria-label={t("a11y.mainNavigation")}>
 <AppBar>
   <AppBar.Toolbar class="grid-cols-[auto_1fr_auto]">
     <AppBar.Lead>
@@ -76,3 +78,4 @@
     </AppBar.Trail>
   </AppBar.Toolbar>
 </AppBar>
+</nav>

@@ -3,6 +3,7 @@
   import Icon from "$lib/ui/components/Icon.svelte";
   import { tutorsId } from "$lib/runes.svelte";
   import { tutorsConnectService, COURSE_SENTIMENT_IDS, type CourseSentimentId } from "$lib/services/connect";
+  import { t } from "$lib/services/i18n";
 
   let menuOpen = $state(false);
   let selected = $state<CourseSentimentId>("neutral");
@@ -23,8 +24,11 @@
 </script>
 
 <Popover open={menuOpen} onOpenChange={(d) => (menuOpen = d.open)}>
-  <Popover.Trigger class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary inline-flex items-center rounded-lg p-2" aria-label={` ${selected}. Open menu to change.`}>
-    <Icon type={selected} tip={`Course sentiment — ${selected}.`} height="28" />
+  <Popover.Trigger
+    class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary inline-flex items-center rounded-lg p-2"
+    aria-label={`${t("content.sentimentLabel")}: ${selected}. ${t("content.sentimentOpen")}`}
+  >
+    <Icon type={selected} tip={`${t("content.sentiment")} — ${selected}.`} height="28" />
   </Popover.Trigger>
   <Portal>
     <Popover.Positioner>

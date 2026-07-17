@@ -1,0 +1,144 @@
+const es: Record<string, string> = {
+  // Navigation
+  "nav.search": "Buscar",
+  "nav.search.exit": "Salir de la busqueda",
+  "nav.search.tip": "Buscar en este curso",
+  "nav.layout": "Diseno",
+  "nav.layout.options": "Opciones de diseno",
+  "nav.layout.appearance": "Apariencia",
+  "nav.layout.cardStyle": "Estilo de tarjeta",
+  "nav.layout.theme": "Tema",
+  "nav.layout.codeStyle": "Estilo de codigo",
+  "nav.layout.layout": "Disposicion",
+  "nav.layout.language": "Idioma",
+  "nav.layout.tip": "Abrir menu de tema",
+  "nav.info.title": "Info del curso",
+  "nav.info.tip": "Abrir info del curso",
+  "nav.toc.suffix": "Arbol del curso",
+  "nav.toc.tip": "Abrir arbol del curso",
+  "nav.calendar.label": "Semana actual",
+  "nav.calendar.tip": "Ver calendario de este curso",
+  "nav.online.view": "Ver",
+  "nav.online.online": "En linea",
+  "nav.llms.tip": "Una version de este curso para LLMs",
+  "nav.time.tip": "Este curso utiliza Tutors Time",
+  "nav.edit.tip": "Editar este curso",
+  "nav.context.collapseAll": "Contraer todo",
+  "nav.context.expandAll": "Expandir todo",
+  "nav.breadcrumbs.goHome": "Ir a la pagina principal del curso",
+  "nav.breadcrumbs.goTo": "Ir a",
+
+  // Profile menus
+  "menu.anonName": "Perfil anonimo de Tutors",
+  "menu.connect": "Conectar",
+  "menu.home": "Inicio",
+  "menu.sharePresence": "Compartir presencia",
+  "menu.tutorsTime": "Tutors Time",
+  "menu.educatorTime": "(Tiempo educador)",
+  "menu.tutorsLive": "Tutors Live",
+  "menu.dashboard": "Panel de control",
+  "menu.githubProfile": "Perfil de Github",
+  "menu.disconnect": "Desconectar",
+
+  // Home page
+  "home.title": "Tutors:",
+  "home.titleAn": "Un",
+  "home.openLearning": "Aprendizaje abierto",
+  "home.webToolkit": "Kit de herramientas web",
+  "home.description": "Componentes y servicios de codigo abierto que apoyan la creacion de experiencias de aprendizaje utilizando estandares web. Desarrollado en",
+  "home.setu": "SETU",
+  "home.location": ", Waterford, Irlanda.",
+  "home.docs": "Docs",
+  "home.source": "Codigo fuente",
+  "home.catalogue": "Catalogo",
+  "home.live": "En vivo",
+  "home.connectedAs": "Conectado como:",
+  "home.favourites": "Favoritos",
+  "home.recentlyAccessed": "Accedidos recientemente",
+  "home.values.title": "Los <span class=\"font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone\">Valores</span> del proyecto",
+  "home.developer.title": "Experiencia del desarrollador",
+  "home.developer.description": "La <b>Experiencia del desarrollador</b> prioriza la especificacion e implementacion de <b>componentes y servicios robustos, bien documentados y de bajo acoplamiento</b>, integrados en un <b>conjunto de herramientas coherente</b> abierto a contribuciones de <b>diversas habilidades</b>.",
+  "home.educator.title": "Experiencia del educador",
+  "home.educator.description": "La <b>Experiencia del educador</b> prioriza la creacion de <b>rutas guiadas</b> a traves de un curriculo mediante la creacion de materiales didacticos que son <b>autonomos, estructuralmente alineados, componibles, auditables, extensibles, versionados</b> y <b>independientes</b>.",
+  "home.learner.title": "Experiencia del estudiante",
+  "home.learner.description": "La <b>Experiencia del estudiante</b> prioriza las interacciones web que son <b>atractivas, contextuales, enlazables, buscables, accesibles</b> y <b>responsivas</b>. Ademas, la experiencia debe fomentar un sentido de <b>comunidad</b> y <b>conexion</b> entre los estudiantes.",
+  "home.credits.title": "Un proyecto completamente <span class=\"font-bold !text-5xl inline-block bg-gradient-to-br from-primary-500 to-secondary-500 bg-clip-text text-transparent box-decoration-clone\">Open Source</span>",
+  "home.credits.description": "Tutors es un proyecto de codigo abierto disponible de forma gratuita en GitHub bajo la licencia MIT.",
+  "home.credits.viewSource": "Ver codigo fuente",
+
+  // Course reader
+  "course.search.label": "Ingrese un termino de busqueda:",
+  "course.search.button": "Buscar",
+  "course.visitCard.lastAccessed": "Ultimo acceso:",
+  "course.visitCard.visits": "Visitas:",
+  "course.visitCard.visitCourse": "Visitar curso",
+  "course.visitCard.delete": "Eliminar",
+  "course.visitCard.star": "Marcar como favorito",
+  "course.visitCard.unstar": "Quitar de favoritos",
+  "course.title.fallback": "Tutors",
+
+  // Live page
+  "live.onlineNow": "En linea ahora",
+  "live.latestActivity": "Ultima actividad",
+  "live.today": "Hoy",
+  "live.thisWeek": "Esta semana",
+  "live.thisMonth": "Este mes",
+  "live.thisYear": "Este ano",
+  "live.emptyOnline": "No hay estudiantes en linea para este curso en este momento.",
+  "live.emptyToday": "No hay actividad registrada hoy para este curso.",
+  "live.emptyWeek": "No hay actividad anterior esta semana para este curso.",
+  "live.emptyMonth": "No hay actividad anterior este mes para este curso.",
+  "live.emptyYear": "No hay actividad anterior este ano para este curso.",
+  "live.catalogue.totals": "Totales:",
+
+  // Auth
+  "auth.signIn": "Inicio de sesion en Tutors",
+  "auth.signInWithGithub": "Iniciar sesion con GitHub",
+
+  // Time tables
+  "time.name": "Nombre",
+  "time.github": "Github",
+  "time.total": "Total",
+  "time.median": "Mediana del curso",
+  "time.calendarByDay": "Actividad del calendario por dia",
+  "time.labByStep": "Actividad del lab por paso",
+  "time.labByLab": "Actividad del lab por lab",
+  "time.calendarByWeek": "Actividad del calendario por semana",
+
+  // Content
+  "content.slideOf": "de",
+  "content.slideBack": "Diapositiva anterior",
+  "content.slideForward": "Diapositiva siguiente",
+  "content.slideRotate": "Rotar diapositiva 90 grados",
+  "content.slideDownload": "Descargar",
+  "content.slideFullScreen": "Pantalla completa",
+  "content.weekNo": "Sem. No.",
+  "content.type": "Tipo",
+  "content.dateStarts": "Fecha de inicio",
+  "content.sentiment": "Sentimiento del curso",
+  "content.sentimentOpen": "Abrir menu para cambiar.",
+  "content.sentimentLabel": "Sentimiento",
+
+  // Footer
+  "footer.version": "Tutors v:",
+  "footer.message": "Un [Kit de herramientas de aprendizaje web abierto](/course/tutors-reference-manual): Explore el [Catalogo de Tutors](/catalogue)",
+  "footer.sponsorsAlt": "patrocinadores",
+  "footer.setuAlt": "South East Technological University",
+
+  // Error page
+  "error.fallback": "Ha ocurrido un error inesperado",
+  "error.goHome": "Inicio",
+
+  // Not found
+  "notFound.title": "No encontrado",
+
+  // Accessibility
+  "a11y.skipToContent": "Ir al contenido",
+  "a11y.mainNavigation": "Navegacion principal",
+  "a11y.breadcrumbs": "Migas de pan",
+  "a11y.secondaryNavigation": "Navegacion secundaria",
+  "a11y.sidebar": "Barra lateral",
+  "a11y.footer": "Pie de pagina"
+};
+
+export default es;

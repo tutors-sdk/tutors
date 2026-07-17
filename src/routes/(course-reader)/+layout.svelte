@@ -27,6 +27,7 @@
     if (elemPage && window.innerWidth >= 600) {
       elemPage.scrollIntoView({ behavior: "smooth", block: "start" });
     }
+    document.getElementById("main-content")?.focus();
   });
 </script>
 

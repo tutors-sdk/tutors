@@ -4,6 +4,7 @@ export const load = async ({ locals }) => {
   const user = session?.user;
   return {
     loggedIn,
-    user
+    user,
+    locale: locals.locale
   };
 };
