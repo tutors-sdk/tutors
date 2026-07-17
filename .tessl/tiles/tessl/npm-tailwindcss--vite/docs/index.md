@@ -24,7 +24,7 @@ const tailwindcss = require("@tailwindcss/vite").default;
 When working with Vite plugin types:
 
 ```typescript
-import type { Plugin, ResolvedConfig, ViteDevServer } from 'vite';
+import type { Plugin, ResolvedConfig, ViteDevServer } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 ```
 
@@ -36,9 +36,9 @@ import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   plugins: [
-    tailwindcss(),
+    tailwindcss()
     // ... other plugins
-  ],
+  ]
 });
 ```
 
@@ -74,8 +74,8 @@ export default tailwindcss;
 // Types imported from 'vite' package
 interface Plugin {
   name: string;
-  enforce?: 'pre' | 'post';
-  apply?: 'build' | 'serve' | ((config: any, env: { command: string, mode: string }) => boolean);
+  enforce?: "pre" | "post";
+  apply?: "build" | "serve" | ((config: any, env: { command: string; mode: string }) => boolean);
   configureServer?: (server: ViteDevServer) => void;
   configResolved?: (config: ResolvedConfig) => void;
   transform?: (code: string, id: string, options?: any) => any | Promise<any>;

@@ -9,6 +9,7 @@ import { markdownService } from "$lib/services/markdown";
 import { courseProtocol, currentCourse, currentLo, rune } from "$lib/runes.svelte";
 import type { CourseService, LabService } from "../types";
 import { decorateCourseTree, determineCourseUrl } from "./lo-tree";
+import log from "$lib/services/logger";
 
 export const courseService: CourseService = {
   /** Cache of loaded courses indexed by courseId */
@@ -17,6 +18,8 @@ export const courseService: CourseService = {
   labs: new Map<string, LiveLab>(),
   /** Cache of processed notes indexed by noteId */
   notes: new Map<string, Note>(),
+  /** Cache of processed notebooks indexed by notebookId */
+  notebooks: new Map<string, Lo>(),
   /** Current course URL */
   courseUrl: rune(""),
 
@@ -43,8 +46,8 @@ export const courseService: CourseService = {
         decorateCourseTree(course, courseId, courseUrl);
         this.courses.set(courseId, course);
       } catch (error) {
-        console.error(`Error fetching from URL: https://${courseUrl}/tutors.json`);
-        console.error(error);
+        log.error(`Error fetching from URL: https://${courseUrl}/tutors.json`);
+        log.error(error);
         throw error;
       }
     }
@@ -79,7 +82,7 @@ export const courseService: CourseService = {
     if (topic) {
       currentLo.value = topic;
     }
-    return topic!;
+    return topic ?? course;
   },
 
   /**
@@ -119,7 +122,7 @@ export const courseService: CourseService = {
   async readWall(courseId: string, type: string, fetchFunction: typeof fetch): Promise<Lo[]> {
     const course = await this.readCourse(courseId, fetchFunction);
     const wall = course.wallMap?.get(type);
-    return wall!;
+    return wall ?? [];
   },
 
   /**
@@ -141,7 +144,13 @@ export const courseService: CourseService = {
         this.notes.set(loId, lo as Note);
       }
     }
-    return lo!;
+    if (lo?.type === "notebook") {
+      if (!this.notebooks.has(loId)) {
+        markdownService.convertNotebookToHtml(course, lo);
+        this.notebooks.set(loId, lo);
+      }
+    }
+    return lo ?? course;
   },
 
   /**
@@ -155,6 +164,9 @@ export const courseService: CourseService = {
     }
     for (const note of this.notes.values()) {
       markdownService.convertNoteToHtml(currentCourse.value!, note, true);
+    }
+    for (const notebook of this.notebooks.values()) {
+      markdownService.convertNotebookToHtml(currentCourse.value!, notebook, true);
     }
   }
 };

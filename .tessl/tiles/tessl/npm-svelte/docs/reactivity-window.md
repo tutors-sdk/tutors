@@ -16,7 +16,7 @@ Reactive values for window size properties.
 const innerWidth: ReactiveValue<number | undefined>;
 
 /**
- * Reactive view of window.innerHeight  
+ * Reactive view of window.innerHeight
  * @since 5.11.0
  */
 const innerHeight: ReactiveValue<number | undefined>;
@@ -45,11 +45,7 @@ const isMediumScreen = $derived(innerWidth.current >= 768 && innerWidth.current 
 const isLargeScreen = $derived(innerWidth.current >= 1024);
 
 // Aspect ratio calculations
-const aspectRatio = $derived(
-  innerWidth.current && innerHeight.current 
-    ? innerWidth.current / innerHeight.current 
-    : 16/9
-);
+const aspectRatio = $derived(innerWidth.current && innerHeight.current ? innerWidth.current / innerHeight.current : 16 / 9);
 
 // Window size for canvas or dynamic layouts
 let canvas;
@@ -103,10 +99,10 @@ const windowPosition = $derived({
 $effect(() => {
   const x = screenLeft.current;
   const y = screenTop.current;
-  
+
   if (x !== undefined && y !== undefined) {
     console.log(`Window moved to (${x}, ${y})`);
-    
+
     // Adjust behavior based on screen position
     if (x < 0 || y < 0) {
       console.log("Window is on a secondary monitor");
@@ -169,13 +165,13 @@ let scrollDirection = $state("up");
 
 $effect(() => {
   const currentScrollY = scrollY.current || 0;
-  
+
   if (currentScrollY > lastScrollY) {
     scrollDirection = "down";
   } else if (currentScrollY < lastScrollY) {
     scrollDirection = "up";
   }
-  
+
   lastScrollY = currentScrollY;
 });
 ```
@@ -260,13 +256,13 @@ $effect(() => {
   if (canvas && ctx) {
     const ratio = devicePixelRatio.current || 1;
     const rect = canvas.getBoundingClientRect();
-    
+
     // Scale canvas for high DPI displays
     canvas.width = rect.width * ratio;
     canvas.height = rect.height * ratio;
-    
+
     ctx.scale(ratio, ratio);
-    
+
     // Redraw with high DPI scaling
     redrawCanvas();
   }
@@ -275,7 +271,7 @@ $effect(() => {
 // Image loading based on pixel density
 const imageSource = $derived(() => {
   const ratio = devicePixelRatio.current || 1;
-  
+
   if (ratio >= 3) {
     return "image@3x.jpg";
   } else if (ratio >= 2) {
@@ -329,14 +325,14 @@ import { innerWidth } from "svelte/reactivity/window";
 
 const breakpoints = {
   sm: 640,
-  md: 768, 
+  md: 768,
   lg: 1024,
   xl: 1280
 };
 
 const screen = $derived(() => {
   const width = innerWidth.current || 1024;
-  
+
   if (width >= breakpoints.xl) return "xl";
   if (width >= breakpoints.lg) return "lg";
   if (width >= breakpoints.md) return "md";
@@ -355,16 +351,16 @@ let activeSection = $state(0);
 
 $effect(() => {
   const currentScroll = scrollY.current || 0;
-  
+
   // Find active section based on scroll position
   const active = sections.findIndex((section, index) => {
     const nextSection = sections[index + 1];
     const sectionTop = section.offsetTop;
     const sectionBottom = nextSection ? nextSection.offsetTop : document.body.scrollHeight;
-    
+
     return currentScroll >= sectionTop - 100 && currentScroll < sectionBottom - 100;
   });
-  
+
   if (active !== -1) {
     activeSection = active;
   }

@@ -17,7 +17,7 @@ Creates a Svelte preprocessor that integrates with Vite's transformation pipelin
 function vitePreprocess(opts?: VitePreprocessOptions): PreprocessorGroup;
 
 interface VitePreprocessOptions {
-  /** 
+  /**
    * Preprocess script blocks with vite pipeline
    * Since Svelte 5 this is not needed for TypeScript anymore
    * @default false
@@ -74,7 +74,7 @@ Configure TypeScript and JavaScript preprocessing for script blocks.
 
 ```typescript { .api }
 interface ScriptProcessingOptions {
-  /** 
+  /**
    * Enable script block preprocessing
    * Note: Since Svelte 5, TypeScript is handled natively and this is usually not needed
    * @default false
@@ -110,9 +110,9 @@ export default {
     name: string;
     age: number;
   }
-  
+
   export let user: User;
-  
+
   // TypeScript features work natively
   const displayName: string = user.name.toUpperCase();
 </script>
@@ -131,7 +131,7 @@ Configure CSS, PostCSS, Sass, and other style preprocessing.
 
 ```typescript { .api }
 interface StyleProcessingOptions {
-  /** 
+  /**
    * Enable and configure style block preprocessing
    * - boolean: enable/disable with default Vite config
    * - InlineConfig: provide specific Vite configuration
@@ -198,11 +198,11 @@ export default {
   .card {
     padding: 1rem;
     border-radius: 0.5rem;
-    
+
     &:hover {
       transform: scale(1.02);
     }
-    
+
     .title {
       font-size: 1.25rem;
       font-weight: bold;
@@ -213,13 +213,13 @@ export default {
 <!-- Sass/SCSS -->
 <style lang="scss">
   $primary-color: #3498db;
-  
+
   .button {
     background-color: $primary-color;
     padding: 0.5rem 1rem;
     border: none;
     border-radius: 0.25rem;
-    
+
     &:hover {
       background-color: darken($primary-color, 10%);
     }
@@ -230,7 +230,7 @@ export default {
 <style>
   @import 'modern-normalize';
   @import './component-styles.css';
-  
+
   .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -243,6 +243,13 @@ export default {
 Support for CSS modules and scoped styles.
 
 ```svelte
+<script>
+  // Access CSS module classes
+  export let styles;
+</script>
+
+<button class={styles.button}>Click me</button>
+
 <!-- CSS Modules -->
 <style module>
   .button {
@@ -250,13 +257,6 @@ Support for CSS modules and scoped styles.
     color: white;
   }
 </style>
-
-<script>
-  // Access CSS module classes
-  export let styles;
-</script>
-
-<button class={styles.button}>Click me</button>
 ```
 
 ### Style Dependencies and Imports
@@ -266,12 +266,12 @@ Handle CSS dependencies and asset imports.
 ```svelte
 <!-- Import external stylesheets -->
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-  @import '../styles/global.css';
-  
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+  @import "../styles/global.css";
+
   /* Local asset imports work through Vite */
   .background {
-    background-image: url('../assets/pattern.svg');
+    background-image: url("../assets/pattern.svg");
   }
 </style>
 ```
@@ -284,8 +284,8 @@ Coordinate preprocessing with your main Vite configuration.
 
 ```javascript
 // vite.config.js
-import { defineConfig } from 'vite';
-import { svelte } from '@sveltejs/vite-plugin-svelte';
+import { defineConfig } from "vite";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
 
 export default defineConfig({
   css: {
@@ -312,14 +312,14 @@ Combine vitePreprocess with other Svelte preprocessors.
 
 ```javascript
 // svelte.config.js
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-import { mdsvex } from 'mdsvex';
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
+import { mdsvex } from "mdsvex";
 
 export default {
-  extensions: ['.svelte', '.md'],
+  extensions: [".svelte", ".md"],
   preprocess: [
     mdsvex({
-      extensions: ['.md']
+      extensions: [".md"]
     }),
     vitePreprocess({
       style: true
@@ -334,9 +334,9 @@ Different preprocessing settings for different environments.
 
 ```javascript
 // svelte.config.js
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 
-const dev = process.env.NODE_ENV === 'development';
+const dev = process.env.NODE_ENV === "development";
 
 export default {
   preprocess: vitePreprocess({

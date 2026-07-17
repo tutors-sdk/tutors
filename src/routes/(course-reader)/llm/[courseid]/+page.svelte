@@ -4,6 +4,7 @@
   import { convertMdToHtml } from "@tutors/tutors-model-lib";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
   import type { PageData } from "./$types";
+  import { sanitizeHtml } from "$lib/utils/sanitize";
 
   interface Props {
     data: PageData;
@@ -28,8 +29,8 @@ Tutors supports the [llms.txt](https://llmstxt.org/) convention for making docum
 <div class="container mx-auto mt-2 items-center justify-between lg:flex">
   <div class="mx-4">
     <div class="prose dark:prose-invert">
-      {@html headdingHtml}
-      {@html data.llmsLinks}
+      {@html sanitizeHtml(headdingHtml ?? "")}
+      {@html sanitizeHtml(data.llmsLinks ?? "")}
     </div>
   </div>
 </div>

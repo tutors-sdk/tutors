@@ -33,7 +33,6 @@
   let adobeDCView: any = null;
   let mounted = false;
   let viewerId = `adobe-pdf-viewer-${Math.random().toString(36).substr(2, 9)}`;
-  // let viewerId = "adobe-pdf-viewer";
 
   function loadSDK() {
     if (!adobeLoaded.value) {
@@ -64,7 +63,6 @@
   }
 
   $effect(() => {
-    console.log(page.data?.lo?.pdf);
     if (mounted && page.data?.lo?.pdf) {
       displayPDF();
     }

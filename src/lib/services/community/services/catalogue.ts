@@ -1,5 +1,6 @@
 import type { CatalogueEntry, CatalogueService } from "$lib/services/community";
 import { supabase } from "../utils/supabase-client";
+import log from "$lib/services/logger";
 
 export const catalogueService: CatalogueService = {
   async getCatalogue() {
@@ -13,7 +14,7 @@ export const catalogueService: CatalogueService = {
       const catalogue = data as Array<CatalogueEntry>;
       return catalogue;
     } catch (error) {
-      console.error("Error fetching courses:", error);
+      log.error("Error fetching courses:", error);
       return [];
     }
   },
@@ -28,7 +29,7 @@ export const catalogueService: CatalogueService = {
 
       return count || 0;
     } catch (error) {
-      console.error("Error fetching course count:", error);
+      log.error("Error fetching course count:", error);
       return 0;
     }
   },
@@ -43,14 +44,14 @@ export const catalogueService: CatalogueService = {
 
       return count || 0;
     } catch (error) {
-      console.error("Error fetching course count:", error);
+      log.error("Error fetching course count:", error);
       return 0;
     }
   },
 
   async pruneCatalogue(fetchFunction: typeof fetch) {
     const catalogue = await this.getCatalogue();
-    console.log(`Total courses: ${catalogue.length}`);
+    log.debug(`Total courses: ${catalogue.length}`);
     const invalidIds: string[] = [];
     for (const course of catalogue) {
       try {
@@ -63,8 +64,8 @@ export const catalogueService: CatalogueService = {
         invalidIds.push(course.course_id);
       }
     }
-    console.log(`Invalid IDs: ${invalidIds.join(", ")}`);
-    console.log(`Invalid count: ${invalidIds.length}`);
+    log.debug(`Invalid IDs: ${invalidIds.join(", ")}`);
+    log.debug(`Invalid count: ${invalidIds.length}`);
 
     if (invalidIds.length > 0) {
       await this.deleteCourses(invalidIds);
@@ -76,12 +77,12 @@ export const catalogueService: CatalogueService = {
       const { error } = await supabase.from("tutors-connect-courses").delete().in("course_id", courseIds);
 
       if (error) {
-        console.error("Error deleting courses:", error);
+        log.error("Error deleting courses:", error);
         throw error;
       }
-      console.log(`Successfully deleted ${courseIds.length} courses`);
+      log.debug(`Successfully deleted ${courseIds.length} courses`);
     } catch (error) {
-      console.error("Error in deleteCourses:", error);
+      log.error("Error in deleteCourses:", error);
       throw error;
     }
   }

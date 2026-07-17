@@ -8,6 +8,7 @@ import type { TutorsId } from "$lib/services/connect";
 import type { Course, Lo } from "@tutors/tutors-model-lib";
 import { storeStudentCourseLearningObjectInSupabase, updateLearningRecordsDuration, updateCalendarDuration, addOrUpdateStudent, formatDate } from "../utils/supabase-client";
 import type { AnalyticsService } from "../types.svelte";
+import log from "$lib/services/logger";
 
 export const analyticsService: AnalyticsService = {
   /** Current learning object route being tracked */
@@ -32,7 +33,7 @@ export const analyticsService: AnalyticsService = {
       }
       this.reportPageLoad(course, lo, student);
     } catch (error: any) {
-      console.log(`TutorStore Error: ${error.message}`);
+      log.error(`TutorStore Error: ${error.message}`);
     }
   },
 
@@ -47,7 +48,7 @@ export const analyticsService: AnalyticsService = {
     try {
       storeStudentCourseLearningObjectInSupabase(course, this.loRoute, lo, student);
     } catch (error: any) {
-      console.log(`TutorStore Error: ${error.message}`);
+      log.error(`TutorStore Error: ${error.message}`);
     }
   },
 
@@ -65,7 +66,7 @@ export const analyticsService: AnalyticsService = {
         updateCalendarDuration(formatDate(new Date()), student.login, course.courseId);
       }
     } catch (error: any) {
-      console.error(`TutorStore Error: ${error.message}`);
+      log.error(`TutorStore Error: ${error.message}`);
     }
   },
 
@@ -79,7 +80,7 @@ export const analyticsService: AnalyticsService = {
     try {
       await addOrUpdateStudent(session.user);
     } catch (error: any) {
-      console.log(`TutorStore Error: ${error.message}`);
+      log.error(`TutorStore Error: ${error.message}`);
     }
   }
 };

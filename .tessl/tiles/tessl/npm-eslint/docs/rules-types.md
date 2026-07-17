@@ -15,22 +15,30 @@ Complete type definitions for all ESLint rules with their configuration options.
  */
 interface ESLintRules extends Linter.RulesRecord {
   // 330+ individual rule definitions with typed options
-  "no-unused-vars": Linter.RuleEntry<[{
-    vars?: "all" | "local";
-    args?: "all" | "after-used" | "none";
-    ignoreRestSiblings?: boolean;
-    argsIgnorePattern?: string;
-    varsIgnorePattern?: string;
-    caughtErrors?: "all" | "none";
-    caughtErrorsIgnorePattern?: string;
-    destructuredArrayIgnorePattern?: string;
-  }]>;
-  
-  "prefer-const": Linter.RuleEntry<[{
-    destructuring?: "any" | "all";
-    ignoreReadBeforeAssign?: boolean;
-  }]>;
-  
+  "no-unused-vars": Linter.RuleEntry<
+    [
+      {
+        vars?: "all" | "local";
+        args?: "all" | "after-used" | "none";
+        ignoreRestSiblings?: boolean;
+        argsIgnorePattern?: string;
+        varsIgnorePattern?: string;
+        caughtErrors?: "all" | "none";
+        caughtErrorsIgnorePattern?: string;
+        destructuredArrayIgnorePattern?: string;
+      }
+    ]
+  >;
+
+  "prefer-const": Linter.RuleEntry<
+    [
+      {
+        destructuring?: "any" | "all";
+        ignoreReadBeforeAssign?: boolean;
+      }
+    ]
+  >;
+
   // ... 328+ more rule definitions
 }
 ```
@@ -42,16 +50,22 @@ import type { ESLintRules } from "eslint/rules";
 
 // Type-safe rule configuration
 const rules: Partial<ESLintRules> = {
-  "no-unused-vars": ["error", {
-    vars: "local",
-    args: "after-used",
-    ignoreRestSiblings: true
-  }],
-  "prefer-const": ["warn", {
-    destructuring: "all",
-    ignoreReadBeforeAssign: false
-  }],
-  "semi": ["error", "always"]
+  "no-unused-vars": [
+    "error",
+    {
+      vars: "local",
+      args: "after-used",
+      ignoreRestSiblings: true
+    }
+  ],
+  "prefer-const": [
+    "warn",
+    {
+      destructuring: "all",
+      ignoreReadBeforeAssign: false
+    }
+  ],
+  semi: ["error", "always"]
 };
 
 // Use in ESLint configuration
@@ -66,9 +80,7 @@ Access specific rule option types for advanced usage.
 
 ```typescript { .api }
 // Rule entry type for any ESLint rule
-type RuleEntry<Options extends readonly unknown[]> = 
-  | Linter.RuleSeverity
-  | [Linter.RuleSeverity, ...Options];
+type RuleEntry<Options extends readonly unknown[]> = Linter.RuleSeverity | [Linter.RuleSeverity, ...Options];
 
 // Rule severity levels
 type RuleSeverity = "off" | "warn" | "error" | 0 | 1 | 2;
@@ -84,16 +96,16 @@ type NoUnusedVarsOptions = ESLintRules["no-unused-vars"];
 type PreferConstOptions = ESLintRules["prefer-const"];
 
 // Create type-safe rule configurations
-const noUnusedVarsConfig: NoUnusedVarsOptions = ["error", {
-  vars: "all",
-  args: "after-used"
-}];
+const noUnusedVarsConfig: NoUnusedVarsOptions = [
+  "error",
+  {
+    vars: "all",
+    args: "after-used"
+  }
+];
 
 // Helper function for rule configuration
-function createRuleConfig<K extends keyof ESLintRules>(
-  ruleName: K,
-  config: ESLintRules[K]
-): Record<K, ESLintRules[K]> {
+function createRuleConfig<K extends keyof ESLintRules>(ruleName: K, config: ESLintRules[K]): Record<K, ESLintRules[K]> {
   return { [ruleName]: config } as Record<K, ESLintRules[K]>;
 }
 
@@ -104,6 +116,7 @@ const semiConfig = createRuleConfig("semi", ["error", "always"]);
 ## Rule Categories
 
 ### Problem Rules
+
 Rules that identify potential errors or problematic code patterns:
 
 ```typescript
@@ -118,6 +131,7 @@ const problemRules: Partial<ESLintRules> = {
 ```
 
 ### Suggestion Rules
+
 Rules that suggest alternative approaches or best practices:
 
 ```typescript
@@ -132,14 +146,15 @@ const suggestionRules: Partial<ESLintRules> = {
 ```
 
 ### Layout Rules (Deprecated)
+
 Formatting rules that are being moved to @stylistic/eslint-plugin:
 
 ```typescript
 // Many layout rules are now deprecated
 const layoutRules: Partial<ESLintRules> = {
-  "semi": ["error", "always"],
-  "quotes": ["error", "double", { avoidEscape: true }],
-  "indent": ["error", 2, { SwitchCase: 1 }],
+  semi: ["error", "always"],
+  quotes: ["error", "double", { avoidEscape: true }],
+  indent: ["error", 2, { SwitchCase: 1 }],
   "comma-dangle": ["error", "never"]
 };
 ```
@@ -174,10 +189,14 @@ import type { ESLintRules } from "eslint/rules";
 
 // Extend ESLintRules for plugin rules
 interface AllRules extends ESLintRules {
-  "@typescript-eslint/no-unused-vars": Linter.RuleEntry<[{
-    vars?: "all" | "local";
-    args?: "all" | "after-used" | "none";
-  }]>;
+  "@typescript-eslint/no-unused-vars": Linter.RuleEntry<
+    [
+      {
+        vars?: "all" | "local";
+        args?: "all" | "after-used" | "none";
+      }
+    ]
+  >;
   "react/jsx-uses-react": Linter.RuleEntry<[]>;
 }
 
@@ -186,7 +205,7 @@ const config: { rules: Partial<AllRules> } = {
     // ESLint core rules
     "no-unused-vars": "off",
     "prefer-const": "error",
-    
+
     // Plugin rules
     "@typescript-eslint/no-unused-vars": ["error", { vars: "all" }],
     "react/jsx-uses-react": "error"
@@ -200,8 +219,7 @@ const config: { rules: Partial<AllRules> } = {
 import type { ESLintRules } from "eslint/rules";
 
 // Extract options type for a specific rule
-type ExtractRuleOptions<T extends keyof ESLintRules> = 
-  ESLintRules[T] extends Linter.RuleEntry<infer Options> ? Options : never;
+type ExtractRuleOptions<T extends keyof ESLintRules> = ESLintRules[T] extends Linter.RuleEntry<infer Options> ? Options : never;
 
 // Usage
 type NoUnusedVarsOptionsArray = ExtractRuleOptions<"no-unused-vars">;
@@ -220,25 +238,31 @@ import type { ESLintRules } from "eslint/rules";
 
 const strictRules: Partial<ESLintRules> = {
   // Error on all problems
-  "no-unused-vars": ["error", {
-    vars: "all",
-    args: "all",
-    ignoreRestSiblings: false
-  }],
+  "no-unused-vars": [
+    "error",
+    {
+      vars: "all",
+      args: "all",
+      ignoreRestSiblings: false
+    }
+  ],
   "no-undef": "error",
   "no-unreachable": "error",
-  
+
   // Enforce best practices
-  "prefer-const": ["error", {
-    destructuring: "all",
-    ignoreReadBeforeAssign: false
-  }],
+  "prefer-const": [
+    "error",
+    {
+      destructuring: "all",
+      ignoreReadBeforeAssign: false
+    }
+  ],
   "no-var": "error",
-  "eqeqeq": ["error", "always"],
-  
+  eqeqeq: ["error", "always"],
+
   // Code style (where not deprecated)
-  "semi": ["error", "always"],
-  "quotes": ["error", "double"]
+  semi: ["error", "always"],
+  quotes: ["error", "double"]
 };
 ```
 
@@ -247,18 +271,21 @@ const strictRules: Partial<ESLintRules> = {
 ```typescript
 const permissiveRules: Partial<ESLintRules> = {
   // Warn on common issues
-  "no-unused-vars": ["warn", {
-    vars: "local",
-    args: "after-used",
-    ignoreRestSiblings: true,
-    argsIgnorePattern: "^_"
-  }],
+  "no-unused-vars": [
+    "warn",
+    {
+      vars: "local",
+      args: "after-used",
+      ignoreRestSiblings: true,
+      argsIgnorePattern: "^_"
+    }
+  ],
   "no-console": "warn",
-  
+
   // Allow flexible code styles
   "prefer-const": "off",
   "no-var": "warn",
-  "eqeqeq": ["warn", "smart"]
+  eqeqeq: ["warn", "smart"]
 };
 ```
 
@@ -266,17 +293,15 @@ const permissiveRules: Partial<ESLintRules> = {
 
 ```typescript
 // Helper to migrate from string rules to typed rules
-function migrateRules(
-  oldRules: Record<string, string | [string, ...any[]]>
-): Partial<ESLintRules> {
+function migrateRules(oldRules: Record<string, string | [string, ...any[]]>): Partial<ESLintRules> {
   const newRules: Partial<ESLintRules> = {};
-  
+
   for (const [ruleName, config] of Object.entries(oldRules)) {
     if (ruleName in ({} as ESLintRules)) {
       (newRules as any)[ruleName] = config;
     }
   }
-  
+
   return newRules;
 }
 
@@ -297,11 +322,11 @@ interface Linter {
   interface RulesRecord {
     [name: string]: RuleEntry<any>;
   }
-  
-  type RuleEntry<Options extends readonly unknown[]> = 
+
+  type RuleEntry<Options extends readonly unknown[]> =
     | RuleSeverity
     | [RuleSeverity, ...Options];
-    
+
   type RuleSeverity = "off" | "warn" | "error" | 0 | 1 | 2;
 }
 

@@ -4,4 +4,3 @@
  */
 
 export { markdownService, currentCodeTheme } from "./services/markdown.svelte";
-export type { MarkdownService } from "./types";

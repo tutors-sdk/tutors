@@ -9,7 +9,7 @@ const config = {
 
   onwarn(warning, defaultHandler) {
     // Ignore state_referenced_locally warning globally
-    if (warning.code === 'state_referenced_locally') return;
+    if (warning.code === "state_referenced_locally") return;
     defaultHandler(warning);
   },
 

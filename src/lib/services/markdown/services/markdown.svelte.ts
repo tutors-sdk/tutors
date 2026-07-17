@@ -5,7 +5,7 @@
  */
 
 import type { Course, Lab, Note, Lo } from "@tutors/tutors-model-lib";
-import { convertMdToHtml, initHighlighter, filter } from "@tutors/tutors-model-lib";
+import { convertMdToHtml, initHighlighter, filter, markdownIt } from "@tutors/tutors-model-lib";
 
 // Import Shiki themes
 import ayuDark from "shiki/themes/ayu-dark.mjs";
@@ -29,7 +29,6 @@ import markdown from "shiki/langs/markdown.mjs";
 import bash from "shiki/langs/bash.mjs";
 import python from "shiki/langs/python.mjs";
 import sql from "shiki/langs/sql.mjs";
-import typescript from "shiki/langs/typescript.mjs";
 import java from "shiki/langs/java.mjs";
 import kotlin from "shiki/langs/kotlin.mjs";
 import csharp from "shiki/langs/csharp.mjs";
@@ -66,7 +65,6 @@ const languages = [
   bash,
   python,
   sql,
-  typescript,
   java,
   kotlin,
   csharp,
@@ -78,7 +76,6 @@ const languages = [
   ruby,
   swift,
   dockerfile,
-  html,
   jsx,
   svelte,
   haskell,
@@ -108,6 +105,16 @@ if (browser && localStorage.codeTheme) {
   currentCodeTheme.value = localStorage.codeTheme;
 }
 initHighlighter(shiki);
+
+const defaultFence = markdownIt.renderer.rules.fence!;
+markdownIt.renderer.rules.fence = (tokens, idx, options, env, self) => {
+  const token = tokens[idx];
+  if (token.info.trim() === "mermaid") {
+    const escaped = token.content.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return `<div class="mermaid">${escaped}</div>`;
+  }
+  return defaultFence(tokens, idx, options, env, self);
+};
 
 export const markdownService: MarkdownService = {
   /** Available syntax highlighting themes */
@@ -159,5 +166,98 @@ export const markdownService: MarkdownService = {
       note.contentMd = filter(note.contentMd, url, courseProtocol.value);
     }
     note.contentHtml = convertMdToHtml(note.contentMd, currentCodeTheme.value);
+  },
+
+  /**
+   * Converts notebook cells to HTML
+   * Processes markdown cells, code cells (with Shiki highlighting), and outputs
+   * @param course - Course containing the notebook
+   * @param lo - Notebook learning object with cells array
+   * @param refreshOnly - If true, skips URL processing
+   */
+  convertNotebookToHtml(course: Course, lo: Lo, refreshOnly: boolean = false) {
+    const notebook = lo as any;
+    if (!notebook.cells) return;
+
+    const kernelLang = notebook.kernelLanguage || "python";
+    const url = notebook.route?.replace(`/notebook/${course.courseId}`, course.courseUrl) || "";
+
+    for (const cell of notebook.cells) {
+      if (cell.cellType === "markdown") {
+        let md = cell.source || "";
+        if (!refreshOnly) {
+          md = filter(md, url, courseProtocol.value);
+        }
+        cell.sourceHtml = convertMdToHtml(md, currentCodeTheme.value);
+      } else if (cell.cellType === "code") {
+        const fenced = "```" + kernelLang + "\n" + (cell.source || "") + "\n```";
+        cell.sourceHtml = convertMdToHtml(fenced, currentCodeTheme.value);
+      } else {
+        cell.sourceHtml = `<pre class="text-sm font-mono whitespace-pre-wrap">${escapeHtml(cell.source || "")}</pre>`;
+      }
+
+      if (cell.outputs && cell.outputs.length > 0) {
+        cell.outputsHtml = cell.outputs.map(renderNotebookOutput).join("");
+      }
+    }
   }
 };
+
+function escapeHtml(text: string): string {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function renderNotebookOutput(output: any): string {
+  switch (output.outputType) {
+    case "stream": {
+      const cls = output.name === "stderr" ? "notebook-output-stream notebook-output-stream-stderr" : "notebook-output-stream";
+      return `<pre class="${cls}">${escapeHtml(output.text || "")}</pre>`;
+    }
+
+    case "execute_result":
+    case "display_data": {
+      if (!output.data) return "";
+      const data = output.data as Record<string, string>;
+
+      if (data["text/html"]) {
+        return `<div class="notebook-output-html">${data["text/html"]}</div>`;
+      }
+      if (data["image/svg+xml"]) {
+        return `<div class="notebook-output-image">${data["image/svg+xml"]}</div>`;
+      }
+      if (data["image/png"]) {
+        const src = data["image/png"].startsWith("data:") || data["image/png"].startsWith("http")
+          ? data["image/png"]
+          : `data:image/png;base64,${data["image/png"]}`;
+        return `<div class="notebook-output-image"><img src="${src}" alt="Output" /></div>`;
+      }
+      if (data["image/jpeg"]) {
+        const src = data["image/jpeg"].startsWith("data:") || data["image/jpeg"].startsWith("http")
+          ? data["image/jpeg"]
+          : `data:image/jpeg;base64,${data["image/jpeg"]}`;
+        return `<div class="notebook-output-image"><img src="${src}" alt="Output" /></div>`;
+      }
+      if (data["text/latex"]) {
+        return convertMdToHtml(data["text/latex"], currentCodeTheme.value);
+      }
+      if (data["text/plain"]) {
+        return `<pre class="notebook-output-stream">${escapeHtml(data["text/plain"])}</pre>`;
+      }
+      return "";
+    }
+
+    case "error": {
+      const traceback = (output.traceback || [])
+        .map((line: string) => line.replace(/\x1b\[[0-9;]*m/g, ""))
+        .join("\n");
+      return `<pre class="notebook-output-error">${escapeHtml(traceback)}</pre>`;
+    }
+
+    default:
+      return "";
+  }
+}

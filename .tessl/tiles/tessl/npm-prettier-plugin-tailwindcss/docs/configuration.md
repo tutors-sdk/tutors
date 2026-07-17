@@ -52,8 +52,9 @@ Specify the path to your Tailwind configuration file for custom class ordering. 
 **Automatic Discovery:**
 
 If not specified, the plugin automatically searches for:
+
 - `tailwind.config.js`
-- `tailwind.config.cjs` 
+- `tailwind.config.cjs`
 - `tailwind.config.mjs`
 - `tailwind.config.ts`
 
@@ -78,7 +79,7 @@ The stylesheet should contain your Tailwind directives and custom CSS:
 /* Your custom styles and configuration */
 @layer components {
   .btn-primary {
-    @apply bg-blue-500 text-white px-4 py-2 rounded;
+    @apply rounded bg-blue-500 px-4 py-2 text-white;
   }
 }
 ```
@@ -102,7 +103,7 @@ This enables sorting in custom attributes:
 // Before
 <div myClassList="px-4 bg-blue-500 text-white py-2">Content</div>
 
-// After  
+// After
 <div myClassList="bg-blue-500 px-4 py-2 text-white">Content</div>
 ```
 
@@ -152,9 +153,7 @@ const buttonClass = cn(
 );
 
 // Method chaining
-const dynamicClass = ClassBuilder()
-  .add("px-4 bg-blue-500 text-white py-2")
-  .build();
+const dynamicClass = ClassBuilder().add("px-4 bg-blue-500 text-white py-2").build();
 ```
 
 ### Whitespace Preservation
@@ -174,14 +173,16 @@ Control whether whitespace around classes is preserved during sorting. By defaul
 
 ```html
 <!-- With tailwindPreserveWhitespace: false (default) -->
-<div class="  px-4   bg-blue-500  text-white  py-2  ">
-<!-- Becomes: -->
 <div class="bg-blue-500 px-4 py-2 text-white">
-
-<!-- With tailwindPreserveWhitespace: true -->
-<div class="  px-4   bg-blue-500  text-white  py-2  ">
-<!-- Becomes: -->
-<div class="  bg-blue-500   px-4  py-2  text-white  ">
+  <!-- Becomes: -->
+  <div class="bg-blue-500 px-4 py-2 text-white">
+    <!-- With tailwindPreserveWhitespace: true -->
+    <div class="bg-blue-500 px-4 py-2 text-white">
+      <!-- Becomes: -->
+      <div class="bg-blue-500 px-4 py-2 text-white"></div>
+    </div>
+  </div>
+</div>
 ```
 
 ### Duplicate Class Preservation
@@ -201,14 +202,16 @@ Control whether duplicate classes are preserved or removed during sorting. By de
 
 ```html
 <!-- With tailwindPreserveDuplicates: false (default) -->
-<div class="px-4 bg-blue-500 px-4 text-white">
-<!-- Becomes: -->
 <div class="bg-blue-500 px-4 text-white">
-
-<!-- With tailwindPreserveDuplicates: true -->
-<div class="px-4 bg-blue-500 px-4 text-white">
-<!-- Becomes: -->
-<div class="bg-blue-500 px-4 px-4 text-white">
+  <!-- Becomes: -->
+  <div class="bg-blue-500 px-4 text-white">
+    <!-- With tailwindPreserveDuplicates: true -->
+    <div class="bg-blue-500 px-4 text-white">
+      <!-- Becomes: -->
+      <div class="bg-blue-500 px-4 text-white"></div>
+    </div>
+  </div>
+</div>
 ```
 
 ### Package Name Override
@@ -250,17 +253,8 @@ By default, the plugin uses `"tailwindcss"` as the package name. This option all
 {
   "plugins": ["prettier-plugin-tailwindcss"],
   "tailwindConfig": "./tailwind.config.js",
-  "tailwindAttributes": [
-    "myClassList",
-    "x-bind:class",
-    "wire:class"
-  ],
-  "tailwindFunctions": [
-    "clsx",
-    "cn", 
-    "classNames",
-    "tw"
-  ],
+  "tailwindAttributes": ["myClassList", "x-bind:class", "wire:class"],
+  "tailwindFunctions": ["clsx", "cn", "classNames", "tw"],
   "tailwindPreserveWhitespace": false,
   "tailwindPreserveDuplicates": false,
   "tailwindPackageName": "tailwindcss"

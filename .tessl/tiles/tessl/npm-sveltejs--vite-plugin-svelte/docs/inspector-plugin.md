@@ -66,29 +66,29 @@ Configure how users activate and navigate the inspector.
 
 ```typescript { .api }
 interface ToggleOptions {
-  /** 
+  /**
    * Key combination to toggle inspector
    * @default 'alt-x'
-   * 
-   * Format: any number of modifiers (control, shift, alt, meta) 
+   *
+   * Format: any number of modifiers (control, shift, alt, meta)
    * followed by zero or one regular key, separated by -
    * Examples: 'control-shift', 'control-o', 'control-alt-s', 'meta-x'
    */
   toggleKeyCombo?: string;
 
-  /** 
+  /**
    * Key to open the editor for the currently selected DOM node
    * @default 'Enter'
    */
   openKey?: string;
 
-  /** 
+  /**
    * Keys to close the inspector
    * @default ['Backspace', 'Escape']
    */
   escapeKeys?: string[];
 
-  /** 
+  /**
    * Inspector automatically disables when releasing toggleKeyCombo after holding
    * @default true
    */
@@ -101,24 +101,24 @@ interface ToggleOptions {
 ```javascript
 svelteInspector({
   // Modifier-only combination (recommended to avoid conflicts)
-  toggleKeyCombo: 'control-shift',
-  
+  toggleKeyCombo: "control-shift",
+
   // Custom navigation keys
-  openKey: 'Space',
-  escapeKeys: ['Escape', 'q'],
-  
+  openKey: "Space",
+  escapeKeys: ["Escape", "q"],
+
   // Disable hold mode for persistent inspector
   holdMode: false
 });
 
 // Accessibility-friendly configuration
 svelteInspector({
-  toggleKeyCombo: 'control-alt-i',
+  toggleKeyCombo: "control-alt-i",
   navKeys: {
-    parent: 'w',    // Instead of ArrowUp
-    prev: 'a',      // Instead of ArrowLeft  
-    child: 's',     // Instead of ArrowDown
-    next: 'd'       // Instead of ArrowRight
+    parent: "w", // Instead of ArrowUp
+    prev: "a", // Instead of ArrowLeft
+    child: "s", // Instead of ArrowDown
+    next: "d" // Instead of ArrowRight
   }
 });
 ```
@@ -129,10 +129,10 @@ Define keys for selecting elements via keyboard navigation.
 
 ```typescript { .api }
 interface NavigationOptions {
-  /** 
+  /**
    * Keys to select elements with via keyboard
    * @default { parent: 'ArrowUp', child: 'ArrowDown', next: 'ArrowRight', prev: 'ArrowLeft' }
-   * 
+   *
    * Improves accessibility and helps select elements without hoverable surface area
    */
   navKeys?: {
@@ -154,30 +154,30 @@ interface NavigationOptions {
 // Default arrow key navigation
 svelteInspector({
   navKeys: {
-    parent: 'ArrowUp',
-    child: 'ArrowDown', 
-    next: 'ArrowRight',
-    prev: 'ArrowLeft'
+    parent: "ArrowUp",
+    child: "ArrowDown",
+    next: "ArrowRight",
+    prev: "ArrowLeft"
   }
 });
 
 // Custom navigation for screen reader users
 svelteInspector({
   navKeys: {
-    parent: 'w',
-    prev: 'a', 
-    child: 's',
-    next: 'd'
+    parent: "w",
+    prev: "a",
+    child: "s",
+    next: "d"
   }
 });
 
 // VI-style navigation
 svelteInspector({
   navKeys: {
-    parent: 'k',    // up
-    child: 'j',     // down
-    prev: 'h',      // left
-    next: 'l'       // right
+    parent: "k", // up
+    child: "j", // down
+    prev: "h", // left
+    next: "l" // right
   }
 });
 ```
@@ -188,19 +188,19 @@ Control the inspector's visual interface and toggle button behavior.
 
 ```typescript { .api }
 interface UIOptions {
-  /** 
+  /**
    * When to show the toggle button
    * @default 'active'
    */
-  showToggleButton?: 'always' | 'active' | 'never';
+  showToggleButton?: "always" | "active" | "never";
 
-  /** 
+  /**
    * Where to display the toggle button
    * @default 'top-right'
    */
-  toggleButtonPos?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+  toggleButtonPos?: "top-right" | "top-left" | "bottom-right" | "bottom-left";
 
-  /** 
+  /**
    * Inject custom styles when inspector is active
    */
   customStyles?: boolean;
@@ -212,20 +212,20 @@ interface UIOptions {
 ```javascript
 // Always show toggle button in bottom-left
 svelteInspector({
-  showToggleButton: 'always',
-  toggleButtonPos: 'bottom-left'
+  showToggleButton: "always",
+  toggleButtonPos: "bottom-left"
 });
 
 // Minimal UI - no toggle button
 svelteInspector({
-  showToggleButton: 'never'
+  showToggleButton: "never"
 });
 
 // Custom styling enabled
 svelteInspector({
   customStyles: true,
-  showToggleButton: 'active',
-  toggleButtonPos: 'top-left'
+  showToggleButton: "active",
+  toggleButtonPos: "top-left"
 });
 ```
 
@@ -249,9 +249,9 @@ interface Options {
   /** Auto-disable on key release after hold (default: true) */
   holdMode?: boolean;
   /** When to show toggle button (default: 'active') */
-  showToggleButton?: 'always' | 'active' | 'never';
+  showToggleButton?: "always" | "active" | "never";
   /** Toggle button position (default: 'top-right') */
-  toggleButtonPos?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+  toggleButtonPos?: "top-right" | "top-left" | "bottom-right" | "bottom-left";
   /** Inject custom styles when active */
   customStyles?: boolean;
   /** Internal options (automatically set, not for user configuration) */
@@ -299,20 +299,20 @@ Standardize inspector settings across development teams.
 ```javascript
 // shared-config.js
 export const inspectorConfig = {
-  toggleKeyCombo: 'control-alt-i',
+  toggleKeyCombo: "control-alt-i",
   holdMode: false,
-  showToggleButton: 'always',
-  toggleButtonPos: 'bottom-right',
+  showToggleButton: "always",
+  toggleButtonPos: "bottom-right",
   navKeys: {
-    parent: 'ArrowUp',
-    child: 'ArrowDown',
-    next: 'ArrowRight', 
-    prev: 'ArrowLeft'
+    parent: "ArrowUp",
+    child: "ArrowDown",
+    next: "ArrowRight",
+    prev: "ArrowLeft"
   }
 };
 
 // vite.config.js
-import { inspectorConfig } from './shared-config.js';
+import { inspectorConfig } from "./shared-config.js";
 
 export default defineConfig({
   plugins: [
@@ -330,22 +330,22 @@ Configure inspector to work with different code editors.
 ```javascript
 // For VS Code users
 svelteInspector({
-  toggleKeyCombo: 'control-shift-i',  // Matches VS Code inspector
-  openKey: 'F12',                     // Matches VS Code "Go to Definition"
+  toggleKeyCombo: "control-shift-i", // Matches VS Code inspector
+  openKey: "F12", // Matches VS Code "Go to Definition"
   holdMode: true
 });
 
-// For Vim users  
+// For Vim users
 svelteInspector({
-  toggleKeyCombo: 'control-alt-i',
+  toggleKeyCombo: "control-alt-i",
   navKeys: {
-    parent: 'k',
-    child: 'j', 
-    prev: 'h',
-    next: 'l'
+    parent: "k",
+    child: "j",
+    prev: "h",
+    next: "l"
   },
-  openKey: 'Enter',
-  escapeKeys: ['Escape', 'q']
+  openKey: "Enter",
+  escapeKeys: ["Escape", "q"]
 });
 ```
 
@@ -355,7 +355,7 @@ The inspector plugin includes comprehensive error handling and debugging capabil
 
 - **Environment Detection**: Automatically disables in production builds
 - **Conflict Resolution**: Warns about key combination conflicts
-- **File System Integration**: Handles editor opening errors gracefully  
+- **File System Integration**: Handles editor opening errors gracefully
 - **Browser Compatibility**: Works across modern browsers with fallbacks
 
 Enable debug logging to troubleshoot inspector issues:
