@@ -50,7 +50,7 @@
         resultStrs.push("~~~");
       }
       result.html = convertMdToHtml(resultStrs.join("\n"), currentCodeTheme.value);
-      result.link = `https://tutors.dev/${result.link}`;
+      result.link = `/${result.link}`;
     });
   }
 

@@ -253,7 +253,7 @@ export async function getCalendarCount(id: string, studentId: string, courseId: 
  */
 export async function getDurationTotal(key: string, table: string, id: string): Promise<number> {
   const { data } = await supabase.from(table).select("duration").eq(key, id).single();
-  return data?.duration || 1;
+  return data?.duration ?? 1;
 }
 
 /**

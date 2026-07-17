@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
+  import { onDestroy } from "svelte";
   import { currentCourse } from "$lib/runes.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
 
@@ -43,9 +44,14 @@
 
   window.addEventListener("popstate", updateSearchState);
   updateSearchState();
+
+  onDestroy(() => {
+    observer.disconnect();
+    window.removeEventListener("popstate", updateSearchState);
+  });
 </script>
 
-<button on:click={toggleSearch}>
+<button onclick={toggleSearch}>
   <div class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary flex items-center gap-2 rounded-lg p-3 text-sm font-bold">
     <Icon type="search" tip="Search this course" />
     <span class="hidden lg:block"> {isSearching ? "Exit Search" : "Search"}</span>
