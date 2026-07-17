@@ -49,7 +49,7 @@ console.log(`Dev server running at ${server.resolvedUrls?.local[0]}`);
 Vite is built around several key components:
 
 - **Configuration System**: Flexible configuration with `defineConfig()` supporting multiple environments and modes
-- **Development Server**: Fast dev server with native ES modules and instant HMR 
+- **Development Server**: Fast dev server with native ES modules and instant HMR
 - **Build System**: Production builds powered by Rollup with optimizations
 - **Plugin System**: Extensible architecture compatible with Rollup plugins
 - **Environment Management**: Support for different environments (client, server, etc.)
@@ -141,8 +141,8 @@ Extensible plugin architecture compatible with Rollup plugins. Supports hooks fo
 ```typescript { .api }
 interface Plugin extends RollupPlugin {
   name: string;
-  enforce?: 'pre' | 'post';
-  apply?: 'build' | 'serve' | ((config: UserConfig, env: ConfigEnv) => boolean);
+  enforce?: "pre" | "post";
+  apply?: "build" | "serve" | ((config: UserConfig, env: ConfigEnv) => boolean);
   config?: (config: UserConfig, env: ConfigEnv) => void | UserConfig | Promise<void | UserConfig>;
   configResolved?: (config: ResolvedConfig) => void | Promise<void>;
   configureServer?: (server: ViteDevServer) => void | Promise<void>;
@@ -178,11 +178,7 @@ interface ResolveOptions {
 Comprehensive CSS processing with support for preprocessors, CSS modules, PostCSS, and advanced optimizations.
 
 ```typescript { .api }
-function preprocessCSS(
-  code: string,
-  filename: string,
-  config: ResolvedConfig
-): Promise<PreprocessCSSResult>;
+function preprocessCSS(code: string, filename: string, config: ResolvedConfig): Promise<PreprocessCSSResult>;
 
 interface CSSOptions {
   modules?: CSSModulesOptions;
@@ -204,10 +200,7 @@ interface CSSOptions {
 Server-side rendering capabilities with module runner, environment management, and SSR-specific optimizations.
 
 ```typescript { .api }
-function createServerModuleRunner(
-  server: ViteDevServer,
-  options?: ServerModuleRunnerOptions
-): Promise<ModuleRunner>;
+function createServerModuleRunner(server: ViteDevServer, options?: ServerModuleRunnerOptions): Promise<ModuleRunner>;
 
 interface SSROptions {
   external?: string[];
@@ -238,7 +231,7 @@ interface HmrOptions {
 }
 
 interface HotPayload {
-  type: 'connected' | 'update' | 'full-reload' | 'prune' | 'error' | 'custom';
+  type: "connected" | "update" | "full-reload" | "prune" | "error" | "custom";
 }
 ```
 
@@ -249,34 +242,17 @@ interface HotPayload {
 Essential utility functions for configuration, logging, and development workflows.
 
 ```typescript { .api }
-function mergeConfig<T extends Record<string, any>>(
-  defaults: T,
-  overrides: T,
-  isRoot?: boolean
-): T;
+function mergeConfig<T extends Record<string, any>>(defaults: T, overrides: T, isRoot?: boolean): T;
 
 function createLogger(level?: LogLevel, options?: LoggerOptions): Logger;
 
-function loadEnv(
-  mode: string,
-  envDir: string,
-  prefixes?: string | string[]
-): Record<string, string>;
+function loadEnv(mode: string, envDir: string, prefixes?: string | string[]): Record<string, string>;
 
 function normalizePath(id: string): string;
 
-function optimizeDeps(
-  config: ResolvedConfig,
-  force?: boolean,
-  asCommand?: boolean
-): Promise<DepOptimizationMetadata>;
+function optimizeDeps(config: ResolvedConfig, force?: boolean, asCommand?: boolean): Promise<DepOptimizationMetadata>;
 
-function transformWithEsbuild(
-  code: string,
-  filename: string,
-  options?: TransformOptions,
-  inMap?: object
-): Promise<ESBuildTransformResult>;
+function transformWithEsbuild(code: string, filename: string, options?: TransformOptions, inMap?: object): Promise<ESBuildTransformResult>;
 ```
 
 [Utilities](./utilities.md)
@@ -285,7 +261,7 @@ function transformWithEsbuild(
 
 ```typescript { .api }
 interface ConfigEnv {
-  command: 'build' | 'serve';
+  command: "build" | "serve";
   mode: string;
   isSsrBuild?: boolean;
   isPreview?: boolean;
@@ -295,7 +271,7 @@ interface ResolvedConfig {
   root: string;
   base: string;
   mode: string;
-  command: 'build' | 'serve';
+  command: "build" | "serve";
   isProduction: boolean;
   plugins: readonly Plugin[];
   server: ResolvedServerOptions;
@@ -335,20 +311,20 @@ interface ESBuildTransformResult {
   warnings: any[];
 }
 
-type LogLevel = 'error' | 'warn' | 'info' | 'silent';
-type LogType = 'error' | 'warn';
+type LogLevel = "error" | "warn" | "info" | "silent";
+type LogType = "error" | "warn";
 interface LogOptions {
   clear?: boolean;
   timestamp?: boolean;
 }
 
 interface TransformOptions {
-  loader?: 'js' | 'jsx' | 'ts' | 'tsx';
+  loader?: "js" | "jsx" | "ts" | "tsx";
   target?: string;
-  format?: 'esm' | 'cjs' | 'iife';
-  platform?: 'browser' | 'node' | 'neutral';
+  format?: "esm" | "cjs" | "iife";
+  platform?: "browser" | "node" | "neutral";
   define?: Record<string, string>;
-  jsx?: 'transform' | 'preserve';
+  jsx?: "transform" | "preserve";
   jsxFactory?: string;
   jsxFragment?: string;
 }

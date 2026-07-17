@@ -24,34 +24,34 @@ function error(status: number, body: App.Error | string): never;
 **Usage Examples:**
 
 ```typescript
-import { error } from '@sveltejs/kit';
+import { error } from "@sveltejs/kit";
 
 // In a load function
 export async function load({ params }) {
   const post = await getPost(params.id);
-  
+
   if (!post) {
-    throw error(404, 'Post not found');
+    throw error(404, "Post not found");
   }
-  
+
   if (!post.published) {
-    throw error(403, 'Post not published');
+    throw error(403, "Post not published");
   }
-  
+
   return { post };
 }
 
 // In an API endpoint
 export async function GET({ params }) {
   const user = await getUser(params.id);
-  
+
   if (!user) {
     throw error(404, {
-      message: 'User not found',
-      code: 'USER_NOT_FOUND'
+      message: "User not found",
+      code: "USER_NOT_FOUND"
     });
   }
-  
+
   return json(user);
 }
 ```
@@ -73,22 +73,22 @@ function isHttpError(e: unknown, status?: number): boolean;
 **Usage Examples:**
 
 ```typescript
-import { isHttpError, error } from '@sveltejs/kit';
+import { isHttpError, error } from "@sveltejs/kit";
 
 try {
   await someOperation();
 } catch (e) {
   if (isHttpError(e)) {
-    console.log('HTTP error occurred:', e.status, e.body);
+    console.log("HTTP error occurred:", e.status, e.body);
     throw e; // Re-throw to let SvelteKit handle it
   }
-  
+
   if (isHttpError(e, 404)) {
-    console.log('Specific 404 error occurred');
+    console.log("Specific 404 error occurred");
   }
-  
+
   // Handle other error types
-  throw error(500, 'Internal server error');
+  throw error(500, "Internal server error");
 }
 ```
 
@@ -109,6 +109,7 @@ function redirect(status: 300 | 301 | 302 | 303 | 304 | 305 | 306 | 307 | 308, l
 ```
 
 **Common Status Codes:**
+
 - `303 See Other`: Redirect as a GET request (often used after a form POST)
 - `307 Temporary Redirect`: Redirect will keep the request method
 - `308 Permanent Redirect`: Redirect will keep the request method, SEO transferred
@@ -116,14 +117,14 @@ function redirect(status: 300 | 301 | 302 | 303 | 304 | 305 | 306 | 307 | 308, l
 **Usage Examples:**
 
 ```typescript
-import { redirect } from '@sveltejs/kit';
+import { redirect } from "@sveltejs/kit";
 
 // In a load function
 export async function load({ url, locals }) {
   if (!locals.user) {
-    throw redirect(303, '/login');
+    throw redirect(303, "/login");
   }
-  
+
   return { user: locals.user };
 }
 
@@ -132,24 +133,24 @@ export const actions = {
   login: async ({ request, cookies }) => {
     const data = await request.formData();
     const user = await authenticate(data);
-    
+
     if (user) {
-      cookies.set('session', user.sessionId, { path: '/' });
-      throw redirect(303, '/dashboard');
+      cookies.set("session", user.sessionId, { path: "/" });
+      throw redirect(303, "/dashboard");
     }
-    
-    return fail(400, { message: 'Invalid credentials' });
+
+    return fail(400, { message: "Invalid credentials" });
   }
 };
 
 // Conditional redirects
 export async function load({ params, url }) {
   const slug = params.slug;
-  
+
   if (slug !== slug.toLowerCase()) {
     throw redirect(301, `/blog/${slug.toLowerCase()}`);
   }
-  
+
   return {};
 }
 ```
@@ -170,18 +171,18 @@ function isRedirect(e: unknown): boolean;
 **Usage Examples:**
 
 ```typescript
-import { isRedirect, redirect } from '@sveltejs/kit';
+import { isRedirect, redirect } from "@sveltejs/kit";
 
 try {
   await processRequest();
 } catch (e) {
   if (isRedirect(e)) {
-    console.log('Redirect to:', e.location);
+    console.log("Redirect to:", e.location);
     throw e; // Re-throw to let SvelteKit handle it
   }
-  
+
   // Handle other error types
-  console.error('Unexpected error:', e);
+  console.error("Unexpected error:", e);
 }
 ```
 

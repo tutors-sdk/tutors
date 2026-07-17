@@ -113,19 +113,21 @@ const options: Record<string, SupportOption>;
 ## Supported Languages and Frameworks
 
 ### Template Languages
+
 - HTML, Angular, Vue.js, Svelte, Astro
 - Glimmer (Ember.js), Marko, Twig, Pug
 - Liquid templates, Lightning Web Components (LWC)
 
 ### Programming Languages
+
 - JavaScript (ES5+), TypeScript
 - CSS, SCSS, Less
 - JSX/TSX (React)
 
 ### Attributes and Contexts
+
 - Static attributes: `class`, `className`
 - Dynamic attributes: `[ngClass]`, `:class`, `v-bind:class`
 - CSS `@apply` directives
 - Function calls: `clsx()`, `cn()`, custom functions
 - Template literals and tagged templates
-

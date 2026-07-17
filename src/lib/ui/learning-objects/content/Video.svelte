@@ -4,6 +4,7 @@
   import { themeService } from "$lib/services/themes/services/themes.svelte";
   import { currentCourse } from "$lib/runes.svelte";
   import { getVideoConfig } from "@tutors/tutors-model-lib";
+  import { sanitizeHtml } from "$lib/utils/sanitize";
 
   interface Props {
     lo: Lo;
@@ -53,7 +54,7 @@
     <br />
     <p class="text-center text-lg italic">{lo.title}</p>
     <div class="text-center text-sm italic">
-      {@html lo.summary}
+      {@html sanitizeHtml(lo.summary ?? "")}
     </div>
   </div>
 {/if}

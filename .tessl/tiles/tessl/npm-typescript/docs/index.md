@@ -27,34 +27,34 @@ const ts = require("typescript");
 import * as ts from "typescript";
 
 // Parse TypeScript source code
-const sourceFile = ts.createSourceFile(
-  "example.ts",
-  'const greeting: string = "Hello, World!";',
-  ts.ScriptTarget.Latest
-);
+const sourceFile = ts.createSourceFile("example.ts", 'const greeting: string = "Hello, World!";', ts.ScriptTarget.Latest);
 
 // Create a program with the source file
-const program = ts.createProgram(["example.ts"], {
-  target: ts.ScriptTarget.ES2015,
-  module: ts.ModuleKind.CommonJS
-}, {
-  getSourceFile: (fileName) => fileName === "example.ts" ? sourceFile : undefined,
-  writeFile: () => {},
-  getCurrentDirectory: () => "",
-  getDirectories: () => [],
-  fileExists: () => true,
-  readFile: () => "",
-  getCanonicalFileName: (fileName) => fileName,
-  useCaseSensitiveFileNames: () => true,
-  getNewLine: () => "\n"
-});
+const program = ts.createProgram(
+  ["example.ts"],
+  {
+    target: ts.ScriptTarget.ES2015,
+    module: ts.ModuleKind.CommonJS
+  },
+  {
+    getSourceFile: (fileName) => (fileName === "example.ts" ? sourceFile : undefined),
+    writeFile: () => {},
+    getCurrentDirectory: () => "",
+    getDirectories: () => [],
+    fileExists: () => true,
+    readFile: () => "",
+    getCanonicalFileName: (fileName) => fileName,
+    useCaseSensitiveFileNames: () => true,
+    getNewLine: () => "\n"
+  }
+);
 
 // Get type checker for semantic analysis
 const typeChecker = program.getTypeChecker();
 
 // Emit JavaScript output
 const result = program.emit();
-console.log(`Emit result: ${result.emitSkipped ? 'failed' : 'success'}`);
+console.log(`Emit result: ${result.emitSkipped ? "failed" : "success"}`);
 ```
 
 ## Architecture
@@ -83,11 +83,7 @@ function createSourceFile(
   scriptKind?: ScriptKind
 ): SourceFile;
 
-function forEachChild<T>(
-  node: Node,
-  cbNode: (node: Node) => T | undefined,
-  cbNodes?: (nodes: NodeArray<Node>) => T | undefined
-): T | undefined;
+function forEachChild<T>(node: Node, cbNode: (node: Node) => T | undefined, cbNodes?: (nodes: NodeArray<Node>) => T | undefined): T | undefined;
 ```
 
 [Parser and AST](./parser-ast.md)
@@ -126,7 +122,13 @@ interface Program {
   getRootFileNames(): readonly string[];
   getSourceFiles(): readonly SourceFile[];
   getTypeChecker(): TypeChecker;
-  emit(targetSourceFile?: SourceFile, writeFile?: WriteFileCallback, cancellationToken?: CancellationToken, emitOnlyDtsFiles?: boolean, customTransformers?: CustomTransformers): EmitResult;
+  emit(
+    targetSourceFile?: SourceFile,
+    writeFile?: WriteFileCallback,
+    cancellationToken?: CancellationToken,
+    emitOnlyDtsFiles?: boolean,
+    customTransformers?: CustomTransformers
+  ): EmitResult;
 }
 ```
 
@@ -137,11 +139,7 @@ interface Program {
 Advanced IDE functionality including auto-completion, navigation, refactoring, and code fixes. Provides the foundation for rich development experiences in editors and IDEs.
 
 ```typescript { .api }
-function createLanguageService(
-  host: LanguageServiceHost,
-  documentRegistry?: DocumentRegistry,
-  syntaxOnlyOrLanguageServiceMode?: boolean | LanguageServiceMode
-): LanguageService;
+function createLanguageService(host: LanguageServiceHost, documentRegistry?: DocumentRegistry, syntaxOnlyOrLanguageServiceMode?: boolean | LanguageServiceMode): LanguageService;
 
 interface LanguageService {
   getCompletionsAtPosition(fileName: string, position: number, options?: GetCompletionsAtPositionOptions): CompletionInfo | undefined;
@@ -160,13 +158,7 @@ Simple and fast TypeScript-to-JavaScript conversion without full type checking. 
 ```typescript { .api }
 function transpileModule(input: string, transpileOptions: TranspileOptions): TranspileOutput;
 
-function transpile(
-  input: string,
-  compilerOptions?: CompilerOptions,
-  fileName?: string,
-  diagnostics?: Diagnostic[],
-  moduleName?: string
-): string;
+function transpile(input: string, compilerOptions?: CompilerOptions, fileName?: string, diagnostics?: Diagnostic[], moduleName?: string): string;
 
 interface TranspileOptions {
   compilerOptions?: CompilerOptions;
@@ -293,7 +285,7 @@ enum SyntaxKind {
   Identifier = 79,
   StringLiteral = 10,
   FunctionDeclaration = 256,
-  ClassDeclaration = 257,
+  ClassDeclaration = 257
   // ... many more
 }
 ```

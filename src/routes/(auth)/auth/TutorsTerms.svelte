@@ -1,5 +1,6 @@
 <script lang="ts">
   import { convertMdToHtml } from "@tutors/tutors-model-lib";
+  import { sanitizeHtml } from "$lib/utils/sanitize";
 
   const terms = `You are about to be authenticated via your Github credentials to Tutors. **For most courses,
 you do not need to log in at all, so if you prefer you can go back to the course page and proceed through 
@@ -26,4 +27,4 @@ Tutors is an open source application - the data collection component
   const content = convertMdToHtml(terms);
 </script>
 
-{@html content}
+{@html sanitizeHtml(content ?? "")}

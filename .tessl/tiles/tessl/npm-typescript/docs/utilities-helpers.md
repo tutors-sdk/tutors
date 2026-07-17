@@ -104,7 +104,7 @@ const sourceFile = ts.createSourceFile(
 function analyzeNode(node: ts.Node) {
   if (ts.isClassDeclaration(node)) {
     console.log(`Found class: ${node.name?.text}`);
-    
+
     for (const member of node.members) {
       if (ts.isPropertyDeclaration(member)) {
         console.log(`  Property: ${member.name?.getText()}`);
@@ -115,7 +115,7 @@ function analyzeNode(node: ts.Node) {
       }
     }
   }
-  
+
   ts.forEachChild(node, analyzeNode);
 }
 
@@ -417,14 +417,14 @@ import * as ts from "typescript";
 // Find all function declarations in a class
 function findFunctionsInClass(classNode: ts.ClassDeclaration): ts.FunctionLikeDeclaration[] {
   const functions: ts.FunctionLikeDeclaration[] = [];
-  
+
   function visit(node: ts.Node) {
     if (ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node) || ts.isArrowFunction(node)) {
       functions.push(node);
     }
     ts.forEachChild(node, visit);
   }
-  
+
   visit(classNode);
   return functions;
 }
@@ -633,7 +633,7 @@ function analyzeJSDoc(node: ts.FunctionDeclaration) {
       }
     }
   }
-  
+
   const deprecatedTag = ts.getJSDocDeprecatedTag(node);
   if (deprecatedTag) {
     console.log(`Function is deprecated: ${deprecatedTag.comment}`);

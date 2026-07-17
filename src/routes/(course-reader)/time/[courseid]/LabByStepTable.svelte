@@ -65,7 +65,10 @@
               <td class="py-3 px-4" style="width: 120px;">—</td>
               {#each stepColumns as stepId}
                 {@const stepMinutes = medianRow[stepId] as number | undefined}
-                <td class="py-3 px-1 text-center font-mono text-xs" style="width: 36px; min-width: 36px; max-width: 36px; background-color: {cellColorForMinutes(stepMinutes ?? 0)}">
+                <td
+                  class="py-3 px-1 text-center font-mono text-xs"
+                  style="width: 36px; min-width: 36px; max-width: 36px; background-color: {cellColorForMinutes(stepMinutes ?? 0)}"
+                >
                   {formatLabTime(stepMinutes)}
                 </td>
               {/each}

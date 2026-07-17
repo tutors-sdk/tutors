@@ -14,18 +14,11 @@ Universal load functions run on both server and client and have access to a `Loa
  * @param event - LoadEvent containing params, url, fetch, and other utilities
  * @returns Data object or promise of data object for the page/layout
  */
-type Load<
-  Params = Record<string, string>,
-  InputData = Record<string, any> | null,
-  ParentData = Record<string, any>,
-  OutputData = Record<string, any> | void
-> = (event: LoadEvent<Params, InputData, ParentData>) => Promise<OutputData> | OutputData;
+type Load<Params = Record<string, string>, InputData = Record<string, any> | null, ParentData = Record<string, any>, OutputData = Record<string, any> | void> = (
+  event: LoadEvent<Params, InputData, ParentData>
+) => Promise<OutputData> | OutputData;
 
-interface LoadEvent<
-  Params = Record<string, string>,
-  Data = Record<string, any> | null,
-  ParentData = Record<string, any>
-> {
+interface LoadEvent<Params = Record<string, string>, Data = Record<string, any> | null, ParentData = Record<string, any>> {
   /** Route parameters extracted from the URL */
   params: Params;
   /** The current URL */
@@ -53,16 +46,16 @@ interface LoadEvent<
 // src/routes/blog/[slug]/+page.js
 export async function load({ params, fetch, depends }) {
   // Declare dependencies for cache invalidation
-  depends('blog:post');
-  
+  depends("blog:post");
+
   const response = await fetch(`/api/posts/${params.slug}`);
-  
+
   if (!response.ok) {
-    throw error(404, 'Post not found');
+    throw error(404, "Post not found");
   }
-  
+
   const post = await response.json();
-  
+
   return {
     post,
     meta: {
@@ -83,16 +76,11 @@ Server load functions run only on the server and have access to additional serve
  * @param event - ServerLoadEvent extending RequestEvent with load-specific utilities
  * @returns Data object or promise of data object for the page/layout
  */
-type ServerLoad<
-  Params = Record<string, string>,
-  ParentData = Record<string, any>,
-  OutputData = Record<string, any> | void
-> = (event: ServerLoadEvent<Params, ParentData>) => Promise<OutputData> | OutputData;
+type ServerLoad<Params = Record<string, string>, ParentData = Record<string, any>, OutputData = Record<string, any> | void> = (
+  event: ServerLoadEvent<Params, ParentData>
+) => Promise<OutputData> | OutputData;
 
-interface ServerLoadEvent<
-  Params = Record<string, string>,
-  ParentData = Record<string, any>
-> extends RequestEvent<Params> {
+interface ServerLoadEvent<Params = Record<string, string>, ParentData = Record<string, any>> extends RequestEvent<Params> {
   /** Access to parent layout data */
   parent: () => Promise<ParentData>;
   /** Declare dependencies for cache invalidation */
@@ -104,28 +92,28 @@ interface ServerLoadEvent<
 
 ```typescript
 // src/routes/dashboard/+page.server.js
-import { redirect } from '@sveltejs/kit';
+import { redirect } from "@sveltejs/kit";
 
 export async function load({ locals, cookies, url }) {
   // Check authentication
   if (!locals.user) {
-    throw redirect(303, '/login');
+    throw redirect(303, "/login");
   }
-  
+
   // Server-side database access
   const projects = await db.projects.findMany({
     where: { userId: locals.user.id }
   });
-  
+
   // Set cache headers
   setHeaders({
-    'Cache-Control': 'private, max-age=300'
+    "Cache-Control": "private, max-age=300"
   });
-  
+
   return {
     user: locals.user,
     projects,
-    preferences: JSON.parse(cookies.get('preferences') || '{}')
+    preferences: JSON.parse(cookies.get("preferences") || "{}")
   };
 }
 ```
@@ -137,18 +125,15 @@ export async function load({ locals, cookies, url }) {
 ```typescript
 // src/routes/products/[id]/+page.js
 export async function load({ params, fetch }) {
-  const [productRes, reviewsRes] = await Promise.all([
-    fetch(`/api/products/${params.id}`),
-    fetch(`/api/products/${params.id}/reviews`)
-  ]);
-  
+  const [productRes, reviewsRes] = await Promise.all([fetch(`/api/products/${params.id}`), fetch(`/api/products/${params.id}/reviews`)]);
+
   if (!productRes.ok) {
-    throw error(404, 'Product not found');
+    throw error(404, "Product not found");
   }
-  
+
   const product = await productRes.json();
   const reviews = reviewsRes.ok ? await reviewsRes.json() : [];
-  
+
   return {
     product,
     reviews
@@ -163,13 +148,13 @@ export async function load({ params, fetch }) {
 export async function load({ locals, depends }) {
   // Ensure admin access
   if (!locals.user?.isAdmin) {
-    throw redirect(303, '/');
+    throw redirect(303, "/");
   }
-  
-  depends('admin:stats');
-  
+
+  depends("admin:stats");
+
   const stats = await getAdminStats();
-  
+
   return {
     adminUser: locals.user,
     stats
@@ -179,12 +164,12 @@ export async function load({ locals, depends }) {
 // src/routes/admin/users/+page.js
 export async function load({ parent, fetch }) {
   const { adminUser } = await parent();
-  
-  const users = await fetch('/api/admin/users').then(r => r.json());
-  
+
+  const users = await fetch("/api/admin/users").then((r) => r.json());
+
   return {
     users,
-    canManageUsers: adminUser.permissions.includes('manage_users')
+    canManageUsers: adminUser.permissions.includes("manage_users")
   };
 }
 ```
@@ -194,17 +179,17 @@ export async function load({ parent, fetch }) {
 ```typescript
 // src/routes/search/+page.js
 export async function load({ url, fetch, depends }) {
-  const query = url.searchParams.get('q');
-  
+  const query = url.searchParams.get("q");
+
   if (!query) {
-    return { results: [], query: '' };
+    return { results: [], query: "" };
   }
-  
+
   depends(`search:${query}`);
-  
+
   const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
   const results = await response.json();
-  
+
   return {
     results,
     query
@@ -219,31 +204,31 @@ export async function load({ url, fetch, depends }) {
 export async function load({ params, fetch }) {
   try {
     const response = await fetch(`/api/posts/${params.slug}`);
-    
+
     if (response.status === 404) {
       throw error(404, {
-        message: 'Post not found',
+        message: "Post not found",
         slug: params.slug
       });
     }
-    
+
     if (!response.ok) {
-      throw error(500, 'Failed to load post');
+      throw error(500, "Failed to load post");
     }
-    
+
     const post = await response.json();
-    
+
     // Check if post is published
     if (!post.published && !locals.user?.isAdmin) {
-      throw error(403, 'Post not published');
+      throw error(403, "Post not published");
     }
-    
+
     return { post };
   } catch (err) {
     if (err.status) throw err; // Re-throw SvelteKit errors
-    
-    console.error('Load error:', err);
-    throw error(500, 'Internal server error');
+
+    console.error("Load error:", err);
+    throw error(500, "Internal server error");
   }
 }
 ```
@@ -255,11 +240,11 @@ export async function load({ params, fetch }) {
 export async function load({ locals }) {
   // Load critical data immediately
   const user = locals.user;
-  
+
   // Stream non-critical data
   const analyticsPromise = loadAnalytics(user.id);
   const notificationsPromise = loadNotifications(user.id);
-  
+
   return {
     user,
     // These promises will be resolved by the client
@@ -276,16 +261,15 @@ export async function load({ locals }) {
 ```typescript
 // src/routes/blog/+page.js
 export async function load({ fetch, depends, url }) {
-  const page = parseInt(url.searchParams.get('page') || '1');
-  const category = url.searchParams.get('category');
-  
+  const page = parseInt(url.searchParams.get("page") || "1");
+  const category = url.searchParams.get("category");
+
   // Track dependencies for cache invalidation
-  depends('blog:posts');
+  depends("blog:posts");
   if (category) depends(`blog:category:${category}`);
-  
-  const posts = await fetch(`/api/posts?page=${page}&category=${category || ''}`)
-    .then(r => r.json());
-  
+
+  const posts = await fetch(`/api/posts?page=${page}&category=${category || ""}`).then((r) => r.json());
+
   return { posts, page, category };
 }
 
@@ -299,10 +283,10 @@ export async function load({ fetch, depends, url }) {
 ```typescript
 export async function load({ url, untrack, fetch }) {
   // This won't trigger reloads when URL changes
-  const theme = untrack(() => url.searchParams.get('theme')) || 'light';
-  
-  const data = await fetch('/api/data').then(r => r.json());
-  
+  const theme = untrack(() => url.searchParams.get("theme")) || "light";
+
+  const data = await fetch("/api/data").then((r) => r.json());
+
   return { data, theme };
 }
 ```
@@ -312,15 +296,15 @@ export async function load({ url, untrack, fetch }) {
 ```typescript
 // src/routes/search/+page.server.js
 export async function load({ url }) {
-  const query = url.searchParams.get('q');
-  
+  const query = url.searchParams.get("q");
+
   if (!query) {
-    return { results: [], query: '' };
+    return { results: [], query: "" };
   }
-  
+
   // Server-side search for initial page load
   const results = await searchDatabase(query);
-  
+
   return {
     results,
     query,
@@ -334,14 +318,13 @@ export async function load({ data, fetch, url }) {
   if (data.serverRendered) {
     return data;
   }
-  
+
   // Client-side search for navigation
-  const query = url.searchParams.get('q');
-  if (!query) return { results: [], query: '' };
-  
-  const results = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
-    .then(r => r.json());
-  
+  const query = url.searchParams.get("q");
+  if (!query) return { results: [], query: "" };
+
+  const results = await fetch(`/api/search?q=${encodeURIComponent(query)}`).then((r) => r.json());
+
   return { results, query };
 }
 ```
@@ -355,14 +338,14 @@ The `fetch` function in load functions has enhanced capabilities:
 ```typescript
 export async function load({ fetch }) {
   // Inherits cookies and headers from the page request
-  const response = await fetch('/api/user/profile');
-  
+  const response = await fetch("/api/user/profile");
+
   // Can make relative requests on the server
-  const posts = await fetch('/api/posts').then(r => r.json());
-  
+  const posts = await fetch("/api/posts").then((r) => r.json());
+
   // Internal requests go directly to handlers
-  const internal = await fetch('/api/internal').then(r => r.json());
-  
+  const internal = await fetch("/api/internal").then((r) => r.json());
+
   return { profile: await response.json(), posts, internal };
 }
 ```
@@ -372,14 +355,14 @@ export async function load({ fetch }) {
 ```typescript
 // src/routes/api-docs/+page.server.js
 export async function load({ setHeaders, fetch }) {
-  const docs = await fetch('/api/docs').then(r => r.json());
-  
+  const docs = await fetch("/api/docs").then((r) => r.json());
+
   // Cache for 1 hour
   setHeaders({
-    'Cache-Control': 'public, max-age=3600',
-    'Vary': 'Accept-Encoding'
+    "Cache-Control": "public, max-age=3600",
+    Vary: "Accept-Encoding"
   });
-  
+
   return { docs };
 }
 ```

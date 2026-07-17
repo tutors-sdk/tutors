@@ -25,9 +25,16 @@ export const presenceService: PresenceService = {
   studentEventMap: new Map<string, LoRecord>(),
 
   studentListener(event: MessageEvent) {
+    // Parse JSON data from WebSocket message with error handling
     let nextCourseEvent;
-    try { nextCourseEvent = JSON.parse(event.data); } catch { return; }
-    if (nextCourseEvent.courseId === this.listeningTo) {// && nextCourseEvent.user.id !== tutorsId.value?.login) {
+    try {
+      nextCourseEvent = JSON.parse(event.data);
+    } catch {
+      return;
+    }
+    // Only process events for current course and from other users
+    if (nextCourseEvent.courseId === this.listeningTo) {
+      // && nextCourseEvent.user.id !== tutorsId.value?.login) {
       const studentEvent = this.studentEventMap.get(nextCourseEvent.user.id);
       if (!studentEvent) {
         // First time seeing this student - add to online list
@@ -88,7 +95,7 @@ export const presenceService: PresenceService = {
     }
 
     void upsertTutorsConnectLatestLo(loRecord);
-  },
+  }
 };
 
 /**

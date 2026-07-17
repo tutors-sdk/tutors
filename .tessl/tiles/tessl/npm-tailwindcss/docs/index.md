@@ -34,11 +34,7 @@ import flattenColorPalette from "tailwindcss/lib/util/flattenColorPalette";
 AST processing:
 
 ```typescript
-import { 
-  toCss, walk, WalkAction,
-  rule, atRule, styleRule, decl, comment, context, atRoot,
-  optimizeAst
-} from "tailwindcss";
+import { toCss, walk, WalkAction, rule, atRule, styleRule, decl, comment, context, atRoot, optimizeAst } from "tailwindcss";
 ```
 
 For CommonJS:
@@ -72,11 +68,11 @@ console.log(compiled);
 // Plugin creation
 import plugin from "tailwindcss/plugin";
 
-const myPlugin = plugin(function({ addUtilities }) {
+const myPlugin = plugin(function ({ addUtilities }) {
   addUtilities({
-    '.my-utility': {
-      'custom-property': 'value',
-    },
+    ".my-utility": {
+      "custom-property": "value"
+    }
   });
 });
 ```
@@ -117,7 +113,7 @@ interface CompileOptions {
   loadModule?: (
     id: string,
     base: string,
-    resourceHint: 'plugin' | 'config'
+    resourceHint: "plugin" | "config"
   ) => Promise<{
     path: string;
     base: string;
@@ -151,26 +147,17 @@ interface PluginAPI {
     cb: (value: T | string, extra: { modifier: string | null }) => string | string[],
     options?: {
       values?: Record<string, T>;
-      sort?(
-        a: { value: T | string; modifier: string | null },
-        b: { value: T | string; modifier: string | null }
-      ): number;
+      sort?(a: { value: T | string; modifier: string | null }, b: { value: T | string; modifier: string | null }): number;
     }
   ): void;
-  addUtilities(
-    utilities: Record<string, CssInJs | CssInJs[]> | Record<string, CssInJs | CssInJs[]>[],
-    options?: {}
-  ): void;
+  addUtilities(utilities: Record<string, CssInJs | CssInJs[]> | Record<string, CssInJs | CssInJs[]>[], options?: {}): void;
   matchUtilities(
-    utilities: Record<
-      string,
-      (value: string, extra: { modifier: string | null }) => CssInJs | CssInJs[]
-    >,
+    utilities: Record<string, (value: string, extra: { modifier: string | null }) => CssInJs | CssInJs[]>,
     options?: Partial<{
       type: string | string[];
       supportsNegativeValues: boolean;
       values: Record<string, string>;
-      modifiers: 'any' | Record<string, string>;
+      modifiers: "any" | Record<string, string>;
     }>
   ): void;
   addComponents(components: Record<string, CssInJs> | Record<string, CssInJs>[], options?: {}): void;
@@ -180,7 +167,7 @@ interface PluginAPI {
       type: string | string[];
       supportsNegativeValues: boolean;
       values: Record<string, string>;
-      modifiers: 'any' | Record<string, string>;
+      modifiers: "any" | Record<string, string>;
     }>
   ): void;
   theme(path: string, defaultValue?: any): any;
@@ -235,10 +222,7 @@ function compileAst(
 
 function toCss(ast: AstNode[], withSourceMap?: boolean): string;
 
-function walk(
-  ast: AstNode[],
-  visitor: (node: AstNode, utils: WalkUtils) => void | WalkAction
-): void;
+function walk(ast: AstNode[], visitor: (node: AstNode, utils: WalkUtils) => void | WalkAction): void;
 
 function rule(selector: string, nodes: AstNode[]): AtRule | StyleRule;
 function atRule(name: string, params: string, nodes: AstNode[]): AtRule;
@@ -250,9 +234,9 @@ function atRoot(nodes: AstNode[]): AtRoot;
 function optimizeAst(ast: AstNode[], designSystem: DesignSystem, polyfills?: Polyfills): AstNode[];
 
 enum WalkAction {
-  Continue = 'continue',
-  Skip = 'skip',
-  Stop = 'stop',
+  Continue = "continue",
+  Skip = "skip",
+  Stop = "stop"
 }
 
 interface WalkUtils {
@@ -271,11 +255,11 @@ Prebuilt CSS files for different use cases and components of the Tailwind CSS sy
 ```typescript { .api }
 // Main Tailwind CSS file with all components
 import "tailwindcss/index.css";
-// or 
+// or
 import "tailwindcss";
 
 // CSS reset and base styles
-import "tailwindcss/preflight.css"; 
+import "tailwindcss/preflight.css";
 import "tailwindcss/preflight";
 
 // Theme variable definitions
@@ -288,6 +272,7 @@ import "tailwindcss/utilities";
 ```
 
 **Asset Files:**
+
 - `index.css`: Complete Tailwind CSS framework
 - `preflight.css`: CSS reset and normalize styles
 - `theme.css`: Theme variable definitions and custom properties
@@ -302,7 +287,7 @@ enum Polyfills {
   None = 0,
   AtProperty = 1 << 0,
   ColorMix = 1 << 1,
-  All = AtProperty | ColorMix,
+  All = AtProperty | ColorMix
 }
 
 enum Features {
@@ -312,13 +297,10 @@ enum Features {
   JsPluginCompat = 1 << 2,
   ThemeFunction = 1 << 3,
   Utilities = 1 << 4,
-  Variants = 1 << 5,
+  Variants = 1 << 5
 }
 
-type Root =
-  | null
-  | 'none'
-  | { base: string; pattern: string };
+type Root = null | "none" | { base: string; pattern: string };
 
 type CssInJs = Record<string, string | string[] | CssInJs>;
 
@@ -359,7 +341,7 @@ interface SourceLocation {
 type AstNode = StyleRule | AtRule | Declaration | Comment | Context | AtRoot;
 
 interface StyleRule {
-  kind: 'rule';
+  kind: "rule";
   selector: string;
   nodes: AstNode[];
   src?: SourceLocation;
@@ -367,7 +349,7 @@ interface StyleRule {
 }
 
 interface AtRule {
-  kind: 'at-rule';
+  kind: "at-rule";
   name: string;
   params: string;
   nodes: AstNode[];
@@ -376,7 +358,7 @@ interface AtRule {
 }
 
 interface Declaration {
-  kind: 'declaration';
+  kind: "declaration";
   property: string;
   value: string | undefined;
   important: boolean;
@@ -385,20 +367,20 @@ interface Declaration {
 }
 
 interface Comment {
-  kind: 'comment';
+  kind: "comment";
   value: string;
   src?: SourceLocation;
   dst?: SourceLocation;
 }
 
 interface Context {
-  kind: 'context';
+  kind: "context";
   context: Record<string, any>;
   nodes: AstNode[];
 }
 
 interface AtRoot {
-  kind: 'at-root';
+  kind: "at-root";
   nodes: AstNode[];
 }
 

@@ -35,11 +35,11 @@ import { error, json } from "@sveltejs/kit";
 
 export async function load({ params, fetch }) {
   const response = await fetch(`/api/posts/${params.id}`);
-  
+
   if (!response.ok) {
-    throw error(404, 'Post not found');
+    throw error(404, "Post not found");
   }
-  
+
   return {
     post: await response.json()
   };
@@ -47,7 +47,7 @@ export async function load({ params, fetch }) {
 
 // API endpoint (+server.js)
 export async function GET({ url, params }) {
-  const data = { message: 'Hello World' };
+  const data = { message: "Hello World" };
   return json(data);
 }
 
@@ -55,12 +55,12 @@ export async function GET({ url, params }) {
 export const actions = {
   default: async ({ request }) => {
     const data = await request.formData();
-    const email = data.get('email');
-    
+    const email = data.get("email");
+
     if (!email) {
-      return fail(400, { message: 'Email required' });
+      return fail(400, { message: "Email required" });
     }
-    
+
     // Process form...
     return { success: true };
   }
@@ -173,13 +173,9 @@ interface RequestEvent<Params = Record<string, string>> {
 Convert between Node.js HTTP objects and Web API Request/Response objects.
 
 ```typescript { .api }
-function getRequest(options: {
-  request: import('http').IncomingMessage;
-  base: string;
-  bodySizeLimit?: number;
-}): Promise<Request>;
+function getRequest(options: { request: import("http").IncomingMessage; base: string; bodySizeLimit?: number }): Promise<Request>;
 
-function setResponse(res: import('http').ServerResponse, response: Response): Promise<void>;
+function setResponse(res: import("http").ServerResponse, response: Response): Promise<void>;
 
 function createReadableStream(file: string): ReadableStream;
 ```
@@ -191,10 +187,7 @@ function createReadableStream(file: string): ReadableStream;
 Customize request/response handling and compose multiple hooks.
 
 ```typescript { .api }
-type Handle = (input: {
-  event: RequestEvent;
-  resolve: (event: RequestEvent, opts?: ResolveOptions) => Promise<Response>;
-}) => Promise<Response>;
+type Handle = (input: { event: RequestEvent; resolve: (event: RequestEvent, opts?: ResolveOptions) => Promise<Response> }) => Promise<Response>;
 
 function sequence(...handlers: Handle[]): Handle;
 ```
@@ -206,7 +199,7 @@ function sequence(...handlers: Handle[]): Handle;
 Configure SvelteKit with Vite for development and building.
 
 ```typescript { .api }
-function sveltekit(): Promise<import('vite').Plugin[]>;
+function sveltekit(): Promise<import("vite").Plugin[]>;
 ```
 
 [Vite Integration](./vite-integration.md)
@@ -230,7 +223,7 @@ interface Page<Params = Record<string, string>> {
 interface Navigation {
   from: NavigationTarget | null;
   to: NavigationTarget | null;
-  type: 'form' | 'leave' | 'link' | 'goto' | 'popstate';
+  type: "form" | "leave" | "link" | "goto" | "popstate";
   willUnload: boolean;
   delta?: number;
   complete: Promise<void>;
@@ -349,13 +342,13 @@ declare namespace App {
   interface Error {
     message: string;
   }
-  
+
   interface Locals {}
-  
+
   interface PageData {}
-  
+
   interface PageState {}
-  
+
   interface Platform {}
 }
 ```

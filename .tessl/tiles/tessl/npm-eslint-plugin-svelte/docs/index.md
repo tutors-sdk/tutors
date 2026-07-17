@@ -27,9 +27,9 @@ import { configs, rules, meta, processors } from "eslint-plugin-svelte";
 
 ```javascript
 // eslint.config.js
-import js from '@eslint/js';
-import svelte from 'eslint-plugin-svelte';
-import globals from 'globals';
+import js from "@eslint/js";
+import svelte from "eslint-plugin-svelte";
+import globals from "globals";
 
 export default [
   js.configs.recommended,
@@ -49,24 +49,19 @@ export default [
 
 ```javascript
 // eslint.config.js
-import js from '@eslint/js';
-import svelte from 'eslint-plugin-svelte';
-import ts from 'typescript-eslint';
+import js from "@eslint/js";
+import svelte from "eslint-plugin-svelte";
+import ts from "typescript-eslint";
 
-export default ts.config(
-  js.configs.recommended,
-  ...ts.configs.recommended,
-  ...svelte.configs.recommended,
-  {
-    files: ['**/*.svelte', '**/*.svelte.ts'],
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        extraFileExtensions: ['.svelte']
-      }
+export default ts.config(js.configs.recommended, ...ts.configs.recommended, ...svelte.configs.recommended, {
+  files: ["**/*.svelte", "**/*.svelte.ts"],
+  languageOptions: {
+    parserOptions: {
+      projectService: true,
+      extraFileExtensions: [".svelte"]
     }
   }
-);
+});
 ```
 
 ## Architecture
@@ -90,10 +85,10 @@ interface PluginConfigs {
   recommended: Linter.Config[];
   prettier: Linter.Config[];
   all: Linter.Config[];
-  'flat/base': Linter.Config[];
-  'flat/recommended': Linter.Config[];
-  'flat/prettier': Linter.Config[];
-  'flat/all': Linter.Config[];
+  "flat/base": Linter.Config[];
+  "flat/recommended": Linter.Config[];
+  "flat/prettier": Linter.Config[];
+  "flat/all": Linter.Config[];
 }
 ```
 
@@ -106,9 +101,9 @@ Comprehensive collection of ESLint rules specifically designed for Svelte applic
 ```typescript { .api }
 interface PluginRules extends Record<string, Rule.RuleModule> {
   // 79 individual rules available
-  'no-at-html-tags': Rule.RuleModule;
-  'prefer-class-directive': Rule.RuleModule;
-  'valid-compile': Rule.RuleModule;
+  "no-at-html-tags": Rule.RuleModule;
+  "prefer-class-directive": Rule.RuleModule;
+  "valid-compile": Rule.RuleModule;
   // ... and 76 more rules
 }
 ```
@@ -152,7 +147,7 @@ interface ESLintPluginSvelte {
   rules: PluginRules;
   meta: PluginMeta;
   processors: {
-    '.svelte': SvelteProcessor;
+    ".svelte": SvelteProcessor;
     svelte: SvelteProcessor;
   };
 }
@@ -170,27 +165,19 @@ interface RuleMetaData {
   docs: {
     description: string;
     category: RuleCategory;
-    recommended: boolean | 'base';
+    recommended: boolean | "base";
     url: string;
     ruleId: string;
     ruleName: string;
   };
   messages: { [messageId: string]: string };
-  fixable?: 'code' | 'whitespace';
+  fixable?: "code" | "whitespace";
   hasSuggestions?: boolean;
   schema: JSONSchema4 | JSONSchema4[];
-  type: 'problem' | 'suggestion' | 'layout';
+  type: "problem" | "suggestion" | "layout";
 }
 
-type RuleCategory = 
-  | 'Possible Errors'
-  | 'Security Vulnerability' 
-  | 'Best Practices'
-  | 'Stylistic Issues'
-  | 'Extension Rules'
-  | 'SvelteKit'
-  | 'Experimental'
-  | 'System';
+type RuleCategory = "Possible Errors" | "Security Vulnerability" | "Best Practices" | "Stylistic Issues" | "Extension Rules" | "SvelteKit" | "Experimental" | "System";
 ```
 
 ### Configuration Types

@@ -25,9 +25,9 @@ import { build } from "vite";
 // Basic build
 const output = await build({
   build: {
-    outDir: 'dist',
+    outDir: "dist",
     sourcemap: true,
-    minify: 'terser'
+    minify: "terser"
   }
 });
 
@@ -35,16 +35,16 @@ const output = await build({
 await build({
   build: {
     lib: {
-      entry: './src/index.ts',
-      name: 'MyLib',
-      formats: ['es', 'cjs', 'umd']
+      entry: "./src/index.ts",
+      name: "MyLib",
+      formats: ["es", "cjs", "umd"]
     },
     rollupOptions: {
-      external: ['vue', 'react'],
+      external: ["vue", "react"],
       output: {
         globals: {
-          vue: 'Vue',
-          react: 'React'
+          vue: "Vue",
+          react: "React"
         }
       }
     }
@@ -79,7 +79,7 @@ Configure build behavior, output format, and optimization settings.
 ```typescript { .api }
 interface BuildOptions {
   /** Build target environment */
-  target?: 'es2015' | 'es2016' | 'es2017' | 'es2018' | 'es2019' | 'es2020' | 'es2021' | 'es2022' | 'esnext' | string[];
+  target?: "es2015" | "es2016" | "es2017" | "es2018" | "es2019" | "es2020" | "es2021" | "es2022" | "esnext" | string[];
   /** Build polyfills */
   polyfillModulePreload?: boolean;
   /** Output directory */
@@ -93,9 +93,9 @@ interface BuildOptions {
   /** CSS target */
   cssTarget?: string | string[];
   /** CSS minify options */
-  cssMinify?: boolean | 'esbuild' | 'lightningcss';
+  cssMinify?: boolean | "esbuild" | "lightningcss";
   /** Generate sourcemaps */
-  sourcemap?: boolean | 'inline' | 'hidden';
+  sourcemap?: boolean | "inline" | "hidden";
   /** Rollup options */
   rollupOptions?: RollupOptions;
   /** Library build options */
@@ -107,7 +107,7 @@ interface BuildOptions {
   /** SSR emit assets */
   ssrEmitAssets?: boolean;
   /** Minification */
-  minify?: boolean | 'terser' | 'esbuild';
+  minify?: boolean | "terser" | "esbuild";
   /** Terser options */
   terserOptions?: TerserOptions;
   /** Write bundle to disk */
@@ -126,7 +126,7 @@ interface BuildOptions {
   copyPublicDir?: boolean;
 }
 
-interface ResolvedBuildOptions extends Required<Omit<BuildOptions, 'rollupOptions' | 'lib'>> {
+interface ResolvedBuildOptions extends Required<Omit<BuildOptions, "rollupOptions" | "lib">> {
   rollupOptions: RollupOptions;
   lib: LibraryOptions | false;
 }
@@ -148,7 +148,7 @@ interface LibraryOptions {
   fileName?: string | ((format: LibraryFormats, entryName: string) => string);
 }
 
-type LibraryFormats = 'es' | 'cjs' | 'umd' | 'iife' | 'system';
+type LibraryFormats = "es" | "cjs" | "umd" | "iife" | "system";
 ```
 
 ### Module Preload
@@ -199,9 +199,9 @@ Customize how built asset URLs are rendered in the output.
  */
 type RenderBuiltAssetUrl = (
   filename: string,
-  type: 'asset' | 'public',
+  type: "asset" | "public",
   hostId: string,
-  hostType: 'js' | 'css' | 'html'
+  hostType: "js" | "css" | "html"
 ) => string | { relative?: boolean; runtime?: string } | undefined;
 ```
 
@@ -248,13 +248,13 @@ interface BuilderOptions {
   inlineConfig?: InlineConfig;
 }
 
-type BuildAppHook = (
-  name: string
-) => {
-  buildApp: (builder: ViteBuilder) => Promise<void>;
-} | Promise<{
-  buildApp: (builder: ViteBuilder) => Promise<void>;
-}>;
+type BuildAppHook = (name: string) =>
+  | {
+      buildApp: (builder: ViteBuilder) => Promise<void>;
+    }
+  | Promise<{
+      buildApp: (builder: ViteBuilder) => Promise<void>;
+    }>;
 ```
 
 ## Build Types

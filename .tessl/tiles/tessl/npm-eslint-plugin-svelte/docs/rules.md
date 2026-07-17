@@ -482,24 +482,24 @@ Rules that extend existing ESLint rules for Svelte context.
 ### By Category Type
 
 ```typescript { .api }
-type RuleCategory = 
-  | 'Possible Errors'      // Rules preventing runtime errors
-  | 'Security Vulnerability' // Security-focused rules
-  | 'Best Practices'       // Code quality and maintainability
-  | 'Stylistic Issues'     // Code formatting and style
-  | 'Extension Rules'      // Extensions of existing ESLint rules
-  | 'SvelteKit'           // SvelteKit-specific patterns
-  | 'Experimental'        // Experimental features
-  | 'System';            // Internal system rules
+type RuleCategory =
+  | "Possible Errors" // Rules preventing runtime errors
+  | "Security Vulnerability" // Security-focused rules
+  | "Best Practices" // Code quality and maintainability
+  | "Stylistic Issues" // Code formatting and style
+  | "Extension Rules" // Extensions of existing ESLint rules
+  | "SvelteKit" // SvelteKit-specific patterns
+  | "Experimental" // Experimental features
+  | "System"; // Internal system rules
 ```
 
 ### By Rule Type
 
 ```typescript { .api }
-type RuleType = 
-  | 'problem'     // Code correctness issues
-  | 'suggestion'  // Code improvement suggestions
-  | 'layout';     // Code formatting issues
+type RuleType =
+  | "problem" // Code correctness issues
+  | "suggestion" // Code improvement suggestions
+  | "layout"; // Code formatting issues
 ```
 
 ## Rule Configuration
@@ -510,9 +510,9 @@ type RuleType =
 export default [
   {
     rules: {
-      'svelte/no-at-html-tags': 'error',
-      'svelte/prefer-class-directive': 'warn',
-      'svelte/html-quotes': ['error', { prefer: 'double' }]
+      "svelte/no-at-html-tags": "error",
+      "svelte/prefer-class-directive": "warn",
+      "svelte/html-quotes": ["error", { prefer: "double" }]
     }
   }
 ];
@@ -524,13 +524,19 @@ export default [
 export default [
   {
     rules: {
-      'svelte/max-attributes-per-line': ['error', {
-        multiline: 1,
-        singleline: 3
-      }],
-      'svelte/sort-attributes': ['error', {
-        order: ['class', 'id', 'name', 'slot']
-      }]
+      "svelte/max-attributes-per-line": [
+        "error",
+        {
+          multiline: 1,
+          singleline: 3
+        }
+      ],
+      "svelte/sort-attributes": [
+        "error",
+        {
+          order: ["class", "id", "name", "slot"]
+        }
+      ]
     }
   }
 ];
@@ -550,20 +556,20 @@ interface RuleMetaData {
   docs: {
     description: string;
     category: RuleCategory;
-    recommended: boolean | 'base';
+    recommended: boolean | "base";
     url: string;
     ruleId: string;
     ruleName: string;
-    default?: 'error' | 'warn';
+    default?: "error" | "warn";
     conflictWithPrettier?: boolean;
   };
   messages: { [messageId: string]: string };
-  fixable?: 'code' | 'whitespace';
+  fixable?: "code" | "whitespace";
   hasSuggestions?: boolean;
   schema: JSONSchema4 | JSONSchema4[];
   deprecated?: boolean;
   replacedBy?: string[] | { note: string };
-  type: 'problem' | 'suggestion' | 'layout';
+  type: "problem" | "suggestion" | "layout";
 }
 
 interface RuleListener {

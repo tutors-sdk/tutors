@@ -109,11 +109,7 @@ Traverse and visit AST nodes using various patterns.
  * @param cbNodes - Optional callback for node arrays
  * @returns Result from first successful callback
  */
-function forEachChild<T>(
-  node: Node,
-  cbNode: (node: Node) => T | undefined,
-  cbNodes?: (nodes: NodeArray<Node>) => T | undefined
-): T | undefined;
+function forEachChild<T>(node: Node, cbNode: (node: Node) => T | undefined, cbNodes?: (nodes: NodeArray<Node>) => T | undefined): T | undefined;
 
 /**
  * Recursively traverse AST with depth-first search
@@ -122,11 +118,7 @@ function forEachChild<T>(
  * @param cbNodes - Optional callback for node arrays
  * @returns Result from first successful callback
  */
-function forEachChildRecursively<T>(
-  node: Node,
-  cbNode: (node: Node) => T | undefined,
-  cbNodes?: (nodes: NodeArray<Node>) => T | undefined
-): T | undefined;
+function forEachChildRecursively<T>(node: Node, cbNode: (node: Node) => T | undefined, cbNodes?: (nodes: NodeArray<Node>) => T | undefined): T | undefined;
 
 /**
  * Visit a single AST node with a visitor function
@@ -136,12 +128,7 @@ function forEachChildRecursively<T>(
  * @param lift - Optional lifting function
  * @returns Visited node or array
  */
-function visitNode<T extends Node>(
-  node: T | undefined,
-  visitor: Visitor,
-  test?: (node: Node) => boolean,
-  lift?: (node: NodeArray<Node>) => T
-): T;
+function visitNode<T extends Node>(node: T | undefined, visitor: Visitor, test?: (node: Node) => boolean, lift?: (node: NodeArray<Node>) => T): T;
 
 /**
  * Visit an array of AST nodes
@@ -152,13 +139,7 @@ function visitNode<T extends Node>(
  * @param count - Number of nodes to visit
  * @returns Visited node array
  */
-function visitNodes<T extends Node>(
-  nodes: NodeArray<T> | undefined,
-  visitor: Visitor,
-  test?: (node: Node) => boolean,
-  start?: number,
-  count?: number
-): NodeArray<T>;
+function visitNodes<T extends Node>(nodes: NodeArray<T> | undefined, visitor: Visitor, test?: (node: Node) => boolean, start?: number, count?: number): NodeArray<T>;
 ```
 
 **Usage Examples:**
@@ -166,11 +147,7 @@ function visitNodes<T extends Node>(
 ```typescript
 import * as ts from "typescript";
 
-const sourceFile = ts.createSourceFile(
-  "example.ts",
-  "function add(a: number, b: number): number { return a + b; }",
-  ts.ScriptTarget.Latest
-);
+const sourceFile = ts.createSourceFile("example.ts", "function add(a: number, b: number): number { return a + b; }", ts.ScriptTarget.Latest);
 
 // Find all identifiers in the AST
 const identifiers: string[] = [];
@@ -205,12 +182,7 @@ Update existing source files efficiently for editor scenarios.
  * @param aggressiveChecks - Whether to perform aggressive validation
  * @returns Updated source file
  */
-function updateSourceFile(
-  sourceFile: SourceFile,
-  newText: string,
-  textChangeRange: TextChangeRange,
-  aggressiveChecks?: boolean
-): SourceFile;
+function updateSourceFile(sourceFile: SourceFile, newText: string, textChangeRange: TextChangeRange, aggressiveChecks?: boolean): SourceFile;
 
 interface TextChangeRange {
   span: TextSpan;
@@ -273,11 +245,7 @@ Parse JSDoc type expressions for testing and analysis.
  * @param length - Length of content to parse
  * @returns Parsed JSDoc type expression
  */
-function parseJSDocTypeExpressionForTests(
-  content: string,
-  start?: number,
-  length?: number
-): { jsDocTypeExpression: JSDocTypeExpression; diagnostics: Diagnostic[] };
+function parseJSDocTypeExpressionForTests(content: string, start?: number, length?: number): { jsDocTypeExpression: JSDocTypeExpression; diagnostics: Diagnostic[] };
 ```
 
 ## Types
@@ -372,43 +340,43 @@ function createScanner(
 interface Scanner {
   /** Get next token */
   scan(): SyntaxKind;
-  
+
   /** Get current token kind */
   getToken(): SyntaxKind;
-  
+
   /** Get current token position */
   getTokenPos(): number;
-  
+
   /** Get current text position */
   getTextPos(): number;
-  
+
   /** Get text of current token */
   getTokenText(): string;
-  
+
   /** Get numeric value of token */
   getTokenValue(): string;
-  
+
   /** Check if token has extended unicode escape */
   hasUnicodeEscape(): boolean;
-  
+
   /** Check if token has extended unicode escape */
   hasExtendedUnicodeEscape(): boolean;
-  
+
   /** Check if preceding line break */
   hasPrecedingLineBreak(): boolean;
-  
+
   /** Set text to scan */
   setText(text: string | undefined, start?: number, length?: number): void;
-  
+
   /** Set text position */
   setTextPos(textPos: number): void;
-  
+
   /** Look ahead for next token */
   lookAhead<T>(callback: () => T): T;
-  
+
   /** Scan range of text */
   scanRange<T>(start: number, length: number, callback: () => T): T;
-  
+
   /** Try scan */
   tryScan<T>(callback: () => T): T;
 }
