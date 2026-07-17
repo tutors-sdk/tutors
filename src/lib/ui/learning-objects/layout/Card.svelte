@@ -72,7 +72,7 @@
       {#if cardDetails.student}
         <div class="flex items-center justify-between">
           <span>
-            <img src={cardDetails.img} alt="" class="rounded-xl {styles.avatar}" />
+            <img src={cardDetails.img} alt={cardDetails.student?.fullName ?? cardDetails.student?.id ?? ""} class="rounded-xl {styles.avatar}" />
           </span>
           <span>
             <h6 class={styles.text}>&nbsp;{cardDetails.student.fullName ?? cardDetails.student.id}</h6>
@@ -93,7 +93,7 @@
     {:else if cardDetails.icon}
       <Iconify icon={cardDetails.icon.type} color={cardDetails.icon.color} height={styles.icon} />
     {:else}
-      <img src={cardDetails.img} alt="" class="{styles.image} object-contain object-center {isCircular ? 'rounded-full' : ''}" />
+      <img src={cardDetails.img} alt={cardDetails.title} class="{styles.image} object-contain object-center {isCircular ? 'rounded-full' : ''}" />
     {/if}
   </figure>
 {/snippet}

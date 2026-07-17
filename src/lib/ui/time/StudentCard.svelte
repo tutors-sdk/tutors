@@ -98,7 +98,7 @@
         {#if lo.img}
           <img
             src={lo.img}
-            alt=""
+            alt={lo.title}
             class="{styles.image} max-h-full w-full object-contain object-center rounded-xl"
           />
         {:else if lo.icon}
