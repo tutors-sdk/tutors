@@ -3,7 +3,7 @@
   import { onDestroy, onMount } from "svelte";
   import { Progress } from "@skeletonlabs/skeleton-svelte";
   import type { Talk } from "@tutors/tutors-model-lib";
-  import { renderMarpSlides } from "$lib/services/markdown/services/marp-renderer";
+  import { renderMarpSlides, buildMarpMarkdown } from "$lib/services/markdown/services/marp-renderer";
   import { mermaidify } from "$lib/services/markdown/services/mermaid-action";
   import Icon from "$lib/ui/components/Icon.svelte";
 
@@ -33,7 +33,7 @@
 
   async function loadSlides() {
     try {
-      const { html, css } = await renderMarpSlides(lo.contentMd);
+      const { html, css } = await renderMarpSlides(buildMarpMarkdown(lo));
       marpCss = css;
 
       const parser = new DOMParser();
