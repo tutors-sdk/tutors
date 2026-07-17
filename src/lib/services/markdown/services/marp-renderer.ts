@@ -11,11 +11,13 @@ export function isMarpContent(lo: Lo): boolean {
 }
 
 export async function renderMarpSlides(markdown: string): Promise<{ html: string; css: string }> {
-  const { Marp } = await import("@marp-team/marp-core");
-  const marp = new Marp({
-    container: { tag: "div", class: "marp-slides" },
-    html: true
+  const response = await fetch("/api/marp", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ markdown })
   });
-  const { html, css } = marp.render(markdown);
-  return { html, css };
+  if (!response.ok) {
+    throw new Error(`Marp render failed: ${response.status}`);
+  }
+  return response.json();
 }
