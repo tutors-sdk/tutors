@@ -13,6 +13,7 @@
   let { lo }: Props = $props();
 
   let loading = $state(true);
+  let error = $state("");
   let slideIndex = $state(0);
   let slideElements: string[] = $state([]);
   let marpCss = $state("");
@@ -34,13 +35,21 @@
     try {
       const { html, css } = await renderMarpSlides(lo.contentMd);
       marpCss = css;
+
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, "text/html");
-      const sections = doc.querySelectorAll("section");
-      slideElements = Array.from(sections).map((s) => s.outerHTML);
+
+      const svgs = doc.querySelectorAll("svg[data-marpit-svg]");
+      if (svgs.length > 0) {
+        slideElements = Array.from(svgs).map((svg) => svg.outerHTML);
+      } else {
+        const sections = doc.querySelectorAll("section");
+        slideElements = Array.from(sections).map((s) => s.outerHTML);
+      }
       loading = false;
-    } catch (error) {
-      console.error("Error rendering Marp slides:", error);
+    } catch (e) {
+      console.error("Error rendering Marp slides:", e);
+      error = e instanceof Error ? e.message : "Failed to render slides";
       loading = false;
     }
   }
@@ -73,13 +82,17 @@
 </script>
 
 <svelte:head>
-  {@html `<style>${marpCss}</style>`}
+  {#if marpCss}
+    {@html `<style>${marpCss}</style>`}
+  {/if}
 </svelte:head>
 
 <div class="card mr-2 rounded-lg border p-2">
   <div class="mx-2 mb-2 flex items-center justify-between">
     <div class="text-sm">
-      {slideIndex + 1} of {totalSlides}
+      {#if totalSlides > 0}
+        {slideIndex + 1} of {totalSlides}
+      {/if}
     </div>
     <div>
       <button class="btn btn-sm" onclick={prevSlide}>
@@ -97,6 +110,10 @@
   {#if loading}
     <div class="mt-72 mb-72 flex flex-col items-center justify-center">
       <Progress value={null} />
+    </div>
+  {:else if error}
+    <div class="flex items-center justify-center p-8 text-sm text-red-500">
+      {error}
     </div>
   {:else if totalSlides === 0}
     <div class="flex items-center justify-center p-8 text-sm opacity-60">
@@ -131,6 +148,11 @@
   :global(.marp-viewport .marp-slides) {
     width: 100%;
     height: 100%;
+  }
+  :global(.marp-viewport svg[data-marpit-svg]) {
+    width: 100%;
+    height: 100%;
+    display: block;
   }
   :global(.marp-viewport section) {
     width: 100% !important;
