@@ -11,6 +11,7 @@ import type { Course, Lo } from "@tutors/tutors-model-lib";
 import type { TutorsId } from "$lib/services/connect";
 import { COURSE_SENTIMENT_IDS } from "$lib/services/connect/types";
 import type { TutorsConnectLatestRow } from "../types.svelte";
+import log from "$lib/services/logger";
 
 export let supabase: SupabaseClient;
 
@@ -97,7 +98,7 @@ export async function upsertTutorsConnectLatestLo(loRecord: object): Promise<voi
   );
 
   if (error) {
-    console.error("upsertTutorsConnectLatestLo failed:", error);
+    log.error("upsertTutorsConnectLatestLo failed:", error);
   }
 }
 
@@ -118,7 +119,7 @@ export async function getTutorsConnectLatestLosByCourseId(courseId: string): Pro
     .order("received_at", { ascending: false });
 
   if (error) {
-    console.error("getTutorsConnectLatestLosByCourseId failed:", error);
+    log.error("getTutorsConnectLatestLosByCourseId failed:", error);
     return [];
   }
 
@@ -145,7 +146,7 @@ async function getNumOfLearningRecordsIncrements(fieldName: string, courseId: st
   });
 
   if (error) {
-    console.error("Error fetching student interaction:", error);
+    log.error("Error fetching student interaction:", error);
     return 0;
   }
   return student ? student[0].increment + 1 : 1;
@@ -180,7 +181,7 @@ async function manageStudentCourseLo(courseId: string, studentId: string, loId: 
     }
   );
   if (error) {
-    console.log(error);
+    log.error(error);
     throw error;
   }
 }
@@ -290,11 +291,6 @@ async function handleInteractionData(courseId: string, studentId: string, loId: 
  * @param student - Student data
  */
 export async function storeStudentCourseLearningObjectInSupabase(course: Course, loid: string, lo: Lo, student: TutorsId) {
-  //   const loTitle = getLoTitle(params)
-  //if (userDetails?.user_metadata?.full_name === "Anon") return;
-  // await insertOrUpdateCourse(course);
-  // await addOrUpdateStudent(userDetails);
-  // await addOrUpdateLo(loid, lo, lo.title);
   await handleInteractionData(course.courseId, student.login, loid, lo);
   await insertOrUpdateCalendar(student.login, course.courseId);
 }
@@ -334,7 +330,7 @@ export async function addOrUpdateStudent(student: TutorsId) {
           fullName = student.login;
         }
       } catch (fetchError) {
-        console.error("Failed to fetch GitHub user:", fetchError);
+        log.error("Failed to fetch GitHub user:", fetchError);
         // Fallback to login if API call fails
         fullName = student.login;
       }
@@ -365,11 +361,11 @@ export async function addOrUpdateStudent(student: TutorsId) {
     const { error } = await supabase.from("tutors-connect-users").upsert(row);
 
     if (error) {
-      console.error("Upsert failed:", error);
+      log.error("Upsert failed:", error);
       throw error;
     }
   } catch (error) {
-    console.error("An error occurred in addOrUpdateUserProfile:", error);
+    log.error("An error occurred in addOrUpdateUserProfile:", error);
     throw error;
   }
 }
@@ -391,7 +387,7 @@ export async function getTutorsConnectUserSentiment(githubId: string): Promise<s
   const { data, error } = await supabase.from("tutors-connect-users").select("sentiment").eq("github_id", githubId).maybeSingle();
 
   if (error) {
-    console.error("getTutorsConnectUserSentiment failed:", error);
+    log.error("getTutorsConnectUserSentiment failed:", error);
     throw error;
   }
   if (!data) return null;
@@ -415,7 +411,7 @@ export async function updateTutorsConnectUserSentiment(githubId: string, sentime
     .eq("github_id", githubId);
 
   if (error) {
-    console.error("updateTutorsConnectUserSentiment failed:", error);
+    log.error("updateTutorsConnectUserSentiment failed:", error);
     throw error;
   }
 }
@@ -431,7 +427,7 @@ export async function getTutorsConnectUserOnlineStatus(githubId: string): Promis
   const { data, error } = await supabase.from("tutors-connect-users").select("online_status").eq("github_id", githubId).maybeSingle();
 
   if (error) {
-    console.error("getTutorsConnectShare failed:", error);
+    log.error("getTutorsConnectShare failed:", error);
     throw error;
   }
   if (!data) return null;
@@ -455,7 +451,7 @@ export async function updateTutorsConnectUserOnlineStatus(githubId: string, onli
     .eq("github_id", githubId);
 
   if (error) {
-    console.error("updateTutorsConnectUserOnlineStatus failed:", error);
+    log.error("updateTutorsConnectUserOnlineStatus failed:", error);
     throw error;
   }
 }

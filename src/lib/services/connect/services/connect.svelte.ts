@@ -26,6 +26,7 @@ import {
   updateTutorsConnectUserOnlineStatus,
   updateTutorsConnectUserSentiment
 } from "$lib/services/community/utils/supabase-client";
+import log from "$lib/services/logger";
 
 /** Global anonymous mode flag, controlled by environment variable */
 let anonMode = false;
@@ -105,7 +106,7 @@ export const tutorsConnectService: TutorsConnectService = {
       const login = tutorsId.value.login;
       if (login && !anonMode) {
         const onlineStatus = tutorsId.value.share === "true" ? "online" : "offline";
-        void updateTutorsConnectUserOnlineStatus(login, onlineStatus).catch((err) => console.error(err));
+        void updateTutorsConnectUserOnlineStatus(login, onlineStatus).catch((err) => log.error(err));
       }
     }
   },

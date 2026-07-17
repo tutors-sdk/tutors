@@ -63,6 +63,7 @@
     "jheat.js": "^5.2.0",
     "knip": "^6.26.0",
     "lint-staged": "^15.5.2",
+    "loglevel": "^1.9.2",
     "msw": "^2.15.0",
     "partysocket": "^1.1.19",
     "pdfjs-dist": "^6.0.227",
