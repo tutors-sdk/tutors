@@ -66,7 +66,7 @@ export const tutorsConnectService: TutorsConnectService = {
     if (user) {
       this.profile = supabaseProfile;
       tutorsId.value = user;
-      tutorsId.value.sentiment! = await getTutorsConnectUserSentiment(user.login) ?? "neutral";
+      tutorsId.value.sentiment = await getTutorsConnectUserSentiment(user.login) ?? "neutral";
       tutorsId.value.share = await getTutorsConnectUserOnlineStatus(user.login) ?? "online";
       addOrUpdateStudent(user);
       if (browser) {
