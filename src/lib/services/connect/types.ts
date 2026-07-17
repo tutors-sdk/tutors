@@ -11,7 +11,7 @@ export type CourseVisit = {
   title: string;
   img?: string;
   icon?: IconType;
-  lastVisit: Date;
+  lastVisit: string;
   credits: string;
   visits?: number;
   private: boolean;

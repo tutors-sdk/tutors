@@ -55,12 +55,12 @@ export const supabaseProfile: ProfileStore = {
     const visit = this.courseVisits.find((c) => c.id === course.courseId);
     if (visit) {
       visit.visits++;
-      visit.lastVisit = new Date();
+      visit.lastVisit = new Date().toISOString();
     } else {
       const courseVisit: CourseVisit = {
         id: course.courseId,
         title: course.title,
-        lastVisit: new Date(),
+        lastVisit: new Date().toISOString(),
         credits: course.properties.credits,
         visits: 1
       };
