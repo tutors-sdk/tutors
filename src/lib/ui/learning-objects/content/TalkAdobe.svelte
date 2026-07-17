@@ -32,8 +32,7 @@
 
   let adobeDCView: any = null;
   let mounted = false;
-  let currentPdfUrl = "";
-  let viewerId = `adobe-pdf-viewer-${Math.random().toString(36).substr(2, 9)}`;
+  let viewerId = $derived(`adobe-pdf-viewer-${lo.pdf.split('/').pop()?.replace(/[^a-z0-9]/gi, '')}`);
 
   function loadSDK() {
     if (!adobeLoaded.value) {
@@ -45,14 +44,7 @@
   }
 
   function displayPDF() {
-    // Clean up existing viewer if URL changed
-    if (adobeDCView && currentPdfUrl !== lo.pdf) {
-      // Adobe DC View doesn't have a destroy method, so we need to recreate the div
-      const container = document.getElementById(viewerId);
-      if (container) {
-        container.innerHTML = "";
-      }
-    }
+    if (!window.AdobeDC) return;
 
     adobeDCView = new window.AdobeDC.View({
       clientId: PUBLIC_PDF_KEY,
@@ -70,11 +62,12 @@
       }
     };
     adobeDCView.previewFile(pdfContent, viewerConfig);
-    currentPdfUrl = lo.pdf;
   }
 
+  // React to lo.pdf changes
   $effect(() => {
-    if (mounted && window.AdobeDC && lo.pdf && currentPdfUrl !== lo.pdf) {
+    const pdfUrl = lo.pdf;
+    if (mounted && window.AdobeDC && pdfUrl) {
       displayPDF();
     }
   });
