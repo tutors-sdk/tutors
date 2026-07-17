@@ -1,0 +1,87 @@
+{
+  "title": "Test Course",
+  "img": "https://{{COURSEURL}}/img/course.png",
+  "route": "/course/{{COURSEURL}}",
+  "type": "course",
+  "summary": "A test course for automated testing",
+  "contentMd": "",
+  "id": "test-course",
+  "hide": false,
+  "video": "",
+  "frontMatter": {},
+  "authLevel": 0,
+  "isPrivate": false,
+  "areLabStepsAutoNumbered": false,
+  "properties": {
+    "credits": "Test Author",
+    "icon": null,
+    "private": 0
+  },
+  "los": [
+    {
+      "title": "Topic 1",
+      "type": "topic",
+      "shortTitle": "topic-01",
+      "route": "/topic/{{COURSEURL}}/topic-01",
+      "img": "https://{{COURSEURL}}/img/topic1.png",
+      "summary": "First topic",
+      "contentMd": "",
+      "contentHtml": "<p>Topic 1 content</p>",
+      "id": "topic-01",
+      "hide": false,
+      "video": "",
+      "frontMatter": {},
+      "los": [
+        {
+          "title": "Lab 1",
+          "type": "lab",
+          "shortTitle": "lab-01",
+          "route": "/lab/{{COURSEURL}}/topic-01/lab-01",
+          "img": "https://{{COURSEURL}}/img/lab1.png",
+          "summary": "First lab",
+          "contentMd": "",
+          "id": "lab-01",
+          "hide": false,
+          "video": "",
+          "frontMatter": {},
+          "los": [
+            {
+              "shortTitle": "Step01",
+              "title": "# Introduction",
+              "contentMd": "## Welcome\nThis is step 1.",
+              "contentHtml": "<h2>Welcome</h2><p>This is step 1.</p>",
+              "type": "step",
+              "id": "step-01",
+              "route": "/lab/{{COURSEURL}}/topic-01/lab-01/Step01"
+            },
+            {
+              "shortTitle": "Step02",
+              "title": "# Exercise",
+              "contentMd": "## Task\nComplete this exercise.",
+              "contentHtml": "<h2>Task</h2><p>Complete this exercise.</p>",
+              "type": "step",
+              "id": "step-02",
+              "route": "/lab/{{COURSEURL}}/topic-01/lab-01/Step02"
+            }
+          ]
+        },
+        {
+          "title": "Talk 1",
+          "type": "talk",
+          "shortTitle": "talk-01",
+          "route": "/talk/{{COURSEURL}}/topic-01/talk-01",
+          "img": "https://{{COURSEURL}}/img/talk1.png",
+          "summary": "First talk",
+          "contentMd": "",
+          "contentHtml": "<p>Talk content</p>",
+          "id": "talk-01",
+          "hide": false,
+          "video": "",
+          "frontMatter": {},
+          "pdf": "https://{{COURSEURL}}/topic-01/talk-01/talk-01.pdf",
+          "los": []
+        }
+      ]
+    }
+  ]
+}

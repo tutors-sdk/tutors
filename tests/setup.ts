@@ -26,15 +26,28 @@ beforeAll(() => {
     version: "test"
   }));
 
-  // Mock localStorage
-  const localStorageMock: Storage = {
-    length: 0,
-    key: vi.fn(),
-    getItem: vi.fn(),
-    setItem: vi.fn(),
-    removeItem: vi.fn(),
-    clear: vi.fn()
-  };
+  // Proxy-based localStorage mock supports both standard API and direct property access
+  // (e.g. localStorage.courseVisits = "..." which the source code uses)
+  const store: Record<string, string> = {};
+  const API_KEYS = new Set(["getItem", "setItem", "removeItem", "clear", "length", "key"]);
+  const localStorageMock = new Proxy(
+    {
+      getItem(key: string) { return store[key] ?? null; },
+      setItem(key: string, value: string) { store[key] = String(value); },
+      removeItem(key: string) { delete store[key]; },
+      clear() { for (const key of Object.keys(store)) delete store[key]; },
+      get length() { return Object.keys(store).length; },
+      key(index: number) { return Object.keys(store)[index] ?? null; }
+    },
+    {
+      get(target: any, prop: string) {
+        if (API_KEYS.has(prop)) return typeof target[prop] === "function" ? target[prop].bind(target) : target[prop];
+        return store[prop] ?? undefined;
+      },
+      set(_target: any, prop: string, value: string) { store[prop] = String(value); return true; },
+      deleteProperty(_target: any, prop: string) { delete store[prop]; return true; }
+    }
+  );
 
   Object.defineProperty(window, "localStorage", {
     value: localStorageMock,
@@ -63,6 +76,13 @@ beforeAll(() => {
       dispatchEvent: vi.fn()
     }))
   });
+
+  // Spies for theme-related DOM mutations
+  if (typeof document !== "undefined") {
+    vi.spyOn(document.documentElement.classList, "add");
+    vi.spyOn(document.documentElement.classList, "remove");
+    vi.spyOn(document.documentElement, "setAttribute");
+  }
 });
 
 afterEach(() => {

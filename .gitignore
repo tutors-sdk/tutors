@@ -26,4 +26,6 @@ vite.config.ts.timestamp-*
 coverage/
 playwright-report/
 .stryker-tmp/
+.stryker-cache/
 test-results/
+reports/

@@ -26,6 +26,11 @@ export default defineConfig({
 
   projects: [
     {
+      name: 'smoke',
+      testMatch: /smoke\.spec\.ts/,
+      use: { ...devices['Desktop Chrome'] }
+    },
+    {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] }
     },
@@ -39,6 +44,12 @@ export default defineConfig({
     command: 'npm run dev',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
-    timeout: 120000
+    timeout: 120000,
+    env: {
+      PUBLIC_ANON_MODE: 'TRUE',
+      PRIVATE_AUTH_SECRET: 'test-secret',
+      PRIVATE_AUTH_GITHUB_ID: 'test-github-id',
+      PRIVATE_AUTH_GITHUB_SECRET: 'test-github-secret'
+    }
   }
 });
