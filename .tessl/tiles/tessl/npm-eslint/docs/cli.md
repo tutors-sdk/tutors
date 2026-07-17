@@ -276,11 +276,11 @@ npx lint-staged
 ESLint searches for configuration files in the following order:
 
 1. `eslint.config.js` (flat config, recommended)
-2. `eslint.config.mjs` 
+2. `eslint.config.mjs`
 3. `eslint.config.cjs`
 4. `.eslintrc.js` (legacy)
 5. `.eslintrc.cjs` (legacy)
-6. `.eslintrc.yaml` (legacy) 
+6. `.eslintrc.yaml` (legacy)
 7. `.eslintrc.yml` (legacy)
 8. `.eslintrc.json` (legacy)
 9. `package.json` with `eslintConfig` property (legacy)

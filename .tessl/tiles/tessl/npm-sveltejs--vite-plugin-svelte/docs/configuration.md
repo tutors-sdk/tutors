@@ -15,28 +15,25 @@ Load and parse Svelte configuration files with automatic discovery and validatio
  * @param inlineOptions - Optional inline plugin options that may affect config loading
  * @returns Promise resolving to parsed Svelte config or undefined if no config found
  */
-function loadSvelteConfig(
-  viteConfig?: UserConfig,
-  inlineOptions?: Partial<Options>
-): Promise<Partial<SvelteConfig> | undefined>;
+function loadSvelteConfig(viteConfig?: UserConfig, inlineOptions?: Partial<Options>): Promise<Partial<SvelteConfig> | undefined>;
 ```
 
 **Usage Examples:**
 
 ```javascript
-import { loadSvelteConfig } from '@sveltejs/vite-plugin-svelte';
+import { loadSvelteConfig } from "@sveltejs/vite-plugin-svelte";
 
 // Basic usage - auto-discover config file
 const config = await loadSvelteConfig();
 console.log(config?.compilerOptions);
 
 // With Vite config context
-const viteConfig = { root: './src' };
+const viteConfig = { root: "./src" };
 const config = await loadSvelteConfig(viteConfig);
 
 // With inline options
 const config = await loadSvelteConfig(viteConfig, {
-  configFile: './custom.svelte.config.js'
+  configFile: "./custom.svelte.config.js"
 });
 
 // Disable config file loading
@@ -52,12 +49,7 @@ const config = await loadSvelteConfig(viteConfig, {
 The system automatically discovers Svelte configuration files in the following order:
 
 ```typescript { .api }
-const knownSvelteConfigNames: string[] = [
-  'svelte.config.js',
-  'svelte.config.ts', 
-  'svelte.config.mjs',
-  'svelte.config.mts'
-];
+const knownSvelteConfigNames: string[] = ["svelte.config.js", "svelte.config.ts", "svelte.config.mjs", "svelte.config.mts"];
 ```
 
 **File Discovery Process:**
@@ -74,12 +66,12 @@ Specify custom configuration file locations:
 ```javascript
 // Relative to Vite root
 const config = await loadSvelteConfig(viteConfig, {
-  configFile: './config/svelte.config.js'
+  configFile: "./config/svelte.config.js"
 });
 
 // Absolute path
 const config = await loadSvelteConfig(viteConfig, {
-  configFile: '/path/to/project/svelte.config.js'
+  configFile: "/path/to/project/svelte.config.js"
 });
 
 // Disable config loading entirely
@@ -94,17 +86,17 @@ const config = await loadSvelteConfig(viteConfig, {
 
 ```javascript
 // svelte.config.js
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 
 /** @type {import('@sveltejs/vite-plugin-svelte').SvelteConfig} */
 export default {
-  extensions: ['.svelte'],
+  extensions: [".svelte"],
   preprocess: vitePreprocess({
     style: true
   }),
   compilerOptions: {
     runes: true,
-    dev: process.env.NODE_ENV === 'development'
+    dev: process.env.NODE_ENV === "development"
   },
   vitePlugin: {
     emitCss: true,
@@ -112,7 +104,7 @@ export default {
   },
   onwarn(warning, defaultHandler) {
     // Custom warning handling
-    if (warning.code === 'css-unused-selector') return;
+    if (warning.code === "css-unused-selector") return;
     defaultHandler(warning);
   }
 };
@@ -122,11 +114,11 @@ export default {
 
 ```typescript
 // svelte.config.ts
-import type { SvelteConfig } from '@sveltejs/vite-plugin-svelte';
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import type { SvelteConfig } from "@sveltejs/vite-plugin-svelte";
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 
 const config: SvelteConfig = {
-  extensions: ['.svelte'],
+  extensions: [".svelte"],
   preprocess: vitePreprocess({
     style: true,
     script: false
@@ -140,7 +132,7 @@ const config: SvelteConfig = {
     hot: true,
     inspector: {
       holdMode: true,
-      showToggleButton: 'always'
+      showToggleButton: "always"
     }
   }
 };
@@ -152,7 +144,7 @@ export default config;
 
 ```javascript
 // svelte.config.mjs
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 
 export default {
   preprocess: vitePreprocess(),
@@ -166,10 +158,10 @@ export default {
 
 ```javascript
 // svelte.config.js
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 
-const isDev = process.env.NODE_ENV === 'development';
-const isProd = process.env.NODE_ENV === 'production';
+const isDev = process.env.NODE_ENV === "development";
+const isProd = process.env.NODE_ENV === "production";
 
 export default {
   preprocess: vitePreprocess({
@@ -193,7 +185,7 @@ export default {
   },
   onwarn(warning, defaultHandler) {
     // Ignore certain warnings in production
-    if (isProd && ['css-unused-selector', 'a11y-missing-attribute'].includes(warning.code)) {
+    if (isProd && ["css-unused-selector", "a11y-missing-attribute"].includes(warning.code)) {
       return;
     }
     defaultHandler(warning);
@@ -211,10 +203,10 @@ The configuration loader includes comprehensive error handling:
 try {
   const config = await loadSvelteConfig(viteConfig, options);
   if (!config) {
-    console.log('No Svelte config found, using defaults');
+    console.log("No Svelte config found, using defaults");
   }
 } catch (error) {
-  console.error('Failed to load Svelte config:', error.message);
+  console.error("Failed to load Svelte config:", error.message);
   // Handle configuration loading errors
 }
 ```
@@ -224,7 +216,7 @@ try {
 The loader validates configuration structure and provides meaningful error messages for common issues:
 
 - Invalid export format (must export default)
-- Missing or malformed configuration objects  
+- Missing or malformed configuration objects
 - File system errors (missing files, permission issues)
 - Module resolution errors
 
@@ -236,16 +228,16 @@ Integrate configuration loading into custom build tools:
 
 ```javascript
 // Custom build script
-import { loadSvelteConfig } from '@sveltejs/vite-plugin-svelte';
+import { loadSvelteConfig } from "@sveltejs/vite-plugin-svelte";
 
 async function buildProject() {
   const viteConfig = await loadViteConfig();
   const svelteConfig = await loadSvelteConfig(viteConfig);
-  
+
   // Use configuration to customize build process
   const shouldMinify = !svelteConfig?.compilerOptions?.dev;
   const preprocessors = svelteConfig?.preprocess || [];
-  
+
   // Custom build logic here
 }
 ```
@@ -256,15 +248,18 @@ Load configuration in test environments:
 
 ```javascript
 // test-utils.js
-import { loadSvelteConfig } from '@sveltejs/vite-plugin-svelte';
+import { loadSvelteConfig } from "@sveltejs/vite-plugin-svelte";
 
 export async function setupSvelteTest() {
-  const config = await loadSvelteConfig({
-    root: process.cwd()
-  }, {
-    configFile: './svelte.config.test.js'
-  });
-  
+  const config = await loadSvelteConfig(
+    {
+      root: process.cwd()
+    },
+    {
+      configFile: "./svelte.config.test.js"
+    }
+  );
+
   return config;
 }
 ```
@@ -275,16 +270,16 @@ Use configuration loading in development tools:
 
 ```javascript
 // dev-tool.js
-import { loadSvelteConfig } from '@sveltejs/vite-plugin-svelte';
+import { loadSvelteConfig } from "@sveltejs/vite-plugin-svelte";
 
 async function analyzeSvelteProject() {
   const config = await loadSvelteConfig();
-  
+
   // Analyze project based on configuration
-  const extensions = config?.extensions || ['.svelte'];
+  const extensions = config?.extensions || [".svelte"];
   const hasPreprocessors = Boolean(config?.preprocess);
   const isRunesEnabled = config?.compilerOptions?.runes;
-  
+
   return {
     extensions,
     hasPreprocessors,
@@ -298,7 +293,7 @@ async function analyzeSvelteProject() {
 The configuration system merges options from multiple sources in priority order:
 
 1. **Inline options** (highest priority)
-2. **Svelte config file** 
+2. **Svelte config file**
 3. **Default values** (lowest priority)
 
 This allows for flexible configuration overrides while maintaining sensible defaults.
@@ -307,12 +302,12 @@ This allows for flexible configuration overrides while maintaining sensible defa
 // Example of configuration precedence
 const finalConfig = {
   // Defaults
-  extensions: ['.svelte'],
+  extensions: [".svelte"],
   emitCss: true,
-  
+
   // Overridden by svelte.config.js
   ...svelteConfigFile,
-  
+
   // Overridden by inline options
   ...inlineOptions
 };

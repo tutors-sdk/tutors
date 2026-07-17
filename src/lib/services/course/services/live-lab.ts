@@ -2,6 +2,10 @@ import type { Lab, Course } from "@tutors/tutors-model-lib";
 import type { LabService } from "../types";
 import { removeLeadingHashes } from "@tutors/tutors-model-lib";
 
+function escapeHtml(str: string): string {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+
 function getKeyIndex(map: Map<string, string>, targetKey: string) {
   const keysArray = [...map.keys()];
   const index = keysArray.indexOf(targetKey);
@@ -50,7 +54,7 @@ export class LiveLab implements LabService {
   }
 
   refreshStep() {
-    this.content = this.chaptersHtml.get(this.currentChapterShortTitle)!;
+    this.content = this.chaptersHtml.get(this.currentChapterShortTitle) ?? "";
   }
   refreshNav() {
     //const number = this.autoNumber ? this.lab.shortTitle + ": " : "";
@@ -60,7 +64,7 @@ export class LiveLab implements LabService {
         const number = this.autoNumber ? chapter.shortTitle + ": " : "";
         const active = encodeURI(chapter.shortTitle) === this.currentChapterShortTitle ? "font-bold bg-surface-200 dark:bg-surface-600 pl-4" : "";
         const title = this.chaptersTitles.get(chapter.shortTitle);
-        return `<a href="${this.url}/${encodeURI(chapter.shortTitle)}"><li class="py-2 px-4 ${active} text-black! dark:text-white!">${number}${title}</li></a>`;
+        return `<a href="${this.url}/${encodeURI(chapter.shortTitle)}"><li class="py-2 px-4 ${active} text-black! dark:text-white!">${escapeHtml(number)}${escapeHtml(title ?? "")}</li></a>`;
       })
       .join("");
 
@@ -73,7 +77,7 @@ export class LiveLab implements LabService {
       const prevTitle = prevChapter ? truncate(this.chaptersTitles.get(prevChapter.shortTitle)) : "";
       if (prevTitle) number = this.autoNumber ? prevChapter.shortTitle + ": " : "";
       this.horizontalNavbarHtml = prevChapter
-        ? `<a class="btn btn-sm text-base capitalize" href="${this.url}/${encodeURI(prevChapter.shortTitle)}"> <span aria-hidden="true">&larr;</span>&nbsp; ${number}${prevTitle} </a>`
+        ? `<a class="btn btn-sm text-base capitalize" href="${this.url}/${encodeURI(prevChapter.shortTitle)}"> <span aria-hidden="true">&larr;</span>&nbsp; ${escapeHtml(number)}${escapeHtml(prevTitle ?? "")} </a>`
         : "";
 
       number = "";
@@ -85,7 +89,7 @@ export class LiveLab implements LabService {
       this.horizontalNavbarHtml += nextChapter
         ? `<a class="ml-auto btn btn-sm capitalize text-base" style="margin-left: auto" href="${this.url}/${encodeURI(
             nextChapter.shortTitle
-          )}"> ${number}${nextTitle} &nbsp;<span aria-hidden="true">&rarr;</span></a>`
+          )}"> ${escapeHtml(number)}${escapeHtml(nextTitle ?? "")} &nbsp;<span aria-hidden="true">&rarr;</span></a>`
         : "";
     } else {
       this.horizontalNavbarHtml = "";
@@ -95,8 +99,8 @@ export class LiveLab implements LabService {
   setCurrentChapter(step: string) {
     if (!this.steps.includes(step)) return;
     this.currentChapterShortTitle = step;
-    this.currentChapterTitle = this.chaptersTitles.get(step)!;
-    this.content = this.chaptersHtml.get(step)!;
+    this.currentChapterTitle = this.chaptersTitles.get(step) ?? "";
+    this.content = this.chaptersHtml.get(step) ?? "";
     this.index = getKeyIndex(this.chaptersHtml, step);
     this.refreshNav();
   }

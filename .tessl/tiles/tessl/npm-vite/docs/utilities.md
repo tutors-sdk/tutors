@@ -16,11 +16,7 @@ Utilities for merging and handling Vite configurations.
  * @param isRoot - Whether this is a root-level merge
  * @returns Merged configuration object
  */
-function mergeConfig<T extends Record<string, any>>(
-  defaults: T,
-  overrides: T,
-  isRoot?: boolean
-): T;
+function mergeConfig<T extends Record<string, any>>(defaults: T, overrides: T, isRoot?: boolean): T;
 ```
 
 **Usage Examples:**
@@ -32,10 +28,10 @@ import { mergeConfig } from "vite";
 const baseConfig = {
   server: {
     port: 3000,
-    host: 'localhost'
+    host: "localhost"
   },
   build: {
-    outDir: 'dist'
+    outDir: "dist"
   }
 };
 
@@ -83,8 +79,8 @@ interface LogOptions {
   timestamp?: boolean;
 }
 
-type LogLevel = 'error' | 'warn' | 'info' | 'silent';
-type LogType = 'error' | 'warn';
+type LogLevel = "error" | "warn" | "info" | "silent";
+type LogType = "error" | "warn";
 ```
 
 **Usage Examples:**
@@ -93,14 +89,14 @@ type LogType = 'error' | 'warn';
 import { createLogger } from "vite";
 
 // Create custom logger
-const logger = createLogger('info', {
-  prefix: '[MyPlugin]',
+const logger = createLogger("info", {
+  prefix: "[MyPlugin]",
   allowClearScreen: false
 });
 
-logger.info('Plugin initialized');
-logger.warn('Deprecated API usage detected');
-logger.error('Build failed');
+logger.info("Plugin initialized");
+logger.warn("Deprecated API usage detected");
+logger.error("Build failed");
 ```
 
 ### Environment Utilities
@@ -115,11 +111,7 @@ Utilities for loading and processing environment variables.
  * @param prefixes - Environment variable prefixes to include
  * @returns Object with loaded environment variables
  */
-function loadEnv(
-  mode: string,
-  envDir: string,
-  prefixes?: string | string[]
-): Record<string, string>;
+function loadEnv(mode: string, envDir: string, prefixes?: string | string[]): Record<string, string>;
 ```
 
 **Usage Examples:**
@@ -128,11 +120,11 @@ function loadEnv(
 import { loadEnv } from "vite";
 
 // Load environment variables
-const env = loadEnv('development', process.cwd(), 'VITE_');
+const env = loadEnv("development", process.cwd(), "VITE_");
 // Loads variables like VITE_API_URL, VITE_DEBUG, etc.
 
 // Load with multiple prefixes
-const allEnv = loadEnv('production', './config', ['VITE_', 'APP_']);
+const allEnv = loadEnv("production", "./config", ["VITE_", "APP_"]);
 ```
 
 ### Path Utilities
@@ -154,10 +146,10 @@ function normalizePath(id: string): string;
 import { normalizePath } from "vite";
 
 // Normalize paths
-const normalized = normalizePath('src\\components\\Button.tsx');
+const normalized = normalizePath("src\\components\\Button.tsx");
 // Result: 'src/components/Button.tsx'
 
-const absoluteNormalized = normalizePath('C:\\Users\\Dev\\project\\src\\index.ts');
+const absoluteNormalized = normalizePath("C:\\Users\\Dev\\project\\src\\index.ts");
 // Result: 'C:/Users/Dev/project/src/index.ts'
 ```
 
@@ -173,11 +165,7 @@ Utilities for dependency optimization and code transformation.
  * @param asCommand - Whether running as CLI command
  * @returns Promise resolving to optimization metadata
  */
-function optimizeDeps(
-  config: ResolvedConfig,
-  force?: boolean,
-  asCommand?: boolean
-): Promise<DepOptimizationMetadata>;
+function optimizeDeps(config: ResolvedConfig, force?: boolean, asCommand?: boolean): Promise<DepOptimizationMetadata>;
 
 /**
  * Transform code using esbuild
@@ -187,12 +175,7 @@ function optimizeDeps(
  * @param inMap - Input source map
  * @returns Promise resolving to transformation result
  */
-function transformWithEsbuild(
-  code: string,
-  filename: string,
-  options?: TransformOptions,
-  inMap?: object
-): Promise<ESBuildTransformResult>;
+function transformWithEsbuild(code: string, filename: string, options?: TransformOptions, inMap?: object): Promise<ESBuildTransformResult>;
 
 interface DepOptimizationMetadata {
   hash: string;
@@ -208,12 +191,12 @@ interface ESBuildTransformResult {
 }
 
 interface TransformOptions {
-  loader?: 'js' | 'jsx' | 'ts' | 'tsx';
+  loader?: "js" | "jsx" | "ts" | "tsx";
   target?: string;
-  format?: 'esm' | 'cjs' | 'iife';
-  platform?: 'browser' | 'node' | 'neutral';
+  format?: "esm" | "cjs" | "iife";
+  platform?: "browser" | "node" | "neutral";
   define?: Record<string, string>;
-  jsx?: 'transform' | 'preserve';
+  jsx?: "transform" | "preserve";
   jsxFactory?: string;
   jsxFragment?: string;
 }
@@ -228,15 +211,11 @@ import { optimizeDeps, transformWithEsbuild } from "vite";
 await optimizeDeps(resolvedConfig, true);
 
 // Transform TypeScript code
-const result = await transformWithEsbuild(
-  'const greeting: string = "Hello";',
-  'greeting.ts',
-  {
-    loader: 'ts',
-    target: 'es2020',
-    format: 'esm'
-  }
-);
+const result = await transformWithEsbuild('const greeting: string = "Hello";', "greeting.ts", {
+  loader: "ts",
+  target: "es2020",
+  format: "esm"
+});
 
 console.log(result.code); // Transformed JavaScript
 ```
@@ -244,12 +223,5 @@ console.log(result.code); // Transformed JavaScript
 ## Import Patterns
 
 ```typescript
-import { 
-  mergeConfig, 
-  createLogger, 
-  loadEnv, 
-  normalizePath,
-  optimizeDeps,
-  transformWithEsbuild
-} from "vite";
+import { mergeConfig, createLogger, loadEnv, normalizePath, optimizeDeps, transformWithEsbuild } from "vite";
 ```

@@ -26,10 +26,10 @@ let element;
 
 async function updateAndRead() {
   count += 1;
-  
+
   // Wait for DOM to update
   await tick();
-  
+
   // Now we can safely read the updated DOM
   console.log("Updated element text:", element.textContent);
 }
@@ -37,13 +37,13 @@ async function updateAndRead() {
 // Measuring DOM changes
 async function measureHeight(newContent) {
   const oldHeight = element.offsetHeight;
-  
+
   // Update content
   content = newContent;
-  
+
   // Wait for DOM update
   await tick();
-  
+
   const newHeight = element.offsetHeight;
   console.log(`Height changed from ${oldHeight} to ${newHeight}`);
 }
@@ -54,10 +54,10 @@ let inputElement;
 
 async function showAndFocus() {
   showInput = true;
-  
+
   // Wait for input to be rendered
   await tick();
-  
+
   // Now we can focus it
   inputElement?.focus();
 }
@@ -85,19 +85,19 @@ let data = $state([]);
 let processedData = $state([]);
 
 // Derived values that might trigger additional updates
-let filteredData = $derived(data.filter(item => item.active));
+let filteredData = $derived(data.filter((item) => item.active));
 let sortedData = $derived(filteredData.sort((a, b) => a.name.localeCompare(b.name)));
 
 async function loadAndProcess() {
   loading = true;
-  
+
   // Fetch data
   const response = await fetch("/api/data");
   data = await response.json();
-  
+
   // Wait for all reactive updates to settle
   await settled();
-  
+
   // Now all derived values are up to date
   console.log("Final processed data:", sortedData);
   loading = false;
@@ -118,10 +118,10 @@ async function processSelection() {
   // Update multiple reactive values
   selectedItems = [...selectedItems, ...searchResults.slice(0, 3)];
   userInput = "";
-  
+
   // Wait for all reactive updates to complete
   await settled();
-  
+
   // Safe to perform operations that depend on final state
   saveSelections(selectedItems);
 }
@@ -151,7 +151,7 @@ let lastUpdate = $state(Date.now());
 // Effect that doesn't depend on lastUpdate changes
 $effect(() => {
   console.log(`Count is ${count}`);
-  
+
   // Update timestamp without creating dependency
   untrack(() => {
     lastUpdate = Date.now();
@@ -165,7 +165,7 @@ let data = $state({ items: [] });
 $effect(() => {
   // React to data changes
   processData(data);
-  
+
   // Log only if debug mode, but don't react to debugMode changes
   untrack(() => {
     if (debugMode) {
@@ -182,7 +182,7 @@ $effect(() => {
   if (config && !initialLoad) {
     // Load data based on config
     loadInitialData(config);
-    
+
     // Set flag without creating new reactive dependency
     untrack(() => {
       initialLoad = true;
@@ -215,10 +215,10 @@ let container;
 function addItemAndScroll(newItem) {
   // Add item
   items = [...items, newItem];
-  
+
   // Force immediate DOM update
   flushSync();
-  
+
   // Scroll to new item (DOM is already updated)
   const newElement = container.lastElementChild;
   newElement.scrollIntoView();
@@ -232,7 +232,7 @@ function batchUpdateWithFlush() {
     name = "Updated";
     active = true;
   });
-  
+
   // DOM is immediately updated here
   measureAndAdjust();
 }
@@ -243,15 +243,12 @@ let element;
 
 function animateWithPreciseTiming() {
   animationTarget = 100;
-  
+
   // Ensure DOM updates immediately
   flushSync();
-  
+
   // Start animation with current DOM state
-  element.animate([
-    { transform: "translateX(0px)" },
-    { transform: `translateX(${animationTarget}px)` }
-  ], { duration: 300 });
+  element.animate([{ transform: "translateX(0px)" }, { transform: `translateX(${animationTarget}px)` }], { duration: 300 });
 }
 ```
 
@@ -278,18 +275,18 @@ let userProfile = $state(null);
 // Effect with automatic cancellation
 $effect(() => {
   if (!userId) return;
-  
+
   const signal = getAbortSignal();
-  
+
   // Fetch with automatic cancellation
   fetch(`/api/users/${userId}`, { signal })
-    .then(r => r.json())
-    .then(profile => {
+    .then((r) => r.json())
+    .then((profile) => {
       if (!signal.aborted) {
         userProfile = profile;
       }
     })
-    .catch(err => {
+    .catch((err) => {
       if (!signal.aborted) {
         console.error("Failed to fetch user:", err);
       }
@@ -300,18 +297,17 @@ $effect(() => {
 let searchQuery = $state("");
 let searchResults = $derived.by(() => {
   if (!searchQuery) return [];
-  
+
   const signal = getAbortSignal();
   let results = [];
-  
+
   // Async search with cancellation
-  searchAPI(searchQuery, { signal })
-    .then(data => {
-      if (!signal.aborted) {
-        results = data;
-      }
-    });
-  
+  searchAPI(searchQuery, { signal }).then((data) => {
+    if (!signal.aborted) {
+      results = data;
+    }
+  });
+
   return results;
 });
 
@@ -321,22 +317,22 @@ let websocket = $state(null);
 
 $effect(() => {
   const signal = getAbortSignal();
-  
+
   const ws = new WebSocket("ws://localhost:8080");
   websocket = ws;
-  
+
   ws.onopen = () => {
     if (!signal.aborted) {
       connected = true;
     }
   };
-  
+
   ws.onclose = () => {
     if (!signal.aborted) {
       connected = false;
     }
   };
-  
+
   // Cleanup when aborted
   signal.addEventListener("abort", () => {
     ws.close();
@@ -375,7 +371,7 @@ $effect(() => {
   const interval = setInterval(() => {
     date.setTime(Date.now());
   }, 1000);
-  
+
   return () => clearInterval(interval);
 });
 
@@ -543,13 +539,9 @@ const prefersReducedMotion = new MediaQuery("(prefers-reduced-motion: reduce)");
 const isDarkMode = new MediaQuery("(prefers-color-scheme: dark)");
 
 // Use in reactive context
-const layoutClass = $derived(
-  isLargeScreen.current ? "desktop-layout" : "mobile-layout"
-);
+const layoutClass = $derived(isLargeScreen.current ? "desktop-layout" : "mobile-layout");
 
-const animationDuration = $derived(
-  prefersReducedMotion.current ? 0 : 300
-);
+const animationDuration = $derived(prefersReducedMotion.current ? 0 : 300);
 ```
 
 #### createSubscriber
@@ -562,9 +554,7 @@ Creates a subscribe function for integrating external event-based systems.
  * @param start - Function called when first subscription occurs
  * @returns Subscribe function
  */
-function createSubscriber(
-  start: (update: () => void) => (() => void) | void
-): () => void;
+function createSubscriber(start: (update: () => void) => (() => void) | void): () => void;
 ```
 
 **Usage Examples:**
@@ -577,22 +567,22 @@ class ReactiveWebSocket {
   #ws;
   #subscribe;
   #data = null;
-  
+
   constructor(url) {
     this.#subscribe = createSubscriber((update) => {
       this.#ws = new WebSocket(url);
-      
+
       this.#ws.onmessage = (event) => {
         this.#data = JSON.parse(event.data);
         update(); // Trigger reactive updates
       };
-      
+
       return () => {
         this.#ws.close();
       };
     });
   }
-  
+
   get data() {
     this.#subscribe(); // Make this getter reactive
     return this.#data;
@@ -622,7 +612,7 @@ $effect(() => {
       debouncedSearch = searchTerm;
     }
   }, 300);
-  
+
   signal.addEventListener("abort", () => {
     clearTimeout(timeout);
   });
@@ -633,7 +623,7 @@ $effect(() => {
 
 ```typescript
 function batchUpdates(updates) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     updates();
     tick().then(resolve);
   });
@@ -654,10 +644,10 @@ let resource = $state(null);
 
 $effect(() => {
   const signal = getAbortSignal();
-  
+
   // Create resource
   resource = createExpensiveResource();
-  
+
   // Cleanup when effect re-runs or component unmounts
   signal.addEventListener("abort", () => {
     resource?.cleanup();

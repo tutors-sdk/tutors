@@ -61,9 +61,7 @@ Marks a Svelte 5 component to be compiled with legacy class component API for ba
  * @param component - Component constructor to mark as legacy
  * @returns The same component with legacy compilation marker
  */
-function asClassComponent<Props extends Record<string, any>, Exports extends Record<string, any>>(
-  component: Component<Props, Exports>
-): Component<Props, Exports>;
+function asClassComponent<Props extends Record<string, any>, Exports extends Record<string, any>>(component: Component<Props, Exports>): Component<Props, Exports>;
 ```
 
 **Usage Examples:**
@@ -73,9 +71,8 @@ function asClassComponent<Props extends Record<string, any>, Exports extends Rec
 import { asClassComponent } from "svelte/legacy";
 
 // Mark this component for legacy compilation
-export default asClassComponent(
-  // Component definition here
-);
+export default asClassComponent();
+// Component definition here
 
 // Or in parent component
 import { asClassComponent } from "svelte/legacy";
@@ -229,7 +226,7 @@ import { createClassComponent } from "svelte/legacy";
 // Factory function for creating legacy versions
 function createLegacyFactory(modernComponent) {
   const LegacyClass = createClassComponent(modernComponent);
-  
+
   return function createInstance(target, props = {}) {
     return new LegacyClass({
       target,
@@ -278,13 +275,13 @@ interface LegacyComponentConstructor<Props extends Record<string, any>, Exports 
 interface LegacyComponentInstance<Props extends Record<string, any>, Exports extends Record<string, any>> {
   /** Update component props */
   $set(props: Partial<Props>): void;
-  
+
   /** Subscribe to component events */
   $on(event: string, callback: (event: CustomEvent) => void): () => void;
-  
+
   /** Destroy component instance */
   $destroy(): void;
-  
+
   /** Access to internal component state */
   $$: {
     props: Props;
@@ -293,11 +290,7 @@ interface LegacyComponentInstance<Props extends Record<string, any>, Exports ext
   };
 }
 
-interface Component<
-  Props extends Record<string, any> = {},
-  Exports extends Record<string, any> = {},
-  Bindings extends keyof Props | '' = string
-> {
+interface Component<Props extends Record<string, any> = {}, Exports extends Record<string, any> = {}, Bindings extends keyof Props | "" = string> {
   (internals: ComponentInternals, props: Props): Exports;
 }
 ```
@@ -342,17 +335,17 @@ test("modern component", () => {
 test("legacy wrapped component", () => {
   const LegacyComponent = createClassComponent(Component);
   const container = document.createElement("div");
-  
+
   const instance = new LegacyComponent({
     target: container,
     props: { name: "test" }
   });
-  
+
   expect(container.textContent).toContain("Hello test");
-  
+
   instance.$set({ name: "updated" });
   expect(container.textContent).toContain("Hello updated");
-  
+
   instance.$destroy();
 });
 ```
@@ -393,14 +386,14 @@ console.log("Component context:", instance.$$.ctx);
 
 // Monitor prop changes
 const originalSet = instance.$set;
-instance.$set = function(props) {
+instance.$set = function (props) {
   console.log("Legacy $set called with:", props);
   return originalSet.call(this, props);
 };
 
 // Monitor events
 const originalOn = instance.$on;
-instance.$on = function(event, callback) {
+instance.$on = function (event, callback) {
   console.log("Legacy $on registered for:", event);
   return originalOn.call(this, event, callback);
 };

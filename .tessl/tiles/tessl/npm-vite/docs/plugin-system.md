@@ -13,9 +13,9 @@ interface Plugin extends RollupPlugin {
   /** Plugin name (required) */
   name: string;
   /** Plugin enforcement order */
-  enforce?: 'pre' | 'post';
+  enforce?: "pre" | "post";
   /** When to apply plugin */
-  apply?: 'build' | 'serve' | ((config: UserConfig, env: ConfigEnv) => boolean);
+  apply?: "build" | "serve" | ((config: UserConfig, env: ConfigEnv) => boolean);
   /** Config modification hook */
   config?: (config: UserConfig, env: ConfigEnv) => void | UserConfig | Promise<void | UserConfig>;
   /** Config resolved hook */
@@ -35,13 +35,21 @@ interface Plugin extends RollupPlugin {
   /** Generate bundle hook */
   generateBundle?: (options: OutputOptions, bundle: OutputBundle) => void | Promise<void>;
   /** Render chunk hook */
-  renderChunk?: (code: string, chunk: RenderedChunk, options: OutputOptions) => string | { code: string; map?: SourceMapInput } | null | Promise<string | { code: string; map?: SourceMapInput } | null>;
+  renderChunk?: (
+    code: string,
+    chunk: RenderedChunk,
+    options: OutputOptions
+  ) => string | { code: string; map?: SourceMapInput } | null | Promise<string | { code: string; map?: SourceMapInput } | null>;
   /** Transform hook */
   transform?: (code: string, id: string) => string | { code: string; map?: SourceMapInput } | null | Promise<string | { code: string; map?: SourceMapInput } | null>;
   /** Load hook */
   load?: (id: string) => string | { code: string; map?: SourceMapInput } | null | Promise<string | { code: string; map?: SourceMapInput } | null>;
   /** Resolve ID hook */
-  resolveId?: (id: string, importer?: string, options?: { custom?: any; isEntry: boolean }) => string | { id: string; external?: boolean } | null | Promise<string | { id: string; external?: boolean } | null>;
+  resolveId?: (
+    id: string,
+    importer?: string,
+    options?: { custom?: any; isEntry: boolean }
+  ) => string | { id: string; external?: boolean } | null | Promise<string | { id: string; external?: boolean } | null>;
   /** Handle HMR update */
   handleHotUpdate?: (ctx: HmrContext) => Array<ModuleNode> | void | Promise<Array<ModuleNode> | void>;
 }
@@ -53,7 +61,7 @@ type PluginOption = Plugin | false | null | undefined | PluginOption[];
  */
 interface HookHandler<T, O> {
   handler: T;
-  order?: 'pre' | 'post' | null;
+  order?: "pre" | "post" | null;
   once?: boolean;
 }
 ```
@@ -66,15 +74,15 @@ import type { Plugin } from "vite";
 // Basic plugin
 function myPlugin(): Plugin {
   return {
-    name: 'my-plugin',
+    name: "my-plugin",
     config(config, { command }) {
-      if (command === 'serve') {
+      if (command === "serve") {
         config.define = config.define || {};
         config.define.__DEV__ = true;
       }
     },
     configureServer(server) {
-      server.middlewares.use('/api', myApiHandler);
+      server.middlewares.use("/api", myApiHandler);
     }
   };
 }
@@ -87,9 +95,9 @@ interface MyPluginOptions {
 
 function myPluginWithOptions(options: MyPluginOptions = {}): Plugin {
   return {
-    name: 'my-plugin-with-options',
-    enforce: 'pre',
-    apply: 'build',
+    name: "my-plugin-with-options",
+    enforce: "pre",
+    apply: "build",
     transform(code, id) {
       if (options.debug) {
         console.log(`Transforming: ${id}`);
@@ -111,10 +119,7 @@ Create environment-specific plugins that can behave differently across environme
  * @param factory - Factory function returning environment-specific plugin
  * @returns Plugin that adapts to different environments
  */
-function perEnvironmentPlugin(
-  name: string,
-  factory: (environment: Environment) => Plugin
-): Plugin;
+function perEnvironmentPlugin(name: string, factory: (environment: Environment) => Plugin): Plugin;
 ```
 
 ### Plugin Context
@@ -211,10 +216,7 @@ Hooks for modifying and accessing configuration.
  * @param env - Configuration environment
  * @returns Modified config or void
  */
-type ConfigHook = (
-  config: UserConfig,
-  env: ConfigEnv
-) => void | UserConfig | Promise<void | UserConfig>;
+type ConfigHook = (config: UserConfig, env: ConfigEnv) => void | UserConfig | Promise<void | UserConfig>;
 
 /**
  * Access resolved configuration
@@ -251,9 +253,7 @@ Hooks for handling Hot Module Replacement.
  * @param ctx - HMR context with file and modules information
  * @returns Array of modules to update or void
  */
-type HandleHotUpdateHook = (
-  ctx: HmrContext
-) => Array<ModuleNode> | void | Promise<Array<ModuleNode> | void>;
+type HandleHotUpdateHook = (ctx: HmrContext) => Array<ModuleNode> | void | Promise<Array<ModuleNode> | void>;
 
 interface HmrContext {
   /** File path that changed */
@@ -278,17 +278,17 @@ Apply plugins conditionally based on environment or configuration.
 ```typescript { .api }
 // Environment-based application
 const myPlugin = (): Plugin => ({
-  name: 'my-plugin',
-  apply: 'build', // Only during build
+  name: "my-plugin",
+  apply: "build" // Only during build
   // ... plugin implementation
 });
 
 // Function-based application
 const conditionalPlugin = (): Plugin => ({
-  name: 'conditional-plugin',
+  name: "conditional-plugin",
   apply: (config, { command, mode }) => {
-    return command === 'build' && mode === 'production';
-  },
+    return command === "build" && mode === "production";
+  }
   // ... plugin implementation
 });
 ```
@@ -300,15 +300,15 @@ Control plugin execution order with enforcement.
 ```typescript { .api }
 // Pre-plugins run before Vite's internal plugins
 const prePlugin = (): Plugin => ({
-  name: 'pre-plugin',
-  enforce: 'pre',
+  name: "pre-plugin",
+  enforce: "pre"
   // ... runs early
 });
 
-// Post-plugins run after Vite's internal plugins  
+// Post-plugins run after Vite's internal plugins
 const postPlugin = (): Plugin => ({
-  name: 'post-plugin',
-  enforce: 'post',
+  name: "post-plugin",
+  enforce: "post"
   // ... runs late
 });
 ```

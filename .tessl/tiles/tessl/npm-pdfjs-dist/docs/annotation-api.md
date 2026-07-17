@@ -15,7 +15,7 @@ class AnnotationLayer {
    * @param parameters - Annotation layer parameters
    */
   static render(parameters: AnnotationLayerParameters): void;
-  
+
   /**
    * Update existing annotation layer
    * @param parameters - Annotation layer parameters
@@ -100,51 +100,51 @@ interface IPDFLinkService {
   rotation: number;
   /** Current scale */
   scale: number;
-  
+
   /**
    * Navigate to page
    * @param pageNumber - Target page number
    */
   goToPage(pageNumber: number): void;
-  
+
   /**
    * Navigate to destination
    * @param dest - PDF destination
    */
   goToDestination(dest: any): void;
-  
+
   /**
    * Get destination hash fragment
    * @param dest - PDF destination
    * @returns Hash string
    */
   getDestinationHash(dest: any): string;
-  
+
   /**
    * Get anchor URL
    * @param anchor - Anchor string
    * @returns Full URL
    */
   getAnchorUrl(anchor: string): string;
-  
+
   /**
    * Set document reference
    * @param pdfDocument - PDF document proxy
    */
   setDocument(pdfDocument: PDFDocumentProxy): void;
-  
+
   /**
    * Set viewer reference
    * @param pdfViewer - PDF viewer instance
    */
   setViewer(pdfViewer: any): void;
-  
+
   /**
    * Execute named action
    * @param action - Action name
    */
   executeNamedAction(action: string): void;
-  
+
   /**
    * Execute set OCG state action
    * @param action - OCG action
@@ -166,7 +166,7 @@ interface IDownloadManager {
    * @param options - Download options
    */
   downloadUrl(url: string, filename: string, options?: any): void;
-  
+
   /**
    * Download binary data
    * @param data - File data
@@ -174,7 +174,7 @@ interface IDownloadManager {
    * @param contentType - MIME type
    */
   downloadData(data: Uint8Array, filename: string, contentType: string): void;
-  
+
   /**
    * Open file in new window
    * @param data - File data
@@ -184,7 +184,7 @@ interface IDownloadManager {
    * @returns Whether file was opened
    */
   openOrDownloadData(data: Uint8Array, filename: string, dest?: any, options?: any): boolean;
-  
+
   /**
    * Download PDF document
    * @param data - PDF data
@@ -249,59 +249,59 @@ Storage system for annotation data and form field values.
 ```javascript { .api }
 class AnnotationStorage {
   constructor();
-  
+
   /**
    * Get stored value for annotation
    * @param key - Annotation key
    * @returns Stored value
    */
   getValue(key: string): any;
-  
+
   /**
    * Get raw stored value
    * @param key - Annotation key
    * @returns Raw value
    */
   getRawValue(key: string): any;
-  
+
   /**
    * Remove stored value
    * @param key - Annotation key
    */
   remove(key: string): void;
-  
+
   /**
    * Store annotation value
    * @param key - Annotation key
    * @param value - Value to store
    */
   setValue(key: string, value: any): void;
-  
+
   /**
    * Check if annotation has stored data
    * @param key - Annotation key
    * @returns Whether data exists
    */
   has(key: string): boolean;
-  
+
   /**
    * Get all stored values
    * @returns Map of all values
    */
   getAll(): Map<string, any>;
-  
+
   /**
    * Get size of stored data
    * @returns Number of stored items
    */
   get size(): number;
-  
+
   /**
    * Reset all stored data
    * @param keepTransformMatrix - Keep transform matrices
    */
   resetModified(keepTransformMatrix?: boolean): void;
-  
+
   /**
    * Get serializable representation
    * @returns Serializable object
@@ -368,13 +368,13 @@ interface AccessibilityManager {
    * @param data - Annotation data
    */
   enable(annotation: HTMLElement, data: any): void;
-  
+
   /**
    * Disable accessibility
    * @param annotation - Annotation element
    */
   disable(annotation: HTMLElement): void;
-  
+
   /**
    * Move focus to annotation
    * @param annotation - Target annotation
@@ -395,12 +395,12 @@ class InteractiveAnnotationLayer {
     this.annotationStorage = new AnnotationStorage();
     this.linkService = new SimpleLinkService();
   }
-  
+
   async render() {
     const annotations = await this.page.getAnnotations({
       intent: "display"
     });
-    
+
     AnnotationLayer.render({
       viewport: this.viewport,
       div: this.container,
@@ -411,9 +411,9 @@ class InteractiveAnnotationLayer {
       renderForms: true,
       enableScripting: false
     });
-    
+
     // Handle form field changes
-    this.container.addEventListener('change', (event) => {
+    this.container.addEventListener("change", (event) => {
       if (event.target.dataset.annotationId) {
         const key = event.target.dataset.annotationId;
         const value = this.getFieldValue(event.target);
@@ -421,21 +421,21 @@ class InteractiveAnnotationLayer {
       }
     });
   }
-  
+
   getFieldValue(element) {
     switch (element.type) {
-      case 'checkbox':
-      case 'radio':
+      case "checkbox":
+      case "radio":
         return element.checked;
-      case 'select-one':
+      case "select-one":
         return element.selectedIndex;
-      case 'select-multiple':
-        return Array.from(element.selectedOptions).map(opt => opt.value);
+      case "select-multiple":
+        return Array.from(element.selectedOptions).map((opt) => opt.value);
       default:
         return element.value;
     }
   }
-  
+
   getFormData() {
     const formData = {};
     for (const [key, value] of this.annotationStorage.getAll()) {
@@ -452,25 +452,25 @@ class SimpleLinkService {
     this.rotation = 0;
     this.scale = 1.0;
   }
-  
+
   goToPage(pageNumber) {
     this.page = pageNumber;
     // Implement page navigation
   }
-  
+
   goToDestination(dest) {
     // Handle PDF destinations
     console.log("Navigate to destination:", dest);
   }
-  
+
   getDestinationHash(dest) {
     return `#page=${dest[0]?.num || 1}`;
   }
-  
+
   getAnchorUrl(anchor) {
     return `#${anchor}`;
   }
-  
+
   executeNamedAction(action) {
     switch (action) {
       case "NextPage":

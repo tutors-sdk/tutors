@@ -72,14 +72,14 @@ import { defineConfig } from "vite";
 export default defineConfig({
   resolve: {
     alias: {
-      '@': './src',
-      '@components': './src/components',
-      '@utils': './src/utils'
+      "@": "./src",
+      "@components": "./src/components",
+      "@utils": "./src/utils"
     },
-    extensions: ['.js', '.ts', '.jsx', '.tsx', '.json'],
-    conditions: ['import', 'module', 'browser', 'default'],
-    mainFields: ['browser', 'module', 'main'],
-    dedupe: ['react', 'react-dom']
+    extensions: [".js", ".ts", ".jsx", ".tsx", ".json"],
+    conditions: ["import", "module", "browser", "default"],
+    mainFields: ["browser", "module", "main"],
+    dedupe: ["react", "react-dom"]
   }
 });
 ```
@@ -103,11 +103,7 @@ interface Alias {
 /**
  * Custom alias resolver function
  */
-type ResolverFunction = (
-  id: string,
-  importer?: string,
-  options?: ResolveOptions
-) => string | undefined | Promise<string | undefined>;
+type ResolverFunction = (id: string, importer?: string, options?: ResolveOptions) => string | undefined | Promise<string | undefined>;
 
 interface ResolverObject {
   buildStart?: () => void;
@@ -128,7 +124,7 @@ Utilities for filtering and matching file patterns.
 /**
  * Create file filter function
  * @param include - Patterns to include
- * @param exclude - Patterns to exclude  
+ * @param exclude - Patterns to exclude
  * @param options - Filter options
  * @returns Filter function
  */
@@ -248,13 +244,43 @@ Built-in asset type detection for various file formats.
  */
 const KNOWN_ASSET_TYPES = [
   // images
-  'apng', 'bmp', 'png', 'jpg', 'jpeg', 'jfif', 'pjpeg', 'pjp', 'gif', 'svg', 'ico', 'webp', 'avif', 'cur', 'jxl',
+  "apng",
+  "bmp",
+  "png",
+  "jpg",
+  "jpeg",
+  "jfif",
+  "pjpeg",
+  "pjp",
+  "gif",
+  "svg",
+  "ico",
+  "webp",
+  "avif",
+  "cur",
+  "jxl",
   // media
-  'mp4', 'webm', 'ogg', 'mp3', 'wav', 'flac', 'aac', 'opus', 'mov', 'm4a', 'vtt',
+  "mp4",
+  "webm",
+  "ogg",
+  "mp3",
+  "wav",
+  "flac",
+  "aac",
+  "opus",
+  "mov",
+  "m4a",
+  "vtt",
   // fonts
-  'woff', 'woff2', 'eot', 'ttf', 'otf',
+  "woff",
+  "woff2",
+  "eot",
+  "ttf",
+  "otf",
   // other
-  'webmanifest', 'pdf', 'txt'
+  "webmanifest",
+  "pdf",
+  "txt"
 ];
 
 /**
@@ -275,15 +301,15 @@ Support for package.json conditional exports.
 /**
  * Default conditions for different targets
  */
-const DEFAULT_CLIENT_CONDITIONS = ['import', 'module', 'browser', 'default'];
-const DEFAULT_SERVER_CONDITIONS = ['import', 'module', 'node', 'default'];
-const DEFAULT_EXTERNAL_CONDITIONS = ['import', 'module', 'node', 'default'];
+const DEFAULT_CLIENT_CONDITIONS = ["import", "module", "browser", "default"];
+const DEFAULT_SERVER_CONDITIONS = ["import", "module", "node", "default"];
+const DEFAULT_EXTERNAL_CONDITIONS = ["import", "module", "node", "default"];
 
 /**
- * Default main fields for different targets  
+ * Default main fields for different targets
  */
-const DEFAULT_CLIENT_MAIN_FIELDS = ['browser', 'module', 'jsnext:main', 'jsnext'];
-const DEFAULT_SERVER_MAIN_FIELDS = ['module', 'jsnext:main', 'jsnext', 'main'];
+const DEFAULT_CLIENT_MAIN_FIELDS = ["browser", "module", "jsnext:main", "jsnext"];
+const DEFAULT_SERVER_MAIN_FIELDS = ["module", "jsnext:main", "jsnext", "main"];
 ```
 
 ### External Dependencies
@@ -298,9 +324,5 @@ Handle external dependencies that should not be bundled.
  * @param isProduction - Whether in production build
  * @returns Whether module is external
  */
-function isExternal(
-  id: string,
-  external: string[] | ((id: string) => boolean),
-  isProduction: boolean
-): boolean;
+function isExternal(id: string, external: string[] | ((id: string) => boolean), isProduction: boolean): boolean;
 ```

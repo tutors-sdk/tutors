@@ -29,10 +29,10 @@ const page: {
 
 ```svelte
 <script>
-  import { page } from '$app/state';
-  
+  import { page } from "$app/state";
+
   // Reactive derived values using Svelte 5 runes
-  const isHomePage = $derived(page.url.pathname === '/');
+  const isHomePage = $derived(page.url.pathname === "/");
   const userId = $derived(page.params.id);
   const isLoading = $derived(page.status === 202);
 </script>
@@ -69,8 +69,8 @@ const navigating: Navigation | null;
 
 ```svelte
 <script>
-  import { navigating } from '$app/state';
-  
+  import { navigating } from "$app/state";
+
   // Show loading indicator during navigation
   const isNavigating = $derived(navigating !== null);
   const navigationType = $derived(navigating?.type);
@@ -99,7 +99,7 @@ const navigating: Navigation | null;
     z-index: 1000;
     animation: pulse 1s infinite;
   }
-  
+
   .loading {
     opacity: 0.7;
     pointer-events: none;
@@ -126,26 +126,24 @@ const updated: {
 
 ```svelte
 <script>
-  import { updated } from '$app/state';
-  
+  import { updated } from "$app/state";
+
   // Check for updates periodically
   $effect(() => {
     const interval = setInterval(() => {
       updated.check();
     }, 30000); // Check every 30 seconds
-    
+
     return () => clearInterval(interval);
   });
-  
+
   const hasUpdate = $derived(!updated.current);
 </script>
 
 {#if hasUpdate}
   <div class="update-banner">
     <p>A new version is available!</p>
-    <button onclick={() => location.reload()}>
-      Update Now
-    </button>
+    <button onclick={() => location.reload()}> Update Now </button>
   </div>
 {/if}
 ```
@@ -167,7 +165,7 @@ interface Page<Params = Record<string, string>> {
 interface Navigation {
   from: NavigationTarget | null;
   to: NavigationTarget | null;
-  type: 'form' | 'leave' | 'link' | 'goto' | 'popstate';
+  type: "form" | "leave" | "link" | "goto" | "popstate";
   willUnload: boolean;
   delta?: number;
   complete: Promise<void>;
@@ -191,13 +189,13 @@ The `$app/state` module replaces the older `$app/stores` module for Svelte 5 app
 
 ```typescript
 // Old approach with stores (Svelte 4)
-import { page, navigating, updated } from '$app/stores';
+import { page, navigating, updated } from "$app/stores";
 
 $: currentPath = $page.url.pathname;
 $: isLoading = $navigating !== null;
 
 // New approach with state (Svelte 5)
-import { page, navigating } from '$app/state';
+import { page, navigating } from "$app/state";
 
 const currentPath = $derived(page.url.pathname);
 const isLoading = $derived(navigating !== null);

@@ -204,21 +204,9 @@ interface NodeFactory {
 const factory = ts.createNodeFactory(ts.NodeFactoryFlags.None);
 
 // Create function parameters
-const param1 = factory.createParameterDeclaration(
-  undefined,
-  undefined,
-  "name",
-  undefined,
-  factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-);
+const param1 = factory.createParameterDeclaration(undefined, undefined, "name", undefined, factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword));
 
-const param2 = factory.createParameterDeclaration(
-  undefined,
-  undefined,
-  "age",
-  undefined,
-  factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword)
-);
+const param2 = factory.createParameterDeclaration(undefined, undefined, "age", undefined, factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword));
 
 // Create function declaration
 const greetFunction = factory.createFunctionDeclaration(
@@ -230,13 +218,7 @@ const greetFunction = factory.createFunctionDeclaration(
   factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
   factory.createBlock([
     factory.createReturnStatement(
-      factory.createTemplateExpression(
-        factory.createTemplateHead("Hello, "),
-        [factory.createTemplateSpan(
-          factory.createIdentifier("name"),
-          factory.createTemplateTail("!")
-        )]
-      )
+      factory.createTemplateExpression(factory.createTemplateHead("Hello, "), [factory.createTemplateSpan(factory.createIdentifier("name"), factory.createTemplateTail("!"))])
     )
   ])
 );
@@ -306,11 +288,7 @@ interface NodeFactory {
    * @param body - Constructor body
    * @returns Constructor declaration node
    */
-  createConstructorDeclaration(
-    modifiers: readonly Modifier[] | undefined,
-    parameters: readonly ParameterDeclaration[],
-    body: Block | undefined
-  ): ConstructorDeclaration;
+  createConstructorDeclaration(modifiers: readonly Modifier[] | undefined, parameters: readonly ParameterDeclaration[], body: Block | undefined): ConstructorDeclaration;
 }
 ```
 
@@ -333,10 +311,7 @@ interface NodeFactory {
    * @param typeArguments - Generic type arguments
    * @returns Type reference node
    */
-  createTypeReferenceNode(
-    typeName: string | EntityName,
-    typeArguments?: readonly TypeNode[]
-  ): TypeReferenceNode;
+  createTypeReferenceNode(typeName: string | EntityName, typeArguments?: readonly TypeNode[]): TypeReferenceNode;
 
   /**
    * Create a union type node
@@ -373,11 +348,7 @@ interface NodeFactory {
    * @param type - Return type
    * @returns Function type node
    */
-  createFunctionTypeNode(
-    typeParameters: readonly TypeParameterDeclaration[] | undefined,
-    parameters: readonly ParameterDeclaration[],
-    type: TypeNode
-  ): FunctionTypeNode;
+  createFunctionTypeNode(typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode): FunctionTypeNode;
 }
 ```
 
@@ -422,40 +393,40 @@ type Transformer<T extends Node> = (node: T) => T;
 interface TransformationContext {
   /** Get compiler options */
   getCompilerOptions(): CompilerOptions;
-  
+
   /** Start lexical environment scope */
   startLexicalEnvironment(): void;
-  
+
   /** End lexical environment scope */
   endLexicalEnvironment(): Statement[] | undefined;
-  
+
   /** Suspend lexical environment */
   suspendLexicalEnvironment(): void;
-  
+
   /** Resume lexical environment */
   resumeLexicalEnvironment(): void;
-  
+
   /** Hoist function declaration */
   hoistFunctionDeclaration(node: FunctionDeclaration): void;
-  
+
   /** Hoist variable declaration */
   hoistVariableDeclaration(node: Identifier): void;
-  
+
   /** Request emit helper */
   requestEmitHelper(helper: EmitHelper): void;
-  
+
   /** Read emit helpers */
   readEmitHelpers(): EmitHelper[] | undefined;
-  
+
   /** Enable emit notifications */
   enableEmitNotification(kind: SyntaxKind): void;
-  
+
   /** Check if emit notifications enabled */
   isEmitNotificationEnabled(node: Node): boolean;
-  
+
   /** Trigger emit notification */
   onEmitNode(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void): void;
-  
+
   /** Substitute node during emit */
   onSubstituteNode(hint: EmitHint, node: Node): Node;
 }
@@ -463,16 +434,16 @@ interface TransformationContext {
 interface TransformationResult<T extends Node> {
   /** Transformed nodes */
   transformed: readonly T[];
-  
+
   /** Diagnostics from transformation */
   diagnostics?: readonly Diagnostic[];
-  
+
   /** Substitution map */
   substituteNode?(hint: EmitHint, node: Node): Node;
-  
+
   /** Emit node callback */
   emitNodeWithNotification?(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void): void;
-  
+
   /** Dispose transformation context */
   dispose?(): void;
 }
@@ -490,51 +461,30 @@ function createLoggingTransformer(): ts.TransformerFactory<ts.SourceFile> {
       function visit(node: ts.Node): ts.Node {
         if (ts.isFunctionDeclaration(node) && node.body) {
           const factory = context.factory;
-          
+
           // Create console.log statement
           const logStatement = factory.createExpressionStatement(
-            factory.createCallExpression(
-              factory.createPropertyAccessExpression(
-                factory.createIdentifier("console"),
-                factory.createIdentifier("log")
-              ),
-              undefined,
-              [factory.createStringLiteral(`Entering function ${node.name?.text || 'anonymous'}`)]
-            )
+            factory.createCallExpression(factory.createPropertyAccessExpression(factory.createIdentifier("console"), factory.createIdentifier("log")), undefined, [
+              factory.createStringLiteral(`Entering function ${node.name?.text || "anonymous"}`)
+            ])
           );
-          
+
           // Add to function body
-          const newBody = factory.createBlock([
-            logStatement,
-            ...node.body.statements
-          ]);
-          
-          return factory.updateFunctionDeclaration(
-            node,
-            node.modifiers,
-            node.asteriskToken,
-            node.name,
-            node.typeParameters,
-            node.parameters,
-            node.type,
-            newBody
-          );
+          const newBody = factory.createBlock([logStatement, ...node.body.statements]);
+
+          return factory.updateFunctionDeclaration(node, node.modifiers, node.asteriskToken, node.name, node.typeParameters, node.parameters, node.type, newBody);
         }
-        
+
         return ts.visitEachChild(node, visit, context);
       }
-      
+
       return ts.visitNode(sourceFile, visit);
     };
   };
 }
 
 // Use the transformer
-const sourceFile = ts.createSourceFile(
-  "example.ts",
-  "function greet(name: string) { return `Hello, ${name}!`; }",
-  ts.ScriptTarget.Latest
-);
+const sourceFile = ts.createSourceFile("example.ts", "function greet(name: string) { return `Hello, ${name}!`; }", ts.ScriptTarget.Latest);
 
 const result = ts.transform(sourceFile, [createLoggingTransformer()]);
 const transformedSourceFile = result.transformed[0];
@@ -610,14 +560,14 @@ interface Printer {
    * @returns Generated source text
    */
   printFile(sourceFile: SourceFile): string;
-  
+
   /**
    * Print a bundle to string
    * @param bundle - Bundle to print
    * @returns Generated source text
    */
   printBundle(bundle: Bundle): string;
-  
+
   /**
    * Print a node to string
    * @param hint - Emit hint for context
@@ -626,7 +576,7 @@ interface Printer {
    * @returns Generated source text
    */
   printNode(hint: EmitHint, node: Node, sourceFile?: SourceFile): string;
-  
+
   /**
    * Print list of nodes to string
    * @param format - List format
@@ -676,11 +626,7 @@ interface PrintHandlers {
  * @param forceDtsPaths - Whether to force .d.ts paths
  * @returns Array of output file paths
  */
-function getOutputPathsFor(
-  sourceFile: SourceFile,
-  host: EmitHost,
-  forceDtsPaths: boolean
-): readonly string[];
+function getOutputPathsFor(sourceFile: SourceFile, host: EmitHost, forceDtsPaths: boolean): readonly string[];
 
 /**
  * Get output file extension for a source file
@@ -802,10 +748,10 @@ interface NodeFactory extends BaseNodeFactory {
 interface CustomTransformers {
   /** Transformers to apply before TypeScript's built-in transformations */
   before?: (TransformerFactory<SourceFile> | CustomTransformerFactory)[];
-  
+
   /** Transformers to apply after TypeScript's built-in transformations */
   after?: (TransformerFactory<SourceFile> | CustomTransformerFactory)[];
-  
+
   /** Transformers to apply to .d.ts files after TypeScript's built-in .d.ts transformations */
   afterDeclarations?: (TransformerFactory<Bundle | SourceFile> | CustomTransformerFactory)[];
 }

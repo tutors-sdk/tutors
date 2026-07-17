@@ -50,7 +50,7 @@ interface Navigation {
   /** Where navigation is going to */
   to: NavigationTarget | null;
   /** Type of navigation */
-  type: 'form' | 'leave' | 'link' | 'goto' | 'popstate';
+  type: "form" | "leave" | "link" | "goto" | "popstate";
   /** Whether navigation will unload the page */
   willUnload: boolean;
   /** Steps for back/forward navigation */
@@ -80,14 +80,17 @@ Programmatic navigation and page management.
  * @param options - Navigation options
  * @returns Promise that resolves when navigation completes
  */
-function goto(url: string | URL, options?: {
-  replaceState?: boolean;
-  noScroll?: boolean;
-  keepFocus?: boolean;
-  invalidateAll?: boolean;
-  invalidate?: (string | URL | ((url: URL) => boolean))[];
-  state?: App.PageState;
-}): Promise<void>;
+function goto(
+  url: string | URL,
+  options?: {
+    replaceState?: boolean;
+    noScroll?: boolean;
+    keepFocus?: boolean;
+    invalidateAll?: boolean;
+    invalidate?: (string | URL | ((url: URL) => boolean))[];
+    state?: App.PageState;
+  }
+): Promise<void>;
 
 /**
  * Invalidate specific load functions
@@ -107,7 +110,7 @@ function invalidateAll(): Promise<void>;
  * @param href - Page to preload
  * @returns Promise with preload result
  */
-function preloadData(href: string): Promise<{ type: 'loaded'; status: number; data: any } | { type: 'redirect'; location: string }>;
+function preloadData(href: string): Promise<{ type: "loaded"; status: number; data: any } | { type: "redirect"; location: string }>;
 
 /**
  * Preload code modules for routes
@@ -162,13 +165,13 @@ interface BeforeNavigate extends Navigation {
 
 interface AfterNavigate extends Navigation {
   /** Type excludes 'leave' as it never completes */
-  type: 'enter' | 'form' | 'link' | 'goto' | 'popstate';
+  type: "enter" | "form" | "link" | "goto" | "popstate";
   willUnload: false;
 }
 
 interface OnNavigate extends Navigation {
   /** Type excludes 'enter' and 'leave' */
-  type: 'form' | 'link' | 'goto' | 'popstate';
+  type: "form" | "link" | "goto" | "popstate";
   willUnload: false;
 }
 ```
@@ -180,18 +183,18 @@ interface OnNavigate extends Navigation {
 ```svelte
 <!-- src/routes/+layout.svelte -->
 <script>
-  import { page } from '$app/state';
-  
+  import { page } from "$app/state";
+
   // Reactive access to page state
   $: currentPath = page.url.pathname;
-  $: isHomePage = currentPath === '/';
-  $: pageTitle = page.data.title || 'Default Title';
+  $: isHomePage = currentPath === "/";
+  $: pageTitle = page.data.title || "Default Title";
 </script>
 
 <nav>
   <a href="/" class:active={isHomePage}>Home</a>
-  <a href="/about" class:active={currentPath === '/about'}>About</a>
-  <a href="/blog" class:active={currentPath.startsWith('/blog')}>Blog</a>
+  <a href="/about" class:active={currentPath === "/about"}>About</a>
+  <a href="/blog" class:active={currentPath.startsWith("/blog")}>Blog</a>
 </nav>
 
 <main>
@@ -212,8 +215,8 @@ interface OnNavigate extends Navigation {
 ```svelte
 <!-- src/routes/+layout.svelte -->
 <script>
-  import { navigating } from '$app/state';
-  
+  import { navigating } from "$app/state";
+
   // Show loading indicator during navigation
   $: isLoading = navigating !== null;
 </script>
@@ -246,32 +249,32 @@ interface OnNavigate extends Navigation {
 ```svelte
 <!-- src/routes/login/+page.svelte -->
 <script>
-  import { goto, invalidateAll } from '$app/navigation';
-  import { page } from '$app/state';
-  
+  import { goto, invalidateAll } from "$app/navigation";
+  import { page } from "$app/state";
+
   async function handleLogin(event) {
     const formData = new FormData(event.target);
-    const response = await fetch('/api/login', {
-      method: 'POST',
+    const response = await fetch("/api/login", {
+      method: "POST",
       body: formData
     });
-    
+
     if (response.ok) {
       // Invalidate all data and redirect
       await invalidateAll();
-      
+
       // Redirect to intended page or dashboard
-      const redirectTo = page.url.searchParams.get('redirectTo') || '/dashboard';
+      const redirectTo = page.url.searchParams.get("redirectTo") || "/dashboard";
       await goto(redirectTo);
     }
   }
-  
+
   function handleCancel() {
     // Go back without scroll/focus changes
-    goto('/', { 
+    goto("/", {
       replaceState: true,
       noScroll: true,
-      keepFocus: true 
+      keepFocus: true
     });
   }
 </script>
@@ -289,36 +292,36 @@ interface OnNavigate extends Navigation {
 ```svelte
 <!-- src/routes/+layout.svelte -->
 <script>
-  import { beforeNavigate, afterNavigate, onNavigate } from '$app/navigation';
-  import { page } from '$app/state';
-  
+  import { beforeNavigate, afterNavigate, onNavigate } from "$app/navigation";
+  import { page } from "$app/state";
+
   let isUnsavedChanges = false;
-  
+
   // Prevent navigation if there are unsaved changes
   beforeNavigate(({ to, cancel }) => {
     if (isUnsavedChanges && to?.url.pathname !== page.url.pathname) {
-      if (!confirm('You have unsaved changes. Are you sure you want to leave?')) {
+      if (!confirm("You have unsaved changes. Are you sure you want to leave?")) {
         cancel();
       }
     }
   });
-  
+
   // Log navigation for analytics
   afterNavigate(({ from, to, type }) => {
     console.log(`Navigated from ${from?.url.pathname} to ${to?.url.pathname} via ${type}`);
-    
+
     // Send to analytics
-    if (typeof gtag !== 'undefined') {
-      gtag('config', 'GA_MEASUREMENT_ID', {
+    if (typeof gtag !== "undefined") {
+      gtag("config", "GA_MEASUREMENT_ID", {
         page_path: to?.url.pathname
       });
     }
   });
-  
+
   // Handle page transitions
   onNavigate((navigation) => {
     if (!document.startViewTransition) return;
-    
+
     return new Promise((resolve) => {
       document.startViewTransition(async () => {
         resolve();
@@ -334,42 +337,38 @@ interface OnNavigate extends Navigation {
 ```svelte
 <!-- src/routes/gallery/+page.svelte -->
 <script>
-  import { pushState, replaceState } from '$app/navigation';
-  import { page } from '$app/state';
-  
+  import { pushState, replaceState } from "$app/navigation";
+  import { page } from "$app/state";
+
   export let data;
-  
+
   let selectedImage = null;
-  
+
   // Restore state from page.state
   $: if (page.state.selectedImage && !selectedImage) {
     selectedImage = page.state.selectedImage;
   }
-  
+
   function selectImage(image) {
     selectedImage = image;
-    
+
     // Update URL and state without full navigation
     pushState(`/gallery?image=${image.id}`, {
       selectedImage: image
     });
   }
-  
+
   function closeModal() {
     selectedImage = null;
-    
+
     // Go back to gallery without image parameter
-    replaceState('/gallery', {});
+    replaceState("/gallery", {});
   }
 </script>
 
 <div class="gallery">
   {#each data.images as image}
-    <img 
-      src={image.thumbnail}
-      alt={image.alt}
-      on:click={() => selectImage(image)}
-    />
+    <img src={image.thumbnail} alt={image.alt} on:click={() => selectImage(image)} />
   {/each}
 </div>
 
@@ -385,38 +384,38 @@ interface OnNavigate extends Navigation {
 ```svelte
 <!-- src/routes/admin/posts/+page.svelte -->
 <script>
-  import { invalidate, invalidateAll } from '$app/navigation';
-  import { page } from '$app/state';
-  
+  import { invalidate, invalidateAll } from "$app/navigation";
+  import { page } from "$app/state";
+
   export let data;
-  
+
   async function deletePost(postId) {
     const response = await fetch(`/api/posts/${postId}`, {
-      method: 'DELETE'
+      method: "DELETE"
     });
-    
+
     if (response.ok) {
       // Invalidate specific dependency
-      await invalidate('posts:list');
-      
+      await invalidate("posts:list");
+
       // Or invalidate all data on the page
       // await invalidateAll();
     }
   }
-  
+
   async function refreshData() {
     // Invalidate based on URL pattern
-    await invalidate((url) => url.pathname.startsWith('/api/posts'));
+    await invalidate((url) => url.pathname.startsWith("/api/posts"));
   }
-  
+
   // Auto-refresh every 30 seconds
   let interval;
   onMount(() => {
     interval = setInterval(() => {
-      invalidate('posts:list');
+      invalidate("posts:list");
     }, 30000);
   });
-  
+
   onDestroy(() => {
     clearInterval(interval);
   });
@@ -438,18 +437,18 @@ interface OnNavigate extends Navigation {
 ```svelte
 <!-- src/routes/blog/+page.svelte -->
 <script>
-  import { preloadData, preloadCode } from '$app/navigation';
-  
+  import { preloadData, preloadCode } from "$app/navigation";
+
   export let data;
-  
+
   function handleMouseEnter(href) {
     // Preload data when user hovers over link
     preloadData(href);
   }
-  
+
   function preloadBlogRoutes() {
     // Preload code for blog routes
-    preloadCode('/blog/*');
+    preloadCode("/blog/*");
   }
 </script>
 
@@ -457,10 +456,7 @@ interface OnNavigate extends Navigation {
   {#each data.posts as post}
     <article>
       <h2>
-        <a 
-          href="/blog/{post.slug}"
-          on:mouseenter={() => handleMouseEnter(`/blog/${post.slug}`)}
-        >
+        <a href="/blog/{post.slug}" on:mouseenter={() => handleMouseEnter(`/blog/${post.slug}`)}>
           {post.title}
         </a>
       </h2>
@@ -469,9 +465,7 @@ interface OnNavigate extends Navigation {
   {/each}
 </div>
 
-<button on:click={preloadBlogRoutes}>
-  Preload Blog Routes
-</button>
+<button on:click={preloadBlogRoutes}> Preload Blog Routes </button>
 ```
 
 ### Error Handling with Navigation
@@ -479,17 +473,17 @@ interface OnNavigate extends Navigation {
 ```svelte
 <!-- src/routes/+error.svelte -->
 <script>
-  import { page } from '$app/state';
-  import { goto } from '$app/navigation';
-  
+  import { page } from "$app/state";
+  import { goto } from "$app/navigation";
+
   function goHome() {
-    goto('/', { replaceState: true });
+    goto("/", { replaceState: true });
   }
-  
+
   function goBack() {
     history.back();
   }
-  
+
   function retry() {
     // Retry by reloading current page
     goto(page.url, { invalidateAll: true });
@@ -498,8 +492,8 @@ interface OnNavigate extends Navigation {
 
 <div class="error-page">
   <h1>Error {page.status}</h1>
-  <p>{page.error?.message || 'An error occurred'}</p>
-  
+  <p>{page.error?.message || "An error occurred"}</p>
+
   <div class="actions">
     <button on:click={retry}>Try Again</button>
     <button on:click={goBack}>Go Back</button>
@@ -513,8 +507,8 @@ interface OnNavigate extends Navigation {
 ```svelte
 <!-- For Svelte 4 compatibility -->
 <script>
-  import { page, navigating } from '$app/stores';
-  
+  import { page, navigating } from "$app/stores";
+
   // Use as stores with $ prefix
   $: currentPath = $page.url.pathname;
   $: isLoading = $navigating !== null;

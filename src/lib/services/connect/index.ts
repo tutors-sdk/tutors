@@ -4,5 +4,5 @@
  */
 
 export { tutorsConnectService } from "./services/connect.svelte";
-export type { TutorsConnectService, TutorsId, ProfileStore, CourseVisit, CourseSentimentId } from "./types";
+export type { TutorsId, CourseVisit, CourseSentimentId } from "./types";
 export { COURSE_SENTIMENT_IDS } from "./types";

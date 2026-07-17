@@ -59,30 +59,30 @@ interface RealtimeChannel {
   topic: string;
   /** Channel state */
   state: 'closed' | 'errored' | 'joined' | 'joining' | 'leaving';
-  
+
   /** Subscribe to events on this channel */
   on(
     type: 'postgres_changes' | 'broadcast' | 'presence',
     filter: Record<string, any>,
     callback: RealtimeCallback
   ): RealtimeChannel;
-  
+
   /** Subscribe to the channel */
   subscribe(callback?: (status: string, err?: Error) => void): RealtimeChannel;
-  
+
   /** Unsubscribe from the channel */
   unsubscribe(): Promise<'ok' | 'timed out' | 'error'>;
-  
+
   /** Send a broadcast message */
   send(options: {
     type: 'broadcast';
     event: string;
     payload?: Record<string, any>;
   }): Promise<'ok' | 'error' | 'timed out'>;
-  
+
   /** Track presence */
   track(state: Record<string, any>): Promise<'ok' | 'error' | 'timed out'>;
-  
+
   /** Untrack presence */
   untrack(): Promise<'ok' | 'error' | 'timed out'>;
 }
@@ -94,19 +94,19 @@ type RealtimeCallback = (payload: any) => void;
 
 ```typescript
 // Create a channel
-const channel = supabase.channel('room-1');
+const channel = supabase.channel("room-1");
 
 // Create a channel with configuration
-const channel = supabase.channel('room-1', {
+const channel = supabase.channel("room-1", {
   config: {
     broadcast: { self: true, ack: true },
-    presence: { key: 'user-id' }
+    presence: { key: "user-id" }
   }
 });
 
 // Get all channels
 const channels = supabase.getChannels();
-console.log('Active channels:', channels.length);
+console.log("Active channels:", channels.length);
 
 // Remove a specific channel
 await supabase.removeChannel(channel);
@@ -167,65 +167,49 @@ on(
 ```typescript
 // Listen to all changes on a table
 const channel = supabase
-  .channel('db-changes')
-  .on(
-    'postgres_changes',
-    { event: '*', schema: 'public', table: 'posts' },
-    (payload) => {
-      console.log('Change received!', payload);
-      console.log('Event type:', payload.eventType);
-      console.log('New data:', payload.new);
-      console.log('Old data:', payload.old);
-    }
-  )
+  .channel("db-changes")
+  .on("postgres_changes", { event: "*", schema: "public", table: "posts" }, (payload) => {
+    console.log("Change received!", payload);
+    console.log("Event type:", payload.eventType);
+    console.log("New data:", payload.new);
+    console.log("Old data:", payload.old);
+  })
   .subscribe();
 
 // Listen to specific events
 const channel = supabase
-  .channel('new-posts')
-  .on(
-    'postgres_changes',
-    { event: 'INSERT', schema: 'public', table: 'posts' },
-    (payload) => {
-      console.log('New post created:', payload.new);
-    }
-  )
+  .channel("new-posts")
+  .on("postgres_changes", { event: "INSERT", schema: "public", table: "posts" }, (payload) => {
+    console.log("New post created:", payload.new);
+  })
   .subscribe();
 
 // Listen with column filters
 const channel = supabase
-  .channel('published-posts')
+  .channel("published-posts")
   .on(
-    'postgres_changes',
+    "postgres_changes",
     {
-      event: 'UPDATE',
-      schema: 'public',
-      table: 'posts',
-      filter: 'status=eq.published'
+      event: "UPDATE",
+      schema: "public",
+      table: "posts",
+      filter: "status=eq.published"
     },
     (payload) => {
-      console.log('Post published:', payload.new);
+      console.log("Post published:", payload.new);
     }
   )
   .subscribe();
 
 // Listen to multiple tables
 const channel = supabase
-  .channel('user-activity')
-  .on(
-    'postgres_changes',
-    { event: '*', schema: 'public', table: 'users' },
-    (payload) => {
-      console.log('User change:', payload);
-    }
-  )
-  .on(
-    'postgres_changes',
-    { event: '*', schema: 'public', table: 'profiles' },
-    (payload) => {
-      console.log('Profile change:', payload);
-    }
-  )
+  .channel("user-activity")
+  .on("postgres_changes", { event: "*", schema: "public", table: "users" }, (payload) => {
+    console.log("User change:", payload);
+  })
+  .on("postgres_changes", { event: "*", schema: "public", table: "profiles" }, (payload) => {
+    console.log("Profile change:", payload);
+  })
   .subscribe();
 ```
 
@@ -278,57 +262,45 @@ send(options: {
 ```typescript
 // Listen for broadcast messages
 const channel = supabase
-  .channel('chat-room')
-  .on(
-    'broadcast',
-    { event: 'message' },
-    (payload) => {
-      console.log('New message:', payload.payload);
-    }
-  )
+  .channel("chat-room")
+  .on("broadcast", { event: "message" }, (payload) => {
+    console.log("New message:", payload.payload);
+  })
   .subscribe();
 
 // Send broadcast messages
 await channel.send({
-  type: 'broadcast',
-  event: 'message',
+  type: "broadcast",
+  event: "message",
   payload: {
-    user: 'john_doe',
-    text: 'Hello everyone!',
+    user: "john_doe",
+    text: "Hello everyone!",
     timestamp: new Date().toISOString()
   }
 });
 
 // Listen for multiple broadcast events
 const channel = supabase
-  .channel('game-room')
-  .on(
-    'broadcast',
-    { event: 'player-move' },
-    (payload) => {
-      console.log('Player moved:', payload.payload);
-    }
-  )
-  .on(
-    'broadcast',
-    { event: 'game-state' },
-    (payload) => {
-      console.log('Game state updated:', payload.payload);
-    }
-  )
+  .channel("game-room")
+  .on("broadcast", { event: "player-move" }, (payload) => {
+    console.log("Player moved:", payload.payload);
+  })
+  .on("broadcast", { event: "game-state" }, (payload) => {
+    console.log("Game state updated:", payload.payload);
+  })
   .subscribe();
 
 // Send different types of messages
 await channel.send({
-  type: 'broadcast',
-  event: 'player-move',
-  payload: { playerId: 'player-1', position: { x: 10, y: 20 } }
+  type: "broadcast",
+  event: "player-move",
+  payload: { playerId: "player-1", position: { x: 10, y: 20 } }
 });
 
 await channel.send({
-  type: 'broadcast',
-  event: 'game-state',
-  payload: { status: 'playing', score: 100 }
+  type: "broadcast",
+  event: "game-state",
+  payload: { status: "playing", score: 100 }
 });
 ```
 
@@ -383,53 +355,41 @@ untrack(): Promise<'ok' | 'error' | 'timed out'>;
 ```typescript
 // Track user presence
 const channel = supabase
-  .channel('online-users', {
+  .channel("online-users", {
     config: {
       presence: {
-        key: 'user-id'
+        key: "user-id"
       }
     }
   })
-  .on(
-    'presence',
-    { event: 'sync' },
-    () => {
-      const newState = channel.presenceState();
-      console.log('Presence sync:', newState);
-      
-      const users = Object.keys(newState).map(key => newState[key][0]);
-      console.log('Online users:', users);
-    }
-  )
-  .on(
-    'presence',
-    { event: 'join' },
-    ({ newPresences }) => {
-      console.log('User joined:', newPresences);
-    }
-  )
-  .on(
-    'presence',
-    { event: 'leave' },
-    ({ leftPresences }) => {
-      console.log('User left:', leftPresences);
-    }
-  )
+  .on("presence", { event: "sync" }, () => {
+    const newState = channel.presenceState();
+    console.log("Presence sync:", newState);
+
+    const users = Object.keys(newState).map((key) => newState[key][0]);
+    console.log("Online users:", users);
+  })
+  .on("presence", { event: "join" }, ({ newPresences }) => {
+    console.log("User joined:", newPresences);
+  })
+  .on("presence", { event: "leave" }, ({ leftPresences }) => {
+    console.log("User left:", leftPresences);
+  })
   .subscribe();
 
 // Track current user
 await channel.track({
-  user_id: 'user-123',
-  username: 'john_doe',
-  status: 'online',
+  user_id: "user-123",
+  username: "john_doe",
+  status: "online",
   last_seen: new Date().toISOString()
 });
 
 // Update user state
 await channel.track({
-  user_id: 'user-123',
-  username: 'john_doe',
-  status: 'typing',
+  user_id: "user-123",
+  username: "john_doe",
+  status: "typing",
   last_seen: new Date().toISOString()
 });
 
@@ -442,29 +402,29 @@ await channel.untrack();
 ```typescript
 // Subscribe with callback to handle connection status
 const channel = supabase
-  .channel('my-channel')
-  .on('postgres_changes', { event: '*', schema: 'public', table: 'posts' }, handleChange)
+  .channel("my-channel")
+  .on("postgres_changes", { event: "*", schema: "public", table: "posts" }, handleChange)
   .subscribe((status, err) => {
-    if (status === 'SUBSCRIBED') {
-      console.log('Successfully subscribed to channel');
+    if (status === "SUBSCRIBED") {
+      console.log("Successfully subscribed to channel");
     }
-    if (status === 'CHANNEL_ERROR') {
-      console.error('Channel error:', err);
+    if (status === "CHANNEL_ERROR") {
+      console.error("Channel error:", err);
     }
-    if (status === 'TIMED_OUT') {
-      console.error('Channel timed out');
+    if (status === "TIMED_OUT") {
+      console.error("Channel timed out");
     }
-    if (status === 'CLOSED') {
-      console.log('Channel closed');
+    if (status === "CLOSED") {
+      console.log("Channel closed");
     }
   });
 
 // Check channel state
-console.log('Channel state:', channel.state); // 'closed' | 'errored' | 'joined' | 'joining' | 'leaving'
+console.log("Channel state:", channel.state); // 'closed' | 'errored' | 'joined' | 'joining' | 'leaving'
 
 // Unsubscribe
 const result = await channel.unsubscribe();
-console.log('Unsubscribe result:', result); // 'ok' | 'timed out' | 'error'
+console.log("Unsubscribe result:", result); // 'ok' | 'timed out' | 'error'
 ```
 
 ## Advanced Real-time Patterns
@@ -474,38 +434,26 @@ console.log('Unsubscribe result:', result); // 'ok' | 'timed out' | 'error'
 ```typescript
 // Create a comprehensive chat room with all features
 const chatChannel = supabase
-  .channel('chat-room-1', {
+  .channel("chat-room-1", {
     config: {
       broadcast: { self: true, ack: true },
-      presence: { key: 'user_id' }
+      presence: { key: "user_id" }
     }
   })
   // Listen for new messages in database
-  .on(
-    'postgres_changes',
-    { event: 'INSERT', schema: 'public', table: 'messages' },
-    (payload) => {
-      console.log('New message in DB:', payload.new);
-    }
-  )
+  .on("postgres_changes", { event: "INSERT", schema: "public", table: "messages" }, (payload) => {
+    console.log("New message in DB:", payload.new);
+  })
   // Listen for typing indicators
-  .on(
-    'broadcast',
-    { event: 'typing' },
-    (payload) => {
-      console.log('User typing:', payload.payload);
-    }
-  )
+  .on("broadcast", { event: "typing" }, (payload) => {
+    console.log("User typing:", payload.payload);
+  })
   // Track user presence
-  .on(
-    'presence',
-    { event: 'sync' },
-    () => {
-      const state = chatChannel.presenceState();
-      const onlineUsers = Object.keys(state);
-      console.log('Online users:', onlineUsers);
-    }
-  )
+  .on("presence", { event: "sync" }, () => {
+    const state = chatChannel.presenceState();
+    const onlineUsers = Object.keys(state);
+    console.log("Online users:", onlineUsers);
+  })
   .subscribe();
 
 // Track user as online
@@ -513,13 +461,13 @@ await chatChannel.track({
   user_id: currentUser.id,
   username: currentUser.username,
   avatar_url: currentUser.avatar_url,
-  status: 'online'
+  status: "online"
 });
 
 // Send typing indicator
 await chatChannel.send({
-  type: 'broadcast',
-  event: 'typing',
+  type: "broadcast",
+  event: "typing",
   payload: {
     user_id: currentUser.id,
     is_typing: true
@@ -531,37 +479,37 @@ await chatChannel.send({
 
 ```typescript
 const channel = supabase
-  .channel('robust-channel')
-  .on('postgres_changes', { event: '*', schema: 'public', table: 'data' }, handleChange)
+  .channel("robust-channel")
+  .on("postgres_changes", { event: "*", schema: "public", table: "data" }, handleChange)
   .subscribe((status, err) => {
     switch (status) {
-      case 'SUBSCRIBED':
-        console.log('Channel subscribed successfully');
-        setConnectionStatus('connected');
+      case "SUBSCRIBED":
+        console.log("Channel subscribed successfully");
+        setConnectionStatus("connected");
         break;
-      case 'CHANNEL_ERROR':
-        console.error('Channel error:', err);
-        setConnectionStatus('error');
+      case "CHANNEL_ERROR":
+        console.error("Channel error:", err);
+        setConnectionStatus("error");
         // Implement retry logic
         setTimeout(() => {
           channel.subscribe();
         }, 5000);
         break;
-      case 'TIMED_OUT':
-        console.error('Channel subscription timed out');
-        setConnectionStatus('timeout');
+      case "TIMED_OUT":
+        console.error("Channel subscription timed out");
+        setConnectionStatus("timeout");
         break;
-      case 'CLOSED':
-        console.log('Channel closed');
-        setConnectionStatus('disconnected');
+      case "CLOSED":
+        console.log("Channel closed");
+        setConnectionStatus("disconnected");
         break;
     }
   });
 
 // Check connection status periodically
 setInterval(() => {
-  if (channel.state === 'errored' || channel.state === 'closed') {
-    console.log('Attempting to reconnect...');
+  if (channel.state === "errored" || channel.state === "closed") {
+    console.log("Attempting to reconnect...");
     channel.subscribe();
   }
 }, 10000);
@@ -572,18 +520,18 @@ setInterval(() => {
 ```typescript
 // Use specific filters to reduce unnecessary messages
 const optimizedChannel = supabase
-  .channel('optimized')
+  .channel("optimized")
   .on(
-    'postgres_changes',
+    "postgres_changes",
     {
-      event: 'UPDATE',
-      schema: 'public',
-      table: 'posts',
-      filter: 'status=eq.published AND author_id=eq.123'
+      event: "UPDATE",
+      schema: "public",
+      table: "posts",
+      filter: "status=eq.published AND author_id=eq.123"
     },
     (payload) => {
       // Only receive updates for published posts by specific author
-      console.log('Relevant update:', payload.new);
+      console.log("Relevant update:", payload.new);
     }
   )
   .subscribe();

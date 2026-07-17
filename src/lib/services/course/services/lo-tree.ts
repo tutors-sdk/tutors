@@ -60,7 +60,7 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   initCalendar(course);
 }
 
-export function decorateLoTree(course: Course, lo: Lo) {
+function decorateLoTree(course: Course, lo: Lo) {
   // every Lo knows its parent
   lo.parentCourse = course;
   // recover icon from frontmatter if present
@@ -75,8 +75,8 @@ export function decorateLoTree(course: Course, lo: Lo) {
   }
 
   // Convert contentMd to html
-  if (lo.type !== "lab" && lo.type !== "note") {
-    // Convert labs & note on demmand as can be time consuming to convert all at once
+  if (lo.type !== "lab" && lo.type !== "note" && lo.type !== "notebook") {
+    // Convert labs, notes & notebooks on demand as can be time consuming to convert all at once
     convertLoToHtml(course, lo);
   }
 
@@ -111,7 +111,7 @@ export function decorateLoTree(course: Course, lo: Lo) {
   }
 }
 
-export function injectCourseUrl(los: Lo[], id: string, url: string) {
+function injectCourseUrl(los: Lo[], id: string, url: string) {
   los.forEach((lo) => {
     if (lo.type === "archive") {
       const archive: Archive = lo as Archive;

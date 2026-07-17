@@ -12,27 +12,27 @@ The official Vite plugin for integrating Svelte components into Vite-based devel
 ## Core Imports
 
 ```javascript
-import { svelte } from '@sveltejs/vite-plugin-svelte';
+import { svelte } from "@sveltejs/vite-plugin-svelte";
 ```
 
 Additional utilities:
 
 ```javascript
-import { svelte, vitePreprocess, loadSvelteConfig } from '@sveltejs/vite-plugin-svelte';
+import { svelte, vitePreprocess, loadSvelteConfig } from "@sveltejs/vite-plugin-svelte";
 ```
 
 Standalone Inspector Plugin:
 
 ```javascript
-import { svelteInspector } from '@sveltejs/vite-plugin-svelte-inspector';
+import { svelteInspector } from "@sveltejs/vite-plugin-svelte-inspector";
 ```
 
 ## Basic Usage
 
 ```javascript
 // vite.config.js
-import { defineConfig } from 'vite';
-import { svelte } from '@sveltejs/vite-plugin-svelte';
+import { defineConfig } from "vite";
+import { svelte } from "@sveltejs/vite-plugin-svelte";
 
 export default defineConfig({
   plugins: [
@@ -50,7 +50,7 @@ export default defineConfig({
 
 ```javascript
 // svelte.config.js
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte";
 
 export default {
   preprocess: vitePreprocess({
@@ -83,7 +83,7 @@ Creates the Vite plugin array for handling Svelte files in development and build
 ```typescript { .api }
 function svelte(inlineOptions?: Partial<Options>): Plugin[];
 
-interface Options extends Omit<SvelteConfig, 'vitePlugin'>, PluginOptionsInline {}
+interface Options extends Omit<SvelteConfig, "vitePlugin">, PluginOptionsInline {}
 
 interface PluginOptionsInline extends PluginOptions {
   /** Path to svelte config file, either absolute or relative to Vite root */
@@ -115,10 +115,7 @@ interface VitePreprocessOptions {
 Utility for loading and parsing Svelte configuration files in custom build scenarios.
 
 ```typescript { .api }
-function loadSvelteConfig(
-  viteConfig?: UserConfig,
-  inlineOptions?: Partial<Options>
-): Promise<Partial<SvelteConfig> | undefined>;
+function loadSvelteConfig(viteConfig?: UserConfig, inlineOptions?: Partial<Options>): Promise<Partial<SvelteConfig> | undefined>;
 ```
 
 [Configuration Management](./configuration.md)
@@ -136,7 +133,7 @@ interface InspectorOptions {
   /** Keyboard navigation keys */
   navKeys?: {
     parent: string;
-    child: string; 
+    child: string;
     next: string;
     prev: string;
   };
@@ -147,9 +144,9 @@ interface InspectorOptions {
   /** Auto-disable on key release (default: true) */
   holdMode?: boolean;
   /** When to show toggle button (default: 'active') */
-  showToggleButton?: 'always' | 'active' | 'never';
+  showToggleButton?: "always" | "active" | "never";
   /** Toggle button position (default: 'top-right') */
-  toggleButtonPos?: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+  toggleButtonPos?: "top-right" | "top-left" | "bottom-right" | "bottom-left";
   /** Inject custom styles when active */
   customStyles?: boolean;
 }
@@ -193,7 +190,7 @@ interface SvelteConfig {
   /** Preprocessors for Svelte source code */
   preprocess?: Arrayable<PreprocessorGroup>;
   /** Svelte compiler options */
-  compilerOptions?: Omit<CompileOptions, 'filename' | 'format' | 'generate'>;
+  compilerOptions?: Omit<CompileOptions, "filename" | "format" | "generate">;
   /** Warning handler function */
   onwarn?: (warning: Warning, defaultHandler: (warning: Warning) => void) => void;
   /** Plugin-specific options */

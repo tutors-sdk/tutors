@@ -47,52 +47,53 @@ interface PluginWithOptions<T> {
 import plugin from "tailwindcss/plugin";
 
 // Simple plugin
-const myPlugin = plugin(function({ addUtilities, theme }) {
+const myPlugin = plugin(function ({ addUtilities, theme }) {
   addUtilities({
-    '.btn': {
-      padding: theme('spacing.4'),
-      borderRadius: theme('borderRadius.md'),
-      fontWeight: theme('fontWeight.semibold'),
+    ".btn": {
+      padding: theme("spacing.4"),
+      borderRadius: theme("borderRadius.md"),
+      fontWeight: theme("fontWeight.semibold")
     },
-    '.btn-primary': {
-      backgroundColor: theme('colors.blue.500'),
-      color: theme('colors.white'),
-    },
+    ".btn-primary": {
+      backgroundColor: theme("colors.blue.500"),
+      color: theme("colors.white")
+    }
   });
 });
 
 // Plugin with configuration
-const buttonPlugin = plugin(function({ addComponents, theme }) {
-  addComponents({
-    '.btn': {
-      padding: `${theme('spacing.2')} ${theme('spacing.4')}`,
-      borderRadius: theme('borderRadius.DEFAULT'),
-      fontWeight: theme('fontWeight.medium'),
-    },
-  });
-}, {
-  theme: {
-    extend: {
-      colors: {
-        'btn-primary': '#3b82f6',
-      },
-    },
+const buttonPlugin = plugin(
+  function ({ addComponents, theme }) {
+    addComponents({
+      ".btn": {
+        padding: `${theme("spacing.2")} ${theme("spacing.4")}`,
+        borderRadius: theme("borderRadius.DEFAULT"),
+        fontWeight: theme("fontWeight.medium")
+      }
+    });
   },
-});
-
-// Plugin with options
-const spacingPlugin = plugin.withOptions<{ prefix?: string }>(
-  (options = {}) => {
-    return ({ addUtilities }) => {
-      const prefix = options.prefix || '';
-      addUtilities({
-        [`.${prefix}spacing-xs`]: { padding: '0.5rem' },
-        [`.${prefix}spacing-sm`]: { padding: '1rem' },
-        [`.${prefix}spacing-md`]: { padding: '1.5rem' },
-      });
-    };
+  {
+    theme: {
+      extend: {
+        colors: {
+          "btn-primary": "#3b82f6"
+        }
+      }
+    }
   }
 );
+
+// Plugin with options
+const spacingPlugin = plugin.withOptions<{ prefix?: string }>((options = {}) => {
+  return ({ addUtilities }) => {
+    const prefix = options.prefix || "";
+    addUtilities({
+      [`.${prefix}spacing-xs`]: { padding: "0.5rem" },
+      [`.${prefix}spacing-sm`]: { padding: "1rem" },
+      [`.${prefix}spacing-md`]: { padding: "1.5rem" }
+    });
+  };
+});
 ```
 
 ### Base Styles
@@ -110,16 +111,16 @@ addBase(base: CssInJs): void;
 **Usage Example:**
 
 ```typescript
-plugin(function({ addBase, theme }) {
+plugin(function ({ addBase, theme }) {
   addBase({
-    'h1': {
-      fontSize: theme('fontSize.4xl'),
-      fontWeight: theme('fontWeight.bold'),
+    h1: {
+      fontSize: theme("fontSize.4xl"),
+      fontWeight: theme("fontWeight.bold")
     },
-    'h2': {
-      fontSize: theme('fontSize.3xl'),
-      fontWeight: theme('fontWeight.semibold'),
-    },
+    h2: {
+      fontSize: theme("fontSize.3xl"),
+      fontWeight: theme("fontWeight.semibold")
+    }
   });
 });
 ```
@@ -158,32 +159,32 @@ matchVariant<T = string>(
 **Usage Examples:**
 
 ```typescript
-plugin(function({ addVariant, matchVariant }) {
+plugin(function ({ addVariant, matchVariant }) {
   // Simple variant
-  addVariant('hocus', ['&:hover', '&:focus']);
-  
+  addVariant("hocus", ["&:hover", "&:focus"]);
+
   // Variant with CSS-in-JS
-  addVariant('not-first', {
-    '&:not(:first-child)': {},
+  addVariant("not-first", {
+    "&:not(:first-child)": {}
   });
-  
+
   // Parametric variant
-  matchVariant('data', (value) => `&[data-${value}]`);
-  
+  matchVariant("data", (value) => `&[data-${value}]`);
+
   // Parametric variant with predefined values
-  matchVariant('theme', (value) => `[data-theme="${value}"] &`, {
+  matchVariant("theme", (value) => `[data-theme="${value}"] &`, {
     values: {
-      light: 'light',
-      dark: 'dark',
-      auto: 'auto',
-    },
+      light: "light",
+      dark: "dark",
+      auto: "auto"
+    }
   });
-  
+
   // Custom sorting
-  matchVariant('min', (value) => `@media (min-width: ${value})`, {
+  matchVariant("min", (value) => `@media (min-width: ${value})`, {
     sort(a, b) {
       return parseInt(a.value) - parseInt(b.value);
-    },
+    }
   });
 });
 ```
@@ -227,52 +228,52 @@ matchUtilities(
 **Usage Examples:**
 
 ```typescript
-plugin(function({ addUtilities, matchUtilities, theme }) {
+plugin(function ({ addUtilities, matchUtilities, theme }) {
   // Static utilities
   addUtilities({
-    '.scrollbar-hide': {
-      '-ms-overflow-style': 'none',
-      'scrollbar-width': 'none',
-      '&::-webkit-scrollbar': {
-        display: 'none',
-      },
+    ".scrollbar-hide": {
+      "-ms-overflow-style": "none",
+      "scrollbar-width": "none",
+      "&::-webkit-scrollbar": {
+        display: "none"
+      }
     },
-    '.scrollbar-default': {
-      '-ms-overflow-style': 'auto',
-      'scrollbar-width': 'auto',
-      '&::-webkit-scrollbar': {
-        display: 'block',
-      },
-    },
+    ".scrollbar-default": {
+      "-ms-overflow-style": "auto",
+      "scrollbar-width": "auto",
+      "&::-webkit-scrollbar": {
+        display: "block"
+      }
+    }
   });
-  
+
   // Parametric utilities
   matchUtilities(
     {
-      'text-shadow': (value) => ({
-        textShadow: value,
+      "text-shadow": (value) => ({
+        textShadow: value
       }),
-      'text-stroke': (value) => ({
-        '-webkit-text-stroke-width': value,
-      }),
+      "text-stroke": (value) => ({
+        "-webkit-text-stroke-width": value
+      })
     },
     {
-      values: theme('textShadow'),
-      type: ['length', 'color'],
+      values: theme("textShadow"),
+      type: ["length", "color"]
     }
   );
-  
+
   // Utilities with modifiers and negative values
   matchUtilities(
     {
-      'skew-x': (value) => ({
-        transform: `skewX(${value})`,
-      }),
+      "skew-x": (value) => ({
+        transform: `skewX(${value})`
+      })
     },
     {
-      values: theme('skew'),
+      values: theme("skew"),
       supportsNegativeValues: true,
-      type: 'angle',
+      type: "angle"
     }
   );
 });
@@ -311,36 +312,36 @@ matchComponents(
 **Usage Examples:**
 
 ```typescript
-plugin(function({ addComponents, matchComponents, theme }) {
+plugin(function ({ addComponents, matchComponents, theme }) {
   // Static components
   addComponents({
-    '.btn': {
-      padding: `${theme('spacing.2')} ${theme('spacing.4')}`,
-      borderRadius: theme('borderRadius.md'),
-      fontWeight: theme('fontWeight.medium'),
+    ".btn": {
+      padding: `${theme("spacing.2")} ${theme("spacing.4")}`,
+      borderRadius: theme("borderRadius.md"),
+      fontWeight: theme("fontWeight.medium")
     },
-    '.card': {
-      backgroundColor: theme('colors.white'),
-      boxShadow: theme('boxShadow.lg'),
-      borderRadius: theme('borderRadius.lg'),
-      padding: theme('spacing.6'),
-    },
+    ".card": {
+      backgroundColor: theme("colors.white"),
+      boxShadow: theme("boxShadow.lg"),
+      borderRadius: theme("borderRadius.lg"),
+      padding: theme("spacing.6")
+    }
   });
-  
+
   // Parametric components
   matchComponents(
     {
-      'btn': (value) => ({
+      btn: (value) => ({
         backgroundColor: value,
-        color: theme('colors.white'),
-        '&:hover': {
-          backgroundColor: theme(`colors.${value}.600`),
-        },
-      }),
+        color: theme("colors.white"),
+        "&:hover": {
+          backgroundColor: theme(`colors.${value}.600`)
+        }
+      })
     },
     {
-      values: theme('colors'),
-      type: 'color',
+      values: theme("colors"),
+      type: "color"
     }
   );
 });
@@ -363,18 +364,18 @@ theme(path: string, defaultValue?: any): any;
 **Usage Example:**
 
 ```typescript
-plugin(function({ addUtilities, theme }) {
+plugin(function ({ addUtilities, theme }) {
   // Access nested theme values
-  const primaryColor = theme('colors.blue.500');
-  const defaultSpacing = theme('spacing.4');
-  const customFont = theme('fontFamily.custom', ['Inter', 'sans-serif']);
-  
+  const primaryColor = theme("colors.blue.500");
+  const defaultSpacing = theme("spacing.4");
+  const customFont = theme("fontFamily.custom", ["Inter", "sans-serif"]);
+
   addUtilities({
-    '.custom-button': {
+    ".custom-button": {
       backgroundColor: primaryColor,
       padding: defaultSpacing,
-      fontFamily: customFont.join(', '),
-    },
+      fontFamily: customFont.join(", ")
+    }
   });
 });
 ```
@@ -409,11 +410,11 @@ prefix(className: string): string;
 **Usage Example:**
 
 ```typescript
-plugin(function({ addUtilities, prefix }) {
+plugin(function ({ addUtilities, prefix }) {
   addUtilities({
-    [`.${prefix('my-utility')}`]: {
-      customProperty: 'value',
-    },
+    [`.${prefix("my-utility")}`]: {
+      customProperty: "value"
+    }
   });
 });
 ```

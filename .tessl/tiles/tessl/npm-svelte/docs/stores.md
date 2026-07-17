@@ -34,19 +34,19 @@ const time = writable(new Date(), (set) => {
   const interval = setInterval(() => {
     set(new Date());
   }, 1000);
-  
+
   // Cleanup function called when last subscriber unsubscribes
   return () => clearInterval(interval);
 });
 
 // Using stores in components
-count.subscribe(value => {
+count.subscribe((value) => {
   console.log("Count:", value);
 });
 
 // Update store values
 count.set(5);
-count.update(n => n + 1);
+count.update((n) => n + 1);
 
 // Auto-subscribe in Svelte components with $
 // let currentCount = $count; // Automatically subscribes
@@ -79,9 +79,9 @@ const mousePosition = readable({ x: 0, y: 0 }, (set) => {
   const handleMouseMove = (event) => {
     set({ x: event.clientX, y: event.clientY });
   };
-  
+
   document.addEventListener("mousemove", handleMouseMove);
-  
+
   return () => {
     document.removeEventListener("mousemove", handleMouseMove);
   };
@@ -90,11 +90,11 @@ const mousePosition = readable({ x: 0, y: 0 }, (set) => {
 // WebSocket store example
 const websocketStore = readable(null, (set) => {
   const ws = new WebSocket("ws://localhost:8080");
-  
+
   ws.onmessage = (event) => {
     set(JSON.parse(event.data));
   };
-  
+
   return () => {
     ws.close();
   };
@@ -113,11 +113,7 @@ Creates a store whose value is computed from one or more other stores. Updates a
  * @param initial_value - Initial value before first computation
  * @returns Readable derived store
  */
-function derived<S extends Stores, T>(
-  stores: S,
-  fn: (values: StoresValues<S>) => T,
-  initial_value?: T
-): Readable<T>;
+function derived<S extends Stores, T>(stores: S, fn: (values: StoresValues<S>) => T, initial_value?: T): Readable<T>;
 
 /**
  * Derived store with async computation
@@ -142,20 +138,13 @@ const firstName = writable("John");
 const lastName = writable("Doe");
 
 // Simple derived store
-const fullName = derived(
-  [firstName, lastName],
-  ([first, last]) => `${first} ${last}`
-);
+const fullName = derived([firstName, lastName], ([first, last]) => `${first} ${last}`);
 
 // Single store derivation
-const doubled = derived(count, n => n * 2);
+const doubled = derived(count, (n) => n * 2);
 
 // Derived with initial value
-const greeting = derived(
-  fullName,
-  name => `Hello, ${name}!`,
-  "Hello, Guest!"
-);
+const greeting = derived(fullName, (name) => `Hello, ${name}!`, "Hello, Guest!");
 
 // Async derived store
 const userProfile = derived(
@@ -165,34 +154,31 @@ const userProfile = derived(
       set(null);
       return;
     }
-    
+
     const controller = new AbortController();
-    
+
     fetch(`/api/users/${id}`, { signal: controller.signal })
-      .then(r => r.json())
-      .then(profile => set(profile))
-      .catch(err => {
+      .then((r) => r.json())
+      .then((profile) => set(profile))
+      .catch((err) => {
         if (!controller.signal.aborted) {
           console.error("Failed to fetch user:", err);
           set(null);
         }
       });
-    
+
     return () => controller.abort();
   },
   null
 );
 
 // Complex derived computation
-const statistics = derived(
-  [users, posts, comments],
-  ([userList, postList, commentList]) => ({
-    totalUsers: userList.length,
-    totalPosts: postList.length,
-    totalComments: commentList.length,
-    avgCommentsPerPost: commentList.length / postList.length || 0
-  })
-);
+const statistics = derived([users, posts, comments], ([userList, postList, commentList]) => ({
+  totalUsers: userList.length,
+  totalPosts: postList.length,
+  totalComments: commentList.length,
+  avgCommentsPerPost: commentList.length / postList.length || 0
+}));
 ```
 
 ### get
@@ -266,11 +252,11 @@ export const settings = readonly(_settings);
 
 // Internal functions can still modify
 export function updateTheme(theme) {
-  _settings.update(s => ({ ...s, theme }));
+  _settings.update((s) => ({ ...s, theme }));
 }
 
 export function updateLanguage(language) {
-  _settings.update(s => ({ ...s, language }));
+  _settings.update((s) => ({ ...s, language }));
 }
 
 // External consumers can only read
@@ -309,7 +295,7 @@ import { toStore, fromStore } from "svelte/store";
 let count = $state(0);
 const countStore = toStore(
   () => count,
-  (value) => count = value
+  (value) => (count = value)
 );
 
 // Convert store to rune-like object
@@ -322,7 +308,7 @@ $effect(() => {
 });
 
 // Update through original store
-settings.update(s => ({ ...s, theme: "dark" }));
+settings.update((s) => ({ ...s, theme: "dark" }));
 ```
 
 ## Types
@@ -344,7 +330,7 @@ interface Writable<T> extends Readable<T> {
    * @param value - New value to set
    */
   set(value: T): void;
-  
+
   /**
    * Update the store value using a function and notify subscribers
    * @param updater - Function that receives current value and returns new value
@@ -356,16 +342,11 @@ type Subscriber<T> = (value: T) => void;
 type Unsubscriber = () => void;
 type Updater<T> = (value: T) => T;
 
-type StartStopNotifier<T> = (
-  set: (value: T) => void,
-  update: (fn: Updater<T>) => void
-) => void | (() => void);
+type StartStopNotifier<T> = (set: (value: T) => void, update: (fn: Updater<T>) => void) => void | (() => void);
 
 type Stores = Readable<any> | [Readable<any>, ...Array<Readable<any>>] | Array<Readable<any>>;
 
-type StoresValues<T> = T extends Readable<infer U> 
-  ? U 
-  : { [K in keyof T]: T[K] extends Readable<infer U> ? U : never };
+type StoresValues<T> = T extends Readable<infer U> ? U : { [K in keyof T]: T[K] extends Readable<infer U> ? U : never };
 ```
 
 ## Best Practices

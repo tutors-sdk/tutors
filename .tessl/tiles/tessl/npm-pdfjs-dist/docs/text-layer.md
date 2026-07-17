@@ -15,24 +15,24 @@ class TextLayer {
    * @param parameters - Text layer construction parameters
    */
   constructor(parameters: TextLayerConstructorParameters);
-  
+
   /**
    * Render text layer over PDF page
    * @returns Promise that resolves when rendering is complete
    */
   render(): Promise<void>;
-  
+
   /**
    * Update existing text layer
    * @param parameters - Text layer update parameters
    */
   update(parameters: TextLayerUpdateParameters): void;
-  
+
   /**
    * Cancel text layer rendering
    */
   cancel(): void;
-  
+
   /** HTML elements that correspond to the text items */
   get textDivs(): HTMLElement[];
 }
@@ -77,7 +77,6 @@ await textLayer.render();
 console.log("Text layer rendered");
 ```
 
-
 ### Text Layer Update Parameters
 
 Configuration for updating an existing text layer.
@@ -102,7 +101,6 @@ textLayer.update({
   onBefore: () => console.log("Updating text layer")
 });
 ```
-
 
 ### Text Content Interfaces
 
@@ -172,16 +170,14 @@ function normalizeUnicode(text: string): string;
 ```javascript
 // Extract plain text from text content
 function extractPlainText(textContent) {
-  return textContent.items
-    .map(item => item.str + (item.hasEOL ? '\n' : ''))
-    .join('');
+  return textContent.items.map((item) => item.str + (item.hasEOL ? "\n" : "")).join("");
 }
 
 // Find text positions for highlighting
 function findTextPositions(textContent, searchTerm) {
   const positions = [];
   let currentIndex = 0;
-  
+
   textContent.items.forEach((item, index) => {
     if (item.str.toLowerCase().includes(searchTerm.toLowerCase())) {
       positions.push({
@@ -196,7 +192,7 @@ function findTextPositions(textContent, searchTerm) {
       });
     }
   });
-  
+
   return positions;
 }
 
@@ -205,15 +201,15 @@ async function createSearchableTextLayer(page, container, viewport) {
   const textContent = await page.getTextContent({
     normalizeWhitespace: true
   });
-  
+
   const textLayer = new TextLayer({
     textContentSource: textContent,
     container: container,
     viewport: viewport
   });
-  
+
   await textLayer.render();
-  
+
   // Enable text search
   return {
     textContent: textContent,
@@ -236,7 +232,7 @@ The text layer requires CSS styling for proper positioning and appearance:
   bottom: 0;
   overflow: hidden;
   opacity: 0.2;
-  line-height: 1.0;
+  line-height: 1;
 }
 
 .textLayer > span {
@@ -281,16 +277,16 @@ The text layer requires CSS styling for proper positioning and appearance:
 interface EnhancedTextLayer {
   /** Highlight text matching search term */
   highlightText(searchTerm: string, className?: string): void;
-  
+
   /** Clear all highlights */
   clearHighlights(): void;
-  
+
   /** Get text in selection */
   getSelectedText(): string;
-  
+
   /** Get all text content as string */
   getAllText(): string;
-  
+
   /** Find and scroll to text */
   findAndScrollTo(searchTerm: string): boolean;
 }
@@ -308,44 +304,44 @@ class SearchableTextLayer {
     this.textContent = null;
     this.textDivs = [];
   }
-  
+
   async render() {
     this.textContent = await this.page.getTextContent({
       normalizeWhitespace: true
     });
-    
+
     this.textLayer = new TextLayer({
       textContentSource: this.textContent,
       container: this.container,
       viewport: this.viewport
     });
-    
+
     await this.textLayer.render();
     this.textDivs = this.textLayer.textDivs;
   }
-  
+
   search(term) {
     this.clearHighlights();
-    
+
     const normalizedTerm = term.toLowerCase();
     let matches = [];
-    
+
     this.textContent.items.forEach((item, index) => {
       const normalizedText = item.str.toLowerCase();
       if (normalizedText.includes(normalizedTerm)) {
         matches.push(index);
         if (this.textDivs[index]) {
-          this.textDivs[index].classList.add('highlight');
+          this.textDivs[index].classList.add("highlight");
         }
       }
     });
-    
+
     return matches;
   }
-  
+
   clearHighlights() {
-    this.textDivs.forEach(div => {
-      div.classList.remove('highlight');
+    this.textDivs.forEach((div) => {
+      div.classList.remove("highlight");
     });
   }
 }

@@ -20,6 +20,7 @@ function preprocess(code: string, filename: string): string[];
 ```
 
 **Usage:**
+
 - Called automatically by ESLint when processing .svelte files
 - Initializes shared state tracking for comment directives
 - Returns the original code wrapped in an array for standard ESLint processing
@@ -36,13 +37,11 @@ Postprocesses lint messages after rule analysis, applying comment directive filt
  * @param filename - Path to the file that was processed
  * @returns Filtered array of lint messages after applying directives
  */
-function postprocess(
-  messages: Linter.LintMessage[][], 
-  filename: string
-): Linter.LintMessage[];
+function postprocess(messages: Linter.LintMessage[][], filename: string): Linter.LintMessage[];
 ```
 
 **Features:**
+
 - Processes `<!-- eslint-disable -->` and `<!-- eslint-enable -->` comments
 - Filters out suppressed rule violations
 - Maintains rule violation context and positioning
@@ -60,6 +59,7 @@ const supportsAutofix: true;
 ```
 
 **Features:**
+
 - Enables automatic fixing of rule violations in .svelte files
 - Maintains proper source mapping for fixes
 - Preserves Svelte component structure and syntax
@@ -128,7 +128,7 @@ The processor is automatically registered with the plugin:
 
 ```typescript { .api }
 interface ProcessorRegistration {
-  '.svelte': SvelteProcessor;
+  ".svelte": SvelteProcessor;
   svelte: SvelteProcessor;
 }
 ```
@@ -139,8 +139,8 @@ interface ProcessorRegistration {
 // eslint.config.js
 export default [
   {
-    files: ['**/*.svelte'],
-    processor: 'svelte/svelte'
+    files: ["**/*.svelte"],
+    processor: "svelte/svelte"
   }
 ];
 ```
@@ -167,6 +167,7 @@ function terminateShared(filename: string): Shared | null;
 ```
 
 **Usage Pattern:**
+
 1. `preprocess()` calls `beginShared()` to initialize tracking
 2. ESLint processes the file and rules interact with shared state
 3. `postprocess()` calls `terminateShared()` to get final state
@@ -182,10 +183,10 @@ The processor handles multiple Svelte-related file types:
 /**
  * File patterns processed by the Svelte processor
  */
-type SupportedFiles = 
-  | '*.svelte'      // Standard Svelte components
-  | '*.svelte.js'   // Svelte JavaScript files
-  | '*.svelte.ts';  // Svelte TypeScript files
+type SupportedFiles =
+  | "*.svelte" // Standard Svelte components
+  | "*.svelte.js" // Svelte JavaScript files
+  | "*.svelte.ts"; // Svelte TypeScript files
 ```
 
 ### Configuration Example
@@ -194,8 +195,8 @@ type SupportedFiles =
 // eslint.config.js
 export default [
   {
-    files: ['**/*.svelte', '**/*.svelte.js', '**/*.svelte.ts'],
-    processor: 'svelte/svelte',
+    files: ["**/*.svelte", "**/*.svelte.js", "**/*.svelte.ts"],
+    processor: "svelte/svelte",
     languageOptions: {
       parser: svelteEslintParser
     }
@@ -216,13 +217,11 @@ The processor provides robust error message filtering:
  * @param shared - Shared state with comment directives
  * @returns Filtered messages after applying directives
  */
-function filter(
-  messages: Linter.LintMessage[], 
-  shared: Shared
-): Linter.LintMessage[];
+function filter(messages: Linter.LintMessage[], shared: Shared): Linter.LintMessage[];
 ```
 
 **Features:**
+
 - Processes multiple comment directives per file
 - Maintains proper rule suppression scope
 - Preserves non-suppressed violations
@@ -290,20 +289,20 @@ interface CommentDirective {
 
 ```javascript
 // eslint.config.js
-import svelte from 'eslint-plugin-svelte';
+import svelte from "eslint-plugin-svelte";
 
 export default [
   {
-    files: ['**/*.svelte'],
-    processor: svelte.processors['.svelte'],
+    files: ["**/*.svelte"],
+    processor: svelte.processors[".svelte"],
     languageOptions: {
-      parser: 'svelte-eslint-parser',
+      parser: "svelte-eslint-parser",
       parserOptions: {
-        svelteConfig: './svelte.config.js'
+        svelteConfig: "./svelte.config.js"
       }
     },
     rules: {
-      'svelte/comment-directive': 'error'
+      "svelte/comment-directive": "error"
     }
   }
 ];
@@ -315,13 +314,13 @@ export default [
 // Works with TypeScript
 export default [
   {
-    files: ['**/*.svelte'],
-    processor: 'svelte/svelte',
+    files: ["**/*.svelte"],
+    processor: "svelte/svelte",
     languageOptions: {
-      parser: 'svelte-eslint-parser',
+      parser: "svelte-eslint-parser",
       parserOptions: {
-        parser: '@typescript-eslint/parser',
-        extraFileExtensions: ['.svelte']
+        parser: "@typescript-eslint/parser",
+        extraFileExtensions: [".svelte"]
       }
     }
   }

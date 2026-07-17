@@ -15,53 +15,53 @@ class AnnotationEditorLayer {
    * @param options - Editor layer options
    */
   constructor(options: AnnotationEditorLayerOptions);
-  
+
   /**
    * Render the editor layer
    * @param parameters - Render parameters
    */
   render(parameters: AnnotationEditorLayerParameters): void;
-  
+
   /**
    * Update the editor layer
    * @param parameters - Update parameters
    */
   update(parameters: AnnotationEditorLayerParameters): void;
-  
+
   /**
    * Update editor mode
    * @param mode - Editor mode (AnnotationEditorType)
    */
   updateMode(mode: number): void;
-  
+
   /**
    * Add ink editor if needed
    * @param isCommitting - Whether committing current editor
    */
   addInkEditorIfNeeded(isCommitting: boolean): void;
-  
+
   /**
    * Add stamp editor if needed
    */
   addStampEditorIfNeeded(): void;
-  
+
   /**
    * Destroy the editor layer
    */
   destroy(): void;
-  
+
   /**
    * Set editing state
    * @param isEditing - Whether currently editing
    */
   setEditingState(isEditing: boolean): void;
-  
+
   /**
    * Enable click events
    * @param enable - Whether to enable
    */
   enableClick(enable: boolean): void;
-  
+
   /**
    * Add editor at coordinates
    * @param x - X coordinate
@@ -140,71 +140,71 @@ Manages annotation editing UI, tool selection, and editor lifecycle.
 ```javascript { .api }
 class AnnotationEditorUIManager {
   constructor();
-  
+
   /**
    * Update UI for editor
    * @param editor - Editor instance
    */
   updateUI(editor: any): void;
-  
+
   /**
    * Update editor mode
    * @param mode - Editor mode
    */
   updateMode(mode: number): void;
-  
+
   /**
    * Get current editor mode
    * @returns Current mode
    */
   getMode(): number;
-  
+
   /**
    * Set editor mode
    * @param mode - Editor mode
    * @param editId - Optional edit ID
    */
   setEditingState(mode: number, editId?: string): void;
-  
+
   /**
    * Add editor to manager
    * @param pageIndex - Page index
    * @param editor - Editor instance
    */
   addEditor(pageIndex: number, editor: any): void;
-  
+
   /**
    * Remove editor from manager
    * @param editor - Editor instance
    */
   removeEditor(editor: any): void;
-  
+
   /**
    * Get editor by ID
    * @param id - Editor ID
    * @returns Editor instance
    */
   getEditor(id: string): any;
-  
+
   /**
    * Get all editors on page
    * @param pageIndex - Page index
    * @returns Array of editors
    */
   getEditors(pageIndex: number): any[];
-  
+
   /**
    * Focus editor
    * @param editor - Editor to focus
    */
   focusEditor(editor: any): void;
-  
+
   /**
    * Add commands to undo stack
    * @param commands - Commands to add
    */
   addCommands(commands: any[]): void;
-  
+
   /**
    * Destroy the UI manager
    */
@@ -251,36 +251,36 @@ class ColorPicker {
    * @param options - Color picker options
    */
   constructor(options: ColorPickerOptions);
-  
+
   /**
    * Render main dropdown
    * @param buttons - Button configurations
    * @param className - CSS class name
    */
   renderMainDropdown(buttons: any[], className: string): HTMLElement;
-  
+
   /**
    * Hide dropdown
    */
   hideDropdown(): void;
-  
+
   /**
    * Show dropdown
    */
   showDropdown(): void;
-  
+
   /**
    * Set color
    * @param color - Color value
    */
   setColor(color: string): void;
-  
+
   /**
    * Get current color
    * @returns Current color
    */
   getColor(): string;
-  
+
   /**
    * Destroy color picker
    */
@@ -331,30 +331,30 @@ interface FreetextEditor {
   color: string;
   /** Font family */
   fontFamily: string;
-  
+
   /**
    * Set font size
    * @param size - Font size in points
    */
   setFontSize(size: number): void;
-  
+
   /**
    * Set text color
    * @param color - Color value
    */
   setColor(color: string): void;
-  
+
   /**
    * Set font family
    * @param family - Font family name
    */
   setFontFamily(family: string): void;
-  
+
   /**
    * Commit text changes
    */
   commit(): void;
-  
+
   /**
    * Cancel editing
    */
@@ -378,36 +378,36 @@ interface InkEditor {
   thickness: number;
   /** Stroke opacity */
   opacity: number;
-  
+
   /**
    * Set stroke color
    * @param color - Color value
    */
   setColor(color: string): void;
-  
+
   /**
    * Set stroke thickness
    * @param thickness - Thickness in pixels
    */
   setThickness(thickness: number): void;
-  
+
   /**
    * Set stroke opacity
    * @param opacity - Opacity (0-1)
    */
   setOpacity(opacity: number): void;
-  
+
   /**
    * Add stroke path
    * @param path - Array of coordinates
    */
   addPath(path: number[]): void;
-  
+
   /**
    * Clear all paths
    */
   clear(): void;
-  
+
   /**
    * Commit drawing
    */
@@ -427,26 +427,26 @@ interface StampEditor {
   bitmap: ImageBitmap;
   /** Stamp dimensions */
   dimensions: { width: number; height: number };
-  
+
   /**
    * Set stamp image
    * @param bitmap - Image bitmap
    */
   setBitmap(bitmap: ImageBitmap): void;
-  
+
   /**
    * Set stamp from file
    * @param file - Image file
    */
   setFromFile(file: File): Promise<void>;
-  
+
   /**
    * Resize stamp
    * @param width - New width
    * @param height - New height
    */
   resize(width: number, height: number): void;
-  
+
   /**
    * Commit stamp placement
    */
@@ -468,24 +468,24 @@ interface HighlightEditor {
   text: string;
   /** Text rectangles */
   quadPoints: number[];
-  
+
   /**
    * Set highlight color
    * @param color - Color value
    */
   setColor(color: string): void;
-  
+
   /**
    * Set text selection
    * @param quadPoints - Selection rectangles
    */
   setSelection(quadPoints: number[]): void;
-  
+
   /**
    * Commit highlight
    */
   commit(): void;
-  
+
   /**
    * Remove highlight
    */
@@ -538,18 +538,18 @@ class PDFAnnotationEditor {
     this.editorLayers = new Map();
     this.currentMode = AnnotationEditorType.NONE;
   }
-  
+
   setupPage(pageIndex, page, viewport) {
     const pageDiv = document.createElement("div");
     pageDiv.className = "page";
     this.container.appendChild(pageDiv);
-    
+
     const editorLayer = new AnnotationEditorLayer({
       uiManager: this.uiManager,
       pageIndex: pageIndex,
       div: pageDiv
     });
-    
+
     editorLayer.render({
       annotationStorage: this.annotationStorage,
       div: pageDiv,
@@ -557,44 +557,44 @@ class PDFAnnotationEditor {
       viewport: viewport,
       uiManager: this.uiManager
     });
-    
+
     this.editorLayers.set(pageIndex, editorLayer);
   }
-  
+
   setMode(mode) {
     this.currentMode = mode;
     this.uiManager.updateMode(mode);
-    
+
     // Update all editor layers
     for (const editorLayer of this.editorLayers.values()) {
       editorLayer.updateMode(mode);
     }
   }
-  
+
   enableTextEditing() {
     this.setMode(AnnotationEditorType.FREETEXT);
   }
-  
+
   enableInkDrawing() {
     this.setMode(AnnotationEditorType.INK);
   }
-  
+
   enableHighlighting() {
     this.setMode(AnnotationEditorType.HIGHLIGHT);
   }
-  
+
   enableStamps() {
     this.setMode(AnnotationEditorType.STAMP);
   }
-  
+
   disableEditing() {
     this.setMode(AnnotationEditorType.DISABLE);
   }
-  
+
   saveAnnotations() {
     return this.annotationStorage.serializable;
   }
-  
+
   loadAnnotations(data) {
     // Load annotation data into storage
     Object.entries(data).forEach(([key, value]) => {

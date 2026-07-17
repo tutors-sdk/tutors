@@ -2,11 +2,12 @@
   import { presenceService } from "$lib/services/community";
   import Sidebar from "$lib/ui/components/Sidebar.svelte";
   import StudentCard from "$lib/ui/time/StudentCard.svelte";
+  import { t } from "$lib/services/i18n";
 </script>
 
 {#snippet menuSelector()}
   <div class="ml-6">
-    View <span class="badge bg-error-500 text-white">{presenceService.studentsOnline.value.length}</span> Online
+    {t("nav.online.view")} <span class="badge bg-error-500 text-white">{presenceService.studentsOnline.value.length}</span> {t("nav.online.online")}
   </div>
 {/snippet}
 {#snippet sidebarContent()}
@@ -18,7 +19,7 @@
           showCourseTitle={true}
           cardLayout={{
             layout: "compacted",
-            style: "landscape",
+            style: "landscape"
           }}
         />
       {/if}
