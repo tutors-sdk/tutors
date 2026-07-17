@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
 
   import type { Lo } from "@tutors/tutors-model-lib";
 
   import Card from "$lib/ui/learning-objects/layout/Card.svelte";
-  import { cubicOut } from "svelte/easing";
   import { scale } from "svelte/transition";
   import { scaleTransition } from "$lib/ui/navigators/animations";
   import { currentCourse } from "$lib/runes.svelte";
@@ -19,8 +18,9 @@
   let ignorePin = "";
   let refresh = $state(true);
   let isLoaded = $state(false);
+  let hasKeyListener = false;
 
-  function keypressInput(e: { key: string }) {
+  function keypressInput(e: KeyboardEvent) {
     pinBuffer = pinBuffer.concat(e.key);
     if (pinBuffer === ignorePin) {
       los.forEach((lo) => {
@@ -35,8 +35,15 @@
     if (currentCourse?.value?.properties.ignorepin) {
       ignorePin = currentCourse?.value?.properties.ignorepin.toString();
       window.addEventListener("keydown", keypressInput);
+      hasKeyListener = true;
     }
     isLoaded = true;
+  });
+
+  onDestroy(() => {
+    if (hasKeyListener) {
+      window.removeEventListener("keydown", keypressInput);
+    }
   });
 </script>
 

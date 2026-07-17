@@ -1,12 +1,13 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { onDestroy } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { currentCourse } from "$lib/runes.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { t } from "$lib/services/i18n";
 
-  let isSearching = sessionStorage.getItem("isSearching") === "true";
+  let isSearching = $state(sessionStorage.getItem("isSearching") === "true");
   let previousPage = "";
+  let observer: MutationObserver | null = null;
 
   const updateSearchState = () => {
     const currentPath = window.location.pathname;
@@ -37,17 +38,18 @@
     }
   };
 
-  const observer = new MutationObserver(checkForNavigation);
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
+  onMount(() => {
+    observer = new MutationObserver(checkForNavigation);
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+    window.addEventListener("popstate", updateSearchState);
+    updateSearchState();
   });
 
-  window.addEventListener("popstate", updateSearchState);
-  updateSearchState();
-
   onDestroy(() => {
-    observer.disconnect();
+    observer?.disconnect();
     window.removeEventListener("popstate", updateSearchState);
   });
 </script>
