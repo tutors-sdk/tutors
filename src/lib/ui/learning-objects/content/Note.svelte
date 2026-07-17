@@ -4,6 +4,7 @@
   import { mermaidify } from "$lib/services/markdown/services/mermaid-action";
   import type { Lo } from "@tutors/tutors-model-lib";
     import { onDestroy, onMount } from "svelte";
+  import { sanitizeHtml } from "$lib/utils/sanitize";
 
   interface Props {
     lo: Lo;
@@ -20,7 +21,7 @@
 
 <article class="prose dark:prose-invert mr-4 max-w-none overflow-x-auto" use:mermaidify>
   {#key currentCodeTheme.value}
-    {@html lo.contentHtml}
+    {@html sanitizeHtml(lo.contentHtml ?? "")}
   {/key}
 </article>
 

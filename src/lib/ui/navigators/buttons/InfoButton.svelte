@@ -2,6 +2,7 @@
   import { currentCourse } from "$lib/runes.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
   import Sidebar from "$lib/ui/components/Sidebar.svelte";
+  import { sanitizeHtml } from "$lib/utils/sanitize";
 </script>
 
 {#snippet menuSelector()}
@@ -16,7 +17,7 @@
   </header>
   <article>
     <prose class="prose dark:prose-invert">
-      {@html currentCourse?.value?.contentHtml}
+      {@html sanitizeHtml(currentCourse?.value?.contentHtml ?? "")}
     </prose>
   </article>
 {/snippet}

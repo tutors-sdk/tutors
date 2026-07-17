@@ -6,6 +6,7 @@
   import { currentCourse } from "$lib/runes.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
   import StudentCard from "$lib/ui/time/StudentCard.svelte";
+  import { sanitizeHtml } from "$lib/utils/sanitize";
 
   let { cardDetails, cardLayout } = $props<{ cardDetails: CardDetails; cardLayout?: CardConfig }>();
 
@@ -101,7 +102,7 @@
 {#snippet content(cardDetails: CardDetails)}
   <div class="flex flex-col justify-between p-4 {!isLandscape ? 'text-center' : ''}">
     <div class="{styles.text} ">
-      {@html cardDetails.summary}
+      {@html sanitizeHtml(cardDetails.summary ?? "")}
     </div>
     <div class="{styles.text} ">
       {cardDetails.summaryEx}
