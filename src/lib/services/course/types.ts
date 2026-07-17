@@ -51,4 +51,7 @@ export interface CourseService {
   readWall(courseId: string, type: string, fetchFunction: typeof fetch): Promise<Lo[]>;
   readLo(courseId: string, loId: string, fetchFunction: typeof fetch): Promise<Lo>;
   refreshAllLabs(codeTheme: string): void;
+
+  /** Cache of processed notebooks */
+  notebooks: Map<string, Lo>;
 }
