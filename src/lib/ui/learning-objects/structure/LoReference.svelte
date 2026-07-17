@@ -2,6 +2,7 @@
   import type { Lo } from "@tutors/tutors-model-lib";
   import Icon from "$lib/ui/components/Icon.svelte";
   import { goto } from "$app/navigation";
+  import { sanitizeHtml } from "$lib/utils/sanitize";
 
   let { lo }: { lo: Lo } = $props();
 
@@ -27,7 +28,7 @@
     <span class="shrink-0">
       <Icon type={lo.type} width="20" height="20" />
     </span>
-    <span class="mb-1 ml-2"> {@html lo.title} </span>
+    <span class="mb-1 ml-2"> {@html sanitizeHtml(lo.title ?? "")} </span>
   </a>
   {#if lo.video && lo.type != "panelvideo"}
     <a class="ml-auto flex pl-4" href={lo.video} onclick={(e) => handleClick(e, lo?.video)}>

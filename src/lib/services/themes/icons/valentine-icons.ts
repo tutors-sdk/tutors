@@ -21,6 +21,7 @@ export const ValentineIcons: IconLib = {
   reference: { type: "fluent:document-copy-24-filled", color: "surface" },
   lab: { type: "fluent:beaker-24-filled", color: "error" },
   note: { type: "fluent:notepad-16-regular", color: "success" },
+  notebook: { type: "simple-icons:jupyter", color: "warning" },
   archive: { type: "mdi:folder-heart", color: "error" },
   web: { type: "tabler:world-heart", color: "primary" },
   github: { type: "mdi:github", color: "warning" },

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { convertMdToHtml } from "@tutors/tutors-model-lib";
   import { onMount } from "svelte";
+  import { sanitizeHtml } from "$lib/utils/sanitize";
   let contentHtml = "";
 
   onMount(async () => {
@@ -15,7 +16,7 @@
 {#if contentHtml}
   <div class="flex w-full justify-center">
     <p class="prose prose-sm prose-slate dark:prose-invert min-w-full">
-      {@html contentHtml}
+      {@html sanitizeHtml(contentHtml ?? "")}
     </p>
   </div>
 {/if}
