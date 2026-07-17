@@ -12,19 +12,19 @@ Global identifiers from different JavaScript environments. This package provides
 ## Core Imports
 
 ```javascript
-const globals = require('globals');
+const globals = require("globals");
 ```
 
 For ES modules:
 
 ```javascript
-import globals from 'globals';
+import globals from "globals";
 ```
 
 ## Basic Usage
 
 ```javascript
-import globals from 'globals';
+import globals from "globals";
 
 // Access browser globals
 const browserGlobals = globals.browser;
@@ -75,7 +75,7 @@ declare const globals: {
 /**
  * Available environments include:
  * - Web: browser, worker, serviceworker, webextensions
- * - Node.js: node, nodeBuiltin, commonjs, shared-node-browser  
+ * - Node.js: node, nodeBuiltin, commonjs, shared-node-browser
  * - ECMAScript: builtin, es3, es5, es2015-es2026
  * - Testing: jest, mocha, jasmine, qunit, vitest, chai
  * - Libraries: jquery, meteor, prototypejs, shelljs
@@ -93,42 +93,42 @@ interface BrowserGlobals {
   readonly 'window': false;
   readonly 'document': false;
   readonly 'globalThis': false;
-  
+
   // DOM Elements
   readonly 'HTMLElement': false;
   readonly 'Element': false;
   readonly 'Node': false;
-  
+
   // Web APIs
   readonly 'fetch': false;
   readonly 'XMLHttpRequest': false;
   readonly 'WebSocket': false;
   readonly 'localStorage': false;
   readonly 'sessionStorage': false;
-  
+
   // Browser Objects
   readonly 'navigator': false;
   readonly 'location': true; // writable
   readonly 'history': false;
   readonly 'screen': false;
-  
+
   // Timing APIs
   readonly 'setTimeout': false;
   readonly 'setInterval': false;
   readonly 'requestAnimationFrame': false;
-  
+
   // Event Handlers (writable)
   readonly 'onload': true;
   readonly 'onclick': true;
   readonly 'onerror': true;
   readonly 'onunload': true;
-  
+
   // Modern APIs
   readonly 'IntersectionObserver': false;
   readonly 'MutationObserver': false;
   readonly 'PerformanceObserver': false;
   readonly 'ResizeObserver': false;
-  
+
   // And 1000+ more browser globals...
 }
 ```
@@ -144,14 +144,14 @@ interface NodeGlobals {
   readonly 'Buffer': false;
   readonly 'global': false;
   readonly 'console': false;
-  
+
   // CommonJS Module System
   readonly 'require': false;
   readonly 'module': false;
   readonly 'exports': true; // writable
   readonly '__dirname': false;
   readonly '__filename': false;
-  
+
   // Node.js Timers
   readonly 'setTimeout': false;
   readonly 'setInterval': false;
@@ -159,7 +159,7 @@ interface NodeGlobals {
   readonly 'clearTimeout': false;
   readonly 'clearInterval': false;
   readonly 'clearImmediate': false;
-  
+
   // Modern Node.js APIs
   readonly 'fetch': false;
   readonly 'AbortController': false;
@@ -168,7 +168,7 @@ interface NodeGlobals {
   readonly 'TextEncoder': false;
   readonly 'TextDecoder': false;
   readonly 'WebAssembly': false;
-  
+
   // And more Node.js globals...
 }
 
@@ -195,7 +195,7 @@ interface BuiltinGlobals {
   readonly 'RegExp': false;
   readonly 'Math': false;
   readonly 'JSON': false;
-  
+
   // Error Types
   readonly 'Error': false;
   readonly 'TypeError': false;
@@ -204,7 +204,7 @@ interface BuiltinGlobals {
   readonly 'RangeError': false;
   readonly 'URIError': false;
   readonly 'EvalError': false;
-  
+
   // Global Functions
   readonly 'parseInt': false;
   readonly 'parseFloat': false;
@@ -214,7 +214,7 @@ interface BuiltinGlobals {
   readonly 'decodeURI': false;
   readonly 'encodeURIComponent': false;
   readonly 'decodeURIComponent': false;
-  
+
   // ES2015+ Features
   readonly 'Map': false;
   readonly 'Set': false;
@@ -226,7 +226,7 @@ interface BuiltinGlobals {
   readonly 'Reflect': false;
   readonly 'BigInt': false; // ES2020+
   readonly 'globalThis': false; // ES2020+
-  
+
   // And more ECMAScript globals...
 }
 ```
@@ -484,7 +484,7 @@ type GlobalPermission = boolean;
 **ESLint Configuration:**
 
 ```javascript
-const globals = require('globals');
+const globals = require("globals");
 
 module.exports = {
   env: {
@@ -499,8 +499,8 @@ module.exports = {
     ...globals.es2022,
     ...globals.jest,
     // Custom globals
-    myCustomGlobal: 'readonly',
-    myWritableGlobal: 'writable'
+    myCustomGlobal: "readonly",
+    myWritableGlobal: "writable"
   }
 };
 ```
@@ -508,12 +508,12 @@ module.exports = {
 **Combining Multiple Environments:**
 
 ```javascript
-const globals = require('globals');
+const globals = require("globals");
 
 // For a React app with testing
 const reactAppGlobals = {
   ...globals.browser,
-  ...globals.es2022, 
+  ...globals.es2022,
   ...globals.jest
 };
 
@@ -525,7 +525,7 @@ const nodeToolGlobals = {
 
 // For a universal/isomorphic app
 const universalAppGlobals = {
-  ...globals.shared-node-browser,
+  ...(globals.shared - node - browser),
   ...globals.es2022
 };
 ```
@@ -533,17 +533,17 @@ const universalAppGlobals = {
 **Custom Environment Detection:**
 
 ```javascript
-const globals = require('globals');
+const globals = require("globals");
 
 function getGlobalsForEnvironment(env) {
   const baseGlobals = { ...globals.builtin };
-  
+
   switch (env) {
-    case 'browser':
+    case "browser":
       return { ...baseGlobals, ...globals.browser };
-    case 'node':
+    case "node":
       return { ...baseGlobals, ...globals.node };
-    case 'worker':
+    case "worker":
       return { ...baseGlobals, ...globals.worker };
     default:
       return baseGlobals;

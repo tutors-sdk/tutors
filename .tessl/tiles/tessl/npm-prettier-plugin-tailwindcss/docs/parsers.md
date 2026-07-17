@@ -19,8 +19,9 @@ const printers: Record<string, Printer>;
 The plugin automatically sorts Tailwind classes in the following file types when configured in Prettier:
 
 #### HTML and Templates
+
 - **HTML** (`.html`) - Standard HTML documents
-- **Angular** (`.html`) - Angular component templates  
+- **Angular** (`.html`) - Angular component templates
 - **Vue** (`.vue`) - Vue.js single file components
 - **Svelte** (`.svelte`) - Svelte components
 - **Astro** (`.astro`) - Astro components
@@ -32,11 +33,13 @@ The plugin automatically sorts Tailwind classes in the following file types when
 - **LWC** - Lightning Web Components
 
 #### CSS and Preprocessors
+
 - **CSS** (`.css`) - Standard CSS files with `@apply` directives
 - **SCSS** (`.scss`) - Sass stylesheets
 - **Less** (`.less`) - Less stylesheets
 
 #### JavaScript and TypeScript
+
 - **JavaScript** (`.js`, `.mjs`) - JavaScript files with JSX
 - **TypeScript** (`.ts`, `.tsx`) - TypeScript files
 - **JSX/TSX** - React components with `className` attributes
@@ -46,6 +49,7 @@ The plugin automatically sorts Tailwind classes in the following file types when
 The plugin sorts classes in different attributes based on the file format:
 
 #### Static Attributes (sorted directly)
+
 ```typescript { .api }
 // HTML-based formats
 class="..."           // HTML, Angular, Vue
@@ -58,11 +62,12 @@ v-bind:class="..."    // Vue.js binding (full syntax)
 ```
 
 #### Dynamic Attributes (JavaScript expressions parsed)
+
 ```typescript { .api }
 // Angular
 [ngClass]="expression"
 
-// Vue.js  
+// Vue.js
 :class="expression"
 v-bind:class="expression"
 
@@ -76,11 +81,11 @@ When configured with `tailwindFunctions`, the plugin sorts classes inside functi
 
 ```javascript
 // Example with clsx function
-clsx("px-4 bg-blue-500 text-white py-2")
+clsx("px-4 bg-blue-500 text-white py-2");
 // Becomes: clsx("bg-blue-500 px-4 py-2 text-white")
 
 // Template literals
-tw`px-4 bg-blue-500 text-white py-2`
+tw`px-4 bg-blue-500 text-white py-2`;
 // Becomes: tw`bg-blue-500 px-4 py-2 text-white`
 ```
 
@@ -90,11 +95,11 @@ The plugin sorts Tailwind utilities in CSS `@apply` directives:
 
 ```css
 .my-component {
-  @apply px-4 bg-blue-500 text-white py-2;
+  @apply bg-blue-500 px-4 py-2 text-white;
 }
 
 /* Becomes: */
-.my-component {  
+.my-component {
   @apply bg-blue-500 px-4 py-2 text-white;
 }
 ```
@@ -136,26 +141,31 @@ const classes = cn("px-4 bg-blue-500 text-white py-2");
 ## Framework-Specific Features
 
 ### Angular
+
 - Sorts `class` attributes in templates
 - Parses and sorts `[ngClass]` directive expressions
 - Handles Angular interpolation syntax
 
 ### Vue.js
-- Sorts `class` attributes in templates  
+
+- Sorts `class` attributes in templates
 - Parses and sorts `:class` and `v-bind:class` expressions
 - Supports both object and array syntax in bindings
 
 ### React/JSX
+
 - Sorts both `class` and `className` attributes
 - Handles JSX expression containers
 - Supports template literals and function calls
 
 ### Svelte
+
 - Sorts `class` attributes in components
 - Handles Svelte's reactive class syntax
 - Processes mustache tag expressions
 
 ### CSS Preprocessors
+
 - Preserves `!important` flags in `@apply` directives
 - Maintains variable references and calculations
 - Works with nested rules and mixins

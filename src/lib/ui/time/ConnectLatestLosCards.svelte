@@ -10,7 +10,7 @@
 
   const cardLayout = {
     layout: "expanded" as const,
-    style: "landscape" as const,
+    style: "landscape" as const
   };
 </script>
 

@@ -44,7 +44,7 @@ setContext(THEME_KEY, theme);
 const API_KEY = Symbol("api");
 setContext(API_KEY, {
   baseUrl: "https://api.example.com",
-  headers: { "Authorization": `Bearer ${token}` }
+  headers: { Authorization: `Bearer ${token}` }
 });
 
 // Reactive context (context value itself can be reactive)
@@ -163,7 +163,7 @@ import { getAllContexts, setContext } from "svelte";
 function debugContexts() {
   const contexts = getAllContexts();
   console.log("Available contexts:", contexts);
-  
+
   for (const [key, value] of contexts) {
     console.log(`Context ${key}:`, value);
   }
@@ -172,7 +172,7 @@ function debugContexts() {
 // Context forwarding component
 function forwardAllContexts(targetComponent) {
   const contexts = getAllContexts();
-  
+
   // Forward all contexts to child component
   for (const [key, value] of contexts) {
     setContext(key, value);
@@ -182,11 +182,8 @@ function forwardAllContexts(targetComponent) {
 // Context merging utility
 function mergeContexts(additionalContexts) {
   const existingContexts = getAllContexts();
-  
-  return new Map([
-    ...existingContexts,
-    ...Object.entries(additionalContexts)
-  ]);
+
+  return new Map([...existingContexts, ...Object.entries(additionalContexts)]);
 }
 ```
 
@@ -214,7 +211,7 @@ const primaryColor = theme.colors.primary;
 ### Store Provider Pattern
 
 ```typescript
-// StoreProvider.svelte  
+// StoreProvider.svelte
 import { setContext } from "svelte";
 import { writable } from "svelte/store";
 
@@ -251,12 +248,12 @@ class APIClient {
     this.baseUrl = baseUrl;
     this.token = token;
   }
-  
+
   async fetch(endpoint, options = {}) {
     return fetch(`${this.baseUrl}${endpoint}`, {
       ...options,
       headers: {
-        "Authorization": `Bearer ${this.token}`,
+        Authorization: `Bearer ${this.token}`,
         ...options.headers
       }
     });
@@ -283,7 +280,7 @@ async function loadData() {
 // Context key can be any type
 type ContextKey = any;
 
-// Context value can be any type  
+// Context value can be any type
 type ContextValue = any;
 
 // Map type for getAllContexts

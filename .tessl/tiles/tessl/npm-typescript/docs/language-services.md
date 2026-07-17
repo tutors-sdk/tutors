@@ -16,11 +16,7 @@ Create and configure language service instances.
  * @param syntaxOnlyOrLanguageServiceMode - Syntax-only mode or full language service mode
  * @returns Language service instance
  */
-function createLanguageService(
-  host: LanguageServiceHost,
-  documentRegistry?: DocumentRegistry,
-  syntaxOnlyOrLanguageServiceMode?: boolean | LanguageServiceMode
-): LanguageService;
+function createLanguageService(host: LanguageServiceHost, documentRegistry?: DocumentRegistry, syntaxOnlyOrLanguageServiceMode?: boolean | LanguageServiceMode): LanguageService;
 
 /**
  * Create a document registry for caching parsed files
@@ -28,10 +24,7 @@ function createLanguageService(
  * @param currentDirectory - Current working directory
  * @returns Document registry instance
  */
-function createDocumentRegistry(
-  useCaseSensitiveFileNames?: boolean,
-  currentDirectory?: string
-): DocumentRegistry;
+function createDocumentRegistry(useCaseSensitiveFileNames?: boolean, currentDirectory?: string): DocumentRegistry;
 
 enum LanguageServiceMode {
   Semantic = 0,
@@ -56,13 +49,7 @@ interface LanguageServiceHost extends GetEffectiveTypeRootsHost {
   trace?(s: string): void;
   error?(s: string): void;
   useCaseSensitiveFileNames?(): boolean;
-  readDirectory?(
-    path: string,
-    extensions?: readonly string[],
-    exclude?: readonly string[],
-    include?: readonly string[],
-    depth?: number
-  ): string[];
+  readDirectory?(path: string, extensions?: readonly string[], exclude?: readonly string[], include?: readonly string[], depth?: number): string[];
   readFile?(path: string, encoding?: string): string | undefined;
   realpath?(path: string): string;
   fileExists?(path: string): boolean;
@@ -74,10 +61,7 @@ interface LanguageServiceHost extends GetEffectiveTypeRootsHost {
     redirectedReference: ResolvedProjectReference | undefined,
     options: CompilerOptions
   ): (ResolvedModule | undefined)[];
-  getResolvedModuleWithFailedLookupLocationsFromCache?(
-    modulename: string,
-    containingFile: string
-  ): ResolvedModuleWithFailedLookupLocations | undefined;
+  getResolvedModuleWithFailedLookupLocationsFromCache?(modulename: string, containingFile: string): ResolvedModuleWithFailedLookupLocations | undefined;
   resolveTypeReferenceDirectives?(
     typeDirectiveNames: string[],
     containingFile: string,
@@ -134,7 +118,7 @@ const services = ts.createLanguageService(servicesHost);
 // Get completions at cursor position (after "jo")
 const completions = services.getCompletionsAtPosition("example.ts", 150, {});
 if (completions) {
-  completions.entries.forEach(entry => {
+  completions.entries.forEach((entry) => {
     console.log(`${entry.name}: ${entry.kind}`);
   });
 }
@@ -153,11 +137,7 @@ interface LanguageService {
    * @param options - Completion options
    * @returns Completion information
    */
-  getCompletionsAtPosition(
-    fileName: string,
-    position: number,
-    options?: GetCompletionsAtPositionOptions
-  ): CompletionInfo | undefined;
+  getCompletionsAtPosition(fileName: string, position: number, options?: GetCompletionsAtPositionOptions): CompletionInfo | undefined;
 
   /**
    * Get detailed information for a completion entry
@@ -186,12 +166,7 @@ interface LanguageService {
    * @param source - Source of completion entry
    * @returns Symbol information
    */
-  getCompletionEntrySymbol(
-    fileName: string,
-    position: number,
-    name: string,
-    source?: string
-  ): Symbol | undefined;
+  getCompletionEntrySymbol(fileName: string, position: number, name: string, source?: string): Symbol | undefined;
 }
 
 interface CompletionInfo {
@@ -229,10 +204,7 @@ interface LanguageService {
    * @param position - Character position in file
    * @returns Array of definition locations
    */
-  getDefinitionAtPosition(
-    fileName: string,
-    position: number
-  ): readonly DefinitionInfo[] | undefined;
+  getDefinitionAtPosition(fileName: string, position: number): readonly DefinitionInfo[] | undefined;
 
   /**
    * Get definition with bound span
@@ -240,10 +212,7 @@ interface LanguageService {
    * @param position - Character position in file
    * @returns Definition info with bound span
    */
-  getDefinitionAndBoundSpan(
-    fileName: string,
-    position: number
-  ): DefinitionInfoAndBoundSpan | undefined;
+  getDefinitionAndBoundSpan(fileName: string, position: number): DefinitionInfoAndBoundSpan | undefined;
 
   /**
    * Get type definition locations
@@ -251,10 +220,7 @@ interface LanguageService {
    * @param position - Character position in file
    * @returns Array of type definition locations
    */
-  getTypeDefinitionAtPosition(
-    fileName: string,
-    position: number
-  ): readonly DefinitionInfo[] | undefined;
+  getTypeDefinitionAtPosition(fileName: string, position: number): readonly DefinitionInfo[] | undefined;
 
   /**
    * Get implementation locations
@@ -262,10 +228,7 @@ interface LanguageService {
    * @param position - Character position in file
    * @returns Array of implementation locations
    */
-  getImplementationAtPosition(
-    fileName: string,
-    position: number
-  ): readonly ImplementationLocation[] | undefined;
+  getImplementationAtPosition(fileName: string, position: number): readonly ImplementationLocation[] | undefined;
 
   /**
    * Find all references to a symbol
@@ -273,10 +236,7 @@ interface LanguageService {
    * @param position - Character position in file
    * @returns Array of referenced symbols with locations
    */
-  findReferences(
-    fileName: string,
-    position: number
-  ): ReferencedSymbol[] | undefined;
+  findReferences(fileName: string, position: number): ReferencedSymbol[] | undefined;
 
   /**
    * Find rename locations for a symbol
@@ -336,11 +296,7 @@ interface LanguageService {
    * @param preferences - User preferences
    * @returns Array of applicable refactors
    */
-  getApplicableRefactors(
-    fileName: string,
-    positionOrRange: number | TextRange,
-    preferences?: UserPreferences
-  ): ApplicableRefactorInfo[];
+  getApplicableRefactors(fileName: string, positionOrRange: number | TextRange, preferences?: UserPreferences): ApplicableRefactorInfo[];
 
   /**
    * Get edits for a specific refactor
@@ -368,11 +324,7 @@ interface LanguageService {
    * @param preferences - User preferences
    * @returns Array of file changes
    */
-  organizeImports(
-    scope: OrganizeImportsScope,
-    formatOptions: FormatCodeOptions,
-    preferences?: UserPreferences
-  ): readonly FileTextChanges[];
+  organizeImports(scope: OrganizeImportsScope, formatOptions: FormatCodeOptions, preferences?: UserPreferences): readonly FileTextChanges[];
 
   /**
    * Get edits for renaming a file
@@ -382,12 +334,7 @@ interface LanguageService {
    * @param preferences - User preferences
    * @returns Array of file changes
    */
-  getEditsForFileRename(
-    oldFilePath: string,
-    newFilePath: string,
-    formatOptions: FormatCodeOptions,
-    preferences?: UserPreferences
-  ): readonly FileTextChanges[];
+  getEditsForFileRename(oldFilePath: string, newFilePath: string, formatOptions: FormatCodeOptions, preferences?: UserPreferences): readonly FileTextChanges[];
 
   /**
    * Get code fixes for errors at a position
@@ -446,10 +393,7 @@ interface LanguageService {
    * @param position - Character position in file
    * @returns Quick info display parts
    */
-  getQuickInfoAtPosition(
-    fileName: string,
-    position: number
-  ): QuickInfo | undefined;
+  getQuickInfoAtPosition(fileName: string, position: number): QuickInfo | undefined;
 
   /**
    * Get signature help for function calls
@@ -458,11 +402,7 @@ interface LanguageService {
    * @param options - Signature help options
    * @returns Signature help information
    */
-  getSignatureHelpItems(
-    fileName: string,
-    position: number,
-    options?: SignatureHelpItemsOptions
-  ): SignatureHelpItems | undefined;
+  getSignatureHelpItems(fileName: string, position: number, options?: SignatureHelpItemsOptions): SignatureHelpItems | undefined;
 
   /**
    * Get navigation bar items for file outline
@@ -492,11 +432,7 @@ interface LanguageService {
    * @param filesToSearch - Files to search for highlights
    * @returns Array of document highlights
    */
-  getDocumentHighlights(
-    fileName: string,
-    position: number,
-    filesToSearch: string[]
-  ): DocumentHighlights[] | undefined;
+  getDocumentHighlights(fileName: string, position: number, filesToSearch: string[]): DocumentHighlights[] | undefined;
 
   /**
    * Get syntactic diagnostics for a file
@@ -563,12 +499,7 @@ interface LanguageService {
    * @param options - Formatting options
    * @returns Array of text changes
    */
-  getFormattingEditsForRange(
-    fileName: string,
-    start: number,
-    end: number,
-    options: FormatCodeOptions
-  ): readonly TextChange[];
+  getFormattingEditsForRange(fileName: string, start: number, end: number, options: FormatCodeOptions): readonly TextChange[];
 
   /**
    * Get formatting edits for entire document
@@ -576,10 +507,7 @@ interface LanguageService {
    * @param options - Formatting options
    * @returns Array of text changes
    */
-  getFormattingEditsForDocument(
-    fileName: string,
-    options: FormatCodeOptions
-  ): readonly TextChange[];
+  getFormattingEditsForDocument(fileName: string, options: FormatCodeOptions): readonly TextChange[];
 
   /**
    * Get formatting edits after a keystroke
@@ -589,12 +517,7 @@ interface LanguageService {
    * @param options - Formatting options
    * @returns Array of text changes
    */
-  getFormattingEditsAfterKeystroke(
-    fileName: string,
-    position: number,
-    key: string,
-    options: FormatCodeOptions
-  ): readonly TextChange[];
+  getFormattingEditsAfterKeystroke(fileName: string, position: number, key: string, options: FormatCodeOptions): readonly TextChange[];
 }
 
 interface FormatCodeOptions extends EditorOptions {

@@ -29,7 +29,7 @@ constructor(config: {
   parserServices?: Object;
   /** Scope analysis results */
   scopeManager?: ScopeManager;
-  /** AST visitor keys */  
+  /** AST visitor keys */
   visitorKeys?: Object;
 });
 ```
@@ -501,7 +501,7 @@ interface Reference {
   writeExpr: ASTNode | null;
   /** Whether this is an initializing reference */
   init: boolean;
-  
+
   /** Check if this is a write reference */
   isWrite(): boolean;
   /** Check if this is a read reference */
@@ -521,24 +521,24 @@ interface Reference {
 // In a rule implementation
 create(context) {
   const sourceCode = context.sourceCode;
-  
+
   return {
     FunctionDeclaration(node) {
       // Get function name token
       const nameToken = sourceCode.getFirstToken(node, {skip: 1});
-      
+
       // Get all tokens for function
       const tokens = sourceCode.getTokens(node);
-      
+
       // Check for comments
       const comments = sourceCode.getCommentsBefore(node);
-      
+
       // Get function scope
       const scope = sourceCode.getScope(node);
-      
+
       // Check variable usage
       const isUsed = sourceCode.markVariableAsUsed("myVar");
-      
+
       // Location utilities
       const loc = sourceCode.getLoc(node);
       const range = sourceCode.getRange(node);

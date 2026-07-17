@@ -28,7 +28,8 @@ export const presenceService: PresenceService = {
     // Parse JSON data from WebSocket message
     const nextCourseEvent = JSON.parse(event.data);
     // Only process events for current course and from other users
-    if (nextCourseEvent.courseId === this.listeningTo) {// && nextCourseEvent.user.id !== tutorsId.value?.login) {
+    if (nextCourseEvent.courseId === this.listeningTo) {
+      // && nextCourseEvent.user.id !== tutorsId.value?.login) {
       const studentEvent = this.studentEventMap.get(nextCourseEvent.user.id);
       if (!studentEvent) {
         // First time seeing this student - add to online list
@@ -89,7 +90,7 @@ export const presenceService: PresenceService = {
     }
 
     void upsertTutorsConnectLatestLo(loRecord);
-  },
+  }
 };
 
 /**

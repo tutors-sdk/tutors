@@ -45,7 +45,6 @@ export const liveService: LiveService = {
       const latestLo = new LoRecord(data);
       this.studentsOnline.value.push(latestLo);
       this.studentEventMap.set(data.user.id, latestLo);
-
     } else {
       // Update existing student record
       refreshLoRecord(studentEvent, data);

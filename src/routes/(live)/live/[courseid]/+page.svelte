@@ -7,7 +7,7 @@
     isReceivedAtInLocalMonth,
     isReceivedAtInLocalWeek,
     isReceivedAtInLocalYear,
-    isReceivedAtOnLocalDay,
+    isReceivedAtOnLocalDay
   } from "$lib/services/community/utils/supabase-client";
   import ConnectLatestLosCards from "$lib/ui/time/ConnectLatestLosCards.svelte";
   import CourseGroupHeader from "$lib/ui/time/CourseGroupHeader.svelte";
@@ -15,16 +15,14 @@
   import type { Course } from "@tutors/tutors-model-lib";
 
   interface Props {
-    data: { courseid: string, course: Course };
+    data: { courseid: string; course: Course };
   }
   let { data }: Props = $props();
 
   let connectRows = $state<TutorsConnectLatestRow[]>([]);
 
   function toVisibleLos(rows: TutorsConnectLatestRow[]): LoRecord[] {
-    return rows
-      .map((r) => new LoRecord(r.payload))
-      .filter((lo) => lo?.user?.fullName !== "Anon");
+    return rows.map((r) => new LoRecord(r.payload)).filter((lo) => lo?.user?.fullName !== "Anon");
   }
 
   const losThisDay = $derived.by(() => {
@@ -34,38 +32,20 @@
 
   const losThisWeek = $derived.by(() => {
     const ref = new Date();
-    return toVisibleLos(
-      connectRows.filter(
-        (r) =>
-          isReceivedAtInLocalWeek(r.received_at, ref) && !isReceivedAtOnLocalDay(r.received_at, ref)
-      )
-    );
+    return toVisibleLos(connectRows.filter((r) => isReceivedAtInLocalWeek(r.received_at, ref) && !isReceivedAtOnLocalDay(r.received_at, ref)));
   });
 
   const losThisMonth = $derived.by(() => {
     const ref = new Date();
-    return toVisibleLos(
-      connectRows.filter(
-        (r) =>
-          isReceivedAtInLocalMonth(r.received_at, ref) && !isReceivedAtInLocalWeek(r.received_at, ref)
-      )
-    );
+    return toVisibleLos(connectRows.filter((r) => isReceivedAtInLocalMonth(r.received_at, ref) && !isReceivedAtInLocalWeek(r.received_at, ref)));
   });
 
   const losThisYear = $derived.by(() => {
     const ref = new Date();
-    return toVisibleLos(
-      connectRows.filter(
-        (r) =>
-          isReceivedAtInLocalYear(r.received_at, ref) &&
-          !isReceivedAtInLocalMonth(r.received_at, ref)
-      )
-    );
+    return toVisibleLos(connectRows.filter((r) => isReceivedAtInLocalYear(r.received_at, ref) && !isReceivedAtInLocalMonth(r.received_at, ref)));
   });
 
-  const studentsOnlineVisible = $derived(
-    presenceService.studentsOnline.value.filter((lo) => lo?.user?.fullName !== "Anon")
-  );
+  const studentsOnlineVisible = $derived(presenceService.studentsOnline.value.filter((lo) => lo?.user?.fullName !== "Anon"));
 
   onMount(async () => {
     const courseid = data.courseid;
@@ -79,22 +59,17 @@
 </script>
 
 <div class="flex w-full min-w-0 flex-col gap-4 pb-4">
-  <section
-     class="bg-surface-100-800-token border-surface-200-700-token w-full min-w-0 overflow-hidden  p-4">
-   <div class="flex flex-wrap justify-center">
-      <div class="border-surface-300-600-token mb-2 w-full ">
+  <section class="bg-surface-100-800-token border-surface-200-700-token w-full min-w-0 overflow-hidden p-4">
+    <div class="flex flex-wrap justify-center">
+      <div class="border-surface-300-600-token mb-2 w-full">
         <CourseGroupHeader courseId={data.course.courseId!} courseTitle={data.course.title!} />
       </div>
       <h2 class="border-surface-300-600-token mb-3 w-full border-b pb-2 text-lg font-semibold">Online right now</h2>
-      <ConnectLatestLosCards
-        los={studentsOnlineVisible}
-        emptyMessage="No students online for this course right now."
-      />
+      <ConnectLatestLosCards los={studentsOnlineVisible} emptyMessage="No students online for this course right now." />
     </div>
   </section>
 
-  <section
-    class="bg-surface-100-800-token border-surface-200-700-token w-full min-w-0 overflow-hidden p-4">
+  <section class="bg-surface-100-800-token border-surface-200-700-token w-full min-w-0 overflow-hidden p-4">
     <h2 class="border-surface-300-600-token mb-3 border-b pb-2 text-lg font-semibold">Latest activity</h2>
     <Tabs defaultValue="Day">
       <Tabs.List>
@@ -105,28 +80,16 @@
         <Tabs.Indicator />
       </Tabs.List>
       <Tabs.Content value="Day">
-        <ConnectLatestLosCards
-          los={losThisDay}
-          emptyMessage="No saved activity today in tutors-connect-latest for this course yet."
-        />
+        <ConnectLatestLosCards los={losThisDay} emptyMessage="No saved activity today in tutors-connect-latest for this course yet." />
       </Tabs.Content>
       <Tabs.Content value="Week">
-        <ConnectLatestLosCards
-          los={losThisWeek}
-          emptyMessage="No activity earlier this week (outside today) in tutors-connect-latest for this course yet."
-        />
+        <ConnectLatestLosCards los={losThisWeek} emptyMessage="No activity earlier this week (outside today) in tutors-connect-latest for this course yet." />
       </Tabs.Content>
       <Tabs.Content value="Month">
-        <ConnectLatestLosCards
-          los={losThisMonth}
-          emptyMessage="No activity earlier this month (outside this week) in tutors-connect-latest for this course yet."
-        />
+        <ConnectLatestLosCards los={losThisMonth} emptyMessage="No activity earlier this month (outside this week) in tutors-connect-latest for this course yet." />
       </Tabs.Content>
       <Tabs.Content value="Year">
-        <ConnectLatestLosCards
-          los={losThisYear}
-          emptyMessage="No activity earlier this year (outside this month) in tutors-connect-latest for this course yet."
-        />
+        <ConnectLatestLosCards los={losThisYear} emptyMessage="No activity earlier this year (outside this month) in tutors-connect-latest for this course yet." />
       </Tabs.Content>
     </Tabs>
   </section>

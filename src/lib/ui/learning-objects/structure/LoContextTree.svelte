@@ -11,9 +11,7 @@
 
   function mapLoToNode(item: any, parentPath: string, index: number): Node {
     const thisPath = `${parentPath}/${index}`;
-    const children = ((item?.toc as any[] | undefined) || [])
-      .filter((child) => !child?.hide)
-      .map((child, i) => mapLoToNode(child, thisPath, i));
+    const children = ((item?.toc as any[] | undefined) || []).filter((child) => !child?.hide).map((child, i) => mapLoToNode(child, thisPath, i));
     return {
       id: item.id,
       name: item?.title || "",

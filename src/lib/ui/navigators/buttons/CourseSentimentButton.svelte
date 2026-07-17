@@ -23,10 +23,7 @@
 </script>
 
 <Popover open={menuOpen} onOpenChange={(d) => (menuOpen = d.open)}>
-  <Popover.Trigger
-    class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary inline-flex items-center rounded-lg p-2"
-    aria-label={` ${selected}. Open menu to change.`}
-  >
+  <Popover.Trigger class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary inline-flex items-center rounded-lg p-2" aria-label={` ${selected}. Open menu to change.`}>
     <Icon type={selected} tip={`Course sentiment — ${selected}.`} height="28" />
   </Popover.Trigger>
   <Portal>

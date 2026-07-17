@@ -24,11 +24,7 @@ function parseCommandLine(commandLine: readonly string[], readFile?: (path: stri
  * @param readFile - Optional file reading function
  * @returns Parsed command line
  */
-function parseCommandLineWorker(
-  diagnostics: Diagnostic[],
-  commandLine: readonly string[],
-  readFile?: (path: string) => string | undefined
-): ParsedCommandLine;
+function parseCommandLineWorker(diagnostics: Diagnostic[], commandLine: readonly string[], readFile?: (path: string) => string | undefined): ParsedCommandLine;
 
 interface ParsedCommandLine {
   options: CompilerOptions;
@@ -49,14 +45,7 @@ interface ParsedCommandLine {
 import * as ts from "typescript";
 
 // Parse command line arguments
-const commandLine = [
-  "--target", "ES2020",
-  "--module", "CommonJS", 
-  "--strict",
-  "--outDir", "./dist",
-  "src/index.ts",
-  "src/utils.ts"
-];
+const commandLine = ["--target", "ES2020", "--module", "CommonJS", "--strict", "--outDir", "./dist", "src/index.ts", "src/utils.ts"];
 
 const parsed = ts.parseCommandLine(commandLine);
 
@@ -67,7 +56,7 @@ if (parsed.errors.length > 0) {
   }
 } else {
   console.log("Target:", parsed.options.target);
-  console.log("Module:", parsed.options.module); 
+  console.log("Module:", parsed.options.module);
   console.log("Strict:", parsed.options.strict);
   console.log("Output Directory:", parsed.options.outDir);
   console.log("Input Files:", parsed.fileNames);
@@ -122,7 +111,7 @@ import * as fs from "fs";
 function readTsConfig(configPath: string) {
   const readFile = (path: string) => {
     try {
-      return fs.readFileSync(path, 'utf8');
+      return fs.readFileSync(path, "utf8");
     } catch {
       return undefined;
     }
@@ -130,21 +119,14 @@ function readTsConfig(configPath: string) {
 
   // Read the configuration file
   const result = ts.readConfigFile(configPath, readFile);
-  
+
   if (result.error) {
-    console.error("Error reading config file:", 
-      ts.flattenDiagnosticMessageText(result.error.messageText, "\n"));
+    console.error("Error reading config file:", ts.flattenDiagnosticMessageText(result.error.messageText, "\n"));
     return null;
   }
 
   // Parse the configuration
-  const parseResult = ts.parseJsonConfigFileContent(
-    result.config,
-    ts.sys,
-    path.dirname(configPath),
-    undefined,
-    configPath
-  );
+  const parseResult = ts.parseJsonConfigFileContent(result.config, ts.sys, path.dirname(configPath), undefined, configPath);
 
   if (parseResult.errors.length > 0) {
     console.error("Configuration errors:");
@@ -186,7 +168,7 @@ function parseJsonConfigFileContent(
 /**
  * Parse JSON source file into configuration
  * @param sourceFile - JSON source file to parse
- * @param host - Configuration parsing host  
+ * @param host - Configuration parsing host
  * @param basePath - Base path for resolving relative paths
  * @param existingOptions - Existing options to extend
  * @param configFileName - Configuration file name
@@ -265,23 +247,21 @@ function loadTypeScriptConfig(projectPath: string) {
   // Read and parse configuration
   const configResult = ts.readConfigFile(configFile, ts.sys.readFile);
   if (configResult.error) {
-    throw new Error(ts.formatDiagnostic(configResult.error, {
-      getCanonicalFileName: fileName => fileName,
-      getCurrentDirectory: ts.sys.getCurrentDirectory,
-      getNewLine: () => ts.sys.newLine
-    }));
+    throw new Error(
+      ts.formatDiagnostic(configResult.error, {
+        getCanonicalFileName: (fileName) => fileName,
+        getCurrentDirectory: ts.sys.getCurrentDirectory,
+        getNewLine: () => ts.sys.newLine
+      })
+    );
   }
 
   // Parse JSON into compiler options
-  const parseResult = ts.parseJsonConfigFileContent(
-    configResult.config,
-    ts.sys,
-    path.dirname(configFile)
-  );
+  const parseResult = ts.parseJsonConfigFileContent(configResult.config, ts.sys, path.dirname(configFile));
 
   if (parseResult.errors.length > 0) {
     const errorMessage = ts.formatDiagnosticsWithColorAndContext(parseResult.errors, {
-      getCanonicalFileName: fileName => fileName,
+      getCanonicalFileName: (fileName) => fileName,
       getCurrentDirectory: ts.sys.getCurrentDirectory,
       getNewLine: () => ts.sys.newLine
     });
@@ -368,11 +348,7 @@ interface ResolvedProjectReference {
  * @param defaultOptions - Default compiler options
  * @returns Solution builder instance
  */
-function createSolutionBuilder<T extends BuilderProgram>(
-  host: SolutionBuilderHost<T>,
-  rootNames: readonly string[],
-  defaultOptions: BuildOptions
-): SolutionBuilder<T>;
+function createSolutionBuilder<T extends BuilderProgram>(host: SolutionBuilderHost<T>, rootNames: readonly string[], defaultOptions: BuildOptions): SolutionBuilder<T>;
 ```
 
 ## Types
@@ -383,178 +359,178 @@ function createSolutionBuilder<T extends BuilderProgram>(
 interface CompilerOptions {
   /** Language version target */
   target?: ScriptTarget;
-  
+
   /** Module system */
   module?: ModuleKind;
-  
+
   /** Library files to include */
   lib?: string[];
-  
+
   /** Allow JavaScript files */
   allowJs?: boolean;
-  
+
   /** Check JavaScript files */
   checkJs?: boolean;
-  
+
   /** Include source maps */
   sourceMap?: boolean;
-  
+
   /** Include inline source maps */
   inlineSourceMap?: boolean;
-  
+
   /** Output directory */
   outDir?: string;
-  
+
   /** Output file */
   outFile?: string;
-  
+
   /** Root directory */
   rootDir?: string;
-  
+
   /** Remove comments */
   removeComments?: boolean;
-  
+
   /** Don't emit output */
   noEmit?: boolean;
-  
+
   /** Don't emit on error */
   noEmitOnError?: boolean;
-  
+
   /** Enable strict type checking */
   strict?: boolean;
-  
+
   /** Enable strict null checks */
   strictNullChecks?: boolean;
-  
+
   /** Enable strict function types */
   strictFunctionTypes?: boolean;
-  
+
   /** Enable strict property initialization */
   strictPropertyInitialization?: boolean;
-  
+
   /** No implicit any */
   noImplicitAny?: boolean;
-  
+
   /** No implicit returns */
   noImplicitReturns?: boolean;
-  
+
   /** No implicit this */
   noImplicitThis?: boolean;
-  
+
   /** No unused locals */
   noUnusedLocals?: boolean;
-  
+
   /** No unused parameters */
   noUnusedParameters?: boolean;
-  
+
   /** Module resolution strategy */
   moduleResolution?: ModuleResolutionKind;
-  
+
   /** Base URL for module resolution */
   baseUrl?: string;
-  
+
   /** Path mapping */
   paths?: MapLike<string[]>;
-  
+
   /** Root directories */
   rootDirs?: string[];
-  
+
   /** Type roots */
   typeRoots?: string[];
-  
+
   /** Types to include */
   types?: string[];
-  
+
   /** Allow synthetic default imports */
   allowSyntheticDefaultImports?: boolean;
-  
+
   /** ES module interop */
   esModuleInterop?: boolean;
-  
+
   /** Preserve symlinks */
   preserveSymlinks?: boolean;
-  
+
   /** Allow UMD global access */
   allowUmdGlobalAccess?: boolean;
-  
+
   /** Source root */
   sourceRoot?: string;
-  
+
   /** Map root */
   mapRoot?: string;
-  
+
   /** Include source content */
   inlineSources?: boolean;
-  
+
   /** Experimental decorators */
   experimentalDecorators?: boolean;
-  
+
   /** Emit decorator metadata */
   emitDecoratorMetadata?: boolean;
-  
+
   /** Generate declaration files */
   declaration?: boolean;
-  
+
   /** Declaration output directory */
   declarationDir?: string;
-  
+
   /** Generate declaration maps */
   declarationMap?: boolean;
-  
+
   /** Skip library check */
   skipLibCheck?: boolean;
-  
+
   /** Skip default library */
   skipDefaultLibCheck?: boolean;
-  
+
   /** Composite project */
   composite?: boolean;
-  
+
   /** Incremental compilation */
   incremental?: boolean;
-  
+
   /** Build info file */
   tsBuildInfoFile?: string;
-  
+
   /** Disable size limit */
   disableSizeLimit?: boolean;
-  
+
   /** Charset */
   charset?: string;
-  
+
   /** New line character */
   newLine?: NewLineKind;
-  
+
   /** No error truncation */
   noErrorTruncation?: boolean;
-  
+
   /** No lib */
   noLib?: boolean;
-  
+
   /** No resolve */
   noResolve?: boolean;
-  
+
   /** Suppress excess property errors */
   suppressExcessPropertyErrors?: boolean;
-  
+
   /** Suppress implicit any index errors */
   suppressImplicitAnyIndexErrors?: boolean;
-  
+
   /** Force consistent casing */
   forceConsistentCasingInFileNames?: boolean;
-  
+
   // JSX options
   jsx?: JsxEmit;
   jsxFactory?: string;
   jsxFragmentFactory?: string;
   jsxImportSource?: string;
-  
+
   // Watch options
   watchFile?: WatchFileKind;
   watchDirectory?: WatchDirectoryKind;
   fallbackPolling?: PollingWatchKind;
   synchronousWatchDirectory?: boolean;
-  
+
   // Advanced options
   resolveJsonModule?: boolean;
   isolatedModules?: boolean;

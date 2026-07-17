@@ -12,20 +12,20 @@ Automatically chooses the SvelteKit adapter for your current environment, if pos
 ## Core Imports
 
 ```javascript
-import adapter from '@sveltejs/adapter-auto';
+import adapter from "@sveltejs/adapter-auto";
 ```
 
 For CommonJS (not recommended as this is an ESM package):
 
 ```javascript
-const adapter = require('@sveltejs/adapter-auto').default;
+const adapter = require("@sveltejs/adapter-auto").default;
 ```
 
 ## Basic Usage
 
 ```javascript
 // svelte.config.js
-import adapter from '@sveltejs/adapter-auto';
+import adapter from "@sveltejs/adapter-auto";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -92,8 +92,9 @@ Supports automatic installation using any of these package managers:
 The adapter uses internal command templates to install adapters with the detected package manager.
 
 The adapter automatically detects the package manager by looking for lockfiles in this priority order:
+
 1. `pnpm-lock.yaml` → pnpm
-2. `yarn.lock` → yarn  
+2. `yarn.lock` → yarn
 3. `package-lock.json` → npm
 4. `bun.lockb` or `bun.lock` → bun
 5. `deno.lock` → deno
@@ -213,7 +214,7 @@ type MaybePromise<T> = T | Promise<T>;
 interface ValidatedConfig extends Record<string, any> {}
 interface Prerendered extends Record<string, any> {}
 interface RouteDefinition extends Record<string, any> {}
-type PrerenderOption = boolean | 'auto'
+type PrerenderOption = boolean | "auto";
 ```
 
 ## Installation Behavior

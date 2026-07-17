@@ -62,11 +62,13 @@ import { FlatESLint } from "eslint/use-at-your-own-risk";
 
 // Explicitly use flat config ESLint
 const eslint = new FlatESLint({
-  baseConfig: [{
-    rules: {
-      "no-unused-vars": "error"
+  baseConfig: [
+    {
+      rules: {
+        "no-unused-vars": "error"
+      }
     }
-  }]
+  ]
 });
 
 const results = await eslint.lintText("var unused = 1;");
@@ -83,14 +85,14 @@ Access to the legacy ESLint implementation for backwards compatibility.
  */
 class LegacyESLint {
   constructor(options?: LegacyESLintOptions);
-  
+
   lintFiles(patterns: string | string[]): Promise<LintResult[]>;
   lintText(code: string, options?: {filePath?: string, warnIgnored?: boolean}): Promise<LintResult[]>;
   getRulesMetaForResults(results: LintResult[]): Record<string, RuleMetaData>;
   loadFormatter(name?: string): Promise<Formatter>;
   calculateConfigForFile(filePath: string): Promise<Config | undefined>;
   isPathIgnored(filePath: string): Promise<boolean>;
-  
+
   static outputFixes(results: LintResult[]): Promise<void>;
   static getErrorResults(results: LintResult[]): LintResult[];
 }
@@ -178,7 +180,7 @@ import { shouldUseFlatConfig, FlatESLint, LegacyESLint } from "eslint/use-at-you
 // Automatically choose correct ESLint implementation
 async function createESLint(options = {}) {
   const useFlatConfig = await shouldUseFlatConfig(options.cwd);
-  
+
   if (useFlatConfig) {
     return new FlatESLint(options);
   } else {
@@ -202,7 +204,7 @@ Internal file enumeration utilities for advanced file discovery.
  */
 class FileEnumerator {
   constructor(options?: FileEnumeratorOptions);
-  
+
   /**
    * Enumerate files matching patterns
    * @param patterns - Glob patterns to match

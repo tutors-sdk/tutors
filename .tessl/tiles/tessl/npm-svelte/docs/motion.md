@@ -14,25 +14,25 @@ A reactive spring animation class that moves values towards targets with physics
  */
 class Spring<T> {
   constructor(value: T, options?: SpringOpts);
-  
+
   /** Create a spring whose value is bound to the return value of fn */
   static of<U>(fn: () => U, options?: SpringOpts): Spring<U>;
-  
+
   /** Sets target value and returns promise that resolves when spring settles */
   set(value: T, options?: SpringUpdateOpts): Promise<void>;
-  
+
   /** Current value of the spring */
   get current(): T;
-  
+
   /** Target value the spring is moving towards */
   target: T;
-  
+
   /** Spring stiffness (0-1, higher = more responsive) */
   stiffness: number;
-  
+
   /** Spring damping (0-1, higher = less oscillation) */
   damping: number;
-  
+
   /** Precision threshold for settling */
   precision: number;
 }
@@ -81,16 +81,16 @@ A reactive tween animation class that smoothly interpolates between values over 
  */
 class Tween<T> {
   constructor(value: T, options?: TweenedOptions<T>);
-  
+
   /** Create a tween whose value is bound to the return value of fn */
   static of<U>(fn: () => U, options?: TweenedOptions<U>): Tween<U>;
-  
+
   /** Sets target value and returns promise when tween completes */
   set(value: T, options?: TweenedOptions<T>): Promise<void>;
-  
+
   /** Current value of the tween */
   get current(): T;
-  
+
   /** Target value the tween is moving towards */
   get target(): T;
   set target(value: T);
@@ -123,18 +123,21 @@ await tween.set(100); // Uses default options
 // Set with custom options
 await tween.set(100, {
   duration: 1000,
-  easing: t => t * t, // Custom easing
+  easing: (t) => t * t, // Custom easing
   delay: 200
 });
 
 // Custom interpolation for complex values
-const colorTween = new Tween({ r: 255, g: 0, b: 0 }, {
-  interpolate: (from, to) => t => ({
-    r: Math.round(from.r + (to.r - from.r) * t),
-    g: Math.round(from.g + (to.g - from.g) * t),
-    b: Math.round(from.b + (to.b - from.b) * t)
-  })
-});
+const colorTween = new Tween(
+  { r: 255, g: 0, b: 0 },
+  {
+    interpolate: (from, to) => (t) => ({
+      r: Math.round(from.r + (to.r - from.r) * t),
+      g: Math.round(from.g + (to.g - from.g) * t),
+      b: Math.round(from.b + (to.b - from.b) * t)
+    })
+  }
+);
 ```
 
 ### FLIP Animation
@@ -148,11 +151,7 @@ The `flip` function calculates start and end positions of elements and animates 
  * @param params - From/to rectangles and animation options
  * @returns Animation configuration
  */
-function flip(
-  node: Element,
-  { from, to }: { from: DOMRect; to: DOMRect },
-  params?: FlipParams
-): AnimationConfig;
+function flip(node: Element, { from, to }: { from: DOMRect; to: DOMRect }, params?: FlipParams): AnimationConfig;
 ```
 
 **Usage Examples:**
@@ -182,11 +181,8 @@ function shuffle() {
 
 // Programmatic usage
 function animateMove(element, fromRect, toRect) {
-  const animation = flip(element, 
-    { from: fromRect, to: toRect },
-    { duration: 400, easing: cubicOut }
-  );
-  
+  const animation = flip(element, { from: fromRect, to: toRect }, { duration: 400, easing: cubicOut });
+
   // Apply animation manually
   element.style.animation = animation.css(0, 1);
 }
@@ -204,7 +200,7 @@ Legacy store-based motion utilities for Svelte 4 compatibility.
 function spring<T = any>(value?: T, opts?: SpringOpts): Spring<T>;
 
 /**
- * @deprecated Use Tween class instead  
+ * @deprecated Use Tween class instead
  * Creates a tweened store with reactive value
  */
 function tweened<T>(value?: T, defaults?: TweenedOptions<T>): Tweened<T>;
@@ -226,13 +222,13 @@ springStore.set(100);
 // Legacy tweened store
 const tweenedStore = tweened(0, {
   duration: 400,
-  easing: t => t * t
+  easing: (t) => t * t
 });
 
 tweenedStore.set(100);
 
 // Subscribe to changes
-springStore.subscribe(value => {
+springStore.subscribe((value) => {
   console.log("Spring value:", value);
 });
 ```

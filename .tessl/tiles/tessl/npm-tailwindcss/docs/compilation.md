@@ -37,7 +37,7 @@ interface CompileOptions {
   loadModule?: (
     id: string,
     base: string,
-    resourceHint: 'plugin' | 'config'
+    resourceHint: "plugin" | "config"
   ) => Promise<{
     path: string;
     base: string;
@@ -73,12 +73,7 @@ const css = `
 const result = await compile(css);
 
 // Generate CSS for specific candidates
-const finalCss = result.build([
-  "bg-primary",
-  "text-secondary", 
-  "hover:bg-secondary",
-  "lg:text-xl"
-]);
+const finalCss = result.build(["bg-primary", "text-secondary", "hover:bg-secondary", "lg:text-xl"]);
 
 // Advanced compilation with options
 const advancedResult = await compile(css, {
@@ -92,9 +87,9 @@ const advancedResult = await compile(css, {
     return {
       path: modulePath,
       base,
-      module: module.default,
+      module: module.default
     };
-  },
+  }
 });
 ```
 
@@ -127,9 +122,7 @@ import { compileAst, styleRule, decl } from "tailwindcss";
 
 // Create AST manually
 const ast = [
-  styleRule(":root", [
-    decl("--color-primary", "#3b82f6"),
-  ]),
+  styleRule(":root", [decl("--color-primary", "#3b82f6")])
   // Additional nodes...
 ];
 
@@ -196,7 +189,7 @@ enum Features {
   /** @tailwind utilities directive was used */
   Utilities = 1 << 4,
   /** @variant directive was used */
-  Variants = 1 << 5,
+  Variants = 1 << 5
 }
 ```
 
@@ -212,7 +205,7 @@ enum Polyfills {
   /** Generate color-mix() fallbacks */
   ColorMix = 1 << 1,
   /** Enable all polyfills */
-  All = AtProperty | ColorMix,
+  All = AtProperty | ColorMix
 }
 ```
 
@@ -225,7 +218,7 @@ type Root =
   /** Unknown/auto-detected root */
   | null
   /** Explicitly no root via source(none) */
-  | 'none'
+  | "none"
   /** Explicit root pattern */
   | { base: string; pattern: string };
 ```

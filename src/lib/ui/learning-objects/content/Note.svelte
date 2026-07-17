@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { hideMainNavigator } from "$lib/runes.svelte";
+  import { hideMainNavigator } from "$lib/runes.svelte";
   import { currentCodeTheme } from "$lib/services/markdown";
   import { mermaidify } from "$lib/services/markdown/services/mermaid-action";
   import type { Lo } from "@tutors/tutors-model-lib";
-    import { onDestroy, onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import { sanitizeHtml } from "$lib/utils/sanitize";
 
   interface Props {
@@ -11,7 +11,7 @@
   }
   let { lo }: Props = $props();
 
-    onMount(() => {
+  onMount(() => {
     hideMainNavigator.value = true;
   });
   onDestroy(() => {

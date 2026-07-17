@@ -15,10 +15,7 @@ Renders a Svelte component on the server and returns HTML string with CSS and me
  * @param options - Server rendering options
  * @returns Rendered HTML with CSS and metadata
  */
-function render<Comp extends Component<any>>(
-  component: Comp,
-  options?: RenderOptions<ComponentProps<Comp>>
-): RenderOutput;
+function render<Comp extends Component<any>>(component: Comp, options?: RenderOptions<ComponentProps<Comp>>): RenderOutput;
 ```
 
 **Usage Examples:**
@@ -47,7 +44,7 @@ app.get("*", async (req, res) => {
       user: req.user
     }
   });
-  
+
   const html = `
     <!DOCTYPE html>
     <html>
@@ -62,7 +59,7 @@ app.get("*", async (req, res) => {
       </body>
     </html>
   `;
-  
+
   res.send(html);
 });
 
@@ -85,7 +82,7 @@ const result = render(App, {
 // src/routes/+page.server.js
 export async function load({ params, url, cookies }) {
   const data = await fetchData(params.id);
-  
+
   return {
     props: {
       data,
@@ -174,7 +171,7 @@ onMount(() => {
 export async function load({ fetch }) {
   const response = await fetch("/api/data");
   const data = await response.json();
-  
+
   return {
     props: { data }
   };
@@ -263,7 +260,7 @@ import { page } from "$app/stores";
 // Dynamic head content
 $effect(() => {
   document.title = `${$page.data.title} - My App`;
-  
+
   // Meta tags
   let metaDescription = document.querySelector('meta[name="description"]');
   if (metaDescription) {

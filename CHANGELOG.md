@@ -3,34 +3,29 @@
 #### [2024-01-09]: Tutors 11.3.0
 
 - Refactor: Services layer restructuring (#920)
-
   - Introduced barrel files for base, connect, and community services
   - Consolidated service types and re-export mechanisms
   - Improved code organization and maintainability
 
 - Feature: Enhanced Card System (#917, #916, #910)
-
   - Introduced new card styles including landscape and circular options
   - Added fine-grained reactivity for better performance
   - Implemented persistent card style preferences
   - Simplified card layout and improved mobile responsiveness
 
 - Feature: Live Integration Improvements (#914)
-
   - Enhanced live subsystem functionality
   - Improved time components and statistics display
   - Added conditional menu options based on course context
   - Updated stat formats and live system linking
 
 - Refactor: Runes Management (#906)
-
   - Moved runes into appropriate service modules
   - Improved state management for course, theme, and layout
   - Simplified code style and theme management
   - Enhanced type safety and reduced complexity
 
 - UI/UX Improvements
-
   - Enhanced lab navigation and article widths (#901)
   - Improved mobile responsiveness (#900)
   - Added scrollbar for LoContext Panel (#899)
@@ -42,14 +37,12 @@
 #### [2024-12-16]
 
 - Feature: Layout Controls Enhancement
-
   - Converted layout controls to dropdown menu for better UX
   - Implemented Segmented control for layout menu
   - Improved wall display management
   - Enhanced icon bar functionality
 
 - Fix: Navigation Improvements
-
   - Resolved scroll position reset between lab steps
   - Implemented smoother navigation experience
   - Enhanced user position tracking
@@ -60,14 +53,12 @@
 #### [2024-12-14] : Tutors 11.2.0
 
 - Feature: Copy/Paste Implementation (#892)
-
   - Added copy button for code blocks
   - Introduced new copy/paste button resources
   - Enhanced code block interaction
   - Improved user feedback for copy operations
 
 - Refactor: Markdown Service Layer (#891)
-
   - Introduced dedicated markdown service interface
   - Improved code organization and maintainability
   - Enhanced markdown processing strategies
@@ -82,14 +73,12 @@
 #### [2024-12-12]
 
 - Feature: Code Style System (#888)
-
   - Implemented Shiki code highlighting
   - Created comprehensive code theme selection
   - Introduced new markdown service architecture
   - Enhanced code block rendering performance
 
 - Fix: Card Component Improvements (#886)
-
   - Enhanced card layout and responsiveness
   - Improved component architecture
   - Optimized rendering performance
@@ -386,7 +375,6 @@
 #### [2024-04-25]
 
 - Feature: Image Support Enhancement
-
   - Improved image handling in panelnotes
   - Better image rendering and display
   - Enhanced test panel functionality
@@ -667,7 +655,6 @@
 #### [2023-09-07]
 
 - Feature: Enhanced Search Functionality
-
   - Implemented search across all labs and notes
   - Improved search result presentation
   - Added type "step" marking for lab steps
@@ -680,7 +667,6 @@
 #### [2023-09-06]
 
 - Feature: Calendar System Enhancement
-
   - Re-enabled calendar bar functionality
   - Improved calendar data loading from course model
   - Enhanced calendar integration
@@ -693,7 +679,6 @@
 #### [2023-09-05]
 
 - Feature: Union Model Implementation
-
   - Introduced new union-based type system
   - Improved model compatibility
   - Enhanced type safety across the application
@@ -706,7 +691,6 @@
 #### [2023-09-04]
 
 - Refactor: Model Architecture
-
   - Introduced new union-based model system
   - Improved service interactions
   - Enhanced type safety and maintainability
@@ -864,7 +848,6 @@
 #### [2023-04-25]
 
 - Feature: Image Support Enhancement
-
   - Improved image handling in panelnotes
   - Better image rendering and display
   - Enhanced test panel functionality

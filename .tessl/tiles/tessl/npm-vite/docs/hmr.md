@@ -22,9 +22,9 @@ interface ServerHotChannel extends HotChannel {
   /** Close channel */
   close(): void;
   /** Handle client connection */
-  on(event: 'connection', handler: (client: HotChannelClient) => void): void;
+  on(event: "connection", handler: (client: HotChannelClient) => void): void;
   /** Handle client disconnect */
-  on(event: 'disconnect', handler: (client: HotChannelClient) => void): void;
+  on(event: "disconnect", handler: (client: HotChannelClient) => void): void;
 }
 ```
 
@@ -38,14 +38,14 @@ const hotChannel = createServerHotChannel(server);
 
 // Send custom update
 hotChannel.send({
-  type: 'custom',
-  event: 'my-plugin-update',
-  data: { message: 'Plugin state changed' }
+  type: "custom",
+  event: "my-plugin-update",
+  data: { message: "Plugin state changed" }
 });
 
 // Listen for connections
-hotChannel.on('connection', (client) => {
-  console.log('Client connected:', client.socket.id);
+hotChannel.on("connection", (client) => {
+  console.log("Client connected:", client.socket.id);
 });
 ```
 
@@ -69,7 +69,7 @@ interface HmrOptions {
 
 interface HotUpdateOptions {
   /** Update type */
-  type: 'js-update' | 'css-update' | 'full-reload';
+  type: "js-update" | "css-update" | "full-reload";
   /** Timestamp */
   timestamp?: number;
   /** Updates to apply */
@@ -85,26 +85,20 @@ Types for different HMR messages sent between server and client.
 /**
  * Union of all possible HMR payloads
  */
-type HotPayload = 
-  | ConnectedPayload
-  | UpdatePayload  
-  | FullReloadPayload
-  | PrunePayload
-  | ErrorPayload
-  | CustomPayload;
+type HotPayload = ConnectedPayload | UpdatePayload | FullReloadPayload | PrunePayload | ErrorPayload | CustomPayload;
 
 interface ConnectedPayload {
-  type: 'connected';
+  type: "connected";
 }
 
 interface UpdatePayload {
-  type: 'update';
+  type: "update";
   updates: Update[];
 }
 
 interface Update {
   /** Update type */
-  type: 'js-update' | 'css-update';
+  type: "js-update" | "css-update";
   /** Module path */
   path: string;
   /** Update timestamp */
@@ -118,19 +112,19 @@ interface Update {
 }
 
 interface FullReloadPayload {
-  type: 'full-reload';
+  type: "full-reload";
   /** Reload trigger path */
   path?: string;
 }
 
 interface PrunePayload {
-  type: 'prune';
+  type: "prune";
   /** Paths to prune */
   paths: string[];
 }
 
 interface ErrorPayload {
-  type: 'error';
+  type: "error";
   /** Error details */
   err: {
     message: string;
@@ -148,7 +142,7 @@ interface ErrorPayload {
 }
 
 interface CustomPayload {
-  type: 'custom';
+  type: "custom";
   /** Custom event name */
   event: string;
   /** Custom data */
@@ -167,7 +161,7 @@ hotChannel.send({
   type: 'update',
   updates: [{
     type: 'js-update',
-    path: '/src/components/Button.tsx', 
+    path: '/src/components/Button.tsx',
     timestamp: Date.now(),
     acceptedPath: '/src/components/Button.tsx'
   }]
@@ -230,9 +224,9 @@ interface WebSocketServer {
   /** Close server */
   close(): Promise<void>;
   /** Handle client connections */
-  on(event: 'connection', handler: (socket: WebSocketClient, request: any) => void): void;
+  on(event: "connection", handler: (socket: WebSocketClient, request: any) => void): void;
   /** Handle errors */
-  on(event: 'error', handler: (error: Error) => void): void;
+  on(event: "error", handler: (error: Error) => void): void;
 }
 
 interface WebSocketClient {
@@ -247,11 +241,11 @@ interface WebSocketClient {
   /** Client socket */
   socket: any;
   /** Handle messages */
-  on(event: 'message', handler: (data: any) => void): void;
+  on(event: "message", handler: (data: any) => void): void;
   /** Handle close */
-  on(event: 'close', handler: () => void): void;
+  on(event: "close", handler: () => void): void;
   /** Handle errors */
-  on(event: 'error', handler: (error: Error) => void): void;
+  on(event: "error", handler: (error: Error) => void): void;
 }
 
 interface WebSocketCustomListener<T = any> {
@@ -312,22 +306,22 @@ Integrate HMR support in plugins for custom file types.
 // Plugin with HMR support
 function myPlugin(): Plugin {
   return {
-    name: 'my-plugin',
+    name: "my-plugin",
     load(id) {
-      if (id.endsWith('.myext')) {
+      if (id.endsWith(".myext")) {
         // Load custom file type
         return `export default ${JSON.stringify(loadMyFile(id))}`;
       }
     },
     handleHotUpdate(ctx) {
-      if (ctx.file.endsWith('.myext')) {
+      if (ctx.file.endsWith(".myext")) {
         // Custom HMR logic for .myext files
         ctx.server.ws.send({
-          type: 'custom',
-          event: 'myext-changed',
+          type: "custom",
+          event: "myext-changed",
           data: { file: ctx.file }
         });
-        
+
         // Return empty array to prevent default HMR
         return [];
       }
@@ -348,19 +342,19 @@ interface ImportMeta {
     accept(): void;
     accept(cb: (newModule: any) => void): void;
     accept(deps: string[], cb: (newModules: any[]) => void): void;
-    
+
     /** Decline updates for this module */
     decline(): void;
-    
+
     /** Dispose callback when module is replaced */
     dispose(cb: () => void): void;
-    
+
     /** Invalidate and force full reload */
     invalidate(): void;
-    
+
     /** Register custom event listener */
     on<T = any>(event: string, cb: (data: T) => void): void;
-    
+
     /** Send custom event to server */
     send<T = any>(event: string, data?: T): void;
   };
@@ -381,16 +375,16 @@ export function Counter() {
 if (import.meta.hot) {
   import.meta.hot.accept((newModule) => {
     // Handle module replacement
-    console.log('Counter updated');
+    console.log("Counter updated");
   });
-  
+
   import.meta.hot.dispose(() => {
     // Cleanup before replacement
-    console.log('Cleaning up counter');
+    console.log("Cleaning up counter");
   });
-  
+
   // Listen for custom events
-  import.meta.hot.on('reset-counter', () => {
+  import.meta.hot.on("reset-counter", () => {
     count = 0;
     updateUI();
   });
@@ -405,7 +399,7 @@ Handle HMR errors and recovery.
 // Error handling in plugins
 function errorHandlingPlugin(): Plugin {
   return {
-    name: 'error-handling',
+    name: "error-handling",
     handleHotUpdate(ctx) {
       try {
         // Process update
@@ -413,15 +407,15 @@ function errorHandlingPlugin(): Plugin {
       } catch (error) {
         // Send error to client
         ctx.server.ws.send({
-          type: 'error',
+          type: "error",
           err: {
             message: error.message,
             stack: error.stack,
             id: ctx.file,
-            plugin: 'error-handling'
+            plugin: "error-handling"
           }
         });
-        
+
         // Don't propagate error
         return ctx.modules;
       }

@@ -28,7 +28,7 @@
       user: d.student!,
       courseTitle: "",
       courseId: "",
-      courseUrl: "",
+      courseUrl: ""
     });
   });
 
@@ -77,7 +77,6 @@
           </span>
           <span>
             <h6 class={styles.text}>&nbsp;{cardDetails.student.fullName ?? cardDetails.student.id}</h6>
-
           </span>
         </div>
       {:else}

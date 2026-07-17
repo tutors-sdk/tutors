@@ -49,27 +49,32 @@
 ## Technology Stack
 
 ### Core Framework
+
 - **[SvelteKit 2.x](https://kit.svelte.dev/)**: Full-stack framework with SSR/CSR support
 - **[Svelte 5.x](https://svelte.dev/)**: Reactive UI framework with runes-based state management
 - **[Vite 8.x](https://vitejs.dev/)**: Build tool and dev server
 - **[TypeScript 6.x](https://www.typescriptlang.org/)**: Type-safe JavaScript
 
 ### UI & Styling
+
 - **[Tailwind CSS 4.x](https://tailwindcss.com/)**: Utility-first CSS framework
 - **[Skeleton UI](https://www.skeleton.dev/)**: Svelte component library
 - **[Iconify](https://iconify.design/)**: Icon library
 
 ### Content Processing
+
 - **[markdown-it](https://github.com/markdown-it/markdown-it)**: Markdown parser
 - **[Shiki](https://shiki.style/)**: Syntax highlighting
 - **[PDF.js](https://mozilla.github.io/pdf.js/)**: PDF rendering
 
 ### Backend & Services
+
 - **[Supabase](https://supabase.com/)**: Database, authentication, and analytics backend
 - **[Auth.js/SvelteKit](https://authjs.dev/)**: GitHub OAuth authentication
 - **[PartyKit](https://www.partykit.io/)**: Real-time WebSocket communication
 
 ### Development Tools
+
 - **[ESLint](https://eslint.org/)**: Code linting
 - **[Prettier](https://prettier.io/)**: Code formatting
 - **[svelte-check](https://github.com/sveltejs/language-tools)**: Type checking for Svelte
@@ -187,6 +192,7 @@ The application follows a **service-oriented architecture** with clear separatio
 The application uses **Svelte 5's runes-based reactivity** for state management:
 
 **Global State** (`src/lib/runes.svelte.ts`):
+
 ```typescript
 // Example pattern
 export const currentCourse = rune<Course | null>(null);
@@ -194,11 +200,12 @@ export const currentLo = rune<Lo | null>(null);
 ```
 
 **Service-Level State** (within services):
+
 ```typescript
 // Services maintain their own reactive state
 export const courseService: CourseService = {
   courses: new Map<string, Course>(),
-  labs: new Map<string, LiveLab>(),
+  labs: new Map<string, LiveLab>()
   // ...
 };
 ```
@@ -223,7 +230,7 @@ The service layer encapsulates business logic and external service integrations.
 export interface XService {
   // State
   someData: Map<string, Data>;
-  
+
   // Methods
   loadData(): Promise<void>;
   processData(input: Input): Output;
@@ -236,11 +243,11 @@ export type { XService } from "./types";
 // services/x.svelte.ts - Implementation
 export const xService: XService = {
   someData: new Map(),
-  
+
   async loadData() {
     // Implementation
   },
-  
+
   processData(input) {
     // Implementation
   }
@@ -254,18 +261,21 @@ export const xService: XService = {
 **Purpose**: Manages course data loading, caching, and navigation
 
 **Key Responsibilities**:
+
 - Fetch and parse course JSON from CDN/origin
 - Cache loaded courses and learning objects
 - Manage lab state with `LiveLab` instances
 - Handle course tree decoration and URL resolution
 
 **Key Files**:
+
 - `services/course.svelte.ts`: Main course loading and caching logic
 - `services/live-lab.ts`: Interactive lab session management
 - `services/lo-tree.ts`: Course tree traversal and decoration
 - `types.ts`: TypeScript interfaces
 
 **Usage Example**:
+
 ```typescript
 import { courseService } from "$lib/services/course";
 
@@ -278,16 +288,19 @@ const topic = await courseService.readTopic(courseId, topicId, fetch);
 **Purpose**: Real-time presence, analytics, and social features
 
 **Sub-services**:
+
 - **Analytics Service**: Tracks learning events to Supabase
 - **Presence Service**: Manages course-specific real-time student presence
 - **Live Service**: Platform-wide live activity monitoring
 - **Catalogue Service**: Manages course catalogue and visit statistics
 
 **Key Technologies**:
+
 - Supabase for analytics storage
 - PartyKit WebSockets for real-time communication
 
 **Key Files**:
+
 - `services/analytics.svelte.ts`: Learning event tracking
 - `services/presence.svelte.ts`: Course presence tracking
 - `services/live.svelte.ts`: Global live activity
@@ -298,6 +311,7 @@ const topic = await courseService.readTopic(courseId, topicId, fetch);
 **Purpose**: Manages UI themes, icons, layouts, and display modes
 
 **Features**:
+
 - Light/dark mode toggle
 - Multiple icon themes
 - Card layout modes (expanded/compacted)
@@ -305,14 +319,16 @@ const topic = await courseService.readTopic(courseId, topicId, fetch);
 - Festive mode (snow animation)
 
 **Key Files**:
+
 - `services/themes.svelte.ts`: Theme state and methods
 - `types.ts`: Theme-related type definitions
 
 **Usage Example**:
+
 ```typescript
 import { themeService } from "$lib/services/themes";
 
-themeService.toggleDisplayMode();  // Light/dark toggle
+themeService.toggleDisplayMode(); // Light/dark toggle
 themeService.setLayout("compacted");
 const icon = themeService.getIcon("lab");
 ```
@@ -322,12 +338,14 @@ const icon = themeService.getIcon("lab");
 **Purpose**: User authentication and session management
 
 **Features**:
+
 - GitHub OAuth integration
 - Session persistence
 - User profile management
 - Course access control
 
 **Key Files**:
+
 - `services/connect.svelte.ts`: Connection service implementation
 - `utils/allCourseAccess.ts`: Course access utilities
 
@@ -336,12 +354,14 @@ const icon = themeService.getIcon("lab");
 **Purpose**: Markdown processing and rendering
 
 **Features**:
+
 - Markdown to HTML conversion
 - Syntax highlighting with Shiki
 - Code block enhancements (copy button)
 - Custom markdown-it plugins
 
 **Key Files**:
+
 - `services/markdown.svelte.ts`: Markdown processing logic
 
 ---
@@ -371,47 +391,51 @@ src/lib/ui/
 
 The platform supports various learning object types, each with dedicated renderers:
 
-| Type | Component | Purpose |
-|------|-----------|---------|
-| **Course** | `Course.svelte` | Course home page |
-| **Topic** | `Topic.svelte` | Topic collection page |
-| **Lab** | `Lab.svelte` | Interactive step-by-step tutorials |
-| **Talk** | `TalkClient.svelte`, `TalkAdobe.svelte` | Presentation viewers |
-| **Video** | `Video.svelte` | Video player |
-| **Note** | `Note.svelte` | PDF/document viewer |
-| **Wall** | `Wall.svelte` | Gallery/grid view of content |
-| **PanelTalk** | `PanelTalk.svelte` | Panel-based presentations |
+| Type          | Component                               | Purpose                            |
+| ------------- | --------------------------------------- | ---------------------------------- |
+| **Course**    | `Course.svelte`                         | Course home page                   |
+| **Topic**     | `Topic.svelte`                          | Topic collection page              |
+| **Lab**       | `Lab.svelte`                            | Interactive step-by-step tutorials |
+| **Talk**      | `TalkClient.svelte`, `TalkAdobe.svelte` | Presentation viewers               |
+| **Video**     | `Video.svelte`                          | Video player                       |
+| **Note**      | `Note.svelte`                           | PDF/document viewer                |
+| **Wall**      | `Wall.svelte`                           | Gallery/grid view of content       |
+| **PanelTalk** | `PanelTalk.svelte`                      | Panel-based presentations          |
 
 ### Component Patterns
 
 #### Layout Components
 
 **Cards** (`Cards.svelte`, `Card.svelte`):
+
 - Displays collections of learning objects as cards
 - Supports multiple card styles (portrait/landscape/circular)
 - Responsive grid layouts
 
 **Panels** (`Panels.svelte`):
+
 - Tabbed/panel interface for structured content
 - Used in courses and topics
 
 **Units** (`Units.svelte`):
+
 - Displays sequential units/modules
 
 #### Content Components
 
 All content components follow this pattern:
+
 ```svelte
 <script lang="ts">
   import type { Lo, Course } from "@tutors/tutors-model-lib";
   import { courseService } from "$lib/services/course";
-  
+
   interface Props {
     lo: Lo;
     course: Course;
   }
   let { lo, course }: Props = $props();
-  
+
   // Component logic
 </script>
 
@@ -556,25 +580,25 @@ presenceService.sendLoEvent()
 **Purpose**: Analytics storage and user data
 
 **Configuration**:
+
 ```env
 PUBLIC_SUPABASE_URL="https://xxx.supabase.co"
 PUBLIC_SUPABASE_ANON_KEY="xxx"
 ```
 
 **Tables Used**:
+
 - Learning event logs
 - User sessions
 - Course catalogue
 - Student visit records
 
 **Client Setup** (`src/lib/services/community/utils/supabase-client.ts`):
+
 ```typescript
 import { createClient } from "@supabase/supabase-js";
 
-export const supabase = createClient(
-  PUBLIC_SUPABASE_URL,
-  PUBLIC_SUPABASE_ANON_KEY
-);
+export const supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
 ```
 
 ### 2. PartyKit Integration
@@ -582,11 +606,13 @@ export const supabase = createClient(
 **Purpose**: Real-time WebSocket communication
 
 **Configuration**:
+
 ```env
 PUBLIC_party_kit_main_room="https://tutors.partykit.dev"
 ```
 
 **Connection Pattern**:
+
 ```typescript
 import PartySocket from "partysocket";
 
@@ -605,6 +631,7 @@ socket.addEventListener("message", (event) => {
 **Purpose**: User authentication
 
 **Configuration**:
+
 ```env
 PRIVATE_AUTH_GITHUB_ID="xxx"
 PRIVATE_AUTH_GITHUB_SECRET="xxx"
@@ -612,6 +639,7 @@ PRIVATE_AUTH_SECRET="xxx"
 ```
 
 **Flow**:
+
 1. User clicks "Sign in with GitHub"
 2. Redirect to GitHub OAuth
 3. Callback to `/auth/callback`
@@ -623,6 +651,7 @@ PRIVATE_AUTH_SECRET="xxx"
 **Purpose**: Fetch course JSON and assets
 
 **URL Pattern**:
+
 ```
 https://[courseUrl]/tutors.json
 https://[courseUrl]/[topicId]/[loId]/[file]
@@ -673,29 +702,32 @@ To test with a local course:
 
 ```json
 {
-  "dev": "vite dev",              // Start dev server
-  "build": "vite build",          // Production build
-  "preview": "vite preview",      // Preview production build
-  "check": "svelte-check",        // Type checking
+  "dev": "vite dev", // Start dev server
+  "build": "vite build", // Production build
+  "preview": "vite preview", // Preview production build
+  "check": "svelte-check", // Type checking
   "check:watch": "svelte-check --watch",
   "format": "prettier --write .", // Format code
-  "lint": "prettier --check . && eslint ."  // Lint code
+  "lint": "prettier --check . && eslint ." // Lint code
 }
 ```
 
 ### Code Quality Tools
 
 **Type Checking**:
+
 ```bash
 npm run check
 ```
 
 **Linting**:
+
 ```bash
 npm run lint
 ```
 
 **Formatting**:
+
 ```bash
 npm run format
 ```
@@ -714,6 +746,7 @@ Learning objects are the atomic units of content in Tutors. Each has:
 - **Children**: Nested learning objects (topics contain labs/talks/etc.)
 
 **Type Definition** (from `@tutors/tutors-model-lib`):
+
 ```typescript
 interface Lo {
   type: string;
@@ -722,7 +755,7 @@ interface Lo {
   summary?: string;
   icon?: IconType;
   img?: string;
-  los?: Lo[];  // Children
+  los?: Lo[]; // Children
   // ... more properties
 }
 ```
@@ -745,6 +778,7 @@ Course
 ```
 
 **Tree Decoration** (`lo-tree.ts`):
+
 - Adds `route` property to each Lo
 - Builds lookup indexes (`topicIndex`, `labIndex`, etc.)
 - Calculates `courseUrl` for asset fetching
@@ -766,6 +800,7 @@ $effect(() => {
 ```
 
 **Key Runes**:
+
 - `$state`: Reactive state
 - `$derived`: Computed values
 - `$effect`: Side effects
@@ -779,7 +814,7 @@ Services are singleton objects exported directly:
 // services/x.svelte.ts
 export const xService: XService = {
   data: new Map(),
-  
+
   async loadData() {
     // Shared state across entire app
   }
@@ -793,6 +828,7 @@ await xService.loadData();
 ### 5. Anonymous Mode
 
 When `PUBLIC_ANON_MODE=TRUE`:
+
 - No authentication required
 - Analytics disabled
 - Presence features hidden
@@ -870,6 +906,7 @@ PUBLIC_PDF_KEY="xxx"
 ```
 
 For anonymous mode (no backend):
+
 ```env
 PUBLIC_ANON_MODE=TRUE
 ```
@@ -945,17 +982,20 @@ Test: Adding or updating tests
 ### What to Contribute
 
 **Good First Issues**:
+
 - Bug fixes (labeled `fix`)
 - Documentation improvements
 - UI/UX enhancements
 - Accessibility improvements
 
 **Feature Contributions**:
+
 - Discuss in an issue first (labeled `feature`)
 - Ensure alignment with project goals
 - Include documentation updates
 
 **What to Avoid**:
+
 - Breaking changes without discussion
 - Large refactors without prior approval
 - Dependencies with incompatible licenses

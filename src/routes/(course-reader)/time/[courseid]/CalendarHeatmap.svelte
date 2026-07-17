@@ -27,7 +27,16 @@
     await import("jheat.js");
     await import("jheat.js/dist/heat.js.css");
 
-    const heat = (window as unknown as { $heat: { render: (el: HTMLElement, opts: object) => void; updateDate: (id: string, date: Date, count: number, type?: string, refresh?: boolean) => void; refresh: (id: string) => void; destroy: (id: string) => void } }).$heat;
+    const heat = (
+      window as unknown as {
+        $heat: {
+          render: (el: HTMLElement, opts: object) => void;
+          updateDate: (id: string, date: Date, count: number, type?: string, refresh?: boolean) => void;
+          refresh: (id: string) => void;
+          destroy: (id: string) => void;
+        };
+      }
+    ).$heat;
     if (!heat) return;
 
     const bindingOptions = {
@@ -46,7 +55,7 @@
       }
     };
 
-        /** Defer render until layout has settled – avoids distorted grid on first load */
+    /** Defer render until layout has settled – avoids distorted grid on first load */
     await new Promise<void>((resolve) => {
       requestAnimationFrame(() => requestAnimationFrame(resolve));
     });
@@ -80,18 +89,7 @@
 </script>
 
 {#if browser}
-  <div
-    bind:this={container}
-    id={elementId}
-    class="calendar-heatmap-container min-h-[200px] w-full"
-    role="img"
-    aria-label="Calendar activity heatmap"
-  ></div>
+  <div bind:this={container} id={elementId} class="calendar-heatmap-container min-h-[200px] w-full" role="img" aria-label="Calendar activity heatmap"></div>
 {:else}
-  <div
-    id={elementId}
-    class="calendar-heatmap-container min-h-[200px] w-full"
-    role="img"
-    aria-label="Calendar activity heatmap"
-  ></div>
+  <div id={elementId} class="calendar-heatmap-container min-h-[200px] w-full" role="img" aria-label="Calendar activity heatmap"></div>
 {/if}
