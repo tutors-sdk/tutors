@@ -12,11 +12,6 @@ export const scaleTransition = {
   easing: cubicOut
 };
 
-export const slideFromLeft = {
-  get in() { return { x: prefersReducedMotion.value ? 0 : -200, duration: duration(), delay: duration() }; },
-  get out() { return { x: prefersReducedMotion.value ? 0 : -200, duration: duration() }; }
-};
-
 export const slideFromRight = {
   get in() { return { x: prefersReducedMotion.value ? 0 : 200, duration: duration(), delay: duration() }; },
   get out() { return { x: prefersReducedMotion.value ? 0 : 200, duration: duration() }; }
