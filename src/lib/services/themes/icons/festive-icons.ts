@@ -21,7 +21,7 @@ export const FestiveIcons: IconLib = {
   reference: { type: "fluent:document-copy-24-filled", color: "surface" },
   lab: { type: "fluent:beaker-24-filled", color: "error" },
   note: { type: "fluent:notepad-16-regular", color: "success" },
-  notebook: { type: "simple-icons:jupyter", color: "warning" },
+  notebook: { type: "simple-icons:jupyter", color: "error" },
   archive: { type: "fluent:archive-24-filled", color: "error" },
   web: { type: "noto:star", color: "primary" },
   github: { type: "mdi:github", color: "warning" },
