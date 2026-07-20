@@ -10,7 +10,7 @@ import { PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY, PUBLIC_ANON_MODE } from 
 import type { Course, Lo } from "@tutors/tutors-model-lib";
 import type { TutorsId } from "$lib/services/connect";
 import { COURSE_SENTIMENT_IDS } from "$lib/services/connect/types";
-import type { TutorsConnectLatestRow } from "../types.svelte";
+import type { TutorsConnectLatestRow, NavEventRow } from "../types.svelte";
 import log from "$lib/services/logger";
 
 export let supabase: SupabaseClient;
@@ -454,4 +454,47 @@ export async function updateTutorsConnectUserOnlineStatus(githubId: string, onli
     log.error("updateTutorsConnectUserOnlineStatus failed:", error);
     throw error;
   }
+}
+
+export async function insertNavEvent(event: {
+  student_id: string;
+  course_id: string;
+  lo_id: string;
+  lo_type: string;
+  session_id: string;
+  duration_ms: number | null;
+  referrer_lo: string | null;
+  engagement: string;
+}): Promise<void> {
+  if (PUBLIC_ANON_MODE === "TRUE" || typeof supabase === "undefined") return;
+
+  const { error } = await supabase.from("nav_events").insert({
+    ...event,
+    ts: new Date().toISOString()
+  });
+
+  if (error) {
+    log.error("insertNavEvent failed:", error);
+  }
+}
+
+export async function getNavEventsByCourse(courseId: string, since: Date): Promise<NavEventRow[]> {
+  if (PUBLIC_ANON_MODE === "TRUE" || typeof supabase === "undefined") return [];
+
+  const id = courseId?.trim();
+  if (!id) return [];
+
+  const { data, error } = await supabase
+    .from("nav_events")
+    .select("*")
+    .eq("course_id", id)
+    .gte("ts", since.toISOString())
+    .order("ts", { ascending: false })
+    .limit(5000);
+
+  if (error) {
+    log.error("getNavEventsByCourse failed:", error);
+    return [];
+  }
+  return (data ?? []) as NavEventRow[];
 }

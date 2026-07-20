@@ -10,7 +10,8 @@ import { browser } from "$app/environment";
 import { goto } from "$app/navigation";
 import type { Course } from "@tutors/tutors-model-lib";
 
-import { analyticsService, presenceService } from "$lib/services/community";
+import { analyticsService, presenceService, activityMonitorService } from "$lib/services/community";
+import { navTrackerService } from "$lib/services/community/services/nav-tracker.svelte";
 import { PUBLIC_ANON_MODE } from "$env/static/public";
 
 import { currentCourse, currentLo, tutorsId } from "$lib/runes.svelte";
@@ -64,6 +65,7 @@ export const tutorsConnectService: TutorsConnectService = {
   async reconnect(user: TutorsId) {
     if (anonMode) return;
     presenceService.connectToAllCourseAccess();
+    navTrackerService.init();
     if (user) {
       this.profile = supabaseProfile;
       tutorsId.value = user;
@@ -187,6 +189,13 @@ export const tutorsConnectService: TutorsConnectService = {
       if (tutorsId.value.share === "true" && !currentCourse.value.isPrivate) {
         presenceService.sendLoEvent(currentCourse.value, currentLo.value, tutorsId.value);
       }
+      navTrackerService.logNavEvent(
+        currentCourse.value.courseId,
+        currentLo.value.route,
+        currentLo.value.type,
+        activityMonitorService.getState(),
+        tutorsId.value.login
+      );
     }
   },
 
@@ -196,17 +205,21 @@ export const tutorsConnectService: TutorsConnectService = {
    */
   startTimer() {
     if (anonMode) return;
+    activityMonitorService.start();
     this.intervalId = setInterval(() => {
-      if (!document.hidden && currentCourse.value && currentLo.value && tutorsId.value) {
-        if (analyticsEnabled) analyticsService.updatePageCount(currentCourse.value, currentLo.value, tutorsId.value);
+      if (currentCourse.value && currentLo.value && tutorsId.value) {
+        if (!document.hidden && analyticsEnabled) {
+          analyticsService.updatePageCount(currentCourse.value, currentLo.value, tutorsId.value);
+        }
+        if (tutorsId.value.share === "true" && !currentCourse.value.isPrivate) {
+          presenceService.sendLoEvent(currentCourse.value, currentLo.value, tutorsId.value);
+        }
       }
     }, 30 * 1000);
   },
 
-  /**
-   * Stops analytics update timer
-   */
   stopTimer() {
+    activityMonitorService.stop();
     if (this.intervalId) {
       clearInterval(this.intervalId);
       this.intervalId = null;

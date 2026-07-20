@@ -1,14 +1,15 @@
 import type { TutorsId } from "$lib/services/connect";
 import type { Course, IconType, Lo } from "@tutors/tutors-model-lib";
 import PartySocket from "partysocket";
-/**
- * Minimal user information for learning object interactions
- */
+
+export type EngagementState = "active" | "idle" | "away";
+
 export interface LoUser {
   fullName: string;
   avatar: string;
   id: string;
   sentiment: string;
+  engagement?: EngagementState;
 }
 
 /**
@@ -26,6 +27,8 @@ export class LoRecord {
   isPrivate: boolean = $state(false);
   user?: LoUser = $state<LoUser | undefined>();
   type: string = $state("");
+  engagement?: EngagementState = $state<EngagementState | undefined>();
+  heartbeatTs?: number = $state<number | undefined>();
 
   constructor(data: any) {
     Object.assign(this, data);
@@ -164,3 +167,58 @@ export interface CatalogueService {
   pruneCatalogue(fetchFunction: typeof fetch): Promise<void>;
   deleteCourses(courseIds: string[]): Promise<void>;
 }
+
+export type AlertSeverity = "red" | "amber" | "green";
+
+export interface DashboardAlert {
+  id: string;
+  studentId: string;
+  studentName: string;
+  studentAvatar: string;
+  severity: AlertSeverity;
+  rule: string;
+  message: string;
+  timestamp: number;
+  loId: string;
+  loTitle: string;
+  dismissed: boolean;
+}
+
+export interface StudentDashboardState {
+  userId: string;
+  fullName: string;
+  avatar: string;
+  currentLoId: string;
+  currentLoTitle: string;
+  currentLoType: string;
+  engagement: EngagementState;
+  timeOnCurrentLoMs: number;
+  currentLoStartTs: number;
+  lastEventTs: number;
+  navHistory: Array<{ loId: string; ts: number; engagement: EngagementState }>;
+  thrashCount: number;
+  sentiment: string;
+}
+
+export interface ClassHealthMetrics {
+  totalStudents: number;
+  activeCount: number;
+  idleCount: number;
+  awayCount: number;
+  disconnectedCount: number;
+  activePercent: number;
+  healthLevel: "green" | "amber" | "red";
+}
+
+export type NavEventRow = {
+  id: number;
+  student_id: string;
+  course_id: string;
+  lo_id: string;
+  lo_type: string;
+  session_id: string;
+  ts: string;
+  duration_ms: number | null;
+  referrer_lo: string | null;
+  engagement: string;
+};
