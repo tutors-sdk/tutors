@@ -45,6 +45,10 @@ export const FluentIconLib: IconLib = {
   tutorsTime: { type: "fluent:clock-alarm-24-filled", color: "primary" },
   timeExport: { type: "fluent:save-arrow-right-24-filled", color: "success" },
   live: { type: "fluent:people-community-24-filled", color: "success" },
+  dashboard: { type: "fluent:data-bar-vertical-24-filled", color: "primary" },
+  engagementActive: { type: "fluent:presence-available-24-filled", color: "success" },
+  engagementIdle: { type: "fluent:presence-away-24-filled", color: "warning" },
+  engagementAway: { type: "fluent:presence-offline-24-filled", color: "error" },
 
   // app icons
   search: { type: "fluent:search-24-filled", color: "primary" },
