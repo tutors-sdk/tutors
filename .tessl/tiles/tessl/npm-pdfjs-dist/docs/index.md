@@ -397,7 +397,7 @@ enum AnnotationType {
   REDACT = 26
 }
 
-// Annotation editor types  
+// Annotation editor types
 enum AnnotationEditorType {
   DISABLE = -1,
   NONE = 0,

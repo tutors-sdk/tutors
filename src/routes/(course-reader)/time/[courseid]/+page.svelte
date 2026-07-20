@@ -4,9 +4,11 @@
   import HeatMaps from "./HeatMaps.svelte";
   import Tables from "./Tables.svelte";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
+  import type { PageData } from "./$types";
+  import log from "$lib/services/logger";
 
   interface Props {
-    data: any;
+    data: PageData;
   }
   let { data }: Props = $props();
 
@@ -17,16 +19,16 @@
   $effect(() => {
     const courseId = currentCourse.value?.courseId;
     const studentLogin = tutorsId.value?.login;
-    
+
     if (!courseId || !studentLogin) return;
-    
+
     isLoading = true;
     TutorsTime.loadStudentTime(courseId, studentLogin, null, null)
       .then((data) => {
         studentCalendar = data;
       })
       .catch((error) => {
-        console.error("Failed to load student calendar:", error);
+        log.error("Failed to load student calendar:", error);
       })
       .finally(() => {
         isLoading = false;
@@ -37,7 +39,7 @@
 <svelte:head>
   <title>Student Calendar</title>
   <meta name="description" content="Single-student calendar view for a specific course" />
-</svelte:head>    
+</svelte:head>
 
 <SecondaryNavigator lo={data?.lo} parentCourse={data.lo?.parentCourse?.properties?.parent} />
 <div class="w-full">
@@ -48,4 +50,3 @@
     <Tables {studentCalendar} />
   </div>
 </div>
-

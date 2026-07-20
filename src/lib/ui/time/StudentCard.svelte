@@ -5,7 +5,11 @@
   import Icon from "$lib/ui/components/Icon.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
 
-  let { lo, cardLayout, showCourseTitle = false } = $props<{
+  let {
+    lo,
+    cardLayout,
+    showCourseTitle = false
+  } = $props<{
     lo: LoEvent;
     cardLayout?: CardConfig;
     showCourseTitle?: boolean;
@@ -20,12 +24,8 @@
   const isLandscape = $derived(style === "landscape");
   const isCircular = $derived(style === "circular");
 
-  const primaryLine = $derived(
-    showCourseTitle ? lo.courseTitle : lo.title
-  );
-  const secondaryLine = $derived(
-    showCourseTitle ? `${lo.title}` : ""
-  );
+  const primaryLine = $derived(showCourseTitle ? lo.courseTitle : lo.title);
+  const secondaryLine = $derived(showCourseTitle ? `${lo.title}` : "");
 
   const styles = $derived({
     heading: cardStyles.heading[layout][style],
@@ -46,9 +46,7 @@
 
 <div class={cardShellClass}>
   <div class="flex h-full w-full flex-col">
-    <div
-      class="relative flex w-full shrink-0 items-center justify-center border-surface-300 border-b px-3 py-3 dark:border-surface-600"
-    >
+    <div class="relative flex w-full shrink-0 items-center justify-center border-surface-300 border-b px-3 py-3 dark:border-surface-600">
       <span class="absolute top-1/2 left-3 z-10 -translate-y-1/2">
         <Icon type={sentiment} tip={`Sentiment — ${sentiment}.`} height="28" />
       </span>
@@ -73,11 +71,7 @@
     <a href={route} target={target || undefined} class="text-inherit relative flex min-h-0 flex-1 gap-1 no-underline">
       <div class="ml-2 flex h-full w-[26%] min-w-0 shrink-0 items-center justify-center">
         <figure class="flex items-center justify-center">
-          <img
-            src={student.avatar}
-            alt={student.fullName}
-            class="{styles.image} object-contain object-center {isCircular ? 'rounded-full' : 'rounded-xl'}"
-          />
+          <img src={student.avatar} alt={student.fullName} class="{styles.image} object-contain object-center {isCircular ? 'rounded-full' : 'rounded-xl'}" />
         </figure>
       </div>
       <div class="relative flex min-w-0 flex-1 flex-col pr-2">
@@ -96,11 +90,7 @@
       </div>
       <div class="mr-2 flex h-full w-[26%] min-w-0 shrink-0 items-center justify-center py-2">
         {#if lo.img}
-          <img
-            src={lo.img}
-            alt={lo.title}
-            class="{styles.image} max-h-full w-full object-contain object-center rounded-xl"
-          />
+          <img src={lo.img} alt="" class="{styles.image} max-h-full w-full object-contain object-center rounded-xl" />
         {:else if lo.icon}
           <Iconify icon={lo.icon.type} color={lo.icon.color} height={styles.icon} />
         {/if}

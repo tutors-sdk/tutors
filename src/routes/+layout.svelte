@@ -4,6 +4,7 @@
   import type { PageData } from "./$types";
   import { browser } from "$app/environment";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
+  import { locale, SUPPORTED_LOCALES } from "$lib/services/i18n";
 
   interface Props {
     data: PageData;
@@ -17,7 +18,16 @@
 
   if (browser) {
     themeService.initDisplay();
+    if (data?.locale && SUPPORTED_LOCALES.includes(data.locale)) {
+      locale.value = data.locale;
+    }
   }
+
+  $effect(() => {
+    if (browser) {
+      document.documentElement.lang = locale.value;
+    }
+  });
 </script>
 
 {@render children()}

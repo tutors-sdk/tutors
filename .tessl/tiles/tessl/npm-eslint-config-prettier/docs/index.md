@@ -26,7 +26,7 @@ import eslintConfigPrettier from "eslint-config-prettier/flat";
 
 export default [
   // other configs...
-  eslintConfigPrettier,
+  eslintConfigPrettier
 ];
 ```
 
@@ -37,7 +37,7 @@ const eslintConfigPrettier = require("eslint-config-prettier/flat");
 
 module.exports = [
   // other configs...
-  eslintConfigPrettier,
+  eslintConfigPrettier
 ];
 ```
 
@@ -65,10 +65,7 @@ Add to your `.eslintrc.json`:
 
 ```json
 {
-  "extends": [
-    "some-other-config-you-use",
-    "prettier"
-  ]
+  "extends": ["some-other-config-you-use", "prettier"]
 }
 ```
 
@@ -80,10 +77,7 @@ Add to your `eslint.config.js`:
 import someConfig from "some-other-config-you-use";
 import eslintConfigPrettier from "eslint-config-prettier/flat";
 
-export default [
-  someConfig,
-  eslintConfigPrettier,
-];
+export default [someConfig, eslintConfigPrettier];
 ```
 
 ### CLI Conflict Detection
@@ -113,6 +107,7 @@ module.exports = eslintConfigPrettier;
 ```
 
 The main configuration includes:
+
 - **Regular rules**: Set to `"off"` - rules that directly conflict with Prettier
 - **Special rules**: Set to `0` - rules that can be used with specific options (see Special Rules section)
 - **Plugin rules**: Rules from various ESLint plugins that conflict with Prettier formatting
@@ -154,9 +149,7 @@ export = eslintConfigPrettierFlat;
 ```javascript
 import eslintConfigPrettier from "eslint-config-prettier/flat";
 
-export default [
-  eslintConfigPrettier,
-];
+export default [eslintConfigPrettier];
 ```
 
 ### Prettier-Specific Rules
@@ -180,6 +173,7 @@ module.exports = prettierRules;
 ```
 
 The prettier rules configuration disables:
+
 - `arrow-body-style`: Controls arrow function body style (set to 0 as special rule)
 - `prefer-arrow-callback`: Prefers arrow functions as callbacks (set to 0 as special rule)
 
@@ -241,6 +235,7 @@ ESLINT_CONFIG_PRETTIER_NO_DEPRECATED=true npx eslint-config-prettier index.js
 ```
 
 **Exit Codes:**
+
 - `0`: No problems found
 - `1`: General error
 - `2`: Conflicting rules found
@@ -261,35 +256,35 @@ const validators: {
    * @returns true if config is compatible with Prettier
    */
   curly(config: { options: any[] }): boolean;
-  
+
   /**
    * Validates lines-around-comment rule options
    * @param config - Object containing options array from ESLint rule config
    * @returns true if config is compatible with Prettier
    */
   "lines-around-comment"(config: { options: any[] }): boolean;
-  
+
   /**
    * Validates no-confusing-arrow rule options
    * @param config - Object containing options array from ESLint rule config
    * @returns true if config is compatible with Prettier
    */
   "no-confusing-arrow"(config: { options: any[] }): boolean;
-  
+
   /**
    * Validates no-tabs rule options
    * @param config - Object containing options array from ESLint rule config
    * @returns true if config is compatible with Prettier
    */
   "no-tabs"(config: { options: any[] }): boolean;
-  
+
   /**
    * Validates unicorn/template-indent rule options
    * @param config - Object containing options array from ESLint rule config
    * @returns true if config is compatible with Prettier
    */
   "unicorn/template-indent"(config: { options: any[] }): boolean;
-  
+
   /**
    * Validates vue/html-self-closing rule options
    * @param config - Object containing options array from ESLint rule config
@@ -312,15 +307,17 @@ const isCompatible = validators.curly(curlyConfig);
 console.log(isCompatible); // true
 
 // Validate lines-around-comment rule
-const commentConfig = { 
-  options: [{ 
-    allowBlockStart: true, 
-    allowBlockEnd: true,
-    allowObjectStart: true,
-    allowObjectEnd: true,
-    allowArrayStart: true,
-    allowArrayEnd: true
-  }] 
+const commentConfig = {
+  options: [
+    {
+      allowBlockStart: true,
+      allowBlockEnd: true,
+      allowObjectStart: true,
+      allowObjectEnd: true,
+      allowArrayStart: true,
+      allowArrayEnd: true
+    }
+  ]
 };
 const isCommentCompatible = validators["lines-around-comment"](commentConfig);
 console.log(isCommentCompatible); // true
@@ -389,14 +386,17 @@ Can be used with specific allow options:
 ```json
 {
   "rules": {
-    "lines-around-comment": ["error", {
-      "allowBlockStart": true,
-      "allowBlockEnd": true,
-      "allowObjectStart": true,
-      "allowObjectEnd": true,
-      "allowArrayStart": true,
-      "allowArrayEnd": true
-    }]
+    "lines-around-comment": [
+      "error",
+      {
+        "allowBlockStart": true,
+        "allowBlockEnd": true,
+        "allowObjectStart": true,
+        "allowObjectEnd": true,
+        "allowArrayStart": true,
+        "allowArrayEnd": true
+      }
+    ]
   }
 }
 ```
@@ -450,10 +450,7 @@ When using both packages together:
 
 ```json
 {
-  "extends": [
-    "some-config",
-    "plugin:prettier/recommended"
-  ]
+  "extends": ["some-config", "plugin:prettier/recommended"]
 }
 ```
 

@@ -7,6 +7,7 @@
   import { PDFWorker, getDocument } from "pdfjs-dist";
   import type { Talk } from "@tutors/tutors-model-lib";
   import Icon from "$lib/ui/components/Icon.svelte";
+  import log from "$lib/services/logger";
 
   pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
@@ -73,7 +74,7 @@
       loading = false;
       await renderPage(pageNum);
     } catch (error) {
-      console.error("Error loading document:", error);
+      log.error("Error loading document:", error);
     }
   }
 
@@ -108,7 +109,7 @@
         }
       }
     } catch (error) {
-      console.error(`Error rendering or getting page ${num}`, error);
+      log.error(`Error rendering or getting page ${num}`, error);
     }
   }
 

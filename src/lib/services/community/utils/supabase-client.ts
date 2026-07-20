@@ -11,13 +11,13 @@ import type { Course, Lo } from "@tutors/tutors-model-lib";
 import type { TutorsId } from "$lib/services/connect";
 import { COURSE_SENTIMENT_IDS } from "$lib/services/connect/types";
 import type { TutorsConnectLatestRow } from "../types.svelte";
+import log from "$lib/services/logger";
 
 export let supabase: SupabaseClient;
 
 if (PUBLIC_ANON_MODE !== "TRUE") {
   supabase = createClient(PUBLIC_SUPABASE_URL, PUBLIC_SUPABASE_ANON_KEY);
 }
-
 
 export function localYyyyMmDd(d = new Date()) {
   const y = d.getFullYear();
@@ -26,7 +26,7 @@ export function localYyyyMmDd(d = new Date()) {
   return `${y}-${m}-${day}`;
 }
 
-export function instantLocalYmd(iso: string | null | undefined): string | null {
+function instantLocalYmd(iso: string | null | undefined): string | null {
   if (!iso?.trim()) return null;
   try {
     const d = new Date(iso.trim());
@@ -47,40 +47,28 @@ function startOfLocalMondayWeek(d: Date): number {
 }
 
 /** Local calendar day match (same semantics as `localYyyyMmDd` / `instantLocalYmd`). */
-export function isReceivedAtOnLocalDay(
-  iso: string | null | undefined,
-  ref = new Date()
-): boolean {
+export function isReceivedAtOnLocalDay(iso: string | null | undefined, ref = new Date()): boolean {
   const ymd = instantLocalYmd(iso);
   if (!ymd) return false;
   return ymd === localYyyyMmDd(ref);
 }
 
 /** Local week starting Monday, through Sunday. */
-export function isReceivedAtInLocalWeek(
-  iso: string | null | undefined,
-  ref = new Date()
-): boolean {
+export function isReceivedAtInLocalWeek(iso: string | null | undefined, ref = new Date()): boolean {
   if (!iso?.trim()) return false;
   const d = new Date(iso.trim());
   if (!Number.isFinite(d.getTime())) return false;
   return startOfLocalMondayWeek(d) === startOfLocalMondayWeek(ref);
 }
 
-export function isReceivedAtInLocalMonth(
-  iso: string | null | undefined,
-  ref = new Date()
-): boolean {
+export function isReceivedAtInLocalMonth(iso: string | null | undefined, ref = new Date()): boolean {
   if (!iso?.trim()) return false;
   const d = new Date(iso.trim());
   if (!Number.isFinite(d.getTime())) return false;
   return d.getFullYear() === ref.getFullYear() && d.getMonth() === ref.getMonth();
 }
 
-export function isReceivedAtInLocalYear(
-  iso: string | null | undefined,
-  ref = new Date()
-): boolean {
+export function isReceivedAtInLocalYear(iso: string | null | undefined, ref = new Date()): boolean {
   if (!iso?.trim()) return false;
   const d = new Date(iso.trim());
   if (!Number.isFinite(d.getTime())) return false;
@@ -104,25 +92,21 @@ export async function upsertTutorsConnectLatestLo(loRecord: object): Promise<voi
       course_id: courseId,
       student_id: studentId,
       payload: loRecord,
-      received_at: new Date().toISOString(),
+      received_at: new Date().toISOString()
     },
     { onConflict: "course_id,student_id" }
   );
 
   if (error) {
-    console.error("upsertTutorsConnectLatestLo failed:", error);
+    log.error("upsertTutorsConnectLatestLo failed:", error);
   }
 }
-
-
 
 /**
  * All stored Lo snapshots for a course (one row per student, already “latest” by key).
  * Sorted by `received_at` descending (most recently updated first).
  */
-export async function getTutorsConnectLatestLosByCourseId(
-  courseId: string
-): Promise<TutorsConnectLatestRow[]> {
+export async function getTutorsConnectLatestLosByCourseId(courseId: string): Promise<TutorsConnectLatestRow[]> {
   if (PUBLIC_ANON_MODE === "TRUE" || typeof supabase === "undefined") return [];
 
   const id = courseId?.trim();
@@ -135,7 +119,7 @@ export async function getTutorsConnectLatestLosByCourseId(
     .order("received_at", { ascending: false });
 
   if (error) {
-    console.error("getTutorsConnectLatestLosByCourseId failed:", error);
+    log.error("getTutorsConnectLatestLosByCourseId failed:", error);
     return [];
   }
 
@@ -151,7 +135,7 @@ export async function getTutorsConnectLatestLosByCourseId(
  * @param loId - Identifier of the learning object
  * @returns Promise resolving to the number of increments
  */
-export async function getNumOfLearningRecordsIncrements(fieldName: string, courseId: string, studentId: string, loId: string) {
+async function getNumOfLearningRecordsIncrements(fieldName: string, courseId: string, studentId: string, loId: string) {
   if (!courseId || !studentId || !loId) return 0;
 
   const { data: student, error } = await supabase.rpc("get_count_learning_records", {
@@ -162,7 +146,7 @@ export async function getNumOfLearningRecordsIncrements(fieldName: string, cours
   });
 
   if (error) {
-    console.error("Error fetching student interaction:", error);
+    log.error("Error fetching student interaction:", error);
     return 0;
   }
   return student ? student[0].increment + 1 : 1;
@@ -177,7 +161,7 @@ export async function getNumOfLearningRecordsIncrements(fieldName: string, cours
  * @param loId - Identifier of the learning object
  * @param lo - Learning object data
  */
-export async function manageStudentCourseLo(courseId: string, studentId: string, loId: string, lo: Lo) {
+async function manageStudentCourseLo(courseId: string, studentId: string, loId: string, lo: Lo) {
   const durationPromise = getNumOfLearningRecordsIncrements("duration", courseId, studentId, loId);
   const countPromise = getNumOfLearningRecordsIncrements("count", courseId, studentId, loId);
   const [duration, count] = await Promise.all([durationPromise, countPromise]);
@@ -197,7 +181,7 @@ export async function manageStudentCourseLo(courseId: string, studentId: string,
     }
   );
   if (error) {
-    console.log(error);
+    log.error(error);
     throw error;
   }
 }
@@ -242,7 +226,7 @@ export const updateCalendarDuration = async (id: string, studentId: string, cour
  * @param courseId - Identifier of the course
  * @returns Promise resolving to the duration value
  */
-export async function getCalendarDuration(id: string, studentId: string, courseId: string): Promise<number> {
+async function getCalendarDuration(id: string, studentId: string, courseId: string): Promise<number> {
   const { data } = await supabase.from("calendar").select("timeactive").eq("id", id).eq("studentid", studentId).eq("courseid", courseId).maybeSingle();
   return data?.timeactive ? data.timeactive + 1 : 1;
 }
@@ -255,22 +239,9 @@ export async function getCalendarDuration(id: string, studentId: string, courseI
  * @param courseId - Identifier of the course
  * @returns Promise resolving to the count value
  */
-export async function getCalendarCount(id: string, studentId: string, courseId: string): Promise<number> {
+async function getCalendarCount(id: string, studentId: string, courseId: string): Promise<number> {
   const { data } = await supabase.from("calendar").select("pageloads").eq("id", id).eq("studentid", studentId).eq("courseid", courseId).maybeSingle();
   return data?.pageloads ? data.pageloads + 1 : 1;
-}
-
-/**
- * Calculates the total duration for a specific metric
- * @async
- * @param key - Metric key to total
- * @param table - Database table name
- * @param id - Identifier for the record
- * @returns Promise resolving to the total duration
- */
-export async function getDurationTotal(key: string, table: string, id: string): Promise<number> {
-  const { data } = await supabase.from(table).select("duration").eq(key, id).single();
-  return data?.duration || 1;
 }
 
 /**
@@ -279,7 +250,7 @@ export async function getDurationTotal(key: string, table: string, id: string): 
  * @param studentId - Identifier of the student
  * @param courseId - Identifier of the course
  */
-export async function insertOrUpdateCalendar(studentId: string, courseId: string) {
+async function insertOrUpdateCalendar(studentId: string, courseId: string) {
   if (!studentId || !courseId) return;
   const durationPromise = getCalendarDuration(formatDate(new Date()), studentId, courseId);
   const countPromise = getCalendarCount(formatDate(new Date()), studentId, courseId);
@@ -306,7 +277,7 @@ export async function insertOrUpdateCalendar(studentId: string, courseId: string
  * @param loId - Identifier of the learning object
  * @param lo - Learning object data
  */
-export async function handleInteractionData(courseId: string, studentId: string, loId: string, lo: Lo) {
+async function handleInteractionData(courseId: string, studentId: string, loId: string, lo: Lo) {
   if (!courseId || !studentId || !loId) return;
   await manageStudentCourseLo(courseId, studentId, loId, lo);
 }
@@ -320,11 +291,6 @@ export async function handleInteractionData(courseId: string, studentId: string,
  * @param student - Student data
  */
 export async function storeStudentCourseLearningObjectInSupabase(course: Course, loid: string, lo: Lo, student: TutorsId) {
-  //   const loTitle = getLoTitle(params)
-  //if (userDetails?.user_metadata?.full_name === "Anon") return;
-  // await insertOrUpdateCourse(course);
-  // await addOrUpdateStudent(userDetails);
-  // await addOrUpdateLo(loid, lo, lo.title);
   await handleInteractionData(course.courseId, student.login, loid, lo);
   await insertOrUpdateCalendar(student.login, course.courseId);
 }
@@ -351,7 +317,7 @@ export async function addOrUpdateStudent(student: TutorsId) {
 
   try {
     let fullName = student.name;
-    
+
     // If name is null or empty, fetch from GitHub API
     if (!fullName && student.login) {
       try {
@@ -364,7 +330,7 @@ export async function addOrUpdateStudent(student: TutorsId) {
           fullName = student.login;
         }
       } catch (fetchError) {
-        console.error("Failed to fetch GitHub user:", fetchError);
+        log.error("Failed to fetch GitHub user:", fetchError);
         // Fallback to login if API call fails
         fullName = student.login;
       }
@@ -395,11 +361,11 @@ export async function addOrUpdateStudent(student: TutorsId) {
     const { error } = await supabase.from("tutors-connect-users").upsert(row);
 
     if (error) {
-      console.error("Upsert failed:", error);
+      log.error("Upsert failed:", error);
       throw error;
     }
   } catch (error) {
-    console.error("An error occurred in addOrUpdateUserProfile:", error);
+    log.error("An error occurred in addOrUpdateUserProfile:", error);
     throw error;
   }
 }
@@ -418,14 +384,10 @@ function normalizeStoredSentiment(raw: string | null | undefined): string | null
 export async function getTutorsConnectUserSentiment(githubId: string): Promise<string | null> {
   if (PUBLIC_ANON_MODE === "TRUE" || !githubId) return null;
 
-  const { data, error } = await supabase
-    .from("tutors-connect-users")
-    .select("sentiment")
-    .eq("github_id", githubId)
-    .maybeSingle();
+  const { data, error } = await supabase.from("tutors-connect-users").select("sentiment").eq("github_id", githubId).maybeSingle();
 
   if (error) {
-    console.error("getTutorsConnectUserSentiment failed:", error);
+    log.error("getTutorsConnectUserSentiment failed:", error);
     throw error;
   }
   if (!data) return null;
@@ -449,7 +411,7 @@ export async function updateTutorsConnectUserSentiment(githubId: string, sentime
     .eq("github_id", githubId);
 
   if (error) {
-    console.error("updateTutorsConnectUserSentiment failed:", error);
+    log.error("updateTutorsConnectUserSentiment failed:", error);
     throw error;
   }
 }
@@ -462,14 +424,10 @@ export async function updateTutorsConnectUserSentiment(githubId: string, sentime
 export async function getTutorsConnectUserOnlineStatus(githubId: string): Promise<string | null> {
   if (PUBLIC_ANON_MODE === "TRUE" || !githubId) return null;
 
-  const { data, error } = await supabase
-    .from("tutors-connect-users")
-    .select("online_status")
-    .eq("github_id", githubId)
-    .maybeSingle();
+  const { data, error } = await supabase.from("tutors-connect-users").select("online_status").eq("github_id", githubId).maybeSingle();
 
   if (error) {
-    console.error("getTutorsConnectShare failed:", error);
+    log.error("getTutorsConnectShare failed:", error);
     throw error;
   }
   if (!data) return null;
@@ -493,9 +451,7 @@ export async function updateTutorsConnectUserOnlineStatus(githubId: string, onli
     .eq("github_id", githubId);
 
   if (error) {
-    console.error("updateTutorsConnectUserOnlineStatus failed:", error);
+    log.error("updateTutorsConnectUserOnlineStatus failed:", error);
     throw error;
   }
 }
-
-

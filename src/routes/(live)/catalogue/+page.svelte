@@ -2,9 +2,10 @@
   import { catalogueService } from "$lib/services/community";
   import Catalogue from "$lib/ui/time/Catalogue.svelte";
   import { onMount } from "svelte";
+  import type { PageData } from "./$types";
 
   interface Props {
-    data: any;
+    data: PageData;
   }
   let { data }: Props = $props();
   let totalModules = $state(0);

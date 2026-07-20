@@ -1,15 +1,18 @@
 <script lang="ts">
-    import { hideMainNavigator } from "$lib/runes.svelte";
+  import { hideMainNavigator } from "$lib/runes.svelte";
   import { currentCodeTheme } from "$lib/services/markdown";
+  import { mermaidify } from "$lib/services/markdown/services/mermaid-action";
+  import { copyCode } from "$lib/services/markdown/actions/copy-code-action";
   import type { Lo } from "@tutors/tutors-model-lib";
-    import { onDestroy, onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
+  import { sanitizeHtml } from "$lib/utils/sanitize";
 
   interface Props {
     lo: Lo;
   }
   let { lo }: Props = $props();
 
-    onMount(() => {
+  onMount(() => {
     hideMainNavigator.value = true;
   });
   onDestroy(() => {
@@ -17,9 +20,9 @@
   });
 </script>
 
-<article class="prose dark:prose-invert mr-4 max-w-none overflow-x-auto">
+<article class="prose dark:prose-invert mr-4 max-w-none overflow-x-auto" use:mermaidify use:copyCode>
   {#key currentCodeTheme.value}
-    {@html lo.contentHtml}
+    {@html sanitizeHtml(lo.contentHtml ?? "")}
   {/key}
 </article>
 

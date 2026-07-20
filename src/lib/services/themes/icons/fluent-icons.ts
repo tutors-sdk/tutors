@@ -28,6 +28,7 @@ export const FluentIconLib: IconLib = {
   paneltalk: { type: "fluent:presenter-24-filled", color: "primary" },
   panelnote: { type: "fluent:notepad-16-regular", color: "warning" },
   tutorial: { type: "fluent:arrow-clockwise-dashes-settings-24-regular", color: "primary" },
+  notebook: { type: "simple-icons:jupyter", color: "error" },
   podcast: { type: "fluent:mic-20-filled", color: "primary" },
 
   // pdf reader icons
@@ -79,7 +80,6 @@ export const FluentIconLib: IconLib = {
   overwhelmed: { type: "twemoji:exploding-head", color: "warning" },
   confused: { type: "twemoji:face-with-spiral-eyes", color: "secondary" },
   drained: { type: "twemoji:melting-face", color: "error" },
-
 
   default: { type: "fluent:re-order-dots-vertical-24-filled", color: "error" }
 };

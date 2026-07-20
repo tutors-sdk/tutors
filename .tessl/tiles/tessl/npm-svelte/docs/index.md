@@ -97,28 +97,27 @@ function afterUpdate(fn: () => void): void;
 Functions for mounting, hydrating, and unmounting Svelte components in the DOM.
 
 ```typescript { .api }
-function mount<Props extends Record<string, any>, Exports extends Record<string, any>>(
-  component: Component<Props, Exports, any>,
-  options: MountOptions<Props>
-): Exports;
+function mount<Props extends Record<string, any>, Exports extends Record<string, any>>(component: Component<Props, Exports, any>, options: MountOptions<Props>): Exports;
 
 function hydrate<Props extends Record<string, any>, Exports extends Record<string, any>>(
   component: Component<Props, Exports, any>,
-  options: {} extends Props ? {
-    target: Document | Element | ShadowRoot;
-    props?: Props;
-    events?: Record<string, (e: any) => any>;
-    context?: Map<any, any>;
-    intro?: boolean;
-    recover?: boolean;
-  } : {
-    target: Document | Element | ShadowRoot;
-    props: Props;
-    events?: Record<string, (e: any) => any>;
-    context?: Map<any, any>;
-    intro?: boolean;
-    recover?: boolean;
-  }
+  options: {} extends Props
+    ? {
+        target: Document | Element | ShadowRoot;
+        props?: Props;
+        events?: Record<string, (e: any) => any>;
+        context?: Map<any, any>;
+        intro?: boolean;
+        recover?: boolean;
+      }
+    : {
+        target: Document | Element | ShadowRoot;
+        props: Props;
+        events?: Record<string, (e: any) => any>;
+        context?: Map<any, any>;
+        intro?: boolean;
+        recover?: boolean;
+      }
 ): Exports;
 
 function unmount(component: Record<string, any>, options?: { outro?: boolean }): Promise<void>;
@@ -169,9 +168,7 @@ declare function $props(): any;
 
 declare function $bindable<T>(fallback?: T): T;
 
-declare function $inspect<T extends any[]>(
-  ...values: T
-): { with: (fn: (type: 'init' | 'update', ...values: T) => void) => void };
+declare function $inspect<T extends any[]>(...values: T): { with: (fn: (type: "init" | "update", ...values: T) => void) => void };
 
 declare function $host<El extends HTMLElement = HTMLElement>(): El;
 ```
@@ -183,10 +180,12 @@ declare function $host<El extends HTMLElement = HTMLElement>(): El;
 Functions for creating snippets programmatically from JavaScript functions.
 
 ```typescript { .api }
-function createRawSnippet<T extends unknown[]>(fn: (...args: T) => {
-  render: () => string;
-  setup?: (element: Element) => void | (() => void);
-}): Snippet<T>;
+function createRawSnippet<T extends unknown[]>(
+  fn: (...args: T) => {
+    render: () => string;
+    setup?: (element: Element) => void | (() => void);
+  }
+): Snippet<T>;
 ```
 
 ### Compiler API
@@ -274,12 +273,7 @@ function get<T>(store: Readable<T>): T;
 Utilities for event handling and DOM event management.
 
 ```typescript { .api }
-function on(
-  element: EventTarget, 
-  event: string, 
-  handler: EventListener, 
-  options?: AddEventListenerOptions | boolean
-): () => void;
+function on(element: EventTarget, event: string, handler: EventListener, options?: AddEventListenerOptions | boolean): () => void;
 ```
 
 ### Attachments
@@ -288,10 +282,7 @@ System for creating and managing element attachments as an alternative to action
 
 ```typescript { .api }
 function createAttachmentKey(): symbol;
-function fromAction<E extends EventTarget, T>(
-  action: Action<E, T>,
-  fn?: () => T
-): Attachment<E>;
+function fromAction<E extends EventTarget, T>(action: Action<E, T>, fn?: () => T): Attachment<E>;
 ```
 
 ### Server-Side Rendering
@@ -299,10 +290,7 @@ function fromAction<E extends EventTarget, T>(
 Functions for rendering Svelte components on the server.
 
 ```typescript { .api }
-function render<Comp extends Component<any>>(
-  component: Comp,
-  options?: RenderOptions<ComponentProps<Comp>>
-): RenderOutput;
+function render<Comp extends Component<any>>(component: Comp, options?: RenderOptions<ComponentProps<Comp>>): RenderOutput;
 ```
 
 [Server-Side Rendering](./ssr.md)
@@ -327,13 +315,9 @@ const devicePixelRatio: ReactiveValue<number | undefined>;
 Utilities for migrating from Svelte 4 and working with legacy components.
 
 ```typescript { .api }
-function createClassComponent<Props, Exports>(
-  component: Component<Props, Exports>
-): LegacyComponentConstructor<Props, Exports>;
+function createClassComponent<Props, Exports>(component: Component<Props, Exports>): LegacyComponentConstructor<Props, Exports>;
 
-function asClassComponent<Props, Exports>(
-  component: Component<Props, Exports>
-): Component<Props, Exports>;
+function asClassComponent<Props, Exports>(component: Component<Props, Exports>): Component<Props, Exports>;
 ```
 
 [Legacy Compatibility](./legacy.md)
@@ -373,7 +357,7 @@ interface Snippet<Parameters extends unknown[] = []> {
   (...args: Parameters): SnippetReturn;
 }
 
-type ComponentProps<Comp extends Component<any, any>> = 
+type ComponentProps<Comp extends Component<any, any>> =
   Comp extends Component<infer Props, any> ? Props : never;
 
 type NotFunction<T> = T extends Function ? never : T;

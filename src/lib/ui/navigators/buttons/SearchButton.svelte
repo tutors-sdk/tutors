@@ -1,10 +1,13 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
+  import { onMount, onDestroy } from "svelte";
   import { currentCourse } from "$lib/runes.svelte";
   import Icon from "$lib/ui/components/Icon.svelte";
+  import { t } from "$lib/services/i18n";
 
-  let isSearching = sessionStorage.getItem("isSearching") === "true";
+  let isSearching = $state(sessionStorage.getItem("isSearching") === "true");
   let previousPage = "";
+  let observer: MutationObserver | null = null;
 
   const updateSearchState = () => {
     const currentPath = window.location.pathname;
@@ -35,19 +38,25 @@
     }
   };
 
-  const observer = new MutationObserver(checkForNavigation);
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true
+  onMount(() => {
+    observer = new MutationObserver(checkForNavigation);
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+    window.addEventListener("popstate", updateSearchState);
+    updateSearchState();
   });
 
-  window.addEventListener("popstate", updateSearchState);
-  updateSearchState();
+  onDestroy(() => {
+    observer?.disconnect();
+    window.removeEventListener("popstate", updateSearchState);
+  });
 </script>
 
 <button onclick={toggleSearch}>
   <div class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary flex items-center gap-2 rounded-lg p-3 text-sm font-bold">
-    <Icon type="search" tip="Search this course" />
-    <span class="hidden lg:block"> {isSearching ? "Exit Search" : "Search"}</span>
+    <Icon type="search" tip={t("nav.search.tip")} />
+    <span class="hidden lg:block"> {isSearching ? t("nav.search.exit") : t("nav.search")}</span>
   </div>
 </button>

@@ -87,22 +87,22 @@ import { defineConfig } from "vite";
 
 // Object configuration
 export default defineConfig({
-  root: './src',
-  base: '/my-app/',
+  root: "./src",
+  base: "/my-app/",
   server: {
     port: 3000,
     open: true
   },
   build: {
-    outDir: '../dist',
+    outDir: "../dist",
     sourcemap: true
   }
 });
 
 // Function configuration
 export default defineConfig(({ command, mode }) => {
-  const isProduction = mode === 'production';
-  
+  const isProduction = mode === "production";
+
   return {
     define: {
       __DEV__: !isProduction
@@ -135,7 +135,7 @@ function loadConfigFromFile(
   configRoot: string = process.cwd(),
   logLevel?: LogLevel,
   customLogger?: Logger,
-  configLoader: 'bundle' | 'runner' | 'native' = 'bundle'
+  configLoader: "bundle" | "runner" | "native" = "bundle"
 ): Promise<{
   path: string;
   config: UserConfig;
@@ -155,13 +155,7 @@ Resolves the final configuration with all defaults and environment-specific valu
  * @param defaultMode - Default mode if not specified
  * @returns Promise resolving to resolved configuration
  */
-function resolveConfig(
-  inlineConfig: InlineConfig,
-  command: 'build' | 'serve',
-  defaultMode?: string,
-  defaultNodeEnv?: string,
-  isPreview?: boolean
-): Promise<ResolvedConfig>;
+function resolveConfig(inlineConfig: InlineConfig, command: "build" | "serve", defaultMode?: string, defaultNodeEnv?: string, isPreview?: boolean): Promise<ResolvedConfig>;
 
 interface ResolvedConfig {
   /** Resolved root directory */
@@ -171,7 +165,7 @@ interface ResolvedConfig {
   /** Resolved mode */
   mode: string;
   /** Command being executed */
-  command: 'build' | 'serve';
+  command: "build" | "serve";
   /** Whether in production mode */
   isProduction: boolean;
   /** Resolved plugins array */
@@ -209,9 +203,7 @@ Sorts user plugins according to their enforcement order.
  * @param plugins - Array of plugin options
  * @returns Tuple with sorted plugin arrays [pre, normal, post]
  */
-function sortUserPlugins(
-  plugins: (Plugin | Plugin[])[] | undefined
-): [Plugin[], Plugin[], Plugin[]];
+function sortUserPlugins(plugins: (Plugin | Plugin[])[] | undefined): [Plugin[], Plugin[], Plugin[]];
 ```
 
 ## Configuration Types
@@ -219,7 +211,7 @@ function sortUserPlugins(
 ```typescript { .api }
 interface ConfigEnv {
   /** Command being executed */
-  command: 'build' | 'serve';
+  command: "build" | "serve";
   /** Current mode */
   mode: string;
   /** Whether this is an SSR build */
@@ -233,7 +225,7 @@ interface InlineConfig extends UserConfig {
   configFile?: string | false;
 }
 
-type AppType = 'spa' | 'mpa' | 'custom';
+type AppType = "spa" | "mpa" | "custom";
 
 interface EnvironmentOptions {
   /** Resolve options for this environment */

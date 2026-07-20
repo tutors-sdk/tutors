@@ -32,8 +32,7 @@
 
   let adobeDCView: any = null;
   let mounted = false;
-  let viewerId = `adobe-pdf-viewer-${Math.random().toString(36).substr(2, 9)}`;
-  // let viewerId = "adobe-pdf-viewer";
+  let viewerId = $derived(`adobe-pdf-viewer-${lo.pdf.split('/').pop()?.replace(/[^a-z0-9]/gi, '')}`);
 
   function loadSDK() {
     if (!adobeLoaded.value) {
@@ -45,6 +44,8 @@
   }
 
   function displayPDF() {
+    if (!window.AdobeDC) return;
+
     adobeDCView = new window.AdobeDC.View({
       clientId: PUBLIC_PDF_KEY,
       divId: viewerId
@@ -63,8 +64,10 @@
     adobeDCView.previewFile(pdfContent, viewerConfig);
   }
 
+  // React to lo.pdf changes
   $effect(() => {
-    if (mounted && page.data?.lo?.pdf) {
+    const pdfUrl = lo.pdf;
+    if (mounted && window.AdobeDC && pdfUrl) {
       displayPDF();
     }
   });

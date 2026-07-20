@@ -4,6 +4,9 @@
   import { goto, afterNavigate } from "$app/navigation";
   import type { LiveLab } from "$lib/services/course";
   import { currentCodeTheme } from "$lib/services/markdown";
+  import { sanitizeHtml } from "$lib/utils/sanitize";
+  import { mermaidify } from "$lib/services/markdown/services/mermaid-action";
+  import { copyCode } from "$lib/services/markdown/actions/copy-code-action";
 
   interface Props {
     lab: LiveLab;
@@ -64,16 +67,16 @@
       >
         <nav class="nav-list">
           <ul>
-            {@html lab.navbarHtml}
+            {@html sanitizeHtml(lab.navbarHtml ?? "")}
           </ul>
         </nav>
       </div>
     </div>
     <div class="min-h-screen flex-1">
-      <article class="prose dark:prose-invert prose-pre:overflow-x-auto 2xl:prose-pre:max-w-[120ch] max-w-[65ch] sm:mx-1 md:mx-4 2xl:max-w-[120ch]">
+      <article class="prose dark:prose-invert prose-pre:overflow-x-auto 2xl:prose-pre:max-w-[120ch] max-w-[65ch] sm:mx-1 md:mx-4 2xl:max-w-[120ch]" use:mermaidify={lab.content} use:copyCode>
         {#key currentCodeTheme.value}
           <span id="lab-panel" class="mt-[-60px] block pt-[60px]">
-            {@html lab.content}
+            {@html sanitizeHtml(lab.content ?? "")}
           </span>
         {/key}
       </article>
@@ -82,7 +85,7 @@
 
   <div class="bg-primary-50 dark:bg-primary-900 fixed bottom-0 left-0 z-50 block w-full rounded-sm border lg:hidden">
     <nav class="flex flex-wrap justify-between p-2">
-      {@html lab.horizontalNavbarHtml}
+      {@html sanitizeHtml(lab.horizontalNavbarHtml ?? "")}
     </nav>
   </div>
 </div>

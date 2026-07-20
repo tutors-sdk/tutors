@@ -267,10 +267,7 @@ Animates SVG path strokes, creating a drawing effect. Only works with elements t
  * @param params - Draw animation parameters
  * @returns Transition configuration
  */
-function draw(
-  node: SVGElement & { getTotalLength(): number }, 
-  params?: DrawParams
-): TransitionConfig;
+function draw(node: SVGElement & { getTotalLength(): number }, params?: DrawParams): TransitionConfig;
 ```
 
 **Usage Examples:**
@@ -331,12 +328,11 @@ Creates a pair of transitions for elements that move between different states, w
  * @param params - Crossfade configuration and fallback
  * @returns Tuple of [send, receive] transition functions
  */
-function crossfade(params: CrossfadeParams & {
-  fallback?: (node: Element, params: CrossfadeParams, intro: boolean) => TransitionConfig;
-}): [
-  (node: Element, params: CrossfadeParams & { key: any }) => () => TransitionConfig,
-  (node: Element, params: CrossfadeParams & { key: any }) => () => TransitionConfig
-];
+function crossfade(
+  params: CrossfadeParams & {
+    fallback?: (node: Element, params: CrossfadeParams, intro: boolean) => TransitionConfig;
+  }
+): [(node: Element, params: CrossfadeParams & { key: any }) => () => TransitionConfig, (node: Element, params: CrossfadeParams & { key: any }) => () => TransitionConfig];
 ```
 
 **Usage Examples:**
@@ -408,7 +404,7 @@ interface SlideParams {
   delay?: number;
   duration?: number;
   easing?: (t: number) => number;
-  axis?: 'x' | 'y';
+  axis?: "x" | "y";
 }
 
 interface ScaleParams {

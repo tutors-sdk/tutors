@@ -51,7 +51,7 @@ export const localStorageProfile: ProfileStore = {
       if (course.properties.icon) {
         courseVisit.icon = course.properties.icon as unknown as IconType;
       } else {
-        courseVisit.image = course.img;
+        courseVisit.img = course.img;
       }
       this.courseVisits.unshift(courseVisit);
     }

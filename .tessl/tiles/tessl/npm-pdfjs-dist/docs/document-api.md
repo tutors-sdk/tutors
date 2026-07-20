@@ -86,14 +86,14 @@ const loadingTask = getDocument("https://example.com/document.pdf");
 const pdf = await loadingTask.promise;
 
 // Load from binary data
-const arrayBuffer = await fetch("document.pdf").then(r => r.arrayBuffer());
+const arrayBuffer = await fetch("document.pdf").then((r) => r.arrayBuffer());
 const loadingTask2 = getDocument(new Uint8Array(arrayBuffer));
 const pdf2 = await loadingTask2.promise;
 
 // Load with configuration
 const loadingTask3 = getDocument({
   url: "document.pdf",
-  httpHeaders: { "Authorization": "Bearer token" },
+  httpHeaders: { Authorization: "Bearer token" },
   cMapUrl: "./cmaps/",
   cMapPacked: true
 });
@@ -140,119 +140,119 @@ interface PDFDocumentProxy {
   loadingParams: DocumentInitParameters;
   /** Loading task that created this document */
   loadingTask: PDFDocumentLoadingTask;
-  
+
   /**
    * Get a specific page by number (1-indexed)
    * @param pageNumber - Page number (1 to numPages)
    * @returns Promise resolving to page proxy
    */
   getPage(pageNumber: number): Promise<PDFPageProxy>;
-  
+
   /**
    * Get page index from page reference
    * @param ref - Page reference object
    * @returns Promise resolving to 0-based page index
    */
   getPageIndex(ref: RefProxy): Promise<number>;
-  
+
   /**
    * Get named destinations in the document
    * @returns Promise resolving to destination mapping
    */
   getDestinations(): Promise<{ [name: string]: any }>;
-  
+
   /**
    * Get specific destination by ID
    * @param id - Destination identifier
    * @returns Promise resolving to destination array
    */
   getDestination(id: string): Promise<any[] | null>;
-  
+
   /**
    * Get document outline/bookmarks
    * @returns Promise resolving to outline tree
    */
   getOutline(): Promise<any[]>;
-  
+
   /**
    * Get document permissions
    * @returns Promise resolving to permission flags
    */
   getPermissions(): Promise<number[]>;
-  
+
   /**
    * Get document metadata
    * @returns Promise resolving to metadata object
    */
   getMetadata(): Promise<{ info: any; metadata: Metadata | null; contentDispositionFilename?: string }>;
-  
+
   /**
    * Get document data as Uint8Array
    * @returns Promise resolving to document bytes
    */
   getData(): Promise<Uint8Array>;
-  
+
   /**
    * Get download info for saving
    * @returns Promise resolving to download information
    */
   getDownloadInfo(): Promise<{ length: number }>;
-  
+
   /**
    * Get document statistics
    * @returns Promise resolving to stats object
    */
   getStats(): Promise<{ streamTypes: any; fontTypes: any }>;
-  
+
   /**
    * Get page labels/numbering information
    * @returns Promise resolving to label array
    */
   getPageLabels(): Promise<string[] | null>;
-  
+
   /**
    * Get page layout setting
    * @returns Promise resolving to layout name
    */
   getPageLayout(): Promise<string>;
-  
+
   /**
    * Get page mode setting
    * @returns Promise resolving to mode name
    */
   getPageMode(): Promise<string>;
-  
+
   /**
    * Get viewer preferences
    * @returns Promise resolving to preferences object
    */
   getViewerPreferences(): Promise<any>;
-  
+
   /**
    * Get document attachments
    * @returns Promise resolving to attachments object
    */
   getAttachments(): Promise<{ [filename: string]: any }>;
-  
+
   /**
    * Get document open action
    * @returns Promise resolving to open action
    */
   getOpenAction(): Promise<any>;
-  
+
   /**
    * Get optional content configuration
    * @param params - Configuration parameters
    * @returns Promise resolving to config object
    */
   getOptionalContentConfig(params?: { intent?: string }): Promise<OptionalContentConfig>;
-  
+
   /**
    * Get mark info for accessibility
    * @returns Promise resolving to mark info object
    */
   getMarkInfo(): Promise<any>;
-  
+
   /**
    * Get annotations filtered by type
    * @param types - Array of annotation types to include
@@ -260,48 +260,48 @@ interface PDFDocumentProxy {
    * @returns Promise resolving to annotations array
    */
   getAnnotationsByType(types: number[], pageIndexesToSkip?: number[]): Promise<any[]>;
-  
+
   /**
    * Get JavaScript actions in document
    * @returns Promise resolving to actions object
    */
   getJSActions(): Promise<{ [name: string]: any }>;
-  
+
   /**
    * Get field objects for forms
    * @returns Promise resolving to field mapping
    */
   getFieldObjects(): Promise<{ [id: string]: any }>;
-  
+
   /**
    * Check if document has JavaScript actions
    * @returns Promise resolving to boolean
    */
   hasJSActions(): Promise<boolean>;
-  
+
   /**
    * Get calculate order for form fields
    * @returns Promise resolving to field order array
    */
   getCalculationOrderIds(): Promise<string[]>;
-  
+
   /**
    * Clean up document resources
    * @param keepLoadedFonts - Keep loaded fonts in memory
    */
   cleanup(keepLoadedFonts?: boolean): void;
-  
+
   /**
    * Destroy document and release all resources
    */
   destroy(): void;
-  
+
   /**
    * Get structure tree for accessibility
    * @returns Promise resolving to structure tree
    */
   getStructTree(pageIndex: number): Promise<any>;
-  
+
   /**
    * Save document with annotations
    * @param annotationStorage - Annotation storage to include
@@ -310,7 +310,7 @@ interface PDFDocumentProxy {
    * @returns Promise resolving to saved document bytes
    */
   saveDocument(annotationStorage?: AnnotationStorage, filename?: string, options?: any): Promise<Uint8Array>;
-  
+
   /**
    * Get cached page number for reference
    * @param ref - Page reference object
@@ -368,14 +368,14 @@ class PDFDataRangeTransport {
     progressiveDone?: boolean,
     contentDispositionFilename?: string
   );
-  
+
   /**
    * Request a specific data range
    * @param begin - Start byte position
    * @param end - End byte position
    */
   requestDataRange(begin: number, end: number): void;
-  
+
   /**
    * Abort all pending requests
    * @param reason - Abort reason
@@ -427,7 +427,8 @@ class UnexpectedResponseException extends Error {
 ```
 
 Common error scenarios:
+
 - Invalid PDF files throw `InvalidPDFException`
-- Missing or network-inaccessible files throw `MissingPDFException`  
+- Missing or network-inaccessible files throw `MissingPDFException`
 - Password-protected documents throw `PasswordException`
 - HTTP errors throw `UnexpectedResponseException`

@@ -7,6 +7,7 @@
 
 import { supabase } from "$lib/services/community";
 import { tutorsId } from "$lib/runes.svelte";
+import log from "$lib/services/logger";
 
 import type { Course, IconType } from "@tutors/tutors-model-lib";
 import type { CourseVisit, ProfileStore } from "../types";
@@ -38,7 +39,7 @@ export const supabaseProfile: ProfileStore = {
     if (id) {
       const { error } = await supabase.from("tutors-connect-profiles").upsert({ tutorId: tutorsId.value?.login, profile: this.courseVisits });
       if (error) {
-        console.log(error);
+        log.error(error);
       }
     }
   },
@@ -67,7 +68,7 @@ export const supabaseProfile: ProfileStore = {
       if (course.properties.icon) {
         courseVisit.icon = course.properties.icon as unknown as IconType;
       } else {
-        courseVisit.image = course.img;
+        courseVisit.img = course.img;
       }
       this.courseVisits.unshift(courseVisit);
     }

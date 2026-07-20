@@ -105,7 +105,7 @@ const messages = linter.verify(code, config, {
 
 // Filter rules
 const messages = linter.verify(code, config, {
-  ruleFilter: ({ruleId}) => ruleId.startsWith("no-")
+  ruleFilter: ({ ruleId }) => ruleId.startsWith("no-")
 });
 ```
 
@@ -149,7 +149,7 @@ interface FixReport {
 const report = linter.verifyAndFix("var x=1", {
   rules: {
     "no-var": "error",
-    "semi": "error"
+    semi: "error"
   }
 });
 
@@ -275,18 +275,18 @@ defineParser(parserId: string, parser: Parser): void;
 
 ```javascript
 // Create linter with eslintrc support
-const linter = new Linter({configType: "eslintrc"});
+const linter = new Linter({ configType: "eslintrc" });
 
 // Define custom rule
 linter.defineRule("my-rule", {
   meta: {
     type: "problem",
-    docs: {description: "My custom rule"}
+    docs: { description: "My custom rule" }
   },
   create(context) {
     return {
       Identifier(node) {
-        context.report({node, message: "Custom rule triggered"});
+        context.report({ node, message: "Custom rule triggered" });
       }
     };
   }
@@ -294,7 +294,7 @@ linter.defineRule("my-rule", {
 
 // Use the custom rule
 const messages = linter.verify("var x = 1;", {
-  rules: {"my-rule": "error"}
+  rules: { "my-rule": "error" }
 });
 ```
 

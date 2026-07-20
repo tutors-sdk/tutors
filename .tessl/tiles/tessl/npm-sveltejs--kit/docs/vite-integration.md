@@ -13,15 +13,15 @@ Returns the complete set of Vite plugins needed for SvelteKit development and bu
  * Returns the SvelteKit Vite plugins
  * @returns Promise resolving to array of Vite plugins
  */
-function sveltekit(): Promise<import('vite').Plugin[]>;
+function sveltekit(): Promise<import("vite").Plugin[]>;
 ```
 
 **Usage Examples:**
 
 ```typescript
 // vite.config.js
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [sveltekit()]
@@ -32,41 +32,41 @@ export default defineConfig({
 
 ```typescript
 // vite.config.js
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [sveltekit()],
-  
+
   // Development server configuration
   server: {
     port: 3000,
     host: true, // Listen on all addresses
     fs: {
-      allow: ['..'] // Allow accessing parent directories
+      allow: [".."] // Allow accessing parent directories
     }
   },
-  
+
   // Build configuration
   build: {
-    target: 'esnext',
+    target: "esnext",
     sourcemap: true,
     rollupOptions: {
       output: {
         manualChunks: {
           // Create separate chunks for large dependencies
-          'vendor': ['lodash', 'date-fns'],
-          'ui-lib': ['@ui/components']
+          vendor: ["lodash", "date-fns"],
+          "ui-lib": ["@ui/components"]
         }
       }
     }
   },
-  
+
   // Dependency optimization
   optimizeDeps: {
-    include: ['some-cjs-package']
+    include: ["some-cjs-package"]
   },
-  
+
   // Environment variables
   define: {
     __BUILD_TIME__: JSON.stringify(new Date().toISOString())
@@ -82,7 +82,7 @@ SvelteKit provides several virtual modules through the Vite integration:
 
 ```typescript { .api }
 // $app/environment - Runtime environment information
-declare module '$app/environment' {
+declare module "$app/environment" {
   export const browser: boolean;
   export const dev: boolean;
   export const building: boolean;
@@ -90,14 +90,14 @@ declare module '$app/environment' {
 }
 
 // $app/forms - Form enhancement utilities
-declare module '$app/forms' {
+declare module "$app/forms" {
   export function enhance(form: HTMLFormElement, submit?: SubmitFunction): { destroy(): void };
   export function deserialize(result: string): ActionResult;
   export function applyAction(result: ActionResult): Promise<void>;
 }
 
 // $app/navigation - Client-side navigation
-declare module '$app/navigation' {
+declare module "$app/navigation" {
   export function goto(url: string | URL, opts?: GotoOptions): Promise<void>;
   export function invalidate(resource: string | URL | ((url: URL) => boolean)): Promise<void>;
   export function invalidateAll(): Promise<void>;
@@ -111,7 +111,7 @@ declare module '$app/navigation' {
 }
 
 // $app/paths - URL path utilities
-declare module '$app/paths' {
+declare module "$app/paths" {
   export const base: string;
   export const assets: string;
   export function resolve(...args: any[]): string;
@@ -119,14 +119,14 @@ declare module '$app/paths' {
 }
 
 // $app/state - Reactive app state (Svelte 5)
-declare module '$app/state' {
+declare module "$app/state" {
   export const page: Page;
   export const navigating: Navigation | null;
   export const updated: { current: boolean; check(): Promise<boolean> };
 }
 
 // $app/stores - Svelte stores (legacy)
-declare module '$app/stores' {
+declare module "$app/stores" {
   export const page: Readable<Page>;
   export const navigating: Readable<Navigation | null>;
   export const updated: Readable<boolean> & { check(): Promise<boolean> };
@@ -137,26 +137,26 @@ declare module '$app/stores' {
 
 ```typescript { .api }
 // $env/static/private - Static private environment variables (server-only)
-declare module '$env/static/private' {
+declare module "$env/static/private" {
   export const DATABASE_URL: string;
   export const SECRET_KEY: string;
   // ... other private env vars
 }
 
 // $env/static/public - Static public environment variables
-declare module '$env/static/public' {
+declare module "$env/static/public" {
   export const PUBLIC_API_URL: string;
   export const PUBLIC_GA_ID: string;
   // ... other public env vars
 }
 
 // $env/dynamic/private - Dynamic private environment variables (server-only)
-declare module '$env/dynamic/private' {
+declare module "$env/dynamic/private" {
   export const env: Record<string, string | undefined>;
 }
 
 // $env/dynamic/public - Dynamic public environment variables
-declare module '$env/dynamic/public' {
+declare module "$env/dynamic/public" {
   export const env: Record<string, string | undefined>;
 }
 ```
@@ -165,7 +165,7 @@ declare module '$env/dynamic/public' {
 
 ```typescript { .api }
 // $service-worker - Service worker utilities
-declare module '$service-worker' {
+declare module "$service-worker" {
   export const base: string;
   export const build: string[];
   export const files: string[];
@@ -180,31 +180,31 @@ declare module '$service-worker' {
 
 ```typescript
 // vite.config.js
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [
     sveltekit(),
-    
+
     // Custom plugin for processing files
     {
-      name: 'custom-processor',
+      name: "custom-processor",
       transform(code, id) {
-        if (id.endsWith('.special')) {
+        if (id.endsWith(".special")) {
           return `export default ${JSON.stringify(processSpecialFile(code))}`;
         }
       }
     },
-    
+
     // Plugin for development only
-    process.env.NODE_ENV === 'development' && {
-      name: 'dev-only-plugin',
+    process.env.NODE_ENV === "development" && {
+      name: "dev-only-plugin",
       configureServer(server) {
-        server.middlewares.use('/dev-api', (req, res, next) => {
+        server.middlewares.use("/dev-api", (req, res, next) => {
           // Development API endpoints
-          if (req.url === '/status') {
-            res.end(JSON.stringify({ status: 'ok' }));
+          if (req.url === "/status") {
+            res.end(JSON.stringify({ status: "ok" }));
           } else {
             next();
           }
@@ -219,24 +219,24 @@ export default defineConfig({
 
 ```typescript
 // vite.config.ts
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
-import type { UserConfig } from 'vite';
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
+import type { UserConfig } from "vite";
 
 const config: UserConfig = {
   plugins: [sveltekit()],
-  
+
   // TypeScript-specific options
   esbuild: {
-    target: 'esnext',
-    format: 'esm'
+    target: "esnext",
+    format: "esm"
   },
-  
+
   // Path aliases
   resolve: {
     alias: {
-      $components: path.resolve('./src/components'),
-      $utils: path.resolve('./src/utils')
+      $components: path.resolve("./src/components"),
+      $utils: path.resolve("./src/utils")
     }
   }
 };
@@ -253,16 +253,16 @@ export default defineConfig(config);
 if (import.meta.hot) {
   // Accept hot updates for this module
   import.meta.hot.accept();
-  
+
   // Dispose callback for cleanup
   import.meta.hot.dispose(() => {
-    console.log('Module disposed');
+    console.log("Module disposed");
   });
-  
+
   // Custom HMR handling
-  import.meta.hot.accept('./some-module.js', (newModule) => {
+  import.meta.hot.accept("./some-module.js", (newModule) => {
     // Handle updated module
-    console.log('Module updated', newModule);
+    console.log("Module updated", newModule);
   });
 }
 ```
@@ -271,25 +271,25 @@ if (import.meta.hot) {
 
 ```typescript
 // vite.config.js
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig(({ command, mode }) => {
-  const isProduction = mode === 'production';
-  const isDevelopment = command === 'serve';
-  
+  const isProduction = mode === "production";
+  const isDevelopment = command === "serve";
+
   return {
     plugins: [sveltekit()],
-    
+
     define: {
       __DEV__: !isProduction,
       __BUILD_DATE__: JSON.stringify(new Date().toISOString())
     },
-    
+
     build: {
       // Production-only build options
       ...(isProduction && {
-        minify: 'terser',
+        minify: "terser",
         terserOptions: {
           compress: {
             drop_console: true,
@@ -298,12 +298,12 @@ export default defineConfig(({ command, mode }) => {
         }
       })
     },
-    
+
     server: {
       // Development-only server options
       ...(isDevelopment && {
         proxy: {
-          '/api': 'http://localhost:8080'
+          "/api": "http://localhost:8080"
         }
       })
     }
@@ -315,12 +315,12 @@ export default defineConfig(({ command, mode }) => {
 
 ```typescript
 // vite.config.js
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [sveltekit()],
-  
+
   css: {
     preprocessorOptions: {
       scss: {
@@ -330,13 +330,10 @@ export default defineConfig({
         `
       }
     },
-    
+
     // PostCSS configuration
     postcss: {
-      plugins: [
-        require('autoprefixer'),
-        require('tailwindcss')
-      ]
+      plugins: [require("autoprefixer"), require("tailwindcss")]
     }
   }
 });
@@ -346,32 +343,32 @@ export default defineConfig({
 
 ```typescript
 // vite.config.js
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [sveltekit()],
-  
+
   // Asset handling
-  assetsInclude: ['**/*.gltf', '**/*.hdr'],
-  
+  assetsInclude: ["**/*.gltf", "**/*.hdr"],
+
   build: {
     assetsInlineLimit: 4096, // 4kb threshold for inlining
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
           // Custom asset file naming
-          const info = assetInfo.name.split('.');
+          const info = assetInfo.name.split(".");
           const ext = info[info.length - 1];
-          
+
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
             return `assets/images/[name]-[hash][extname]`;
           }
-          
+
           if (/woff2?|eot|ttf|otf/i.test(ext)) {
             return `assets/fonts/[name]-[hash][extname]`;
           }
-          
+
           return `assets/[name]-[hash][extname]`;
         }
       }
@@ -384,22 +381,22 @@ export default defineConfig({
 
 ```typescript
 // vite.config.js
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [sveltekit()],
-  
+
   worker: {
-    format: 'es'
+    format: "es"
   },
-  
+
   build: {
     rollupOptions: {
       output: {
         // Separate chunk for web workers
         manualChunks: {
-          worker: ['./src/lib/worker.js']
+          worker: ["./src/lib/worker.js"]
         }
       }
     }
@@ -416,32 +413,32 @@ export default defineConfig({
 
 ```typescript
 // vite.config.js
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [sveltekit()],
-  
+
   build: {
     rollupOptions: {
       output: {
         manualChunks: (id) => {
           // Vendor chunk for node_modules
-          if (id.includes('node_modules')) {
-            if (id.includes('svelte')) {
-              return 'svelte-vendor';
+          if (id.includes("node_modules")) {
+            if (id.includes("svelte")) {
+              return "svelte-vendor";
             }
-            return 'vendor';
+            return "vendor";
           }
-          
+
           // UI components chunk
-          if (id.includes('/src/components/ui/')) {
-            return 'ui-components';
+          if (id.includes("/src/components/ui/")) {
+            return "ui-components";
           }
-          
+
           // Utils chunk
-          if (id.includes('/src/lib/utils/')) {
-            return 'utils';
+          if (id.includes("/src/lib/utils/")) {
+            return "utils";
           }
         }
       }
@@ -454,20 +451,21 @@ export default defineConfig({
 
 ```typescript
 // vite.config.js
-import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vite';
-import { visualizer } from 'rollup-plugin-visualizer';
+import { sveltekit } from "@sveltejs/kit/vite";
+import { defineConfig } from "vite";
+import { visualizer } from "rollup-plugin-visualizer";
 
 export default defineConfig({
   plugins: [
     sveltekit(),
-    
+
     // Bundle analyzer
-    process.env.ANALYZE && visualizer({
-      filename: 'dist/stats.html',
-      open: true,
-      gzipSize: true
-    })
+    process.env.ANALYZE &&
+      visualizer({
+        filename: "dist/stats.html",
+        open: true,
+        gzipSize: true
+      })
   ].filter(Boolean)
 });
 
