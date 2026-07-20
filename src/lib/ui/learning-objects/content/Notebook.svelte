@@ -5,6 +5,7 @@
   import { currentCodeTheme } from "$lib/services/markdown";
   import { copyCode } from "$lib/services/markdown/actions/copy-code-action";
   import type { Lo } from "@tutors/tutors-model-lib";
+  import NotebookCodeEditor from "./NotebookCodeEditor.svelte";
 
   interface NotebookOutput {
     outputType: "stream" | "execute_result" | "display_data" | "error";
@@ -39,6 +40,21 @@
   let activeCellIndex = $state(0);
   let loaded = false;
   let revealedOutputs: Record<number, boolean> = $state({});
+  let revealedSolutions: Record<number, boolean> = $state({});
+
+  function isSolutionCell(cell: NotebookCell): boolean {
+    const tags = cell.metadata?.tags;
+    return Array.isArray(tags) && tags.includes("solution");
+  }
+
+  function isExerciseCell(cell: NotebookCell): boolean {
+    const tags = cell.metadata?.tags;
+    return Array.isArray(tags) && tags.includes("exercise");
+  }
+
+  function toggleSolution(index: number) {
+    revealedSolutions[index] = !revealedSolutions[index];
+  }
 
   const cells = $derived(lo.cells ?? []);
   const cellCount = $derived(cells.length);
@@ -139,7 +155,11 @@
                 >
                   <span class="flex items-center gap-2">
                     <span class="text-xs opacity-60 font-mono">
-                      {#if cell.cellType === "code"}
+                      {#if isSolutionCell(cell)}
+                        <span class="text-tertiary-500">&#128274;</span>
+                      {:else if isExerciseCell(cell)}
+                        <span class="text-primary-500">&#9998;</span>
+                      {:else if cell.cellType === "code"}
                         <span class="text-warning-500">&#9654;</span>
                       {:else if cell.cellType === "markdown"}
                         <span class="text-success-500">&#182;</span>
@@ -147,7 +167,7 @@
                         <span class="text-surface-500">&#9644;</span>
                       {/if}
                     </span>
-                    <span class="truncate">{getCellLabel(cell, i)}</span>
+                    <span class="truncate">{isSolutionCell(cell) ? "Solution" : getCellLabel(cell, i)}</span>
                   </span>
                 </button>
               </li>
@@ -173,7 +193,69 @@
               onclick={() => { activeCellIndex = i; }}
               onkeydown={() => {}}
             >
-              {#if cell.cellType === "code"}
+              {#if isSolutionCell(cell)}
+                <!-- Solution cell: two-stage reveal (code first, then output) -->
+                <div class="solution-cell">
+                  <button
+                    class="flex w-full items-center gap-2 px-4 py-3 text-sm font-medium transition-colors
+                      {revealedSolutions[i]
+                        ? 'bg-tertiary-100 dark:bg-tertiary-900 text-tertiary-700 dark:text-tertiary-300'
+                        : 'bg-tertiary-50 dark:bg-tertiary-950 text-tertiary-600 dark:text-tertiary-400 hover:bg-tertiary-100 dark:hover:bg-tertiary-900'}"
+                    onclick={(e) => { e.stopPropagation(); toggleSolution(i); }}
+                  >
+                    <span class="text-base">{revealedSolutions[i] ? "▾" : "▸"}</span>
+                    <span>{revealedSolutions[i] ? "Hide Solution" : "Show Solution"}</span>
+                  </button>
+                  {#if revealedSolutions[i]}
+                    <div class="flex">
+                      <div class="flex-shrink-0 w-14 pt-3 text-right pr-2 font-mono text-xs text-surface-400 select-none">
+                        [{cell.executionCount ?? " "}]:
+                      </div>
+                      <div class="flex-1 min-w-0 overflow-x-auto">
+                        <div class="notebook-code-source">
+                          {@html cell.sourceHtml ?? ""}
+                        </div>
+                        {#if cell.outputsHtml}
+                          <div class="flex items-center border-t border-surface-200 dark:border-surface-700 px-3 py-1.5">
+                            <button
+                              class="run-button flex items-center gap-1.5 rounded-md px-3 py-1 text-xs font-medium transition-colors
+                                {revealedOutputs[i]
+                                  ? 'bg-surface-200 dark:bg-surface-700 text-surface-600 dark:text-surface-300'
+                                  : 'bg-success-100 dark:bg-success-900 text-success-700 dark:text-success-300 hover:bg-success-200 dark:hover:bg-success-800'}"
+                              onclick={(e) => { e.stopPropagation(); toggleOutput(i); }}
+                            >
+                              <span class="text-sm">{revealedOutputs[i] ? "▾" : "▸"}</span>
+                              {revealedOutputs[i] ? "Hide Output" : "Run"}
+                            </button>
+                          </div>
+                          {#if revealedOutputs[i]}
+                            <div class="notebook-outputs border-t border-surface-200 dark:border-surface-700 bg-surface-50 dark:bg-surface-900 p-3">
+                              {@html cell.outputsHtml}
+                            </div>
+                          {/if}
+                        {/if}
+                      </div>
+                    </div>
+                  {/if}
+                </div>
+
+              {:else if isExerciseCell(cell)}
+                <!-- Exercise cell (editable) -->
+                <div class="exercise-cell">
+                  <div class="flex items-center gap-2 px-4 py-1.5 bg-primary-50 dark:bg-primary-950 border-b border-surface-200 dark:border-surface-700">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-primary-600 dark:text-primary-400">Exercise</span>
+                  </div>
+                  <div class="flex">
+                    <div class="flex-shrink-0 w-14 pt-3 text-right pr-2 font-mono text-xs text-surface-400 select-none">
+                      [{cell.executionCount ?? " "}]:
+                    </div>
+                    <div class="flex-1 min-w-0 overflow-x-auto">
+                      <NotebookCodeEditor source={cell.source} language={lo.kernelLanguage ?? "python"} />
+                    </div>
+                  </div>
+                </div>
+
+              {:else if cell.cellType === "code"}
                 <!-- Code cell -->
                 <div class="flex">
                   <div class="flex-shrink-0 w-14 pt-3 text-right pr-2 font-mono text-xs text-surface-400 select-none">
