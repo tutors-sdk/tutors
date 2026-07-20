@@ -3,6 +3,7 @@
   import { onDestroy, onMount } from "svelte";
   import { afterNavigate } from "$app/navigation";
   import { currentCodeTheme } from "$lib/services/markdown";
+  import { copyCode } from "$lib/services/markdown/actions/copy-code-action";
   import type { Lo } from "@tutors/tutors-model-lib";
 
   interface NotebookOutput {
@@ -157,7 +158,7 @@
     </div>
 
     <!-- Main content area -->
-    <div class="min-h-screen flex-1">
+    <div class="min-h-screen flex-1" use:copyCode>
       <div id="notebook-panel" class="mt-[-60px] block pt-[60px]">
         {#key currentCodeTheme.value}
           {#each cells as cell, i}

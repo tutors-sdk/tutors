@@ -8,6 +8,8 @@ const config: KnipConfig = {
   ignoreDependencies: [
     // adapter-auto dynamically requires this based on process.env at build time
     "@sveltejs/adapter-netlify",
+    // Used by @tutors/tutors-model-lib (external JSR package) for code block copy buttons
+    "shiki-transformer-copy-button",
   ],
   ignore: [
     // Referenced in app.html via %sveltekit.assets% — knip can't trace the placeholder
