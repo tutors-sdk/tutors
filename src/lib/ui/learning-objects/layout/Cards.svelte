@@ -1,13 +1,29 @@
 <script lang="ts">
   import { onMount, onDestroy } from "svelte";
 
-  import type { Lo } from "@tutors/tutors-model-lib";
+  import { type Lo, flattenLos } from "@tutors/tutors-model-lib";
 
   import Card from "$lib/ui/learning-objects/layout/Card.svelte";
   import { scale } from "svelte/transition";
   import { scaleTransition } from "$lib/ui/navigators/animations";
   import { currentCourse } from "$lib/runes.svelte";
   import { setShowHide } from "@tutors/tutors-model-lib";
+  import { progressService } from "$lib/services/connect";
+  import { trackableLoTypes } from "$lib/services/connect/types";
+
+  function getLoMetric(lo: Lo): string | undefined {
+    void progressService.version.value;
+    if (!currentCourse.value) return undefined;
+    if (!("los" in lo)) return undefined;
+    const children = flattenLos((lo as any).los as Lo[]);
+    const trackable = children.filter((c) => (trackableLoTypes as readonly string[]).includes(c.type));
+    if (trackable.length === 0) return undefined;
+    const visited = progressService.visitedLos.get(currentCourse.value.courseId);
+    if (!visited || visited.size === 0) return undefined;
+    const count = trackable.filter((c) => visited.has(c.route)).length;
+    if (count === 0) return undefined;
+    return String(Math.round((count / trackable.length) * 100));
+  }
 
   interface Props {
     los?: Lo[];
@@ -62,7 +78,8 @@
                   summary: lo.summary,
                   img: lo.img,
                   icon: lo.icon,
-                  video: lo.video
+                  video: lo.video,
+                  metric: getLoMetric(lo)
                 }}
               />
             </div>

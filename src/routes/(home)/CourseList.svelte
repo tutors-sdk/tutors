@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { tutorsConnectService, type CourseVisit } from "$lib/services/connect";
+  import { tutorsConnectService, progressService, type CourseVisit } from "$lib/services/connect";
   import { onMount } from "svelte";
   import CourseVisitCard from "./CourseVisitCard.svelte";
   import { t } from "$lib/services/i18n";
@@ -11,6 +11,7 @@
 
   function deleteCourse(id: string) {
     tutorsConnectService.deleteCourseVisit(id);
+    progressService.clearCourseProgress(id);
     courseVisits = courseVisits.filter((c) => c.id !== id);
   }
 
