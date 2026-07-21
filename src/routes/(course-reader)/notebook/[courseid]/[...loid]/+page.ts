@@ -4,8 +4,8 @@ import { courseService } from "$lib/services/course";
 export const ssr = false;
 
 export const load: PageLoad = async ({ url, params, fetch }) => {
-  const lo = await courseService.readLo(params.courseid, url.pathname, fetch);
+  const liveNotebook = await courseService.readNotebook(params.courseid, url.pathname, fetch);
   return {
-    notebook: lo
+    notebook: liveNotebook
   };
 };

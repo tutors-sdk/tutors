@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { PageData } from "./$types";
   import Context from "$lib/ui/learning-objects/structure/Context.svelte";
-  import Notebook from "$lib/ui/learning-objects/content/Notebook.svelte";
+  import Notebook from "$lib/ui/learning-objects/content/notebook/Notebook.svelte";
   import { hideMainNavigator } from "$lib/runes.svelte";
   import { onDestroy, onMount } from "svelte";
 
@@ -10,14 +10,14 @@
   }
   let { data }: Props = $props();
 
-  onMount(() => {
-    hideMainNavigator.value = true;
-  });
-  onDestroy(() => {
-    hideMainNavigator.value = false;
-  });
+  // onMount(() => {
+  //   hideMainNavigator.value = true;
+  // });
+  // onDestroy(() => {
+  //   hideMainNavigator.value = false;
+  // });
 </script>
 
-<Context lo={data.notebook}>
-  <Notebook lo={data.notebook} />
+<Context lo={data.notebook.notebook}>
+  <Notebook notebook={data.notebook} />
 </Context>
