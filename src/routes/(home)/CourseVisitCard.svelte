@@ -25,7 +25,7 @@
       {#if courseVisit.icon}
         <Iconify icon={courseVisit.icon.type} color={courseVisit.icon.color} height="96" />
       {:else}
-        <img class="h-20" src={courseVisit.img} alt={courseVisit.title} />
+        <img class="h-20" src={courseVisit.image} alt={courseVisit.title} />
       {/if}
     </section>
   </div>
