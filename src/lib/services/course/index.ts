@@ -5,3 +5,4 @@
 
 export { courseService } from "./services/course.svelte";
 export { LiveLab } from "./services/live-lab";
+export { LiveNotebook } from "./services/live-notebook";

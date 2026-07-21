@@ -1,4 +1,5 @@
 import type { Course, Lab, Lo, Note } from "@tutors/tutors-model-lib";
+import type { NotebookCell, NotebookLo } from "$lib/types/notebook-types";
 
 /**
  * Interface representing a live interactive lab session
@@ -32,6 +33,30 @@ export interface LabService {
 }
 
 /**
+ * Interface representing a live interactive notebook session
+ * Manages notebook content, navigation, and state
+ */
+export interface NotebookService {
+  course: Course;
+  notebook: NotebookLo;
+  url: string;
+  cells: NotebookCell[];
+  cellCount: number;
+  activeCellIndex: number;
+  navbarHtml: string;
+  horizontalNavbarHtml: string;
+
+  setActiveCell(index: number): void;
+  nextCell(): number;
+  prevCell(): number;
+  isSolutionCell(cell: NotebookCell): boolean;
+  isExerciseCell(cell: NotebookCell): boolean;
+  getCellLabel(cell: NotebookCell, index: number): string;
+  getCellTypeIcon(cellType: string): string;
+  refreshNav(): void;
+}
+
+/**
  * Service for managing course content and navigation
  */
 export interface CourseService {
@@ -41,6 +66,8 @@ export interface CourseService {
   labs: Map<string, LabService>;
   /** Cache of processed notes */
   notes: Map<string, Note>;
+  /** Cache of live notebook instances */
+  notebooks: Map<string, NotebookService>;
   /** Current course URL */
   courseUrl: any;
 
@@ -48,10 +75,8 @@ export interface CourseService {
   readCourse(courseId: string, fetchFunction: typeof fetch): Promise<Course>;
   readTopic(courseId: string, topicId: string, fetchFunction: typeof fetch): Promise<Lo>;
   readLab(courseId: string, labId: string, fetchFunction: typeof fetch): Promise<LabService>;
+  readNotebook(courseId: string, notebookId: string, fetchFunction: typeof fetch): Promise<NotebookService>;
   readWall(courseId: string, type: string, fetchFunction: typeof fetch): Promise<Lo[]>;
   readLo(courseId: string, loId: string, fetchFunction: typeof fetch): Promise<Lo>;
   refreshAllLabs(codeTheme: string): void;
-
-  /** Cache of processed notebooks */
-  notebooks: Map<string, Lo>;
 }
