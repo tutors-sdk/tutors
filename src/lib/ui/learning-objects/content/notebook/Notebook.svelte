@@ -66,6 +66,13 @@
     }
   }
 
+  function handleSidebarKeydown(e: KeyboardEvent) {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleSidebarClick(e as any);
+    }
+  }
+
   // Event delegation for mobile navigation
   function handleMobileNavClick(e: MouseEvent) {
     const target = e.target as HTMLElement;
@@ -81,6 +88,13 @@
         notebook.setActiveCell(nextIndex);
         scrollToCell(nextIndex);
       }
+    }
+  }
+
+  function handleMobileNavKeydown(e: KeyboardEvent) {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleMobileNavClick(e as any);
     }
   }
 
@@ -120,7 +134,8 @@
       <div
         class="card bg-surface-100 border-primary-100 dark:border-primary-500 dark:bg-surface-950 sticky top-14 m-2 h-auto max-h-[80vh] overflow-y-auto rounded-xl border-[1px] py-4"
       >
-        <nav class="nav-list" onclick={handleSidebarClick}>
+        <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+        <nav class="nav-list" onclick={handleSidebarClick} onkeydown={handleSidebarKeydown}>
           <ul>
             {@html sanitizeHtml(notebook.navbarHtml ?? "")}
           </ul>
@@ -129,7 +144,7 @@
     </div>
 
     <!-- Main content area -->
-    <div class="min-h-screen flex-1" use:copyCode>
+    <div class="min-h-screen flex-1 mr-4" use:copyCode>
       <div id="notebook-panel" class="mt-[-60px] block pt-[60px]">
         {#key currentCodeTheme.value}
           {#each notebook.cells as cell, i}
@@ -153,7 +168,8 @@
 
   <!-- Mobile bottom navigation -->
   <div class="bg-primary-50 dark:bg-primary-900 fixed bottom-0 left-0 z-50 block w-full rounded-sm border lg:hidden">
-    <nav class="flex items-center justify-between p-2" onclick={handleMobileNavClick}>
+    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+    <nav class="flex items-center justify-between p-2" onclick={handleMobileNavClick} onkeydown={handleMobileNavKeydown}>
       {@html sanitizeHtml(notebook.horizontalNavbarHtml ?? "")}
     </nav>
   </div>

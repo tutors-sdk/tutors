@@ -29,7 +29,7 @@
         [{cell.executionCount ?? " "}]:
       </div>
       <div class="flex-1 min-w-0 overflow-x-auto">
-        <div class="notebook-code-source">
+        <div class="notebook-code-source prose dark:prose-invert prose-pre:overflow-x-auto max-w-none">
           {@html cell.sourceHtml ?? ""}
         </div>
         {#if cell.outputsHtml}
