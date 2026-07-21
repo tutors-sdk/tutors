@@ -22,18 +22,18 @@
   const totalSlides = $derived(slideElements.length);
   const currentSlideHtml = $derived(slideElements[slideIndex] ?? "");
 
-  onMount(async () => {
+  onMount(() => {
     window.addEventListener("keydown", keypressInput);
-    await loadSlides();
+    loadSlides();
   });
 
   onDestroy(() => {
     if (browser) window.removeEventListener("keydown", keypressInput);
   });
 
-  async function loadSlides() {
+  function loadSlides() {
     try {
-      const { html, css } = await renderMarpSlides(buildMarpMarkdown(lo));
+      const { html, css } = renderMarpSlides(buildMarpMarkdown(lo));
       marpCss = css;
 
       const parser = new DOMParser();
