@@ -5,9 +5,11 @@
 
 import type { Lo, Course, Lab, Note } from "@tutors/tutors-model-lib";
 import { LiveLab } from "./live-lab";
+import { LiveNotebook } from "./live-notebook";
 import { markdownService } from "$lib/services/markdown";
 import { courseProtocol, currentCourse, currentLo, rune } from "$lib/runes.svelte";
-import type { CourseService, LabService } from "../types";
+import type { CourseService, LabService, NotebookService } from "../types";
+import type { NotebookLo } from "$lib/types/notebook-types";
 import { decorateCourseTree, determineCourseUrl } from "./lo-tree";
 import log from "$lib/services/logger";
 
@@ -18,8 +20,8 @@ export const courseService: CourseService = {
   labs: new Map<string, LiveLab>(),
   /** Cache of processed notes indexed by noteId */
   notes: new Map<string, Note>(),
-  /** Cache of processed notebooks indexed by notebookId */
-  notebooks: new Map<string, Lo>(),
+  /** Cache of live notebook instances indexed by notebookId */
+  notebooks: new Map<string, LiveNotebook>(),
   /** Current course URL */
   courseUrl: rune(""),
 
@@ -113,6 +115,28 @@ export const courseService: CourseService = {
   },
 
   /**
+   * Reads and caches a notebook, creating a LiveNotebook instance
+   * @param courseId - Course identifier
+   * @param notebookId - Notebook path/identifier
+   * @param fetchFunction - Fetch implementation for HTTP requests
+   * @returns Promise resolving to the LiveNotebook instance
+   */
+  async readNotebook(courseId: string, notebookId: string, fetchFunction: typeof fetch): Promise<NotebookService> {
+    const course = await this.readCourse(courseId, fetchFunction);
+
+    let liveNotebook = this.notebooks.get(notebookId);
+    if (!liveNotebook) {
+      const notebook = course.loIndex.get(notebookId) as NotebookLo;
+      markdownService.convertNotebookToHtml(course, notebook);
+      liveNotebook = new LiveNotebook(course, notebook, notebookId);
+      this.notebooks.set(notebookId, liveNotebook);
+    }
+
+    currentLo.value = liveNotebook.notebook;
+    return liveNotebook;
+  },
+
+  /**
    * Retrieves all learning objects of a specific type from a course
    * @param courseId - Course identifier
    * @param type - Type of learning objects to retrieve
@@ -147,7 +171,8 @@ export const courseService: CourseService = {
     if (lo?.type === "notebook") {
       if (!this.notebooks.has(loId)) {
         markdownService.convertNotebookToHtml(course, lo);
-        this.notebooks.set(loId, lo);
+        const liveNotebook = new LiveNotebook(course, lo as NotebookLo, loId);
+        this.notebooks.set(loId, liveNotebook);
       }
     }
     return lo ?? course;
@@ -165,8 +190,9 @@ export const courseService: CourseService = {
     for (const note of this.notes.values()) {
       markdownService.convertNoteToHtml(currentCourse.value!, note, true);
     }
-    for (const notebook of this.notebooks.values()) {
-      markdownService.convertNotebookToHtml(currentCourse.value!, notebook, true);
+    for (const liveNotebook of this.notebooks.values()) {
+      markdownService.convertNotebookToHtml(currentCourse.value!, liveNotebook.notebook, true);
+      liveNotebook.refreshNav();
     }
   }
 };

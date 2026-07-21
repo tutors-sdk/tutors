@@ -1,0 +1,78 @@
+/* Notebook Code Editor styles */
+.notebook-editor {
+  min-height: 4rem;
+}
+
+.notebook-editor .cm-editor {
+  border: none;
+  outline: none;
+}
+
+.notebook-editor .cm-focused {
+  outline: none;
+}
+
+/* Notebook output image styles */
+.notebook-outputs img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Notebook output pre/code styles */
+.notebook-outputs pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  margin: 0;
+  padding: 0.5rem;
+  font-size: 0.85rem;
+}
+
+/* Notebook error output styles */
+.notebook-output-error {
+  color: #e74c3c;
+  background: #fdf2f2;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-family: monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+}
+
+.dark .notebook-output-error {
+  background: #2d1b1b;
+  color: #ff6b6b;
+}
+
+/* Notebook stream output styles */
+.notebook-output-stream {
+  font-family: monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.notebook-output-stream-stderr {
+  color: #e74c3c;
+}
+
+/* Notebook HTML output styles */
+.notebook-output-html {
+  overflow-x: auto;
+}
+
+.notebook-output-html table {
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.notebook-output-html table th,
+.notebook-output-html table td {
+  border: 1px solid #ddd;
+  padding: 0.3rem 0.6rem;
+  text-align: left;
+}
+
+.dark .notebook-output-html table th,
+.dark .notebook-output-html table td {
+  border-color: #444;
+}

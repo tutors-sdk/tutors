@@ -10,14 +10,14 @@
   }
   let { data }: Props = $props();
 
-  onMount(() => {
-    hideMainNavigator.value = true;
-  });
-  onDestroy(() => {
-    hideMainNavigator.value = false;
-  });
+  // onMount(() => {
+  //   hideMainNavigator.value = true;
+  // });
+  // onDestroy(() => {
+  //   hideMainNavigator.value = false;
+  // });
 </script>
 
-<Context lo={data.notebook}>
-  <Notebook lo={data.notebook} />
+<Context lo={data.notebook.notebook}>
+  <Notebook notebook={data.notebook} />
 </Context>

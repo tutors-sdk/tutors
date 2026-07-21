@@ -2,6 +2,7 @@
   import { browser } from "$app/environment";
   import { onMount, onDestroy } from "svelte";
   import { currentCodeTheme } from "$lib/services/markdown";
+  import "./notebook-styles.css";
 
   interface Props {
     source: string;
@@ -178,16 +179,3 @@
     <pre class="text-sm font-mono whitespace-pre-wrap">{output}</pre>
   </div>
 {/if}
-
-<style>
-  .notebook-editor {
-    min-height: 4rem;
-  }
-  .notebook-editor :global(.cm-editor) {
-    border: none;
-    outline: none;
-  }
-  .notebook-editor :global(.cm-focused) {
-    outline: none;
-  }
-</style>
