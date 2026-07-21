@@ -27,6 +27,7 @@ export const HeroIconLib: IconLib = {
   paneltalk: { type: "heroicons-outline:presentation-chart-bar", color: "primary" },
   note: { type: "heroicons:document-text", color: "warning" },
   notebook: { type: "simple-icons:jupyter", color: "success" },
+  quiz: { type: "heroicons:question-mark-circle", color: "primary" },
   panelnote: { type: "heroicons:document-text", color: "warning" },
 
   // pdf reader icons

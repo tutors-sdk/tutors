@@ -83,6 +83,8 @@ export interface PresenceService {
    * @param courseId - Identifier of course to monitor
    */
   startPresenceListener(courseId: string): void;
+
+  onQuizStarted?: ((notification: any) => void) | undefined;
 }
 
 /**

@@ -72,6 +72,11 @@ export const FluentIconLib: IconLib = {
   theme: { type: "fluent:color-fill-24-regular", color: "success" },
   codeTheme: { type: "fluent:paint-brush-sparkle-20-regular", color: "primary" },
 
+  // quiz
+  quiz: { type: "fluent:quiz-new-24-filled", color: "primary" },
+  quizLive: { type: "fluent:live-24-filled", color: "error" },
+  quizResults: { type: "fluent:data-bar-vertical-24-filled", color: "success" },
+
   // sentiment
   neutral: { type: "twemoji:dizzy", color: "bg-base-content" },
   fine: { type: "twemoji:slightly-smiling-face", color: "bg-base-content" },

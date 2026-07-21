@@ -36,7 +36,8 @@
     const steps = filterByType(data.course.los, "step");
     const notes = filterByType(data.course.los, "note");
     const panelNotes = filterByType(data.course.los, "panelnote");
-    searchLos.push(...labs, ...steps, ...notes, ...panelNotes);
+    const quizzes = filterByType(data.course.los, "quiz");
+    searchLos.push(...labs, ...steps, ...notes, ...panelNotes, ...quizzes);
     searchInputElement.focus();
   });
 
