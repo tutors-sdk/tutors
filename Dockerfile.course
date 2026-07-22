@@ -1,0 +1,44 @@
+# Sample Dockerfile for serving a Tutors course as a static container.
+#
+# Usage:
+#   1. Build your course with tutors-json (produces a directory of JSON + assets)
+#   2. Build the container image:
+#      docker build -f Dockerfile.course --build-arg COURSE_DIR=./my-course-output -t my-course .
+#   3. Run:
+#      docker run -p 8080:8080 my-course
+#
+# The course will be available at http://localhost:8080/tutors.json
+
+FROM nginx:1.27-alpine
+
+ARG COURSE_DIR=./course
+
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY <<'NGINX' /etc/nginx/conf.d/course.conf
+server {
+    listen 8080;
+    server_name _;
+    root /usr/share/nginx/html;
+
+    add_header Access-Control-Allow-Origin *;
+    add_header Access-Control-Allow-Methods "GET, OPTIONS";
+    add_header Access-Control-Allow-Headers "Content-Type";
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~* \.(json|png|jpg|jpeg|gif|svg|pdf|zip)$ {
+        expires 1h;
+        add_header Cache-Control "public, immutable";
+        add_header Access-Control-Allow-Origin *;
+    }
+}
+NGINX
+
+COPY ${COURSE_DIR} /usr/share/nginx/html/
+
+EXPOSE 8080
+
+CMD ["nginx", "-g", "daemon off;"]

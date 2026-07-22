@@ -1,4 +1,5 @@
 import { courseProtocol } from "$lib/runes.svelte";
+import { courseBaseDomain } from "$lib/services/course/config";
 import {
   allVideoLos,
   convertLoToHtml,
@@ -155,28 +156,26 @@ function localizePath(lo: Lo) {
 
 /**
  * Determines the course URL and normalized course ID from various input formats.
- * Handles full URLs, Netlify domains, localhost/IP addresses, and plain course IDs.
+ * Handles full URLs, localhost/IP addresses, and plain course IDs.
  * @param input - Course identifier (URL, domain, or ID)
+ * @param baseDomain - Domain suffix for plain course IDs (default: from PUBLIC_COURSE_BASE_DOMAIN env var)
  * @returns Object with normalized courseId and courseUrl
  */
-export function determineCourseUrl(input: string): { courseId: string; courseUrl: string } {
+export function determineCourseUrl(input: string, baseDomain: string = courseBaseDomain): { courseId: string; courseUrl: string } {
   const urlPattern = /^(https?:\/\/)?([A-Za-z0-9.-]+\.[A-Za-z]{2,})(:[0-9]+)?(\/[A-Za-z0-9_.-]+)*(\/[A-Za-z0-9_.-]+\?[A-Za-z0-9_=-]+)?(#.*)?$/;
   const isValidURL = urlPattern.test(input);
 
   if (isValidURL) {
-    // Full URL provided (e.g., https://example.netlify.app)
     const courseUrl = input;
-    const courseId = input.includes(".netlify.app") ? input.replace(".netlify.app", "") : input;
+    const courseId = input.includes(baseDomain) ? input.replace(baseDomain, "") : input;
     return { courseId, courseUrl };
   }
 
-  // Course ID only - determine protocol and construct URL
   const isLocalhost = input.startsWith("192") || input.startsWith("localhost");
   if (isLocalhost) {
     courseProtocol.value = "http://";
     return { courseId: input, courseUrl: input };
   }
 
-  // Default to Netlify subdomain
-  return { courseId: input, courseUrl: `${input}.netlify.app` };
+  return { courseId: input, courseUrl: `${input}${baseDomain}` };
 }
