@@ -1,5 +1,101 @@
 # Tutors Changelog
 
+> Changelog format updated from v12.0.0 onward. For automated release notes generation,
+> see `guides/Release-Strategy.md`.
+
+## [Unreleased]
+
+## v15.2.0 (2026-07)
+
+### Features
+
+- Interactive notebook cells with solution hiding and Pyodide execution
+- Jupyter Notebook support as a first-class content type
+- Mermaid.js diagram rendering in course content
+- Marp slide presentation support with server-side rendering
+- Internationalization (i18n) support
+- Accessibility improvements across components
+
+### Fixes
+
+- Marp rendering hang resolved by moving to server-side API endpoint
+- Marp detection fix for production course JSON
+- Memory leak fixes and type safety improvements
+- XSS sanitization and security header hardening
+
+### Infrastructure
+
+- Comprehensive testing infrastructure with BDD/EARS and mutation testing (95 tests)
+- Architecture document added
+- Knip integration for unused code detection
+- Loglevel logging system replacing console usage
+- Security review tooling
+
+## v14.0.0 (2025-07)
+
+### Features
+
+- Embedded video player with poster image support
+- YouTube configuration for course content
+- Podcast support and podcast wall view
+- Tree view enhancements with unique nodes and expanded flags
+- Sidebar independent scrolling
+- HTTP protocol support for local hosting
+
+### Fixes
+
+- Breadcrumbs responsive behavior fixes
+- Search result display fixes
+- Lab navigation edge cases resolved
+
+### Infrastructure
+
+- Live view refactor
+- Enrollment system changes
+
+## v13.0.0 (2025-06)
+
+### Features
+
+- Refactor to use JSR tutors model package
+- Export types for external consumption
+- Additional asset types support
+
+### Breaking Changes
+
+- Remove base utils (consumers must migrate to new package)
+- Icon navigation bar types moved to lo-types
+
+## v12.0.0 (2024-01)
+
+### Features
+
+- SvelteKit 2 alignment
+- Skeleton UI v2 to v4 migration
+- Simulator implementation
+- Sentiment system with emojis and status fields
+- Auth rework: Auth0 to Supabase session management
+- Presence system improvements (PartyKit integration)
+- Student connect users
+- Favorites system
+- Animated footer redesign
+
+### Fixes
+
+- PDF rendering improvements
+- Dark mode prose improvements
+- Lab navigation fixes
+- Various accessibility and ARIA fixes
+- Search improvements (auto-focus, larger click targets)
+- Course visit card improvements
+
+### Infrastructure
+
+- Tailwind configuration updates
+- Package updates and version corrections (v12.2.0)
+
+---
+
 #### [2024-01-09]: Tutors 11.3.0
 
 - Refactor: Services layer restructuring (#920)
