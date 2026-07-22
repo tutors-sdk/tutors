@@ -65,7 +65,7 @@
         class="card bg-surface-100 border-primary-100 dark:border-primary-500 dark:bg-surface-950 sticky top-14 m-2 h-auto rounded-xl border-[1px]
           py-4"
       >
-        <nav class="nav-list">
+        <nav class="nav-list" aria-label="Lab steps">
           <ul>
             {@html sanitizeHtml(lab.navbarHtml ?? "")}
           </ul>
@@ -84,7 +84,7 @@
   </div>
 
   <div class="bg-primary-50 dark:bg-primary-900 fixed bottom-0 left-0 z-50 block w-full rounded-sm border lg:hidden">
-    <nav class="flex flex-wrap justify-between p-2">
+    <nav class="flex flex-wrap justify-between p-2" aria-label="Lab steps">
       {@html sanitizeHtml(lab.horizontalNavbarHtml ?? "")}
     </nav>
   </div>

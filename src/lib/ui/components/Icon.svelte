@@ -13,9 +13,10 @@
     height?: string;
     tip?: string;
     text?: string;
+    ariaLabel?: string;
   }
 
-  let { type = "", icon = "", color = "", link = "", target = "", width = "", height = "20", tip = $bindable(""), text = "" }: Props = $props();
+  let { type = "", icon = "", color = "", link = "", target = "", width = "", height = "20", tip = $bindable(""), text = "", ariaLabel = "" }: Props = $props();
 
   if (target === "_blank") {
     tip = `${tip} (opens in a new Window)`;
@@ -40,17 +41,16 @@
 {#snippet displayIcon()}
   {#if type}
     {#if link}
-      <a class="btn btn-sm" {target} href={link}>
-        <Icon icon={themeService.getIcon(type).type} color={legacyIconColour(themeService.getIcon(type).color)} {width} {height} />
+      <a class="btn btn-sm" {target} href={link} aria-label={ariaLabel || tip || undefined} rel={target === "_blank" ? "noopener noreferrer" : undefined}>
+        <Icon icon={themeService.getIcon(type).type} color={legacyIconColour(themeService.getIcon(type).color)} {width} {height} aria-hidden="true" />
         {text}
       </a>
     {:else}
       <Icon icon={themeService.getIcon(type).type} color={legacyIconColour(themeService.getIcon(type).color)} {width} {height} />
     {/if}
   {:else if link}
-    <a {target} href={link}>
-      {color}
-      <Icon {icon} {color} {width} {height} />
+    <a {target} href={link} aria-label={ariaLabel || tip || undefined} rel={target === "_blank" ? "noopener noreferrer" : undefined}>
+      <Icon {icon} {color} {width} {height} aria-hidden="true" />
     </a>
   {:else}
     <Icon {icon} {color} {width} {height} />

@@ -5,7 +5,7 @@
   let { widthPlease = "40px" }: Props = $props();
 </script>
 
-<svg width={widthPlease} viewBox="0 0 54.5 39.4" xml:space="preserve">
+<svg width={widthPlease} viewBox="0 0 54.5 39.4" xml:space="preserve" role="img" aria-label="Tutors">
   <defs />
   <g>
     <path fill="#37919b" d="M51.5,0H3C1.4,0,0,1.4,0,3v33.3c0,1.7,1.4,3,3,3h48.5c1.7,0,3-1.4,3-3V3C54.5,1.4,53.1,0,51.5,0z M50,34.8H4.5 V4.5H50V34.8z" />
