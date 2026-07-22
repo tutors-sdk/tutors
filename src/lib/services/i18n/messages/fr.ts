@@ -149,6 +149,7 @@ const fr: Record<string, string> = {
   "shortcuts.notebook": "Carnet",
   "shortcuts.showShortcuts": "Afficher les raccourcis clavier",
   "shortcuts.closeOverlay": "Fermer la boite de dialogue",
+  "shortcuts.focusMode": "Basculer le mode focus",
   "shortcuts.nextStep": "Etape suivante",
   "shortcuts.prevStep": "Etape precedente",
   "shortcuts.nextSlide": "Diapositive suivante",

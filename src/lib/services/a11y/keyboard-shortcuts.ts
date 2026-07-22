@@ -19,7 +19,8 @@ const SHORTCUT_CATEGORIES: ShortcutCategory[] = [
     context: "general",
     shortcuts: [
       { keys: ["?"], descriptionKey: "shortcuts.showShortcuts" },
-      { keys: ["Esc"], descriptionKey: "shortcuts.closeOverlay" }
+      { keys: ["Esc"], descriptionKey: "shortcuts.closeOverlay" },
+      { keys: ["F"], descriptionKey: "shortcuts.focusMode" }
     ]
   },
   {

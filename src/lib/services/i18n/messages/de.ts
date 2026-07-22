@@ -149,6 +149,7 @@ const de: Record<string, string> = {
   "shortcuts.notebook": "Notizbuch",
   "shortcuts.showShortcuts": "Tastenkuerzel anzeigen",
   "shortcuts.closeOverlay": "Dialog schliessen",
+  "shortcuts.focusMode": "Fokusmodus umschalten",
   "shortcuts.nextStep": "Naechster Schritt",
   "shortcuts.prevStep": "Vorheriger Schritt",
   "shortcuts.nextSlide": "Naechste Folie",

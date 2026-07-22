@@ -27,6 +27,10 @@
       e.preventDefault();
       shortcutsOverlayOpen.value = !shortcutsOverlayOpen.value;
     }
+    if (e.key === "f" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      e.preventDefault();
+      hideMainNavigator.value = !hideMainNavigator.value;
+    }
   }
 </script>
 

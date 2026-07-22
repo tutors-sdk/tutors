@@ -161,6 +161,7 @@ Tutors is an open source application - the data collection component [is here](h
   "shortcuts.notebook": "Notebook",
   "shortcuts.showShortcuts": "Show keyboard shortcuts",
   "shortcuts.closeOverlay": "Close dialog",
+  "shortcuts.focusMode": "Toggle focus mode",
   "shortcuts.nextStep": "Next step",
   "shortcuts.prevStep": "Previous step",
   "shortcuts.nextSlide": "Next slide",

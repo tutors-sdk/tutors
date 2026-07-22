@@ -149,6 +149,7 @@ const it: Record<string, string> = {
   "shortcuts.notebook": "Quaderno",
   "shortcuts.showShortcuts": "Mostra scorciatoie da tastiera",
   "shortcuts.closeOverlay": "Chiudi finestra di dialogo",
+  "shortcuts.focusMode": "Attiva/disattiva modalita focus",
   "shortcuts.nextStep": "Passo successivo",
   "shortcuts.prevStep": "Passo precedente",
   "shortcuts.nextSlide": "Diapositiva successiva",
