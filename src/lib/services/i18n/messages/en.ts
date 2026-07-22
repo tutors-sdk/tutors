@@ -39,6 +39,7 @@ const en = {
   "menu.dashboard": "Dashboard",
   "menu.githubProfile": "Github Profile",
   "menu.disconnect": "Disconnect",
+  "menu.profile": "Profile menu",
 
   // Home page
   "home.title": "Tutors:",

@@ -57,11 +57,15 @@
   {/if}
 {/snippet}
 
+{#snippet tooltipTrigger(attrs)}
+  <span {...attrs}>
+    {@render displayIcon()}
+  </span>
+{/snippet}
+
 {#if tip}
   <Tooltip>
-    <Tooltip.Trigger>
-      {@render displayIcon()}
-    </Tooltip.Trigger>
+    <Tooltip.Trigger element={tooltipTrigger} />
     <Portal>
       <Tooltip.Positioner>
         <Tooltip.Content class="card bg-surface-100-900 z-9999 max-w-md p-2 shadow-xl">

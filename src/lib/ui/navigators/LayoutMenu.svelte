@@ -169,4 +169,4 @@
   </div>
 {/snippet}
 
-<Menu {menuSelector} {menuContent} />
+<Menu {menuSelector} {menuContent} ariaLabel={t("nav.layout.tip")} />

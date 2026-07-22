@@ -27,4 +27,4 @@
   </div>
 {/snippet}
 
-<Sidebar position="right" {menuSelector} {sidebarContent} />
+<Sidebar position="right" {menuSelector} {sidebarContent} ariaLabel={t("nav.online.view") + " " + t("nav.online.online")} />

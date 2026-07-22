@@ -2,7 +2,7 @@
   import { Dialog, Portal } from "@skeletonlabs/skeleton-svelte";
   import Icon from "./Icon.svelte";
 
-  let { position = "left", menuSelector, sidebarContent } = $props();
+  let { position = "left", menuSelector, sidebarContent, ariaLabel = "" } = $props();
 
   let positionerJustify = $state(position === "right" ? "justify-end" : "justify-start");
   let contentTranslate = $state(
@@ -13,7 +13,7 @@
 </script>
 
 <Dialog>
-  <Dialog.Trigger>
+  <Dialog.Trigger aria-label={ariaLabel || undefined}>
     {@render menuSelector()}
   </Dialog.Trigger>
   <Portal>
