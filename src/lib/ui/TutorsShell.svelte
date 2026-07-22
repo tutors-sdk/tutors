@@ -2,7 +2,8 @@
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
   import { onMount, type Snippet } from "svelte";
   import MainNavigator from "./navigators/MainNavigator.svelte";
-  import { animationDelay, hideMainNavigator } from "$lib/runes.svelte";
+  import { animationDelay, hideMainNavigator, shortcutsOverlayOpen } from "$lib/runes.svelte";
+  import KeyboardShortcutsOverlay from "./components/KeyboardShortcutsOverlay.svelte";
   import { cubicIn, cubicOut } from "svelte/easing";
   import { fly, slide } from "svelte/transition";
   import { prefersReducedMotion } from "$lib/services/a11y/reduced-motion.svelte";
@@ -15,7 +16,21 @@
   onMount(() => {
     showFooter = true;
   });
+
+  function handleGlobalKeydown(e: KeyboardEvent) {
+    const target = e.target as HTMLElement;
+    const tag = target.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || target.isContentEditable) {
+      return;
+    }
+    if (e.key === "?" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      e.preventDefault();
+      shortcutsOverlayOpen.value = !shortcutsOverlayOpen.value;
+    }
+  }
 </script>
+
+<svelte:window onkeydown={handleGlobalKeydown} />
 
 <div class="flex h-screen flex-col">
   <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:p-4 focus:bg-primary-500 focus:text-white">
@@ -42,6 +57,8 @@
       <Footer />
     </footer>
   {/if}
+
+  <KeyboardShortcutsOverlay />
 </div>
 
 <style>

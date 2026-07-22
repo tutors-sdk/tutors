@@ -8,6 +8,7 @@
   import { copyCode } from "$lib/services/markdown/actions/copy-code-action";
   import NotebookCell from "./cells/NotebookCell.svelte";
   import "./notebook-styles.css";
+  import { shortcutsOverlayOpen } from "$lib/runes.svelte";
 
   interface Props {
     notebook: LiveNotebook;
@@ -39,6 +40,7 @@
   }
 
   function keypressInput(e: KeyboardEvent) {
+    if (shortcutsOverlayOpen.value) return;
     if (e.key === "ArrowDown" || e.key === "ArrowRight") {
       e.preventDefault();
       const nextIndex = notebook.nextCell();
