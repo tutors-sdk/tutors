@@ -66,4 +66,6 @@
   </ul>
 {/snippet}
 
-<Menu {menuSelector} {menuContent} />
+<div data-tour="profile">
+  <Menu {menuSelector} {menuContent} />
+</div>

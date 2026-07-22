@@ -5,7 +5,7 @@
 </script>
 
 {#if currentLo?.value}
-  <div class="flex flex-nowrap items-center">
+  <div data-tour="course-title" class="flex flex-nowrap items-center">
     <div class="mr-2 inline-flex">
       {#if currentLo?.value?.img}
         <Image lo={currentLo?.value} miniImage={true} />

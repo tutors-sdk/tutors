@@ -9,6 +9,7 @@
 
   import { Combobox, SegmentedControl, Portal } from "@skeletonlabs/skeleton-svelte";
   import { currentCourse } from "$lib/runes.svelte";
+  import { tourService } from "$lib/services/tour";
 
   interface ComboxData {
     label: string;
@@ -40,7 +41,7 @@
 </script>
 
 {#snippet menuSelector()}
-  <div class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary flex items-center rounded-lg p-4">
+  <div data-tour="layout" class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary flex items-center rounded-lg p-4">
     <Icon type="lightMode" tip={t("nav.layout.tip")} />
     <span class="ml-2 hidden text-sm font-bold md:block">{t("nav.layout")}</span>
   </div>
@@ -166,6 +167,19 @@
     <div class="mx-2 mb-2">
       <LanguageSwitcher />
     </div>
+    {#if currentCourse.value}
+      <hr />
+      <div class="mt-1 mb-1 ml-2">{t("tour.menuLabel")}</div>
+      <div class="mx-2 mb-2">
+        <button
+          class="preset-tonal w-full rounded-lg px-3 py-2 text-sm font-medium"
+          onclick={() => setTimeout(() => tourService.start(), 150)}
+        >
+          <Icon type="info" />
+          <span class="ml-1">{t("tour.startButton")}</span>
+        </button>
+      </div>
+    {/if}
   </div>
 {/snippet}
 

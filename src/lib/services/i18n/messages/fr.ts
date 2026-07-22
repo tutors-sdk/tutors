@@ -138,7 +138,30 @@ const fr: Record<string, string> = {
   "a11y.breadcrumbs": "Fil d'Ariane",
   "a11y.secondaryNavigation": "Navigation secondaire",
   "a11y.sidebar": "Barre laterale",
-  "a11y.footer": "Pied de page"
+  "a11y.footer": "Pied de page",
+
+  // Guided tour
+  "tour.ariaLabel": "Visite guidee",
+  "tour.skip": "Passer",
+  "tour.prev": "Retour",
+  "tour.next": "Suivant",
+  "tour.finish": "Terminer",
+  "tour.menuLabel": "Visite guidee",
+  "tour.startButton": "Commencer la visite",
+  "tour.courseTitle.title": "Titre du cours",
+  "tour.courseTitle.description": "Ceci affiche le nom et l'image du cours que vous consultez actuellement.",
+  "tour.search.title": "Recherche",
+  "tour.search.description": "Trouvez rapidement du contenu dans ce cours. Vous pouvez aussi appuyer sur Ctrl+K (ou Cmd+K sur Mac) a tout moment.",
+  "tour.layout.title": "Theme et mise en page",
+  "tour.layout.description": "Personnalisez l'apparence : basculez entre le mode clair et sombre, changez le style des cartes, le theme et la langue.",
+  "tour.profile.title": "Votre profil",
+  "tour.profile.description": "Connectez-vous avec GitHub pour suivre votre progression et activer les fonctionnalites de presence en direct.",
+  "tour.toc.title": "Arborescence du cours",
+  "tour.toc.description": "Ouvrez l'arborescence complete du cours pour voir tous les sujets et naviguer directement vers n'importe quelle section.",
+  "tour.calendar.title": "Calendrier",
+  "tour.calendar.description": "Consultez le calendrier du cours et voyez ce qui est prevu cette semaine.",
+  "tour.info.title": "Informations sur le cours",
+  "tour.info.description": "Lisez les informations detaillees sur ce cours, y compris sa description et ses objectifs."
 };
 
 export default fr;

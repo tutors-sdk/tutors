@@ -150,7 +150,30 @@ Tutors is an open source application - the data collection component [is here](h
   "a11y.breadcrumbs": "Breadcrumbs",
   "a11y.secondaryNavigation": "Secondary navigation",
   "a11y.sidebar": "Sidebar",
-  "a11y.footer": "Site footer"
+  "a11y.footer": "Site footer",
+
+  // Guided tour
+  "tour.ariaLabel": "Guided tour",
+  "tour.skip": "Skip",
+  "tour.prev": "Back",
+  "tour.next": "Next",
+  "tour.finish": "Done",
+  "tour.menuLabel": "Guided Tour",
+  "tour.startButton": "Start Tour",
+  "tour.courseTitle.title": "Course Title",
+  "tour.courseTitle.description": "This shows the name and image of the course you are currently viewing.",
+  "tour.search.title": "Search",
+  "tour.search.description": "Quickly find content in this course. You can also press Ctrl+K (or Cmd+K on Mac) anytime.",
+  "tour.layout.title": "Theme & Layout",
+  "tour.layout.description": "Customize the appearance: switch between light and dark mode, change the card style, theme, and language.",
+  "tour.profile.title": "Your Profile",
+  "tour.profile.description": "Sign in with GitHub to track your progress and enable live presence features.",
+  "tour.toc.title": "Course Tree",
+  "tour.toc.description": "Open the full course tree to see all topics and navigate directly to any section.",
+  "tour.calendar.title": "Calendar",
+  "tour.calendar.description": "View the course schedule and see what is coming up this week.",
+  "tour.info.title": "Course Info",
+  "tour.info.description": "Read detailed information about this course, including its description and objectives."
 } as const;
 
 export default en;
