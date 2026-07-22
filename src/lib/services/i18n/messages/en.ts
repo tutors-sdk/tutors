@@ -149,6 +149,7 @@ Tutors is an open source application - the data collection component [is here](h
   "a11y.mainNavigation": "Main navigation",
   "a11y.breadcrumbs": "Breadcrumbs",
   "a11y.secondaryNavigation": "Secondary navigation",
+  "a11y.backToTop": "Back to top",
   "a11y.sidebar": "Sidebar",
   "a11y.footer": "Site footer",
 
@@ -167,7 +168,8 @@ Tutors is an open source application - the data collection component [is here](h
   "shortcuts.nextSlide": "Next slide",
   "shortcuts.prevSlide": "Previous slide",
   "shortcuts.nextCell": "Next cell",
-  "shortcuts.prevCell": "Previous cell"
+  "shortcuts.prevCell": "Previous cell",
+  "shortcuts.backToTop": "Scroll to top"
 } as const;
 
 export default en;

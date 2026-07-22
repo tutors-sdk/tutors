@@ -137,6 +137,7 @@ const es: Record<string, string> = {
   "a11y.mainNavigation": "Navegacion principal",
   "a11y.breadcrumbs": "Migas de pan",
   "a11y.secondaryNavigation": "Navegacion secundaria",
+  "a11y.backToTop": "Volver arriba",
   "a11y.sidebar": "Barra lateral",
   "a11y.footer": "Pie de pagina",
 
@@ -155,7 +156,8 @@ const es: Record<string, string> = {
   "shortcuts.nextSlide": "Diapositiva siguiente",
   "shortcuts.prevSlide": "Diapositiva anterior",
   "shortcuts.nextCell": "Celda siguiente",
-  "shortcuts.prevCell": "Celda anterior"
+  "shortcuts.prevCell": "Celda anterior",
+  "shortcuts.backToTop": "Volver arriba"
 };
 
 export default es;

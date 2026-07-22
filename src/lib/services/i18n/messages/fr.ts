@@ -137,6 +137,7 @@ const fr: Record<string, string> = {
   "a11y.mainNavigation": "Navigation principale",
   "a11y.breadcrumbs": "Fil d'Ariane",
   "a11y.secondaryNavigation": "Navigation secondaire",
+  "a11y.backToTop": "Retour en haut",
   "a11y.sidebar": "Barre laterale",
   "a11y.footer": "Pied de page",
 
@@ -155,7 +156,8 @@ const fr: Record<string, string> = {
   "shortcuts.nextSlide": "Diapositive suivante",
   "shortcuts.prevSlide": "Diapositive precedente",
   "shortcuts.nextCell": "Cellule suivante",
-  "shortcuts.prevCell": "Cellule precedente"
+  "shortcuts.prevCell": "Cellule precedente",
+  "shortcuts.backToTop": "Retour en haut"
 };
 
 export default fr;
