@@ -138,7 +138,30 @@ const es: Record<string, string> = {
   "a11y.breadcrumbs": "Migas de pan",
   "a11y.secondaryNavigation": "Navegacion secundaria",
   "a11y.sidebar": "Barra lateral",
-  "a11y.footer": "Pie de pagina"
+  "a11y.footer": "Pie de pagina",
+
+  // Guided tour
+  "tour.ariaLabel": "Tour guiado",
+  "tour.skip": "Saltar",
+  "tour.prev": "Atras",
+  "tour.next": "Siguiente",
+  "tour.finish": "Listo",
+  "tour.menuLabel": "Tour guiado",
+  "tour.startButton": "Iniciar tour",
+  "tour.courseTitle.title": "Titulo del curso",
+  "tour.courseTitle.description": "Aqui se muestra el nombre y la imagen del curso que estas viendo actualmente.",
+  "tour.search.title": "Buscar",
+  "tour.search.description": "Encuentra rapidamente contenido en este curso. Tambien puedes presionar Ctrl+K (o Cmd+K en Mac) en cualquier momento.",
+  "tour.layout.title": "Tema y diseno",
+  "tour.layout.description": "Personaliza la apariencia: alterna entre modo claro y oscuro, cambia el estilo de las tarjetas, el tema y el idioma.",
+  "tour.profile.title": "Tu perfil",
+  "tour.profile.description": "Inicia sesion con GitHub para seguir tu progreso y activar las funciones de presencia en vivo.",
+  "tour.toc.title": "Arbol del curso",
+  "tour.toc.description": "Abre el arbol completo del curso para ver todos los temas y navegar directamente a cualquier seccion.",
+  "tour.calendar.title": "Calendario",
+  "tour.calendar.description": "Consulta el horario del curso y mira lo que viene esta semana.",
+  "tour.info.title": "Informacion del curso",
+  "tour.info.description": "Lee informacion detallada sobre este curso, incluyendo su descripcion y objetivos."
 };
 
 export default es;

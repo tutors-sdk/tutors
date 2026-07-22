@@ -21,4 +21,6 @@
   </article>
 {/snippet}
 
-<Sidebar position="right" {menuSelector} {sidebarContent} />
+<div data-tour="toc">
+  <Sidebar position="right" {menuSelector} {sidebarContent} />
+</div>

@@ -3,6 +3,7 @@
   import { onMount, type Snippet } from "svelte";
   import MainNavigator from "./navigators/MainNavigator.svelte";
   import { animationDelay, hideMainNavigator } from "$lib/runes.svelte";
+  import TourOverlay from "./components/TourOverlay.svelte";
   import { cubicIn, cubicOut } from "svelte/easing";
   import { fly, slide } from "svelte/transition";
   import { prefersReducedMotion } from "$lib/services/a11y/reduced-motion.svelte";
@@ -43,6 +44,8 @@
     </footer>
   {/if}
 </div>
+
+<TourOverlay />
 
 <style>
 </style>

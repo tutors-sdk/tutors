@@ -23,4 +23,6 @@
   </article>
 {/snippet}
 
-<Sidebar {menuSelector} {sidebarContent} />
+<div data-tour="info">
+  <Sidebar {menuSelector} {sidebarContent} />
+</div>

@@ -138,7 +138,30 @@ const de: Record<string, string> = {
   "a11y.breadcrumbs": "Brotkruemelnavigation",
   "a11y.secondaryNavigation": "Sekundaere Navigation",
   "a11y.sidebar": "Seitenleiste",
-  "a11y.footer": "Seitenfuss"
+  "a11y.footer": "Seitenfuss",
+
+  // Guided tour
+  "tour.ariaLabel": "Gefuehrte Tour",
+  "tour.skip": "Ueberspringen",
+  "tour.prev": "Zurueck",
+  "tour.next": "Weiter",
+  "tour.finish": "Fertig",
+  "tour.menuLabel": "Gefuehrte Tour",
+  "tour.startButton": "Tour starten",
+  "tour.courseTitle.title": "Kurstitel",
+  "tour.courseTitle.description": "Hier werden der Name und das Bild des aktuell angezeigten Kurses angezeigt.",
+  "tour.search.title": "Suche",
+  "tour.search.description": "Finden Sie schnell Inhalte in diesem Kurs. Sie koennen auch jederzeit Strg+K (oder Cmd+K auf dem Mac) druecken.",
+  "tour.layout.title": "Design und Layout",
+  "tour.layout.description": "Passen Sie das Erscheinungsbild an: Wechseln Sie zwischen hellem und dunklem Modus, aendern Sie den Kartenstil, das Design und die Sprache.",
+  "tour.profile.title": "Ihr Profil",
+  "tour.profile.description": "Melden Sie sich mit GitHub an, um Ihren Fortschritt zu verfolgen und Live-Praesenzfunktionen zu aktivieren.",
+  "tour.toc.title": "Kursbaum",
+  "tour.toc.description": "Oeffnen Sie den vollstaendigen Kursbaum, um alle Themen zu sehen und direkt zu einem Abschnitt zu navigieren.",
+  "tour.calendar.title": "Kalender",
+  "tour.calendar.description": "Sehen Sie den Kursplan und was diese Woche ansteht.",
+  "tour.info.title": "Kursinformationen",
+  "tour.info.description": "Lesen Sie detaillierte Informationen ueber diesen Kurs, einschliesslich seiner Beschreibung und Ziele."
 };
 
 export default de;
