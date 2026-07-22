@@ -1,16 +1,8 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import { onMount } from "svelte";
-  import type { ResultType } from "@tutors/tutors-model-lib";
-  import { isValid, searchHits, filterByType } from "@tutors/tutors-model-lib";
-  import type { Lo } from "@tutors/tutors-model-lib";
-  import type { Course } from "@tutors/tutors-model-lib";
-  import { convertMdToHtml } from "@tutors/tutors-model-lib";
+  import { searchOpen } from "$lib/runes.svelte";
   import type { PageData } from "./$types";
-  import { currentLo } from "$lib/runes.svelte";
-  import { currentCodeTheme } from "$lib/services/markdown";
-  import Icon from "$lib/ui/components/Icon.svelte";
-  import { t } from "$lib/services/i18n";
-  import { sanitizeHtml } from "$lib/utils/sanitize";
 
   interface Props {
     data: PageData;
@@ -18,94 +10,8 @@
 
   let { data }: Props = $props();
 
-  let course: Course;
-  let searchLos: Lo[] = [];
-  let searchTerm = $state("");
-  let searchResults: ResultType[] = $state([]);
-  let searchInputElement = $state();
-
-  onMount(async () => {
-    course = data.course;
-    currentLo.value = data.course;
-    const labs = filterByType(data.course.los, "lab");
-    labs.forEach((lab) => {
-      lab?.los?.forEach((step) => {
-        step.parentLo = lab;
-      });
-    });
-    const steps = filterByType(data.course.los, "step");
-    const notes = filterByType(data.course.los, "note");
-    const panelNotes = filterByType(data.course.los, "panelnote");
-    searchLos.push(...labs, ...steps, ...notes, ...panelNotes);
-    searchInputElement.focus();
+  onMount(() => {
+    searchOpen.value = true;
+    goto(`/course/${data.course.courseId}`, { replaceState: true });
   });
-
-  function transformResults(results: ResultType[]) {
-    results.forEach((result) => {
-      let resultStrs: string[] = [];
-      if (result.fenced) {
-        resultStrs.push(`~~~${result.language}`);
-      }
-      resultStrs.push(result.contentMd);
-      if (result.fenced) {
-        resultStrs.push("~~~");
-      }
-      result.html = convertMdToHtml(resultStrs.join("\n"), currentCodeTheme.value);
-      result.link = `/${result.link}`;
-    });
-  }
-
-  let lastSearchTerm = "";
-
-  function performSearch() {
-    if (isValid(searchTerm) && searchTerm !== lastSearchTerm) {
-      lastSearchTerm = searchTerm;
-      searchResults = searchHits(searchLos, searchTerm);
-      transformResults(searchResults);
-    }
-  }
-
-  // $effect(() => {
-  //   if (isValid(searchTerm) && searchTerm !== lastSearchTerm) {
-  //     lastSearchTerm = searchTerm;
-  //     searchResults = searchHits(searchLos, searchTerm);
-  //     transformResults(searchResults);
-  //   }
-  // });
 </script>
-
-<div class="card container mx-auto mb-4 p-4">
-  <label for="search" class="label"><span>{t("course.search.label")}</span></label>
-  <div class="flex items-center gap-2">
-    <button onclick={performSearch} class="hover:preset-tonal-secondary dark:hover:preset-tonal-tertiary flex items-center gap-2 rounded-lg p-3 text-sm font-bold">
-      <Icon type="search" tip={t("nav.search.tip")} />
-      <span class="hidden lg:block">{t("course.search.button")}</span>
-    </button>
-    <input
-      bind:value={searchTerm}
-      bind:this={searchInputElement}
-      type="text"
-      name="search"
-      id="search"
-      class="input flex-1 p-2"
-      placeholder="..."
-      onkeydown={(e) => e.key === "Enter" && performSearch()}
-    />
-  </div>
-  <div class="mt-2 flex flex-wrap justify-center">
-    {#each searchResults as result}
-      <div class="card m-1 w-full border p-4">
-        <div>
-          <div class="prose dark:prose-invert">
-            {@html sanitizeHtml(result.html ?? "")}
-          </div>
-          <div class="pt-4 text-right text-sm">
-            <a rel="noopener noreferrer" href={result.link} target="_blank" class="text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300">
-              {result.title}
-            </a>
-          </div>
-        </div>
-      </div>
-    {/each}
-  </div>
-</div>

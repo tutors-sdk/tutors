@@ -90,6 +90,7 @@
     "@tutors/tutors-time-lib": "npm:@jsr/tutors__tutors-time-lib@^5.0.4",
     "codemirror": "^6.0.2",
     "dompurify": "^3.4.12",
-    "mermaid": "^11.16.0"
+    "mermaid": "^11.16.0",
+    "minisearch": "^7.2.0"
   }
 }

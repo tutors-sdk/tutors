@@ -11,6 +11,7 @@ import { courseProtocol, currentCourse, currentLo, rune } from "$lib/runes.svelt
 import type { CourseService, LabService, NotebookService } from "../types";
 import type { NotebookLo } from "$lib/types/notebook-types";
 import { decorateCourseTree, determineCourseUrl } from "./lo-tree";
+import { searchService } from "$lib/services/search";
 import log from "$lib/services/logger";
 
 export const courseService: CourseService = {
@@ -47,6 +48,7 @@ export const courseService: CourseService = {
         course = data as Course;
         decorateCourseTree(course, courseId, courseUrl);
         this.courses.set(courseId, course);
+        searchService.buildIndex(course);
       } catch (error) {
         log.error(`Error fetching from URL: https://${courseUrl}/tutors.json`);
         log.error(error);
