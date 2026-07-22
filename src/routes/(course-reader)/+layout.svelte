@@ -1,6 +1,6 @@
 <script lang="ts">
   import CourseShell from "$lib/ui/TutorsShell.svelte";
-  import type { Snippet } from "svelte";
+  import { onDestroy, type Snippet } from "svelte";
   import { tutorsConnectService } from "$lib/services/connect";
   import { page } from "$app/state";
   import { currentCourse } from "$lib/runes.svelte";
@@ -10,6 +10,10 @@
   let { children }: Props = $props();
 
   tutorsConnectService.startTimer();
+
+  onDestroy(() => {
+    tutorsConnectService.stopTimer();
+  });
 
   let lastCourseId = "";
   $effect(() => {

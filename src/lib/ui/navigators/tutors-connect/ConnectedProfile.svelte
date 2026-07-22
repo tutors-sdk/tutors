@@ -52,6 +52,7 @@
           <MenuItem link="https://time.tutors.dev/{currentCourse.value?.courseId}" text={t("menu.educatorTime")} type="tutorsTime" targetStr="_blank" />
         {/if}
         <MenuItem link="/live/{currentCourse.value?.courseId}" text={t("menu.tutorsLive")} type="live" targetStr="_blank" />
+        <MenuItem link="/live/{currentCourse.value?.courseId}/dashboard" text={t("dashboard.title")} type="dashboard" targetStr="_blank" />
 
         <li class="option hover:preset-tonal p-0!">
           <OnlineButton />
