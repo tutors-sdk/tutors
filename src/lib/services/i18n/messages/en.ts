@@ -169,7 +169,8 @@ Tutors is an open source application - the data collection component [is here](h
   "shortcuts.prevSlide": "Previous slide",
   "shortcuts.nextCell": "Next cell",
   "shortcuts.prevCell": "Previous cell",
-  "shortcuts.backToTop": "Scroll to top"
+  "shortcuts.backToTop": "Scroll to top",
+  "shortcuts.toggleLecturer": "Toggle lecturer view (dev)"
 } as const;
 
 export default en;

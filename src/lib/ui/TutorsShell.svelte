@@ -2,7 +2,8 @@
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
   import { onMount, type Snippet } from "svelte";
   import MainNavigator from "./navigators/MainNavigator.svelte";
-  import { animationDelay, hideMainNavigator, shortcutsOverlayOpen } from "$lib/runes.svelte";
+  import { animationDelay, hideMainNavigator, shortcutsOverlayOpen, isLecturer, courseLecturers } from "$lib/runes.svelte";
+  import { dev } from "$app/environment";
   import KeyboardShortcutsOverlay from "./components/KeyboardShortcutsOverlay.svelte";
   import Icon from "./components/Icon.svelte";
   import { cubicIn, cubicOut } from "svelte/easing";
@@ -45,6 +46,10 @@
     if (e.key === "t" && !e.ctrlKey && !e.metaKey && !e.altKey) {
       e.preventDefault();
       scrollToTop();
+    }
+    if (dev && e.key === "l" && !e.ctrlKey && !e.metaKey && !e.altKey && courseLecturers.value.length > 0) {
+      e.preventDefault();
+      isLecturer.value = !isLecturer.value;
     }
   }
 </script>

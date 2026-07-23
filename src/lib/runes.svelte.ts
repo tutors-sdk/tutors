@@ -26,3 +26,7 @@ export const courseProtocol = rune("https://");
 
 export const hideMainNavigator = rune(false);
 export const shortcutsOverlayOpen = rune(false);
+
+export const isLecturer = rune(false);
+export const courseLecturers = rune<string[]>([]);
+export const contentLocks = rune<Map<string, boolean>>(new Map());
