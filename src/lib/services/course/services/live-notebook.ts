@@ -1,6 +1,5 @@
-import type { Course } from "@tutors/tutors-model-lib";
+import type { Course, Notebook, NotebookCell } from "@tutors/tutors-model-lib";
 import type { NotebookService } from "../types";
-import type { NotebookCell, NotebookLo } from "$lib/types/notebook-types";
 
 function escapeHtml(str: string): string {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -8,7 +7,7 @@ function escapeHtml(str: string): string {
 
 export class LiveNotebook implements NotebookService {
   course: Course;
-  notebook: NotebookLo;
+  notebook: Notebook;
   url: string;
   cells: NotebookCell[];
   cellCount: number;
@@ -16,7 +15,7 @@ export class LiveNotebook implements NotebookService {
   navbarHtml: string;
   horizontalNavbarHtml: string;
 
-  constructor(course: Course, notebook: NotebookLo, notebookId: string) {
+  constructor(course: Course, notebook: Notebook, notebookId: string) {
     this.course = course;
     this.notebook = notebook;
     this.url = notebookId;

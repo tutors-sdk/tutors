@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { NotebookCell as NotebookCellType } from "$lib/types/notebook-types";
+  import type { NotebookCell as NotebookCellType } from "@tutors/tutors-model-lib";
   import type { LiveNotebook } from "$lib/services/course";
   import NotebookSolutionCell from "./NotebookSolutionCell.svelte";
   import NotebookExerciseCell from "./NotebookExerciseCell.svelte";
