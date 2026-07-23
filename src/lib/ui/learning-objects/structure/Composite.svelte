@@ -5,6 +5,7 @@
   import Cards from "../layout/Cards.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
   import SecondaryNavigator from "$lib/ui/navigators/SecondaryNavigator.svelte";
+  import CourseProgressBar from "$lib/ui/components/CourseProgressBar.svelte";
 
   interface Props {
     composite: Composite;
@@ -12,9 +13,13 @@
   let { composite }: Props = $props();
 
   const sideWidth = $derived(themeService.cardStyle.value === "landscape" ? "w-[64rem]" : "w-[28rem]");
+  const isCourseHome = $derived(composite?.type === "course");
 </script>
 
 <SecondaryNavigator lo={composite} parentCourse={composite?.parentCourse?.properties?.parent} />
+{#if isCourseHome}
+  <CourseProgressBar />
+{/if}
 {#if composite?.units?.sides?.length > 0}
   <div class="m-4 block justify-center md:flex">
     <div class="w-full">

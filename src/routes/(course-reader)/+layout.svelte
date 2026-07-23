@@ -1,9 +1,9 @@
 <script lang="ts">
   import CourseShell from "$lib/ui/TutorsShell.svelte";
   import type { Snippet } from "svelte";
-  import { tutorsConnectService } from "$lib/services/connect";
+  import { tutorsConnectService, progressService } from "$lib/services/connect";
   import { page } from "$app/state";
-  import { currentCourse } from "$lib/runes.svelte";
+  import { currentCourse, currentLo } from "$lib/runes.svelte";
   import { afterNavigate } from "$app/navigation";
 
   type Props = { children: Snippet };
@@ -18,7 +18,12 @@
     if (currentCourse.value?.courseId !== lastCourseId) {
       tutorsConnectService.checkWhiteList();
       tutorsConnectService.courseVisit(currentCourse.value!);
+      progressService.loadCourseProgress(currentCourse.value!);
       lastCourseId = currentCourse.value?.courseId!;
+    }
+
+    if (currentCourse.value && currentLo.value) {
+      progressService.recordVisit(currentCourse.value.courseId, currentLo.value);
     }
   });
 

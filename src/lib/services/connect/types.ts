@@ -3,6 +3,14 @@ import type { Course, IconType } from "@tutors/tutors-model-lib";
 export const COURSE_SENTIMENT_IDS = ["neutral", "fine", "delighted", "confident", "overwhelmed", "confused", "drained"] as const;
 export type CourseSentimentId = (typeof COURSE_SENTIMENT_IDS)[number];
 
+export const trackableLoTypes = ["lab", "talk", "note", "paneltalk", "panelnote", "panelvideo", "book", "tutorial", "notebook"] as const;
+
+export type CourseProgress = {
+  visited: number;
+  total: number;
+  percentage: number;
+};
+
 /**
  * Record of a user's interaction with a course
  */

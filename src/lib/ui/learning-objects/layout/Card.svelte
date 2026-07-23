@@ -3,6 +3,7 @@
   import { LoRecord } from "$lib/services/community";
   import { cardStyles, type CardConfig, type CardDetails } from "$lib/services/themes";
   import Icon from "$lib/ui/components/Icon.svelte";
+  import ProgressRing from "$lib/ui/components/ProgressRing.svelte";
   import { currentCourse } from "$lib/runes.svelte";
   import { themeService } from "$lib/services/themes/services/themes.svelte";
   import StudentCard from "$lib/ui/time/StudentCard.svelte";
@@ -113,8 +114,13 @@
   <div class="card-header flex">
     {@render header(cardDetails)}
   </div>
-  <div class="card-body flex flex-1 items-center justify-center">
+  <div class="card-body relative flex flex-1 items-center justify-center">
     {@render figure(cardDetails)}
+    {#if cardDetails.metric}
+      <div class="absolute top-1/2 left-2 -translate-y-1/2">
+        <ProgressRing percentage={parseInt(cardDetails.metric)} size={28} strokeWidth={2.5} />
+      </div>
+    {/if}
   </div>
   <div class="card-footer">
     {@render content(cardDetails)}
@@ -129,8 +135,11 @@
     <div class="mt-8 flex flex-1 items-center justify-center">
       {@render figure(cardDetails)}
     </div>
-    <div class="mb-2">
+    <div class="mb-2 flex items-center gap-2">
       <Icon type={cardDetails.type} height={styles.iconHeight} />
+      {#if cardDetails.metric}
+        <ProgressRing percentage={parseInt(cardDetails.metric)} size={24} strokeWidth={2} />
+      {/if}
     </div>
   </div>
 {/snippet}
@@ -142,7 +151,11 @@
   <div class="relative w-2/3">
     {@render header(cardDetails)}
     {@render content(cardDetails)}
-    <div class="absolute right-2 bottom-1 text-xs text-gray-400">{cardDetails.metric}</div>
+    {#if cardDetails.metric}
+      <div class="absolute right-2 bottom-1">
+        <ProgressRing percentage={parseInt(cardDetails.metric)} size={28} strokeWidth={2.5} />
+      </div>
+    {/if}
   </div>
 {/snippet}
 
