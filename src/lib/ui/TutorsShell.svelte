@@ -2,7 +2,9 @@
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
   import { onMount, type Snippet } from "svelte";
   import MainNavigator from "./navigators/MainNavigator.svelte";
-  import { animationDelay, hideMainNavigator } from "$lib/runes.svelte";
+  import { animationDelay, hideMainNavigator, shortcutsOverlayOpen } from "$lib/runes.svelte";
+  import KeyboardShortcutsOverlay from "./components/KeyboardShortcutsOverlay.svelte";
+  import Icon from "./components/Icon.svelte";
   import { cubicIn, cubicOut } from "svelte/easing";
   import { fly, slide } from "svelte/transition";
   import { prefersReducedMotion } from "$lib/services/a11y/reduced-motion.svelte";
@@ -11,11 +13,43 @@
   type Props = { children: Snippet };
   let { children }: Props = $props();
   let showFooter = $state(false);
+  let showBackToTop = $state(false);
+  let mainEl: HTMLElement | undefined = $state();
 
   onMount(() => {
     showFooter = true;
   });
+
+  function onMainScroll() {
+    showBackToTop = (mainEl?.scrollTop ?? 0) > 400;
+  }
+
+  function scrollToTop() {
+    mainEl?.scrollTo({ top: 0, behavior: prefersReducedMotion.value ? "instant" : "smooth" });
+  }
+
+  function handleGlobalKeydown(e: KeyboardEvent) {
+    const target = e.target as HTMLElement;
+    const tag = target.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || target.isContentEditable) {
+      return;
+    }
+    if (e.key === "?" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      e.preventDefault();
+      shortcutsOverlayOpen.value = !shortcutsOverlayOpen.value;
+    }
+    if (e.key === "f" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      e.preventDefault();
+      hideMainNavigator.value = !hideMainNavigator.value;
+    }
+    if (e.key === "t" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+      e.preventDefault();
+      scrollToTop();
+    }
+  }
 </script>
+
+<svelte:window onkeydown={handleGlobalKeydown} />
 
 <div class="flex h-screen flex-col">
   <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:p-4 focus:bg-primary-500 focus:text-white">
@@ -33,7 +67,7 @@
     {/if}
   </header>
 
-  <main id="main-content" tabindex="-1" class="flex-1 overflow-y-auto outline-none">
+  <main id="main-content" tabindex="-1" class="flex-1 overflow-y-auto outline-none" bind:this={mainEl} onscroll={onMainScroll}>
     {@render children()}
   </main>
 
@@ -42,6 +76,20 @@
       <Footer />
     </footer>
   {/if}
+
+  {#if showBackToTop}
+    <button
+      class="fixed bottom-6 right-6 z-50 rounded-full bg-primary-500 p-3 text-white shadow-lg
+        transition-opacity hover:bg-primary-600
+        {prefersReducedMotion.value ? '' : 'animate-in fade-in duration-200'}"
+      onclick={scrollToTop}
+      aria-label={t("a11y.backToTop")}
+    >
+      <Icon icon="fluent:arrow-up-24-filled" color="white" height="24" />
+    </button>
+  {/if}
+
+  <KeyboardShortcutsOverlay />
 </div>
 
 <style>
