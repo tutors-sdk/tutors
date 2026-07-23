@@ -1,5 +1,6 @@
 import type { CatalogueEntry, CatalogueService } from "$lib/services/community";
 import { supabase } from "../utils/supabase-client";
+import { courseBaseDomain } from "$lib/services/course/config";
 import log from "$lib/services/logger";
 
 export const catalogueService: CatalogueService = {
@@ -55,7 +56,7 @@ export const catalogueService: CatalogueService = {
     const invalidIds: string[] = [];
     for (const course of catalogue) {
       try {
-        const url = `https://${course.course_id}.netlify.app/tutors.json`;
+        const url = `https://${course.course_id}${courseBaseDomain}/tutors.json`;
         const response = await fetchFunction(url, { method: "HEAD" });
         if (!response.ok) {
           invalidIds.push(course.course_id);
