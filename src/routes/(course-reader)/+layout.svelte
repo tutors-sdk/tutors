@@ -3,8 +3,10 @@
   import type { Snippet } from "svelte";
   import { tutorsConnectService } from "$lib/services/connect";
   import { page } from "$app/state";
-  import { currentCourse } from "$lib/runes.svelte";
+  import { currentCourse, tutorsId, isLecturer, courseLecturers, contentLocks } from "$lib/runes.svelte";
+  import { rbacService } from "$lib/services/rbac";
   import { afterNavigate } from "$app/navigation";
+  import { goto } from "$app/navigation";
 
   type Props = { children: Snippet };
   let { children }: Props = $props();
@@ -19,10 +21,22 @@
       tutorsConnectService.checkWhiteList();
       tutorsConnectService.courseVisit(currentCourse.value!);
       lastCourseId = currentCourse.value?.courseId!;
+
+      const login = tutorsId.value?.login?.toLowerCase();
+      isLecturer.value = !!login && courseLecturers.value.includes(login);
+      rbacService.loadLocks(currentCourse.value!.courseId);
     }
   });
 
-  afterNavigate(() => {
+  afterNavigate(({ to }) => {
+    if (!isLecturer.value && to?.url?.pathname && currentCourse.value) {
+      const lo = currentCourse.value.loIndex?.get(to.url.pathname);
+      if (lo && contentLocks.value.get(lo.route)) {
+        goto(`/course/${currentCourse.value.courseId}`);
+        return;
+      }
+    }
+
     const elemPage = document.querySelector("#content-panel");
     if (elemPage && window.innerWidth >= 600) {
       elemPage.scrollIntoView({ behavior: "smooth", block: "start" });

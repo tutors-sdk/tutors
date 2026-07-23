@@ -7,6 +7,7 @@
   import { sanitizeHtml } from "$lib/utils/sanitize";
   import { mermaidify } from "$lib/services/markdown/services/mermaid-action";
   import { copyCode } from "$lib/services/markdown/actions/copy-code-action";
+  import { shortcutsOverlayOpen } from "$lib/runes.svelte";
 
   interface Props {
     lab: LiveLab;
@@ -37,6 +38,7 @@
   });
 
   async function keypressInput(e: KeyboardEvent) {
+    if (shortcutsOverlayOpen.value) return;
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {
       e.preventDefault();
       let step = lab.nextStep();

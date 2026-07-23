@@ -11,8 +11,9 @@
   import ConnectedProfile from "./tutors-connect/ConnectedProfile.svelte";
   import TutorsTitle from "./titles/TutorsTitle.svelte";
   import CalendarButton from "./buttons/CalendarButton.svelte";
+  import LecturerButton from "./buttons/LecturerButton.svelte";
   import CourseSentimentButton from "./buttons/CourseSentimentButton.svelte";
-  import { currentCourse, tutorsId } from "$lib/runes.svelte";
+  import { currentCourse, tutorsId, isLecturer } from "$lib/runes.svelte";
   import { t } from "$lib/services/i18n";
 </script>
 
@@ -39,6 +40,11 @@
 
     <AppBar.Trail>
       <CalendarButton />
+      {#if isLecturer.value}
+        <span class="hidden md:block">
+          <LecturerButton />
+        </span>
+      {/if}
       {#if tutorsId.value?.login && tutorsId.value?.share === "true"}
         <div class="flex items-center">
           <CourseSentimentButton />

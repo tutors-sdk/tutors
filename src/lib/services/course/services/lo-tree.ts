@@ -1,4 +1,5 @@
-import { courseProtocol } from "$lib/runes.svelte";
+import { courseProtocol, courseLecturers, tutorsId, isLecturer } from "$lib/runes.svelte";
+import { dev } from "$app/environment";
 import {
   allVideoLos,
   convertLoToHtml,
@@ -54,6 +55,24 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   topicLos.forEach((lo) => course.topicIndex.set(lo.route, lo as Topic));
 
   loadPropertyFlags(course);
+
+  const ownerRaw = (course.properties?.owner as string) ?? "";
+  const lecturersRaw = (course.properties?.lecturers as string) ?? "";
+  const allLecturerLogins = [ownerRaw, ...lecturersRaw.split(",")]
+    .map((s) => s.trim().toLowerCase())
+    .filter(Boolean);
+
+  if (dev && allLecturerLogins.length === 0) {
+    const devLogin = "dev-lecturer";
+    allLecturerLogins.push(devLogin);
+    if (!tutorsId.value) {
+      tutorsId.value = { name: "Dev Lecturer", login: devLogin, email: "", image: "", share: "false", sentiment: "" };
+    }
+    isLecturer.value = true;
+  }
+
+  courseLecturers.value = allLecturerLogins;
+
   createCompanions(course);
   createWalls(course);
   // createToc(course);

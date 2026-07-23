@@ -416,6 +416,57 @@ export async function updateTutorsConnectUserSentiment(githubId: string, sentime
   }
 }
 
+export async function getContentLocks(courseId: string): Promise<{ course_id: string; lo_route: string; locked: boolean; locked_by: string; locked_at: string }[]> {
+  if (PUBLIC_ANON_MODE === "TRUE" || typeof supabase === "undefined") return [];
+  const id = courseId?.trim();
+  if (!id) return [];
+
+  const { data, error } = await supabase.from("tutors_content_locks").select("*").eq("course_id", id);
+
+  if (error) {
+    log.error("getContentLocks failed:", error);
+    return [];
+  }
+  return data ?? [];
+}
+
+export async function upsertContentLock(courseId: string, loRoute: string, locked: boolean, lockedBy: string): Promise<void> {
+  if (PUBLIC_ANON_MODE === "TRUE" || typeof supabase === "undefined") return;
+
+  const { error } = await supabase.from("tutors_content_locks").upsert(
+    {
+      course_id: courseId,
+      lo_route: loRoute,
+      locked,
+      locked_by: lockedBy,
+      locked_at: new Date().toISOString()
+    },
+    { onConflict: "course_id,lo_route" }
+  );
+
+  if (error) {
+    log.error("upsertContentLock failed:", error);
+  }
+}
+
+export async function getLearningRecordsByCourse(courseId: string) {
+  if (PUBLIC_ANON_MODE === "TRUE" || typeof supabase === "undefined") return [];
+  const id = courseId?.trim();
+  if (!id) return [];
+
+  const { data, error } = await supabase
+    .from("learning_records")
+    .select("student_id, lo_id, type, date_last_accessed, duration, count")
+    .eq("course_id", id)
+    .order("date_last_accessed", { ascending: false });
+
+  if (error) {
+    log.error("getLearningRecordsByCourse failed:", error);
+    return [];
+  }
+  return data ?? [];
+}
+
 /**
  * Fetches online_status for a row in tutors-connect-users (mirrors Share Presence / {@link updateTutorsConnectUserOnlineStatus}).
  * @param githubId - Student GitHub login (primary key for the row)

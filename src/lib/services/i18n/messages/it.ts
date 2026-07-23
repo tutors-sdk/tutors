@@ -137,8 +137,27 @@ const it: Record<string, string> = {
   "a11y.mainNavigation": "Navigazione principale",
   "a11y.breadcrumbs": "Breadcrumb",
   "a11y.secondaryNavigation": "Navigazione secondaria",
+  "a11y.backToTop": "Torna in alto",
   "a11y.sidebar": "Barra laterale",
-  "a11y.footer": "Pie di pagina"
+  "a11y.footer": "Pie di pagina",
+
+  // Keyboard shortcuts
+  "shortcuts.title": "Scorciatoie da tastiera",
+  "shortcuts.close": "Chiudi scorciatoie da tastiera",
+  "shortcuts.general": "Generale",
+  "shortcuts.lab": "Lab",
+  "shortcuts.talk": "Presentazione",
+  "shortcuts.notebook": "Quaderno",
+  "shortcuts.showShortcuts": "Mostra scorciatoie da tastiera",
+  "shortcuts.closeOverlay": "Chiudi finestra di dialogo",
+  "shortcuts.focusMode": "Attiva/disattiva modalita focus",
+  "shortcuts.nextStep": "Passo successivo",
+  "shortcuts.prevStep": "Passo precedente",
+  "shortcuts.nextSlide": "Diapositiva successiva",
+  "shortcuts.prevSlide": "Diapositiva precedente",
+  "shortcuts.nextCell": "Cella successiva",
+  "shortcuts.prevCell": "Cella precedente",
+  "shortcuts.backToTop": "Torna in alto"
 };
 
 export default it;

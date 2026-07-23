@@ -4,10 +4,12 @@
   import type { Lo } from "@tutors/tutors-model-lib";
 
   import Card from "$lib/ui/learning-objects/layout/Card.svelte";
+  import Icon from "$lib/ui/components/Icon.svelte";
   import { scale } from "svelte/transition";
   import { scaleTransition } from "$lib/ui/navigators/animations";
-  import { currentCourse } from "$lib/runes.svelte";
+  import { currentCourse, isLecturer, contentLocks, tutorsId } from "$lib/runes.svelte";
   import { setShowHide } from "@tutors/tutors-model-lib";
+  import { rbacService } from "$lib/services/rbac";
 
   interface Props {
     los?: Lo[];
@@ -53,10 +55,15 @@
       {#key refresh}
         {#each los as lo}
           {#if !lo.hide}
-            <div class="flex justify-center">
+            <div class="relative flex justify-center">
+              {#if contentLocks.value.get(lo.route) && !isLecturer.value}
+                <div class="absolute inset-0 z-10 flex items-center justify-center rounded-xl bg-surface-500/30 backdrop-blur-[2px]">
+                  <Icon type="lock" height="48" />
+                </div>
+              {/if}
               <Card
                 cardDetails={{
-                  route: lo.route,
+                  route: contentLocks.value.get(lo.route) && !isLecturer.value ? "#" : lo.route,
                   title: lo.title,
                   type: lo.type,
                   summary: lo.summary,
@@ -65,6 +72,14 @@
                   video: lo.video
                 }}
               />
+              {#if isLecturer.value}
+                <button
+                  class="absolute top-2 right-2 z-20 rounded-lg bg-surface-200 p-1 opacity-70 transition-opacity hover:opacity-100 dark:bg-surface-700"
+                  onclick={() => rbacService.toggleLock(currentCourse.value!.courseId, lo.route, tutorsId.value!.login)}
+                >
+                  <Icon type={contentLocks.value.get(lo.route) ? "lock" : "unlock"} height="20" />
+                </button>
+              {/if}
             </div>
           {/if}
         {/each}

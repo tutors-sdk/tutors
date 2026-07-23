@@ -6,6 +6,7 @@
   import { renderMarpSlides, buildMarpMarkdown } from "$lib/services/markdown/services/marp-renderer";
   import { mermaidify } from "$lib/services/markdown/services/mermaid-action";
   import Icon from "$lib/ui/components/Icon.svelte";
+  import { shortcutsOverlayOpen } from "$lib/runes.svelte";
 
   interface Props {
     lo: Talk;
@@ -55,6 +56,7 @@
   }
 
   function keypressInput(e: KeyboardEvent) {
+    if (shortcutsOverlayOpen.value) return;
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {
       e.preventDefault();
       nextSlide();

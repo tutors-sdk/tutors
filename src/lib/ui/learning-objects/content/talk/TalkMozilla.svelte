@@ -8,6 +8,7 @@
   import type { Talk } from "@tutors/tutors-model-lib";
   import Icon from "$lib/ui/components/Icon.svelte";
   import log from "$lib/services/logger";
+  import { shortcutsOverlayOpen } from "$lib/runes.svelte";
 
   pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
@@ -43,6 +44,7 @@
   }
 
   function keypressInput(e) {
+    if (shortcutsOverlayOpen.value) return;
     if (e.key === "ArrowRight") {
       e.preventDefault();
       onNextPage();

@@ -149,8 +149,28 @@ Tutors is an open source application - the data collection component [is here](h
   "a11y.mainNavigation": "Main navigation",
   "a11y.breadcrumbs": "Breadcrumbs",
   "a11y.secondaryNavigation": "Secondary navigation",
+  "a11y.backToTop": "Back to top",
   "a11y.sidebar": "Sidebar",
-  "a11y.footer": "Site footer"
+  "a11y.footer": "Site footer",
+
+  // Keyboard shortcuts
+  "shortcuts.title": "Keyboard Shortcuts",
+  "shortcuts.close": "Close keyboard shortcuts",
+  "shortcuts.general": "General",
+  "shortcuts.lab": "Lab",
+  "shortcuts.talk": "Presentation",
+  "shortcuts.notebook": "Notebook",
+  "shortcuts.showShortcuts": "Show keyboard shortcuts",
+  "shortcuts.closeOverlay": "Close dialog",
+  "shortcuts.focusMode": "Toggle focus mode",
+  "shortcuts.nextStep": "Next step",
+  "shortcuts.prevStep": "Previous step",
+  "shortcuts.nextSlide": "Next slide",
+  "shortcuts.prevSlide": "Previous slide",
+  "shortcuts.nextCell": "Next cell",
+  "shortcuts.prevCell": "Previous cell",
+  "shortcuts.backToTop": "Scroll to top",
+  "shortcuts.toggleLecturer": "Toggle lecturer view (dev)"
 } as const;
 
 export default en;
