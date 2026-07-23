@@ -3,6 +3,7 @@ import type { IconLib } from "../types";
 export const HalloweenIconLib: IconLib = {
   // Home type
   programHome: { type: "cib:nodemon", color: "warning" },
+  programme: { type: "mdi:school-outline", color: "warning" },
 
   // companion types
   slack: { type: "fluent:chat-24-filled", color: "warning" },

@@ -3,6 +3,7 @@ import type { IconLib } from "../types";
 export const EasterIcons: IconLib = {
   // Home Icon
   programHome: { type: "bxs:home-circle", color: "success" },
+  programme: { type: "bxs:graduation", color: "success" },
 
   // companion Icons
   slack: { type: "logos:slack-icon", color: "error" },

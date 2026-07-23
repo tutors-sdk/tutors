@@ -3,6 +3,7 @@ import type { IconLib } from "../types";
 export const ValentineIcons: IconLib = {
   // Home Icon
   programHome: { type: "fluent:home-heart-32-filled", color: "success" },
+  programme: { type: "fluent:hat-graduation-24-filled", color: "success" },
 
   // companion Icons
   slack: { type: "logos:slack-icon", color: "error" },

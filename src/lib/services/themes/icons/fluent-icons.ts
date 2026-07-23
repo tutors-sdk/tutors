@@ -3,6 +3,7 @@ import type { IconLib } from "../types";
 export const FluentIconLib: IconLib = {
   // Home Icon
   programHome: { type: "fluent:home-24-filled", color: "success" },
+  programme: { type: "fluent:hat-graduation-24-filled", color: "success" },
 
   // companion Icons
   slack: { type: "logos:slack-icon", color: "error" },

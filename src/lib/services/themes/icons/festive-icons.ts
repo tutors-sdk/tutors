@@ -3,6 +3,7 @@ import type { IconLib } from "../types";
 export const FestiveIcons: IconLib = {
   // Home Icon
   programHome: { type: "tabler:christmas-ball", color: "success" },
+  programme: { type: "tabler:school", color: "success" },
 
   // companion Icons
   slack: { type: "logos:slack-icon", color: "error" },

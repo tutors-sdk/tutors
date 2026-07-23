@@ -3,6 +3,7 @@ import type { IconLib } from "../types";
 export const HeroIconLib: IconLib = {
   // Home Icon
   programHome: { type: "heroicons-outline:home", color: "success" },
+  programme: { type: "heroicons-outline:academic-cap", color: "success" },
 
   // companion Icons
   slack: { type: "grommet-icons:slack", color: "error" },
