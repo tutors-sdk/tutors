@@ -9,7 +9,7 @@
 {#if currentCourse?.value?.courseCalendar?.currentWeek}
   {#snippet menuSelector()}
     <div class="hidden w-full lg:flex">
-      <button class="hover:preset-tonal mx-auto inline-flex rounded-lg p-2">
+      <div class="hover:preset-tonal mx-auto inline-flex rounded-lg p-2">
         <span class="my-auto pr-4 pl-2">
           <Icon tip={t("nav.calendar.tip")} type="calendar" />
         </span>
@@ -18,7 +18,7 @@
           <span class="pt-1 text-sm">{t("nav.calendar.label")}</span><br />
           <span class="pb-1 text-lg font-bold">{currentCourse.value?.courseCalendar?.currentWeek.title}</span>
         </span>
-      </button>
+      </div>
     </div>
   {/snippet}
 
@@ -26,5 +26,5 @@
     <Calendar calendar={currentCourse.value?.courseCalendar!} />
   {/snippet}
 
-  <Sidebar {menuSelector} {sidebarContent} />
+  <Sidebar {menuSelector} {sidebarContent} ariaLabel={t("nav.calendar.tip")} />
 {/if}

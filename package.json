@@ -18,6 +18,7 @@
     "test:integration": "vitest run tests/integration",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "test:a11y": "playwright test --config=playwright-a11y.config.ts",
     "test:watch": "vitest",
     "test:changed": "vitest related --run",
     "test:mutation": "stryker run",
@@ -28,6 +29,7 @@
   "devDependencies": {
     "@auth/core": "^0.41.2",
     "@auth/sveltekit": "1.11.2",
+    "@axe-core/playwright": "^4.12.1",
     "@eslint/compat": "^2.1.0",
     "@eslint/js": "^10.0.1",
     "@faker-js/faker": "^10.5.0",

@@ -23,4 +23,4 @@
   </article>
 {/snippet}
 
-<Sidebar {menuSelector} {sidebarContent} />
+<Sidebar {menuSelector} {sidebarContent} ariaLabel={t("nav.info.tip")} />

@@ -28,12 +28,12 @@
 <div class="mx-8 my-2 flex items-center overflow-hidden p-1">
   <ol class="flex w-full items-center gap-2 min-w-0">
     <li class="flex items-center">
-      <a class="inline-flex items-center hover:underline" href="/"> <TutorsIcon widthPlease="25px" /></a>
+      <a class="inline-flex items-center hover:underline" href="/" aria-label={t("nav.breadcrumbs.goHome")}> <TutorsIcon widthPlease="25px" /></a>
     </li>
     <li class="flex items-center opacity-50" aria-hidden="true">&rsaquo;</li>
     {#if parentCourse}
       <li class="flex items-center">
-        <a class="inline-flex items-center hover:underline" href="/{parentCourse}"> <Icon type="programHome" tip={`Go to Course Home`} /></a>
+        <a class="inline-flex items-center hover:underline" href="/{parentCourse}" aria-label={t("nav.breadcrumbs.goHome")}> <Icon type="programHome" tip={t("nav.breadcrumbs.goHome")} /></a>
       </li>
       <li class="flex items-center opacity-50" aria-hidden="true">&rsaquo;</li>
     {/if}

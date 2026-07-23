@@ -39,6 +39,7 @@ const de: Record<string, string> = {
   "menu.dashboard": "Dashboard",
   "menu.githubProfile": "Github-Profil",
   "menu.disconnect": "Trennen",
+  "menu.profile": "Profilmenü",
 
   // Home page
   "home.title": "Tutors:",

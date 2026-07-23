@@ -60,7 +60,7 @@
       <div class="flex items-center">
         <LayoutMenu />
       </div>
-      <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200"></span>
+      <span class="mx-2 h-10 w-[1px] bg-gray-400 dark:bg-gray-200" role="separator" aria-hidden="true"></span>
       {#if !currentCourse?.value?.isPrivate}
         <div class="relative">
           {#if !tutorsId.value?.login}

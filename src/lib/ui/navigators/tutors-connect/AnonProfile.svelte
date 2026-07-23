@@ -27,4 +27,4 @@
   </ul>
 {/snippet}
 
-<Menu {menuSelector} {menuContent} />
+<Menu {menuSelector} {menuContent} ariaLabel={t("menu.anonName")} />

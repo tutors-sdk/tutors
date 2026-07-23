@@ -7,6 +7,7 @@
   import { PDFWorker, getDocument } from "pdfjs-dist";
   import type { Talk } from "@tutors/tutors-model-lib";
   import Icon from "$lib/ui/components/Icon.svelte";
+  import { t } from "$lib/services/i18n";
   import log from "$lib/services/logger";
 
   pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
@@ -154,20 +155,20 @@
       {pageNum} of {pdfDoc?.numPages}
     </div>
     <div>
-      <button class="btn btn-sm" onclick={onPrevPage}>
-        <Icon type="left" tip={"Back 1 slide"} />
+      <button class="btn btn-sm" onclick={onPrevPage} aria-label={t("content.slideBack")}>
+        <Icon type="left" tip={t("content.slideBack")} />
       </button>
-      <button class="btn btn-sm" onclick={onNextPage}>
-        <Icon type="right" tip={"Forward 1 slide"} />
+      <button class="btn btn-sm" onclick={onNextPage} aria-label={t("content.slideForward")}>
+        <Icon type="right" tip={t("content.slideForward")} />
       </button>
-      <button class="btn btn-sm" onclick={clockwiseRotate}>
-        <Icon type="rotate" tip={"Rotate Slide 90 degrees"} />
+      <button class="btn btn-sm" onclick={clockwiseRotate} aria-label={t("content.slideRotate")}>
+        <Icon type="rotate" tip={t("content.slideRotate")} />
       </button>
-      <button class="btn btn-sm" onclick={downloadPdf}>
-        <Icon type="download" tip={"Download"} />
+      <button class="btn btn-sm" onclick={downloadPdf} aria-label={t("content.slideDownload")}>
+        <Icon type="download" tip={t("content.slideDownload")} />
       </button>
-      <button class="btn btn-sm">
-        <Icon link={lo.pdf} type="fullScreen" target="_blank" tip={"View Full Screen"} />
+      <button class="btn btn-sm" aria-label={t("content.slideFullScreen")}>
+        <Icon link={lo.pdf} type="fullScreen" target="_blank" tip={t("content.slideFullScreen")} />
       </button>
     </div>
   </div>

@@ -31,7 +31,7 @@
     <span class="mb-1 ml-2"> {@html sanitizeHtml(lo.title ?? "")} </span>
   </a>
   {#if lo.video && lo.type != "panelvideo"}
-    <a class="ml-auto flex pl-4" href={lo.video} onclick={(e) => handleClick(e, lo?.video)}>
+    <a class="ml-auto flex pl-4" href={lo.video} onclick={(e) => handleClick(e, lo?.video)} aria-label="Video: {lo.title}">
       <span class="shrink-0">
         <Icon type="video" width="20" height="20" />
       </span>
