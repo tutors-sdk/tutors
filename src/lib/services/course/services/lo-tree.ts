@@ -56,7 +56,19 @@ export function decorateCourseTree(course: Course, courseId: string = "", course
   loadPropertyFlags(course);
   createCompanions(course);
   createWalls(course);
-  // createToc(course);
+
+  const quizLos = filterByType(allLos, "quiz").filter((lo) => !lo.hide);
+  if (quizLos.length > 0) {
+    course.walls?.push(quizLos);
+    course.wallMap?.set("quiz", quizLos);
+    course.wallBar?.bar?.push({
+      link: `/wall/quiz/${course.courseId}`,
+      type: "quiz",
+      tip: "All quizzes in the course",
+      target: ""
+    });
+  }
+
   initCalendar(course);
 }
 
@@ -75,7 +87,7 @@ function decorateLoTree(course: Course, lo: Lo) {
   }
 
   // Convert contentMd to html
-  if (lo.type !== "lab" && lo.type !== "note" && lo.type !== "notebook") {
+  if (lo.type !== "lab" && lo.type !== "note" && lo.type !== "notebook" && lo.type !== "quiz") {
     // Convert labs, notes & notebooks on demand as can be time consuming to convert all at once
     convertLoToHtml(course, lo);
   }

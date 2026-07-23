@@ -113,6 +113,10 @@ markdownIt.renderer.rules.fence = (tokens, idx, options, env, self) => {
     const escaped = token.content.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     return `<div class="mermaid">${escaped}</div>`;
   }
+  if (token.info.trim() === "quiz") {
+    const escaped = token.content.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return `<div class="quiz-definition" data-quiz-source="${escaped}"></div>`;
+  }
   return defaultFence(tokens, idx, options, env, self);
 };
 

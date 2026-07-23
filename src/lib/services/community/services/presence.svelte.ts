@@ -32,6 +32,12 @@ export const presenceService: PresenceService = {
     } catch {
       return;
     }
+
+    if (nextCourseEvent.type === "quiz:live-started") {
+      this.onQuizStarted?.(nextCourseEvent);
+      return;
+    }
+
     // Only process events for current course and from other users
     if (nextCourseEvent.courseId === this.listeningTo) {
       // && nextCourseEvent.user.id !== tutorsId.value?.login) {

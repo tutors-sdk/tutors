@@ -5,6 +5,7 @@
   import { page } from "$app/state";
   import { currentCourse } from "$lib/runes.svelte";
   import { afterNavigate } from "$app/navigation";
+  import QuizNotificationListener from "$lib/ui/quiz/QuizNotificationListener.svelte";
 
   type Props = { children: Snippet };
   let { children }: Props = $props();
@@ -35,6 +36,7 @@
   <title>{currentCourse?.value?.title}</title>
 </svelte:head>
 
+<QuizNotificationListener />
 <CourseShell>
   <span id="content-panel" class="mt-[-60px] block pt-[60px]"></span>
 

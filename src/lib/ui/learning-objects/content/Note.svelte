@@ -3,6 +3,7 @@
   import { currentCodeTheme } from "$lib/services/markdown";
   import { mermaidify } from "$lib/services/markdown/services/mermaid-action";
   import { copyCode } from "$lib/services/markdown/actions/copy-code-action";
+  import { quizify } from "$lib/services/quiz/services/quiz-action";
   import type { Lo } from "@tutors/tutors-model-lib";
   import { onDestroy, onMount } from "svelte";
   import { sanitizeHtml } from "$lib/utils/sanitize";
@@ -20,7 +21,7 @@
   });
 </script>
 
-<article class="prose dark:prose-invert mr-4 max-w-none overflow-x-auto" use:mermaidify use:copyCode>
+<article class="prose dark:prose-invert mr-4 max-w-none overflow-x-auto" use:mermaidify use:copyCode use:quizify>
   {#key currentCodeTheme.value}
     {@html sanitizeHtml(lo.contentHtml ?? "")}
   {/key}
