@@ -163,9 +163,7 @@
     </div>
     <hr />
     <div class="mt-1 mb-1 ml-2">{t("nav.layout.language")}</div>
-    <div class="mx-2 mb-2">
-      <LanguageSwitcher />
-    </div>
+    <LanguageSwitcher />
   </div>
 {/snippet}
 
