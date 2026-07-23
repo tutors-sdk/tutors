@@ -1,5 +1,4 @@
-import type { Course, Lab, Lo, Note } from "@tutors/tutors-model-lib";
-import type { NotebookCell, NotebookLo } from "$lib/types/notebook-types";
+import type { Course, Lab, Lo, Note, Notebook, NotebookCell } from "@tutors/tutors-model-lib";
 
 /**
  * Interface representing a live interactive lab session
@@ -38,7 +37,7 @@ export interface LabService {
  */
 export interface NotebookService {
   course: Course;
-  notebook: NotebookLo;
+  notebook: Notebook;
   url: string;
   cells: NotebookCell[];
   cellCount: number;

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { NotebookCell } from "$lib/types/notebook-types";
+  import type { NotebookCell } from "@tutors/tutors-model-lib";
   import NotebookCodeEditor from "../NotebookCodeEditor.svelte";
 
   interface Props {

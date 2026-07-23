@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { NotebookCell } from "$lib/types/notebook-types";
+  import type { NotebookCell } from "@tutors/tutors-model-lib";
 
   interface Props {
     cell: NotebookCell;

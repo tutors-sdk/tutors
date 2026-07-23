@@ -3,13 +3,12 @@
  * Handles course loading, caching, and content transformation.
  */
 
-import type { Lo, Course, Lab, Note } from "@tutors/tutors-model-lib";
+import type { Lo, Course, Lab, Note, Notebook } from "@tutors/tutors-model-lib";
 import { LiveLab } from "./live-lab";
 import { LiveNotebook } from "./live-notebook";
 import { markdownService } from "$lib/services/markdown";
 import { courseProtocol, currentCourse, currentLo, rune } from "$lib/runes.svelte";
 import type { CourseService, LabService, NotebookService } from "../types";
-import type { NotebookLo } from "$lib/types/notebook-types";
 import { decorateCourseTree, determineCourseUrl } from "./lo-tree";
 import log from "$lib/services/logger";
 
@@ -126,7 +125,7 @@ export const courseService: CourseService = {
 
     let liveNotebook = this.notebooks.get(notebookId);
     if (!liveNotebook) {
-      const notebook = course.loIndex.get(notebookId) as NotebookLo;
+      const notebook = course.loIndex.get(notebookId) as Notebook;
       markdownService.convertNotebookToHtml(course, notebook);
       liveNotebook = new LiveNotebook(course, notebook, notebookId);
       this.notebooks.set(notebookId, liveNotebook);
@@ -171,7 +170,7 @@ export const courseService: CourseService = {
     if (lo?.type === "notebook") {
       if (!this.notebooks.has(loId)) {
         markdownService.convertNotebookToHtml(course, lo);
-        const liveNotebook = new LiveNotebook(course, lo as NotebookLo, loId);
+        const liveNotebook = new LiveNotebook(course, lo as Notebook, loId);
         this.notebooks.set(loId, liveNotebook);
       }
     }
