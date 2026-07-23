@@ -60,6 +60,21 @@
     },
     "tessl/npm-vite": {
       "version": "7.1.0"
+    },
+    "tessl/tutors-architecture": {
+      "version": "15.2.0"
+    },
+    "tessl/tutors-content-types": {
+      "version": "15.2.0"
+    },
+    "tessl/tutors-services": {
+      "version": "15.2.0"
+    },
+    "tessl/tutors-routing": {
+      "version": "15.2.0"
+    },
+    "tessl/tutors-ui": {
+      "version": "15.2.0"
     }
   }
 }
