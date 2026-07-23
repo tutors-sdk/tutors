@@ -66,6 +66,14 @@ const en = {
   "home.credits.description": "Tutors is an open source project available for free under the MIT license on GitHub.",
   "home.credits.viewSource": "View Source Code",
 
+  // Search overlay
+  "search.placeholder": "Search this course...",
+  "search.noResults": "No results found",
+  "search.shortcut": "to search",
+  "search.navigate": "to navigate",
+  "search.select": "to select",
+  "search.close": "Close search",
+
   // Course reader
   "course.search.label": "Enter search term:",
   "course.search.button": "Search",

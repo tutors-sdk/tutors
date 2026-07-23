@@ -66,6 +66,14 @@ const es: Record<string, string> = {
   "home.credits.description": "Tutors es un proyecto de codigo abierto disponible de forma gratuita en GitHub bajo la licencia MIT.",
   "home.credits.viewSource": "Ver codigo fuente",
 
+  // Search overlay
+  "search.placeholder": "Buscar en este curso...",
+  "search.noResults": "No se encontraron resultados",
+  "search.shortcut": "para buscar",
+  "search.navigate": "para navegar",
+  "search.select": "para seleccionar",
+  "search.close": "Cerrar busqueda",
+
   // Course reader
   "course.search.label": "Ingrese un termino de busqueda:",
   "course.search.button": "Buscar",

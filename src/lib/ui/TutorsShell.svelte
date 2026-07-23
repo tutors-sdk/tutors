@@ -2,7 +2,8 @@
   import Footer from "$lib/ui/navigators/footers/Footer.svelte";
   import { onMount, type Snippet } from "svelte";
   import MainNavigator from "./navigators/MainNavigator.svelte";
-  import { animationDelay, hideMainNavigator } from "$lib/runes.svelte";
+  import { animationDelay, currentCourse, hideMainNavigator, searchOpen } from "$lib/runes.svelte";
+  import SearchOverlay from "./components/SearchOverlay.svelte";
   import { cubicIn, cubicOut } from "svelte/easing";
   import { fly, slide } from "svelte/transition";
   import { prefersReducedMotion } from "$lib/services/a11y/reduced-motion.svelte";
@@ -15,7 +16,18 @@
   onMount(() => {
     showFooter = true;
   });
+
+  function handleGlobalKeydown(e: KeyboardEvent) {
+    if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+      e.preventDefault();
+      if (currentCourse.value && !currentCourse.value.isPortfolio) {
+        searchOpen.value = !searchOpen.value;
+      }
+    }
+  }
 </script>
+
+<svelte:window onkeydown={handleGlobalKeydown} />
 
 <div class="flex h-screen flex-col">
   <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:z-50 focus:p-4 focus:bg-primary-500 focus:text-white">
@@ -43,6 +55,10 @@
     </footer>
   {/if}
 </div>
+
+{#if currentCourse?.value && !currentCourse?.value?.isPortfolio}
+  <SearchOverlay />
+{/if}
 
 <style>
 </style>
