@@ -1,0 +1,6 @@
+{
+  "name": "tessl/tutors-content-types",
+  "version": "15.2.0",
+  "docs": "docs/index.md",
+  "summary": "Tutors Learning Object (Lo) type system: base Lo type, composite types (Course, Topic, Unit, Side), and simple types (Lab, Talk, Note, Notebook, Archive, Web, Github, PanelNote, PanelTalk, PanelVideo, Podcast)."
+}

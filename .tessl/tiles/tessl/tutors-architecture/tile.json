@@ -1,0 +1,6 @@
+{
+  "name": "tessl/tutors-architecture",
+  "version": "15.2.0",
+  "docs": "docs/index.md",
+  "summary": "Tutors platform architecture overview: SvelteKit app with service-layer pattern, Svelte 5 runes state management, CDN-hosted course JSON, and Supabase/PartyKit integrations."
+}

@@ -1,0 +1,6 @@
+{
+  "name": "tessl/tutors-ui",
+  "version": "15.2.0",
+  "docs": "docs/index.md",
+  "summary": "Tutors UI component library: TutorsShell layout, Composite/Card/Cards/Panels/Units structure components, content renderers (Lab, Talk variants, Note, Video, Notebook), navigation (MainNavigator, SecondaryNavigator, Breadcrumbs), and utility components."
+}
