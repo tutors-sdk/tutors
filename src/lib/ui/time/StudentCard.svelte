@@ -47,8 +47,12 @@
 <div class={cardShellClass}>
   <div class="flex h-full w-full flex-col">
     <div class="relative flex w-full shrink-0 items-center justify-center border-surface-300 border-b px-3 py-3 dark:border-surface-600">
-      <span class="absolute top-1/2 left-3 z-10 -translate-y-1/2">
+      <span class="absolute top-1/2 left-3 z-10 -translate-y-1/2 flex items-center gap-1">
         <Icon type={sentiment} tip={`Sentiment — ${sentiment}.`} height="28" />
+        {#if lo.engagement}
+          {@const engColor = lo.engagement === "active" ? "bg-success-500" : lo.engagement === "idle" ? "bg-warning-500" : "bg-error-500"}
+          <span class="inline-block h-2.5 w-2.5 rounded-full {engColor}" title={lo.engagement}></span>
+        {/if}
       </span>
       {#if student.id}
         <a

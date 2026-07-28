@@ -40,6 +40,20 @@ const en = {
   "menu.githubProfile": "Github Profile",
   "menu.disconnect": "Disconnect",
 
+  // Dashboard
+  "dashboard.title": "Class Dashboard",
+  "dashboard.classHealth": "Class Health",
+  "dashboard.alerts": "Alerts",
+  "dashboard.noAlerts": "No alerts — all students appear on track.",
+  "dashboard.progress": "Progress Distribution",
+  "dashboard.students": "Students",
+  "dashboard.active": "Active",
+  "dashboard.idle": "Idle",
+  "dashboard.away": "Away",
+  "dashboard.stuck": "may be stuck",
+  "dashboard.thrashing": "navigating back and forth",
+  "dashboard.timeOnLo": "on current content",
+
   // Home page
   "home.title": "Tutors:",
   "home.titleAn": "An",

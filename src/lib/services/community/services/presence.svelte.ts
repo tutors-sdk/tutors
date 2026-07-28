@@ -11,6 +11,7 @@ import { rune, tutorsId } from "$lib/runes.svelte";
 import { LoRecord, type LoUser, type PresenceService } from "../types.svelte";
 import type { TutorsId } from "$lib/services/connect";
 import { upsertTutorsConnectLatestLo } from "../utils/supabase-client";
+import { activityMonitorService } from "./activity-monitor.svelte";
 
 // Server URL from environment variables
 const partyKitServer = PUBLIC_party_kit_main_room;
@@ -87,6 +88,8 @@ export const presenceService: PresenceService = {
     if (lo.icon) {
       loRecord.icon = lo.icon;
     }
+    loRecord.engagement = activityMonitorService.getState();
+    loRecord.heartbeatTs = Date.now();
     const loRecordJson = JSON.stringify(loRecord);
     this.partyKitAll.send(loRecordJson);
     this.partyKitCourse.room = course.courseId;
@@ -108,6 +111,8 @@ export function refreshLoRecord(loEvent: LoRecord, nextLoEvent: LoRecord) {
   loEvent.title = nextLoEvent.title;
   loEvent.type = nextLoEvent.type;
   loEvent.user = nextLoEvent.user;
+  loEvent.engagement = nextLoEvent.engagement;
+  loEvent.heartbeatTs = nextLoEvent.heartbeatTs;
   if (nextLoEvent.icon) {
     loEvent.icon = nextLoEvent.icon;
     loEvent.img = undefined;
@@ -135,6 +140,7 @@ function getUser(tutorsId: TutorsId): LoUser {
     user.avatar = tutorsId.image;
     user.id = tutorsId.login;
     user.sentiment = tutorsId.sentiment ?? "neutral";
+    user.engagement = activityMonitorService.getState();
   }
   return user;
 }
