@@ -16,8 +16,14 @@ export const localStorageProfile: ProfileStore = {
    * Only executes in browser environment
    */
   reload(): void {
-    if (browser && localStorage.courseVisits) {
-      this.courseVisits = JSON.parse(localStorage.courseVisits);
+    if (!browser) return;
+    try {
+      const stored = localStorage.courseVisits;
+      const visits = stored ? JSON.parse(stored) : [];
+      this.courseVisits = Array.isArray(visits) ? visits : [];
+    } catch {
+      // Invalid saved history must not prevent browsing or recording new visits.
+      this.courseVisits = [];
     }
   },
   /**
